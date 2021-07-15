@@ -15,20 +15,85 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hmg-p6-Ay9">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rw2-d3-mUd">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="6zC-SP-1cg">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jI6-hf-IY2">
+                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="60"/>
+                                                        <state key="normal" title="친구"/>
+                                                    </button>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시간표" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bay-nk-r6C">
+                                                        <rect key="frame" x="138" y="0.0" width="138" height="60"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="08r-gG-SR5">
+                                                        <rect key="frame" x="276" y="0.0" width="138" height="60"/>
+                                                        <state key="normal" title="시간표 추가"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="6zC-SP-1cg" firstAttribute="leading" secondItem="Rw2-d3-mUd" secondAttribute="leading" id="MTw-mP-Ico"/>
+                                            <constraint firstItem="6zC-SP-1cg" firstAttribute="top" secondItem="Rw2-d3-mUd" secondAttribute="top" id="Mrr-82-nL9"/>
+                                            <constraint firstAttribute="height" constant="60" id="SLc-Bp-5H5"/>
+                                            <constraint firstAttribute="bottom" secondItem="6zC-SP-1cg" secondAttribute="bottom" id="UoP-i5-RV2"/>
+                                            <constraint firstAttribute="trailing" secondItem="6zC-SP-1cg" secondAttribute="trailing" id="cMe-Ww-iZv"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mI1-yV-quH" customClass="Elliotable" customModule="Elliotable">
+                                        <rect key="frame" x="0.0" y="60" width="414" height="709"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                <constraints>
+                                    <constraint firstItem="Rw2-d3-mUd" firstAttribute="leading" secondItem="Hmg-p6-Ay9" secondAttribute="leading" id="0Eh-ni-uyC"/>
+                                    <constraint firstItem="Rw2-d3-mUd" firstAttribute="top" secondItem="Hmg-p6-Ay9" secondAttribute="top" id="VPc-og-co0"/>
+                                    <constraint firstItem="mI1-yV-quH" firstAttribute="top" secondItem="Rw2-d3-mUd" secondAttribute="bottom" id="VY6-56-25g"/>
+                                    <constraint firstAttribute="bottom" secondItem="mI1-yV-quH" secondAttribute="bottom" id="agw-DZ-Ipa"/>
+                                    <constraint firstAttribute="trailing" secondItem="Rw2-d3-mUd" secondAttribute="trailing" id="k7l-oY-Bgc"/>
+                                    <constraint firstAttribute="trailing" secondItem="mI1-yV-quH" secondAttribute="trailing" id="rdT-7T-suE"/>
+                                    <constraint firstItem="mI1-yV-quH" firstAttribute="leading" secondItem="Hmg-p6-Ay9" secondAttribute="leading" id="uD7-Ac-qMm"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Hmg-p6-Ay9" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="IWY-B5-roU"/>
+                            <constraint firstItem="Hmg-p6-Ay9" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="Xcc-VY-5gt"/>
+                            <constraint firstAttribute="trailing" secondItem="Hmg-p6-Ay9" secondAttribute="trailing" id="h3K-dl-C0L"/>
+                            <constraint firstItem="Hmg-p6-Ay9" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="qDa-Za-Pz3"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Timetable" id="Ab4-sA-Stu"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="timetableView" destination="mI1-yV-quH" id="V6X-LR-gf2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="35" y="71"/>
+            <point key="canvasLocation" x="34.782608695652179" y="70.982142857142847"/>
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray3Color">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
