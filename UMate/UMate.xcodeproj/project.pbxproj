@@ -23,7 +23,9 @@
 		5C92DD36269B4EEC0094A93C /* PlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92DD35269B4EEC0094A93C /* PlaceViewController.swift */; };
 		5C92DD3A269BF8450094A93C /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C92DD39269BF8450094A93C /* Account.storyboard */; };
 		5C92DD3C269BF84F0094A93C /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92DD3B269BF84E0094A93C /* AccountViewController.swift */; };
-		DF46AEAC26A1C72C00435D94 /* BoardListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF46AEAB26A1C72C00435D94 /* BoardListTableViewCell.swift */; };
+		DF3EA85B26A3FF7C00424E7E /* BoardNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA85A26A3FF7C00424E7E /* BoardNames.swift */; };
+		DF3EA85D26A4003100424E7E /* NonTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA85C26A4003100424E7E /* NonTitleTableViewCell.swift */; };
+		DF46AEAC26A1C72C00435D94 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF46AEAB26A1C72C00435D94 /* TitleTableViewCell.swift */; };
 		F1414B82382F46CC5C59AD6B /* Pods_UMate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0336406B0211FCA66E293B37 /* Pods_UMate.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +51,9 @@
 		5C92DD3B269BF84E0094A93C /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		6C4F9A5EE11942DC73C60538 /* Pods-UMate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UMate.debug.xcconfig"; path = "Target Support Files/Pods-UMate/Pods-UMate.debug.xcconfig"; sourceTree = "<group>"; };
 		82B0AC8E61382EB56A093901 /* Pods-UMate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UMate.release.xcconfig"; path = "Target Support Files/Pods-UMate/Pods-UMate.release.xcconfig"; sourceTree = "<group>"; };
-		DF46AEAB26A1C72C00435D94 /* BoardListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListTableViewCell.swift; sourceTree = "<group>"; };
+		DF3EA85A26A3FF7C00424E7E /* BoardNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNames.swift; sourceTree = "<group>"; };
+		DF3EA85C26A4003100424E7E /* NonTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonTitleTableViewCell.swift; sourceTree = "<group>"; };
+		DF46AEAB26A1C72C00435D94 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,7 @@
 		5C92DD20269B4E670094A93C /* Board */ = {
 			isa = PBXGroup;
 			children = (
+				DF3EA85926A3FF4500424E7E /* Model */,
 				DF46AEAA26A1C70A00435D94 /* Cell */,
 				5C92DD27269B4E890094A93C /* Board.storyboard */,
 				5C92DD31269B4ED20094A93C /* BoardViewController.swift */,
@@ -155,10 +160,19 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		DF3EA85926A3FF4500424E7E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DF3EA85A26A3FF7C00424E7E /* BoardNames.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		DF46AEAA26A1C70A00435D94 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				DF46AEAB26A1C72C00435D94 /* BoardListTableViewCell.swift */,
+				DF3EA85C26A4003100424E7E /* NonTitleTableViewCell.swift */,
+				DF46AEAB26A1C72C00435D94 /* TitleTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -292,7 +306,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C92DD36269B4EEC0094A93C /* PlaceViewController.swift in Sources */,
-				DF46AEAC26A1C72C00435D94 /* BoardListTableViewCell.swift in Sources */,
+				DF3EA85B26A3FF7C00424E7E /* BoardNames.swift in Sources */,
+				DF46AEAC26A1C72C00435D94 /* TitleTableViewCell.swift in Sources */,
 				5C92DD34269B4EDF0094A93C /* TimetableViewController.swift in Sources */,
 				5C92DD30269B4EC00094A93C /* HomeViewController.swift in Sources */,
 				5C92DD0E269B4DEF0094A93C /* ViewController.swift in Sources */,
@@ -300,6 +315,7 @@
 				5C92DD0C269B4DEF0094A93C /* SceneDelegate.swift in Sources */,
 				5C92DD32269B4ED20094A93C /* BoardViewController.swift in Sources */,
 				5C92DD3C269BF84F0094A93C /* AccountViewController.swift in Sources */,
+				DF3EA85D26A4003100424E7E /* NonTitleTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
