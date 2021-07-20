@@ -43,7 +43,7 @@
                                                         <state key="normal" title="시간표 추가"/>
                                                         <connections>
                                                             <action selector="add:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="gAk-OK-LbF"/>
-                                                            <segue destination="AIb-cr-mJT" kind="show" id="Nya-Va-WOS"/>
+                                                            <segue destination="AIb-cr-mJT" kind="show" identifier="show" id="Nya-Va-WOS"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -270,14 +270,14 @@
                                                     <rect key="frame" x="20" y="51.5" width="374" height="138.5"/>
                                                     <subviews>
                                                         <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W0q-X1-fqB">
-                                                            <rect key="frame" x="0.0" y="0.0" width="124.5" height="138.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="125" height="139"/>
                                                             <connections>
                                                                 <outlet property="dataSource" destination="AIb-cr-mJT" id="5JG-Mh-hio"/>
                                                                 <outlet property="delegate" destination="AIb-cr-mJT" id="gGm-oM-3fl"/>
                                                             </connections>
                                                         </pickerView>
                                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRX-MZ-Q6N">
-                                                            <rect key="frame" x="124.5" y="0.0" width="125" height="138.5"/>
+                                                            <rect key="frame" x="125" y="0.0" width="125" height="139"/>
                                                             <date key="date" timeIntervalSinceReferenceDate="631152000.21094894">
                                                                 <!--2021-01-01 00:00:00 +0000-->
                                                             </date>
@@ -287,7 +287,7 @@
                                                             </connections>
                                                         </datePicker>
                                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tvx-WV-5Og">
-                                                            <rect key="frame" x="249.5" y="0.0" width="124.5" height="138.5"/>
+                                                            <rect key="frame" x="250" y="0.0" width="124" height="139"/>
                                                             <date key="date" timeIntervalSinceReferenceDate="631152000.26362097">
                                                                 <!--2021-01-01 00:00:00 +0000-->
                                                             </date>

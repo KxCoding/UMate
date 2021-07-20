@@ -9,8 +9,9 @@ import UIKit
 import Elliotable
 
 class TimetableViewController: UIViewController {
+    let dayString: [String] = ["월", "화", "수", "목", "금"]
+    var courseList = [ElliottEvent]()
     
-
     @IBAction func showFriends(_ sender: Any) {
         
     }
@@ -18,9 +19,6 @@ class TimetableViewController: UIViewController {
     @IBAction func add(_ sender: Any) {
         
     }
-    
-    let dayString: [String] = ["월", "화", "수", "목", "금"]
-    let courseList: [ElliottEvent] = [ElliottEvent(courseId: "F1234", courseName: "자료구조", roomName: "팔308", professor: "교수님", courseDay: .monday, startTime: "09:00", endTime: "10:15", textColor: UIColor.white, backgroundColor: .purple), ElliottEvent(courseId: "F1234", courseName: "자료구조", roomName: "팔308", professor: "교수님", courseDay: .wednesday, startTime: "09:00", endTime: "10:15", textColor: UIColor.white, backgroundColor: .purple), ElliottEvent(courseId: "F5678", courseName: "컴퓨터그래픽스", roomName: "팔1025", professor: "교수님", courseDay: .monday, startTime: "10:30", endTime: "11:45", textColor: UIColor.white, backgroundColor: .cyan), ElliottEvent(courseId: "F5678", courseName: "컴퓨터그래픽스", roomName: "팔1025", professor: "교수님", courseDay: .thursday, startTime: "10:30", endTime: "11:45", textColor: UIColor.white, backgroundColor: .cyan)]
 
     @IBOutlet weak var timetableView: Elliotable!
     
@@ -53,6 +51,13 @@ class TimetableViewController: UIViewController {
         timetableView.reloadData()
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "show" {
+            print("show")
+            let tableViewController : AddLectureTableViewController = segue.destination as! AddLectureTableViewController
+            tableViewController.delegate = self
+        }
+    }
 }
 
 
@@ -86,4 +91,13 @@ extension TimetableViewController: ElliotableDataSource {
     }
     
     
+}
+
+
+extension TimetableViewController : SendDataDelegate {
+    func sendData(data: ElliottEvent) {
+        courseList.append(data)
+        timetableView.reloadData()
+        print(courseList)
+    }
 }

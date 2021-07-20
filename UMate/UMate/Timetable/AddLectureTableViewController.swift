@@ -6,13 +6,21 @@
 //
 
 import UIKit
+import Elliotable
+
+protocol SendDataDelegate {
+    func sendData(data: ElliottEvent)
+}
 
 class AddLectureTableViewController: UITableViewController {
     
+    var delegate: SendDataDelegate?
     let weekdays = ["월", "화", "수", "목", "금"]
     let colors = ["red", "orange", "green", "blue", "purple", "darkGray"]
     var startTime: String = "09:00"
     var endTime: String = "09:00"
+    var weekdayInt = 1
+    var colorString = "red"
     
     @IBOutlet weak var courseIdField: UITextField!
     @IBOutlet weak var courseNameField: UITextField!
@@ -46,6 +54,8 @@ class AddLectureTableViewController: UITableViewController {
         courseNameField.delegate = self
         roomNameField.delegate = self
         professorField.delegate = self
+        
+        self.courseIdField.becomeFirstResponder()
     }
     
     
@@ -61,6 +71,22 @@ class AddLectureTableViewController: UITableViewController {
             return
         }
         
+        if startTime == endTime {
+            alertWithNoAction(title: "경고", message: "강의 시작 시간과 종료 시간이 같습니다.")
+            return
+        }
+        
+        if startTime > endTime {
+            alertWithNoAction(title: "경고", message: "강의 시작 시간이 종료 시간보다 늦습니다.")
+            return
+        }
+        
+        let elliotday: ElliotDay = ElliotDay(rawValue: weekdayInt)!
+        let backgroundColor: UIColor = UIColor(named: "\(colorString)") ?? .black
+        
+        let lectureInfo = ElliottEvent(courseId: courseId, courseName: courseName, roomName: roomName, professor: professor, courseDay: elliotday, startTime: startTime, endTime: endTime, backgroundColor: backgroundColor)
+        delegate?.sendData(data: lectureInfo)
+        
         alert(title: "알림", message: "저장되었습니다.")
     }
 }
@@ -74,11 +100,21 @@ extension AddLectureTableViewController: UITextFieldDelegate {
         guard let text = textField.text else { return true }
         
         let newLength = text.count + string.count - range.length
-        
-        print(newLength)
+
         return newLength <= 20
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == courseIdField {
+            courseNameField.becomeFirstResponder()
+        } else if textField == courseNameField {
+            roomNameField.becomeFirstResponder()
+        } else if textField == roomNameField {
+            professorField.becomeFirstResponder()
+        }
+        
+        return true
+    }
 }
 
 
@@ -135,14 +171,14 @@ extension AddLectureTableViewController: UIPickerViewDelegate {
         if pickerView == weekdayPicker {
             switch component {
             case 0:
-                print(weekdays[row])
+                weekdayInt = row + 1
             default:
                 break
             }
         } else {
             switch component {
             case 0:
-                print(colors[row])
+                colorString = colors[row]
             default:
                 break
             }
