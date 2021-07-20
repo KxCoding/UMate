@@ -26,25 +26,25 @@ class AccountViewController: UIViewController {
     
     
     @IBAction func login(_ sender: Any) {
-        guard let id = idTextField.text,
-              id.count > 0,
-              id.contains("@") && id.contains("."),
-              id.trimmingCharacters(in: .whitespacesAndNewlines)  != "" else {
-                  
-                  showError(title: "알림", message: "이메일 형식으로 입력해야합니다.")
-                  
-                  return
-              }
-        
-        guard let password = passwordTextField.text,
-              isPasswordValid(password),
-              password.count >= 8,
-              password.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
-                  
-                  showError(title: "알림", message: "비밀번호는 최소 8자리 이상 특수문자 포함 해야합니다.")
-                  
-                  return
-              }
+//        guard let id = idTextField.text,
+//              id.count > 0,
+//              id.contains("@") && id.contains("."),
+//              id.trimmingCharacters(in: .whitespacesAndNewlines)  != "" else {
+//                  
+//                  showError(title: "알림", message: "이메일 형식으로 입력해야합니다.")
+//                  
+//                  return
+//              }
+//        
+//        guard let password = passwordTextField.text,
+//              isPasswordValid(password),
+//              password.count >= 8,
+//              password.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
+//                  
+//                  showError(title: "알림", message: "비밀번호는 최소 8자리 이상 특수문자 포함 해야합니다.")
+//                  
+//                  return
+//              }
         
         
         transitionToHome()
