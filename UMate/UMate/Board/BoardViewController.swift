@@ -7,163 +7,409 @@
 
 import UIKit
 
-struct Section {
-    let title: String
-    let options: [String]
-    var isOpened = false
-    var isBookmarked = false
-}
+
+//##section접었다 펼쳤을 때 스크롤 조정해야함.##
+
 
 class BoardViewController: UIViewController {
+    
 
-   
     @IBOutlet weak var boardListTableView: UITableView!
     
+   
+    @IBAction func updateBookmarK(_ sender: UIButton) {
     
-    var NonTitleboardList = [
-        BoadNames(isExpanded: false, names: ["스크랩"].map{ Contact(name: $0, isBookmarked: false) }),
-        BoadNames(isExpanded: false, names: ["자유게시판"].map{ Contact(name: $0, isBookmarked: false) }),
-        BoadNames(isExpanded: false, names: ["인기글 게시판"].map{ Contact(name: $0, isBookmarked: false) }),
-        BoadNames(isExpanded: false, names: ["졸업생 게시판"].map{ Contact(name: $0, isBookmarked: false) }),
-        BoadNames(isExpanded: false, names: ["새내기 게시판"].map{ Contact(name: $0, isBookmarked: false) }),
-        BoadNames(isExpanded: false, names: ["강의평가 게시판"].map{ Contact(name: $0, isBookmarked: false) })
-    ]
+//        let section = sender.tag / 100 - 1
+//        let row = sender.tag % 100
+        
+        if sender.tintColor == .darkGray {
+            sender.tintColor = .systemBlue
+        } else {
+            sender.tintColor = .darkGray
+        }
+        print(#function, sender.tag)
+    }
     
-    var TitleboardList = [
-        BoadNames(title: "홍보", isExpanded: true, names: ["홍보 게시판", "동아리, 학회"].map{ Contact(name: $0, isBookmarked: false) }),
-        BoadNames(title: "정보", isExpanded: true, names: ["정보 게시판", "취업, 진로"].map{ Contact(name: $0, isBookmarked: false) }),
-    ]
+    
+    //    let bookmarks: [Int: [String]] = [0: ["abc123","abc121"]]
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
+            
+            if identifier == "freeSegue" && indexPath.row == 0 {
+                return false
+            } else if identifier == "freeSegue" && indexPath.row == 5 {
+                return false
+            }
+        }
+        return true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
+            
+            if let vc = segue.destination as? FreeBoardViewController {
+                
+                switch indexPath.row {
+                case 1:
+                    vc.selectedBoard = freeBoard
+                case 2:
+                    vc.selectedBoard = popularPostBoard
+                case 3:
+                    vc.selectedBoard = graduateBoard
+                case 4:
+                    vc.selectedBoard = freshmanBoard
+                default: break
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //        postDic["abc123"]?.forEach({ comment in
+        //            print(comment.commentContent)
+        //        })
+        
     }
+
+    let freeBoard = Board(boardTitle: "자유 게시판",
+                          posts: [Post(image: UIImage(named:"image1"),
+                                       postTitle: "아자아자",
+                                       postContent: "5개월동안 열심히하자!",
+                                       postWriter: "정은",
+                                       insertDate: Date(timeIntervalSinceNow: -3000),
+                                       likeCount: 3,
+                                       commentCount: 12),
+                                  Post(image: UIImage(named:"image2"),
+                                       postTitle: "to catch this in the",
+                                       postContent: "5UIConstraintBasedLayoutDebugging!",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -200),
+                                       likeCount: 3,
+                                       commentCount: 13),
+                                  Post(image: UIImage(named:""),
+                                       postTitle: "Lorem ipsum dolor sit ame",
+                                       postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -388),
+                                       likeCount: 3,
+                                       commentCount: 32),
+                                  Post(image: UIImage(named:""),
+                                       postTitle: "H. Rackham",
+                                       postContent: "s mistaken idea of denouncing pleasure and praising pain was born and I will giv!",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -3600 * 100),
+                                       likeCount: 3,
+                                       commentCount: 18),
+                                  Post(image: UIImage(named:""),
+                                       postTitle: "foregroundColor",
+                                       postContent: "n macOS, the value of this attribute is an NSColor instance. In iOS, tvOS, watchOS, and Mac Catalyst, the value of this attribute is a UICo",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
+                                       likeCount: 4,
+                                       commentCount: 18),
+                                  Post(image: UIImage(named:"image1"),
+                                       postTitle: "Where does it come from",
+                                       postContent: "consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
+                                       likeCount: 4,
+                                       commentCount: 18),
+                                  Post(image: UIImage(named:""),
+                                       postTitle: "foregroundColor",
+                                       postContent: "n macOS, the value of this attribute is an NSColor instance. In iOS, tvOS, watchOS, and Mac Catalyst, the value of this attribute is a UICo",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
+                                       likeCount: 4,
+                                       commentCount: 18),
+                                  Post(image: UIImage(named:"image2"),
+                                       postTitle: "Where can I get some?",
+                                       postContent: "ave suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are g",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
+                                       likeCount: 4,
+                                       commentCount: 18),
+                                  Post(image: UIImage(named:""),
+                                       postTitle: "Why do we use it?",
+                                       postContent: "nterested. Sections 1.10.32 an",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
+                                       likeCount: 4,
+                                       commentCount: 18),
+                                  Post(image: UIImage(named:"image1"),
+                                       postTitle: "Where does it come from",
+                                       postContent: "consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
+                                       likeCount: 4,
+                                       commentCount: 18),
+                                  Post(image: UIImage(named:""),
+                                       postTitle: "foregroundColor",
+                                       postContent: "n macOS, the value of this attribute is an NSColor instance. In iOS, tvOS, watchOS, and Mac Catalyst, the value of this attribute is a UICo",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
+                                       likeCount: 4,
+                                       commentCount: 18),
+                                  Post(image: UIImage(named:"image2"),
+                                       postTitle: "Where can I get some?",
+                                       postContent: "ave suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are g",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
+                                       likeCount: 4,
+                                       commentCount: 18),
+                                  Post(image: UIImage(named:"image1"),
+                                       postTitle: "아자아자",
+                                       postContent: "5개월동안 열심히하자!",
+                                       postWriter: "정은",
+                                       insertDate: Date(timeIntervalSinceNow: -3000),
+                                       likeCount: 3,
+                                       commentCount: 12),
+                                  Post(image: UIImage(named:"image2"),
+                                       postTitle: "to catch this in the",
+                                       postContent: "5UIConstraintBasedLayoutDebugging!",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -200),
+                                       likeCount: 3,
+                                       commentCount: 13),
+                                  Post(image: UIImage(named:""),
+                                       postTitle: "Lorem ipsum dolor sit ame",
+                                       postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
+                                       postWriter: "category",
+                                       insertDate: Date(timeIntervalSinceNow: -388),
+                                       likeCount: 3,
+                                       commentCount: 32),
+                                 ])
+    let popularPostBoard = Board(boardTitle: "인기글 게시판",
+                                 posts: [Post(image: UIImage(named:"image3"),
+                                              postTitle: "아자아자",
+                                              postContent: "5개월동안 열심히하자!",
+                                              postWriter: "정은",
+                                              insertDate: Date(),
+                                              likeCount: 3,
+                                              commentCount: 12),
+                                         Post(image: UIImage(named:"image4"),
+                                              postTitle: "to catch this in the",
+                                              postContent: "5UIConstraintBasedLayoutDebugging!",
+                                              postWriter: "category",
+                                              insertDate: Date(),
+                                              likeCount: 3,
+                                              commentCount: 13),
+                                        ])
+    let graduateBoard = Board(boardTitle: "졸업생 게시판",
+                              posts: [Post(image: UIImage(named:"image5"),
+                                           postTitle: "아자아자",
+                                           postContent: "5개월동안 열심히하자!",
+                                           postWriter: "정은",
+                                           insertDate: Date(),
+                                           likeCount: 3,
+                                           commentCount: 12),
+                                      Post(image: UIImage(named:"image6"),
+                                           postTitle: "Lorem ipsum dolor sit ame",
+                                           postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
+                                           postWriter: "category",
+                                           insertDate: Date(),
+                                           likeCount: 3,
+                                           commentCount: 32),
+                                     ])
+    let freshmanBoard =  Board(boardTitle: "신입생 게시판",
+                               posts: [Post(image: UIImage(named:"image7"),
+                                            postTitle: "Lorem ipsum dolor sit ame",
+                                            postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
+                                            postWriter: "category",
+                                            insertDate: Date(),
+                                            likeCount: 3,
+                                            commentCount: 32),
+                                       Post(image: UIImage(named:"image8"),
+                                            postTitle: "H. Rackham",
+                                            postContent: "s mistaken idea of denouncing pleasure and praising pain was born and I will giv!",
+                                            postWriter: "category",
+                                            insertDate: Date(),
+                                            likeCount: 3,
+                                            commentCount: 18),
+                                      ])
+    
+    var nonExpandableBoardList = [BoardUI(sectionName: nil, boardNames: ["스크랩"]),
+                                  BoardUI(sectionName: nil, boardNames: ["자유 게시판"]),
+                                  BoardUI(sectionName: nil, boardNames: ["인기글 게시판"]),
+                                  BoardUI(sectionName: nil, boardNames: ["졸업생 게시판"]),
+                                  BoardUI(sectionName: nil, boardNames: ["신입생 게시판"]),
+                                  BoardUI(sectionName: nil, boardNames: ["강의평가 게시판"]),]
+    
+    var expandableBoardList = [BoardUI(sectionName: "홍보", isExpanded: true ,boardNames: ["홍보 게시판", "동아리, 학회"]),
+                               BoardUI(sectionName: "정보", isExpanded: true ,boardNames: ["정보 게시판", "취업, 진로"]),]
+    
+    let commentsInPost: [String: [Comment]] = ["abc123": [Comment(commentContent: "화이팅!!", commentWriter: "1004"),
+                                                          Comment(commentContent: "바나나", commentWriter: "119"),
+                                                          Comment(commentContent: "사과!!", commentWriter: "나무")]]
 }
 
 
-extension BoardViewController: UITableViewDataSource {
 
-    
+extension BoardViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        3
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         switch section {
+            //non expandable board
         case 0:
-            return NonTitleboardList.count
-        default:
-            if !TitleboardList[section - 1]
-                .isExpanded {
-                return 0
-            }
-            return TitleboardList[section - 1].names.count
+            return nonExpandableBoardList.count
+            
+            //expandable board
+        case 1,2:
+            if expandableBoardList[section - 1].isExpanded { return expandableBoardList[section - 1].boardNames.count }
+            return 0
+            
+        default: return 0
         }
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NonTitleTableViewCell", for: indexPath) as! NonTitleTableViewCell
-            cell.link = self
+        if indexPath.section == 0{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
+            cell.configure(boardList: nonExpandableBoardList, indexPath: indexPath)
             
-            cell.textLabel?.text = NonTitleboardList[indexPath.row].names.first?.name
-            cell.accessoryView?.tintColor = NonTitleboardList[indexPath.section].names[0].isBookmarked ? UIColor.red : .lightGray
             return cell
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TitleTableViewCell", for: indexPath) as! TitleTableViewCell
-        cell.link = self
-        cell.textLabel?.text = TitleboardList[indexPath.section - 1].names[indexPath.row].name
-        cell.accessoryView?.tintColor = TitleboardList[indexPath.section - 1].names[indexPath.row].isBookmarked ? UIColor.red : .lightGray
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ExpandableBoardTableViewCell", for: indexPath) as! ExpandableBoardTableViewCell
+        cell.configure(boardList: expandableBoardList, indexPath: indexPath)
         
         return cell
     }
-    
 }
 
 
 
 extension BoardViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         tableView.deselectRow(at: indexPath, animated: true)
+        
+       //게시판 index에 맞는 게시판으로 이동해야함.
+        switch indexPath.section {
+        case 0:
+            
+            //1,2,3,4는 같은 viewController사용하고 게시글 목록만 바꿔줘도 될 듯
+            switch indexPath.row {
+            case 0:
+                //스크랩 게시판으로 이동
+                break
+            case 1,2,3,4:
+                //자유 게시판으로 이동
+                //인기글 게시판으로 이동
+                //졸업생 게시판으로 이동
+                //새내기 게시판으로 이동
+            //prepare(for segue)를 이용
+                break
+            case 5:
+                //강의평가 게시판으로 이동
+                performSegue(withIdentifier: "lectureSegue", sender: self)
+                break
+            default:
+                break
+            }
+            
+        case 1:
+            switch indexPath.row {
+            case 0:
+                //홍보 게시판으로 이동
+                break
+            case 1:
+                //동아리, 학회 게시판으로 이동
+                break
+            default:
+                break
+            }
+            
+        case 2:
+            switch indexPath.row {
+            case 0:
+                //정보 게시판으로 이동
+                break
+            case 1:
+                //취업, 진로 게시판으로 이동
+                break
+            default:
+                break
+            }
+            
+        default: break
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            return 10
+        case 1, 2:
+            return 70
+        default: break
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
+        //Header에 들어갈 버튼
         if section != 0 {
-            let button = UIButton(type: .system)
-            button.setTitle(TitleboardList[section - 1].title, for: .normal)
+            let button = UIButton(type: .custom)
             
-            button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = .brown
-            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+            button.setTitle(expandableBoardList[section - 1].sectionName, for: .normal)
+            button.titleLabel?.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -20).isActive = true
+            button.setTitleColor(.systemGray4, for: .normal)
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
             
-            button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
+            //            let arrowView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            //            //let image = UIImage(named: "dwonArrow")
+            //            let imageView = UIImageView(image: UIImage(named: "dwonArrow"))
+            //            arrowView.translatesAutoresizingMaskIntoConstraints = false
+            //            arrowView.addSubview(imageView)
+            //            imageView.leadingAnchor.constraint(equalTo: arrowView.leadingAnchor).isActive = true
+            //            imageView.bottomAnchor.constraint(equalTo: arrowView.bottomAnchor).isActive = true
+            //            imageView.trailingAnchor.constraint(equalTo: arrowView.trailingAnchor).isActive = true
+            //            imageView.topAnchor.constraint(equalTo: arrowView.topAnchor).isActive = true
+            //
+            //            button.addSubview(arrowView)
+            //
+            //            arrowView.bottomAnchor.constraint(equalTo: button.bottomAnchor).isActive = true
+            //            arrowView.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: 20).isActive = true
+            //            arrowView.topAnchor.constraint(equalTo: button.topAnchor).isActive = true
             
-            button.tag = section
             
+            button.addTarget(self, action: #selector(handleExpandClose(button:)), for: .touchUpInside)
+            
+            button.tag = section//  버튼 태그는 1,2
             return button
         }
+        
         let header = UIView()
-        header.backgroundColor = .yellow
+        //header.alpha = 1
         return header
     }
     
     @objc func handleExpandClose(button: UIButton) {
-        print("Trying to expand and close section")
         
-        //section은 0,1,2 그런데 버튼 태그도 0,1,2
-        let section = button.tag
+        let section = button.tag// 섹션은 1,2
         
         var indexPathArr = [IndexPath]()
         
-        //0일 때는 할 필요 없음
-        if section != 0 {
-            //배열은 0부터 시작이므로 button1,2인 경우만이니까 -1을 해주어야함.
-            for row in TitleboardList[section - 1].names.indices {
-                print(0, row)
-                let indexPath = IndexPath(row: row, section: section)
-                indexPathArr.append(indexPath)
-            }
-            
-            let isExpanded = TitleboardList[section - 1].isExpanded
-            TitleboardList[section - 1].isExpanded = !isExpanded
-            
-            
-            if isExpanded {
-                boardListTableView.deleteRows(at: indexPathArr, with: .fade)
-            } else {
-                boardListTableView.insertRows(at: indexPathArr, with: .fade)
-            }
+        for row in expandableBoardList[section - 1].boardNames.indices {
+            let indexPath = IndexPath(row: row, section: section)
+            indexPathArr.append(indexPath)
         }
-    }
-    
-    
-    
-    func changeNonTitleBookmarkColor(cell: UITableViewCell) {
-        //section이 0일 때 먼저
-        guard let indexPathTapped = boardListTableView.indexPath(for: cell) else { return }
         
-        guard let contact = NonTitleboardList[indexPathTapped.row].names.first else { return }
+        expandableBoardList[section - 1].isExpanded = !expandableBoardList[section - 1].isExpanded
         
-        let isBookmarked = contact.isBookmarked
-        NonTitleboardList[indexPathTapped.row].names[0].isBookmarked = !isBookmarked
-        
-        cell.accessoryView?.tintColor = isBookmarked ? UIColor.lightGray : .red
-    }
-    
-    func changeTitleBookmarkColor(cell: UITableViewCell) {
-        //section이 1,2
-        guard let indexPathTapped = boardListTableView.indexPath(for: cell) else { return }
-        
-        let contact = TitleboardList[indexPathTapped.section - 1].names[indexPathTapped.row]
-        
-        let isBookmarked = contact.isBookmarked
-        TitleboardList[indexPathTapped.section - 1].names[indexPathTapped.row].isBookmarked = !isBookmarked
-        
-        cell.accessoryView?.tintColor = isBookmarked ? UIColor.lightGray : .red
+        if expandableBoardList[section - 1].isExpanded {
+            boardListTableView.insertRows(at: indexPathArr, with: .fade)
+        } else {
+            boardListTableView.deleteRows(at: indexPathArr, with: .fade)
+        }
     }
 }
