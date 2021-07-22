@@ -30,9 +30,8 @@
 		6D7ECDA426A72C17005D59B5 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7ECDA326A72C17005D59B5 /* SettingViewController.swift */; };
 		6D8019C026A525900042A288 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8019BF26A525900042A288 /* User.swift */; };
 		6D8019C226A52C480042A288 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8019C126A52C480042A288 /* Constant.swift */; };
-		DF3EA85B26A3FF7C00424E7E /* BoardNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA85A26A3FF7C00424E7E /* BoardNames.swift */; };
+		DF36281526A93207007AC5D2 /* ExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */; };
 		DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */; };
-		DF46AEAC26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */; };
 		DFEF018026A756290015829B /* Date + Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF017F26A756290015829B /* Date + Formatter.swift */; };
 		DFEF018226A756880015829B /* FreeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018126A756880015829B /* FreeBoardViewController.swift */; };
 		DFEF018426A756AF0015829B /* LectureReviewBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */; };
@@ -71,7 +70,6 @@
 		6D8019BF26A525900042A288 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6D8019C126A52C480042A288 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		82B0AC8E61382EB56A093901 /* Pods-UMate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UMate.release.xcconfig"; path = "Target Support Files/Pods-UMate/Pods-UMate.release.xcconfig"; sourceTree = "<group>"; };
-		DF3EA85A26A3FF7C00424E7E /* BoardNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNames.swift; sourceTree = "<group>"; };
 		DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
 		DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
 		DFEF017F26A756290015829B /* Date + Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Formatter.swift"; sourceTree = "<group>"; };
@@ -214,7 +212,6 @@
 		DF3EA85926A3FF4500424E7E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DF3EA85A26A3FF7C00424E7E /* BoardNames.swift */,
 				DFEF018526A756C80015829B /* Post.swift */,
 				DFEF018726A756D90015829B /* Board.swift */,
 			);
@@ -377,14 +374,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF36281526A93207007AC5D2 /* ExpandableBoardTableViewCell.swift in Sources */,
 				5C92DD36269B4EEC0094A93C /* PlaceViewController.swift in Sources */,
 				DFEF018226A756880015829B /* FreeBoardViewController.swift in Sources */,
 				DFEF018826A756D90015829B /* Board.swift in Sources */,
-				DF3EA85B26A3FF7C00424E7E /* BoardNames.swift in Sources */,
-				DF46AEAC26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift in Sources */,
 				5CAFD3AD26A74B9D0002D0EC /* AddLectureTableViewController.swift in Sources */,
 				5C0D977726A768A600F396B7 /* UIViewController+Alert.swift in Sources */,
-				DF46AEAC26A1C72C00435D94 /* TitleTableViewCell.swift in Sources */,
 				5C92DD34269B4EDF0094A93C /* TimetableViewController.swift in Sources */,
 				5C92DD30269B4EC00094A93C /* HomeViewController.swift in Sources */,
 				DFEF018426A756AF0015829B /* LectureReviewBoardViewController.swift in Sources */,

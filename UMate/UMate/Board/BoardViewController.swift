@@ -16,26 +16,28 @@ class BoardViewController: UIViewController {
 
     @IBOutlet weak var boardListTableView: UITableView!
     
+    var bookmarks: [Int:Bool] = [:]
    
     @IBAction func updateBookmarK(_ sender: UIButton) {
-    
-//        let section = sender.tag / 100 - 1
-//        let row = sender.tag % 100
         
-        if sender.tintColor == .darkGray {
-            sender.tintColor = .systemBlue
-        } else {
-            sender.tintColor = .darkGray
+        sender.tintColor = sender.tintColor == .darkGray ? .systemBlue : .darkGray 
+    
+        if bookmarks.keys.contains(sender.tag) {
+            if let isBookmarked = bookmarks[sender.tag] {
+                bookmarks[sender.tag] = !isBookmarked
+            }
         }
-        print(#function, sender.tag)
+
+        //print(bookmarks[sender.tag])
+        
+        
     }
     
-    
-    //    let bookmarks: [Int: [String]] = [0: ["abc123","abc121"]]
+
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
-            
             if identifier == "freeSegue" && indexPath.row == 0 {
                 return false
             } else if identifier == "freeSegue" && indexPath.row == 5 {
@@ -70,6 +72,18 @@ class BoardViewController: UIViewController {
         //        postDic["abc123"]?.forEach({ comment in
         //            print(comment.commentContent)
         //        })
+        for row in 0..<nonExpandableBoardList.count {
+            bookmarks[row + 100] = false
+        }
+        var sectionNum = 2
+        for section in expandableBoardList {
+            for row in 0..<section.boardNames.count {
+                bookmarks[sectionNum * 100 + row] = false
+            }
+            sectionNum += 1
+        }
+        
+        
         
     }
 
@@ -270,16 +284,17 @@ extension BoardViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0{
+        if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
+            //재사용 셀을 생성
+            //그 셀을 설정해서 리턴해야함. 
             cell.configure(boardList: nonExpandableBoardList, indexPath: indexPath)
-            
             return cell
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpandableBoardTableViewCell", for: indexPath) as! ExpandableBoardTableViewCell
         cell.configure(boardList: expandableBoardList, indexPath: indexPath)
-        
+        cell.board = self
         return cell
     }
 }
@@ -361,26 +376,12 @@ extension BoardViewController: UITableViewDelegate {
             let button = UIButton(type: .custom)
             
             button.setTitle(expandableBoardList[section - 1].sectionName, for: .normal)
-            button.titleLabel?.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -20).isActive = true
-            button.setTitleColor(.systemGray4, for: .normal)
+            
+            button.titleLabel?.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
+            
+            button.setTitleColor(.black, for: .normal)
             button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-            
-            //            let arrowView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-            //            //let image = UIImage(named: "dwonArrow")
-            //            let imageView = UIImageView(image: UIImage(named: "dwonArrow"))
-            //            arrowView.translatesAutoresizingMaskIntoConstraints = false
-            //            arrowView.addSubview(imageView)
-            //            imageView.leadingAnchor.constraint(equalTo: arrowView.leadingAnchor).isActive = true
-            //            imageView.bottomAnchor.constraint(equalTo: arrowView.bottomAnchor).isActive = true
-            //            imageView.trailingAnchor.constraint(equalTo: arrowView.trailingAnchor).isActive = true
-            //            imageView.topAnchor.constraint(equalTo: arrowView.topAnchor).isActive = true
-            //
-            //            button.addSubview(arrowView)
-            //
-            //            arrowView.bottomAnchor.constraint(equalTo: button.bottomAnchor).isActive = true
-            //            arrowView.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: 20).isActive = true
-            //            arrowView.topAnchor.constraint(equalTo: button.topAnchor).isActive = true
-            
+           
             
             button.addTarget(self, action: #selector(handleExpandClose(button:)), for: .touchUpInside)
             
@@ -411,5 +412,8 @@ extension BoardViewController: UITableViewDelegate {
         } else {
             boardListTableView.deleteRows(at: indexPathArr, with: .fade)
         }
+        
     }
 }
+
+

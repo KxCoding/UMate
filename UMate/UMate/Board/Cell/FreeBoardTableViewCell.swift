@@ -13,7 +13,7 @@ class FreeBoardTableViewCell: UITableViewCell {
     @IBOutlet weak var postImageView: UIImageView!
     
     @IBOutlet weak var postTitle: UILabel!
-    @IBOutlet weak var PostContent: UILabel!
+    @IBOutlet weak var postContent: UILabel!
     @IBOutlet weak var postTime: UILabel!
     @IBOutlet weak var postWriter: UILabel!
     @IBOutlet weak var likeCount: UILabel!
@@ -31,7 +31,7 @@ class FreeBoardTableViewCell: UITableViewCell {
         
         postImageView.image = post.image
         postTitle.text = post.postTitle
-        PostContent.text = post.postContent
+        postContent.text = post.postContent
         postTime.text = post.insertDate.relativeDate
         postWriter.text = post.postWriter
         likeCount.text = "\(post.likeCount)"

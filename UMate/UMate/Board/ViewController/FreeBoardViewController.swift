@@ -19,16 +19,16 @@ class FreeBoardViewController: UIViewController {
 
 
 
-   extension FreeBoardViewController: UITableViewDataSource {
-       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return selectedBoard?.posts.count ?? 0
-       }
-       
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-           let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
-           guard let post = selectedBoard?.posts[indexPath.row] else { return cell }
-           
-           cell.configure(post: post)
-           return cell
-       }
-   }
+extension FreeBoardViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return selectedBoard?.posts.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
+        guard let post = selectedBoard?.posts[indexPath.row] else { return cell }
+        
+        cell.configure(post: post)
+        return cell
+    }
+}

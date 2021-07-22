@@ -28,6 +28,5 @@ struct BoardUI {
     
     let sectionName: String?
     var isExpanded: Bool = false
-    let boardNames: [String]
-    
+    let boardNames: [String]    
 }

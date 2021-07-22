@@ -233,6 +233,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uaW-kg-AuJ">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="sectionIndexColor" systemColor="systemGray5Color"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FreeBoardTableViewCell" rowHeight="115" id="fO0-mc-pb5" customClass="FreeBoardTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="414" height="115"/>
@@ -352,10 +353,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="PostContent" destination="xfP-9I-wGh" id="cUr-PZ-aVI"/>
                                             <outlet property="PostImageView" destination="5Nk-Hv-Rkc" id="Zdb-vB-aef"/>
                                             <outlet property="commentCount" destination="hxh-h0-Z1w" id="c12-5p-Ygp"/>
                                             <outlet property="likeCount" destination="3sr-RA-nEY" id="dFy-Me-SKc"/>
+                                            <outlet property="postContent" destination="xfP-9I-wGh" id="rQY-pZ-MLP"/>
                                             <outlet property="postImageView" destination="5Nk-Hv-Rkc" id="eAq-qb-Xgv"/>
                                             <outlet property="postTime" destination="Fce-Z9-gUx" id="mWb-k8-NRq"/>
                                             <outlet property="postTitle" destination="oas-eD-P7g" id="2FM-Eh-mNc"/>
@@ -397,6 +398,9 @@
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
