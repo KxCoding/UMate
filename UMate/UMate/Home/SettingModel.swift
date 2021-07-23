@@ -12,7 +12,7 @@ struct Profile {
     let profileImage: UIImage?
     let id: String?
     let name: String
-    let nickName: String
+    let nickName: String?
     let university: String
     let entranceYear: String
 }
