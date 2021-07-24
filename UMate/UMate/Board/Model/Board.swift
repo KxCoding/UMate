@@ -15,18 +15,13 @@ struct Board {
 }
 
 struct BoardUI {
-    internal init(sectionName: String?, boardNames: [String]) {
-        self.sectionName = sectionName
-        self.boardNames = boardNames
-    }
-    
-    internal init(sectionName: String?, isExpanded: Bool, boardNames: [String]) {
+    internal init(sectionName: String?, isExpanded: Bool = false, boardNames: [String]) {
         self.sectionName = sectionName
         self.boardNames = boardNames
         self.isExpanded = isExpanded
     }
     
     let sectionName: String?
-    var isExpanded: Bool = false
+    var isExpanded: Bool
     let boardNames: [String]    
 }

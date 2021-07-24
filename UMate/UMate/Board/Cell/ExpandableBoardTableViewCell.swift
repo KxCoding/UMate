@@ -20,7 +20,7 @@ class ExpandableBoardTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
    
-        bookmarkButton.tintColor = .darkGray
+        bookmarkButton.tintColor = .lightGray
     }
 
     func configure(boardList: [BoardUI], indexPath: IndexPath) {
@@ -31,7 +31,7 @@ class ExpandableBoardTableViewCell: UITableViewCell {
         if board?.bookmarks[bookmarkButton.tag] == true {
             bookmarkButton.tintColor = .systemBlue
         } else {
-            bookmarkButton.tintColor = .darkGray
+            bookmarkButton.tintColor = .lightGray
         }
     }
 

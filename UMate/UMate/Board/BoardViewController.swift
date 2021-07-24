@@ -13,27 +13,21 @@ import UIKit
 
 class BoardViewController: UIViewController {
     
-
+    var bookmarks: [Int:Bool] = [:]
+    
     @IBOutlet weak var boardListTableView: UITableView!
     
-    var bookmarks: [Int:Bool] = [:]
-   
-    @IBAction func updateBookmarK(_ sender: UIButton) {
+    @IBAction func updateBookmark(_ sender: UIButton) {
+        sender.tintColor = sender.tintColor == .lightGray ? .systemBlue : .lightGray
         
-        sender.tintColor = sender.tintColor == .darkGray ? .systemBlue : .darkGray 
-    
         if bookmarks.keys.contains(sender.tag) {
             if let isBookmarked = bookmarks[sender.tag] {
                 bookmarks[sender.tag] = !isBookmarked
             }
         }
-
         //print(bookmarks[sender.tag])
-        
-        
     }
     
-
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
@@ -48,6 +42,7 @@ class BoardViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
             
             if let vc = segue.destination as? FreeBoardViewController {
@@ -82,127 +77,47 @@ class BoardViewController: UIViewController {
             }
             sectionNum += 1
         }
-        
-        
-        
     }
-
+    
     let freeBoard = Board(boardTitle: "자유 게시판",
-                          posts: [Post(image: UIImage(named:"image1"),
+                          posts: [Post(images: [UIImage(named:"image1"), UIImage(named:"image2")],
                                        postTitle: "아자아자",
                                        postContent: "5개월동안 열심히하자!",
                                        postWriter: "정은",
                                        insertDate: Date(timeIntervalSinceNow: -3000),
                                        likeCount: 3,
                                        commentCount: 12),
-                                  Post(image: UIImage(named:"image2"),
+                                  Post(images: [UIImage(named:"image2")],
                                        postTitle: "to catch this in the",
                                        postContent: "5UIConstraintBasedLayoutDebugging!",
                                        postWriter: "category",
                                        insertDate: Date(timeIntervalSinceNow: -200),
                                        likeCount: 3,
                                        commentCount: 13),
-                                  Post(image: UIImage(named:""),
+                                  Post(images: [],
                                        postTitle: "Lorem ipsum dolor sit ame",
                                        postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
                                        postWriter: "category",
                                        insertDate: Date(timeIntervalSinceNow: -388),
                                        likeCount: 3,
-                                       commentCount: 32),
-                                  Post(image: UIImage(named:""),
-                                       postTitle: "H. Rackham",
-                                       postContent: "s mistaken idea of denouncing pleasure and praising pain was born and I will giv!",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -3600 * 100),
-                                       likeCount: 3,
-                                       commentCount: 18),
-                                  Post(image: UIImage(named:""),
-                                       postTitle: "foregroundColor",
-                                       postContent: "n macOS, the value of this attribute is an NSColor instance. In iOS, tvOS, watchOS, and Mac Catalyst, the value of this attribute is a UICo",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
-                                       likeCount: 4,
-                                       commentCount: 18),
-                                  Post(image: UIImage(named:"image1"),
-                                       postTitle: "Where does it come from",
-                                       postContent: "consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
-                                       likeCount: 4,
-                                       commentCount: 18),
-                                  Post(image: UIImage(named:""),
-                                       postTitle: "foregroundColor",
-                                       postContent: "n macOS, the value of this attribute is an NSColor instance. In iOS, tvOS, watchOS, and Mac Catalyst, the value of this attribute is a UICo",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
-                                       likeCount: 4,
-                                       commentCount: 18),
-                                  Post(image: UIImage(named:"image2"),
-                                       postTitle: "Where can I get some?",
-                                       postContent: "ave suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are g",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
-                                       likeCount: 4,
-                                       commentCount: 18),
-                                  Post(image: UIImage(named:""),
-                                       postTitle: "Why do we use it?",
-                                       postContent: "nterested. Sections 1.10.32 an",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
-                                       likeCount: 4,
-                                       commentCount: 18),
-                                  Post(image: UIImage(named:"image1"),
-                                       postTitle: "Where does it come from",
-                                       postContent: "consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
-                                       likeCount: 4,
-                                       commentCount: 18),
-                                  Post(image: UIImage(named:""),
-                                       postTitle: "foregroundColor",
-                                       postContent: "n macOS, the value of this attribute is an NSColor instance. In iOS, tvOS, watchOS, and Mac Catalyst, the value of this attribute is a UICo",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
-                                       likeCount: 4,
-                                       commentCount: 18),
-                                  Post(image: UIImage(named:"image2"),
-                                       postTitle: "Where can I get some?",
-                                       postContent: "ave suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are g",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -23 * 100),
-                                       likeCount: 4,
-                                       commentCount: 18),
-                                  Post(image: UIImage(named:"image1"),
-                                       postTitle: "아자아자",
-                                       postContent: "5개월동안 열심히하자!",
-                                       postWriter: "정은",
-                                       insertDate: Date(timeIntervalSinceNow: -3000),
-                                       likeCount: 3,
-                                       commentCount: 12),
-                                  Post(image: UIImage(named:"image2"),
-                                       postTitle: "to catch this in the",
-                                       postContent: "5UIConstraintBasedLayoutDebugging!",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -200),
-                                       likeCount: 3,
-                                       commentCount: 13),
-                                  Post(image: UIImage(named:""),
-                                       postTitle: "Lorem ipsum dolor sit ame",
-                                       postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -388),
-                                       likeCount: 3,
-                                       commentCount: 32),
+                                       commentCount: 32)
                                  ])
     let popularPostBoard = Board(boardTitle: "인기글 게시판",
-                                 posts: [Post(image: UIImage(named:"image3"),
+                                 posts: [Post(images: [UIImage(named:"image3")],
                                               postTitle: "아자아자",
                                               postContent: "5개월동안 열심히하자!",
                                               postWriter: "정은",
                                               insertDate: Date(),
                                               likeCount: 3,
                                               commentCount: 12),
-                                         Post(image: UIImage(named:"image4"),
+                                         Post(images: [],
+                                              postTitle: "Lorem ipsum dolor sit ame",
+                                              postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
+                                              postWriter: "category",
+                                              insertDate: Date(timeIntervalSinceNow: -388),
+                                              likeCount: 3,
+                                              commentCount: 32),
+                                         Post(images: [UIImage(named:"image4")],
                                               postTitle: "to catch this in the",
                                               postContent: "5UIConstraintBasedLayoutDebugging!",
                                               postWriter: "category",
@@ -211,14 +126,14 @@ class BoardViewController: UIViewController {
                                               commentCount: 13),
                                         ])
     let graduateBoard = Board(boardTitle: "졸업생 게시판",
-                              posts: [Post(image: UIImage(named:"image5"),
+                              posts: [Post(images: [UIImage(named:"image5")],
                                            postTitle: "아자아자",
                                            postContent: "5개월동안 열심히하자!",
                                            postWriter: "정은",
                                            insertDate: Date(),
                                            likeCount: 3,
                                            commentCount: 12),
-                                      Post(image: UIImage(named:"image6"),
+                                      Post(images: [UIImage(named:"image6")],
                                            postTitle: "Lorem ipsum dolor sit ame",
                                            postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
                                            postWriter: "category",
@@ -227,14 +142,14 @@ class BoardViewController: UIViewController {
                                            commentCount: 32),
                                      ])
     let freshmanBoard =  Board(boardTitle: "신입생 게시판",
-                               posts: [Post(image: UIImage(named:"image7"),
+                               posts: [Post(images: [UIImage(named:"image7")],
                                             postTitle: "Lorem ipsum dolor sit ame",
                                             postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
                                             postWriter: "category",
                                             insertDate: Date(),
                                             likeCount: 3,
                                             commentCount: 32),
-                                       Post(image: UIImage(named:"image8"),
+                                       Post(images: [UIImage(named:"image8")],
                                             postTitle: "H. Rackham",
                                             postContent: "s mistaken idea of denouncing pleasure and praising pain was born and I will giv!",
                                             postWriter: "category",
@@ -243,6 +158,7 @@ class BoardViewController: UIViewController {
                                             commentCount: 18),
                                       ])
     
+    //나중에 cellType으로 넣는게 나으려나
     var nonExpandableBoardList = [BoardUI(sectionName: nil, boardNames: ["스크랩"]),
                                   BoardUI(sectionName: nil, boardNames: ["자유 게시판"]),
                                   BoardUI(sectionName: nil, boardNames: ["인기글 게시판"]),
@@ -287,14 +203,15 @@ extension BoardViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
             //재사용 셀을 생성
-            //그 셀을 설정해서 리턴해야함. 
+            //그 셀을 설정해서 리턴해야함.
             cell.configure(boardList: nonExpandableBoardList, indexPath: indexPath)
             return cell
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpandableBoardTableViewCell", for: indexPath) as! ExpandableBoardTableViewCell
-        cell.configure(boardList: expandableBoardList, indexPath: indexPath)
+        
         cell.board = self
+        cell.configure(boardList: expandableBoardList, indexPath: indexPath)
         return cell
     }
 }
@@ -306,10 +223,10 @@ extension BoardViewController: UITableViewDelegate {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-       //게시판 index에 맞는 게시판으로 이동해야함.
+        //게시판 index에 맞는 게시판으로 이동해야함.
         switch indexPath.section {
-        case 0:
             
+        case 0:
             //1,2,3,4는 같은 viewController사용하고 게시글 목록만 바꿔줘도 될 듯
             switch indexPath.row {
             case 0:
@@ -320,7 +237,7 @@ extension BoardViewController: UITableViewDelegate {
                 //인기글 게시판으로 이동
                 //졸업생 게시판으로 이동
                 //새내기 게시판으로 이동
-            //prepare(for segue)를 이용
+                //prepare(for segue)를 이용
                 break
             case 5:
                 //강의평가 게시판으로 이동
@@ -381,7 +298,7 @@ extension BoardViewController: UITableViewDelegate {
             
             button.setTitleColor(.black, for: .normal)
             button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-           
+            
             
             button.addTarget(self, action: #selector(handleExpandClose(button:)), for: .touchUpInside)
             
@@ -412,8 +329,8 @@ extension BoardViewController: UITableViewDelegate {
         } else {
             boardListTableView.deleteRows(at: indexPathArr, with: .fade)
         }
-        
     }
+    
 }
 
 

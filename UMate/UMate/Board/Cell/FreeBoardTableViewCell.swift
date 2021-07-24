@@ -27,9 +27,11 @@ class FreeBoardTableViewCell: UITableViewCell {
 
     func configure(post: Post) {
         
-        postImageView.isHidden = post.image == nil ? true : false
+        postImageView.isHidden = post.images.first == nil ? true : false
         
-        postImageView.image = post.image
+        if post.images.count > 0 {
+            postImageView.image = post.images[0]
+        }
         postTitle.text = post.postTitle
         postContent.text = post.postContent
         postTime.text = post.insertDate.relativeDate

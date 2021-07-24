@@ -9,7 +9,7 @@ import UIKit
 
 struct Post {
     //let imageURL: [String]
-    let image: UIImage?
+    let images: [UIImage?]
     let postTitle: String
     let postContent: String
     let postWriter: String
