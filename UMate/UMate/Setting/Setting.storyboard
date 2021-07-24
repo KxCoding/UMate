@@ -781,6 +781,9 @@
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mCZ-EU-3C0">
                                                                             <rect key="frame" x="0.0" y="0.0" width="448" height="48"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <connections>
+                                                                                <action selector="logOutTapped:" destination="7h3-5o-ULF" eventType="touchUpInside" id="b4U-ED-E4O"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -823,13 +826,14 @@
                             <outlet property="delegate" destination="7h3-5o-ULF" id="paw-x9-krn"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="9m7-i2-Yt8"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="488" height="1735"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="59X-pO-cji" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="810.14492753623199" y="288.95089285714283"/>
+            <point key="canvasLocation" x="1720.289855072464" y="288.95089285714283"/>
         </scene>
     </scenes>
     <resources>

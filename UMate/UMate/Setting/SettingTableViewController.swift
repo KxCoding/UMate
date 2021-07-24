@@ -9,6 +9,15 @@ import UIKit
 
 class SettingTableViewController: UITableViewController {
 
+    @IBAction func logOutTapped(_ sender: UIButton) {
+         
+         let storyboard = UIStoryboard(name: "Account", bundle: nil)
+         let loginNavController = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController")
+         
+         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginNavController)
+         
+     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

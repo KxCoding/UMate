@@ -72,14 +72,7 @@ class AccountViewController: UIViewController {
     }
     
     
-    func logOutTapped(_ sender: UIButton) {
-        
-        let storyboard = UIStoryboard(name: "Account", bundle: nil)
-        let loginNavController = storyboard.instantiateViewController(withIdentifier: "LoginNaviationController")
-        
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginNavController)
-        
-    }
+  
     
 }
 
