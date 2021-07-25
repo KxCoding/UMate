@@ -9,7 +9,7 @@ import UIKit
 import Elliotable
 
 protocol SendDataDelegate {
-    func sendData(data: ElliottEvent)
+    func sendData(data: [ElliottEvent])
 }
 
 class AddLectureTableViewController: UITableViewController {
@@ -20,6 +20,7 @@ class AddLectureTableViewController: UITableViewController {
     var startTime: String = "09:00"
     var endTime: String = "09:00"
     var weekdayInt = 1
+    var weekdayList: [Bool] = [false, false, false, false, false]
     var colorString = "red"
     
     @IBOutlet weak var courseIdField: UITextField!
@@ -35,9 +36,69 @@ class AddLectureTableViewController: UITableViewController {
     @IBOutlet weak var thursdayContainerView: UIView!
     @IBOutlet weak var fridayContainerView: UIView!
     
+    @IBOutlet weak var mondayLabel: UILabel!
+    @IBOutlet weak var tuesdayLabel: UILabel!
+    @IBOutlet weak var wednesdayLabel: UILabel!
+    @IBOutlet weak var thursdayLabel: UILabel!
+    @IBOutlet weak var fridayLabel: UILabel!
+    
+    
     @IBAction func selectDay(_ sender: UIButton) {
         if sender.tag == 100 {
-            mondayContainerView.backgroundColor = UIColor.cyan
+            if mondayContainerView.backgroundColor == .clear {
+                mondayContainerView.backgroundColor = UIColor.systemPink
+                mondayLabel.textColor = UIColor.white
+                weekdayInt = 1
+                weekdayList[0] = true
+            } else {
+                mondayContainerView.backgroundColor = .clear
+                mondayLabel.textColor = UIColor.black
+                weekdayList[0] = false
+            }
+        } else if sender.tag == 101 {
+            if tuesdayContainerView.backgroundColor == .clear {
+                tuesdayContainerView.backgroundColor = UIColor.systemPink
+                tuesdayLabel.textColor = UIColor.white
+                weekdayInt = 2
+                weekdayList[1] = true
+            } else {
+                tuesdayContainerView.backgroundColor = .clear
+                tuesdayLabel.textColor = UIColor.black
+                weekdayList[1] = false
+            }
+        } else if sender.tag == 102 {
+            if wednesdayContainerView.backgroundColor == .clear {
+                wednesdayContainerView.backgroundColor = UIColor.systemPink
+                wednesdayLabel.textColor = UIColor.white
+                weekdayInt = 3
+                weekdayList[2] = true
+            } else {
+                wednesdayContainerView.backgroundColor = .clear
+                wednesdayLabel.textColor = UIColor.black
+                weekdayList[2] = false
+            }
+        } else if sender.tag == 103 {
+            if thursdayContainerView.backgroundColor == .clear {
+                thursdayContainerView.backgroundColor = UIColor.systemPink
+                thursdayLabel.textColor = UIColor.white
+                weekdayInt = 4
+                weekdayList[3] = true
+            } else {
+                thursdayContainerView.backgroundColor = .clear
+                thursdayLabel.textColor = UIColor.black
+                weekdayList[3] = false
+            }
+        } else if sender.tag == 104 {
+            if fridayContainerView.backgroundColor == .clear {
+                fridayContainerView.backgroundColor = UIColor.systemPink
+                fridayLabel.textColor = UIColor.white
+                weekdayInt = 5
+                weekdayList[4] = true
+            } else {
+                fridayContainerView.backgroundColor = .clear
+                fridayLabel.textColor = UIColor.black
+                weekdayList[4] = false
+            }
         }
     }
     
@@ -68,11 +129,18 @@ class AddLectureTableViewController: UITableViewController {
         roomNameField.delegate = self
         professorField.delegate = self
         
-        mondayContainerView.layer.frame = mondayContainerView.frame.height / 2
-        tuesdayContainerView.layer.frame = tuesdayContainerView.frame.height / 2
-        wednesdayContainerView.layer.frame = wednesdayContainerView.frame.height / 2
-        thursdayContainerView.layer.frame = thursdayContainerView.frame.height / 2
-        fridayContainerView.layer.frame = fridayContainerView.frame.height / 2
+        mondayContainerView.layer.cornerRadius = mondayContainerView.frame.width / 2
+        tuesdayContainerView.layer.cornerRadius = tuesdayContainerView.frame.width / 2
+        wednesdayContainerView.layer.cornerRadius = wednesdayContainerView.frame.width / 2
+        thursdayContainerView.layer.cornerRadius = thursdayContainerView.frame.width / 2
+        fridayContainerView.layer.cornerRadius = fridayContainerView.frame.width / 2
+        
+        
+        mondayContainerView.backgroundColor = .clear
+        tuesdayContainerView.backgroundColor = .clear
+        wednesdayContainerView.backgroundColor = .clear
+        thursdayContainerView.backgroundColor = .clear
+        fridayContainerView.backgroundColor = .clear
         
         self.courseIdField.becomeFirstResponder()
     }
@@ -100,11 +168,22 @@ class AddLectureTableViewController: UITableViewController {
             return
         }
         
-        let elliotday: ElliotDay = ElliotDay(rawValue: weekdayInt)!
         let backgroundColor: UIColor = UIColor(named: "\(colorString)") ?? .black
         
-        let lectureInfo = ElliottEvent(courseId: courseId, courseName: courseName, roomName: roomName, professor: professor, courseDay: elliotday, startTime: startTime, endTime: endTime, backgroundColor: backgroundColor)
-        delegate?.sendData(data: lectureInfo)
+        
+        var lectureList: [ElliottEvent] = []
+        
+        for i in 0...4 {
+            if weekdayList[i] == true {
+                var elliotday: ElliotDay = ElliotDay(rawValue: i + 1)!
+                
+                let lectureInfo = ElliottEvent(courseId: courseId, courseName: courseName, roomName: roomName, professor: professor, courseDay: elliotday, startTime: startTime, endTime: endTime, backgroundColor: backgroundColor)
+                
+                lectureList.append(lectureInfo)
+                
+            }
+        }
+        delegate?.sendData(data: lectureList)
         
         alert(title: "알림", message: "저장되었습니다.")
     }

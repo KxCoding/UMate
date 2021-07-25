@@ -254,46 +254,77 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="339" id="2uV-5E-HTN">
-                                        <rect key="frame" x="0.0" y="488" width="414" height="339"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="260" id="2uV-5E-HTN">
+                                        <rect key="frame" x="0.0" y="488" width="414" height="260"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2uV-5E-HTN" id="dAI-zn-Cx9">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="339"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="260"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="강의 시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uK-wO-hrM">
-                                                    <rect key="frame" x="20" y="21" width="63.5" height="20.5"/>
+                                                    <rect key="frame" x="20" y="21" width="63.5" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="XOY-oF-Y1D">
-                                                    <rect key="frame" x="20" y="146.5" width="374" height="171.5"/>
+                                                    <rect key="frame" x="20" y="139" width="374" height="100"/>
                                                     <subviews>
-                                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRX-MZ-Q6N">
-                                                            <rect key="frame" x="0.0" y="0.0" width="187" height="171.5"/>
-                                                            <date key="date" timeIntervalSinceReferenceDate="631152000.21094894">
-                                                                <!--2021-01-01 00:00:00 +0000-->
-                                                            </date>
-                                                            <locale key="locale" localeIdentifier="ko_KR"/>
-                                                            <connections>
-                                                                <action selector="startTimeDidSelected:" destination="AIb-cr-mJT" eventType="valueChanged" id="66N-iE-Ag0"/>
-                                                            </connections>
-                                                        </datePicker>
-                                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tvx-WV-5Og">
-                                                            <rect key="frame" x="187" y="0.0" width="187" height="171.5"/>
-                                                            <date key="date" timeIntervalSinceReferenceDate="631152000.26362097">
-                                                                <!--2021-01-01 00:00:00 +0000-->
-                                                            </date>
-                                                            <locale key="locale" localeIdentifier="ko_KR"/>
-                                                            <connections>
-                                                                <action selector="endTimeDidSelected:" destination="AIb-cr-mJT" eventType="valueChanged" id="VK0-ub-bPe"/>
-                                                            </connections>
-                                                        </datePicker>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zmf-Qh-lvg">
+                                                            <rect key="frame" x="0.0" y="0.0" width="187" height="100"/>
+                                                            <subviews>
+                                                                <datePicker contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRX-MZ-Q6N">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="187" height="100"/>
+                                                                    <date key="date" timeIntervalSinceReferenceDate="631152000.21094894">
+                                                                        <!--2021-01-01 00:00:00 +0000-->
+                                                                    </date>
+                                                                    <locale key="locale" localeIdentifier="ko_KR"/>
+                                                                    <connections>
+                                                                        <action selector="startTimeDidSelected:" destination="AIb-cr-mJT" eventType="valueChanged" id="66N-iE-Ag0"/>
+                                                                    </connections>
+                                                                </datePicker>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <constraints>
+                                                                <constraint firstItem="yRX-MZ-Q6N" firstAttribute="leading" secondItem="zmf-Qh-lvg" secondAttribute="leading" id="Cf4-OZ-Q0a"/>
+                                                                <constraint firstItem="yRX-MZ-Q6N" firstAttribute="top" secondItem="zmf-Qh-lvg" secondAttribute="top" id="DJg-s3-DWG"/>
+                                                                <constraint firstItem="yRX-MZ-Q6N" firstAttribute="centerX" secondItem="zmf-Qh-lvg" secondAttribute="centerX" id="a0I-TN-hIO"/>
+                                                                <constraint firstItem="yRX-MZ-Q6N" firstAttribute="centerY" secondItem="zmf-Qh-lvg" secondAttribute="centerY" id="go7-yN-M0q"/>
+                                                                <constraint firstAttribute="trailing" secondItem="yRX-MZ-Q6N" secondAttribute="trailing" id="j3O-zN-CGW"/>
+                                                                <constraint firstAttribute="bottom" secondItem="yRX-MZ-Q6N" secondAttribute="bottom" id="ofv-ph-R2q"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UbU-i2-TBn">
+                                                            <rect key="frame" x="187" y="0.0" width="187" height="100"/>
+                                                            <subviews>
+                                                                <datePicker contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tvx-WV-5Og">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="187" height="100"/>
+                                                                    <date key="date" timeIntervalSinceReferenceDate="631152000.26362097">
+                                                                        <!--2021-01-01 00:00:00 +0000-->
+                                                                    </date>
+                                                                    <locale key="locale" localeIdentifier="ko_KR"/>
+                                                                    <connections>
+                                                                        <action selector="endTimeDidSelected:" destination="AIb-cr-mJT" eventType="valueChanged" id="VK0-ub-bPe"/>
+                                                                    </connections>
+                                                                </datePicker>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="tvx-WV-5Og" secondAttribute="bottom" id="0JT-cj-11O"/>
+                                                                <constraint firstItem="tvx-WV-5Og" firstAttribute="centerY" secondItem="UbU-i2-TBn" secondAttribute="centerY" id="HWg-po-fQg"/>
+                                                                <constraint firstItem="tvx-WV-5Og" firstAttribute="top" secondItem="UbU-i2-TBn" secondAttribute="top" id="dSc-ll-wKd"/>
+                                                                <constraint firstItem="tvx-WV-5Og" firstAttribute="leading" secondItem="UbU-i2-TBn" secondAttribute="leading" id="oVR-B2-KAT"/>
+                                                                <constraint firstAttribute="trailing" secondItem="tvx-WV-5Og" secondAttribute="trailing" id="sJr-Ia-FWg"/>
+                                                                <constraint firstItem="tvx-WV-5Og" firstAttribute="centerX" secondItem="UbU-i2-TBn" secondAttribute="centerX" id="yBc-ih-AfR"/>
+                                                            </constraints>
+                                                        </view>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="100" id="w6Y-lz-x1f"/>
+                                                    </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="fFi-eb-bQs">
-                                                    <rect key="frame" x="20" y="61.5" width="374" height="75"/>
+                                                    <rect key="frame" x="20" y="54" width="374" height="75"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="psM-3N-pfP">
                                                             <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
@@ -320,6 +351,7 @@
                                                                         <constraint firstAttribute="bottomMargin" secondItem="NAR-Cw-oaQ" secondAttribute="bottom" id="E4i-6i-diu"/>
                                                                         <constraint firstItem="jrF-b4-3YB" firstAttribute="centerY" secondItem="2bA-xt-mU1" secondAttribute="centerY" id="VJd-4O-jJ8"/>
                                                                         <constraint firstItem="NAR-Cw-oaQ" firstAttribute="leading" secondItem="2bA-xt-mU1" secondAttribute="leadingMargin" id="XaL-R1-HjZ"/>
+                                                                        <constraint firstAttribute="width" secondItem="2bA-xt-mU1" secondAttribute="height" multiplier="1:1" id="ar6-kI-E4V"/>
                                                                         <constraint firstAttribute="trailingMargin" secondItem="NAR-Cw-oaQ" secondAttribute="trailing" id="qVb-t2-bVC"/>
                                                                         <constraint firstItem="NAR-Cw-oaQ" firstAttribute="top" secondItem="2bA-xt-mU1" secondAttribute="topMargin" id="xST-rP-vn9"/>
                                                                         <constraint firstItem="jrF-b4-3YB" firstAttribute="centerX" secondItem="2bA-xt-mU1" secondAttribute="centerX" id="zqg-0k-7QR"/>
@@ -361,6 +393,7 @@
                                                                         <constraint firstItem="CVx-4t-7KT" firstAttribute="centerY" secondItem="1fz-vD-w3l" secondAttribute="centerY" id="LMv-Jp-eQO"/>
                                                                         <constraint firstItem="CVx-4t-7KT" firstAttribute="centerX" secondItem="1fz-vD-w3l" secondAttribute="centerX" id="PQG-Sx-BIa"/>
                                                                         <constraint firstAttribute="bottomMargin" secondItem="kNb-v8-2k8" secondAttribute="bottom" id="PtD-xw-zPI"/>
+                                                                        <constraint firstAttribute="width" secondItem="1fz-vD-w3l" secondAttribute="height" multiplier="1:1" id="U3D-rw-tGm"/>
                                                                         <constraint firstAttribute="trailingMargin" secondItem="kNb-v8-2k8" secondAttribute="trailing" id="oGb-FO-LIK"/>
                                                                     </constraints>
                                                                 </view>
@@ -400,6 +433,7 @@
                                                                         <constraint firstAttribute="bottomMargin" secondItem="use-Z6-nbc" secondAttribute="bottom" id="AnQ-7b-Ila"/>
                                                                         <constraint firstItem="Y7J-QS-u8b" firstAttribute="centerX" secondItem="PQf-XN-Px2" secondAttribute="centerX" id="CPu-uO-4DE"/>
                                                                         <constraint firstItem="Y7J-QS-u8b" firstAttribute="centerY" secondItem="PQf-XN-Px2" secondAttribute="centerY" id="ms1-0Y-uNl"/>
+                                                                        <constraint firstAttribute="width" secondItem="PQf-XN-Px2" secondAttribute="height" multiplier="1:1" id="p6p-Dv-Qfi"/>
                                                                         <constraint firstItem="use-Z6-nbc" firstAttribute="top" secondItem="PQf-XN-Px2" secondAttribute="topMargin" id="uoV-Js-0rj"/>
                                                                     </constraints>
                                                                 </view>
@@ -440,6 +474,7 @@
                                                                         <constraint firstItem="7eC-Uu-8xn" firstAttribute="centerX" secondItem="oOT-RH-iEB" secondAttribute="centerX" id="eib-Im-y8T"/>
                                                                         <constraint firstItem="rHT-zh-Fzg" firstAttribute="top" secondItem="oOT-RH-iEB" secondAttribute="topMargin" id="gXx-r5-Uas"/>
                                                                         <constraint firstAttribute="bottomMargin" secondItem="rHT-zh-Fzg" secondAttribute="bottom" id="hio-Nn-W8S"/>
+                                                                        <constraint firstAttribute="width" secondItem="oOT-RH-iEB" secondAttribute="height" multiplier="1:1" id="ntx-5T-Rnh"/>
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
@@ -479,6 +514,7 @@
                                                                         <constraint firstAttribute="bottomMargin" secondItem="3U9-X2-3eW" secondAttribute="bottom" id="Mnz-kV-DcV"/>
                                                                         <constraint firstAttribute="trailingMargin" secondItem="3U9-X2-3eW" secondAttribute="trailing" id="c2L-R3-cK3"/>
                                                                         <constraint firstItem="dv3-0p-o7z" firstAttribute="centerY" secondItem="8wM-tL-U7u" secondAttribute="centerY" id="g13-cv-SPV"/>
+                                                                        <constraint firstAttribute="width" secondItem="8wM-tL-U7u" secondAttribute="height" multiplier="1:1" id="x9N-Nh-gbQ"/>
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
@@ -498,7 +534,7 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="XOY-oF-Y1D" secondAttribute="bottom" constant="10" id="7Hi-Va-YbM"/>
                                                 <constraint firstItem="fFi-eb-bQs" firstAttribute="leading" secondItem="dAI-zn-Cx9" secondAttribute="leadingMargin" id="Aug-ML-H7y"/>
                                                 <constraint firstItem="XOY-oF-Y1D" firstAttribute="trailing" secondItem="dAI-zn-Cx9" secondAttribute="trailingMargin" id="Cyn-gP-7cO"/>
-                                                <constraint firstItem="fFi-eb-bQs" firstAttribute="top" secondItem="3uK-wO-hrM" secondAttribute="bottom" constant="20" id="DBh-7P-axg"/>
+                                                <constraint firstItem="fFi-eb-bQs" firstAttribute="top" secondItem="3uK-wO-hrM" secondAttribute="bottom" constant="10" id="DBh-7P-axg"/>
                                                 <constraint firstItem="XOY-oF-Y1D" firstAttribute="leading" secondItem="dAI-zn-Cx9" secondAttribute="leadingMargin" id="I6D-nE-wMk"/>
                                                 <constraint firstItem="XOY-oF-Y1D" firstAttribute="top" secondItem="fFi-eb-bQs" secondAttribute="bottom" constant="10" id="Q9z-jS-kHD"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="fFi-eb-bQs" secondAttribute="trailing" id="d0c-0U-TkG"/>
@@ -507,7 +543,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="200" id="nhH-wn-4ST">
-                                        <rect key="frame" x="0.0" y="827" width="414" height="200"/>
+                                        <rect key="frame" x="0.0" y="748" width="414" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nhH-wn-4ST" id="Oza-MF-NNF">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
@@ -538,7 +574,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="ZbU-I5-zMQ">
-                                        <rect key="frame" x="0.0" y="1027" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="948" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZbU-I5-zMQ" id="c7f-gX-68l">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -594,12 +630,17 @@
                         <outlet property="courseIdField" destination="6wb-aU-eoH" id="UW5-K7-cdO"/>
                         <outlet property="courseNameField" destination="iPk-ez-1AN" id="2aw-T2-tZj"/>
                         <outlet property="fridayContainerView" destination="8wM-tL-U7u" id="8ph-3e-utb"/>
+                        <outlet property="fridayLabel" destination="dv3-0p-o7z" id="hAk-Rd-cSP"/>
                         <outlet property="mondayContainerView" destination="2bA-xt-mU1" id="Mu4-9d-rXl"/>
+                        <outlet property="mondayLabel" destination="jrF-b4-3YB" id="QpG-Of-3v6"/>
                         <outlet property="professorField" destination="ixM-nN-dWF" id="1Pq-zZ-xxV"/>
                         <outlet property="roomNameField" destination="ec0-7G-7qU" id="dPt-yg-EqV"/>
                         <outlet property="thursdayContainerView" destination="oOT-RH-iEB" id="tq3-VN-hwg"/>
+                        <outlet property="thursdayLabel" destination="7eC-Uu-8xn" id="sdM-2B-XYW"/>
                         <outlet property="tuesdayContainerView" destination="1fz-vD-w3l" id="bVs-m1-yy8"/>
+                        <outlet property="tuesdayLabel" destination="CVx-4t-7KT" id="9ph-2I-hqs"/>
                         <outlet property="wednesdayContainerView" destination="PQf-XN-Px2" id="xMB-HK-ZQG"/>
+                        <outlet property="wednesdayLabel" destination="Y7J-QS-u8b" id="iEz-xG-1JT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PGM-D7-Dqy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
