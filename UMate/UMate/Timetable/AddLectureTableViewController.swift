@@ -68,11 +68,11 @@ class AddLectureTableViewController: UITableViewController {
         roomNameField.delegate = self
         professorField.delegate = self
         
-        mondayContainerView.layer.frame = mondayContainerView.frame.height / 2
-        tuesdayContainerView.layer.frame = tuesdayContainerView.frame.height / 2
-        wednesdayContainerView.layer.frame = wednesdayContainerView.frame.height / 2
-        thursdayContainerView.layer.frame = thursdayContainerView.frame.height / 2
-        fridayContainerView.layer.frame = fridayContainerView.frame.height / 2
+//        mondayContainerView.layer.frame = mondayContainerView.frame.height / 2
+//        tuesdayContainerView.layer.frame = tuesdayContainerView.frame.height / 2
+//        wednesdayContainerView.layer.frame = wednesdayContainerView.frame.height / 2
+//        thursdayContainerView.layer.frame = thursdayContainerView.frame.height / 2
+//        fridayContainerView.layer.frame = fridayContainerView.frame.height / 2
         
         self.courseIdField.becomeFirstResponder()
     }
