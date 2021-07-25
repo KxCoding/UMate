@@ -95,8 +95,8 @@ extension TimetableViewController: ElliotableDataSource {
 
 
 extension TimetableViewController : SendDataDelegate {
-    func sendData(data: ElliottEvent) {
-        courseList.append(data)
+    func sendData(data: [ElliottEvent]) {
+        courseList = data
         timetableView.reloadData()
         print(courseList)
     }
