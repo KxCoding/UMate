@@ -27,8 +27,21 @@ class AddLectureTableViewController: UITableViewController {
     @IBOutlet weak var roomNameField: UITextField!
     @IBOutlet weak var professorField: UITextField!
     
-    @IBOutlet weak var weekdayPicker: UIPickerView!
     @IBOutlet weak var colorPicker: UIPickerView!
+    
+    @IBOutlet weak var mondayContainerView: UIView!
+    @IBOutlet weak var tuesdayContainerView: UIView!
+    @IBOutlet weak var wednesdayContainerView: UIView!
+    @IBOutlet weak var thursdayContainerView: UIView!
+    @IBOutlet weak var fridayContainerView: UIView!
+    
+    @IBAction func selectDay(_ sender: UIButton) {
+        if sender.tag == 100 {
+            mondayContainerView.backgroundColor = UIColor.cyan
+        }
+    }
+    
+    
     @IBAction func startTimeDidSelected(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
@@ -54,6 +67,12 @@ class AddLectureTableViewController: UITableViewController {
         courseNameField.delegate = self
         roomNameField.delegate = self
         professorField.delegate = self
+        
+        mondayContainerView.layer.frame = mondayContainerView.frame.height / 2
+        tuesdayContainerView.layer.frame = tuesdayContainerView.frame.height / 2
+        wednesdayContainerView.layer.frame = wednesdayContainerView.frame.height / 2
+        thursdayContainerView.layer.frame = thursdayContainerView.frame.height / 2
+        fridayContainerView.layer.frame = fridayContainerView.frame.height / 2
         
         self.courseIdField.becomeFirstResponder()
     }
@@ -125,20 +144,11 @@ extension AddLectureTableViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView == weekdayPicker {
-            switch component {
-            case 0:
-                return weekdays.count
-            default:
-                return 0
-            }
-        } else {
-            switch component {
-            case 0:
-                return colors.count
-            default:
-                return 0
-            }
+        switch component {
+        case 0:
+            return colors.count
+        default:
+            return 0
         }
         
     }
@@ -150,38 +160,20 @@ extension AddLectureTableViewController: UIPickerViewDataSource {
 
 extension AddLectureTableViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView == weekdayPicker {
-            switch component {
-            case 0:
-                return weekdays[row]
-            default:
-                return nil
-            }
-        } else {
-            switch component {
-            case 0:
-                return colors[row]
-            default:
-                return nil
-            }
+        switch component {
+        case 0:
+            return colors[row]
+        default:
+            return nil
         }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == weekdayPicker {
-            switch component {
-            case 0:
-                weekdayInt = row + 1
-            default:
-                break
-            }
-        } else {
-            switch component {
-            case 0:
-                colorString = colors[row]
-            default:
-                break
-            }
+        switch component {
+        case 0:
+            colorString = colors[row]
+        default:
+            break
         }
     }
 }
