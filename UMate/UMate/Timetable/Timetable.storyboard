@@ -1024,26 +1024,145 @@
             </objects>
             <point key="canvasLocation" x="1841" y="526"/>
         </scene>
-        <!--View Controller-->
+        <!--친구 목록-->
         <scene sceneID="SwM-Rt-pAg">
             <objects>
-                <viewController id="AKZ-eZ-xMM" sceneMemberID="viewController">
+                <viewController id="AKZ-eZ-xMM" customClass="FriendsListViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="I6o-vz-2iI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bCe-9g-T3j">
+                                <rect key="frame" x="0.0" y="56" width="414" height="737"/>
+                                <connections>
+                                    <segue destination="apa-BW-DfC" kind="embed" id="HhH-76-4HS"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6GD-me-qC7"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6GD-me-qC7" firstAttribute="bottom" secondItem="bCe-9g-T3j" secondAttribute="bottom" id="0fs-Ea-6nJ"/>
+                            <constraint firstItem="6GD-me-qC7" firstAttribute="trailing" secondItem="bCe-9g-T3j" secondAttribute="trailing" id="TEo-mI-RSz"/>
+                            <constraint firstItem="bCe-9g-T3j" firstAttribute="top" secondItem="6GD-me-qC7" secondAttribute="top" id="TIF-uH-J4I"/>
+                            <constraint firstItem="bCe-9g-T3j" firstAttribute="leading" secondItem="6GD-me-qC7" secondAttribute="leading" id="xWE-Yq-51b"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="Hr6-hJ-Ayx">
-                        <barButtonItem key="leftBarButtonItem" title="닫기" id="GoL-75-QaM"/>
-                        <barButtonItem key="rightBarButtonItem" title="친구 추가" id="lUE-az-P2Y"/>
+                    <navigationItem key="navigationItem" title="친구 목록" id="Hr6-hJ-Ayx">
+                        <barButtonItem key="leftBarButtonItem" title="닫기" id="GoL-75-QaM">
+                            <connections>
+                                <action selector="close:" destination="AKZ-eZ-xMM" id="30w-2E-gcE"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="친구 추가" id="lUE-az-P2Y">
+                            <connections>
+                                <action selector="addFriends:" destination="AKZ-eZ-xMM" id="82e-9J-3oz"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i0z-pw-TYb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1805.7971014492755" y="-375"/>
+        </scene>
+        <!--Friends List Table View Controller-->
+        <scene sceneID="rm0-qb-W0J">
+            <objects>
+                <tableViewController id="apa-BW-DfC" customClass="FriendsListTableViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="2E3-96-DFg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="737"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="4OM-Pu-evX">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="yDP-9R-Vdi">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yDP-9R-Vdi" id="ltQ-35-Ri9">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="친구1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNM-be-SDQ">
+                                                    <rect key="frame" x="20" y="19.5" width="37" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MNM-be-SDQ" firstAttribute="centerY" secondItem="ltQ-35-Ri9" secondAttribute="centerY" id="7Ln-Gq-xkV"/>
+                                                <constraint firstItem="MNM-be-SDQ" firstAttribute="leading" secondItem="ltQ-35-Ri9" secondAttribute="leadingMargin" id="F8o-9W-MMD"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="xxR-7O-Kfw" kind="show" id="ofZ-ua-SQe"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="apa-BW-DfC" id="uSA-91-Olj"/>
+                            <outlet property="delegate" destination="apa-BW-DfC" id="Leo-cW-TW8"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LlF-o0-zyf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2805.7971014492755" y="-375.33482142857139"/>
+        </scene>
+        <!--Friend Lecture View Controller-->
+        <scene sceneID="lhp-bS-pyD">
+            <objects>
+                <viewController id="xxR-7O-Kfw" customClass="FriendLectureViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bzW-o7-1Ka">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="683"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w9C-Eb-Hk9">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="친구1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="utP-DO-9cC">
+                                        <rect key="frame" x="188.5" y="19.5" width="37" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="utP-DO-9cC" firstAttribute="centerX" secondItem="w9C-Eb-Hk9" secondAttribute="centerX" id="1cq-ix-QuK"/>
+                                    <constraint firstItem="utP-DO-9cC" firstAttribute="centerY" secondItem="w9C-Eb-Hk9" secondAttribute="centerY" id="AUL-zB-tG3"/>
+                                    <constraint firstAttribute="height" constant="60" id="zbc-Ub-Hdk"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5UZ-g0-Aot" customClass="Elliotable" customModule="Elliotable">
+                                <rect key="frame" x="0.0" y="60" width="414" height="623"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="02j-ac-dhU"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="w9C-Eb-Hk9" firstAttribute="leading" secondItem="02j-ac-dhU" secondAttribute="leading" id="DUX-pV-PKL"/>
+                            <constraint firstItem="5UZ-g0-Aot" firstAttribute="top" secondItem="w9C-Eb-Hk9" secondAttribute="bottom" id="NSf-lu-o7t"/>
+                            <constraint firstItem="02j-ac-dhU" firstAttribute="bottom" secondItem="5UZ-g0-Aot" secondAttribute="bottom" id="VdL-k5-xKU"/>
+                            <constraint firstItem="w9C-Eb-Hk9" firstAttribute="top" secondItem="02j-ac-dhU" secondAttribute="top" id="fkz-Am-djP"/>
+                            <constraint firstItem="w9C-Eb-Hk9" firstAttribute="trailing" secondItem="02j-ac-dhU" secondAttribute="trailing" id="mHn-HW-IKE"/>
+                            <constraint firstItem="02j-ac-dhU" firstAttribute="trailing" secondItem="5UZ-g0-Aot" secondAttribute="trailing" id="mic-Ks-rpa"/>
+                            <constraint firstItem="5UZ-g0-Aot" firstAttribute="leading" secondItem="02j-ac-dhU" secondAttribute="leading" id="mzc-Eu-oWq"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="zVl-BW-ZEY"/>
+                    <connections>
+                        <outlet property="timetableView" destination="5UZ-g0-Aot" id="XT7-Dk-qxj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vcm-8S-tAk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3751" y="-375"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="znw-Fv-IE4">
