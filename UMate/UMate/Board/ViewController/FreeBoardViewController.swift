@@ -32,8 +32,7 @@ class FreeBoardViewController: UIViewController {
             
             if let scrappedPost = noti.userInfo?["scrappedPost"] as? Post {
                 scrappedPost.isScrapped = true
-                scrapBoard.posts.append(scrappedPost) //class라 scrappedPost도 원본을 가리킴.
-                print("append")
+                scrapBoard.posts.insert(scrappedPost, at: 0)
             }
         }
         tokens.append(token)
@@ -49,7 +48,6 @@ class FreeBoardViewController: UIViewController {
                 if let unscrappedPostIndex = scrapBoard.posts.firstIndex(where: { $0 === unscrappedPost }) {
                     unscrappedPost.isScrapped = false
                     scrapBoard.posts.remove(at: unscrappedPostIndex)
-                    print("remove")
                     self.postListTableView.reloadData()
                 }
             }
@@ -75,16 +73,11 @@ extension FreeBoardViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
         
-        if selectedBoard === scrapBoard {
-            guard let post = selectedBoard?.posts.reversed()[indexPath.row] else { return cell }
-            
-            cell.configure(post: post)
-            return cell
-        } else {
-            guard let post = selectedBoard?.posts[indexPath.row] else { return cell }
-            
-            cell.configure(post: post)
-            return cell
-        }
+        
+        guard let post = selectedBoard?.posts[indexPath.row] else { return cell }
+        
+        cell.configure(post: post)
+        return cell
+        
     }
 }
