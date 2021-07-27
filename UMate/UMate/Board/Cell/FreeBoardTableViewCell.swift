@@ -9,7 +9,7 @@ import UIKit
 
 
 class FreeBoardTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var postImageView: UIImageView!
     
     @IBOutlet weak var postTitle: UILabel!
@@ -21,10 +21,10 @@ class FreeBoardTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-       
+        
         postImageView.layer.cornerRadius = postImageView.frame.height * 0.1
     }
-
+    
     func configure(post: Post) {
         
         postImageView.isHidden = post.images.first == nil ? true : false
@@ -39,5 +39,4 @@ class FreeBoardTableViewCell: UITableViewCell {
         likeCount.text = "\(post.likeCount)"
         commentCount.text = "\(post.commentCount)"
     }
-
 }

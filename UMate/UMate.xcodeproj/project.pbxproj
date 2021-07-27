@@ -37,6 +37,7 @@
 		DF25EF4426AFD59300949AAB /* PostImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4326AFD59300949AAB /* PostImageTableViewCell.swift */; };
 		DF25EF4626AFD5EE00949AAB /* PostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4526AFD5EE00949AAB /* PostImageCollectionViewCell.swift */; };
 		DF25EF4926AFD61500949AAB /* BoardDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4826AFD61500949AAB /* BoardDummy.swift */; };
+		DF25EF4C26AFDD1F00949AAB /* BoardCustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4B26AFDD1F00949AAB /* BoardCustomHeaderView.swift */; };
 		DF36281526A93207007AC5D2 /* ExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */; };
 		DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */; };
 		DFEF018026A756290015829B /* Date + Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF017F26A756290015829B /* Date + Formatter.swift */; };
@@ -100,6 +101,7 @@
 		DF25EF4326AFD59300949AAB /* PostImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageTableViewCell.swift; sourceTree = "<group>"; };
 		DF25EF4526AFD5EE00949AAB /* PostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF25EF4826AFD61500949AAB /* BoardDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDummy.swift; sourceTree = "<group>"; };
+		DF25EF4B26AFDD1F00949AAB /* BoardCustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCustomHeaderView.swift; sourceTree = "<group>"; };
 		DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
 		DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
 		DFEF017F26A756290015829B /* Date + Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Formatter.swift"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 		5C92DD20269B4E670094A93C /* Board */ = {
 			isa = PBXGroup;
 			children = (
+				DF25EF4A26AFDD0100949AAB /* View */,
 				DF25EF4726AFD60700949AAB /* Dummy */,
 				DF25EF3D26AFD4BE00949AAB /* DetailPost */,
 				DFEF017E26A755E70015829B /* Extension */,
@@ -301,6 +304,14 @@
 				DF25EF4826AFD61500949AAB /* BoardDummy.swift */,
 			);
 			path = Dummy;
+			sourceTree = "<group>";
+		};
+		DF25EF4A26AFDD0100949AAB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DF25EF4B26AFDD1F00949AAB /* BoardCustomHeaderView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		DF3EA85926A3FF4500424E7E /* Model */ = {
@@ -534,6 +545,7 @@
 				6D64F78226ADC9D3005BAC82 /* DropDownTableViewCell.swift in Sources */,
 				5CAFD3AD26A74B9D0002D0EC /* AddLectureTableViewController.swift in Sources */,
 				5C0D977726A768A600F396B7 /* UIViewController+Alert.swift in Sources */,
+				DF25EF4C26AFDD1F00949AAB /* BoardCustomHeaderView.swift in Sources */,
 				DF25EF3F26AFD4F300949AAB /* DetailPostViewController.swift in Sources */,
 				F48843AB26ABE512005DB8A3 /* ReviewTableViewCell.swift in Sources */,
 				5C92DD34269B4EDF0094A93C /* TimetableViewController.swift in Sources */,

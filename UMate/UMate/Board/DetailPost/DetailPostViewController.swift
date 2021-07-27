@@ -26,10 +26,6 @@ class DetailPostViewController: UIViewController {
 
 extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return detailPostTableView.rowHeight
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }

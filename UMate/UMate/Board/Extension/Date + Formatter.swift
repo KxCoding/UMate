@@ -28,7 +28,8 @@ extension Date {
     }
     
     var string: String {
-        formatter.dateFormat = "mm/dd hh:mm"
+        
+        formatter.dateFormat = "MM/dd hh:mm"
         return formatter.string(from: self)
     }
 }

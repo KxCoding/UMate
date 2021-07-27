@@ -15,7 +15,7 @@ class NonExpandableBoardTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-     
+        
         bookmarkButton.tintColor = .lightGray
     }
     
@@ -23,6 +23,5 @@ class NonExpandableBoardTableViewCell: UITableViewCell {
         boardLabel.text = boardList[indexPath.row].boardNames.first
         bookmarkButton.tag = indexPath.row + 100 * (indexPath.section + 1)
     }
-
 }
 

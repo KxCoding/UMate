@@ -72,9 +72,9 @@ class BoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        postDic["abc123"]?.forEach({ comment in
-        //            print(comment.commentContent)
-        //        })
+        
+        boardListTableView.register(BoardCustomHeaderView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
+        
         for row in 0..<nonExpandableBoardList.count {
             bookmarks[row + 100] = false
         }
@@ -191,7 +191,7 @@ extension BoardViewController: UITableViewDelegate {
         case 0:
             return 10
         case 1, 2:
-            return 70
+            return 80
         default: break
         }
         return 0
@@ -202,19 +202,28 @@ extension BoardViewController: UITableViewDelegate {
         //Header에 들어갈 버튼
         if section != 0 {
             let button = UIButton(type: .custom)
+            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! BoardCustomHeaderView
+            view.title.text = expandableBoardList[section - 1].sectionName
+            view.title.textColor = .darkGray
+            view.title.font = UIFont.boldSystemFont(ofSize: 23)
+            view.image.image = UIImage(named: "downarrow")
+            view.image.tintColor = .lightGray
+            view.image.alpha = 0.2
             
-            button.setTitle(expandableBoardList[section - 1].sectionName, for: .normal)
             
-            button.titleLabel?.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
-            
-            button.setTitleColor(.black, for: .normal)
-            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-            
+            view.addSubview(button)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                button.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                button.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                button.topAnchor.constraint(equalTo: view.topAnchor),
+                button.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
             
             button.addTarget(self, action: #selector(handleExpandClose(button:)), for: .touchUpInside)
             
             button.tag = section//  버튼 태그는 1,2
-            return button
+            return view
         }
         
         let header = UIView()
