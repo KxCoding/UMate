@@ -54,7 +54,7 @@ class TimetableViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "show" {
             print("show")
-            let tableViewController : AddLectureTableViewController = segue.destination as! AddLectureTableViewController
+            let tableViewController : AddLectureTableViewController = segue.destination.children.first as! AddLectureTableViewController
             tableViewController.delegate = self
         }
     }
@@ -96,7 +96,10 @@ extension TimetableViewController: ElliotableDataSource {
 
 extension TimetableViewController : SendDataDelegate {
     func sendData(data: [ElliottEvent]) {
-        courseList = data
+        for i in 0...data.count - 1 {
+            courseList.append(data[i])
+        }
+        
         timetableView.reloadData()
         print(courseList)
     }
