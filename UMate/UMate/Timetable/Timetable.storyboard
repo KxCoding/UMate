@@ -33,6 +33,7 @@
                                                         <state key="normal" title="친구"/>
                                                         <connections>
                                                             <action selector="showFriends:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="prg-uf-Elx"/>
+                                                            <segue destination="39o-hZ-vMg" kind="show" id="wBt-V0-Pdp"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시간표" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bay-nk-r6C">
@@ -1021,7 +1022,28 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PGM-D7-Dqy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1757.9710144927537" y="107.14285714285714"/>
+            <point key="canvasLocation" x="1841" y="526"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="SwM-Rt-pAg">
+            <objects>
+                <viewController id="AKZ-eZ-xMM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="I6o-vz-2iI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="6GD-me-qC7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Hr6-hJ-Ayx">
+                        <barButtonItem key="leftBarButtonItem" title="닫기" id="GoL-75-QaM"/>
+                        <barButtonItem key="rightBarButtonItem" title="친구 추가" id="lUE-az-P2Y"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i0z-pw-TYb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1805.7971014492755" y="-375"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="znw-Fv-IE4">
@@ -1040,7 +1062,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QUs-Pu-6Us" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="847.82608695652175" y="70.982142857142847"/>
+            <point key="canvasLocation" x="896" y="526"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1jY-vZ-oPQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="39o-hZ-vMg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="lmz-qL-mqS"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="neu-gQ-baR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AKZ-eZ-xMM" kind="relationship" relationship="rootViewController" id="QNd-Hg-qRE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ga7-Dp-3f3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="895.6521739130435" y="-375"/>
         </scene>
     </scenes>
     <resources>
@@ -1067,7 +1108,7 @@
             <color red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="pink">
-            <color red="1" green="0.34318569302558899" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.3411764705882353" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="purple">
             <color red="0.59999999999999998" green="0.40000000000000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
