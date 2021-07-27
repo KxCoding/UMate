@@ -143,11 +143,6 @@ extension BoardViewController: UITableViewDelegate {
         case 0:
             switch indexPath.row {
             case 0,1,2,3,4:
-                //스크랩 게시판으로 이동
-                //자유 게시판으로 이동
-                //인기글 게시판으로 이동
-                //졸업생 게시판으로 이동
-                //새내기 게시판으로 이동
                 //prepare(for segue)를 이용
                 break
             case 5:
