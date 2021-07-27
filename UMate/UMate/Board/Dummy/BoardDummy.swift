@@ -8,7 +8,7 @@
 import UIKit
 
 
-let scrapBoard = Board(boardTitle: "스크랩", posts: [])
+var scrapBoard = Board(boardTitle: "스크랩", posts: [])
 
 let freeBoard = Board(boardTitle: "자유 게시판",
                       posts: [Post(images: [UIImage(named:"image1"), UIImage(named:"image2")],
