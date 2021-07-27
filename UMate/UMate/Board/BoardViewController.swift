@@ -32,9 +32,10 @@ class BoardViewController: UIViewController {
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
-            if identifier == "freeSegue" && indexPath.row == 0 {
+            if identifier == "freeSegue" && indexPath.row == 5 {
                 return false
-            } else if identifier == "freeSegue" && indexPath.row == 5 {
+            }
+            if identifier == "infoSegue" && indexPath != IndexPath(row: 0, section: 2) {
                 return false
             }
         }
@@ -47,16 +48,23 @@ class BoardViewController: UIViewController {
             
             if let vc = segue.destination as? FreeBoardViewController {
                 
-                switch indexPath.row {
-                case 1:
-                    vc.selectedBoard = freeBoard
-                case 2:
-                    vc.selectedBoard = popularPostBoard
-                case 3:
-                    vc.selectedBoard = graduateBoard
-                case 4:
-                    vc.selectedBoard = freshmanBoard
-                default: break
+                if indexPath.section == 2 && indexPath.row == 0 {
+                    vc.selectedBoard = infoBoard
+                    
+                } else if indexPath.section == 0 {
+                    switch indexPath.row {
+                    case 0:
+                        vc.selectedBoard = scrapBoard
+                    case 1:
+                        vc.selectedBoard = freeBoard
+                    case 2:
+                        vc.selectedBoard = popularPostBoard
+                    case 3:
+                        vc.selectedBoard = graduateBoard
+                    case 4:
+                        vc.selectedBoard = freshmanBoard
+                    default: break
+                    }
                 }
             }
         }
@@ -78,100 +86,6 @@ class BoardViewController: UIViewController {
             sectionNum += 1
         }
     }
-    
-    let freeBoard = Board(boardTitle: "자유 게시판",
-                          posts: [Post(images: [UIImage(named:"image1"), UIImage(named:"image2")],
-                                       postTitle: "아자아자",
-                                       postContent: "5개월동안 열심히하자!",
-                                       postWriter: "정은",
-                                       insertDate: Date(timeIntervalSinceNow: -3000),
-                                       likeCount: 3,
-                                       commentCount: 12),
-                                  Post(images: [UIImage(named:"image2")],
-                                       postTitle: "to catch this in the",
-                                       postContent: "5UIConstraintBasedLayoutDebugging!",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -200),
-                                       likeCount: 3,
-                                       commentCount: 13),
-                                  Post(images: [],
-                                       postTitle: "Lorem ipsum dolor sit ame",
-                                       postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
-                                       postWriter: "category",
-                                       insertDate: Date(timeIntervalSinceNow: -388),
-                                       likeCount: 3,
-                                       commentCount: 32)
-                                 ])
-    let popularPostBoard = Board(boardTitle: "인기글 게시판",
-                                 posts: [Post(images: [UIImage(named:"image3")],
-                                              postTitle: "아자아자",
-                                              postContent: "5개월동안 열심히하자!",
-                                              postWriter: "정은",
-                                              insertDate: Date(),
-                                              likeCount: 3,
-                                              commentCount: 12),
-                                         Post(images: [],
-                                              postTitle: "Lorem ipsum dolor sit ame",
-                                              postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
-                                              postWriter: "category",
-                                              insertDate: Date(timeIntervalSinceNow: -388),
-                                              likeCount: 3,
-                                              commentCount: 32),
-                                         Post(images: [UIImage(named:"image4")],
-                                              postTitle: "to catch this in the",
-                                              postContent: "5UIConstraintBasedLayoutDebugging!",
-                                              postWriter: "category",
-                                              insertDate: Date(),
-                                              likeCount: 3,
-                                              commentCount: 13),
-                                        ])
-    let graduateBoard = Board(boardTitle: "졸업생 게시판",
-                              posts: [Post(images: [UIImage(named:"image5")],
-                                           postTitle: "아자아자",
-                                           postContent: "5개월동안 열심히하자!",
-                                           postWriter: "정은",
-                                           insertDate: Date(),
-                                           likeCount: 3,
-                                           commentCount: 12),
-                                      Post(images: [UIImage(named:"image6")],
-                                           postTitle: "Lorem ipsum dolor sit ame",
-                                           postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
-                                           postWriter: "category",
-                                           insertDate: Date(),
-                                           likeCount: 3,
-                                           commentCount: 32),
-                                     ])
-    let freshmanBoard =  Board(boardTitle: "신입생 게시판",
-                               posts: [Post(images: [UIImage(named:"image7")],
-                                            postTitle: "Lorem ipsum dolor sit ame",
-                                            postContent: " consectetur adipiscing elit,labore et dolore magna aliqua. Ut enim ad minim anim id est laborum.",
-                                            postWriter: "category",
-                                            insertDate: Date(),
-                                            likeCount: 3,
-                                            commentCount: 32),
-                                       Post(images: [UIImage(named:"image8")],
-                                            postTitle: "H. Rackham",
-                                            postContent: "s mistaken idea of denouncing pleasure and praising pain was born and I will giv!",
-                                            postWriter: "category",
-                                            insertDate: Date(),
-                                            likeCount: 3,
-                                            commentCount: 18),
-                                      ])
-    
-    //나중에 cellType으로 넣는게 나으려나
-    var nonExpandableBoardList = [BoardUI(sectionName: nil, boardNames: ["스크랩"]),
-                                  BoardUI(sectionName: nil, boardNames: ["자유 게시판"]),
-                                  BoardUI(sectionName: nil, boardNames: ["인기글 게시판"]),
-                                  BoardUI(sectionName: nil, boardNames: ["졸업생 게시판"]),
-                                  BoardUI(sectionName: nil, boardNames: ["신입생 게시판"]),
-                                  BoardUI(sectionName: nil, boardNames: ["강의평가 게시판"]),]
-    
-    var expandableBoardList = [BoardUI(sectionName: "홍보", isExpanded: true ,boardNames: ["홍보 게시판", "동아리, 학회"]),
-                               BoardUI(sectionName: "정보", isExpanded: true ,boardNames: ["정보 게시판", "취업, 진로"]),]
-    
-    let commentsInPost: [String: [Comment]] = ["abc123": [Comment(commentContent: "화이팅!!", commentWriter: "1004"),
-                                                          Comment(commentContent: "바나나", commentWriter: "119"),
-                                                          Comment(commentContent: "사과!!", commentWriter: "나무")]]
 }
 
 
@@ -227,12 +141,9 @@ extension BoardViewController: UITableViewDelegate {
         switch indexPath.section {
             
         case 0:
-            //1,2,3,4는 같은 viewController사용하고 게시글 목록만 바꿔줘도 될 듯
             switch indexPath.row {
-            case 0:
+            case 0,1,2,3,4:
                 //스크랩 게시판으로 이동
-                break
-            case 1,2,3,4:
                 //자유 게시판으로 이동
                 //인기글 게시판으로 이동
                 //졸업생 게시판으로 이동
