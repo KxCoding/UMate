@@ -8,9 +8,14 @@
 
 import UIKit
 
-struct Board {
+class Board {
+    internal init(boardTitle: String, posts: [Post]) {
+        self.boardTitle = boardTitle
+        self.posts = posts
+    }
+    
     let boardTitle: String
-    let posts: [Post]
+    var posts: [Post]
     //여기에 board id넣고 사용자가 즐겨찾기 하면 추가되는 방식으로 해야하나?
 }
 

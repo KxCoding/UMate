@@ -10,7 +10,7 @@ import Elliotable
 
 class TimetableViewController: UIViewController {
     let dayString: [String] = ["월", "화", "수", "목", "금"]
-    var courseList = [ElliottEvent]()
+//    var courseList = [ElliottEvent]()
     
     @IBAction func showFriends(_ sender: Any) {
         
@@ -48,13 +48,15 @@ class TimetableViewController: UIViewController {
         timetableView.symbolFontColor = UIColor(displayP3Red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
         timetableView.symbolTimeFontColor = UIColor(displayP3Red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
         
+        timetableView.isFullBorder = true
+        timetableView.roundCorner = .right
+        
         timetableView.reloadData()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "show" {
-            print("show")
-            let tableViewController : AddLectureTableViewController = segue.destination as! AddLectureTableViewController
+            let tableViewController : AddLectureTableViewController = segue.destination.children.first as! AddLectureTableViewController
             tableViewController.delegate = self
         }
     }
@@ -87,7 +89,7 @@ extension TimetableViewController: ElliotableDataSource {
     }
     
     func courseItems(in elliotable: Elliotable) -> [ElliottEvent] {
-        return courseList
+        return Lecture.shared.courseList
     }
     
     
@@ -96,8 +98,11 @@ extension TimetableViewController: ElliotableDataSource {
 
 extension TimetableViewController : SendDataDelegate {
     func sendData(data: [ElliottEvent]) {
-        courseList = data
+        for i in 0...data.count - 1 {
+            Lecture.shared.courseList.append(data[i])
+        }
+        
         timetableView.reloadData()
-        print(courseList)
+//        print(Lecture.shared.courseList)
     }
 }

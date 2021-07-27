@@ -31,14 +31,12 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
         NSLayoutConstraint.activate([
             title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30),
             title.heightAnchor.constraint(equalToConstant: 30),
-            title.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             title.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30),
             
             image.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30),
             image.widthAnchor.constraint(equalToConstant: 30),
-            image.heightAnchor.constraint(equalToConstant: 30),
-            image.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 8),
+            image.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
 }
