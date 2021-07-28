@@ -245,7 +245,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="yEm-Fe-zIN" kind="show" id="WJ7-0k-Vqy"/>
+                                                    <segue destination="Arp-vK-a9Y" kind="show" id="KDK-C5-mLp"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -337,47 +337,336 @@
             <point key="canvasLocation" x="2853.6231884057975" y="583.92857142857144"/>
         </scene>
         <!--회원가입-->
-        <scene sceneID="kma-zQ-cwA">
+        <scene sceneID="lNM-E8-H7B">
             <objects>
-                <viewController id="yEm-Fe-zIN" customClass="SearchBarTestViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="FgF-IE-bcz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                <tableViewController id="Arp-vK-a9Y" customClass="TermsOfConditionsTableViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="KpX-b2-qEz">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="633-tJ-0El">
-                                <rect key="frame" x="0.0" y="88" width="414" height="70"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약관 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h7a-WL-Jqh">
-                                        <rect key="frame" x="18" y="20" width="88.5" height="29"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="h7a-WL-Jqh" firstAttribute="top" secondItem="633-tJ-0El" secondAttribute="top" constant="20" symbolic="YES" id="Obk-8f-9vo"/>
-                                    <constraint firstItem="h7a-WL-Jqh" firstAttribute="leading" secondItem="633-tJ-0El" secondAttribute="leading" constant="18" id="nVm-fm-dOS"/>
-                                    <constraint firstAttribute="height" constant="70" id="uUb-f2-Y4a"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="xdS-2W-897"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="633-tJ-0El" firstAttribute="top" secondItem="xdS-2W-897" secondAttribute="top" id="Hw2-5J-uti"/>
-                            <constraint firstItem="633-tJ-0El" firstAttribute="leading" secondItem="xdS-2W-897" secondAttribute="leading" id="TOw-gh-PSd"/>
-                            <constraint firstItem="xdS-2W-897" firstAttribute="trailing" secondItem="633-tJ-0El" secondAttribute="trailing" id="Yd3-XR-l5J"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="회원가입" id="qBO-2u-bUY"/>
+                        <sections>
+                            <tableViewSection id="2YP-Nz-SxL">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="47" id="Kcg-91-D6z">
+                                        <rect key="frame" x="0.0" y="18" width="414" height="47"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Kcg-91-D6z" id="dUZ-Mj-HE7">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="47"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9BN-2Y-oBl">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이용 약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5i-h6-hjf">
+                                                            <rect key="frame" x="10" y="0.0" width="88.5" height="29"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="G83-yK-hYJ"/>
+                                                        <constraint firstItem="X5i-h6-hjf" firstAttribute="leading" secondItem="9BN-2Y-oBl" secondAttribute="leading" constant="10" id="Tyr-kY-skd"/>
+                                                        <constraint firstItem="X5i-h6-hjf" firstAttribute="top" secondItem="9BN-2Y-oBl" secondAttribute="top" id="WxJ-Ud-cCJ"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9BN-2Y-oBl" firstAttribute="leading" secondItem="dUZ-Mj-HE7" secondAttribute="leading" id="2Qy-Mo-fKc"/>
+                                                <constraint firstAttribute="trailing" secondItem="9BN-2Y-oBl" secondAttribute="trailing" id="lo7-k5-qJ5"/>
+                                                <constraint firstItem="9BN-2Y-oBl" firstAttribute="top" secondItem="dUZ-Mj-HE7" secondAttribute="top" id="unK-bl-3dU"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="56" id="Az5-cb-Bng">
+                                        <rect key="frame" x="0.0" y="65" width="414" height="56"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Az5-cb-Bng" id="MlO-4f-wbz">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F6i-yF-1te" customClass="BEMCheckBox">
+                                                    <rect key="frame" x="20" y="12" width="22" height="22"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="OjH-oG-D2q"/>
+                                                        <constraint firstAttribute="height" constant="22" id="e0Y-hn-Vgy"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="아래 약관에 모두 동의합니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uiY-js-6a1">
+                                                    <rect key="frame" x="52" y="16" width="149.5" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="F6i-yF-1te" firstAttribute="top" secondItem="MlO-4f-wbz" secondAttribute="topMargin" constant="1" id="Erm-LM-chH"/>
+                                                <constraint firstItem="F6i-yF-1te" firstAttribute="leading" secondItem="MlO-4f-wbz" secondAttribute="leadingMargin" id="LJy-3O-4JT"/>
+                                                <constraint firstItem="uiY-js-6a1" firstAttribute="leading" secondItem="F6i-yF-1te" secondAttribute="trailing" constant="10" id="b8p-Zp-B1D"/>
+                                                <constraint firstItem="uiY-js-6a1" firstAttribute="top" secondItem="MlO-4f-wbz" secondAttribute="topMargin" constant="5" id="ndl-40-vWX"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="232" id="Sn1-mW-N1S">
+                                        <rect key="frame" x="0.0" y="121" width="414" height="232"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Sn1-mW-N1S" id="xO4-vn-uk1">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="232"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J7n-6F-Vrj" customClass="BEMCheckBox">
+                                                    <rect key="frame" x="20" y="12" width="18" height="18"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="5Dh-0S-L3l"/>
+                                                        <constraint firstAttribute="width" constant="18" id="aNl-4l-9Ww"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="서비스이용약관 동의 (필수)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1my-Yf-Tc6">
+                                                    <rect key="frame" x="48" y="16" width="129.5" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ZnQ-bG-5EA">
+                                                    <rect key="frame" x="20" y="44" width="374" height="147"/>
+                                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="147" id="M0A-hu-0GP"/>
+                                                    </constraints>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <color key="textColor" systemColor="labelColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="ZnQ-bG-5EA" secondAttribute="bottom" constant="30" id="4KW-jq-7XK"/>
+                                                <constraint firstItem="1my-Yf-Tc6" firstAttribute="top" secondItem="xO4-vn-uk1" secondAttribute="topMargin" constant="5" id="9VW-Iw-izk"/>
+                                                <constraint firstItem="1my-Yf-Tc6" firstAttribute="leading" secondItem="J7n-6F-Vrj" secondAttribute="trailing" constant="10" id="F82-Q8-p2E"/>
+                                                <constraint firstItem="ZnQ-bG-5EA" firstAttribute="trailing" secondItem="xO4-vn-uk1" secondAttribute="trailingMargin" id="MwY-2g-4dw"/>
+                                                <constraint firstItem="J7n-6F-Vrj" firstAttribute="top" secondItem="xO4-vn-uk1" secondAttribute="topMargin" constant="1" id="oLp-OU-4Sk"/>
+                                                <constraint firstItem="ZnQ-bG-5EA" firstAttribute="leading" secondItem="xO4-vn-uk1" secondAttribute="leadingMargin" id="t5w-PD-77R"/>
+                                                <constraint firstItem="J7n-6F-Vrj" firstAttribute="leading" secondItem="xO4-vn-uk1" secondAttribute="leadingMargin" id="wxO-0g-N5e"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="232" id="7Pt-Yu-aE9">
+                                        <rect key="frame" x="0.0" y="353" width="414" height="232"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7Pt-Yu-aE9" id="Q0f-m8-hky">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="232"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cLY-4D-wvh" customClass="BEMCheckBox">
+                                                    <rect key="frame" x="20" y="12" width="18" height="18"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="YS9-FC-EiP"/>
+                                                        <constraint firstAttribute="width" constant="18" id="tvj-0p-Drq"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="개인정보 수집 및 동의 (필수)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9LB-Ij-0FW">
+                                                    <rect key="frame" x="48" y="16" width="136" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1Dt-DM-cUv">
+                                                    <rect key="frame" x="20" y="44" width="374" height="147"/>
+                                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="147" id="mHi-v1-wLM"/>
+                                                    </constraints>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <color key="textColor" systemColor="labelColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9LB-Ij-0FW" firstAttribute="leading" secondItem="cLY-4D-wvh" secondAttribute="trailing" constant="10" id="R1G-ia-kTg"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="1Dt-DM-cUv" secondAttribute="bottom" constant="30" id="YEF-5M-jiv"/>
+                                                <constraint firstItem="cLY-4D-wvh" firstAttribute="leading" secondItem="Q0f-m8-hky" secondAttribute="leadingMargin" id="Z00-rx-7CG"/>
+                                                <constraint firstItem="1Dt-DM-cUv" firstAttribute="leading" secondItem="Q0f-m8-hky" secondAttribute="leadingMargin" id="hwP-UE-rUw"/>
+                                                <constraint firstItem="cLY-4D-wvh" firstAttribute="top" secondItem="Q0f-m8-hky" secondAttribute="topMargin" constant="1" id="o0L-G8-lAR"/>
+                                                <constraint firstItem="9LB-Ij-0FW" firstAttribute="top" secondItem="Q0f-m8-hky" secondAttribute="topMargin" constant="5" id="xVX-no-zRc"/>
+                                                <constraint firstItem="1Dt-DM-cUv" firstAttribute="trailing" secondItem="Q0f-m8-hky" secondAttribute="trailingMargin" id="zf3-T0-92K"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="232" id="ez0-qC-kFf">
+                                        <rect key="frame" x="0.0" y="585" width="414" height="232"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ez0-qC-kFf" id="Bmv-n2-uec">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="232"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kpn-V9-o11" customClass="BEMCheckBox">
+                                                    <rect key="frame" x="20" y="12" width="18" height="18"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="s5v-Sr-CI2"/>
+                                                        <constraint firstAttribute="width" constant="18" id="vuU-2L-nXc"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="커뮤니티이용규칙 동의 (필수)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0mY-1v-cvi">
+                                                    <rect key="frame" x="48" y="16" width="140" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5Yz-1P-gHa">
+                                                    <rect key="frame" x="20" y="44" width="374" height="147"/>
+                                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="147" id="bE8-JD-pYA"/>
+                                                    </constraints>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <color key="textColor" systemColor="labelColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="kpn-V9-o11" firstAttribute="top" secondItem="Bmv-n2-uec" secondAttribute="topMargin" constant="1" id="C3w-kA-iwL"/>
+                                                <constraint firstItem="kpn-V9-o11" firstAttribute="leading" secondItem="Bmv-n2-uec" secondAttribute="leadingMargin" id="N5l-fA-HtP"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="5Yz-1P-gHa" secondAttribute="bottom" constant="30" id="ZYZ-U9-ejc"/>
+                                                <constraint firstItem="0mY-1v-cvi" firstAttribute="top" secondItem="Bmv-n2-uec" secondAttribute="topMargin" constant="5" id="iyq-1b-gcc"/>
+                                                <constraint firstItem="5Yz-1P-gHa" firstAttribute="trailing" secondItem="Bmv-n2-uec" secondAttribute="trailingMargin" id="kdF-hw-gry"/>
+                                                <constraint firstItem="0mY-1v-cvi" firstAttribute="leading" secondItem="kpn-V9-o11" secondAttribute="trailing" constant="10" id="mRD-MC-BLX"/>
+                                                <constraint firstItem="5Yz-1P-gHa" firstAttribute="leading" secondItem="Bmv-n2-uec" secondAttribute="leadingMargin" id="yaf-CG-jQP"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="232" id="SEl-PC-Gaj">
+                                        <rect key="frame" x="0.0" y="817" width="414" height="232"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SEl-PC-Gaj" id="PhF-Tq-9to">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="232"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S6T-zJ-2cm" customClass="BEMCheckBox">
+                                                    <rect key="frame" x="20" y="12" width="18" height="18"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="5f8-Lt-7Ay"/>
+                                                        <constraint firstAttribute="width" constant="18" id="BN8-rY-0gv"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="광고성 정보 수신 동의 (필수)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1z-Bb-hSh">
+                                                    <rect key="frame" x="48" y="16" width="136" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9N8-zw-9rv">
+                                                    <rect key="frame" x="20" y="44" width="374" height="147"/>
+                                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="147" id="feM-XU-r6U"/>
+                                                    </constraints>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <color key="textColor" systemColor="labelColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="S6T-zJ-2cm" firstAttribute="top" secondItem="PhF-Tq-9to" secondAttribute="topMargin" constant="1" id="0Ut-cd-R6C"/>
+                                                <constraint firstItem="S6T-zJ-2cm" firstAttribute="leading" secondItem="PhF-Tq-9to" secondAttribute="leadingMargin" id="Goo-8x-Rny"/>
+                                                <constraint firstItem="9N8-zw-9rv" firstAttribute="trailing" secondItem="PhF-Tq-9to" secondAttribute="trailingMargin" id="Zh7-aB-cTP"/>
+                                                <constraint firstItem="9N8-zw-9rv" firstAttribute="leading" secondItem="PhF-Tq-9to" secondAttribute="leadingMargin" id="aB6-yi-uRG"/>
+                                                <constraint firstItem="w1z-Bb-hSh" firstAttribute="top" secondItem="PhF-Tq-9to" secondAttribute="topMargin" constant="5" id="igS-vt-8ML"/>
+                                                <constraint firstItem="w1z-Bb-hSh" firstAttribute="leading" secondItem="S6T-zJ-2cm" secondAttribute="trailing" constant="10" id="nu8-Vp-SBX"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="9N8-zw-9rv" secondAttribute="bottom" constant="30" id="qUt-QK-FG3"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="184" id="aau-VB-9ke">
+                                        <rect key="frame" x="0.0" y="1049" width="414" height="184"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aau-VB-9ke" id="vS3-XF-8qa">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="184"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Acf-Oa-2NF" customClass="BEMCheckBox">
+                                                    <rect key="frame" x="20" y="12" width="18" height="18"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="hL4-tO-0p1"/>
+                                                        <constraint firstAttribute="width" constant="18" id="tzk-ww-N2p"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="만 14세 이상입니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tEO-Wz-yD8">
+                                                    <rect key="frame" x="48" y="16" width="105" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="UMATE는 국내 대학생을 위한 서비스이며 본인 인증을 통해 만 14세이상만 가입할 수 있습니다." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Uk-hi-6t8">
+                                                    <rect key="frame" x="20" y="50" width="374" height="29"/>
+                                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BB8-Ze-l99">
+                                                    <rect key="frame" x="20" y="109" width="374" height="50"/>
+                                                    <color key="backgroundColor" red="1" green="0.31619817550000001" blue="0.096470429070000002" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="gBG-gU-FGP"/>
+                                                    </constraints>
+                                                    <state key="normal" title="이메일인증">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="BB8-Ze-l99" firstAttribute="top" secondItem="6Uk-hi-6t8" secondAttribute="bottom" constant="30" id="37m-CN-c4b"/>
+                                                <constraint firstItem="6Uk-hi-6t8" firstAttribute="top" secondItem="Acf-Oa-2NF" secondAttribute="bottom" constant="20" id="9Qf-Wq-nsv"/>
+                                                <constraint firstItem="Acf-Oa-2NF" firstAttribute="top" secondItem="vS3-XF-8qa" secondAttribute="topMargin" constant="1" id="Ajc-R6-YWJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="6Uk-hi-6t8" secondAttribute="trailing" constant="20" id="FIZ-qo-6Tt"/>
+                                                <constraint firstItem="Acf-Oa-2NF" firstAttribute="leading" secondItem="vS3-XF-8qa" secondAttribute="leadingMargin" id="OfI-fO-apD"/>
+                                                <constraint firstItem="BB8-Ze-l99" firstAttribute="trailing" secondItem="vS3-XF-8qa" secondAttribute="trailingMargin" id="OoG-Bw-pwP"/>
+                                                <constraint firstItem="tEO-Wz-yD8" firstAttribute="leading" secondItem="Acf-Oa-2NF" secondAttribute="trailing" constant="10" id="T0G-Gn-jw1"/>
+                                                <constraint firstItem="6Uk-hi-6t8" firstAttribute="leading" secondItem="vS3-XF-8qa" secondAttribute="leading" constant="20" id="hYD-Li-NaA"/>
+                                                <constraint firstItem="tEO-Wz-yD8" firstAttribute="top" secondItem="vS3-XF-8qa" secondAttribute="topMargin" constant="5" id="kbs-rl-QNB"/>
+                                                <constraint firstItem="BB8-Ze-l99" firstAttribute="leading" secondItem="vS3-XF-8qa" secondAttribute="leadingMargin" id="wAr-Xk-hB6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="Arp-vK-a9Y" id="JjJ-Hu-oBL"/>
+                            <outlet property="delegate" destination="Arp-vK-a9Y" id="0Ve-Zc-DcZ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="회원가입" id="Jls-U6-pNh"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="414" height="1500"/>
                     <connections>
-                        <outlet property="searchBarView" destination="okQ-nZ-kWy" id="Huu-lC-Lip"/>
+                        <outlet property="advertisementTOCTextView" destination="9N8-zw-9rv" id="QkV-oT-Pep"/>
+                        <outlet property="checkBox2" destination="J7n-6F-Vrj" id="Vwt-by-m0o"/>
+                        <outlet property="checkBox3" destination="cLY-4D-wvh" id="kNY-lC-ExF"/>
+                        <outlet property="checkBox4" destination="kpn-V9-o11" id="KWw-Lu-jXJ"/>
+                        <outlet property="checkBox5" destination="S6T-zJ-2cm" id="yLh-rQ-6hJ"/>
+                        <outlet property="checkBox6" destination="Acf-Oa-2NF" id="SQf-9F-BUK"/>
+                        <outlet property="checkbox1" destination="F6i-yF-1te" id="8Oh-IC-bG5"/>
+                        <outlet property="communityTOCTextView" destination="5Yz-1P-gHa" id="3g4-dy-k50"/>
+                        <outlet property="minimumAge" destination="6Uk-hi-6t8" id="fuh-is-aZA"/>
+                        <outlet property="personalInformationTOCTextView" destination="1Dt-DM-cUv" id="ZWn-I9-0jH"/>
+                        <outlet property="serviceTOCTextView" destination="ZnQ-bG-5EA" id="hVV-jV-GSi"/>
+                        <outlet property="verifyEmailButton" destination="BB8-Ze-l99" id="Nkm-k3-ANI"/>
                     </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="C1W-pw-gwd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vhO-jP-gV2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3776.811594202899" y="583.92857142857144"/>
+            <point key="canvasLocation" x="3898.5507246376815" y="277.90178571428572"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="v81-5G-Yg2">

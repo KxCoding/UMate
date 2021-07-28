@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TermsofService: String {
+enum TermsOfService: String {
     case service
     case privacy
     case location
