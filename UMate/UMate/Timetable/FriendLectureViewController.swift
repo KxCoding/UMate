@@ -1,28 +1,20 @@
 //
-//  TimetableViewController.swift
-//  UMate
+//  FriendLectureViewController.swift
+//  FriendLectureViewController
 //
-//  Created by 안상희 on 2021/07/12.
+//  Created by 안상희 on 2021/07/28.
 //
 
 import UIKit
 import Elliotable
 
-class TimetableViewController: UIViewController {
+class FriendLectureViewController: UIViewController {
+
     let dayString: [String] = ["월", "화", "수", "목", "금"]
-//    var courseList = [ElliottEvent]()
-    
-    @IBAction func showFriends(_ sender: Any) {
-        
-    }
-    
-    @IBAction func add(_ sender: Any) {
-        
-    }
+    let courseList: [ElliottEvent] = [ElliottEvent(courseId: "F1234", courseName: "자료구조", roomName: "팔308", professor: "교수님", courseDay: .monday, startTime: "09:00", endTime: "10:15", textColor: UIColor.white, backgroundColor: .purple), ElliottEvent(courseId: "F1234", courseName: "자료구조", roomName: "팔308", professor: "교수님", courseDay: .wednesday, startTime: "09:00", endTime: "10:15", textColor: UIColor.white, backgroundColor: .purple), ElliottEvent(courseId: "F5678", courseName: "컴퓨터그래픽스", roomName: "팔1025", professor: "교수님", courseDay: .monday, startTime: "10:30", endTime: "11:45", textColor: UIColor.white, backgroundColor: .cyan), ElliottEvent(courseId: "F5678", courseName: "컴퓨터그래픽스", roomName: "팔1025", professor: "교수님", courseDay: .thursday, startTime: "10:30", endTime: "11:45", textColor: UIColor.white, backgroundColor: .cyan)]
+
 
     @IBOutlet weak var timetableView: Elliotable!
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,17 +45,12 @@ class TimetableViewController: UIViewController {
         
         timetableView.reloadData()
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "show" {
-            let tableViewController : AddLectureTableViewController = segue.destination.children.first as! AddLectureTableViewController
-            tableViewController.delegate = self
-        }
-    }
 }
 
 
-extension TimetableViewController: ElliotableDelegate {
+
+
+extension FriendLectureViewController: ElliotableDelegate {
     func elliotable(elliotable: Elliotable, didSelectCourse selectedCourse: ElliottEvent) {
         
     }
@@ -78,8 +65,7 @@ extension TimetableViewController: ElliotableDelegate {
 
 
 
-
-extension TimetableViewController: ElliotableDataSource {
+extension FriendLectureViewController: ElliotableDataSource {
     func elliotable(elliotable: Elliotable, at dayPerIndex: Int) -> String {
         return dayString[dayPerIndex]
     }
@@ -89,20 +75,6 @@ extension TimetableViewController: ElliotableDataSource {
     }
     
     func courseItems(in elliotable: Elliotable) -> [ElliottEvent] {
-        return Lecture.shared.courseList
-    }
-    
-    
-}
-
-
-extension TimetableViewController : SendDataDelegate {
-    func sendData(data: [ElliottEvent]) {
-        for i in 0...data.count - 1 {
-            Lecture.shared.courseList.append(data[i])
-        }
-        
-        timetableView.reloadData()
-//        print(Lecture.shared.courseList)
+        return courseList
     }
 }

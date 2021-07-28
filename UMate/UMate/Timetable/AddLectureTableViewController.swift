@@ -75,7 +75,7 @@ class AddLectureTableViewController: UITableViewController {
     @IBAction func selectDay(_ sender: UIButton) {
         if sender.tag == 101 {
             if mondayContainerView.backgroundColor == .clear {
-                mondayContainerView.backgroundColor = UIColor.systemPink
+                mondayContainerView.backgroundColor = UIColor.systemGray
                 mondayLabel.textColor = UIColor.white
                 weekdayInt = 1
                 weekdayList[0] = true
@@ -86,7 +86,7 @@ class AddLectureTableViewController: UITableViewController {
             }
         } else if sender.tag == 102 {
             if tuesdayContainerView.backgroundColor == .clear {
-                tuesdayContainerView.backgroundColor = UIColor.systemPink
+                tuesdayContainerView.backgroundColor = UIColor.systemGray
                 tuesdayLabel.textColor = UIColor.white
                 weekdayInt = 2
                 weekdayList[1] = true
@@ -97,7 +97,7 @@ class AddLectureTableViewController: UITableViewController {
             }
         } else if sender.tag == 103 {
             if wednesdayContainerView.backgroundColor == .clear {
-                wednesdayContainerView.backgroundColor = UIColor.systemPink
+                wednesdayContainerView.backgroundColor = UIColor.systemGray
                 wednesdayLabel.textColor = UIColor.white
                 weekdayInt = 3
                 weekdayList[2] = true
@@ -108,7 +108,7 @@ class AddLectureTableViewController: UITableViewController {
             }
         } else if sender.tag == 104 {
             if thursdayContainerView.backgroundColor == .clear {
-                thursdayContainerView.backgroundColor = UIColor.systemPink
+                thursdayContainerView.backgroundColor = UIColor.systemGray
                 thursdayLabel.textColor = UIColor.white
                 weekdayInt = 4
                 weekdayList[3] = true
@@ -119,7 +119,7 @@ class AddLectureTableViewController: UITableViewController {
             }
         } else if sender.tag == 105 {
             if fridayContainerView.backgroundColor == .clear {
-                fridayContainerView.backgroundColor = UIColor.systemPink
+                fridayContainerView.backgroundColor = UIColor.systemGray
                 fridayLabel.textColor = UIColor.white
                 weekdayInt = 5
                 weekdayList[4] = true
@@ -351,6 +351,29 @@ class AddLectureTableViewController: UITableViewController {
                 
             }
         }
+        
+        if !Lecture.shared.courseList.isEmpty { // 이미 강의 정보가 저장되어있을 경우 시간표 중복 체크
+            print("checkcheck")
+            for i in 0...Lecture.shared.courseList.count - 1 {
+                for j in 0...lectureList.count - 1 {
+                    if lectureList[j].courseDay == Lecture.shared.courseList[i].courseDay {
+                        
+                        if lectureList[j].startTime >= Lecture.shared.courseList[i].startTime && lectureList[j].endTime <= Lecture.shared.courseList[i].endTime {
+                            print("1")
+                            alertWithNoAction(title: "경고", message: "강의 시간이 겹칩니다.")
+                            return
+                        }
+                        
+                        if lectureList[j].startTime >= Lecture.shared.courseList[i].startTime && lectureList[j].startTime < Lecture.shared.courseList[j].endTime  {
+                            print("2")
+                            alertWithNoAction(title: "경고", message: "강의 시간이 겹칩니다.")
+                            return
+                        }
+                    }
+                }
+            }
+        }
+        
         delegate?.sendData(data: lectureList)
         
         alert(title: "알림", message: "저장되었습니다.")

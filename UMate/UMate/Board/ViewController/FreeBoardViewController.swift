@@ -12,6 +12,8 @@ class FreeBoardViewController: UIViewController {
     var selectedBoard: Board?
     
     @IBOutlet weak var postListTableView: UITableView!
+    @IBOutlet weak var composeContainerView: UIView!
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? UITableViewCell, let indexPath = postListTableView.indexPath(for: cell) {
@@ -22,11 +24,13 @@ class FreeBoardViewController: UIViewController {
     }
     
     var tokens = [NSObjectProtocol]()
+    var newPostToken: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = selectedBoard?.boardTitle
         
+        composeContainerView.layer.cornerRadius = composeContainerView.frame.height / 2
         
         var token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main) { noti in
             
@@ -53,10 +57,18 @@ class FreeBoardViewController: UIViewController {
             }
         }
         tokens.append(token)
+        
+        NotificationCenter.default.addObserver(forName: ComposeViewController.newPostInsert, object: nil, queue: .main) { [weak self] noti in
+            self?.postListTableView.reloadData()
+        }
     }
     
     deinit {
         for token in tokens {
+            NotificationCenter.default.removeObserver(token)
+        }
+        
+        if let token = newPostToken {
             NotificationCenter.default.removeObserver(token)
         }
     }
