@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ONU-BN-eP4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19142.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ONU-BN-eP4">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19129"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -22,14 +23,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="NonExpandableBoardTableViewCell" rowHeight="65" id="Qr3-Kz-IYL" customClass="NonExpandableBoardTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="49.5" width="374" height="65"/>
+                                        <rect key="frame" x="20" y="55.5" width="374" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Qr3-Kz-IYL" id="MGl-n9-VJh">
-                                            <rect key="frame" x="0.0" y="0.0" width="344.5" height="65"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h5f-3z-En2">
-                                                    <rect key="frame" x="0.0" y="0.0" width="344.5" height="65"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="65"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jH3-qr-Aug">
                                                             <rect key="frame" x="0.0" y="0.0" width="70" height="65"/>
@@ -59,7 +60,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="자유 게시판" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udW-Gq-Xdi">
-                                                            <rect key="frame" x="70" y="0.0" width="274.5" height="65"/>
+                                                            <rect key="frame" x="70" y="0.0" width="273" height="65"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -86,14 +87,14 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ExpandableBoardTableViewCell" rowHeight="65" id="DJJ-6T-DH4" customClass="ExpandableBoardTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="114.5" width="374" height="65"/>
+                                        <rect key="frame" x="20" y="120.5" width="374" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DJJ-6T-DH4" id="qGm-Zd-S8o">
-                                            <rect key="frame" x="0.0" y="0.0" width="344.5" height="65"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zQd-u0-6KT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="344.5" height="65"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="65"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0b-Pg-aSc">
                                                             <rect key="frame" x="0.0" y="0.0" width="70" height="65"/>
@@ -123,7 +124,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="자유 게시판" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6d-QX-p4e">
-                                                            <rect key="frame" x="70" y="0.0" width="274.5" height="65"/>
+                                                            <rect key="frame" x="70" y="0.0" width="273" height="65"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -236,7 +237,7 @@
                                 <color key="sectionIndexColor" systemColor="systemGray5Color"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FreeBoardTableViewCell" rowHeight="115" id="fO0-mc-pb5" customClass="FreeBoardTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="115"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="115"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fO0-mc-pb5" id="fWS-RK-SGp">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="115"/>
@@ -313,7 +314,7 @@
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hGj-V2-Ygg">
-                                                                                    <rect key="frame" x="0.0" y="0.5" width="20" height="19.5"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="20" height="19.5"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" constant="20" id="IRY-O8-lhQ"/>
                                                                                         <constraint firstAttribute="height" constant="20" id="PPZ-05-5WH"/>
@@ -454,7 +455,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostContentTableViewCell" rowHeight="208" id="k8o-lY-8fM" customClass="PostContentTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="208"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="208"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k8o-lY-8fM" id="9PZ-gs-pyg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="208"/>
@@ -665,7 +666,7 @@
                                                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
                                                                                             <subviews>
                                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wyR-f0-h0U">
-                                                                                                    <rect key="frame" x="0.0" y="0.5" width="16" height="19.5"/>
+                                                                                                    <rect key="frame" x="0.0" y="0.0" width="16" height="19.5"/>
                                                                                                     <color key="tintColor" red="0.50425743570000003" green="0.76867932080000001" blue="0.73781567020000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                                     <constraints>
                                                                                                         <constraint firstAttribute="width" constant="16" id="GEh-Mb-zah"/>
@@ -761,22 +762,24 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="commentLabel" destination="w1b-Wl-0xj" id="b9k-hT-hMZ"/>
+                                            <outlet property="commentCountLabel" destination="w1b-Wl-0xj" id="zCG-BD-oSN"/>
                                             <outlet property="dateLabel" destination="tFy-xu-ez3" id="wWm-sW-NUT"/>
+                                            <outlet property="likeButtonLabel" destination="0xM-7q-D4c" id="npE-4A-wao"/>
                                             <outlet property="likeContainerView" destination="QsA-2o-HeV" id="vN2-nh-ZfU"/>
-                                            <outlet property="likeLabel" destination="e2q-sQ-tlQ" id="BtX-O3-ovV"/>
+                                            <outlet property="likeCountLabel" destination="e2q-sQ-tlQ" id="zhH-TQ-m6B"/>
+                                            <outlet property="likeImageView" destination="4f2-go-vKN" id="UZd-UM-KNT"/>
                                             <outlet property="postContentLabel" destination="8UT-bU-YTk" id="O54-SF-Fue"/>
                                             <outlet property="postTitleLabel" destination="vAb-BT-PHk" id="3Ed-mN-VQR"/>
-                                            <outlet property="scarpLabel" destination="8Sr-Y5-jmV" id="Lp1-tJ-e1i"/>
+                                            <outlet property="scarpCountLabel" destination="8Sr-Y5-jmV" id="HUH-um-bIZ"/>
+                                            <outlet property="scrapButtonLabel" destination="Myk-WN-ldr" id="nnj-4u-V3K"/>
                                             <outlet property="scrapContainerView" destination="jrP-MN-Mky" id="EqH-hL-Nk6"/>
                                             <outlet property="scrapImageView" destination="UAH-gf-hra" id="2GI-EW-WJ4"/>
-                                            <outlet property="scrapLabel" destination="Myk-WN-ldr" id="hXF-zO-wA4"/>
                                             <outlet property="userImageView" destination="RY6-G4-9eJ" id="RYq-aU-Jdt"/>
                                             <outlet property="userNameLabel" destination="Zl1-uT-DPh" id="Dqe-oP-9Yz"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostImageTableViewCell" rowHeight="248" id="VYU-cc-zmg" customClass="PostImageTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="232.5" width="414" height="248"/>
+                                        <rect key="frame" x="0.0" y="258" width="414" height="248"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VYU-cc-zmg" id="b0S-ie-Meg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="248"/>
@@ -881,13 +884,13 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d80-hs-36P">
-                                <rect key="frame" x="16" y="111" width="382" height="697"/>
+                                <rect key="frame" x="16" y="111" width="382" height="731"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="bqC-IO-vXl">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="647"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="681"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Tx6-lQ-lIb">
-                                                <rect key="frame" x="0.0" y="0.0" width="382" height="374"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="382" height="408"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <color key="textColor" systemColor="labelColor"/>
@@ -895,7 +898,7 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2fK-JN-5wQ">
-                                                <rect key="frame" x="0.0" y="377" width="382" height="270"/>
+                                                <rect key="frame" x="0.0" y="411" width="382" height="270"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XfB-qX-gFN">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
@@ -984,7 +987,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KLc-gx-O0p">
-                                        <rect key="frame" x="16" y="647" width="350" height="50"/>
+                                        <rect key="frame" x="16" y="681" width="350" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3S-td-b0E">
                                                 <rect key="frame" x="0.0" y="0.0" width="56" height="50"/>
@@ -1105,7 +1108,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Scl-Fd-kRk">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <mutableString key="text">1. 원칙
+                                <string key="text">1. 원칙
 
 1조) XETOWN은 XpressEngine, Rhymix 사용자 커뮤니티이자 웹사이트 구축 및 운영에 관한 웹마스터 커뮤니티로서 거대 SNS 플랫폼에 의존하지 않고 누구나 쉽게 웹사이트(홈페이지)를 개설하여 운영하는 환경을 추구합니다.
  
@@ -1462,7 +1465,7 @@ XETOWN 운영자로 오인될 수 있는 내용
 70조) 본 규칙을 변경할 때에는 공지사항을 통하여 공고하며, 공고되는 즉시 시행됩니다. 다만, 회원의 권리와 의무에 대하여 중대한 변경이 발생했을 경우에는 공고한 날로부터 30일 후에 시행합니다.
 공고일자 : 2019년 11월 01일
 시행일자 : 2020년 01월 01일
-이전 커뮤니티 규칙</mutableString>
+이전 커뮤니티 규칙</string>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

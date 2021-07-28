@@ -26,10 +26,12 @@ class Post {
     let postWriter: String
     
     let insertDate: Date
-    let likeCount: Int
+    var likeCount: Int = 0
     let commentCount: Int
+    var scrapCount: Int = 0
     
     var isScrapped = false
+    var isliked = false
     
     let postID: String = ""
     let writerID: Int = 0

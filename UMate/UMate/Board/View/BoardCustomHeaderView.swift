@@ -29,7 +29,7 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(image)
         
         NSLayoutConstraint.activate([
-            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30),
+            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             title.heightAnchor.constraint(equalToConstant: 30),
             title.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30),
             
