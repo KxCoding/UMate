@@ -12,27 +12,41 @@ class ComposeViewController: UIViewController {
     @IBOutlet weak var postTitleTextField: UITextField!
     @IBOutlet weak var postContentTextView: UITextView!
     @IBOutlet weak var postContentContainerView: UIView!
-    @IBOutlet weak var infoTextView: UITextView!
     @IBOutlet weak var commmunityRuleView: UIView!
+    @IBOutlet weak var contentCountLabel: UILabel!
     
+    @IBOutlet var accessoryBar: UIToolbar!
     
-    var willShowToken: NSObjectProtocol?
-    var willHideToken: NSObjectProtocol?
-    
-    deinit {
-        if let token = willShowToken {
-            NotificationCenter.default.removeObserver(token)
-        }
+    @IBAction func selectWriter(_ sender: Any) {
+        guard let selectWriter = sender as? UIBarButtonItem else { return }
         
-        if let token = willHideToken {
-            NotificationCenter.default.removeObserver(token)
+        if selectWriter.tag == 101 {
+            selectWriter.tintColor = .black
+            selectWriter.tag = 0
+        } else {
+            selectWriter.tintColor = .lightGray
+            selectWriter.tag = 101
         }
     }
+    
+    @IBAction func selectAlbum(_ sender: Any) {
+        guard let selectAlbumBtn = sender as? UIBarButtonItem else { return }
+        
+        if selectAlbumBtn.tag == 102 {
+            // 여기서 앨범 여는 코드를 구현하면 될려나?
+        }
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         commmunityRuleView.layer.cornerRadius = commmunityRuleView.frame.height / 2
+        
+        postTitleTextField.becomeFirstResponder()
+        postTitleTextField.inputAccessoryView = accessoryBar
+        postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
 
         postTitleTextField.placeholder = "제목"
         postTitleTextField.returnKeyType = .next
@@ -41,23 +55,6 @@ class ComposeViewController: UIViewController {
         postContentTextView.text = "내용을 입력하세요."
         postContentTextView.textColor = .lightGray
         postContentTextView.delegate = self
-        
-        willShowToken = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main, using: { [weak self]  noti in
-            guard let strongSelf = self else { return }
-            
-            if let frame = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                let height = frame.cgRectValue.height
-                
-                
-                var inset = strongSelf.infoTextView.contentInset
-                inset.bottom = height
-                strongSelf.infoTextView.contentInset = inset
-                
-                inset = strongSelf.infoTextView.verticalScrollIndicatorInsets
-                inset.bottom = height
-                strongSelf.infoTextView.scrollIndicatorInsets = inset
-            }
-        })
     }
     
     @IBAction func closeVC(_ sender: Any) {
@@ -66,10 +63,11 @@ class ComposeViewController: UIViewController {
     
     @IBAction func savePost(_ sender: Any) {
         guard let title = postTitleTextField.text, title.count > 0, let content = postContentTextView.text, content.count > 0 else {
+            alertNoContent(message: "게시글 작성을 취소하겠습니까?")
             return
         }
         
-        let newPost = Post(images: [UIImage(named: "image4")], postTitle: title, postContent: content, postWriter: "익명1", insertDate: Date(), likeCount: 3, commentCount: 2)
+        let newPost = Post(images: [UIImage(named: "image4")], postTitle: title, postContent: content, postWriter: "아이디 데이터 넣기!", insertDate: Date(), likeCount: 3, commentCount: 2)
         freeBoard.posts.insert(newPost, at: 0)
         
         NotificationCenter.default.post(name: ComposeViewController.newPostInsert, object: nil)
@@ -98,6 +96,29 @@ extension ComposeViewController: UITextViewDelegate {
             textView.textColor = UIColor.lightGray
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        contentCountLabel.text = "\(postContentTextView.text.count) / 500"
+        
+        if postContentTextView.text.count >= 500 {
+            contentCountLabel.textColor = UIColor.systemRed
+        } else {
+            contentCountLabel.textColor = .lightGray
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        let currentContentText = NSString(string: textView.text ?? "")
+        let finalContentText = currentContentText.replacingCharacters(in: range, with: " ")
+        
+        if finalContentText.count > 500 {
+            return false
+        }
+        
+        return true
+    }
+    
 }
 
 extension ComposeViewController: UITextFieldDelegate {
@@ -110,6 +131,17 @@ extension ComposeViewController: UITextFieldDelegate {
             }
         default:
             break
+        }
+        
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentTitle = NSString(string: postTitleTextField.text ?? "")
+        let finalTitle = currentTitle.replacingCharacters(in: range, with: " ")
+        
+        if finalTitle.count > 50 {
+            return false
         }
         
         return true
