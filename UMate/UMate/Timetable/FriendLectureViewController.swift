@@ -14,6 +14,9 @@ class FriendLectureViewController: UIViewController {
     let courseList: [ElliottEvent] = [ElliottEvent(courseId: "F1234", courseName: "자료구조", roomName: "팔308", professor: "교수님", courseDay: .monday, startTime: "09:00", endTime: "10:15", textColor: UIColor.white, backgroundColor: .purple), ElliottEvent(courseId: "F1234", courseName: "자료구조", roomName: "팔308", professor: "교수님", courseDay: .wednesday, startTime: "09:00", endTime: "10:15", textColor: UIColor.white, backgroundColor: .purple), ElliottEvent(courseId: "F5678", courseName: "컴퓨터그래픽스", roomName: "팔1025", professor: "교수님", courseDay: .monday, startTime: "10:30", endTime: "11:45", textColor: UIColor.white, backgroundColor: .cyan), ElliottEvent(courseId: "F5678", courseName: "컴퓨터그래픽스", roomName: "팔1025", professor: "교수님", courseDay: .thursday, startTime: "10:30", endTime: "11:45", textColor: UIColor.white, backgroundColor: .cyan)]
 
 
+    var name: String?
+    
+    @IBOutlet weak var friendNameLabel: UILabel!
     @IBOutlet weak var timetableView: Elliotable!
     
     override func viewDidLoad() {
@@ -44,6 +47,8 @@ class FriendLectureViewController: UIViewController {
         timetableView.roundCorner = .right
         
         timetableView.reloadData()
+        
+        friendNameLabel.text = name
     }
 }
 

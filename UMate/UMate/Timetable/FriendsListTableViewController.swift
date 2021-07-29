@@ -9,6 +9,14 @@ import UIKit
 
 class FriendsListTableViewController: UITableViewController {
 
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? FriendLectureViewController {
+            print(nameLabel.text)
+            vc.name = nameLabel.text
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
