@@ -11,7 +11,6 @@ class ComposeViewController: UIViewController {
     
     @IBOutlet weak var postTitleTextField: UITextField!
     @IBOutlet weak var postContentTextView: UITextView!
-    @IBOutlet weak var postContentContainerView: UIView!
     @IBOutlet weak var commmunityRuleView: UIView!
     @IBOutlet weak var contentCountLabel: UILabel!
     
@@ -37,7 +36,19 @@ class ComposeViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var infoStackViewBottomConstraint: NSLayoutConstraint!
+    var willShowToken: NSObjectProtocol?
+    var willHideToken: NSObjectProtocol?
     
+    deinit {
+        if let token = willShowToken {
+            NotificationCenter.default.removeObserver(token)
+        }
+        
+        if let token = willHideToken {
+            NotificationCenter.default.removeObserver(token)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +58,7 @@ class ComposeViewController: UIViewController {
         postTitleTextField.becomeFirstResponder()
         postTitleTextField.inputAccessoryView = accessoryBar
         postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
-
+        
         postTitleTextField.placeholder = "제목"
         postTitleTextField.returnKeyType = .next
         postTitleTextField.delegate = self
@@ -55,6 +66,23 @@ class ComposeViewController: UIViewController {
         postContentTextView.text = "내용을 입력하세요."
         postContentTextView.textColor = .lightGray
         postContentTextView.delegate = self
+        
+        willShowToken = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main, using: { [weak self]  noti in
+            guard let strongSelf = self else { return }
+            
+            if let frame = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let height = frame.cgRectValue.height
+                
+                strongSelf.infoStackViewBottomConstraint.constant = height
+            }
+        })
+        
+        willHideToken = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main, using: { [weak self] (noti) in
+            guard let strongSelf = self else { return }
+            
+            
+            strongSelf.infoStackViewBottomConstraint.constant = 20
+        })
     }
     
     @IBAction func closeVC(_ sender: Any) {
@@ -77,9 +105,11 @@ class ComposeViewController: UIViewController {
 }
 
 
+
 extension ComposeViewController {
     static let newPostInsert = Notification.Name(rawValue: "newPostInsert")
 }
+
 
 
 extension ComposeViewController: UITextViewDelegate {
@@ -118,8 +148,9 @@ extension ComposeViewController: UITextViewDelegate {
         
         return true
     }
-    
 }
+
+
 
 extension ComposeViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
