@@ -1076,30 +1076,108 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아이디 검색" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dI4-m0-85C">
-                                <rect key="frame" x="20" y="76" width="374" height="21"/>
+                                <rect key="frame" x="20" y="76" width="374" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oRQ-0C-ddo">
-                                <rect key="frame" x="20" y="105" width="374" height="34"/>
+                                <rect key="frame" x="20" y="104.5" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Huh-0i-aJb" id="CHy-r5-LAE"/>
+                                </connections>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QgJ-TI-GQx">
+                                <rect key="frame" x="20" y="158.5" width="374" height="580.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="RCC-7S-DsQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAH-wm-P96">
+                                                <rect key="frame" x="0.0" y="0.0" width="124.5" height="60"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I6w-Rk-G9A">
+                                                <rect key="frame" x="124.5" y="0.0" width="125" height="60"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="lSS-Ut-D02">
+                                                <rect key="frame" x="249.5" y="0.0" width="124.5" height="60"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6f-tY-uey">
+                                                        <rect key="frame" x="0.0" y="0.0" width="124.5" height="60"/>
+                                                        <state key="normal" title="친구 추가"/>
+                                                        <connections>
+                                                            <action selector="addFriendsButton:" destination="Huh-0i-aJb" eventType="touchUpInside" id="xOe-nR-cDb"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="e6f-tY-uey" firstAttribute="top" secondItem="lSS-Ut-D02" secondAttribute="top" id="Iyq-bv-fsJ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="e6f-tY-uey" secondAttribute="bottom" id="Ohq-wG-QAg"/>
+                                                    <constraint firstAttribute="trailing" secondItem="e6f-tY-uey" secondAttribute="trailing" id="Yew-IA-FQA"/>
+                                                    <constraint firstItem="e6f-tY-uey" firstAttribute="leading" secondItem="lSS-Ut-D02" secondAttribute="leading" id="xUX-YK-2UZ"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="eg4-Ps-QbX"/>
+                                        </constraints>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btZ-4P-cKr">
+                                        <rect key="frame" x="0.0" y="60" width="374" height="200"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="검색 결과가 없습니다." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QqN-3j-uby">
+                                                <rect key="frame" x="114" y="90" width="146" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="QqN-3j-uby" firstAttribute="centerX" secondItem="btZ-4P-cKr" secondAttribute="centerX" id="Wtw-18-4ju"/>
+                                            <constraint firstAttribute="height" constant="200" id="fF9-F7-KH5"/>
+                                            <constraint firstItem="QqN-3j-uby" firstAttribute="centerY" secondItem="btZ-4P-cKr" secondAttribute="centerY" id="mzD-hg-AK6"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="RCC-7S-DsQ" secondAttribute="trailing" id="3Rn-ny-J8q"/>
+                                    <constraint firstItem="btZ-4P-cKr" firstAttribute="top" secondItem="RCC-7S-DsQ" secondAttribute="bottom" id="QGs-fT-B3T"/>
+                                    <constraint firstItem="RCC-7S-DsQ" firstAttribute="leading" secondItem="QgJ-TI-GQx" secondAttribute="leading" id="RLc-p6-VZg"/>
+                                    <constraint firstItem="btZ-4P-cKr" firstAttribute="leading" secondItem="QgJ-TI-GQx" secondAttribute="leading" id="lmL-nG-dQa"/>
+                                    <constraint firstItem="RCC-7S-DsQ" firstAttribute="top" secondItem="QgJ-TI-GQx" secondAttribute="top" id="qGQ-wz-bsK"/>
+                                    <constraint firstAttribute="trailing" secondItem="btZ-4P-cKr" secondAttribute="trailing" id="sCO-vj-rMO"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Cmk-G7-t4E"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="oRQ-0C-ddo" firstAttribute="top" secondItem="dI4-m0-85C" secondAttribute="bottom" constant="8" symbolic="YES" id="PKW-4Q-Lan"/>
-                            <constraint firstItem="Cmk-G7-t4E" firstAttribute="trailing" secondItem="oRQ-0C-ddo" secondAttribute="trailing" constant="20" id="RHh-6Z-hE8"/>
-                            <constraint firstItem="oRQ-0C-ddo" firstAttribute="leading" secondItem="Cmk-G7-t4E" secondAttribute="leading" constant="20" id="Vxl-3o-3mM"/>
+                            <constraint firstItem="Cmk-G7-t4E" firstAttribute="trailing" secondItem="oRQ-0C-ddo" secondAttribute="trailing" constant="20" id="51c-Nz-Aih"/>
+                            <constraint firstItem="oRQ-0C-ddo" firstAttribute="leading" secondItem="Cmk-G7-t4E" secondAttribute="leading" constant="20" id="DVV-Un-GcG"/>
+                            <constraint firstItem="QgJ-TI-GQx" firstAttribute="top" secondItem="oRQ-0C-ddo" secondAttribute="bottom" constant="20" id="Jsc-pS-faX"/>
+                            <constraint firstItem="oRQ-0C-ddo" firstAttribute="top" secondItem="dI4-m0-85C" secondAttribute="bottom" constant="8" symbolic="YES" id="Rhs-cM-Tvm"/>
                             <constraint firstItem="dI4-m0-85C" firstAttribute="leading" secondItem="Cmk-G7-t4E" secondAttribute="leading" constant="20" id="hDw-mE-7aN"/>
+                            <constraint firstItem="QgJ-TI-GQx" firstAttribute="leading" secondItem="Cmk-G7-t4E" secondAttribute="leading" constant="20" id="k2t-R6-Wqh"/>
+                            <constraint firstItem="Cmk-G7-t4E" firstAttribute="bottom" secondItem="QgJ-TI-GQx" secondAttribute="bottom" constant="20" id="o0K-Jf-V5y"/>
+                            <constraint firstItem="Cmk-G7-t4E" firstAttribute="trailing" secondItem="QgJ-TI-GQx" secondAttribute="trailing" constant="20" id="qL5-Qs-EJq"/>
                             <constraint firstItem="Cmk-G7-t4E" firstAttribute="trailing" secondItem="dI4-m0-85C" secondAttribute="trailing" constant="20" id="qyz-He-XXK"/>
                             <constraint firstItem="dI4-m0-85C" firstAttribute="top" secondItem="Cmk-G7-t4E" secondAttribute="top" constant="20" id="rWg-gg-ys3"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="친구 추가" id="ZgE-cN-i9I"/>
                     <connections>
+                        <outlet property="foundContainerView" destination="RCC-7S-DsQ" id="EQ1-x5-WB8"/>
+                        <outlet property="idLabel" destination="rAH-wm-P96" id="sHJ-NL-2rG"/>
+                        <outlet property="notFoundContainerView" destination="btZ-4P-cKr" id="R6u-4n-ulg"/>
                         <outlet property="searchField" destination="oRQ-0C-ddo" id="JSs-rw-iUF"/>
                     </connections>
                 </viewController>
