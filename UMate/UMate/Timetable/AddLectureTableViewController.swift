@@ -22,6 +22,7 @@ class AddLectureTableViewController: UITableViewController {
     var weekdayInt = 1
     var weekdayList: [Bool] = [false, false, false, false, false]
     var colorString = "lightRed"
+    var textColorString = "black"
     let buttonImage = UIImage(named: "check")
     
     @IBOutlet weak var courseIdField: UITextField!
@@ -79,6 +80,7 @@ class AddLectureTableViewController: UITableViewController {
                 mondayLabel.textColor = UIColor.white
                 weekdayInt = 1
                 weekdayList[0] = true
+                textColorString = "white"
             } else {
                 mondayContainerView.backgroundColor = .clear
                 mondayLabel.textColor = UIColor.black
@@ -140,8 +142,11 @@ class AddLectureTableViewController: UITableViewController {
                 [redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                
+                textColorString = "white"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "black"
             }
         } else if sender.tag == 201 {
             if sender.image(for: .normal) == nil {
@@ -151,8 +156,11 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                
+                textColorString = "white"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "black"
             }
         } else if sender.tag == 202 {
             if sender.image(for: .normal) == nil {
@@ -162,8 +170,11 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, redButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                
+                textColorString = "black"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "white"
             }
         } else if sender.tag == 203 {
             if sender.image(for: .normal) == nil {
@@ -173,8 +184,11 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, redButton, pinkButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                
+                textColorString = "black"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "white"
             }
         } else if sender.tag == 204 {
             if sender.image(for: .normal) == nil {
@@ -184,8 +198,11 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, redButton, pinkButton, orangeButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                
+                textColorString = "black"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "white"
             }
         } else if sender.tag == 205 {
             if sender.image(for: .normal) == nil {
@@ -195,8 +212,11 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                
+                textColorString = "black"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "white"
             }
         } else if sender.tag == 206 {
             if sender.image(for: .normal) == nil {
@@ -206,8 +226,10 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                textColorString = "white"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "black"
             }
         } else if sender.tag == 207 {
             if sender.image(for: .normal) == nil {
@@ -217,8 +239,10 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                textColorString = "black"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "white"
             }
         } else if sender.tag == 208 {
             if sender.image(for: .normal) == nil {
@@ -228,8 +252,10 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                textColorString = "white"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "black"
             }
         } else if sender.tag == 209 {
             if sender.image(for: .normal) == nil {
@@ -239,8 +265,10 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, purpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                textColorString = "black"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "white"
             }
         } else if sender.tag == 210 {
             if sender.image(for: .normal) == nil {
@@ -250,8 +278,10 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, darkGrayButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                textColorString = "white"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "black"
             }
         } else if sender.tag == 211 {
             if sender.image(for: .normal) == nil {
@@ -261,8 +291,10 @@ class AddLectureTableViewController: UITableViewController {
                 [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton].forEach {
                     $0?.setImage(nil, for: .normal)
                 }
+                textColorString = "white"
             } else {
                 sender.setImage(nil, for: .normal)
+                textColorString = "black"
             }
         }
         
@@ -338,6 +370,7 @@ class AddLectureTableViewController: UITableViewController {
         
         let backgroundColor: UIColor = UIColor(named: "\(colorString)") ?? .black
         
+        let textColor: UIColor = UIColor(named: "\(textColorString)") ?? .white
         
         var lectureList: [ElliottEvent] = []
         
@@ -345,7 +378,7 @@ class AddLectureTableViewController: UITableViewController {
             if weekdayList[i] == true {
                 let elliotday: ElliotDay = ElliotDay(rawValue: i + 1)!
                 
-                let lectureInfo = ElliottEvent(courseId: courseId, courseName: courseName, roomName: roomName, professor: professor, courseDay: elliotday, startTime: startTime, endTime: endTime, backgroundColor: backgroundColor)
+                let lectureInfo = ElliottEvent(courseId: courseId, courseName: courseName, roomName: roomName, professor: professor, courseDay: elliotday, startTime: startTime, endTime: endTime, textColor: textColor, backgroundColor: backgroundColor)
                 
                 lectureList.append(lectureInfo)
                 
@@ -358,17 +391,23 @@ class AddLectureTableViewController: UITableViewController {
                 for j in 0...lectureList.count - 1 {
                     if lectureList[j].courseDay == Lecture.shared.courseList[i].courseDay {
                         
+                        if Lecture.shared.courseList[i].startTime == lectureList[j].startTime || Lecture.shared.courseList[i].endTime == lectureList[j].endTime {
+                            alertWithNoAction(title: "경고", message: "강의 시간이 겹칩니다.")
+                            return
+                        }
+                        
                         if lectureList[j].startTime >= Lecture.shared.courseList[i].startTime && lectureList[j].endTime <= Lecture.shared.courseList[i].endTime {
                             print("1")
                             alertWithNoAction(title: "경고", message: "강의 시간이 겹칩니다.")
                             return
                         }
                         
-                        if lectureList[j].startTime >= Lecture.shared.courseList[i].startTime && lectureList[j].startTime < Lecture.shared.courseList[j].endTime  {
+                        if lectureList[j].startTime > Lecture.shared.courseList[i].startTime && lectureList[j].startTime < Lecture.shared.courseList[j].endTime  {
                             print("2")
                             alertWithNoAction(title: "경고", message: "강의 시간이 겹칩니다.")
                             return
                         }
+                        
                     }
                 }
             }
