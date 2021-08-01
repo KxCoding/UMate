@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C3D34C026B6A3650036DF0A /* PlaceSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3D34BF26B6A3650036DF0A /* PlaceSearchViewController.swift */; };
+		2C3D34C226B6A3770036DF0A /* PlaceSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C3D34C126B6A3770036DF0A /* PlaceSearch.storyboard */; };
+		2C3D34C526B6AD400036DF0A /* PlaceSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3D34C426B6AD400036DF0A /* PlaceSearchCollectionViewCell.swift */; };
+		2C3D34C726B6AF900036DF0A /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3D34C626B6AF900036DF0A /* Search.swift */; };
 		5C0D977726A768A600F396B7 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D977626A768A600F396B7 /* UIViewController+Alert.swift */; };
 		5C733FDF26B0659A00C1AF21 /* LectureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C733FDE26B0659A00C1AF21 /* LectureModel.swift */; };
 		5C733FE126B07CB500C1AF21 /* FriendsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C733FE026B07CB500C1AF21 /* FriendsListTableViewController.swift */; };
@@ -78,6 +82,10 @@
 
 /* Begin PBXFileReference section */
 		0336406B0211FCA66E293B37 /* Pods_UMate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UMate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C3D34BF26B6A3650036DF0A /* PlaceSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchViewController.swift; sourceTree = "<group>"; };
+		2C3D34C126B6A3770036DF0A /* PlaceSearch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlaceSearch.storyboard; sourceTree = "<group>"; };
+		2C3D34C426B6AD400036DF0A /* PlaceSearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		2C3D34C626B6AF900036DF0A /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		5C0D977626A768A600F396B7 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		5C733FDE26B0659A00C1AF21 /* LectureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureModel.swift; sourceTree = "<group>"; };
 		5C733FE026B07CB500C1AF21 /* FriendsListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListTableViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +170,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C3D34C326B6AD2B0036DF0A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				2C3D34C426B6AD400036DF0A /* PlaceSearchCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		37CC69B55B36F808E76561B4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,6 +425,7 @@
 			children = (
 				F488439026ABE512005DB8A3 /* Review.swift */,
 				F488439126ABE512005DB8A3 /* Place.swift */,
+				2C3D34C626B6AF900036DF0A /* Search.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -416,6 +433,9 @@
 		F488439226ABE512005DB8A3 /* PlaceSearch */ = {
 			isa = PBXGroup;
 			children = (
+				2C3D34C326B6AD2B0036DF0A /* Cell */,
+				2C3D34BF26B6A3650036DF0A /* PlaceSearchViewController.swift */,
+				2C3D34C126B6A3770036DF0A /* PlaceSearch.storyboard */,
 			);
 			path = PlaceSearch;
 			sourceTree = "<group>";
@@ -514,6 +534,7 @@
 				5C92DD13269B4DF00094A93C /* Assets.xcassets in Resources */,
 				6D42480526AAB8C300E1E138 /* Setting.storyboard in Resources */,
 				5C92DD2A269B4E8E0094A93C /* Timetable.storyboard in Resources */,
+				2C3D34C226B6A3770036DF0A /* PlaceSearch.storyboard in Resources */,
 				5C92DD3A269BF8450094A93C /* Account.storyboard in Resources */,
 				5C92DD11269B4DEF0094A93C /* Main.storyboard in Resources */,
 				6D64F78326ADC9D3005BAC82 /* DropDownTableViewCell.xib in Resources */,
@@ -569,6 +590,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C3D34C526B6AD400036DF0A /* PlaceSearchCollectionViewCell.swift in Sources */,
 				F48843A826ABE512005DB8A3 /* DetailTableViewCell.swift in Sources */,
 				6D42480726AABFE500E1E138 /* SettingTableViewController.swift in Sources */,
 				DF36281526A93207007AC5D2 /* ExpandableBoardTableViewCell.swift in Sources */,
@@ -609,6 +631,7 @@
 				5C733FDF26B0659A00C1AF21 /* LectureModel.swift in Sources */,
 				5C92DD3C269BF84F0094A93C /* AccountViewController.swift in Sources */,
 				F48843AA26ABE512005DB8A3 /* InfoSectionTableViewCell.swift in Sources */,
+				2C3D34C726B6AF900036DF0A /* Search.swift in Sources */,
 				6D9D9A9126B03A180084C764 /* UniversityTitleData.swift in Sources */,
 				F48843A426ABE512005DB8A3 /* Place.swift in Sources */,
 				5C733FE526B0839D00C1AF21 /* FriendLectureViewController.swift in Sources */,
@@ -621,6 +644,7 @@
 				F50F9B5226B0F6CF007ABEF6 /* ComposeViewController.swift in Sources */,
 				F48843B126ABE512005DB8A3 /* RoundedButton.swift in Sources */,
 				DFEF018026A756290015829B /* Date + Formatter.swift in Sources */,
+				2C3D34C026B6A3650036DF0A /* PlaceSearchViewController.swift in Sources */,
 				DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */,
 				DFEF018A26A7571A0015829B /* FreeBoardTableViewCell.swift in Sources */,
 				6D90357826A9DA4B00195D5D /* SettingModel.swift in Sources */,
