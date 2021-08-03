@@ -80,7 +80,7 @@ class PostContentTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .postDidScrap, object: nil, userInfo: ["scrappedPost": post])
         }
         
-        scarpCountLabel.text = "\(post.scrapCount)"
+        scrapCountLabel.text = "\(post.scrapCount)"
     }
    
     
@@ -90,16 +90,15 @@ class PostContentTableViewCell: UITableViewCell {
     
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
-    @IBOutlet weak var scarpCountLabel: UILabel!
+    @IBOutlet weak var scrapCountLabel: UILabel!
   
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        likeContainerView.layer.borderColor = UIColor.darkGray.cgColor
         likeContainerView.layer.borderWidth = 1.0
         likeContainerView.layer.cornerRadius = 5
-        scrapContainerView.layer.borderColor = UIColor.darkGray.cgColor
+       
         scrapContainerView.layer.borderWidth = 1.0
         scrapContainerView.layer.cornerRadius = 5
     }
@@ -133,6 +132,7 @@ class PostContentTableViewCell: UITableViewCell {
         postContentLabel.text = post.postContent
         likeCountLabel.text = post.likeCount.description
         commentCountLabel.text = post.commentCount.description
+        scrapCountLabel.text = post.scrapCount.description
         selectedPost = post 
     }
 }

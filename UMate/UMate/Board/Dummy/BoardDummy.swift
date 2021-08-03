@@ -89,7 +89,26 @@ let freshmanBoard =  Board(boardTitle: "신입생 게시판",
                                         commentCount: 18),
                                   ])
 
-let infoBoard = Board(boardTitle: "정보 게시판", posts: [Post(images: [UIImage(named: "info")], postTitle: "사회적 거리두기", postContent: "2단계 2020.09/14부터 9월 27일까지 2단계 시행", postWriter: "캔버스", insertDate: Date(timeIntervalSinceNow: -400), likeCount: 4, commentCount: 3)])
+let infoBoard = Board(boardTitle: "정보 게시판", posts: [Post(images: [], postTitle: "사회적 거리두기", postContent: "2단계 2020.09/14부터 9월 27일까지 2단계 시행", postWriter: "캔버스", insertDate: Date(timeIntervalSinceNow: -400), likeCount: 4, commentCount: 3)])
+
+
+let publicityBoard = Board(boardTitle: "홍보게시판",
+                           posts: [Post(images: [], postTitle: "알바", postContent: "과외", postWriter: "학생", insertDate: Date(), likeCount: 1, commentCount: 1, scrapCount: 1, publicity: .partTimeJob, club: nil, career: nil),
+                                   Post(images: [], postTitle: "기타", postContent: "과외", postWriter: "학생", insertDate: Date(), likeCount: 1, commentCount: 1, scrapCount: 1, publicity: .etcetera, club: nil, career: nil),
+                                   Post(images: [], postTitle: "강연", postContent: "과외", postWriter: "학생", insertDate: Date(), likeCount: 1, commentCount: 1, scrapCount: 1, publicity: .lectureAndEvent, club: nil, career: nil)],
+                           categories:  Post.Category.Publicity.allCases.map{ $0.rawValue })
+
+let clubBoard = Board(boardTitle: "동아리, 학회",
+                      posts: [Post(images: [], postTitle: "교내", postContent: "교내", postWriter: "학생", insertDate: Date(), likeCount: 1, commentCount: 1, scrapCount: 1, publicity:       nil, club: .inside, career: nil),
+                              Post(images: [], postTitle: "연합", postContent: "연합", postWriter: "학생", insertDate: Date(), likeCount: 1, commentCount: 1, scrapCount: 1, publicity: nil, club: .union, career: nil),
+                              Post(images: [], postTitle: "학회", postContent: "전체", postWriter: "학생", insertDate: Date(), likeCount: 1, commentCount: 1, scrapCount: 1, publicity: nil, club: .inside, career: nil)],
+                      categories: Post.Category.Club.allCases.map{ $0.rawValue })
+
+let careerBoard = Board(boardTitle: "취업, 진로",
+                        posts: [Post(images: [], postTitle: "진로", postContent: "전체", postWriter: "학생", insertDate: Date(), likeCount: 1, commentCount: 1, scrapCount: 1, publicity: nil, club: nil, career: .QNA),
+                                Post(images: [], postTitle: "질문", postContent: "질문", postWriter: "학생", insertDate: Date(), likeCount: 1, commentCount: 1, scrapCount: 1, publicity: nil, club: nil, career: .QNA),
+                                Post(images: [], postTitle: "후기", postContent: "후기", postWriter: "학생", insertDate: Date(), likeCount: 1, commentCount: 1, scrapCount: 1, publicity: nil, club: nil, career: .review)],
+                        categories: Post.Category.Career.allCases.map{ $0.rawValue })
 
 //나중에 cellType으로 넣는게 나으려나
 var nonExpandableBoardList = [BoardUI(sectionName: nil, boardNames: ["스크랩"]),

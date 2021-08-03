@@ -9,14 +9,15 @@
 import UIKit
 
 class Board {
-    internal init(boardTitle: String, posts: [Post]) {
+    internal init(boardTitle: String, posts: [Post], categories: [String] = []) {
         self.boardTitle = boardTitle
         self.posts = posts
+        self.categories = categories
     }
     
     let boardTitle: String
     var posts: [Post]
-    //여기에 board id넣고 사용자가 즐겨찾기 하면 추가되는 방식으로 해야하나?
+    var categories: [String]
 }
 
 struct BoardUI {
