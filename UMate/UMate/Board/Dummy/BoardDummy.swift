@@ -127,6 +127,6 @@ var expandableBoardList = [BoardUI(sectionName: "홍보", isExpanded: true ,boar
 
 
 
-let commentsInPost: [String: [Comment]] = ["abc123": [Comment(commentContent: "화이팅!!", commentWriter: "1004"),
-                                                      Comment(commentContent: "바나나", commentWriter: "119"),
-                                                      Comment(commentContent: "사과!!", commentWriter: "나무")]]
+//let commentsInPost: [String: [Comment]] = ["abc123": [Comment(commentContent: "화이팅!!", commentWriter: "1004"),
+//                                                      Comment(commentContent: "바나나", commentWriter: "119"),
+//                                                      Comment(commentContent: "사과!!", commentWriter: "나무")]]

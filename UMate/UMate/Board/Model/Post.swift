@@ -73,9 +73,23 @@ extension Post.Category.Career: CaseIterable { }
 
 
 
-struct Comment {
-    let commentContent: String
-    let commentWriter: String
+class Comment {
+    internal init(image: UIImage?, writer: String, content: String, insertDate: Date, heartCount: Int, isliked: Bool = false) {
+        self.image = image
+        self.writer = writer
+        self.content = content
+        self.insertDate = insertDate
+        self.heartCount = heartCount
+        self.isliked = isliked
+    }
     
-    let wrtierID: Int = 0
+    let image: UIImage?
+    let writer: String
+    let content: String
+    let insertDate: Date
+    let heartCount: Int
+    
+    var isliked = false
+    
+    static var dummyCommentList = [Comment]()
 }
