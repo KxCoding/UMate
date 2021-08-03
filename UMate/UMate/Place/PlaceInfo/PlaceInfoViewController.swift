@@ -14,12 +14,13 @@ extension Notification.Name {
 
 class PlaceInfoViewController: UIViewController {
     
+    // 상세 페이지 하위 탭
     enum SubTab {
         case detail
         case review
     }
     
-    // 선택된 탭
+    // 선택된 탭 저장
     var selectedTap: SubTab = .detail
     
     // 가게 더미 데이터
@@ -27,7 +28,9 @@ class PlaceInfoViewController: UIViewController {
                       university: "숙명여대",
                       district: "숙대입구역 인근",
                       type: .cafe,
-                      keywords: ["레트로", "사진 찍기 좋은", "새로 오픈한", "친절", "따뜻한", "커피 맛집", "목재 가구"])
+                      keywords: ["레트로", "사진 찍기 좋은", "새로 오픈한", "친절", "따뜻한", "커피 맛집", "목재 가구"],
+                      instagramID: "dailyroutinecoffee",
+                      url: "http://naver.me/xrPcV2Ie")
     
     // 리뷰 요약 데이터
     var review = PlaceReviewItem(starPoint: 4.8,
@@ -51,8 +54,9 @@ class PlaceInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        placeInfoTableView.dataSource = self
+        print(type(of: self), #function)
         
+        placeInfoTableView.dataSource = self
     }
     
     @IBAction func selectTap(_ sender: UIButton) {

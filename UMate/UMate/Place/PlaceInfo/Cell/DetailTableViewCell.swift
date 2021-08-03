@@ -15,10 +15,12 @@ class DetailTableViewCell: UITableViewCell {
     @IBOutlet weak var districtCollectionView: UICollectionView!
     @IBOutlet weak var keywordsCollectionView: UICollectionView!
     
-    var target = Place(name: "학교 이름", university: "대학교", district: "도서관 근처", type: .restaurant, keywords: ["일식당", "아기자기한"])
+    
+    var target: Place!
     
     func configure(with content: Place, indexPath: IndexPath) {
-        print(type(of: self), #function)
+
+        
         target = content
         dump(target)
         
@@ -39,7 +41,7 @@ class DetailTableViewCell: UITableViewCell {
         // UI 초기화
         addressView.layer.cornerRadius = addressView.frame.height / 4
         
-        
+//        target = Place(name: "가게 이름", university: "대학교", district: "도서관 근처", type: .restaurant, keywords: ["일식당", "아기자기한"])
     }
     
 }

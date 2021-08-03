@@ -44,4 +44,7 @@ struct Place {
     }
     
     var keywords: [String]
+    
+    var instagramID: String?
+    var url: String?
 }
