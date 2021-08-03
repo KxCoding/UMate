@@ -51,9 +51,11 @@
 		DF25EF4626AFD5EE00949AAB /* PostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4526AFD5EE00949AAB /* PostImageCollectionViewCell.swift */; };
 		DF25EF4926AFD61500949AAB /* BoardDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4826AFD61500949AAB /* BoardDummy.swift */; };
 		DF25EF4C26AFDD1F00949AAB /* BoardCustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4B26AFDD1F00949AAB /* BoardCustomHeaderView.swift */; };
+		DF27D74B26B936780046D7BF /* CategoryBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF27D74A26B936780046D7BF /* CategoryBoardViewController.swift */; };
+		DF27D74D26B937240046D7BF /* CategoryBoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF27D74C26B937240046D7BF /* CategoryBoardCollectionViewCell.swift */; };
 		DF36281526A93207007AC5D2 /* ExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */; };
 		DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */; };
-		DFEF018026A756290015829B /* Date + Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF017F26A756290015829B /* Date + Formatter.swift */; };
+		DFEF018026A756290015829B /* Date+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF017F26A756290015829B /* Date+Formatter.swift */; };
 		DFEF018226A756880015829B /* FreeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018126A756880015829B /* FreeBoardViewController.swift */; };
 		DFEF018426A756AF0015829B /* LectureReviewBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */; };
 		DFEF018626A756C80015829B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018526A756C80015829B /* Post.swift */; };
@@ -131,9 +133,11 @@
 		DF25EF4526AFD5EE00949AAB /* PostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF25EF4826AFD61500949AAB /* BoardDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDummy.swift; sourceTree = "<group>"; };
 		DF25EF4B26AFDD1F00949AAB /* BoardCustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCustomHeaderView.swift; sourceTree = "<group>"; };
+		DF27D74A26B936780046D7BF /* CategoryBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBoardViewController.swift; sourceTree = "<group>"; };
+		DF27D74C26B937240046D7BF /* CategoryBoardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBoardCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
 		DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
-		DFEF017F26A756290015829B /* Date + Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Formatter.swift"; sourceTree = "<group>"; };
+		DFEF017F26A756290015829B /* Date+Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatter.swift"; sourceTree = "<group>"; };
 		DFEF018126A756880015829B /* FreeBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeBoardViewController.swift; sourceTree = "<group>"; };
 		DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReviewBoardViewController.swift; sourceTree = "<group>"; };
 		DFEF018526A756C80015829B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -378,6 +382,7 @@
 				DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */,
 				DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */,
 				DFEF018926A7571A0015829B /* FreeBoardTableViewCell.swift */,
+				DF27D74C26B937240046D7BF /* CategoryBoardCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -389,6 +394,7 @@
 				DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */,
 				F50F9B5126B0F6CF007ABEF6 /* ComposeViewController.swift */,
 				F50F9B5326B0F932007ABEF6 /* CommunityRuleViewController.swift */,
+				DF27D74A26B936780046D7BF /* CategoryBoardViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -396,7 +402,7 @@
 		DFEF017E26A755E70015829B /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				DFEF017F26A756290015829B /* Date + Formatter.swift */,
+				DFEF017F26A756290015829B /* Date+Formatter.swift */,
 				F5B204A626B2ABF100A9C491 /* UIViewController+AlertNoContent.swift */,
 			);
 			path = Extension;
@@ -596,6 +602,7 @@
 				5C44242E26B7586200A6C23B /* SchoolAuthTableViewController.swift in Sources */,
 				2C3D34C526B6AD400036DF0A /* PlaceSearchCollectionViewCell.swift in Sources */,
 				F48843A826ABE512005DB8A3 /* DetailTableViewCell.swift in Sources */,
+				DF27D74B26B936780046D7BF /* CategoryBoardViewController.swift in Sources */,
 				6D42480726AABFE500E1E138 /* SettingTableViewController.swift in Sources */,
 				DF36281526A93207007AC5D2 /* ExpandableBoardTableViewCell.swift in Sources */,
 				6D9E0CEB26ABC7B300ABB37F /* RegisterViewController.swift in Sources */,
@@ -640,6 +647,7 @@
 				F48843A426ABE512005DB8A3 /* Place.swift in Sources */,
 				5C733FE526B0839D00C1AF21 /* FriendLectureViewController.swift in Sources */,
 				F48843AC26ABE512005DB8A3 /* WordCollectionViewCell.swift in Sources */,
+				DF27D74D26B937240046D7BF /* CategoryBoardCollectionViewCell.swift in Sources */,
 				DFEF018626A756C80015829B /* Post.swift in Sources */,
 				F48843AE26ABE512005DB8A3 /* TabSectionTableViewCell.swift in Sources */,
 				5C733FE326B07D7C00C1AF21 /* FriendsListViewController.swift in Sources */,
@@ -647,7 +655,7 @@
 				DF25EF4226AFD54C00949AAB /* PostContentTableViewCell.swift in Sources */,
 				F50F9B5226B0F6CF007ABEF6 /* ComposeViewController.swift in Sources */,
 				F48843B126ABE512005DB8A3 /* RoundedButton.swift in Sources */,
-				DFEF018026A756290015829B /* Date + Formatter.swift in Sources */,
+				DFEF018026A756290015829B /* Date+Formatter.swift in Sources */,
 				2C3D34C026B6A3650036DF0A /* PlaceSearchViewController.swift in Sources */,
 				DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */,
 				DFEF018A26A7571A0015829B /* FreeBoardTableViewCell.swift in Sources */,
