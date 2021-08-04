@@ -201,8 +201,8 @@ extension BoardViewController: UITableViewDelegate {
             view.title.textColor = .darkGray
             view.title.font = UIFont.boldSystemFont(ofSize: 23)
             view.image.image = UIImage(named: "downarrow")
-            view.image.tintColor = .lightGray
-            view.image.alpha = 0.2
+            view.image.tintColor = .darkGray
+            view.image.alpha = 0.9
             
             
             view.addSubview(button)

@@ -23,6 +23,8 @@ class FreeBoardTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         postImageView.layer.cornerRadius = postImageView.frame.height * 0.1
+        postImageView.layer.borderWidth = 1
+        postImageView.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     func configure(post: Post) {

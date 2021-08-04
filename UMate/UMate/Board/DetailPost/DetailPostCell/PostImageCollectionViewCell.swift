@@ -16,12 +16,6 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        //postImageView.layer.cornerRadius = postImageView.frame.height * 0.1
-        
-//        layer.shadowColor = UIColor.black.cgColor
-//        layer.shadowRadius = postImageView.frame.height * 0.1
-//        layer.shadowOpacity = 0.5
-        
         layer.cornerRadius = 15.0
         //layer.borderWidth = 0.0
         layer.shadowColor = UIColor.black.cgColor
