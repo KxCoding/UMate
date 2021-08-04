@@ -79,6 +79,8 @@ class RegisterViewController: UIViewController {
         universitySearchBar.delegate = self
         listTableView.isHidden = true
         
+        
+        
     }
     
     @objc func dismissKeyboard() {
@@ -101,7 +103,7 @@ extension RegisterViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
+        cell.selectionStyle = .none
         if searching {
             cell.textLabel?.text = searchCountry[indexPath.row]
         } else {
@@ -116,7 +118,12 @@ extension RegisterViewController: UITableViewDataSource {
 
 extension RegisterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        universitySearchBar.text = universityList[indexPath.row]
+        if searching {
+            universitySearchBar.text = searchCountry[indexPath.row]
+        } else {
+            universitySearchBar.text = universityList[indexPath.row]
+        }
+        
     }
     
 }
@@ -125,7 +132,7 @@ extension RegisterViewController: UITableViewDelegate {
 extension RegisterViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searching = true
-        searchCountry = universityList.filter{ $0.lowercased().prefix(searchText.count) == searchText.lowercased() }
+        searchCountry = universityList.filter{ $0.prefix(searchText.count) == searchText }
         
         listTableView.reloadData()
     }
