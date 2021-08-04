@@ -18,7 +18,7 @@ class BoardViewController: UIViewController {
     @IBOutlet weak var boardListTableView: UITableView!
     
     @IBAction func updateBookmark(_ sender: UIButton) {
-        sender.tintColor = sender.tintColor == .lightGray ? .systemBlue : .lightGray
+        sender.tintColor = sender.tintColor == .lightGray ? .black : .lightGray
         
         if bookmarks.keys.contains(sender.tag) {
             if let isBookmarked = bookmarks[sender.tag] {

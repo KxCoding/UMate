@@ -29,7 +29,7 @@ class ExpandableBoardTableViewCell: UITableViewCell {
         
         //cellforRowAt에서 cell을 재사용 하기 때문에 매번 버튼 색을 업데이트 해주어야 함.
         if board?.bookmarks[bookmarkButton.tag] == true {
-            bookmarkButton.tintColor = .systemBlue
+            bookmarkButton.tintColor = .black
         } else {
             bookmarkButton.tintColor = .lightGray
         }

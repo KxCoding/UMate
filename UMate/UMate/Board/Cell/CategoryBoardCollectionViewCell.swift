@@ -16,7 +16,7 @@ class CategoryBoardCollectionViewCell: UICollectionViewCell {
         didSet {
             if isSelected {
                 UIView.animate(withDuration: 0.3) {
-                    self.categoryView.backgroundColor = .systemRed
+                    self.categoryView.backgroundColor = .black
                 }
             } else {
                 UIView.animate(withDuration: 0.3) {

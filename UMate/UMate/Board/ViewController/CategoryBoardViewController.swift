@@ -38,7 +38,7 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
         guard let cateigories = selectedBoard?.categories else { return cell }
         if indexPath.row == 0 {
             if nonCliked {
-                cell.categoryView.backgroundColor = .systemRed
+                cell.categoryView.backgroundColor = .black
             } else {
                 cell.categoryView.backgroundColor = .white
             }
@@ -85,16 +85,16 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
         
         if posts.first?.publicity != nil {
             filteredPostList = posts.filter{ post in
-                return post.publicity == .all || post.publicity?.rawValue == selectedBoard?.categories[indexPath.row]
+                return post.publicity?.rawValue == selectedBoard?.categories[indexPath.row]
             }
         } else if posts.first?.club != nil {
             filteredPostList = posts.filter{ post in
-                return post.club == .all || post.club?.rawValue == selectedBoard?.categories[indexPath.row]
+                return post.club?.rawValue == selectedBoard?.categories[indexPath.row]
             }
           
         } else if posts.first?.career != nil {
             filteredPostList = posts.filter{ post in
-                return post.career == .all || post.career?.rawValue == selectedBoard?.categories[indexPath.row]
+                return post.career?.rawValue == selectedBoard?.categories[indexPath.row]
             }
         }
     }
