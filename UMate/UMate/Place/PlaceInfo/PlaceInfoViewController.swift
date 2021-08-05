@@ -24,13 +24,7 @@ class PlaceInfoViewController: UIViewController {
     var selectedTap: SubTab = .detail
     
     // 가게 더미 데이터
-    var place = Place(name: "데일리루틴",
-                      university: "숙명여대",
-                      district: "숙대입구역 인근",
-                      type: .cafe,
-                      keywords: ["레트로", "사진 찍기 좋은", "새로 오픈한", "친절", "따뜻한", "커피 맛집", "목재 가구"],
-                      instagramID: "dailyroutinecoffee",
-                      url: "http://naver.me/xrPcV2Ie")
+    var place: Place! = Place.dummyData.first
     
     // 리뷰 요약 데이터
     var review = PlaceReviewItem(starPoint: 4.8,

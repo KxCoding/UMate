@@ -6,93 +6,97 @@
 //
 
 import UIKit
-
-extension UIView {
-    
-    func setViewPillShape() {
-        self.layer.cornerRadius = self.frame.height / 2
-        self.layer.borderColor = UIColor.systemGray4.cgColor
-        self.layer.borderWidth = 1
-    }
-    
-    func setViewSquircle() {
-        self.layer.cornerRadius = self.frame.height / 6
-        self.layer.borderColor = UIColor.systemGray4.cgColor
-        self.layer.borderWidth = 1
-    }
-}
+import CoreLocation
+import GoogleMaps
+import GooglePlaces
 
 class PlaceMainViewController: UIViewController {
+    
+    // 지도를 표시할 배경 뷰
+    @IBOutlet weak var mapView: UIView!
     
     @IBOutlet weak var locationContainer: UIView!
     @IBOutlet weak var searchBtnContainer: UIView!
     
     @IBOutlet weak var nearbyPlaceCollectionView: UICollectionView!
+    var selecteditemIndex = 0
     
     var list = [Place]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        list.append(contentsOf: [
-            Place(name: "스티키리키",
-                  university: "숙명여대",
-                  district: "숙대입구역 인근",
-                  type: .desert,
-                  keywords: ["수제 아이스크림", "포토존", "핫플", "아기자기한"],
-                  instagramID: "stickyrickys",
-                  url: "http://naver.me/xE1xr6kD"),
-            Place(name: "오오비",
-                  university: "숙명여대",
-                  district: "숙대입구역 인근",
-                  type: .cafe,
-                  keywords: ["햇살 맛집", "드립커피", "아늑한", "LP 음악", "통창"],
-                  instagramID: "oob_official",
-                  url: "http://naver.me/FMAdSiZN"),
-            Place(name: "카페 모",
-                  university: "숙명여대",
-                  district: "숙대입구역 인근",
-                  type: .cafe,
-                  keywords: ["보태니컬", "영화", "햇살 맛집", "나만 알고 싶은"],
-                  instagramID: "cafe_mo",
-                  url: "http://naver.me/F7CF9X6a"),
-            Place(name: "부암동 치킨",
-                  university: "숙명여대",
-                  district: "청파동 언덕길",
-                  type: .restaurant,
-                  keywords: ["치킨", "맛집", "회식", "뒷풀이"],
-                  instagramID: nil,
-                  url: "http://naver.me/5y4qBz2M")
-        ])
+        // 위치 생성을 위한 세팅
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        // 뷰 로드 시점에 위치 추적 권한 요청
+        locationManager.requestWhenInUseAuthorization()
+        // 정확도 설정
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // 위치 업데이트
+        locationManager.startUpdatingLocation()
+        
+        // 위도, 경도 가져오기
+        let currentCoor = locationManager.location?.coordinate
+        let latitude = (currentCoor?.latitude ?? 37.546489) as Double
+        let longitude = (currentCoor?.longitude ?? 126.973707) as Double
+        
+        //        // 현재 지도가 표시하는 영역을 나타내는 카메라
+        //        let camera = GMSCameraPosition.camera(withLatitude: latitude,
+        //                                              longitude: longitude,
+        //                                              zoom: 16.0)
+        //        let map = GMSMapView.map(withFrame: mapView.bounds, camera: camera)
+        //        mapView.addSubview(map)
+        
+        // 상단 뷰 초기화
+        locationContainer.viewConfig(with: [.pillShape, .lightBorder])
+        searchBtnContainer.viewConfig(with: [.pillShape, .lightBorder])
+        
+        // 컬렉션 뷰 장소 더미데이터
+        list.append(contentsOf: Place.dummyData)
         
         nearbyPlaceCollectionView.dataSource = self
         nearbyPlaceCollectionView.delegate = self
         
+        nearbyPlaceCollectionView.isScrollEnabled = false
         nearbyPlaceCollectionView.isPagingEnabled = true
         nearbyPlaceCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         
-        // Item
-        // fractionalWidth, fractionalHeight는 0~1 사이 값, 1이면 상위(group size)만큼 채움
+        // 컬렉션 뷰 pagingCentered 적용
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 5)
-
-        // Group
-        // width: 상대값: fractionWidth(0.8), 넓이는 상위(section) width의 80%
-        // height: 절대값: absolute(120)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+        
+        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .absolute(120))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-
-        // Section (orthogonalScrollingBehavior)
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered
-
+        
+        // 셀을 움직일 때마다 실행할 코드
+        section.visibleItemsInvalidationHandler = ({ [weak self] visibleItems, scrollOffset, layoutEnvironment in
+            guard let self = self else { return }
+            print("displayed")
+            print(scrollOffset)
+            
+            self.selecteditemIndex = Int((scrollOffset.x + 19) / 337)
+            print(self.selecteditemIndex)
+            
+            let selectedItem = self.list[self.selecteditemIndex]
+            print(selectedItem.name)
+            
+            guard let coord = selectedItem.coordinate else { return }
+            print(coord.latitude, coord.longitude)
+            
+            
+        })
+        
         // Compositional Layout
         let layout = UICollectionViewCompositionalLayout(section: section)
         nearbyPlaceCollectionView.collectionViewLayout = layout
         
-        locationContainer.setViewPillShape()
-        searchBtnContainer.setViewPillShape()
         
     }
     
@@ -129,4 +133,19 @@ extension PlaceMainViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
     
+}
+
+extension PlaceMainViewController: CLLocationManagerDelegate {
+    
+}
+
+
+extension PlaceMainViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(#function, scrollView.contentOffset)
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        print(targetContentOffset.pointee.x, targetContentOffset.pointee.y)
+    }
 }

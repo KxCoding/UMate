@@ -14,6 +14,7 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var placeNameLabel: UILabel!
     @IBOutlet weak var districtLabel: UILabel!
     @IBOutlet weak var keywordLabel1: UILabel!
+    @IBOutlet weak var keywordContainer1: UIView!
     @IBOutlet weak var keywordLabel2: UILabel!
     @IBOutlet weak var keywordContainer2: UIView!
     
@@ -40,7 +41,9 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
     }
     
     override func awakeFromNib() {
-        self.setViewSquircle()
+        self.viewConfig(with: [.squircleBig, .lightShadow])
+        keywordContainer1.viewConfig(with: [.squircleSmall])
+        keywordContainer2.viewConfig(with: [.squircleSmall])
     }
 }
 
