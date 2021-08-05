@@ -14,11 +14,16 @@ class FreeBoardViewController: UIViewController {
     @IBOutlet weak var postListTableView: UITableView!
     @IBOutlet weak var composeContainerView: UIView!
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    var filteredPostList: [Post] = []
+    
+    var cachedText: String = ""
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? UITableViewCell, let indexPath = postListTableView.indexPath(for: cell) {
             if let vc = segue.destination as? DetailPostViewController {
-                vc.selectedPost = selectedBoard?.posts[indexPath.row]
+                vc.selectedPost = filteredPostList[indexPath.row]
             }
         }
     }
@@ -29,6 +34,10 @@ class FreeBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = selectedBoard?.boardTitle
+        
+        filteredPostList = selectedBoard?.posts ?? []
+        
+        setupSearchBar()
         
         composeContainerView.layer.cornerRadius = composeContainerView.frame.height / 2
         
@@ -61,6 +70,15 @@ class FreeBoardViewController: UIViewController {
         }
     }
     
+    func setupSearchBar() {
+        self.definesPresentationContext = true
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "검색어를 입력해주세요."
+    }
+    
     deinit {
         for token in tokens {
             NotificationCenter.default.removeObserver(token)
@@ -74,16 +92,44 @@ class FreeBoardViewController: UIViewController {
 
 
 
+
+extension FreeBoardViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(#function)
+        guard let posts = selectedBoard?.posts else { return }
+        filteredPostList = posts.filter({ post in
+            return post.postTitle.lowercased().contains(searchText.lowercased()) ||
+            post.postContent.lowercased().contains(searchText.lowercased())
+        })
+        
+        if let text = searchBar.text, text.isEmpty && filteredPostList.isEmpty {
+            filteredPostList = selectedBoard?.posts ?? []
+        }
+        
+        cachedText = searchText
+        postListTableView.reloadData()
+        print(filteredPostList.count)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if !cachedText.isEmpty && !filteredPostList.isEmpty {
+            searchController.searchBar.text = cachedText
+        }
+    }
+}
+
+
+
 extension FreeBoardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectedBoard?.posts.count ?? 0
+        return filteredPostList.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
         
-        guard let post = selectedBoard?.posts[indexPath.row] else { return cell }
+        let post = filteredPostList[indexPath.row]
         
         cell.configure(post: post)
         return cell

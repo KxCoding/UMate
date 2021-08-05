@@ -90,6 +90,10 @@ class Comment {
     let heartCount: Int
     
     var isliked = false
+ 
     
     static var dummyCommentList = [Comment]()
 }
+
+
+
