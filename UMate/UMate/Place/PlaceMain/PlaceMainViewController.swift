@@ -39,7 +39,7 @@ class PlaceMainViewController: UIViewController {
                   university: "숙명여대",
                   district: "숙대입구역 인근",
                   type: .desert,
-                  keywords: ["수제 아이스크림", "사진 찍기 좋은", "핫플", "아기자기한"],
+                  keywords: ["수제 아이스크림", "포토존", "핫플", "아기자기한"],
                   instagramID: "stickyrickys",
                   url: "http://naver.me/xE1xr6kD"),
             Place(name: "오오비",
@@ -70,6 +70,26 @@ class PlaceMainViewController: UIViewController {
         
         nearbyPlaceCollectionView.isPagingEnabled = true
         nearbyPlaceCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+        
+        // Item
+        // fractionalWidth, fractionalHeight는 0~1 사이 값, 1이면 상위(group size)만큼 채움
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 5)
+
+        // Group
+        // width: 상대값: fractionWidth(0.8), 넓이는 상위(section) width의 80%
+        // height: 절대값: absolute(120)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .absolute(120))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+
+        // Section (orthogonalScrollingBehavior)
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPagingCentered
+
+        // Compositional Layout
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        nearbyPlaceCollectionView.collectionViewLayout = layout
         
         locationContainer.setViewPillShape()
         searchBtnContainer.setViewPillShape()
