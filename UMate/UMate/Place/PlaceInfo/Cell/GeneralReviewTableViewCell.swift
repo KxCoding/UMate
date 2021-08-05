@@ -17,6 +17,7 @@ class GeneralReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var moodLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var foodAmountLabel: UILabel!
+    @IBOutlet weak var reviewWriteContainerView: UIView!
     
     
     func configure(with placeReview: PlaceReviewItem) {
@@ -31,6 +32,7 @@ class GeneralReviewTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        reviewWriteContainerView.layer.cornerRadius = 10
     }
 
 
