@@ -7,6 +7,8 @@
 
 import UIKit
 import DropDown
+import GoogleMaps
+import GooglePlaces
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         DropDown.startListeningToKeyboard()
+        
+        GMSServices.provideAPIKey("AIzaSyAhzg0tpy0zZB_UHQKg06K3uhkR46bQtAQ")
+        GMSPlacesClient.provideAPIKey("AIzaSyAhzg0tpy0zZB_UHQKg06K3uhkR46bQtAQ")
         
         return true
     }

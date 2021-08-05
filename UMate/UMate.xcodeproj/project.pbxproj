@@ -68,6 +68,10 @@
 		DFEF018826A756D90015829B /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018726A756D90015829B /* Board.swift */; };
 		DFEF018A26A7571A0015829B /* FreeBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018926A7571A0015829B /* FreeBoardTableViewCell.swift */; };
 		F1414B82382F46CC5C59AD6B /* Pods_UMate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0336406B0211FCA66E293B37 /* Pods_UMate.framework */; };
+		F4666A3126BAEF7800A7AFA5 /* PlaceMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4666A3026BAEF7800A7AFA5 /* PlaceMainViewController.swift */; };
+		F4666A3326BAEF9600A7AFA5 /* PlaceMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4666A3226BAEF9600A7AFA5 /* PlaceMain.storyboard */; };
+		F4666A3726BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4666A3626BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift */; };
+		F4666A5926BBCC3C00A7AFA5 /* UIView+Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4666A5826BBCC3C00A7AFA5 /* UIView+Config.swift */; };
 		F48843A226ABE512005DB8A3 /* PlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488438E26ABE512005DB8A3 /* PlaceViewController.swift */; };
 		F48843A326ABE512005DB8A3 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488439026ABE512005DB8A3 /* Review.swift */; };
 		F48843A426ABE512005DB8A3 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488439126ABE512005DB8A3 /* Place.swift */; };
@@ -156,6 +160,10 @@
 		DFEF018526A756C80015829B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		DFEF018726A756D90015829B /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DFEF018926A7571A0015829B /* FreeBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeBoardTableViewCell.swift; sourceTree = "<group>"; };
+		F4666A3026BAEF7800A7AFA5 /* PlaceMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMainViewController.swift; sourceTree = "<group>"; };
+		F4666A3226BAEF9600A7AFA5 /* PlaceMain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlaceMain.storyboard; sourceTree = "<group>"; };
+		F4666A3626BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPlaceCollectionViewCell.swift; sourceTree = "<group>"; };
+		F4666A5826BBCC3C00A7AFA5 /* UIView+Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Config.swift"; sourceTree = "<group>"; };
 		F488438E26ABE512005DB8A3 /* PlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceViewController.swift; sourceTree = "<group>"; };
 		F488439026ABE512005DB8A3 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		F488439126ABE512005DB8A3 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
@@ -438,9 +446,21 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		F4666A2F26BAEF6200A7AFA5 /* PlaceMain */ = {
+			isa = PBXGroup;
+			children = (
+				F4666A3026BAEF7800A7AFA5 /* PlaceMainViewController.swift */,
+				F4666A3226BAEF9600A7AFA5 /* PlaceMain.storyboard */,
+				F4666A3626BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift */,
+				F4666A5826BBCC3C00A7AFA5 /* UIView+Config.swift */,
+			);
+			path = PlaceMain;
+			sourceTree = "<group>";
+		};
 		F488438D26ABE512005DB8A3 /* Place */ = {
 			isa = PBXGroup;
 			children = (
+				F4666A2F26BAEF6200A7AFA5 /* PlaceMain */,
 				F488438E26ABE512005DB8A3 /* PlaceViewController.swift */,
 				F488438F26ABE512005DB8A3 /* Model */,
 				F488439226ABE512005DB8A3 /* PlaceSearch */,
@@ -509,6 +529,7 @@
 				5C92DD03269B4DEF0094A93C /* Frameworks */,
 				5C92DD04269B4DEF0094A93C /* Resources */,
 				64DCB5B42249AF506BF6A539 /* [CP] Embed Pods Frameworks */,
+				95D4E4F37D4933D891C138B2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -559,6 +580,7 @@
 				5C92DD28269B4E890094A93C /* Board.storyboard in Resources */,
 				5C92DD26269B4E850094A93C /* Home.storyboard in Resources */,
 				F48843A726ABE512005DB8A3 /* PlaceInfo.storyboard in Resources */,
+				F4666A3326BAEF9600A7AFA5 /* PlaceMain.storyboard in Resources */,
 				F48843A526ABE512005DB8A3 /* Place.storyboard in Resources */,
 				5C92DD16269B4DF00094A93C /* LaunchScreen.storyboard in Resources */,
 				5C92DD13269B4DF00094A93C /* Assets.xcassets in Resources */,
@@ -589,6 +611,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UMate/Pods-UMate-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		95D4E4F37D4933D891C138B2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UMate/Pods-UMate-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UMate/Pods-UMate-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UMate/Pods-UMate-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CEC84CABB56D06F83AD21DCE /* [CP] Check Pods Manifest.lock */ = {
@@ -644,6 +683,7 @@
 				DFEF018426A756AF0015829B /* LectureReviewBoardViewController.swift in Sources */,
 				DF25EF4626AFD5EE00949AAB /* PostImageCollectionViewCell.swift in Sources */,
 				5C92DD0E269B4DEF0094A93C /* ViewController.swift in Sources */,
+				F4666A5926BBCC3C00A7AFA5 /* UIView+Config.swift in Sources */,
 				F48843AD26ABE512005DB8A3 /* UserReviewTableViewCell.swift in Sources */,
 				F48843A626ABE512005DB8A3 /* PlaceInfoViewController.swift in Sources */,
 				F5B204A726B2ABF100A9C491 /* UIViewController+AlertNoContent.swift in Sources */,
@@ -659,6 +699,7 @@
 				5C733FE126B07CB500C1AF21 /* FriendsListTableViewController.swift in Sources */,
 				5C92DD0C269B4DEF0094A93C /* SceneDelegate.swift in Sources */,
 				6D8019C026A525900042A288 /* User.swift in Sources */,
+				F4666A3126BAEF7800A7AFA5 /* PlaceMainViewController.swift in Sources */,
 				6D9D9A9326B0788B0084C764 /* Termsandconditions.swift in Sources */,
 				6D8019C226A52C480042A288 /* Constant.swift in Sources */,
 				5C92DD32269B4ED20094A93C /* BoardViewController.swift in Sources */,
@@ -681,6 +722,7 @@
 				5C733FE326B07D7C00C1AF21 /* FriendsListViewController.swift in Sources */,
 				F50F9B5426B0F932007ABEF6 /* CommunityRuleViewController.swift in Sources */,
 				DF25EF4226AFD54C00949AAB /* PostContentTableViewCell.swift in Sources */,
+				F4666A3726BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift in Sources */,
 				F50F9B5226B0F6CF007ABEF6 /* ComposeViewController.swift in Sources */,
 				F48843B126ABE512005DB8A3 /* RoundedButton.swift in Sources */,
 				DFEF018026A756290015829B /* Date+Formatter.swift in Sources */,
