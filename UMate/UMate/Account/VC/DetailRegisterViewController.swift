@@ -25,20 +25,20 @@ class DetailRegisterViewController: UIViewController {
               isPasswordValid(password),
               password.count >= 8,
               password.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
-            showError(title: "알림", message: "비밀번호는 반드시 영문 숫자 특수문자를 포함해야합니다냐.")
-            return
-        }
+                  alertWithNoAction(title: "알림", message: "비밀번호는 반드시 영문 숫자 특수문자를 포함해야합니다냐.")
+                  return
+              }
         guard let repeatPassword = repeatPasswordTextField.text,
               repeatPassword == password else {
-            showError(title: "알림", message: "비밀번호가 같지 않습니다.")
-            return
-        }
+                  alertWithNoAction(title: "알림", message: "비밀번호가 같지 않습니다.")
+                  return
+              }
         guard let name = nickNameTextField.text,
               let nickName = nickNameTextField.text,
               name.count >= 2, nickName.count >= 2 else {
-            showError(title: "알림", message: "잘못된 형식의 이름 혹은 닉네임입니다.")
-            return
-        }
+                  alertWithNoAction(title: "알림", message: "잘못된 형식의 이름 혹은 닉네임입니다.")
+                  return
+              }
         
         
         
@@ -66,7 +66,7 @@ class DetailRegisterViewController: UIViewController {
             strongSelf.profileImageView.image = profileImageView.image
             
         })
-     
+        
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2.0
         profileImageView.clipsToBounds = true
         profileImageView.contentMode = .scaleAspectFill
