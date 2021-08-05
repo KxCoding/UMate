@@ -1,14 +1,14 @@
 //
-//  CommentTableViewCell.swift
+//  ReCommentTableViewCell.swift
 //  UMate
 //
-//  Created by 김정민 on 2021/08/04.
+//  Created by 김정민 on 2021/08/06.
 //
 
 import UIKit
 
-class CommentTableViewCell: UITableViewCell {
-    
+class ReCommentTableViewCell: UITableViewCell {
+
     let formatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "MM/dd"
@@ -24,7 +24,8 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var heartCountLabel: UILabel!
     @IBOutlet weak var btnContainerView: UIView!
     @IBOutlet weak var heartImageView: UIImageView!
-    
+    @IBOutlet weak var rightDownArrowContainerView: UIStackView!
+    @IBOutlet weak var reCommentContainerView: UIView!
     
     @IBAction func likeBtn(_ sender: Any) {
         print("공감합니다, HeartCount +1")
@@ -36,18 +37,21 @@ class CommentTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        btnContainerView.layer.cornerRadius = 14
-        btnContainerView.layer.borderColor = UIColor.lightGray.cgColor
-        btnContainerView.layer.borderWidth = 2
         
-        //heartCount가 0일때는 하트이미지 숨기는 기능 구현
+        reCommentContainerView.layer.cornerRadius = 14
+        
+        btnContainerView.layer.cornerRadius = 14
+        btnContainerView.layer.borderWidth = 2
+        btnContainerView.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-    func configure(with comment: Comment) {
-        profileImageView.image = comment.image
-        userIdLabel.text = comment.writer
-        commentLabel.text = comment.content
-        dateTimeLabel.text = formatter.string(from: comment.insertDate)
-        heartCountLabel.text = comment.heartCount.description
+    //indexPath: IndexPath
+    func configure(with comment: [Comment]) {
+        profileImageView.image = comment[0].image
+        userIdLabel.text = comment[0].writer
+        commentLabel.text = comment[0].content
+        dateTimeLabel.text = formatter.string(from: comment[0].insertDate)
+        heartCountLabel.text = "\(comment[0].heartCount)"
+        
     }
 }

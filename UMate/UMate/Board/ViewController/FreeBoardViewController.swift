@@ -65,7 +65,7 @@ class FreeBoardViewController: UIViewController {
         }
         tokens.append(token)
         
-        NotificationCenter.default.addObserver(forName: ComposeViewController.newPostInsert, object: nil, queue: .main) { [weak self] noti in
+        NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) { [weak self] noti in
             self?.postListTableView.reloadData()
         }
     }

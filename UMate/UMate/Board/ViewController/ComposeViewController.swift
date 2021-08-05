@@ -28,27 +28,7 @@ class ComposeViewController: UIViewController {
         }
     }
     
-    @IBAction func selectAlbum(_ sender: Any) {
-        guard let selectAlbumBtn = sender as? UIBarButtonItem else { return }
-        
-        if selectAlbumBtn.tag == 102 {
-            // 여기서 앨범 여는 코드를 구현하면 될려나?
-        }
-    }
-    
-    @IBOutlet weak var infoStackViewBottomConstraint: NSLayoutConstraint!
-    var willShowToken: NSObjectProtocol?
-    var willHideToken: NSObjectProtocol?
-    
-    deinit {
-        if let token = willShowToken {
-            NotificationCenter.default.removeObserver(token)
-        }
-        
-        if let token = willHideToken {
-            NotificationCenter.default.removeObserver(token)
-        }
-    }
+    @IBOutlet weak var contentTextViewBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,30 +39,14 @@ class ComposeViewController: UIViewController {
         postTitleTextField.inputAccessoryView = accessoryBar
         postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
         
-        postTitleTextField.placeholder = "제목"
+        postTitleTextField.placeholder = "제목을 입력하세요."
         postTitleTextField.returnKeyType = .next
         postTitleTextField.delegate = self
         
         postContentTextView.text = "내용을 입력하세요."
         postContentTextView.textColor = .lightGray
         postContentTextView.delegate = self
-        
-        willShowToken = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main, using: { [weak self]  noti in
-            guard let strongSelf = self else { return }
-            
-            if let frame = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                let height = frame.cgRectValue.height
-                
-                strongSelf.infoStackViewBottomConstraint.constant = height
-            }
-        })
-        
-        willHideToken = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main, using: { [weak self] (noti) in
-            guard let strongSelf = self else { return }
-            
-            
-            strongSelf.infoStackViewBottomConstraint.constant = 20
-        })
+ 
     }
     
     @IBAction func closeVC(_ sender: Any) {
@@ -98,16 +62,10 @@ class ComposeViewController: UIViewController {
         let newPost = Post(images: [UIImage(named: "image4")], postTitle: title, postContent: content, postWriter: "아이디 데이터 넣기!", insertDate: Date(), likeCount: 3, commentCount: 2)
         freeBoard.posts.insert(newPost, at: 0)
         
-        NotificationCenter.default.post(name: ComposeViewController.newPostInsert, object: nil)
+        NotificationCenter.default.post(name: .newPostInsert, object: nil)
         
         dismiss(animated: true, completion: nil)
     }
-}
-
-
-
-extension ComposeViewController {
-    static let newPostInsert = Notification.Name(rawValue: "newPostInsert")
 }
 
 
@@ -177,5 +135,11 @@ extension ComposeViewController: UITextFieldDelegate {
         
         return true
     }
+}
+
+
+
+extension Notification.Name {
+    static let newPostInsert = Notification.Name(rawValue: "newPostInsert")
 }
 
