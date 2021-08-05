@@ -18,7 +18,7 @@ class BoardViewController: UIViewController {
     @IBOutlet weak var boardListTableView: UITableView!
     
     @IBAction func updateBookmark(_ sender: UIButton) {
-        sender.tintColor = sender.tintColor == .lightGray ? .systemBlue : .lightGray
+        sender.tintColor = sender.tintColor == .lightGray ? .black : .lightGray
         
         if bookmarks.keys.contains(sender.tag) {
             if let isBookmarked = bookmarks[sender.tag] {
@@ -32,11 +32,11 @@ class BoardViewController: UIViewController {
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
-            if identifier == "freeSegue" && indexPath.row == 5 {
-                return false
+            if cell.reuseIdentifier == "NonExpandableBoardTableViewCell" && indexPath.row == 5 {
+                return false //강의평가 게시판
             }
-            if identifier == "infoSegue" && indexPath != IndexPath(row: 0, section: 2) {
-                return false
+            if cell.reuseIdentifier == "ExpandableBoardTableViewCell" && indexPath == IndexPath(row: 0, section: 2){
+                return false //정보게시판. 얘는 기본 게시판임.
             }
         }
         return true
@@ -47,11 +47,8 @@ class BoardViewController: UIViewController {
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
             
             if let vc = segue.destination as? FreeBoardViewController {
-                
-                if indexPath.section == 2 && indexPath.row == 0 {
-                    vc.selectedBoard = infoBoard
-                    
-                } else if indexPath.section == 0 {
+              
+                if indexPath.section == 0 {
                     switch indexPath.row {
                     case 0:
                         vc.selectedBoard = scrapBoard
@@ -65,6 +62,20 @@ class BoardViewController: UIViewController {
                         vc.selectedBoard = freshmanBoard
                     default: break
                     }
+                }
+            } else if let vc = segue.destination as? CategoryBoardViewController {
+                switch indexPath.section {
+                case 1:
+                    if indexPath.row == 0 {
+                        vc.selectedBoard = publicityBoard
+                    } else if indexPath.row == 1 {
+                        vc.selectedBoard = clubBoard
+                    }
+                case 2:
+                    if indexPath.row == 1 {
+                        vc.selectedBoard = careerBoard
+                    }
+                default: break
                 }
             }
         }
@@ -116,8 +127,7 @@ extension BoardViewController: UITableViewDataSource {
         
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
-            //재사용 셀을 생성
-            //그 셀을 설정해서 리턴해야함.
+        
             cell.configure(boardList: nonExpandableBoardList, indexPath: indexPath)
             return cell
         }
@@ -137,14 +147,10 @@ extension BoardViewController: UITableViewDelegate {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        //게시판 index에 맞는 게시판으로 이동해야함.
         switch indexPath.section {
             
         case 0:
             switch indexPath.row {
-            case 0,1,2,3,4:
-                //prepare(for segue)를 이용
-                break
             case 5:
                 //강의평가 게시판으로 이동
                 performSegue(withIdentifier: "lectureSegue", sender: self)
@@ -155,11 +161,7 @@ extension BoardViewController: UITableViewDelegate {
             
         case 1:
             switch indexPath.row {
-            case 0:
-                //홍보 게시판으로 이동
-                break
-            case 1:
-                //동아리, 학회 게시판으로 이동
+            case 0, 1:
                 break
             default:
                 break
@@ -169,9 +171,6 @@ extension BoardViewController: UITableViewDelegate {
             switch indexPath.row {
             case 0:
                 //정보 게시판으로 이동
-                break
-            case 1:
-                //취업, 진로 게시판으로 이동
                 break
             default:
                 break
@@ -202,8 +201,8 @@ extension BoardViewController: UITableViewDelegate {
             view.title.textColor = .darkGray
             view.title.font = UIFont.boldSystemFont(ofSize: 23)
             view.image.image = UIImage(named: "downarrow")
-            view.image.tintColor = .lightGray
-            view.image.alpha = 0.2
+            view.image.tintColor = .darkGray
+            view.image.alpha = 0.9
             
             
             view.addSubview(button)

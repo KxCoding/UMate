@@ -21,4 +21,16 @@ extension UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    func alertComment(title: String, message: String) {
+        let alertCommnet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alertCommnet.addAction(okAction)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alertCommnet.addAction(cancelAction)
+        
+        present(alertCommnet, animated: true, completion: nil)
+    }
 }

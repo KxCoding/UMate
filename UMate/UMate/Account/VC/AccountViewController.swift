@@ -26,26 +26,29 @@ class AccountViewController: UIViewController {
     
     
     @IBAction func login(_ sender: Any) {
-//        guard let id = idTextField.text,
-//              id.count > 0,
-//              id.contains("@") && id.contains("."),
-//              id.trimmingCharacters(in: .whitespacesAndNewlines)  != "" else {
-//
-//                  showError(title: "알림", message: "이메일 형식으로 입력해야합니다.")
-//
-//                  return
-//              }
-//
-//        guard let password = passwordTextField.text,
-//              isPasswordValid(password),
-//              password.count >= 8,
-//              password.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
-//
-//                  showError(title: "알림", message: "비밀번호는 최소 8자리 이상 특수문자 포함 해야합니다.")
-//
-//                  return
-//              }
-//        
+        guard idTextField.text == User.emailAddress && passwordTextField.text == User.password else {
+            return
+        }
+        guard let id = idTextField.text,
+              id.count > 0,
+              id.contains("@") && id.contains("."),
+              id.trimmingCharacters(in: .whitespacesAndNewlines)  != "" else {
+
+                  showError(title: "알림", message: "존재하지않는 아이디 입니다.")
+
+                  return
+              }
+
+        guard let password = passwordTextField.text,
+              isPasswordValid(password),
+              password.count >= 8,
+              password.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
+
+                  showError(title: "알림", message: "아이디 비밀번호가 맞지 않습니다.")
+
+                  return
+              }
+        
         
         transitionToHome()
         
@@ -55,6 +58,9 @@ class AccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginButton.layer.cornerRadius = loginButton.frame.height / 2
+     
+        idTextField.text = User.emailAddress
+        passwordTextField.text = User.password
         
     }
     
@@ -70,9 +76,6 @@ class AccountViewController: UIViewController {
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
         return passwordTest.evaluate(with: password)
     }
-    
-    
-  
     
 }
 

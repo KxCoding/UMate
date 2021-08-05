@@ -8,25 +8,63 @@
 import UIKit
 
 class PlaceSearchViewController: UIViewController {
-
-    var list: [SearchPlaceItem] = [
-        SearchPlaceItem(image: UIImage(named: "place_00"), placeTitle: "카페 지미스", regionName: "고양", classificationName: "카페"),
-        SearchPlaceItem(image: UIImage(named: "place_01"), placeTitle: "카페 케이원", regionName: "송리단길", classificationName: "카페"),
-        SearchPlaceItem(image: UIImage(named: "place_00"), placeTitle: "카페 브리타니", regionName: "부산", classificationName: "카페"),
-        SearchPlaceItem(image: UIImage(named: "place_01"), placeTitle: "꼬앙드파리", regionName: "과천", classificationName: "카페")
+    
+    var list = [SearchPlaceItem]()
+    
+    let dummyData: [SearchPlaceItem] = [
+        SearchPlaceItem(image: UIImage(named: "place_00"),
+                        placeTitle: "카페 지미스",
+                        regionName: "고양",
+                        classificationName: "카페"),
+        
+        SearchPlaceItem(image: UIImage(named: "place_01"),
+                        placeTitle: "카페 브리타니",
+                        regionName: "부산",
+                        classificationName: "카페"),
+        
+        SearchPlaceItem(image: UIImage(named: "search_00"),
+                        placeTitle: "가온",
+                        regionName: "청담",
+                        classificationName: "카페"),
+        
+        SearchPlaceItem(image: UIImage(named: "search_01"),
+                        placeTitle: "인생밥집",
+                        regionName: "제주시 서부",
+                        classificationName: "음식점"),
+        
+        SearchPlaceItem(image: UIImage(named: "search_02"),
+                        placeTitle: "인디안썸머",
+                        regionName: "제주시 서부",
+                        classificationName: "와인바"),
+        
+        SearchPlaceItem(image: UIImage(named: "search_03"),
+                        placeTitle: "인스밀",
+                        regionName: "서귀포시 서부",
+                        classificationName: "카페"),
+        
+        SearchPlaceItem(image: UIImage(named: "search_04"),
+                        placeTitle: "인셉트",
+                        regionName: "대전",
+                        classificationName: "카페"),
+        
+        SearchPlaceItem(image: UIImage(named: "search_05"),
+                        placeTitle: "인센스홀",
+                        regionName: "대전",
+                        classificationName: "카페")
     ]
     
     @IBOutlet weak var searchCollectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // 네비게이션바에 백버튼 타이틀 지우고 SearchBar를 추가
         self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
         let searchBar = UISearchBar()
-        searchBar.placeholder = "검색"
+        searchBar.placeholder = "검색어를 입력해주세요."
         self.navigationItem.titleView = searchBar
         searchBar.becomeFirstResponder()
+        searchBar.delegate = self
     }
 }
 
@@ -40,7 +78,7 @@ extension PlaceSearchViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceSearchCollectionViewCell", for: indexPath) as! PlaceSearchCollectionViewCell
-    
+        
         let target = list[indexPath.row]
         cell.configure(with: target)
         
@@ -61,5 +99,31 @@ extension PlaceSearchViewController: UICollectionViewDelegateFlowLayout {
         let height = width * 1.5
         
         return CGSize(width: Int(width), height: Int(height))
+    }
+}
+
+
+
+
+extension PlaceSearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        list = []
+        
+        guard let text = searchBar.text else { return }
+        
+        // 검색한 텍스트로 필터링
+        let containData = dummyData.filter { $0.placeTitle.contains(text) }
+        
+        // 필터링된 데이터를 장소 이름을 기준으로 오름차순 정렬
+        let sortContainData = containData.sorted { $0.placeTitle < $1.placeTitle }
+        
+        list.append(contentsOf: sortContainData)
+        print(list)
+        
+        searchBar.resignFirstResponder()
+        
+        DispatchQueue.main.async {
+            self.searchCollectionView.reloadData()
+        }
     }
 }

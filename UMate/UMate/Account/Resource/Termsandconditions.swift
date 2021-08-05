@@ -7,17 +7,6 @@
 
 import Foundation
 
-enum TermsOfService: String {
-    case service
-    case privacy
-    case location
-    case termsofservice
-    case privacypolicy
-    case locationbasedservices
-    case agreednotification
- 
-}
-
 class LocalStorage {
     
     private init() { }

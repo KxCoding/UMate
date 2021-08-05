@@ -30,19 +30,19 @@ class PostContentTableViewCell: UITableViewCell {
         
         guard let post = selectedPost else { return }
         
-        
-        
         if post.isliked {
-            likeContainerView.layer.borderColor = UIColor.lightGray.cgColor
+            likeContainerView.backgroundColor = .white
+            likeImageView.image = UIImage(systemName: "heart")
             likeImageView.tintColor = .lightGray
             likeButtonLabel.textColor = .lightGray
             
             post.isliked = false
             post.likeCount -= 1
         } else {
-            likeContainerView.layer.borderColor = UIColor.systemRed.cgColor
-            likeImageView.tintColor = .systemRed
-            likeButtonLabel.textColor = .systemRed
+            likeContainerView.backgroundColor = .black
+            likeImageView.image = UIImage(systemName: "heart.fill")
+            likeImageView.tintColor = .white
+            likeButtonLabel.textColor = .white
             
             post.isliked = true
             post.likeCount += 1
@@ -62,7 +62,8 @@ class PostContentTableViewCell: UITableViewCell {
         guard let post = selectedPost else { return }
         
         if post.isScrapped {
-            scrapContainerView.layer.borderColor = UIColor.lightGray.cgColor
+            scrapContainerView.backgroundColor = .white
+            scrapImageView.image = UIImage(systemName: "bookmark")
             scrapImageView.tintColor = .lightGray
             scrapButtonLabel.textColor = .lightGray
             
@@ -71,16 +72,17 @@ class PostContentTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .postCancelScrap, object: nil, userInfo: ["unscrappedPost": post])
     
         } else {
-            scrapContainerView.layer.borderColor = UIColor.systemYellow.cgColor
-            scrapImageView.tintColor = .systemYellow
-            scrapButtonLabel.textColor = .systemYellow
+            scrapContainerView.backgroundColor = .black
+            scrapImageView.image = UIImage(systemName: "bookmark.fill")
+            scrapImageView.tintColor = .white
+            scrapButtonLabel.textColor = .white
             
             post.isScrapped = true
             post.scrapCount += 1
             NotificationCenter.default.post(name: .postDidScrap, object: nil, userInfo: ["scrappedPost": post])
         }
         
-        scarpCountLabel.text = "\(post.scrapCount)"
+        scrapCountLabel.text = "\(post.scrapCount)"
     }
    
     
@@ -90,39 +92,41 @@ class PostContentTableViewCell: UITableViewCell {
     
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
-    @IBOutlet weak var scarpCountLabel: UILabel!
+    @IBOutlet weak var scrapCountLabel: UILabel!
   
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        likeContainerView.layer.borderColor = UIColor.darkGray.cgColor
+        likeContainerView.layer.borderColor = UIColor.lightGray.cgColor
         likeContainerView.layer.borderWidth = 1.0
         likeContainerView.layer.cornerRadius = 5
-        scrapContainerView.layer.borderColor = UIColor.darkGray.cgColor
+        scrapContainerView.layer.borderColor = UIColor.lightGray.cgColor
         scrapContainerView.layer.borderWidth = 1.0
         scrapContainerView.layer.cornerRadius = 5
     }
     
     func configure(post: Post) {
         if post.isliked {
-            likeContainerView.layer.borderColor = UIColor.systemRed.cgColor
-            likeImageView.tintColor = .systemRed
-            likeButtonLabel.textColor = .systemRed
+            likeContainerView.backgroundColor = .black
+            likeImageView.image = UIImage(systemName: "heart.fill")
+            likeImageView.tintColor = .white
+            likeButtonLabel.textColor = .white
         } else {
-            likeContainerView.layer.borderColor = UIColor.lightGray.cgColor
+            likeContainerView.backgroundColor = .white
+            likeImageView.image = UIImage(systemName: "heart")
             likeImageView.tintColor = .lightGray
             likeButtonLabel.textColor = .lightGray
         }
         
         if post.isScrapped {
-            //스크랩 되어 있으면 파랑색
-            scrapContainerView.layer.borderColor = UIColor.systemYellow.cgColor
-            scrapImageView.tintColor = .systemYellow
-            scrapButtonLabel.textColor = .systemYellow
+            scrapContainerView.backgroundColor = .black
+            scrapImageView.image = UIImage(systemName: "bookmark.fill")
+            scrapImageView.tintColor = .white
+            scrapButtonLabel.textColor = .white
         } else {
-            //안 되어 있으면 회색
-            scrapContainerView.layer.borderColor = UIColor.lightGray.cgColor
+            scrapContainerView.backgroundColor = .white
+            scrapImageView.image = UIImage(systemName: "bookmark")
             scrapImageView.tintColor = .lightGray
             scrapButtonLabel.textColor = .lightGray
         }
@@ -133,6 +137,7 @@ class PostContentTableViewCell: UITableViewCell {
         postContentLabel.text = post.postContent
         likeCountLabel.text = post.likeCount.description
         commentCountLabel.text = post.commentCount.description
+        scrapCountLabel.text = post.scrapCount.description
         selectedPost = post 
     }
 }
