@@ -30,8 +30,6 @@ class PostContentTableViewCell: UITableViewCell {
         
         guard let post = selectedPost else { return }
         
-        
-        
         if post.isliked {
             likeContainerView.backgroundColor = .white
             likeImageView.image = UIImage(systemName: "heart")
@@ -100,10 +98,10 @@ class PostContentTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        likeContainerView.layer.borderColor = UIColor.darkGray.cgColor
+        likeContainerView.layer.borderColor = UIColor.lightGray.cgColor
         likeContainerView.layer.borderWidth = 1.0
         likeContainerView.layer.cornerRadius = 5
-        scrapContainerView.layer.borderColor = UIColor.darkGray.cgColor
+        scrapContainerView.layer.borderColor = UIColor.lightGray.cgColor
         scrapContainerView.layer.borderWidth = 1.0
         scrapContainerView.layer.cornerRadius = 5
     }

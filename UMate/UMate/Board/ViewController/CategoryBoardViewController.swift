@@ -11,20 +11,69 @@ import UIKit
 class CategoryBoardViewController: UIViewController {
 
     var selectedBoard: Board?
+    let searchController = UISearchController(searchResultsController: nil)
     
     var filteredPostList: [Post] = []
     var nonCliked = true
     
+    var cachedText: String = ""
+    
     @IBOutlet weak var categoryListCollectionView: UICollectionView!
     
     @IBOutlet weak var categoryListTableView: UITableView!
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         filteredPostList = selectedBoard?.posts ?? []
+        
+        setupSearchBar()
+    }
+    
+    func setupSearchBar() {
+        self.definesPresentationContext = true
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "검색어를 입력해주세요."
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
     }
 }
+
+
+
+extension CategoryBoardViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(#function)
+        guard let posts = selectedBoard?.posts else { return }
+        filteredPostList = posts.filter({ post in
+            return post.postTitle.lowercased().contains(searchText.lowercased()) ||
+            post.postContent.lowercased().contains(searchText.lowercased())
+        })
+        
+        if let text = searchBar.text, text.isEmpty && filteredPostList.isEmpty {
+            filteredPostList = selectedBoard?.posts ?? []
+        }
+        
+        cachedText = searchText
+        categoryListTableView.reloadData()
+        print(filteredPostList.count)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if !cachedText.isEmpty && !filteredPostList.isEmpty {
+            searchController.searchBar.text = cachedText
+        }
+    }
+}
+
 
 
 extension CategoryBoardViewController: UICollectionViewDataSource {
@@ -91,7 +140,6 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
             filteredPostList = posts.filter{ post in
                 return post.club?.rawValue == selectedBoard?.categories[indexPath.row]
             }
-          
         } else if posts.first?.career != nil {
             filteredPostList = posts.filter{ post in
                 return post.career?.rawValue == selectedBoard?.categories[indexPath.row]
@@ -111,7 +159,7 @@ extension CategoryBoardViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
         
         let post = filteredPostList[indexPath.row]
-        
+        print(#function)
         cell.configure(post: post)
         return cell
     }
