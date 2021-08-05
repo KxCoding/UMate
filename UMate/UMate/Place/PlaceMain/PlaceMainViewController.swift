@@ -42,12 +42,12 @@ class PlaceMainViewController: UIViewController {
         let latitude = (currentCoor?.latitude ?? 37.546489) as Double
         let longitude = (currentCoor?.longitude ?? 126.973707) as Double
         
-        //        // 현재 지도가 표시하는 영역을 나타내는 카메라
-        //        let camera = GMSCameraPosition.camera(withLatitude: latitude,
-        //                                              longitude: longitude,
-        //                                              zoom: 16.0)
-        //        let map = GMSMapView.map(withFrame: mapView.bounds, camera: camera)
-        //        mapView.addSubview(map)
+//                // 현재 지도가 표시하는 영역을 나타내는 카메라
+//                let camera = GMSCameraPosition.camera(withLatitude: latitude,
+//                                                      longitude: longitude,
+//                                                      zoom: 16.0)
+//                let map = GMSMapView.map(withFrame: mapView.bounds, camera: camera)
+//                mapView.addSubview(map)
         
         // 상단 뷰 초기화
         locationContainer.viewConfig(with: [.pillShape, .lightBorder])
