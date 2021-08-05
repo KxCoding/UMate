@@ -16,6 +16,7 @@ struct Place {
         case bakery = "베이커리"
         case studyCafe = "스터디카페"
         case pub = "주점"
+        case desert = "디저트 가게"
     }
     
     var id = UUID()
@@ -40,10 +41,14 @@ struct Place {
             return UIImage(named: "pencil")
         case .pub:
             return UIImage(named: "beer")
+        case .desert:
+            return UIImage(named: "ice-cream")
         }
     }
     
     var keywords: [String]
+    
+    var images = [UIImage]()
     
     var instagramID: String?
     var url: String?

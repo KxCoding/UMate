@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fG8-jQ-fN1">
-                                <rect key="frame" x="0.0" y="44" width="414" height="1873"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="1917"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FirstSectionTableViewCell" rowHeight="160" id="YSS-t7-UHC" customClass="FirstSectionTableViewCell" customModule="UMate" customModuleProvider="target">
@@ -30,12 +30,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6XF-Oq-RQd">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-image-landscape" translatesAutoresizingMaskIntoConstraints="NO" id="6XF-Oq-RQd">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="6XF-Oq-RQd" secondAttribute="height" multiplier="3:2" id="DLA-Yi-OLj"/>
                                                     </constraints>
-                                                    <imageReference key="image" image="place_01"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -504,7 +503,7 @@
                                                             <rect key="frame" x="0.0" y="39" width="169.5" height="30"/>
                                                             <subviews>
                                                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQJ-K3-2mj" customClass="CosmosView" customModule="Cosmos">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="30"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="20"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="120" id="b5i-PP-Lah"/>
@@ -734,7 +733,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="169.5" height="30"/>
                                                                     <subviews>
                                                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7lK-Xb-haj" customClass="CosmosView" customModule="Cosmos">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="30"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="20"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -870,23 +869,13 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7PB-lK-DxV">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="36"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="Sjo-pt-MP5"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="FFu-oa-NdP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="fG8-jQ-fN1" firstAttribute="leading" secondItem="FFu-oa-NdP" secondAttribute="leading" id="047-LL-XDd"/>
-                            <constraint firstItem="7PB-lK-DxV" firstAttribute="top" secondItem="htc-VT-I8V" secondAttribute="top" id="0DZ-DA-AbM"/>
                             <constraint firstItem="fG8-jQ-fN1" firstAttribute="trailing" secondItem="FFu-oa-NdP" secondAttribute="trailing" id="DJq-8W-PQR"/>
-                            <constraint firstItem="7PB-lK-DxV" firstAttribute="leading" secondItem="htc-VT-I8V" secondAttribute="leading" id="feh-FB-M5W"/>
-                            <constraint firstAttribute="trailing" secondItem="7PB-lK-DxV" secondAttribute="trailing" id="nva-RK-6BN"/>
-                            <constraint firstItem="fG8-jQ-fN1" firstAttribute="top" secondItem="FFu-oa-NdP" secondAttribute="top" id="swy-de-TXk"/>
+                            <constraint firstItem="fG8-jQ-fN1" firstAttribute="top" secondItem="htc-VT-I8V" secondAttribute="top" id="swy-de-TXk"/>
                             <constraint firstItem="fG8-jQ-fN1" firstAttribute="bottom" secondItem="FFu-oa-NdP" secondAttribute="bottom" id="xI9-Zh-uEf"/>
                         </constraints>
                     </view>
@@ -2109,7 +2098,7 @@
                                                             <rect key="frame" x="0.0" y="39" width="169.5" height="30"/>
                                                             <subviews>
                                                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5f4-lN-vez" customClass="CosmosView" customModule="Cosmos">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="30"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="20"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="120" id="YWA-aO-qg5"/>
@@ -2339,7 +2328,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="169.5" height="30"/>
                                                                     <subviews>
                                                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GOE-o1-hg7" customClass="CosmosView" customModule="Cosmos">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="30"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="20"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -3242,6 +3231,9 @@
         <designable name="5bc-iw-ddJ">
             <size key="intrinsicContentSize" width="39" height="30"/>
         </designable>
+        <designable name="5f4-lN-vez">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
         <designable name="622-jF-g17">
             <size key="intrinsicContentSize" width="52" height="30"/>
         </designable>
@@ -3250,6 +3242,9 @@
         </designable>
         <designable name="75O-HV-YHd">
             <size key="intrinsicContentSize" width="52" height="30"/>
+        </designable>
+        <designable name="7lK-Xb-haj">
+            <size key="intrinsicContentSize" width="120" height="20"/>
         </designable>
         <designable name="88r-xq-QHI">
             <size key="intrinsicContentSize" width="30" height="30"/>
@@ -3278,6 +3273,9 @@
         <designable name="F6q-PZ-5c6">
             <size key="intrinsicContentSize" width="47" height="30"/>
         </designable>
+        <designable name="GOE-o1-hg7">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
         <designable name="H1c-7m-gSQ">
             <size key="intrinsicContentSize" width="30" height="30"/>
         </designable>
@@ -3301,6 +3299,9 @@
         </designable>
         <designable name="Rzs-15-JmQ">
             <size key="intrinsicContentSize" width="52" height="30"/>
+        </designable>
+        <designable name="YQJ-K3-2mj">
+            <size key="intrinsicContentSize" width="120" height="20"/>
         </designable>
         <designable name="Ybi-nn-APR">
             <size key="intrinsicContentSize" width="30" height="30"/>
@@ -3380,6 +3381,7 @@
         <image name="bookmark64" width="32" height="32"/>
         <image name="cafe" width="32" height="32"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
+        <image name="dummy-image-landscape" width="512" height="292.5"/>
         <image name="hand.thumbsup" catalog="system" width="128" height="128"/>
         <image name="hand.thumbsup.fill" catalog="system" width="128" height="121"/>
         <image name="instagram64" width="32" height="32"/>
@@ -3387,7 +3389,6 @@
         <image name="location_64" width="32" height="32"/>
         <image name="mapImage" width="562.5" height="224"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
-        <image name="place_01" width="562.5" height="258.5"/>
         <image name="safari" catalog="system" width="128" height="121"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
