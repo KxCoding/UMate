@@ -76,7 +76,9 @@ extension PasswordChangeViewController: UITextFieldDelegate {
         case checkField:
             guard let checkPassword = checkField.text, checkPassword.count > 1, checkPassword == passwordField.text else {
                 checkPasswordContainerView.isHidden = false
-                return false
+                checkPasswordLabel.text = "입력하신 두 비밀번호가 일치하지 않습니다."
+                checkPasswordLabel.textColor = UIColor.red
+                return true
             }
             checkPasswordLabel.text = "비밀번호가 일치합니다."
             checkPasswordLabel.textColor = UIColor.blue
