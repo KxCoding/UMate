@@ -88,7 +88,9 @@
                             <constraint firstItem="Hmg-p6-Ay9" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="qDa-Za-Pz3"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Timetable" id="Ab4-sA-Stu"/>
+                    <tabBarItem key="tabBarItem" title="Timetable" id="Ab4-sA-Stu">
+                        <imageReference key="image" image="clock" catalog="system"/>
+                    </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="timetableView" destination="mI1-yV-quH" id="V6X-LR-gf2"/>
@@ -1331,6 +1333,7 @@
     </scenes>
     <resources>
         <image name="check" width="16" height="16"/>
+        <image name="clock" catalog="system" width="128" height="121"/>
         <namedColor name="blue">
             <color red="0.20000000000000001" green="0.59999999999999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
