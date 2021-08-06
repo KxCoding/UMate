@@ -21,12 +21,12 @@ class PostContentTableViewCell: UITableViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    
+    // MARK: 공감 버튼
     @IBOutlet weak var likeContainerView: UIView!
     @IBOutlet weak var likeImageView: UIImageView!
     @IBOutlet weak var likeButtonLabel: UILabel!
     @IBAction func likeButton(_ sender: UIButton) {
-        //공감 버튼
-        print("+1 like")
         
         guard let post = selectedPost else { return }
         
@@ -52,13 +52,12 @@ class PostContentTableViewCell: UITableViewCell {
     }
     
     
+    // MARK: 스크랩 버튼
     @IBOutlet weak var scrapContainerView: UIView!
     @IBOutlet weak var scrapImageView: UIImageView!
     @IBOutlet weak var scrapButtonLabel: UILabel!
     @IBAction func scrapButton(_ sender: UIButton) {
-        //스크랩 버튼
-        print("+1 scrap")
-        
+    
         guard let post = selectedPost else { return }
         
         if post.isScrapped {
@@ -105,6 +104,7 @@ class PostContentTableViewCell: UITableViewCell {
         scrapContainerView.layer.borderWidth = 1.0
         scrapContainerView.layer.cornerRadius = 5
     }
+    
     
     func configure(post: Post) {
         if post.isliked {

@@ -13,11 +13,11 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageContentView: UIView!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         layer.cornerRadius = 15.0
-        //layer.borderWidth = 0.0
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 2, height: 2)
         layer.shadowRadius = 2
@@ -26,6 +26,5 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         
         imageContentView.layer.cornerRadius = postImageView.frame.height * 0.06
         imageContentView.layer.masksToBounds = true
-       
     }
 }

@@ -58,7 +58,6 @@
 		DF25EF4226AFD54C00949AAB /* PostContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4126AFD54C00949AAB /* PostContentTableViewCell.swift */; };
 		DF25EF4426AFD59300949AAB /* PostImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4326AFD59300949AAB /* PostImageTableViewCell.swift */; };
 		DF25EF4626AFD5EE00949AAB /* PostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4526AFD5EE00949AAB /* PostImageCollectionViewCell.swift */; };
-		DF25EF4926AFD61500949AAB /* BoardDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4826AFD61500949AAB /* BoardDummy.swift */; };
 		DF25EF4C26AFDD1F00949AAB /* BoardCustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF25EF4B26AFDD1F00949AAB /* BoardCustomHeaderView.swift */; };
 		DF27D74B26B936780046D7BF /* CategoryBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF27D74A26B936780046D7BF /* CategoryBoardViewController.swift */; };
 		DF27D74D26B937240046D7BF /* CategoryBoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF27D74C26B937240046D7BF /* CategoryBoardCollectionViewCell.swift */; };
@@ -93,7 +92,7 @@
 		F50F9B5226B0F6CF007ABEF6 /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F9B5126B0F6CF007ABEF6 /* ComposeViewController.swift */; };
 		F50F9B5426B0F932007ABEF6 /* CommunityRuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F9B5326B0F932007ABEF6 /* CommunityRuleViewController.swift */; };
 		F53A427926BC73DE008D1698 /* ReCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A427826BC73DE008D1698 /* ReCommentTableViewCell.swift */; };
-		F53A427B26BC7FB0008D1698 /* BuildFile in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F53A427B26BC7FB0008D1698 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F560368726B9EE5C0093DDC7 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F560368626B9EE5C0093DDC7 /* CommentTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -104,7 +103,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F53A427B26BC7FB0008D1698 /* BuildFile in Embed Frameworks */,
+				F53A427B26BC7FB0008D1698 /* (null) in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,7 +166,6 @@
 		DF25EF4126AFD54C00949AAB /* PostContentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostContentTableViewCell.swift; sourceTree = "<group>"; };
 		DF25EF4326AFD59300949AAB /* PostImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageTableViewCell.swift; sourceTree = "<group>"; };
 		DF25EF4526AFD5EE00949AAB /* PostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageCollectionViewCell.swift; sourceTree = "<group>"; };
-		DF25EF4826AFD61500949AAB /* BoardDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDummy.swift; sourceTree = "<group>"; };
 		DF25EF4B26AFDD1F00949AAB /* BoardCustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCustomHeaderView.swift; sourceTree = "<group>"; };
 		DF27D74A26B936780046D7BF /* CategoryBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBoardViewController.swift; sourceTree = "<group>"; };
 		DF27D74C26B937240046D7BF /* CategoryBoardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBoardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -303,14 +301,17 @@
 		5C92DD20269B4E670094A93C /* Board */ = {
 			isa = PBXGroup;
 			children = (
-				DF25EF4A26AFDD0100949AAB /* View */,
-				DF25EF4726AFD60700949AAB /* Dummy */,
-				DF25EF3D26AFD4BE00949AAB /* DetailPost */,
-				DFEF017D26A755E00015829B /* ViewController */,
-				DF3EA85926A3FF4500424E7E /* Model */,
-				DF46AEAA26A1C70A00435D94 /* Cell */,
 				5C92DD27269B4E890094A93C /* Board.storyboard */,
 				5C92DD31269B4ED20094A93C /* BoardViewController.swift */,
+				DFEF018126A756880015829B /* FreeBoardViewController.swift */,
+				DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */,
+				DF27D74A26B936780046D7BF /* CategoryBoardViewController.swift */,
+				F50F9B5126B0F6CF007ABEF6 /* ComposeViewController.swift */,
+				F50F9B5326B0F932007ABEF6 /* CommunityRuleViewController.swift */,
+				DF25EF3E26AFD4F300949AAB /* DetailPostViewController.swift */,
+				DF46AEAA26A1C70A00435D94 /* Cell */,
+				DF3EA85926A3FF4500424E7E /* Model */,
+				DF25EF4A26AFDD0100949AAB /* View */,
 			);
 			path = Board;
 			sourceTree = "<group>";
@@ -399,15 +400,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DF25EF3D26AFD4BE00949AAB /* DetailPost */ = {
-			isa = PBXGroup;
-			children = (
-				DF25EF3E26AFD4F300949AAB /* DetailPostViewController.swift */,
-				DF25EF4026AFD51B00949AAB /* DetailPostCell */,
-			);
-			path = DetailPost;
-			sourceTree = "<group>";
-		};
 		DF25EF4026AFD51B00949AAB /* DetailPostCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,14 +410,6 @@
 				F53A427826BC73DE008D1698 /* ReCommentTableViewCell.swift */,
 			);
 			path = DetailPostCell;
-			sourceTree = "<group>";
-		};
-		DF25EF4726AFD60700949AAB /* Dummy */ = {
-			isa = PBXGroup;
-			children = (
-				DF25EF4826AFD61500949AAB /* BoardDummy.swift */,
-			);
-			path = Dummy;
 			sourceTree = "<group>";
 		};
 		DF25EF4A26AFDD0100949AAB /* View */ = {
@@ -452,20 +436,9 @@
 				DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */,
 				DFEF018926A7571A0015829B /* FreeBoardTableViewCell.swift */,
 				DF27D74C26B937240046D7BF /* CategoryBoardCollectionViewCell.swift */,
+				DF25EF4026AFD51B00949AAB /* DetailPostCell */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		DFEF017D26A755E00015829B /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				DFEF018126A756880015829B /* FreeBoardViewController.swift */,
-				DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */,
-				F50F9B5126B0F6CF007ABEF6 /* ComposeViewController.swift */,
-				F50F9B5326B0F932007ABEF6 /* CommunityRuleViewController.swift */,
-				DF27D74A26B936780046D7BF /* CategoryBoardViewController.swift */,
-			);
-			path = ViewController;
 			sourceTree = "<group>";
 		};
 		EDA9F6209A6ED419EF4D01D4 /* Pods */ = {
@@ -701,7 +674,6 @@
 				5C7E4C4F26BD6FD4009DF776 /* Dummy.swift in Sources */,
 				F48843A626ABE512005DB8A3 /* PlaceInfoViewController.swift in Sources */,
 				F48843A926ABE512005DB8A3 /* GeneralReviewTableViewCell.swift in Sources */,
-				DF25EF4926AFD61500949AAB /* BoardDummy.swift in Sources */,
 				F48843A226ABE512005DB8A3 /* PlaceViewController.swift in Sources */,
 				5CD1F63A26B9A7FB00441831 /* PasswordChangeViewController.swift in Sources */,
 				6D9E3AAF26B26B300038614D /* EmailVerifyViewController.swift in Sources */,

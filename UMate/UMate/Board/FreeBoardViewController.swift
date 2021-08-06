@@ -20,6 +20,7 @@ class FreeBoardViewController: UIViewController {
     
     var cachedText: String = ""
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? UITableViewCell, let indexPath = postListTableView.indexPath(for: cell) {
             if let vc = segue.destination as? DetailPostViewController {
@@ -28,8 +29,10 @@ class FreeBoardViewController: UIViewController {
         }
     }
     
+    
     var tokens = [NSObjectProtocol]()
     var newPostToken: NSObjectProtocol?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,10 +123,12 @@ extension FreeBoardViewController: UISearchBarDelegate {
 
 
 
+
 extension FreeBoardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredPostList.count ?? 0
+        return filteredPostList.count
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -133,6 +138,5 @@ extension FreeBoardViewController: UITableViewDataSource {
         
         cell.configure(post: post)
         return cell
-        
     }
 }

@@ -19,6 +19,7 @@ class FreeBoardTableViewCell: UITableViewCell {
     @IBOutlet weak var likeCount: UILabel!
     @IBOutlet weak var commentCount: UILabel!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -27,6 +28,7 @@ class FreeBoardTableViewCell: UITableViewCell {
         postImageView.layer.borderColor = UIColor.lightGray.cgColor
     }
     
+    
     func configure(post: Post) {
         
         postImageView.isHidden = post.images.first == nil ? true : false
@@ -34,6 +36,7 @@ class FreeBoardTableViewCell: UITableViewCell {
         if post.images.count > 0 {
             postImageView.image = post.images[0]
         }
+        
         postTitle.text = post.postTitle
         postContent.text = post.postContent
         postTime.text = post.insertDate.relativeDate
