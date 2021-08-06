@@ -7,8 +7,6 @@
 
 import UIKit
 import CoreLocation
-import GoogleMaps
-import GooglePlaces
 
 class PlaceMainViewController: UIViewController {
     
@@ -19,6 +17,7 @@ class PlaceMainViewController: UIViewController {
     @IBOutlet weak var searchBtnContainer: UIView!
     
     @IBOutlet weak var nearbyPlaceCollectionView: UICollectionView!
+    
     var selecteditemIndex = 0
     
     var list = [Place]()
@@ -26,28 +25,6 @@ class PlaceMainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 위치 생성을 위한 세팅
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        
-        // 뷰 로드 시점에 위치 추적 권한 요청
-        locationManager.requestWhenInUseAuthorization()
-        // 정확도 설정
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        // 위치 업데이트
-        locationManager.startUpdatingLocation()
-        
-        // 위도, 경도 가져오기
-        let currentCoor = locationManager.location?.coordinate
-        let latitude = (currentCoor?.latitude ?? 37.546489) as Double
-        let longitude = (currentCoor?.longitude ?? 126.973707) as Double
-        
-//                // 현재 지도가 표시하는 영역을 나타내는 카메라
-//                let camera = GMSCameraPosition.camera(withLatitude: latitude,
-//                                                      longitude: longitude,
-//                                                      zoom: 16.0)
-//                let map = GMSMapView.map(withFrame: mapView.bounds, camera: camera)
-//                mapView.addSubview(map)
         
         // 상단 뷰 초기화
         locationContainer.viewConfig(with: [.pillShape, .lightBorder])
@@ -107,6 +84,7 @@ class PlaceMainViewController: UIViewController {
             }
         }
     }
+    
 }
 
 extension PlaceMainViewController: UICollectionViewDataSource {
@@ -121,7 +99,6 @@ extension PlaceMainViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
 }
 
 
@@ -132,20 +109,5 @@ extension PlaceMainViewController: UICollectionViewDelegateFlowLayout {
         let height = CGFloat(120)
         return CGSize(width: width, height: height)
     }
-    
 }
 
-extension PlaceMainViewController: CLLocationManagerDelegate {
-    
-}
-
-
-extension PlaceMainViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(#function, scrollView.contentOffset)
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        print(targetContentOffset.pointee.x, targetContentOffset.pointee.y)
-    }
-}
