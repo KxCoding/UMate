@@ -16,6 +16,9 @@ class ComposeViewController: UIViewController {
     
     @IBOutlet var accessoryBar: UIToolbar!
     
+    @IBOutlet weak var contentTextViewBottomConstraint: NSLayoutConstraint!
+    
+    
     @IBAction func selectWriter(_ sender: Any) {
         guard let selectWriter = sender as? UIBarButtonItem else { return }
         
@@ -28,7 +31,6 @@ class ComposeViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var contentTextViewBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()

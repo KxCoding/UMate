@@ -12,6 +12,7 @@ class CategoryBoardCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var categoryName: UILabel!
     @IBOutlet weak var categoryView: UIView!
     
+    
     override var isSelected: Bool {
         didSet {
             if isSelected {
@@ -25,6 +26,7 @@ class CategoryBoardCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    
     
     func configure(categories: [String], indexPath: IndexPath) {
         categoryName.text = categories[indexPath.row]

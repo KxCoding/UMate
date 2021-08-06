@@ -8,14 +8,14 @@
 import UIKit
 
 
-//##section접었다 펼쳤을 때 스크롤 조정해야함.##
-
+// TODO: section접었다 펼쳤을 때 스크롤 조정해야함
 
 class BoardViewController: UIViewController {
     
     var bookmarks: [Int:Bool] = [:]
     
     @IBOutlet weak var boardListTableView: UITableView!
+    
     
     @IBAction func updateBookmark(_ sender: UIButton) {
         sender.tintColor = sender.tintColor == .lightGray ? .black : .lightGray
@@ -25,7 +25,6 @@ class BoardViewController: UIViewController {
                 bookmarks[sender.tag] = !isBookmarked
             }
         }
-        //print(bookmarks[sender.tag])
     }
     
     
@@ -41,6 +40,7 @@ class BoardViewController: UIViewController {
         }
         return true
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -81,6 +81,7 @@ class BoardViewController: UIViewController {
         }
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,21 +102,25 @@ class BoardViewController: UIViewController {
 
 
 
+
 extension BoardViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
-            //non expandable board
+        //non expandable board
         case 0:
             return nonExpandableBoardList.count
             
-            //expandable board
+        //expandable board
         case 1,2:
-            if expandableBoardList[section - 1].isExpanded { return expandableBoardList[section - 1].boardNames.count }
+            if expandableBoardList[section - 1].isExpanded {
+                return expandableBoardList[section - 1].boardNames.count
+            }
             return 0
             
         default: return 0
@@ -142,43 +147,19 @@ extension BoardViewController: UITableViewDataSource {
 
 
 
+
 extension BoardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        switch indexPath.section {
-            
-        case 0:
-            switch indexPath.row {
-            case 5:
-                //강의평가 게시판으로 이동
-                performSegue(withIdentifier: "lectureSegue", sender: self)
-                break
-            default:
-                break
-            }
-            
-        case 1:
-            switch indexPath.row {
-            case 0, 1:
-                break
-            default:
-                break
-            }
-            
-        case 2:
-            switch indexPath.row {
-            case 0:
-                //정보 게시판으로 이동
-                break
-            default:
-                break
-            }
-            
-        default: break
+        if indexPath.section == 0 && indexPath.row == 5 {
+            performSegue(withIdentifier: "lectureSegue", sender: self)
+        } else if indexPath.section == 2 && indexPath.row == 0 {
+            //정보게시판으로 이동
         }
     }
+    
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
@@ -190,6 +171,7 @@ extension BoardViewController: UITableViewDelegate {
         }
         return 0
     }
+    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
@@ -216,7 +198,7 @@ extension BoardViewController: UITableViewDelegate {
             
             button.addTarget(self, action: #selector(handleExpandClose(button:)), for: .touchUpInside)
             
-            button.tag = section//  버튼 태그는 1,2
+            button.tag = section// 버튼 태그는 1,2
             return view
         }
         
@@ -224,6 +206,7 @@ extension BoardViewController: UITableViewDelegate {
         //header.alpha = 1
         return header
     }
+    
     
     @objc func handleExpandClose(button: UIButton) {
         
@@ -244,7 +227,6 @@ extension BoardViewController: UITableViewDelegate {
             boardListTableView.deleteRows(at: indexPathArr, with: .fade)
         }
     }
-    
 }
 
 

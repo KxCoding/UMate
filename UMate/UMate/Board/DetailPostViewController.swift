@@ -184,14 +184,14 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostContentTableViewCell", for: indexPath) as! PostContentTableViewCell
             guard let post = selectedPost else { return cell }
-            //print("1")
+    
             cell.configure(post: post)
             return cell
             
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostImageTableViewCell", for: indexPath) as! PostImageTableViewCell
             guard let post = selectedPost else { return cell }
-            //print(post.images.count)
+        
             cell.configure(post: post)
             return cell
             

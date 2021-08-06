@@ -9,20 +9,20 @@ import UIKit
 
 class PostImageTableViewCell: UITableViewCell {
     
-    
     var selectedPost: Post?
     
     @IBOutlet weak var postImageCollectionView: UICollectionView!
 
+    
     override func awakeFromNib() {
         super.awakeFromNib()
      
         postImageCollectionView.dataSource = self
     }
     
+    
     func configure(post: Post) {
         selectedPost = post
-        //print(post.images.count)
         postImageCollectionView.isHidden = post.images.isEmpty
         postImageCollectionView.reloadData()
     }
@@ -35,6 +35,7 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedPost?.images.count ?? 0
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
