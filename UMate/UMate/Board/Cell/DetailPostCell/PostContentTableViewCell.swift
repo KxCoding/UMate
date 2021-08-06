@@ -23,121 +23,91 @@ class PostContentTableViewCell: UITableViewCell {
     
     
     // MARK: 공감 버튼
-    @IBOutlet weak var likeContainerView: UIView!
     @IBOutlet weak var likeImageView: UIImageView!
-    @IBOutlet weak var likeButtonLabel: UILabel!
     @IBAction func likeButton(_ sender: UIButton) {
-        
+        print("+1 like")
         guard let post = selectedPost else { return }
         
         if post.isliked {
-            likeContainerView.backgroundColor = .white
-            likeImageView.image = UIImage(systemName: "heart")
-            likeImageView.tintColor = .lightGray
-            likeButtonLabel.textColor = .lightGray
+            UIView.animate(withDuration: 0.2) {
+                self.likeImageView.image = UIImage(named: "heart2")
+                self.likeImageView.tintColor = .lightGray
+            }
             
             post.isliked = false
             post.likeCount -= 1
         } else {
-            likeContainerView.backgroundColor = .black
-            likeImageView.image = UIImage(systemName: "heart.fill")
-            likeImageView.tintColor = .white
-            likeButtonLabel.textColor = .white
+            UIView.animate(withDuration: 0.2) {
+                self.likeImageView.image = UIImage(named: "heart2.fill")
+                self.likeImageView.tintColor = .black
+            }
             
             post.isliked = true
             post.likeCount += 1
         }
-        
-        likeCountLabel.text = "\(post.likeCount)"
     }
     
     
     // MARK: 스크랩 버튼
-    @IBOutlet weak var scrapContainerView: UIView!
     @IBOutlet weak var scrapImageView: UIImageView!
-    @IBOutlet weak var scrapButtonLabel: UILabel!
     @IBAction func scrapButton(_ sender: UIButton) {
-    
+        print("+1 scrap")
         guard let post = selectedPost else { return }
         
         if post.isScrapped {
-            scrapContainerView.backgroundColor = .white
-            scrapImageView.image = UIImage(systemName: "bookmark")
-            scrapImageView.tintColor = .lightGray
-            scrapButtonLabel.textColor = .lightGray
+            UIView.animate(withDuration: 0.2) {
+                self.scrapImageView.image = UIImage(named: "bookmark64")
+                self.scrapImageView.tintColor = .lightGray
+            }
             
             post.isScrapped = false
             post.scrapCount -= 1
             NotificationCenter.default.post(name: .postCancelScrap, object: nil, userInfo: ["unscrappedPost": post])
     
         } else {
-            scrapContainerView.backgroundColor = .black
-            scrapImageView.image = UIImage(systemName: "bookmark.fill")
-            scrapImageView.tintColor = .white
-            scrapButtonLabel.textColor = .white
+            UIView.animate(withDuration: 0.2) {
+                self.scrapImageView.image = UIImage(named: "bookmark64.fill")
+                self.scrapImageView.tintColor = .black
+            }
             
             post.isScrapped = true
             post.scrapCount += 1
             NotificationCenter.default.post(name: .postDidScrap, object: nil, userInfo: ["scrappedPost": post])
         }
-        
-        scrapCountLabel.text = "\(post.scrapCount)"
     }
    
     
     @IBOutlet weak var postTitleLabel: UILabel!
     @IBOutlet weak var postContentLabel: UILabel!
-    
-    
-    @IBOutlet weak var likeCountLabel: UILabel!
-    @IBOutlet weak var commentCountLabel: UILabel!
-    @IBOutlet weak var scrapCountLabel: UILabel!
   
 
     override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        likeContainerView.layer.borderColor = UIColor.lightGray.cgColor
-        likeContainerView.layer.borderWidth = 1.0
-        likeContainerView.layer.cornerRadius = 5
-        scrapContainerView.layer.borderColor = UIColor.lightGray.cgColor
-        scrapContainerView.layer.borderWidth = 1.0
-        scrapContainerView.layer.cornerRadius = 5
+        userImageView.layer.cornerRadius = userImageView.frame.height / 2
     }
     
     
     func configure(post: Post) {
         if post.isliked {
-            likeContainerView.backgroundColor = .black
-            likeImageView.image = UIImage(systemName: "heart.fill")
-            likeImageView.tintColor = .white
-            likeButtonLabel.textColor = .white
+            self.likeImageView.image = UIImage(named: "heart2.fill")
+            self.likeImageView.tintColor = .black
         } else {
-            likeContainerView.backgroundColor = .white
-            likeImageView.image = UIImage(systemName: "heart")
-            likeImageView.tintColor = .lightGray
-            likeButtonLabel.textColor = .lightGray
+            self.likeImageView.image = UIImage(named: "heart2")
+            self.likeImageView.tintColor = .lightGray
         }
         
         if post.isScrapped {
-            scrapContainerView.backgroundColor = .black
-            scrapImageView.image = UIImage(systemName: "bookmark.fill")
-            scrapImageView.tintColor = .white
-            scrapButtonLabel.textColor = .white
+            self.scrapImageView.image = UIImage(named: "bookmark64.fill")
+            self.scrapImageView.tintColor = .black
         } else {
-            scrapContainerView.backgroundColor = .white
-            scrapImageView.image = UIImage(systemName: "bookmark")
-            scrapImageView.tintColor = .lightGray
-            scrapButtonLabel.textColor = .lightGray
+            self.scrapImageView.image = UIImage(named: "bookmark64")
+            self.scrapImageView.tintColor = .lightGray
         }
         
         userNameLabel.text = post.postWriter
         dateLabel.text = post.insertDate.string
         postTitleLabel.text = post.postTitle
         postContentLabel.text = post.postContent
-        likeCountLabel.text = post.likeCount.description
-        commentCountLabel.text = post.commentCount.description
-        scrapCountLabel.text = post.scrapCount.description
+    
         selectedPost = post 
     }
 }

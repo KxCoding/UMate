@@ -91,7 +91,7 @@ let freshmanBoard =  Board(boardTitle: "신입생 게시판",
                                         commentCount: 18),
                                   ])
 
-let infoBoard = Board(boardTitle: "정보 게시판", posts: [Post(images: [], postTitle: "사회적 거리두기", postContent: "2단계 2020.09/14부터 9월 27일까지 2단계 시행", postWriter: "캔버스", insertDate: Date(timeIntervalSinceNow: -400), likeCount: 4, commentCount: 3)])
+let infoBoard = Board(boardTitle: "정보 게시판", posts: [Post(images: [], postTitle: "사회적 거리두기", postContent: "2단계 2020.09/14부터 9월 27일까지 2단계 시행", postWriter: "캔버스", insertDate: Date(), likeCount: 4, commentCount: 3)])
 
 
 let publicityBoard = Board(boardTitle: "홍보게시판",

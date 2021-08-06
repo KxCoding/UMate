@@ -44,6 +44,10 @@ class BoardViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        if let vc = segue.destination as? FreeBoardViewController, segue.identifier == "infoSegue" {
+            vc.selectedBoard = infoBoard
+        } 
+        
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
             
             if let vc = segue.destination as? FreeBoardViewController {
@@ -72,7 +76,7 @@ class BoardViewController: UIViewController {
                         vc.selectedBoard = clubBoard
                     }
                 case 2:
-                    if indexPath.row == 1 {
+                   if indexPath.row == 1 {
                         vc.selectedBoard = careerBoard
                     }
                 default: break
@@ -157,6 +161,7 @@ extension BoardViewController: UITableViewDelegate {
             performSegue(withIdentifier: "lectureSegue", sender: self)
         } else if indexPath.section == 2 && indexPath.row == 0 {
             //정보게시판으로 이동
+            performSegue(withIdentifier: "infoSegue", sender: self)
         }
     }
     
@@ -180,12 +185,10 @@ extension BoardViewController: UITableViewDelegate {
             let button = UIButton(type: .custom)
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! BoardCustomHeaderView
             view.title.text = expandableBoardList[section - 1].sectionName
-            view.title.textColor = .darkGray
+            view.title.textColor = .black
             view.title.font = UIFont.boldSystemFont(ofSize: 23)
             view.image.image = UIImage(named: "downarrow")
-            view.image.tintColor = .darkGray
-            view.image.alpha = 0.9
-            
+            view.image.tintColor = .black
             
             view.addSubview(button)
             button.translatesAutoresizingMaskIntoConstraints = false
