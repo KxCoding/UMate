@@ -15,7 +15,6 @@ protocol SendDataDelegate {
 class AddLectureTableViewController: UITableViewController {
     
     var delegate: SendDataDelegate?
-    let weekdays = ["월", "화", "수", "목", "금"]
     let colors = ["lightRed", "red", "pink", "orange", "yellow", "lightGreen", "green", "skyblue", "blue", "lightPurple", "purple", "darkGray"]
     var startTime: String = "09:00"
     var endTime: String = "09:00"
@@ -42,7 +41,6 @@ class AddLectureTableViewController: UITableViewController {
     @IBOutlet weak var thursdayLabel: UILabel!
     @IBOutlet weak var fridayLabel: UILabel!
     
-    
     @IBOutlet weak var lightRedView: UIView!
     @IBOutlet weak var redView: UIView!
     @IBOutlet weak var pinkView: UIView!
@@ -68,9 +66,6 @@ class AddLectureTableViewController: UITableViewController {
     @IBOutlet weak var lightPurpleButton: UIButton!
     @IBOutlet weak var purpleButton: UIButton!
     @IBOutlet weak var darkGrayButton: UIButton!
-    
-    
-    
     
     
     @IBAction func selectDay(_ sender: UIButton) {
@@ -132,6 +127,7 @@ class AddLectureTableViewController: UITableViewController {
             }
         }
     }
+    
     
     @IBAction func selectColor(_ sender: UIButton) {
         if sender.tag == 200 {
@@ -307,17 +303,20 @@ class AddLectureTableViewController: UITableViewController {
         startTime = dateFormatter.string(from: sender.date)
     }
     
+    
     @IBAction func endTimeDidSelected(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         endTime = dateFormatter.string(from: sender.date)
     }
     
+    
     func checkMaxLength(textField: UITextField!, maxLength: Int) {
         if (textField.text?.count ?? 0 > maxLength) {
             textField.deleteBackward()
         }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -331,6 +330,7 @@ class AddLectureTableViewController: UITableViewController {
             $0?.layer.cornerRadius = ($0?.frame.width)! / 2
             $0?.backgroundColor = .clear
         }
+        
         
         [lightRedView, redView, pinkView, orangeView, yellowView, lightGreenView, greenView, skyblueView, blueView, lightPurpleView, purpleView, darkGrayView
         ].forEach {
@@ -353,26 +353,31 @@ class AddLectureTableViewController: UITableViewController {
             return
         }
         
+        
         if weekdayList[0] == false, weekdayList[1] == false, weekdayList[2] == false, weekdayList[3] == false, weekdayList[4] == false {
             alertWithNoAction(title: "경고", message: "요일 정보를 입력해주세요.")
             return
         }
+        
         
         if startTime == endTime {
             alertWithNoAction(title: "경고", message: "강의 시작 시간과 종료 시간이 같습니다.")
             return
         }
         
+        
         if startTime > endTime {
             alertWithNoAction(title: "경고", message: "강의 시작 시간이 종료 시간보다 늦습니다.")
             return
         }
         
-        let backgroundColor: UIColor = UIColor(named: "\(colorString)") ?? .black
         
+        let backgroundColor: UIColor = UIColor(named: "\(colorString)") ?? .black
+
         let textColor: UIColor = UIColor(named: "\(textColorString)") ?? .white
         
         var lectureList: [ElliottEvent] = []
+        
         
         for i in 0...4 {
             if weekdayList[i] == true {
@@ -384,6 +389,7 @@ class AddLectureTableViewController: UITableViewController {
                 
             }
         }
+        
         
         if !Lecture.shared.courseList.isEmpty { // 이미 강의 정보가 저장되어있을 경우 시간표 중복 체크
             print("checkcheck")
@@ -412,6 +418,7 @@ class AddLectureTableViewController: UITableViewController {
                 }
             }
         }
+        
         
         delegate?.sendData(data: lectureList)
         
@@ -444,6 +451,8 @@ extension AddLectureTableViewController: UITextFieldDelegate {
         return true
     }
 }
+
+
 
 
 extension UITableViewController {

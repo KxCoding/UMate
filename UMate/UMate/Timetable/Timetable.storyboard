@@ -32,7 +32,6 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="60"/>
                                                         <state key="normal" title="친구"/>
                                                         <connections>
-                                                            <action selector="showFriends:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="prg-uf-Elx"/>
                                                             <segue destination="39o-hZ-vMg" kind="show" id="wBt-V0-Pdp"/>
                                                         </connections>
                                                     </button>
@@ -46,7 +45,6 @@
                                                         <rect key="frame" x="276" y="0.0" width="138" height="60"/>
                                                         <state key="normal" title="시간표 추가"/>
                                                         <connections>
-                                                            <action selector="add:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="gAk-OK-LbF"/>
                                                             <segue destination="JSr-eF-Dmh" kind="show" identifier="show" id="Nya-Va-WOS"/>
                                                         </connections>
                                                     </button>
@@ -93,7 +91,7 @@
                     </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="timetableView" destination="mI1-yV-quH" id="V6X-LR-gf2"/>
+                        <outlet property="timeTableView" destination="mI1-yV-quH" id="CX7-zb-a5l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1285,7 +1283,7 @@
                     <navigationItem key="navigationItem" id="zVl-BW-ZEY"/>
                     <connections>
                         <outlet property="friendNameLabel" destination="utP-DO-9cC" id="9cH-h5-l9o"/>
-                        <outlet property="timetableView" destination="5UZ-g0-Aot" id="XT7-Dk-qxj"/>
+                        <outlet property="timeTableView" destination="5UZ-g0-Aot" id="Efm-W3-iWS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vcm-8S-tAk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

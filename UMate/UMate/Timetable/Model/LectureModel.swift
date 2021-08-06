@@ -16,4 +16,6 @@ class Lecture {
     }
     
     var courseList = [ElliottEvent]()
+    
+    let dayString: [String] = ["월", "화", "수", "목", "금"]
 }
