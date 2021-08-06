@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ypp-tW-6o6">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Review Write Table View Controller-->
+        <scene sceneID="cfl-Ag-BR1">
+            <objects>
+                <tableViewController id="ypp-tW-6o6" customClass="ReviewWriteTableViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="cpx-rb-lbk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1300"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="jjd-j8-TOx">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="74" id="NRc-IX-5M1">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="74"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NRc-IX-5M1" id="PQK-tk-AoQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="74"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="리뷰 쓰기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmI-ff-VdL">
+                                                    <rect key="frame" x="20" y="27" width="63.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="cmI-ff-VdL" firstAttribute="centerY" secondItem="PQK-tk-AoQ" secondAttribute="centerY" id="3Zc-76-3DW"/>
+                                                <constraint firstItem="cmI-ff-VdL" firstAttribute="leading" secondItem="PQK-tk-AoQ" secondAttribute="leadingMargin" id="BJI-oL-Z1U"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="561" id="2pa-iR-8Rz">
+                                        <rect key="frame" x="0.0" y="98.5" width="414" height="561"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2pa-iR-8Rz" id="Hkq-z2-uU7">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="561"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JOJ-fk-qKG">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="50"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="성적 반영" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwp-uS-qph">
+                                                            <rect key="frame" x="0.0" y="15" width="63.5" height="20.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="Gwp-uS-qph" firstAttribute="leading" secondItem="JOJ-fk-qKG" secondAttribute="leading" id="3p5-oV-5bp"/>
+                                                        <constraint firstItem="Gwp-uS-qph" firstAttribute="centerY" secondItem="JOJ-fk-qKG" secondAttribute="centerY" id="wYY-ze-bOK"/>
+                                                        <constraint firstAttribute="height" constant="50" id="xJa-kX-fKR"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h5r-fh-0Qd">
+                                                    <rect key="frame" x="20" y="50" width="374" height="475"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kuh-gs-FXe">
+                                                            <rect key="frame" x="0.0" y="8" width="0.0" height="0.0"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJW-7s-bz1">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="111"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="맛" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6F-mc-eot">
+                                                                    <rect key="frame" x="0.0" y="8" width="12.5" height="17"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Nvf-1c-aou">
+                                                                    <rect key="frame" x="0.0" y="33" width="302" height="30"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncN-xx-M1Y" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title=" 맛있다 ">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <state key="highlighted" title="많음">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="tasteSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="8S5-Sq-arw"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bm-8X-i7l" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="78" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="  신선하다  ">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="tasteSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="0Gq-NF-cP1"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tm1-b3-M1z" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="156" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="깔끔하다">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="tasteSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="yK9-DV-WtK"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YE4-vv-rhD" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="234" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="고소하다">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="tasteSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="k4T-SO-xrK"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Lex-LS-nlS">
+                                                                    <rect key="frame" x="0.0" y="71" width="50" height="30"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" tag="104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uED-nW-j42" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="   짜다   ">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="tasteSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="CYU-j9-jOj"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="Lex-LS-nlS" firstAttribute="leading" secondItem="Nvf-1c-aou" secondAttribute="leading" id="H2C-fH-UGv"/>
+                                                                <constraint firstItem="w6F-mc-eot" firstAttribute="leading" secondItem="FJW-7s-bz1" secondAttribute="leading" id="VvN-5X-eRf"/>
+                                                                <constraint firstItem="Nvf-1c-aou" firstAttribute="top" secondItem="w6F-mc-eot" secondAttribute="bottom" constant="8" symbolic="YES" id="X9L-Ao-BZz"/>
+                                                                <constraint firstItem="Nvf-1c-aou" firstAttribute="leading" secondItem="FJW-7s-bz1" secondAttribute="leading" id="YGh-hl-odr"/>
+                                                                <constraint firstItem="w6F-mc-eot" firstAttribute="top" secondItem="FJW-7s-bz1" secondAttribute="top" constant="8" id="h7a-Yz-OYx"/>
+                                                                <constraint firstAttribute="bottom" secondItem="Lex-LS-nlS" secondAttribute="bottom" constant="10" id="hJR-08-b10"/>
+                                                                <constraint firstItem="Lex-LS-nlS" firstAttribute="top" secondItem="Nvf-1c-aou" secondAttribute="bottom" constant="8" symbolic="YES" id="hka-ZQ-Kmq"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b3t-6h-13b">
+                                                            <rect key="frame" x="0.0" y="119" width="374" height="73"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서비스" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6vT-0A-kpK">
+                                                                    <rect key="frame" x="0.0" y="8" width="36.5" height="17"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6xX-A1-hgm">
+                                                                    <rect key="frame" x="0.0" y="33" width="224" height="30"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZB-lp-1nL" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="친절함">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <state key="highlighted" title="많음">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="serviceSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="cTf-Gi-4Uw"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="201" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YkC-xf-Zvi" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="78" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="  불친절함  ">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="serviceSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="w32-vx-AQ0"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="202" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJv-Fv-BKe" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="156" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="까칠함">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="serviceSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="IdC-cl-8n2"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="6xX-A1-hgm" secondAttribute="bottom" constant="10" id="Up6-IT-wyI"/>
+                                                                <constraint firstItem="6xX-A1-hgm" firstAttribute="top" secondItem="6vT-0A-kpK" secondAttribute="bottom" constant="8" symbolic="YES" id="bzd-PD-HXV"/>
+                                                                <constraint firstItem="6vT-0A-kpK" firstAttribute="leading" secondItem="b3t-6h-13b" secondAttribute="leading" id="nVf-dm-U1K"/>
+                                                                <constraint firstItem="6vT-0A-kpK" firstAttribute="top" secondItem="b3t-6h-13b" secondAttribute="top" constant="8" id="ooe-AA-hLj"/>
+                                                                <constraint firstItem="6xX-A1-hgm" firstAttribute="leading" secondItem="b3t-6h-13b" secondAttribute="leading" id="usC-1p-2Z3"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h2T-fO-R0N">
+                                                            <rect key="frame" x="0.0" y="400" width="374" height="73"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="음식양" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5z-Go-khj">
+                                                                    <rect key="frame" x="0.0" y="8" width="36.5" height="17"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="NU4-2y-dfp">
+                                                                    <rect key="frame" x="0.0" y="33" width="224" height="30"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" tag="500" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MmG-9F-9tT" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="적다">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <state key="highlighted" title="많음">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="amountSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="GSJ-nO-Eiy"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="501" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MHb-wV-cwG" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="78" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="  적당하다  ">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="amountSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="p10-bP-y2j"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="502" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="44R-Mc-hjy" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="156" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="푸짐하다">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="amountSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="p9l-ub-TEv"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="NU4-2y-dfp" firstAttribute="leading" secondItem="h2T-fO-R0N" secondAttribute="leading" id="Czn-83-rzc"/>
+                                                                <constraint firstItem="e5z-Go-khj" firstAttribute="top" secondItem="h2T-fO-R0N" secondAttribute="top" constant="8" id="R2a-ao-VMU"/>
+                                                                <constraint firstItem="e5z-Go-khj" firstAttribute="leading" secondItem="h2T-fO-R0N" secondAttribute="leading" id="feG-9A-RLV"/>
+                                                                <constraint firstItem="NU4-2y-dfp" firstAttribute="top" secondItem="e5z-Go-khj" secondAttribute="bottom" constant="8" symbolic="YES" id="ne5-dX-ITy"/>
+                                                                <constraint firstAttribute="bottom" secondItem="NU4-2y-dfp" secondAttribute="bottom" constant="10" id="uLN-Ao-AfI"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ih-PW-aPS">
+                                                            <rect key="frame" x="0.0" y="200" width="374" height="111"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="분위기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ij-Vv-VZy">
+                                                                    <rect key="frame" x="0.0" y="8" width="36.5" height="17"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="EYq-kK-5qz">
+                                                                    <rect key="frame" x="0.0" y="33" width="322" height="30"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" tag="300" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqc-tP-xf8" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="73" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="조용한">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <state key="highlighted" title="많음">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="moodSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="dU9-MG-Fkk"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="301" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KUO-D0-hyr" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="83" y="0.0" width="73" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title=" 감성적인 ">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="moodSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="Bex-tf-GeS"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="302" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDL-uZ-eA4" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="166" y="0.0" width="73" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title=" 심플한 ">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="moodSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="EwA-ls-vKl"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="303" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3x-zB-Lbu" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="249" y="0.0" width="73" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title=" 아기자기한 ">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="moodSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="qqd-Pk-dUJ"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dYa-pV-KQe">
+                                                                    <rect key="frame" x="0.0" y="71" width="73" height="30"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" tag="304" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QoM-Bb-D8z" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="73" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="깔끔한">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="moodSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="EBg-dg-9c1"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="QoM-Bb-D8z" firstAttribute="width" secondItem="kqc-tP-xf8" secondAttribute="width" id="AEp-zt-sad"/>
+                                                                <constraint firstItem="EYq-kK-5qz" firstAttribute="leading" secondItem="9Ih-PW-aPS" secondAttribute="leading" id="Da5-EN-l2E"/>
+                                                                <constraint firstItem="dYa-pV-KQe" firstAttribute="top" secondItem="EYq-kK-5qz" secondAttribute="bottom" constant="8" symbolic="YES" id="GlK-X0-BJa"/>
+                                                                <constraint firstItem="2ij-Vv-VZy" firstAttribute="top" secondItem="9Ih-PW-aPS" secondAttribute="top" constant="8" id="agk-OJ-460"/>
+                                                                <constraint firstItem="EYq-kK-5qz" firstAttribute="top" secondItem="2ij-Vv-VZy" secondAttribute="bottom" constant="8" symbolic="YES" id="cFk-Kh-tJQ"/>
+                                                                <constraint firstItem="dYa-pV-KQe" firstAttribute="leading" secondItem="EYq-kK-5qz" secondAttribute="leading" id="pwe-Fc-eSY"/>
+                                                                <constraint firstItem="2ij-Vv-VZy" firstAttribute="leading" secondItem="9Ih-PW-aPS" secondAttribute="leading" id="t8I-5O-gAq"/>
+                                                                <constraint firstAttribute="bottom" secondItem="dYa-pV-KQe" secondAttribute="bottom" constant="10" id="whO-1H-iIN"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i3q-dN-2S2">
+                                                            <rect key="frame" x="0.0" y="319" width="374" height="73"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="가격" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tmF-PE-MuC">
+                                                                    <rect key="frame" x="0.0" y="8" width="24.5" height="17"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jXM-sU-tQ9">
+                                                                    <rect key="frame" x="0.0" y="33" width="224" height="30"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" tag="400" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jub-Xg-Nhk" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="  저렴하다  ">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <state key="highlighted" title="많음">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="priceSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="cSU-Hp-wcR"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="401" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Olg-Jr-pyW" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="78" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="적당하다">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="priceSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="rjK-WG-0Fm"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="402" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0u-RE-cja" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="156" y="0.0" width="68" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="비싸다">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="priceSelectLineButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="LYD-hl-ecs"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="jXM-sU-tQ9" firstAttribute="leading" secondItem="i3q-dN-2S2" secondAttribute="leading" id="5cm-bu-Vy2"/>
+                                                                <constraint firstItem="tmF-PE-MuC" firstAttribute="top" secondItem="i3q-dN-2S2" secondAttribute="top" constant="8" id="NQx-19-Ed3"/>
+                                                                <constraint firstItem="jXM-sU-tQ9" firstAttribute="top" secondItem="tmF-PE-MuC" secondAttribute="bottom" constant="8" symbolic="YES" id="gJu-cz-sXH"/>
+                                                                <constraint firstItem="tmF-PE-MuC" firstAttribute="leading" secondItem="i3q-dN-2S2" secondAttribute="leading" id="mgt-tE-TAt"/>
+                                                                <constraint firstAttribute="bottom" secondItem="jXM-sU-tQ9" secondAttribute="bottom" constant="10" id="w8l-ye-FpR"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="b3t-6h-13b" firstAttribute="top" secondItem="FJW-7s-bz1" secondAttribute="bottom" constant="8" symbolic="YES" id="6KL-UF-NQh"/>
+                                                        <constraint firstAttribute="trailing" secondItem="FJW-7s-bz1" secondAttribute="trailing" id="6UM-9u-gaj"/>
+                                                        <constraint firstItem="i3q-dN-2S2" firstAttribute="leading" secondItem="h5r-fh-0Qd" secondAttribute="leading" id="7Z7-Zf-hkw"/>
+                                                        <constraint firstAttribute="trailing" secondItem="b3t-6h-13b" secondAttribute="trailing" id="8f4-M2-VAm"/>
+                                                        <constraint firstItem="9Ih-PW-aPS" firstAttribute="top" secondItem="b3t-6h-13b" secondAttribute="bottom" constant="8" symbolic="YES" id="A3z-d4-Rw7"/>
+                                                        <constraint firstAttribute="trailing" secondItem="i3q-dN-2S2" secondAttribute="trailing" id="Eja-7p-qvs"/>
+                                                        <constraint firstItem="h2T-fO-R0N" firstAttribute="leading" secondItem="h5r-fh-0Qd" secondAttribute="leading" id="Hfb-Go-NSj"/>
+                                                        <constraint firstAttribute="trailing" secondItem="9Ih-PW-aPS" secondAttribute="trailing" id="IFa-1C-6h6"/>
+                                                        <constraint firstItem="i3q-dN-2S2" firstAttribute="top" secondItem="9Ih-PW-aPS" secondAttribute="bottom" constant="8" symbolic="YES" id="NFU-I6-0Rh"/>
+                                                        <constraint firstAttribute="height" constant="475" id="ggg-Bk-naA"/>
+                                                        <constraint firstAttribute="trailing" secondItem="h2T-fO-R0N" secondAttribute="trailing" id="hAy-qf-unZ"/>
+                                                        <constraint firstItem="b3t-6h-13b" firstAttribute="leading" secondItem="h5r-fh-0Qd" secondAttribute="leading" id="iDD-XX-fpF"/>
+                                                        <constraint firstItem="9Ih-PW-aPS" firstAttribute="leading" secondItem="h5r-fh-0Qd" secondAttribute="leading" id="l2y-Ae-S4P"/>
+                                                        <constraint firstItem="h2T-fO-R0N" firstAttribute="top" secondItem="i3q-dN-2S2" secondAttribute="bottom" constant="8" symbolic="YES" id="my1-P5-IZp"/>
+                                                        <constraint firstItem="FJW-7s-bz1" firstAttribute="leading" secondItem="h5r-fh-0Qd" secondAttribute="leading" id="rmV-Ip-Ne9"/>
+                                                        <constraint firstItem="FJW-7s-bz1" firstAttribute="top" secondItem="h5r-fh-0Qd" secondAttribute="top" id="zPp-CV-rMM"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="h5r-fh-0Qd" secondAttribute="trailing" constant="20" symbolic="YES" id="4kl-1j-aRB"/>
+                                                <constraint firstItem="h5r-fh-0Qd" firstAttribute="top" secondItem="JOJ-fk-qKG" secondAttribute="bottom" id="LPi-kb-Nco"/>
+                                                <constraint firstItem="JOJ-fk-qKG" firstAttribute="top" secondItem="Hkq-z2-uU7" secondAttribute="top" id="bXK-VR-6Kr"/>
+                                                <constraint firstItem="h5r-fh-0Qd" firstAttribute="leading" secondItem="Hkq-z2-uU7" secondAttribute="leading" constant="20" symbolic="YES" id="eR9-zL-0R7"/>
+                                                <constraint firstAttribute="trailing" secondItem="JOJ-fk-qKG" secondAttribute="trailing" constant="20" symbolic="YES" id="tze-wy-CbT"/>
+                                                <constraint firstItem="JOJ-fk-qKG" firstAttribute="leading" secondItem="Hkq-z2-uU7" secondAttribute="leading" constant="20" symbolic="YES" id="w49-Z1-Gvv"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="225" id="VaI-av-lYY">
+                                        <rect key="frame" x="0.0" y="659.5" width="414" height="225"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VaI-av-lYY" id="rhu-J9-5gn">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="225"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMe-pt-0uB">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="200"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WhN-n4-7sS">
+                                                            <rect key="frame" x="0.0" y="50" width="374" height="80"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="총평" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OF1-hH-SU9">
+                                                                    <rect key="frame" x="0.0" y="8" width="24.5" height="17"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="foW-Ga-Try">
+                                                                    <rect key="frame" x="8" y="33" width="300" height="30"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" tag="600" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJ4-yT-Iww" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="52" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="1점">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <state key="highlighted" title="많음">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="generalReviewButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="IcR-fU-lmi"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="601" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nPV-Nb-Xaw" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="62" y="0.0" width="52" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="2점">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="generalReviewButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="agV-Et-SG4"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="602" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOH-Oy-VOb" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="124" y="0.0" width="52" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="3점">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="generalReviewButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="CAq-Mf-nEQ"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="603" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5T1-Ay-Nze" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="186" y="0.0" width="52" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="4점">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="generalReviewButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="gEw-xW-cX3"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="604" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IE5-x2-ebR" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                                                            <rect key="frame" x="248" y="0.0" width="52" height="30"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="5점">
+                                                                                <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <state key="selected">
+                                                                                <color key="titleColor" systemColor="systemRedColor"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="generalReviewButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="q0d-Ge-gqD"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="300" id="Hhp-4o-3DV"/>
+                                                                    </constraints>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="OF1-hH-SU9" firstAttribute="leading" secondItem="WhN-n4-7sS" secondAttribute="leading" id="Zft-kv-eww"/>
+                                                                <constraint firstItem="OF1-hH-SU9" firstAttribute="top" secondItem="WhN-n4-7sS" secondAttribute="top" constant="8" id="eRR-DW-bbQ"/>
+                                                                <constraint firstItem="foW-Ga-Try" firstAttribute="leading" secondItem="WhN-n4-7sS" secondAttribute="leading" constant="8" id="jWZ-g1-0u4"/>
+                                                                <constraint firstItem="foW-Ga-Try" firstAttribute="top" secondItem="OF1-hH-SU9" secondAttribute="bottom" constant="8" symbolic="YES" id="mqA-hJ-s84"/>
+                                                                <constraint firstAttribute="bottom" secondItem="foW-Ga-Try" secondAttribute="bottom" constant="17" id="n6a-WD-6Ox"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpp-p2-ChS">
+                                                            <rect key="frame" x="0.0" y="138" width="374" height="39"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="39" id="OUx-Sk-Hfi"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" title="확인"/>
+                                                            <connections>
+                                                                <action selector="reviewSaveButtonTapped:" destination="ypp-tW-6o6" eventType="touchUpInside" id="ryO-Hg-BN4"/>
+                                                            </connections>
+                                                        </button>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OA9-MS-04U">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="총평" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="299-nL-96X">
+                                                                    <rect key="frame" x="0.0" y="15" width="29.5" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="299-nL-96X" firstAttribute="leading" secondItem="OA9-MS-04U" secondAttribute="leading" id="D64-at-dtr"/>
+                                                                <constraint firstItem="299-nL-96X" firstAttribute="centerY" secondItem="OA9-MS-04U" secondAttribute="centerY" id="WfY-44-6sv"/>
+                                                                <constraint firstAttribute="height" constant="50" id="tzw-Wa-gpE"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstItem="hpp-p2-ChS" firstAttribute="leading" secondItem="AMe-pt-0uB" secondAttribute="leading" id="3bi-bi-aM0"/>
+                                                        <constraint firstItem="WhN-n4-7sS" firstAttribute="top" secondItem="OA9-MS-04U" secondAttribute="bottom" id="5bj-9x-RDj"/>
+                                                        <constraint firstAttribute="trailing" secondItem="WhN-n4-7sS" secondAttribute="trailing" id="CQf-Ul-phk"/>
+                                                        <constraint firstItem="hpp-p2-ChS" firstAttribute="top" secondItem="WhN-n4-7sS" secondAttribute="bottom" constant="8" symbolic="YES" id="Chs-i3-Lzt"/>
+                                                        <constraint firstItem="OA9-MS-04U" firstAttribute="leading" secondItem="AMe-pt-0uB" secondAttribute="leading" id="Hx1-oj-ga7"/>
+                                                        <constraint firstItem="WhN-n4-7sS" firstAttribute="leading" secondItem="AMe-pt-0uB" secondAttribute="leading" id="Peq-5R-CGo"/>
+                                                        <constraint firstAttribute="trailing" secondItem="hpp-p2-ChS" secondAttribute="trailing" id="Toy-p6-1tB"/>
+                                                        <constraint firstAttribute="height" constant="200" id="VeK-Z2-p7l"/>
+                                                        <constraint firstItem="WhN-n4-7sS" firstAttribute="leading" secondItem="AMe-pt-0uB" secondAttribute="leadingMargin" constant="-8" id="WwJ-8M-Hfn"/>
+                                                        <constraint firstAttribute="trailing" secondItem="OA9-MS-04U" secondAttribute="trailing" id="Zxp-1t-qNZ"/>
+                                                        <constraint firstItem="WhN-n4-7sS" firstAttribute="trailing" secondItem="AMe-pt-0uB" secondAttribute="trailingMargin" constant="8" id="elv-Je-16B"/>
+                                                        <constraint firstItem="OA9-MS-04U" firstAttribute="top" secondItem="AMe-pt-0uB" secondAttribute="top" id="vAs-FL-JZh"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="AMe-pt-0uB" firstAttribute="top" secondItem="rhu-J9-5gn" secondAttribute="top" id="YQp-e2-U05"/>
+                                                <constraint firstItem="AMe-pt-0uB" firstAttribute="leading" secondItem="rhu-J9-5gn" secondAttribute="leading" constant="20" symbolic="YES" id="cWO-YM-qid"/>
+                                                <constraint firstAttribute="trailing" secondItem="AMe-pt-0uB" secondAttribute="trailing" constant="20" symbolic="YES" id="hNp-Rj-i5r"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="ypp-tW-6o6" id="KgR-Fi-SXE"/>
+                            <outlet property="delegate" destination="ypp-tW-6o6" id="F28-6S-VOV"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="git-5d-2un"/>
+                    <size key="freeformSize" width="414" height="1300"/>
+                    <connections>
+                        <outlet property="affordableButton" destination="Olg-Jr-pyW" id="POc-Y9-k7K"/>
+                        <outlet property="cheapButton" destination="Jub-Xg-Nhk" id="eTe-Wz-GdQ"/>
+                        <outlet property="cleanButton" destination="Tm1-b3-M1z" id="974-KN-sgA"/>
+                        <outlet property="clearButton" destination="QoM-Bb-D8z" id="Ubc-45-m7D"/>
+                        <outlet property="cuteButton" destination="r3x-zB-Lbu" id="aCU-uK-g45"/>
+                        <outlet property="deliciousButton" destination="ncN-xx-M1Y" id="OE2-Zk-A2r"/>
+                        <outlet property="emotionalButton" destination="KUO-D0-hyr" id="o3r-1s-JSa"/>
+                        <outlet property="expensiveButton" destination="c0u-RE-cja" id="NAf-P9-uLO"/>
+                        <outlet property="fivePointButton" destination="IE5-x2-ebR" id="plU-Yu-TJq"/>
+                        <outlet property="fourPointButton" destination="5T1-Ay-Nze" id="Yvt-38-0Cg"/>
+                        <outlet property="freshButton" destination="8bm-8X-i7l" id="HGc-zf-2dw"/>
+                        <outlet property="kindButton" destination="pZB-lp-1nL" id="S6K-TJ-8BB"/>
+                        <outlet property="onePointButton" destination="dJ4-yT-Iww" id="ziO-Sn-Fhe"/>
+                        <outlet property="plainButton" destination="YE4-vv-rhD" id="R6v-ji-iu2"/>
+                        <outlet property="plentyButton" destination="44R-Mc-hjy" id="bfj-3Q-9ne"/>
+                        <outlet property="quietButton" destination="kqc-tP-xf8" id="z68-Qa-afX"/>
+                        <outlet property="reviewSaveButton" destination="hpp-p2-ChS" id="4Dt-lU-ESX"/>
+                        <outlet property="saltyButton" destination="uED-nW-j42" id="zcd-HA-c4z"/>
+                        <outlet property="simpleButton" destination="wDL-uZ-eA4" id="G83-xw-HBQ"/>
+                        <outlet property="smallButton" destination="MmG-9F-9tT" id="qEf-LN-zQy"/>
+                        <outlet property="suitableButton" destination="MHb-wV-cwG" id="cBX-WF-s7R"/>
+                        <outlet property="threePointButton" destination="tOH-Oy-VOb" id="ooj-5v-hRZ"/>
+                        <outlet property="touchyButton" destination="CJv-Fv-BKe" id="0jl-gj-Jgj"/>
+                        <outlet property="twoPointButton" destination="nPV-Nb-Xaw" id="cZK-G4-onm"/>
+                        <outlet property="unkindButton" destination="YkC-xf-Zvi" id="vsy-2g-sAH"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5a8-pR-2x0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1802.8985507246377" y="-130.58035714285714"/>
+        </scene>
+    </scenes>
+    <designables>
+        <designable name="44R-Mc-hjy">
+            <size key="intrinsicContentSize" width="52" height="30"/>
+        </designable>
+        <designable name="5T1-Ay-Nze">
+            <size key="intrinsicContentSize" width="30" height="30"/>
+        </designable>
+        <designable name="8bm-8X-i7l">
+            <size key="intrinsicContentSize" width="68" height="30"/>
+        </designable>
+        <designable name="CJv-Fv-BKe">
+            <size key="intrinsicContentSize" width="39" height="30"/>
+        </designable>
+        <designable name="IE5-x2-ebR">
+            <size key="intrinsicContentSize" width="30" height="30"/>
+        </designable>
+        <designable name="Jub-Xg-Nhk">
+            <size key="intrinsicContentSize" width="68" height="30"/>
+        </designable>
+        <designable name="KUO-D0-hyr">
+            <size key="intrinsicContentSize" width="60" height="30"/>
+        </designable>
+        <designable name="MHb-wV-cwG">
+            <size key="intrinsicContentSize" width="68" height="30"/>
+        </designable>
+        <designable name="MmG-9F-9tT">
+            <size key="intrinsicContentSize" width="30" height="30"/>
+        </designable>
+        <designable name="Olg-Jr-pyW">
+            <size key="intrinsicContentSize" width="52" height="30"/>
+        </designable>
+        <designable name="QoM-Bb-D8z">
+            <size key="intrinsicContentSize" width="39" height="30"/>
+        </designable>
+        <designable name="Tm1-b3-M1z">
+            <size key="intrinsicContentSize" width="52" height="30"/>
+        </designable>
+        <designable name="YE4-vv-rhD">
+            <size key="intrinsicContentSize" width="52" height="30"/>
+        </designable>
+        <designable name="YkC-xf-Zvi">
+            <size key="intrinsicContentSize" width="68" height="30"/>
+        </designable>
+        <designable name="c0u-RE-cja">
+            <size key="intrinsicContentSize" width="39" height="30"/>
+        </designable>
+        <designable name="dJ4-yT-Iww">
+            <size key="intrinsicContentSize" width="30" height="30"/>
+        </designable>
+        <designable name="kqc-tP-xf8">
+            <size key="intrinsicContentSize" width="39" height="30"/>
+        </designable>
+        <designable name="nPV-Nb-Xaw">
+            <size key="intrinsicContentSize" width="30" height="30"/>
+        </designable>
+        <designable name="ncN-xx-M1Y">
+            <size key="intrinsicContentSize" width="47" height="30"/>
+        </designable>
+        <designable name="pZB-lp-1nL">
+            <size key="intrinsicContentSize" width="39" height="30"/>
+        </designable>
+        <designable name="r3x-zB-Lbu">
+            <size key="intrinsicContentSize" width="73" height="30"/>
+        </designable>
+        <designable name="tOH-Oy-VOb">
+            <size key="intrinsicContentSize" width="30" height="30"/>
+        </designable>
+        <designable name="uED-nW-j42">
+            <size key="intrinsicContentSize" width="50" height="30"/>
+        </designable>
+        <designable name="wDL-uZ-eA4">
+            <size key="intrinsicContentSize" width="47" height="30"/>
+        </designable>
+    </designables>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

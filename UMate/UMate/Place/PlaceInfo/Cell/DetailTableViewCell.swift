@@ -11,18 +11,16 @@ class DetailTableViewCell: UITableViewCell {
     
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var addressView: UIView!
-    
     @IBOutlet weak var districtCollectionView: UICollectionView!
     @IBOutlet weak var keywordsCollectionView: UICollectionView!
     
-    
+    /// 정보를 표시할 가게
     var target: Place!
     
+    /// 셀 내부 각 뷰들이 표시하는 content 초기화
+    /// - Parameter content: 표시할 내용을 담은 Place 객체
     func configure(with content: Place, indexPath: IndexPath) {
-
-        
         target = content
-        dump(target)
         
         addressLabel.text = target.district
         
@@ -30,7 +28,9 @@ class DetailTableViewCell: UITableViewCell {
         keywordsCollectionView.reloadData()
         
     }
+   
     
+    /// 셀 초기화
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -39,12 +39,13 @@ class DetailTableViewCell: UITableViewCell {
         keywordsCollectionView.dataSource = self
         
         // UI 초기화
-        addressView.layer.cornerRadius = addressView.frame.height / 4
-        
-//        target = Place(name: "가게 이름", university: "대학교", district: "도서관 근처", type: .restaurant, keywords: ["일식당", "아기자기한"])
+        addressView.configureStyle(with: [.squircleSmall])
     }
     
 }
+
+
+
 
 extension DetailTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

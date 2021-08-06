@@ -9,21 +9,24 @@ import UIKit
 
 class InfoSectionTableViewCell: UITableViewCell {
     
-    var target: Place!
-    
     @IBOutlet weak var placeTypeImage: UIImageView!
     @IBOutlet weak var placeNameLabel: UILabel!
+    
+    @IBOutlet weak var universityLabel: UILabel!
+    @IBOutlet weak var districtLabel: UILabel!
+    @IBOutlet weak var keywordLabel: UILabel!
+    @IBOutlet weak var placeTypeLabel: UILabel!
     
     @IBOutlet weak var openInstagramButton: UIButton!
     @IBOutlet weak var openSafariButton: UIButton!
     @IBOutlet weak var bookmarkButton: UIButton!
     
-    @IBOutlet weak var universityLabel: UILabel!
-    @IBOutlet weak var districtLabel: UILabel!
+    /// 정보를 표시할 가게
+    var target: Place!
     
-    @IBOutlet weak var keywordLabel: UILabel!
-    @IBOutlet weak var placeTypeLabel: UILabel!
     
+    /// 셀 내부 각 뷰들이 표시하는 content 초기화
+    /// - Parameter content: 표시할 내용을 담은 Place 객체
     func configure(with content: Place) {
         
         target = content
@@ -48,34 +51,40 @@ class InfoSectionTableViewCell: UITableViewCell {
     }
     
     
+    /// 셀 초기화
     override func awakeFromNib() {
         super.awakeFromNib()
         
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
+    
+    /// 버튼을 누르면 해당 가게 인스타그램 open
+    /// - Parameter sender: 버튼
+    @IBAction func openInInstagram(_ sender: UIButton) {
+        guard let id = target.instagramID else { return }
+        openURL(urlString: "https://instagram.com/\(id)")
     }
     
-    @IBAction func openInInstagram(_ sender: UIButton) {
-        guard let id = target.instagramID, let url = URL(string: "https://instagram.com/\(id)") else { return }
+    
+    /// 버튼을 누르면 해당 가게 관련 URL open
+    /// - Parameter sender: 버튼
+    @IBAction func openInSafari(_ sender: Any) {
+        guard let string = target.url else { return }
+        openURL(urlString: string)
+    }
+    
+    
+    /// 문자열 url을 앱이나 웹에서 열어주는 메소드
+    /// - Parameter urlString: 문자열 url
+    func openURL(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
         
         if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
-    }
-    
-    @IBAction func openInSafari(_ sender: Any) {
-        
-        guard let url = target.url, let webURL = URL(string: url) else { return }
-        
-        if UIApplication.shared.canOpenURL(webURL) {
             
             if #available(iOS 10.0, *) {
-                UIApplication.shared.open(webURL, options: [:], completionHandler: nil)
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             } else {
-                UIApplication.shared.openURL(webURL)
+                UIApplication.shared.openURL(url)
             }
         }
     }

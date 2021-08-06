@@ -15,6 +15,8 @@ class TabSectionTableViewCell: UITableViewCell {
     @IBOutlet weak var centerXToDetailConstraint: NSLayoutConstraint!
     @IBOutlet weak var centerXToReviewConstraint: NSLayoutConstraint!
     
+    
+    /// 셀 초기화
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -37,9 +39,4 @@ class TabSectionTableViewCell: UITableViewCell {
         }
         
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
 }
