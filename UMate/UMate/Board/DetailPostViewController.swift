@@ -57,7 +57,6 @@ class DetailPostViewController: UIViewController {
     }
     
     
-    
     var willShowToken: NSObjectProtocol?
     var willHideToken: NSObjectProtocol?
     var newCommentToken: NSObjectProtocol?
@@ -144,7 +143,7 @@ class DetailPostViewController: UIViewController {
         
         //배열에서 삭제하기 전에 정말 삭제할 것인지 다시 물어보는 알림창! -> ok하면 삭제하고 cancel하면 현재상태 유지
         
-        if indexPath.section == 2 {
+        if indexPath.section == 3 {
             Comment.dummyCommentList.remove(at: indexPath.row)
         } else {
             Comment.dummyReCommentList.remove(at: indexPath.row)
@@ -159,7 +158,7 @@ class DetailPostViewController: UIViewController {
 extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -168,26 +167,32 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
         case 0:
             return 1
         case 1:
+            if let post = selectedPost, post.images.count == 0 {
+                return 0
+            }
             return 1
         case 2:
-            return Comment.dummyCommentList.count
+            return 1
         case 3:
+            return Comment.dummyCommentList.count
+        case 4:
             return Comment.dummyReCommentList.count
         default: return 0
-        } //댓글과 대댓글은 section 2,3
+        } //댓글과 대댓글은 section 3,4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
+        // 게시글 내용 표시하는 셀
         case 0:
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostContentTableViewCell", for: indexPath) as! PostContentTableViewCell
             guard let post = selectedPost else { return cell }
     
             cell.configure(post: post)
             return cell
             
+        // 이미지 표시하는 셀
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostImageTableViewCell", for: indexPath) as! PostImageTableViewCell
             guard let post = selectedPost else { return cell }
@@ -195,7 +200,15 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
             cell.configure(post: post)
             return cell
             
+        // 카운트 라벨 표시하는 셀
         case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CountLabelTableViewCell", for: indexPath) as! CountLabelTableViewCell
+            guard let post = selectedPost else { return cell }
+        
+            cell.configure(post: post)
+            return cell
+            
+        case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
             
             let target = Comment.dummyCommentList
@@ -203,7 +216,7 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
             
             return cell
             
-        case 3:
+        case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReCommentTableViewCell", for: indexPath) as! ReCommentTableViewCell
             
             let target = Comment.dummyReCommentList
@@ -211,13 +224,14 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
             
             return cell
             
-            
-        default: fatalError()
+        default: break
         }
+        
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if indexPath.section >= 2  {
+        if indexPath.section >= 3  {
             let noti = UIContextualAction(style: .normal, title: "댓글 신고") { action, v, completion in
                 print("댓글을 신고하시겠습니까?")
                 self.alertComment()
@@ -234,7 +248,7 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if indexPath.section >= 2 {
+        if indexPath.section >= 3 {
             let removeComment = UIContextualAction(style: .destructive, title: "댓글 삭제") { action, v, completion in
                 print("댓글이 삭제되었습니다.")
                 
@@ -259,7 +273,7 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        if indexPath.section >= 2 {
+        if indexPath.section >= 3 {
             return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
                 let notiAction =
                     UIAction(title: NSLocalizedString("댓글 신고", comment: ""),

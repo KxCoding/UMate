@@ -53,7 +53,7 @@ class CategoryBoardViewController: UIViewController {
 
 extension CategoryBoardViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(#function)
+    
         guard let posts = selectedBoard?.posts else { return }
         filteredPostList = posts.filter({ post in
             return post.postTitle.lowercased().contains(searchText.lowercased()) ||
@@ -66,7 +66,6 @@ extension CategoryBoardViewController: UISearchBarDelegate {
         
         cachedText = searchText
         categoryListTableView.reloadData()
-        print(filteredPostList.count)
     }
     
     
