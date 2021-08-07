@@ -41,9 +41,9 @@ class PlaceInfoViewController: UIViewController {
     
     // 리뷰 데이터
     var reviews = [
-        UserReview(reviewText: "분위기 너무 좋아요", date: "2021.06.01"),
-        UserReview(reviewText: "커피 맛이 좋아요", date: "2021.05.28"),
-        UserReview(reviewText: "커피는 데일리루틴 나만 알고싶은집", date: "2021.05.23")
+        PlaceReviewItem.UserReview(reviewText: "분위기 너무 좋아요", date: "2021.06.01"),
+        PlaceReviewItem.UserReview(reviewText: "커피 맛이 좋아요", date: "2021.05.28"),
+        PlaceReviewItem.UserReview(reviewText: "커피는 데일리루틴 나만 알고싶은집", date: "2021.05.23")
     ]
     
     
@@ -52,6 +52,7 @@ class PlaceInfoViewController: UIViewController {
         super.viewDidLoad()
         
         placeInfoTableView.dataSource = self
+        placeInfoTableView.delegate = self
     }
     
     
@@ -122,7 +123,11 @@ extension PlaceInfoViewController: UITableViewDataSource {
         switch indexPath.section {
             
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "FirstSectionTableViewCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FirstSectionTableViewCell", for: indexPath) as! FirstSectionTableViewCell
+            
+            cell.configure(with: place)
+            
+            return cell
             
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InfoSectionTableViewCell", for: indexPath) as! InfoSectionTableViewCell
@@ -165,5 +170,15 @@ extension PlaceInfoViewController: UITableViewDataSource {
         }
     }
     
-    
+}
+
+extension PlaceInfoViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return tableView.frame.width * 0.5
+        }
+        else {
+            return UITableView.automaticDimension
+        }
+    }
 }

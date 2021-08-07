@@ -9,7 +9,6 @@ import UIKit
 import Cosmos
 
 class GeneralReviewTableViewCell: UITableViewCell {
-
     @IBOutlet weak var starPointView: CosmosView!
     @IBOutlet weak var starPointLabel: UILabel!
     @IBOutlet weak var tasteLabel: UILabel!
@@ -20,6 +19,16 @@ class GeneralReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var reviewWriteContainerView: UIView!
     
     
+    /// 초기화 작업을 실행합니다.
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        /// reviewWriteContainerView의 cornerRadius 설정
+        reviewWriteContainerView.layer.cornerRadius = 10
+    }
+    
+    
+    /// 테이블뷰셀에 표시할 내용을 설정합니다.
+    /// - Parameter placeReview: 표시할 내용을 가진 구조체
     func configure(with placeReview: PlaceReviewItem) {
         starPointLabel.text = "\(starPointView.rating)"
         tasteLabel.text = placeReview.taste.rawValue
@@ -28,13 +37,4 @@ class GeneralReviewTableViewCell: UITableViewCell {
         priceLabel.text = placeReview.price.rawValue
         foodAmountLabel.text = placeReview.amount.rawValue
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        reviewWriteContainerView.layer.cornerRadius = 10
-    }
-
-
-
 }

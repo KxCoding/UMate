@@ -8,6 +8,12 @@
 import UIKit
 
 struct PlaceReviewItem {
+    struct UserReview {
+        let reviewText: String
+        let date: String
+    }
+    
+    
     let starPoint: Double
     
     enum Taste: String {
@@ -17,7 +23,6 @@ struct PlaceReviewItem {
         case plain = "고소하다"
         case salty = "짜다"
     }
-    
     let taste: Taste
     
     enum Service: String {
@@ -25,7 +30,6 @@ struct PlaceReviewItem {
         case unkind = "불친절함"
         case touchy = "까칠함"
     }
-    
     let service: Service
     
     enum Mood: String {
@@ -36,7 +40,6 @@ struct PlaceReviewItem {
         case clear = "깔끔한"
         
     }
-    
     let mood: Mood
     
     enum Price: String {
@@ -44,7 +47,6 @@ struct PlaceReviewItem {
         case affordable = "적당하다"
         case expensive = "비싸다"
     }
-    
     let price: Price
     
     enum Amount: String {
@@ -52,11 +54,5 @@ struct PlaceReviewItem {
         case suitable = "적당하다"
         case plenty = "푸짐하다"
     }
-    
     let amount: Amount
-}
-
-struct UserReview {
-    let reviewText: String
-    let date: String
 }

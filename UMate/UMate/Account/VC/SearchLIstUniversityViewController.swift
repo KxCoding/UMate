@@ -7,25 +7,44 @@
 
 import UIKit
 
-class SearchLIstUniversityViewController: UIViewController {
+extension Notification.Name {
+    static let didTapSendUniversityName = Notification.Name("didTapSendUniversityName")
+}
 
-    @IBOutlet weak var Listsearchbar: UISearchBar!
+class SearchLIstUniversityViewController: UIViewController {
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var listTableView: UITableView!
+    
     var searchCountry = [String]()
     var searching = false
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        listTableView.delegate = self
-        listTableView.dataSource = self
-        Listsearchbar.delegate = self
-        listTableView.isHidden = true
-
-       
+    static let universityNameTransitionKey = "universityNameTransitionKey"
+    
+    
+    @IBAction func cancel(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+        
     }
     
+    
+    @IBAction func completeButton(_ sender: Any) {
+        guard let searchBarText = searchBar.text else { return  }
+        NotificationCenter.default.post(name: .didTapSendUniversityName, object: nil, userInfo: [SearchLIstUniversityViewController.universityNameTransitionKey: searchBarText])
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        listTableView.delegate = self
+        listTableView.dataSource = self
+        searchBar.delegate = self
+        listTableView.isHidden = true
 
+    }
+    
 }
 
 
@@ -56,9 +75,9 @@ extension SearchLIstUniversityViewController: UITableViewDataSource {
 extension SearchLIstUniversityViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if searching {
-            Listsearchbar.text = searchCountry[indexPath.row]
+            searchBar.text = searchCountry[indexPath.row]
         } else {
-            Listsearchbar.text = universityList[indexPath.row]
+            searchBar.text = universityList[indexPath.row]
         }
         
     }

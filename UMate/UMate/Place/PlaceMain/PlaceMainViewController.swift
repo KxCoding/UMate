@@ -72,9 +72,7 @@ class PlaceMainViewController: UIViewController {
         section.visibleItemsInvalidationHandler = { [weak self] visibleItems, scrollOffset, layoutEnvironment in
             guard let self = self else { return }
             
-            
-            print("displayed")
-            print(scrollOffset)
+            //print(scrollOffset)
             
             self.selecteditemIndex = Int((scrollOffset.x + 19) / 337)
             
@@ -82,11 +80,14 @@ class PlaceMainViewController: UIViewController {
             
             guard let coord = selectedItem.coordinate else { return }
             
-            #if DEBUG
-            print(self.selecteditemIndex)
-            print(selectedItem.name)
-            print(coord.latitude, coord.longitude)
-            #endif
+//            #if DEBUG
+//            if
+//            print("------------------------", "\n",
+//                  "index-----", self.selecteditemIndex, "\n",
+//                  "선택된 가게--", selectedItem.name, "\n",
+//                  "좌표-------", coord.latitude, "/", coord.longitude,
+//                  separator: "")
+//            #endif
         }
         
         let layout = UICollectionViewCompositionalLayout(section: section)
