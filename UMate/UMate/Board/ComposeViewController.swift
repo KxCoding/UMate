@@ -57,7 +57,7 @@ class ComposeViewController: UIViewController {
     
     @IBAction func savePost(_ sender: Any) {
         guard let title = postTitleTextField.text, title.count > 0, let content = postContentTextView.text, content.count > 0 else {
-            alertNoContent(message: "게시글 작성을 취소하겠습니까?")
+            alertVersion2(message: "게시글 작성을 취소하겠습니까?")
             return
         }
         

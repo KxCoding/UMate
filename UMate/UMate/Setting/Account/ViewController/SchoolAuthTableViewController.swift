@@ -31,19 +31,7 @@ class SchoolAuthTableViewController: UITableViewController {
         tableView.separatorStyle = .none
         
         [authContainerView1, authContainerView2, authContainerView3].forEach {
-            $0?.layer.cornerRadius = 14
-            $0?.layer.borderColor = UIColor.systemGray.cgColor
+            $0?.setViewTheme()
         }
     }
-
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if indexPath.row == 1 {
-//            print("1")
-//        } else if indexPath.row == 2 {
-//            print("2")
-//        } else if indexPath.row == 3 {
-//            print("3")
-//        }
-//    }
-
 }

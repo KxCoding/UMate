@@ -34,7 +34,7 @@ class AccountViewController: UIViewController {
               id.contains("@") && id.contains("."),
               id.trimmingCharacters(in: .whitespacesAndNewlines)  != "" else {
 
-                  alertWithNoAction(title: "알림", message: "존재하지않는 아이디 입니다.")
+                  alert(title: "알림", message: "존재하지 않는 아이디 입니다.")
 
                   return
               }
@@ -44,7 +44,7 @@ class AccountViewController: UIViewController {
               password.count >= 8,
               password.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
 
-                  alertWithNoAction(title: "알림", message: "아이디 비밀번호가 맞지 않습니다.")
+                  alert(title: "알림", message: "아이디와 비밀번호가 맞지 않습니다.")
 
                   return
               }

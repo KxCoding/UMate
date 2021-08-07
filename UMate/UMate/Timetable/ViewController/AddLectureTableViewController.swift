@@ -349,25 +349,25 @@ class AddLectureTableViewController: UITableViewController {
     @IBAction func save(_ sender: Any) {
         // 시간표에 데이터 전달하기 위한 값
         guard let courseId = courseIdField.text, courseId.count > 0, let courseName = courseNameField.text, courseName.count > 0, let roomName = roomNameField.text, roomName.count > 0, let professor = professorField.text, professor.count > 0 else {
-            alertWithNoAction(title: "경고", message: "시간표 정보를 모두 입력해주세요.")
+            alert(title: "경고", message: "시간표 정보를 모두 입력해주세요.")
             return
         }
         
         
         if weekdayList[0] == false, weekdayList[1] == false, weekdayList[2] == false, weekdayList[3] == false, weekdayList[4] == false {
-            alertWithNoAction(title: "경고", message: "요일 정보를 입력해주세요.")
+            alert(title: "경고", message: "요일 정보를 입력해주세요.")
             return
         }
         
         
         if startTime == endTime {
-            alertWithNoAction(title: "경고", message: "강의 시작 시간과 종료 시간이 같습니다.")
+            alert(title: "경고", message: "강의 시작 시간과 종료 시간이 같습니다.")
             return
         }
         
         
         if startTime > endTime {
-            alertWithNoAction(title: "경고", message: "강의 시작 시간이 종료 시간보다 늦습니다.")
+            alert(title: "경고", message: "강의 시작 시간이 종료 시간보다 늦습니다.")
             return
         }
         
@@ -398,19 +398,19 @@ class AddLectureTableViewController: UITableViewController {
                     if lectureList[j].courseDay == Lecture.shared.courseList[i].courseDay {
                         
                         if Lecture.shared.courseList[i].startTime == lectureList[j].startTime || Lecture.shared.courseList[i].endTime == lectureList[j].endTime {
-                            alertWithNoAction(title: "경고", message: "강의 시간이 겹칩니다.")
+                            alert(title: "경고", message: "강의 시간이 겹칩니다.")
                             return
                         }
                         
                         if lectureList[j].startTime >= Lecture.shared.courseList[i].startTime && lectureList[j].endTime <= Lecture.shared.courseList[i].endTime {
                             print("1")
-                            alertWithNoAction(title: "경고", message: "강의 시간이 겹칩니다.")
+                            alert(title: "경고", message: "강의 시간이 겹칩니다.")
                             return
                         }
                         
                         if lectureList[j].startTime > Lecture.shared.courseList[i].startTime && lectureList[j].startTime < Lecture.shared.courseList[j].endTime  {
                             print("2")
-                            alertWithNoAction(title: "경고", message: "강의 시간이 겹칩니다.")
+                            alert(title: "경고", message: "강의 시간이 겹칩니다.")
                             return
                         }
                         

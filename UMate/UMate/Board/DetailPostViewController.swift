@@ -17,7 +17,7 @@ class DetailPostViewController: UIViewController {
     
     @IBAction func saveCommentBtn(_ sender: Any) {
         guard let comment = commentTextView.text, comment.count > 0 else {
-            alertNoContent(message: "댓글을 입력하세요")
+            alertVersion2(message: "댓글을 입력하세요")
             return
         }
         
@@ -43,7 +43,7 @@ class DetailPostViewController: UIViewController {
         
         if commentTextView.isFirstResponder {
             guard let comment = commentTextView.text, comment.count > 0 else {
-                alertNoContent(message: "대댓글 입력하세요")
+                alertVersion2(message: "대댓글 입력하세요")
                 return
             }
             

@@ -9,42 +9,38 @@ import UIKit
 
 extension UIViewController {
     
-    /// <#Description#>
+    /// 알림 메소드1 (alert)
+    ///
+    /// 확인 버튼만 존재하는 알림 메소드입니다.
+    ///
+    /// 추가적인 작업을 하고 싶을 경우, handler 파라미터를 이용해주세요.
+    ///
     /// - Parameters:
-    ///   - title: <#title description#>
-    ///   - message: <#message description#>
-    func alert(title: String, message: String) {
+    ///   - title: 알림 타이틀. 기본 값은 "알림"입니다.
+    ///   - message: 알림 메시지.
+    ///   - handler: 핸들러. handler의 기본값은 nil입니다.
+    func alert(title: String = "알림", message: String, handler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "확인", style: .default) { action in
-            self.dismiss(animated: true, completion: nil)
+        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] action in
+            self?.dismiss(animated: true, completion: nil)
         }
         alert.addAction(okAction)
         
         present(alert, animated: true, completion: nil)
     }
     
-    
-    /// <#Description#>
+    /// 알림 메소드2  (alert)
+    ///
+    /// 확인, 취소 버튼이 존재하는 알림 메소드입니다.
+    ///
+    /// 추가적인 작업을 하고 싶을 경우, handler 파라미터를 이용해주세요. handler의 기본값은 nil입니다.
+    ///
     /// - Parameters:
-    ///   - title: <#title description#>
-    ///   - message: <#message description#>
-    func alertWithNoAction(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-        alert.addAction(okAction)
-        
-        present(alert, animated: true, completion: nil)
-    }
-    
-    
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - title: <#title description#>
-    ///   - message: <#message description#>
-    func alertNoContent(title: String = "알림", message: String) {
+    ///   - title: 알림 타이틀. 기본 값은 "알림"입니다.
+    ///   - message: 알림 메시지.
+    ///   - handler: 핸들러. handler의 기본값은 nil입니다.
+    func alertVersion2(title: String = "알림", message: String, handler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "확인", style: .default, handler: { [weak self] (noti) in

@@ -1,10 +1,11 @@
 //
-//  UIView+Config.swift
-//  UMate
+//  UIView+Extension.swift
+//  UIView+Extension
 //
-//  Created by Effie on 2021/08/05.
+//  Created by 안상희 on 2021/08/08.
 //
 
+import Foundation
 import UIKit
 
 extension UIView {
@@ -93,4 +94,9 @@ extension UIView {
         
     }
     
+    /// View의 모서리 테마 설정 메소드
+    func setViewTheme() {
+        self.layer.cornerRadius = 14
+        self.layer.borderColor = UIColor.systemGray.cgColor
+    }
 }
