@@ -41,9 +41,9 @@ class PlaceInfoViewController: UIViewController {
     
     // 리뷰 데이터
     var reviews = [
-        UserReview(reviewText: "분위기 너무 좋아요", date: "2021.06.01"),
-        UserReview(reviewText: "커피 맛이 좋아요", date: "2021.05.28"),
-        UserReview(reviewText: "커피는 데일리루틴 나만 알고싶은집", date: "2021.05.23")
+        PlaceReviewItem.UserReview(reviewText: "분위기 너무 좋아요", date: "2021.06.01"),
+        PlaceReviewItem.UserReview(reviewText: "커피 맛이 좋아요", date: "2021.05.28"),
+        PlaceReviewItem.UserReview(reviewText: "커피는 데일리루틴 나만 알고싶은집", date: "2021.05.23")
     ]
     
     

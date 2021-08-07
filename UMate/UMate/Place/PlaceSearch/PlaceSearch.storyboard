@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -82,25 +81,25 @@
                                                         <constraint firstAttribute="bottom" secondItem="7mp-Ks-wna" secondAttribute="bottom" id="hbB-2h-I62"/>
                                                     </constraints>
                                                 </view>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m82-Xn-5JS">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OFt-n8-fa7">
                                                     <rect key="frame" x="0.0" y="0.0" width="341" height="186"/>
-                                                    <imageReference key="image" image="place_01"/>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="37X-yy-wRo" firstAttribute="leading" secondItem="0dH-gy-hMc" secondAttribute="leading" id="G0Z-60-lRQ"/>
-                                                <constraint firstAttribute="trailing" secondItem="m82-Xn-5JS" secondAttribute="trailing" id="O5s-m1-AvL"/>
-                                                <constraint firstItem="m82-Xn-5JS" firstAttribute="top" secondItem="0dH-gy-hMc" secondAttribute="top" id="RxA-uK-ue4"/>
+                                                <constraint firstItem="OFt-n8-fa7" firstAttribute="leading" secondItem="0dH-gy-hMc" secondAttribute="leading" id="Lxi-qb-ZCL"/>
                                                 <constraint firstAttribute="trailing" secondItem="37X-yy-wRo" secondAttribute="trailing" id="SVK-L8-zJ1"/>
                                                 <constraint firstAttribute="bottom" secondItem="37X-yy-wRo" secondAttribute="bottom" id="TXJ-jF-D0P"/>
-                                                <constraint firstItem="37X-yy-wRo" firstAttribute="top" secondItem="m82-Xn-5JS" secondAttribute="bottom" id="dEU-ea-1Gg"/>
-                                                <constraint firstItem="m82-Xn-5JS" firstAttribute="leading" secondItem="0dH-gy-hMc" secondAttribute="leading" id="sB0-xc-ctS"/>
+                                                <constraint firstAttribute="trailing" secondItem="OFt-n8-fa7" secondAttribute="trailing" id="aXc-Do-hao"/>
+                                                <constraint firstItem="OFt-n8-fa7" firstAttribute="top" secondItem="0dH-gy-hMc" secondAttribute="top" id="beU-WL-2mE"/>
+                                                <constraint firstItem="37X-yy-wRo" firstAttribute="top" secondItem="OFt-n8-fa7" secondAttribute="bottom" id="xIJ-Bm-1yJ"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="341" height="230"/>
                                         <connections>
                                             <outlet property="classificationNameLabel" destination="c81-qw-YBL" id="DCT-cv-1Mu"/>
-                                            <outlet property="imageView" destination="m82-Xn-5JS" id="pbf-Tb-vSV"/>
+                                            <outlet property="imageView" destination="OFt-n8-fa7" id="HmI-4g-8RE"/>
                                             <outlet property="placeTitle" destination="AJH-Vm-WUY" id="ggd-b4-k8j"/>
                                             <outlet property="regionNameLabel" destination="uf4-xd-x7X" id="WwN-f7-5dK"/>
                                         </connections>
@@ -123,7 +122,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="AxK-rb-2ED"/>
                     <connections>
-                        <outlet property="searchCollectionView" destination="Tip-Jm-BF9" id="9Cz-CU-0Jf"/>
+                        <outlet property="searchCollectionView" destination="Tip-Jm-BF9" id="JuJ-ij-qzw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -132,7 +131,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="place_01" width="562.5" height="258.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
