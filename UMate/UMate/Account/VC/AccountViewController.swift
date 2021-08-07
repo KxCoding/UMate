@@ -32,7 +32,7 @@ class AccountViewController: UIViewController {
         guard let id = idTextField.text,
               id.count > 0,
               id.contains("@") && id.contains("."),
-              id.trimmingCharacters(in: .whitespacesAndNewlines)  != "" else {
+              id.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
 
                   alertWithNoAction(title: "알림", message: "존재하지않는 아이디 입니다.")
 

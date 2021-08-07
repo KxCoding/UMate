@@ -13,25 +13,46 @@ extension Notification.Name {
 }
 
 class ProfilePicturesViewController: UIViewController {
-    @IBOutlet weak var profilePics1: UIImageView!
-    @IBOutlet weak var profilePics2: UIImageView!
-    @IBOutlet weak var profilePics3: UIImageView!
-    @IBOutlet weak var profilePics4: UIImageView!
-    @IBOutlet weak var profilePics5: UIImageView!
-    @IBOutlet weak var profilePics6: UIImageView!
-    @IBOutlet weak var profilePics7: UIImageView!
-    @IBOutlet weak var profilePics8: UIImageView!
-    @IBOutlet weak var profilePics9: UIImageView!
     
+    // profilePic
+    @IBOutlet weak var profilePic1: UIImageView!
+    @IBOutlet weak var profilePic2: UIImageView!
+    @IBOutlet weak var profilePic3: UIImageView!
+    @IBOutlet weak var profilePic4: UIImageView!
+    @IBOutlet weak var profilePic5: UIImageView!
+    @IBOutlet weak var profilePic6: UIImageView!
+    @IBOutlet weak var profilePic7: UIImageView!
+    @IBOutlet weak var profilePic8: UIImageView!
+    @IBOutlet weak var profilePic9: UIImageView!
+    
+    // Profile Button
+    @IBOutlet weak var profileButton1: UIButton!
+    @IBOutlet weak var profileButton2: UIButton!
+    @IBOutlet weak var profileButton3: UIButton!
+    @IBOutlet weak var profileButton4: UIButton!
+    @IBOutlet weak var profileButton5: UIButton!
+    @IBOutlet weak var profileButton6: UIButton!
+    @IBOutlet weak var profileButton7: UIButton!
+    @IBOutlet weak var profileButton8: UIButton!
+    @IBOutlet weak var profileButton9: UIButton!
+    
+    static let picsKey = "picsKey"
     
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
+    @IBAction func selectedProfilePic(_ sender: Any) {
+
+    
+        dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
+
         
     }
     
@@ -41,56 +62,56 @@ class ProfilePicturesViewController: UIViewController {
 
 extension ProfilePicturesViewController {
     @IBAction func selectedProfilePicsButton1(_ sender: Any) {
-        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: ["picsKey": profilePics1 ?? UIImageView()])
-        
+        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: profilePic1 ?? UIImageView()])
+
         dismiss(animated: true, completion: nil)
-        
+
     }
     @IBAction func selectedProfilePicsButton2(_ sender: Any) {
-        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: ["picsKey": profilePics2 ?? UIImageView()])
+        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: profilePic2 ?? UIImageView()])
         dismiss(animated: true, completion: nil)
-        
+
     }
     @IBAction func selectedProfilePicsButton3(_ sender: Any) {
-        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: ["picsKey": profilePics3 ?? UIImageView()])
+        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: profilePic3 ?? UIImageView()])
         dismiss(animated: true, completion: nil)
-        
+
     }
     @IBAction func selectedProfilePicsButton4(_ sender: Any) {
-        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: ["picsKey": profilePics4 ?? UIImageView()])
+        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: profilePic4 ?? UIImageView()])
         dismiss(animated: true, completion: nil)
-        
+
     }
     @IBAction func selectedProfilePicsButton5(_ sender: Any) {
-        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: ["picsKey": profilePics5 ?? UIImageView()])
-        
+        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: profilePic5 ?? UIImageView()])
+
         dismiss(animated: true, completion: nil)
-        
+
     }
     @IBAction func selectedProfilePicsButton6(_ sender: Any) {
-        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: ["picsKey": profilePics6 ?? UIImageView()])
-        
+        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: profilePic6 ?? UIImageView()])
+
         dismiss(animated: true, completion: nil)
-        
+
     }
     @IBAction func selectedProfilePicsButton7(_ sender: Any) {
-        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: ["picsKey": profilePics7 ?? UIImageView()])
-        
+        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: profilePic7 ?? UIImage()])
+
         dismiss(animated: true, completion: nil)
-        
+
     }
     @IBAction func selectedProfilePicsButton8(_ sender: Any) {
-        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: ["picsKey": profilePics8 ?? UIImageView()])
-        
+        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: profilePic8 ?? UIImage()])
+
         dismiss(animated: true, completion: nil)
-        
+
     }
     @IBAction func selectedProfilePicsButton9(_ sender: Any) {
-        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: ["picsKey": profilePics9 ?? UIImageView()])
-        
+        NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: profilePic9 ?? UIImage()])
+
         dismiss(animated: true, completion: nil)
-        
+
     }
-    
-    
+
+
 }

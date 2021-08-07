@@ -10,17 +10,17 @@ import DropDown
 
 class RegisterViewController: UIViewController {
     
-    @IBOutlet weak var listTableView: UITableView!
     @IBOutlet weak var enterenceYearView: UIView!
     @IBOutlet weak var universityView: UIView!
     @IBOutlet weak var nextButton: UIView!
     @IBOutlet weak var enterenceTextField: UITextField!
-    @IBOutlet weak var universitySearchBar: UISearchBar!
-    @IBOutlet weak var listTableViewConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var dismissZone: UIView!
     @IBOutlet weak var dismissZone2: UIView!
     
+    @IBOutlet weak var universityNameField: UILabel!
+    
+    var token: NSObjectProtocol?
     
     let menu: DropDown = {
         let menu = DropDown()
@@ -45,7 +45,6 @@ class RegisterViewController: UIViewController {
     }()
     
  
-    
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
@@ -74,10 +73,15 @@ class RegisterViewController: UIViewController {
         dismissZone.addGestureRecognizer(tap)
         dismissZone2.addGestureRecognizer(tap)
 
-        
-        
+        token = NotificationCenter.default.addObserver(forName: .didTapSendUniversityName, object: nil, queue: .main, using: { [weak self] noti in
+            guard let strongSelf = self else { return }
+            guard let universityName = noti.userInfo?[SearchLIstUniversityViewController.universityNameTransitionKey] as? String else { return }
+            
+            strongSelf.universityNameField.text = universityName
+        })
         
     }
+    
     
     @objc func dismissKeyboard() {
         dismissZone2.endEditing(true)

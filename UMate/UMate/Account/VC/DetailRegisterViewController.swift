@@ -71,7 +71,7 @@ class DetailRegisterViewController: UIViewController {
  
         token = NotificationCenter.default.addObserver(forName: .didTapProfilePics, object: nil, queue: .main, using: { [weak self] noti  in
             guard let strongSelf = self else { return }
-            guard let profileImageView = noti.userInfo?["picsKey"] as? UIImageView else { return }
+            guard let profileImageView = noti.userInfo?[ProfilePicturesViewController.picsKey] as? UIImageView else { return }
             
             strongSelf.profileImageView.image = profileImageView.image
             
