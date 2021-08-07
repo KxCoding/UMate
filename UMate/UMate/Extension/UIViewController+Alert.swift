@@ -55,9 +55,9 @@ extension UIViewController {
     }
     
     
-    /// <#Description#>
+    /// 알림 메소드3
     /// - Parameters:
-    ///   - title: <#title description#>
+    ///   - title: 알림 타이틀
     ///   - message: <#message description#>
     func alertComment(title: String, message: String) {
         let alertCommnet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
@@ -71,6 +71,29 @@ extension UIViewController {
         present(alertCommnet, animated: true, completion: nil)
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - title: <#title description#>
+    ///   - message: <#message description#>
+    ///   - completion: <#completion description#>
+    func alertDelete(title: String? = nil, message: String? = nil, completion: ((UIAlertAction) -> Void)? = nil) {
+        let alertDelete = UIAlertController(title: "알림", message: "댓글을 삭제하시겠습니까?", preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "확인", style: .destructive, handler: completion)
+        alertDelete.addAction(okAction)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alertDelete.addAction(cancelAction)
+        
+        present(alertDelete, animated: true, completion: nil)
+    }
+    
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - title: <#title description#>
+    ///   - message: <#message description#>
     func alertComment(title: String? = nil, message: String = "댓글을 신고하시겠습니까?") {
         let alertCommnet = UIAlertController(title: title, message: message , preferredStyle: .actionSheet)
         

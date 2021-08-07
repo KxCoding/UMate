@@ -7,18 +7,64 @@
 
 import UIKit
 
+
+extension Notification.Name {
+    static let newPostInsert = Notification.Name(rawValue: "newPostInsert")
+}
+
+
+
+
 class ComposeViewController: UIViewController {
     
     @IBOutlet weak var postTitleTextField: UITextField!
     @IBOutlet weak var postContentTextView: UITextView!
     @IBOutlet weak var commmunityRuleView: UIView!
     @IBOutlet weak var contentCountLabel: UILabel!
-    
+    @IBOutlet weak var contentPlacehoderLabel: UILabel!
     @IBOutlet var accessoryBar: UIToolbar!
-    
     @IBOutlet weak var contentTextViewBottomConstraint: NSLayoutConstraint!
     
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        commmunityRuleView.layer.cornerRadius = commmunityRuleView.frame.height / 2
+        
+        postTitleTextField.becomeFirstResponder()
+        postTitleTextField.inputAccessoryView = accessoryBar
+        postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
+    }
+    
+    
+    @IBAction func closeVC(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func savePost(_ sender: Any) {
+        guard let title = postTitleTextField.text, title.count > 0,
+              let content = postContentTextView.text, content.count > 0 else {
+            
+            alertVersion2(message: "게시글 작성을 취소하겠습니까?")
+            return
+        }
+        
+        let newPost = Post(images: [UIImage(named: "image4")],
+                           postTitle: title,
+                           postContent: content,
+                           postWriter: "아이디 데이터 넣기!",
+                           insertDate: Date(), likeCount: 3,
+                           commentCount: 2)
+        freeBoard.posts.insert(newPost, at: 0)
+        
+        NotificationCenter.default.post(name: .newPostInsert, object: nil)
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // TODO: 홍보,정보 게시판 카테고리 선택항목으로 변경할 것
     @IBAction func selectWriter(_ sender: Any) {
         guard let selectWriter = sender as? UIBarButtonItem else { return }
         
@@ -30,62 +76,28 @@ class ComposeViewController: UIViewController {
             selectWriter.tag = 101
         }
     }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        commmunityRuleView.layer.cornerRadius = commmunityRuleView.frame.height / 2
-        
-        postTitleTextField.becomeFirstResponder()
-        postTitleTextField.inputAccessoryView = accessoryBar
-        postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
-        
-        postTitleTextField.placeholder = "제목을 입력하세요."
-        postTitleTextField.returnKeyType = .next
-        postTitleTextField.delegate = self
-        
-        postContentTextView.text = "내용을 입력하세요."
-        postContentTextView.textColor = .lightGray
-        postContentTextView.delegate = self
- 
-    }
-    
-    @IBAction func closeVC(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func savePost(_ sender: Any) {
-        guard let title = postTitleTextField.text, title.count > 0, let content = postContentTextView.text, content.count > 0 else {
-            alertVersion2(message: "게시글 작성을 취소하겠습니까?")
-            return
-        }
-        
-        let newPost = Post(images: [UIImage(named: "image4")], postTitle: title, postContent: content, postWriter: "아이디 데이터 넣기!", insertDate: Date(), likeCount: 3, commentCount: 2)
-        freeBoard.posts.insert(newPost, at: 0)
-        
-        NotificationCenter.default.post(name: .newPostInsert, object: nil)
-        
-        dismiss(animated: true, completion: nil)
-    }
 }
 
 
 
+
+// 게시글(본문) placeHolder 설정 및 글자수 제한(500자)
 extension ComposeViewController: UITextViewDelegate {
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "내용을 입력하세요." || postContentTextView.isFirstResponder {
-            textView.text = ""
-            textView.textColor = .black
-        }
+        contentPlacehoderLabel.isHidden = true
     }
     
+    
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
-            textView.text = "글을 입력하세요."
-            textView.textColor = UIColor.lightGray
+        guard let content = postContentTextView.text, content.count > 0 else {
+            contentPlacehoderLabel.isHidden = false
+            return
         }
+        
+        contentPlacehoderLabel.isHidden = true
     }
+    
     
     func textViewDidChange(_ textView: UITextView) {
         contentCountLabel.text = "\(postContentTextView.text.count) / 500"
@@ -96,6 +108,7 @@ extension ComposeViewController: UITextViewDelegate {
             contentCountLabel.textColor = .lightGray
         }
     }
+    
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
@@ -111,21 +124,18 @@ extension ComposeViewController: UITextViewDelegate {
 }
 
 
-
+// 제목 글자수 제한(50자)
 extension ComposeViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        switch textField {
-        case postTitleTextField:
-            if postTitleTextField.isFirstResponder {
-                postContentTextView.becomeFirstResponder()
-            }
-        default:
-            break
+        if textField == postTitleTextField && postTitleTextField.isFirstResponder {
+            postContentTextView.becomeFirstResponder()
         }
         
         return true
     }
+    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentTitle = NSString(string: postTitleTextField.text ?? "")
@@ -139,9 +149,4 @@ extension ComposeViewController: UITextFieldDelegate {
     }
 }
 
-
-
-extension Notification.Name {
-    static let newPostInsert = Notification.Name(rawValue: "newPostInsert")
-}
 
