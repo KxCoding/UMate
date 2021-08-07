@@ -32,7 +32,6 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="60"/>
                                                         <state key="normal" title="친구"/>
                                                         <connections>
-                                                            <action selector="showFriends:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="prg-uf-Elx"/>
                                                             <segue destination="39o-hZ-vMg" kind="show" id="wBt-V0-Pdp"/>
                                                         </connections>
                                                     </button>
@@ -46,7 +45,6 @@
                                                         <rect key="frame" x="276" y="0.0" width="138" height="60"/>
                                                         <state key="normal" title="시간표 추가"/>
                                                         <connections>
-                                                            <action selector="add:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="gAk-OK-LbF"/>
                                                             <segue destination="JSr-eF-Dmh" kind="show" identifier="show" id="Nya-Va-WOS"/>
                                                         </connections>
                                                     </button>
@@ -88,10 +86,12 @@
                             <constraint firstItem="Hmg-p6-Ay9" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="qDa-Za-Pz3"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Timetable" id="Ab4-sA-Stu"/>
+                    <tabBarItem key="tabBarItem" title="Timetable" id="Ab4-sA-Stu">
+                        <imageReference key="image" image="clock" catalog="system"/>
+                    </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="timetableView" destination="mI1-yV-quH" id="V6X-LR-gf2"/>
+                        <outlet property="timeTableView" destination="mI1-yV-quH" id="CX7-zb-a5l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -122,10 +122,10 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6wb-aU-eoH">
-                                                    <rect key="frame" x="98" y="24.5" width="296" height="23"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="과목 ID를 입력해주세요." adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6wb-aU-eoH">
+                                                    <rect key="frame" x="98" y="27" width="296" height="18.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="AIb-cr-mJT" id="CPI-fM-951"/>
                                                     </connections>
@@ -153,10 +153,10 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iPk-ez-1AN">
-                                                    <rect key="frame" x="96.5" y="24.5" width="297.5" height="23"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="과목명을 입력해주세요." adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iPk-ez-1AN">
+                                                    <rect key="frame" x="96.5" y="27" width="297.5" height="18.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="AIb-cr-mJT" id="dr5-aa-R60"/>
                                                     </connections>
@@ -184,10 +184,10 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ec0-7G-7qU">
-                                                    <rect key="frame" x="96.5" y="24.5" width="297.5" height="23"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="강의실을 입력해주세요." adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ec0-7G-7qU">
+                                                    <rect key="frame" x="96.5" y="27" width="297.5" height="18.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="AIb-cr-mJT" id="wlc-E6-wzb"/>
                                                     </connections>
@@ -215,10 +215,10 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ixM-nN-dWF">
-                                                    <rect key="frame" x="96.5" y="24.5" width="297.5" height="23"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="교수님을 입력해주세요." adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ixM-nN-dWF">
+                                                    <rect key="frame" x="96.5" y="27" width="297.5" height="18.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="AIb-cr-mJT" id="Mdw-ry-3hq"/>
                                                     </connections>
@@ -1283,7 +1283,7 @@
                     <navigationItem key="navigationItem" id="zVl-BW-ZEY"/>
                     <connections>
                         <outlet property="friendNameLabel" destination="utP-DO-9cC" id="9cH-h5-l9o"/>
-                        <outlet property="timetableView" destination="5UZ-g0-Aot" id="XT7-Dk-qxj"/>
+                        <outlet property="timeTableView" destination="5UZ-g0-Aot" id="Efm-W3-iWS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vcm-8S-tAk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1331,6 +1331,7 @@
     </scenes>
     <resources>
         <image name="check" width="16" height="16"/>
+        <image name="clock" catalog="system" width="128" height="121"/>
         <namedColor name="blue">
             <color red="0.20000000000000001" green="0.59999999999999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

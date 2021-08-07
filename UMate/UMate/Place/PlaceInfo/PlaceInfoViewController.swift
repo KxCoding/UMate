@@ -7,12 +7,17 @@
 
 import UIKit
 
-// 탭 선택될 때 post할 notification 등록
 extension Notification.Name {
+    /// 하위 탭을 선택할 때 post할 notification
     static let tapToggleDidRequest = Notification.Name(rawValue: "tapToggleDidRequest")
 }
 
+
+
+
 class PlaceInfoViewController: UIViewController {
+    
+    @IBOutlet weak var placeInfoTableView: UITableView!
     
     // 상세 페이지 하위 탭
     enum SubTab {
@@ -20,7 +25,7 @@ class PlaceInfoViewController: UIViewController {
         case review
     }
     
-    // 선택된 탭 저장
+    // 선택된 탭을 저장하는 속성
     var selectedTap: SubTab = .detail
     
     // 가게 더미 데이터
@@ -42,22 +47,20 @@ class PlaceInfoViewController: UIViewController {
     ]
     
     
-    
-    @IBOutlet weak var placeInfoTableView: UITableView!
-    
+    /// 화면 초기화
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(type(of: self), #function)
         
         placeInfoTableView.dataSource = self
     }
     
+    
+    /// 탭 버튼을 선택하면 호출되는 메소드
+    /// - Parameter sender: 탭 버튼
     @IBAction func selectTap(_ sender: UIButton) {
         switch sender.tag {
+        
         case 100:
-            print("select detail tap")
-            
             // 선택된 탭 저장
             selectedTap = .detail
             
@@ -66,12 +69,14 @@ class PlaceInfoViewController: UIViewController {
             
             // 테이블 뷰 리로드 -> 테이블 뷰가 알맞은 셀 표시
             placeInfoTableView.reloadData()
+            
         case 101:
-            print("select review tap")
             selectedTap = .review
+            
             NotificationCenter.default.post(name: .tapToggleDidRequest, object: nil, userInfo: ["selectedTap": selectedTap])
             
             placeInfoTableView.reloadData()
+            
         default:
             break
         }
@@ -79,11 +84,24 @@ class PlaceInfoViewController: UIViewController {
     
 }
 
+
+
+
 extension PlaceInfoViewController: UITableViewDataSource {
+    
+    /// table view에서 몇 개의 section을 표시할 건지 data source에게 묻는 메소드
+    /// - Parameter tableView: 이 정보를 요청하는 table view
+    /// - Returns: 섹션의 개수
     func numberOfSections(in tableView: UITableView) -> Int {
         return 5
     }
     
+    
+    /// 지정된 섹션에서 몇 개의 item을 표시할 건지 data source에게 묻는 메소드
+    /// - Parameters:
+    ///   - tableView: 이 정보를 요청하는 table view
+    ///   - section: 컬렉션 뷰의 특정 섹션을 가리키는 index number
+    /// - Returns: 섹션에 포함되는 아이템의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 4:
@@ -94,6 +112,12 @@ extension PlaceInfoViewController: UITableViewDataSource {
         }
     }
     
+    
+    /// data source에게 테이블 뷰에서 특정 indexpath의 아이템에 응하는 셀을 요청하는 메소드
+    /// - Parameters:
+    ///   - tableView: 이 정보를 요청하는 table view
+    ///   - indexPath: 아이템의 위치를 가리키는 indexpath
+    /// - Returns: 완성된 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
             

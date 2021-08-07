@@ -18,14 +18,14 @@ class EmailVerifyViewController: UIViewController {
               id.count > 0,
               id.contains("@") && id.contains("."),
               id.trimmingCharacters(in: .whitespacesAndNewlines)  != "" else {
-                  showError(title: "알림", message: "잘못된 형식의 이메일입니다.")
+                  alertWithNoAction(title: "알림", message: "잘못된 형식의 이메일입니다.")
                   return
               }
     }
     
     @IBAction func emailVerificationButtonAction(_ sender: Any) {
         guard let codeField = codeTextField.text, codeField == "19930725" else {
-            showError(title: "알림", message: "잘못된 코드입니다.")
+            alertWithNoAction(title: "알림", message: "잘못된 코드입니다.")
             return
         }
         

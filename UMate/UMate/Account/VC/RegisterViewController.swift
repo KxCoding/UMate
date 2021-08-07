@@ -44,8 +44,7 @@ class RegisterViewController: UIViewController {
         return menu
     }()
     
-    var searchCountry = [String]()
-    var searching = false
+ 
     
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
@@ -74,17 +73,13 @@ class RegisterViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         dismissZone.addGestureRecognizer(tap)
         dismissZone2.addGestureRecognizer(tap)
-        listTableView.delegate = self
-        listTableView.dataSource = self
-        universitySearchBar.delegate = self
-        listTableView.isHidden = true
+
         
         
         
     }
     
     @objc func dismissKeyboard() {
-        dismissZone.endEditing(true)
         dismissZone2.endEditing(true)
     }
     
@@ -92,64 +87,3 @@ class RegisterViewController: UIViewController {
 
 
 
-extension RegisterViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searching {
-            return searchCountry.count
-        }
-        
-        return universityList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.selectionStyle = .none
-        if searching {
-            cell.textLabel?.text = searchCountry[indexPath.row]
-        } else {
-            cell.textLabel?.text = universityList[indexPath.row]
-        }
-        
-        return cell
-    }
-    
-    
-}
-
-extension RegisterViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if searching {
-            universitySearchBar.text = searchCountry[indexPath.row]
-        } else {
-            universitySearchBar.text = universityList[indexPath.row]
-        }
-        
-    }
-    
-}
-
-
-extension RegisterViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searching = true
-        searchCountry = universityList.filter{ $0.prefix(searchText.count) == searchText }
-        
-        listTableView.reloadData()
-    }
-    
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        listTableViewConstraint.constant = 0
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-        listTableView.isHidden = false
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        return true
-    }
-    
-    
-    
-}
