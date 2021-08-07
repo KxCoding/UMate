@@ -52,6 +52,7 @@ class PlaceInfoViewController: UIViewController {
         super.viewDidLoad()
         
         placeInfoTableView.dataSource = self
+        placeInfoTableView.delegate = self
     }
     
     
@@ -122,7 +123,11 @@ extension PlaceInfoViewController: UITableViewDataSource {
         switch indexPath.section {
             
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "FirstSectionTableViewCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FirstSectionTableViewCell", for: indexPath) as! FirstSectionTableViewCell
+            
+            cell.configure(with: place)
+            
+            return cell
             
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InfoSectionTableViewCell", for: indexPath) as! InfoSectionTableViewCell
@@ -165,5 +170,15 @@ extension PlaceInfoViewController: UITableViewDataSource {
         }
     }
     
-    
+}
+
+extension PlaceInfoViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return tableView.frame.width * 0.5
+        }
+        else {
+            return UITableView.automaticDimension
+        }
+    }
 }
