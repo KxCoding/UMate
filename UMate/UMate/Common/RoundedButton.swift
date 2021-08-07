@@ -9,7 +9,6 @@ import UIKit
 
 @IBDesignable
 class RoundedButton: UIButton {
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -23,14 +22,12 @@ class RoundedButton: UIButton {
     
     
     func setup() {
-        layer.cornerRadius = frame.height / 2
+        layer.cornerRadius = frame.height / 4
     }
     
     
     override func prepareForInterfaceBuilder() {
         setup()
     }
-    
-    
 }
 
