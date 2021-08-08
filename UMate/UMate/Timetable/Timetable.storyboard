@@ -103,7 +103,7 @@
             <objects>
                 <tableViewController id="AIb-cr-mJT" customClass="AddLectureTableViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="1Fk-Jb-fXu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="946"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="892"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
@@ -541,10 +541,11 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="65.5" height="66"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Arj-nu-r37">
-                                                                    <rect key="frame" x="13" y="13" width="39.5" height="40"/>
+                                                                    <rect key="frame" x="9" y="9" width="47.5" height="48"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8x7-GP-FPe">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="39.5" height="40"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="48"/>
+                                                                            <color key="backgroundColor" name="lightRed"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <state key="normal">
                                                                                 <imageReference key="image" image="check"/>
@@ -567,20 +568,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstItem="Arj-nu-r37" firstAttribute="top" secondItem="2CK-0G-DBf" secondAttribute="topMargin" constant="5" id="3yP-rQ-Pdx"/>
-                                                                <constraint firstItem="Arj-nu-r37" firstAttribute="leading" secondItem="2CK-0G-DBf" secondAttribute="leadingMargin" constant="5" id="DCv-B1-UrW"/>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="Arj-nu-r37" secondAttribute="bottom" constant="5" id="F1t-Hw-Soe"/>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="Arj-nu-r37" secondAttribute="trailing" constant="5" id="vpx-zb-80F"/>
+                                                                <constraint firstItem="Arj-nu-r37" firstAttribute="top" secondItem="2CK-0G-DBf" secondAttribute="topMargin" constant="1" id="3yP-rQ-Pdx"/>
+                                                                <constraint firstItem="Arj-nu-r37" firstAttribute="leading" secondItem="2CK-0G-DBf" secondAttribute="leadingMargin" constant="1" id="DCv-B1-UrW"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="Arj-nu-r37" secondAttribute="bottom" constant="1" id="F1t-Hw-Soe"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="Arj-nu-r37" secondAttribute="trailing" constant="1" id="vpx-zb-80F"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dEs-3w-JgW">
                                                             <rect key="frame" x="65.5" y="0.0" width="66" height="66"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bk9-vY-5fh">
-                                                                    <rect key="frame" x="13" y="13" width="40" height="40"/>
+                                                                    <rect key="frame" x="9" y="9" width="48" height="48"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="201" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDP-m6-7bm">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                                                                            <color key="backgroundColor" name="red"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="wnO-9f-oVf"/>
@@ -600,20 +602,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="bk9-vY-5fh" secondAttribute="bottom" constant="5" id="276-UU-4QM"/>
-                                                                <constraint firstItem="bk9-vY-5fh" firstAttribute="leading" secondItem="dEs-3w-JgW" secondAttribute="leadingMargin" constant="5" id="UQS-6G-MdX"/>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="bk9-vY-5fh" secondAttribute="trailing" constant="5" id="klR-Qc-Ftp"/>
-                                                                <constraint firstItem="bk9-vY-5fh" firstAttribute="top" secondItem="dEs-3w-JgW" secondAttribute="topMargin" constant="5" id="lIZ-E0-oN1"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="bk9-vY-5fh" secondAttribute="bottom" constant="1" id="276-UU-4QM"/>
+                                                                <constraint firstItem="bk9-vY-5fh" firstAttribute="leading" secondItem="dEs-3w-JgW" secondAttribute="leadingMargin" constant="1" id="UQS-6G-MdX"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="bk9-vY-5fh" secondAttribute="trailing" constant="1" id="klR-Qc-Ftp"/>
+                                                                <constraint firstItem="bk9-vY-5fh" firstAttribute="top" secondItem="dEs-3w-JgW" secondAttribute="topMargin" constant="1" id="lIZ-E0-oN1"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rcL-nl-tYg">
                                                             <rect key="frame" x="131.5" y="0.0" width="65.5" height="66"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHC-Ai-hSc">
-                                                                    <rect key="frame" x="13" y="13" width="39.5" height="40"/>
+                                                                    <rect key="frame" x="9" y="9" width="47.5" height="48"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="202" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5rq-xx-bnK">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="39.5" height="40"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="48"/>
+                                                                            <color key="backgroundColor" name="pink"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="g29-rG-D50"/>
@@ -633,20 +636,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="jHC-Ai-hSc" secondAttribute="trailing" constant="5" id="1zo-e1-s1R"/>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="jHC-Ai-hSc" secondAttribute="bottom" constant="5" id="B8p-ah-JRC"/>
-                                                                <constraint firstItem="jHC-Ai-hSc" firstAttribute="leading" secondItem="rcL-nl-tYg" secondAttribute="leadingMargin" constant="5" id="nbo-GG-b6y"/>
-                                                                <constraint firstItem="jHC-Ai-hSc" firstAttribute="top" secondItem="rcL-nl-tYg" secondAttribute="topMargin" constant="5" id="qS7-gd-LMy"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="jHC-Ai-hSc" secondAttribute="trailing" constant="1" id="1zo-e1-s1R"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="jHC-Ai-hSc" secondAttribute="bottom" constant="1" id="B8p-ah-JRC"/>
+                                                                <constraint firstItem="jHC-Ai-hSc" firstAttribute="leading" secondItem="rcL-nl-tYg" secondAttribute="leadingMargin" constant="1" id="nbo-GG-b6y"/>
+                                                                <constraint firstItem="jHC-Ai-hSc" firstAttribute="top" secondItem="rcL-nl-tYg" secondAttribute="topMargin" constant="1" id="qS7-gd-LMy"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68E-IU-gUN">
                                                             <rect key="frame" x="197" y="0.0" width="65.5" height="66"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IDu-p6-OoU">
-                                                                    <rect key="frame" x="13" y="13" width="39.5" height="40"/>
+                                                                    <rect key="frame" x="9" y="9" width="47.5" height="48"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="203" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bf7-dN-wUd">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="39.5" height="40"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="48"/>
+                                                                            <color key="backgroundColor" name="orange"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="dbf-fp-0sm"/>
@@ -666,20 +670,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="IDu-p6-OoU" secondAttribute="trailing" constant="5" id="6vz-2b-MfU"/>
-                                                                <constraint firstItem="IDu-p6-OoU" firstAttribute="leading" secondItem="68E-IU-gUN" secondAttribute="leadingMargin" constant="5" id="Mvz-nz-qSF"/>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="IDu-p6-OoU" secondAttribute="bottom" constant="5" id="mSD-WY-s46"/>
-                                                                <constraint firstItem="IDu-p6-OoU" firstAttribute="top" secondItem="68E-IU-gUN" secondAttribute="topMargin" constant="5" id="xXp-bQ-w3D"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="IDu-p6-OoU" secondAttribute="trailing" constant="1" id="6vz-2b-MfU"/>
+                                                                <constraint firstItem="IDu-p6-OoU" firstAttribute="leading" secondItem="68E-IU-gUN" secondAttribute="leadingMargin" constant="1" id="Mvz-nz-qSF"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="IDu-p6-OoU" secondAttribute="bottom" constant="1" id="mSD-WY-s46"/>
+                                                                <constraint firstItem="IDu-p6-OoU" firstAttribute="top" secondItem="68E-IU-gUN" secondAttribute="topMargin" constant="1" id="xXp-bQ-w3D"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oL4-NO-QOk">
                                                             <rect key="frame" x="262.5" y="0.0" width="66" height="66"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q2H-LM-YsL">
-                                                                    <rect key="frame" x="13" y="13" width="40" height="40"/>
+                                                                    <rect key="frame" x="9" y="9" width="48" height="48"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="204" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vot-cH-mHh">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                                                                            <color key="backgroundColor" name="yellow"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="KNz-il-p5p"/>
@@ -699,20 +704,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="Q2H-LM-YsL" secondAttribute="trailing" constant="5" id="Fuc-Q9-fJG"/>
-                                                                <constraint firstItem="Q2H-LM-YsL" firstAttribute="leading" secondItem="oL4-NO-QOk" secondAttribute="leadingMargin" constant="5" id="KcF-Vw-Od5"/>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="Q2H-LM-YsL" secondAttribute="bottom" constant="5" id="qB4-38-Plf"/>
-                                                                <constraint firstItem="Q2H-LM-YsL" firstAttribute="top" secondItem="oL4-NO-QOk" secondAttribute="topMargin" constant="5" id="y9M-AX-7q3"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="Q2H-LM-YsL" secondAttribute="trailing" constant="1" id="Fuc-Q9-fJG"/>
+                                                                <constraint firstItem="Q2H-LM-YsL" firstAttribute="leading" secondItem="oL4-NO-QOk" secondAttribute="leadingMargin" constant="1" id="KcF-Vw-Od5"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="Q2H-LM-YsL" secondAttribute="bottom" constant="1" id="qB4-38-Plf"/>
+                                                                <constraint firstItem="Q2H-LM-YsL" firstAttribute="top" secondItem="oL4-NO-QOk" secondAttribute="topMargin" constant="1" id="y9M-AX-7q3"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LMC-G0-FF3">
                                                             <rect key="frame" x="328.5" y="0.0" width="65.5" height="66"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rCM-RH-KHJ">
-                                                                    <rect key="frame" x="13" y="13" width="39.5" height="40"/>
+                                                                    <rect key="frame" x="9" y="9" width="47.5" height="48"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="205" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UMA-l5-r7F">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="39.5" height="40"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="48"/>
+                                                                            <color key="backgroundColor" name="lightGreen"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="Wni-Ah-0dY"/>
@@ -732,10 +738,10 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="rCM-RH-KHJ" secondAttribute="bottom" constant="5" id="9vo-YS-tBe"/>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="rCM-RH-KHJ" secondAttribute="trailing" constant="5" id="NF0-Cx-9ye"/>
-                                                                <constraint firstItem="rCM-RH-KHJ" firstAttribute="leading" secondItem="LMC-G0-FF3" secondAttribute="leadingMargin" constant="5" id="NvD-Rl-iOr"/>
-                                                                <constraint firstItem="rCM-RH-KHJ" firstAttribute="top" secondItem="LMC-G0-FF3" secondAttribute="topMargin" constant="5" id="mza-y6-Dxh"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="rCM-RH-KHJ" secondAttribute="bottom" constant="1" id="9vo-YS-tBe"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="rCM-RH-KHJ" secondAttribute="trailing" constant="1" id="NF0-Cx-9ye"/>
+                                                                <constraint firstItem="rCM-RH-KHJ" firstAttribute="leading" secondItem="LMC-G0-FF3" secondAttribute="leadingMargin" constant="1" id="NvD-Rl-iOr"/>
+                                                                <constraint firstItem="rCM-RH-KHJ" firstAttribute="top" secondItem="LMC-G0-FF3" secondAttribute="topMargin" constant="1" id="mza-y6-Dxh"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -747,10 +753,11 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="65.5" height="65.5"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2EI-7M-5aM">
-                                                                    <rect key="frame" x="13" y="13" width="39.5" height="39.5"/>
+                                                                    <rect key="frame" x="9" y="9" width="47.5" height="47.5"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="206" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Zz-gm-0oI">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="39.5" height="39.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="47.5"/>
+                                                                            <color key="backgroundColor" name="green"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="gry-L6-5b7"/>
@@ -770,20 +777,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="2EI-7M-5aM" secondAttribute="trailing" constant="5" id="5Ce-xn-2se"/>
-                                                                <constraint firstItem="2EI-7M-5aM" firstAttribute="leading" secondItem="TTG-hG-DgR" secondAttribute="leadingMargin" constant="5" id="L6c-O2-x2c"/>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="2EI-7M-5aM" secondAttribute="bottom" constant="5" id="QOh-Mo-gdy"/>
-                                                                <constraint firstItem="2EI-7M-5aM" firstAttribute="top" secondItem="TTG-hG-DgR" secondAttribute="topMargin" constant="5" id="aym-Gq-wHY"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="2EI-7M-5aM" secondAttribute="trailing" constant="1" id="5Ce-xn-2se"/>
+                                                                <constraint firstItem="2EI-7M-5aM" firstAttribute="leading" secondItem="TTG-hG-DgR" secondAttribute="leadingMargin" constant="1" id="L6c-O2-x2c"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="2EI-7M-5aM" secondAttribute="bottom" constant="1" id="QOh-Mo-gdy"/>
+                                                                <constraint firstItem="2EI-7M-5aM" firstAttribute="top" secondItem="TTG-hG-DgR" secondAttribute="topMargin" constant="1" id="aym-Gq-wHY"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KlK-Lk-pXk">
                                                             <rect key="frame" x="65.5" y="0.0" width="66" height="65.5"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rf9-NM-bPF">
-                                                                    <rect key="frame" x="13" y="13" width="40" height="39.5"/>
+                                                                    <rect key="frame" x="9" y="9" width="48" height="47.5"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="207" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NbS-cm-fIP">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="39.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="48" height="47.5"/>
+                                                                            <color key="backgroundColor" name="skyblue"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="ISp-gv-N7J"/>
@@ -803,20 +811,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstItem="rf9-NM-bPF" firstAttribute="leading" secondItem="KlK-Lk-pXk" secondAttribute="leadingMargin" constant="5" id="9yk-z5-Jp1"/>
-                                                                <constraint firstItem="rf9-NM-bPF" firstAttribute="top" secondItem="KlK-Lk-pXk" secondAttribute="topMargin" constant="5" id="eQM-n3-uX8"/>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="rf9-NM-bPF" secondAttribute="bottom" constant="5" id="nZC-7p-fBN"/>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="rf9-NM-bPF" secondAttribute="trailing" constant="5" id="sRW-RK-Iji"/>
+                                                                <constraint firstItem="rf9-NM-bPF" firstAttribute="leading" secondItem="KlK-Lk-pXk" secondAttribute="leadingMargin" constant="1" id="9yk-z5-Jp1"/>
+                                                                <constraint firstItem="rf9-NM-bPF" firstAttribute="top" secondItem="KlK-Lk-pXk" secondAttribute="topMargin" constant="1" id="eQM-n3-uX8"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="rf9-NM-bPF" secondAttribute="bottom" constant="1" id="nZC-7p-fBN"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="rf9-NM-bPF" secondAttribute="trailing" constant="1" id="sRW-RK-Iji"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJs-GY-Slw">
                                                             <rect key="frame" x="131.5" y="0.0" width="65.5" height="65.5"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xWQ-UO-cqa">
-                                                                    <rect key="frame" x="13" y="13" width="39.5" height="39.5"/>
+                                                                    <rect key="frame" x="9" y="9" width="47.5" height="47.5"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="208" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2C-nV-7hl">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="39.5" height="39.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="47.5"/>
+                                                                            <color key="backgroundColor" name="blue"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="VNQ-1n-yKC"/>
@@ -836,20 +845,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstItem="xWQ-UO-cqa" firstAttribute="leading" secondItem="lJs-GY-Slw" secondAttribute="leadingMargin" constant="5" id="9Rz-Cn-JIQ"/>
-                                                                <constraint firstItem="xWQ-UO-cqa" firstAttribute="top" secondItem="lJs-GY-Slw" secondAttribute="topMargin" constant="5" id="d30-TM-A9u"/>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="xWQ-UO-cqa" secondAttribute="trailing" constant="5" id="k1f-1a-TGg"/>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="xWQ-UO-cqa" secondAttribute="bottom" constant="5" id="s4r-sp-FR4"/>
+                                                                <constraint firstItem="xWQ-UO-cqa" firstAttribute="leading" secondItem="lJs-GY-Slw" secondAttribute="leadingMargin" constant="1" id="9Rz-Cn-JIQ"/>
+                                                                <constraint firstItem="xWQ-UO-cqa" firstAttribute="top" secondItem="lJs-GY-Slw" secondAttribute="topMargin" constant="1" id="d30-TM-A9u"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="xWQ-UO-cqa" secondAttribute="trailing" constant="1" id="k1f-1a-TGg"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="xWQ-UO-cqa" secondAttribute="bottom" constant="1" id="s4r-sp-FR4"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ndY-xM-LXC">
                                                             <rect key="frame" x="197" y="0.0" width="65.5" height="65.5"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f4z-bw-VIc">
-                                                                    <rect key="frame" x="13" y="13" width="39.5" height="39.5"/>
+                                                                    <rect key="frame" x="9" y="9" width="47.5" height="47.5"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="209" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7as-U8-nv5">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="39.5" height="39.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="47.5"/>
+                                                                            <color key="backgroundColor" name="lightPurple"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="DTg-GC-E4w"/>
@@ -869,20 +879,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="f4z-bw-VIc" secondAttribute="bottom" constant="5" id="Ute-sw-5XT"/>
-                                                                <constraint firstItem="f4z-bw-VIc" firstAttribute="leading" secondItem="ndY-xM-LXC" secondAttribute="leadingMargin" constant="5" id="dHw-Pr-YJW"/>
-                                                                <constraint firstItem="f4z-bw-VIc" firstAttribute="top" secondItem="ndY-xM-LXC" secondAttribute="topMargin" constant="5" id="nQu-Ml-VzA"/>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="f4z-bw-VIc" secondAttribute="trailing" constant="5" id="ywa-jM-cEQ"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="f4z-bw-VIc" secondAttribute="bottom" constant="1" id="Ute-sw-5XT"/>
+                                                                <constraint firstItem="f4z-bw-VIc" firstAttribute="leading" secondItem="ndY-xM-LXC" secondAttribute="leadingMargin" constant="1" id="dHw-Pr-YJW"/>
+                                                                <constraint firstItem="f4z-bw-VIc" firstAttribute="top" secondItem="ndY-xM-LXC" secondAttribute="topMargin" constant="1" id="nQu-Ml-VzA"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="f4z-bw-VIc" secondAttribute="trailing" constant="1" id="ywa-jM-cEQ"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c4c-jh-W59">
                                                             <rect key="frame" x="262.5" y="0.0" width="66" height="65.5"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8GU-cG-rMc">
-                                                                    <rect key="frame" x="13" y="13" width="40" height="39.5"/>
+                                                                    <rect key="frame" x="9" y="9" width="48" height="47.5"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="210" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBJ-YL-gDr">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="39.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="48" height="47.5"/>
+                                                                            <color key="backgroundColor" name="purple"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="p4n-8b-wQj"/>
@@ -902,20 +913,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstItem="8GU-cG-rMc" firstAttribute="top" secondItem="c4c-jh-W59" secondAttribute="topMargin" constant="5" id="48J-JI-mbX"/>
-                                                                <constraint firstItem="8GU-cG-rMc" firstAttribute="leading" secondItem="c4c-jh-W59" secondAttribute="leadingMargin" constant="5" id="774-uw-SJ6"/>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="8GU-cG-rMc" secondAttribute="bottom" constant="5" id="ADX-an-vGl"/>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="8GU-cG-rMc" secondAttribute="trailing" constant="5" id="GgE-x6-jAv"/>
+                                                                <constraint firstItem="8GU-cG-rMc" firstAttribute="top" secondItem="c4c-jh-W59" secondAttribute="topMargin" constant="1" id="48J-JI-mbX"/>
+                                                                <constraint firstItem="8GU-cG-rMc" firstAttribute="leading" secondItem="c4c-jh-W59" secondAttribute="leadingMargin" constant="1" id="774-uw-SJ6"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="8GU-cG-rMc" secondAttribute="bottom" constant="1" id="ADX-an-vGl"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="8GU-cG-rMc" secondAttribute="trailing" constant="1" id="GgE-x6-jAv"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kC5-af-Bfj">
                                                             <rect key="frame" x="328.5" y="0.0" width="65.5" height="65.5"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wkb-fl-XoD">
-                                                                    <rect key="frame" x="13" y="13" width="39.5" height="39.5"/>
+                                                                    <rect key="frame" x="9" y="9" width="47.5" height="47.5"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="211" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="90I-Eo-4X4">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="39.5" height="39.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="47.5"/>
+                                                                            <color key="backgroundColor" name="darkGray"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
                                                                                 <action selector="selectColor:" destination="AIb-cr-mJT" eventType="touchUpInside" id="v1X-Bg-mSi"/>
@@ -935,10 +947,10 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstItem="wkb-fl-XoD" firstAttribute="top" secondItem="kC5-af-Bfj" secondAttribute="topMargin" constant="5" id="9Kt-2k-3Ej"/>
-                                                                <constraint firstAttribute="bottomMargin" secondItem="wkb-fl-XoD" secondAttribute="bottom" constant="5" id="aPf-WB-BkC"/>
-                                                                <constraint firstItem="wkb-fl-XoD" firstAttribute="leading" secondItem="kC5-af-Bfj" secondAttribute="leadingMargin" constant="5" id="l7a-Ip-Kpl"/>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="wkb-fl-XoD" secondAttribute="trailing" constant="5" id="lnv-VR-LRe"/>
+                                                                <constraint firstItem="wkb-fl-XoD" firstAttribute="top" secondItem="kC5-af-Bfj" secondAttribute="topMargin" constant="1" id="9Kt-2k-3Ej"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="wkb-fl-XoD" secondAttribute="bottom" constant="1" id="aPf-WB-BkC"/>
+                                                                <constraint firstItem="wkb-fl-XoD" firstAttribute="leading" secondItem="kC5-af-Bfj" secondAttribute="leadingMargin" constant="1" id="l7a-Ip-Kpl"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="wkb-fl-XoD" secondAttribute="trailing" constant="1" id="lnv-VR-LRe"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -978,7 +990,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="414" height="1000"/>
+                    <size key="freeformSize" width="414" height="946"/>
                     <connections>
                         <outlet property="blueButton" destination="j2C-nV-7hl" id="xS6-bi-CZk"/>
                         <outlet property="blueView" destination="xWQ-UO-cqa" id="qzA-aU-O5Y"/>
@@ -1022,7 +1034,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PGM-D7-Dqy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1841" y="526"/>
+            <point key="canvasLocation" x="1840.5797101449277" y="525.66964285714289"/>
         </scene>
         <!--친구 목록-->
         <scene sceneID="SwM-Rt-pAg">

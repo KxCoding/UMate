@@ -15,14 +15,15 @@ protocol SendDataDelegate {
 class AddLectureTableViewController: UITableViewController {
     
     var delegate: SendDataDelegate?
-    let colors = ["lightRed", "red", "pink", "orange", "yellow", "lightGreen", "green", "skyblue", "blue", "lightPurple", "purple", "darkGray"]
     var startTime: String = "09:00"
     var endTime: String = "09:00"
     var weekdayInt = 1
     var weekdayList: [Bool] = [false, false, false, false, false]
     var colorString = "lightRed"
     var textColorString = "black"
+    var isWeekdayInfoEntered = false
     let buttonImage = UIImage(named: "check")
+    
     
     @IBOutlet weak var courseIdField: UITextField!
     @IBOutlet weak var courseNameField: UITextField!
@@ -68,230 +69,185 @@ class AddLectureTableViewController: UITableViewController {
     @IBOutlet weak var darkGrayButton: UIButton!
     
     
+    
+    /// 요일 정보를 선택하는 메소드입니다. 요일 클릭 시, 선택 상태가 변경됩니다.
+    /// - Parameters:
+    ///   - view: 선택된 버튼에 해당하는 뷰
+    ///   - label: 선택된 버튼에 해당하는 라벨
+    func selectedWeekday(view: UIView, label: UILabel) {
+        view.backgroundColor = UIColor.systemGray
+        label.textColor = UIColor.white
+    }
+    
+    
+    /// 요일 정보를 선택해제 하는 메소드입니다. 요일 선택을 해제할 때 호출됩니다.
+    /// - Parameters:
+    ///   - view: 선택 해제된 버튼에 해당하는 뷰
+    ///   - label: 선택 해제된 버튼에 해당하는 라벨
+    func unselectedWeekDay(view: UIView, label: UILabel) {
+        view.backgroundColor = .clear
+        label.textColor = UIColor.black
+    }
+    
+    
+    /// 요일 정보를 선택하는 메소드입니다.
+    /// - Parameter sender: 선택된 버튼
     @IBAction func selectDay(_ sender: UIButton) {
-        if sender.tag == 101 {
+        
+        switch sender.tag {
+        case 101:
             if mondayContainerView.backgroundColor == .clear {
-                mondayContainerView.backgroundColor = UIColor.systemGray
-                mondayLabel.textColor = UIColor.white
+                selectedWeekday(view: mondayContainerView, label: mondayLabel)
                 weekdayInt = 1
                 weekdayList[0] = true
-                textColorString = "white"
-            } else {
-                mondayContainerView.backgroundColor = .clear
-                mondayLabel.textColor = UIColor.black
-                weekdayList[0] = false
+                break
             }
-        } else if sender.tag == 102 {
+            
+            unselectedWeekDay(view: mondayContainerView, label: mondayLabel)
+            weekdayList[0] = false
+            
+        case 102:
             if tuesdayContainerView.backgroundColor == .clear {
-                tuesdayContainerView.backgroundColor = UIColor.systemGray
-                tuesdayLabel.textColor = UIColor.white
+                selectedWeekday(view: tuesdayContainerView, label: tuesdayLabel)
                 weekdayInt = 2
                 weekdayList[1] = true
-            } else {
-                tuesdayContainerView.backgroundColor = .clear
-                tuesdayLabel.textColor = UIColor.black
-                weekdayList[1] = false
+                break
             }
-        } else if sender.tag == 103 {
+            
+            unselectedWeekDay(view: tuesdayContainerView, label: tuesdayLabel)
+            weekdayList[1] = false
+            
+        case 103:
             if wednesdayContainerView.backgroundColor == .clear {
-                wednesdayContainerView.backgroundColor = UIColor.systemGray
-                wednesdayLabel.textColor = UIColor.white
+                selectedWeekday(view: wednesdayContainerView, label: wednesdayLabel)
                 weekdayInt = 3
                 weekdayList[2] = true
-            } else {
-                wednesdayContainerView.backgroundColor = .clear
-                wednesdayLabel.textColor = UIColor.black
-                weekdayList[2] = false
+                break
             }
-        } else if sender.tag == 104 {
+            
+            unselectedWeekDay(view: wednesdayContainerView, label: wednesdayLabel)
+            weekdayList[2] = false
+            
+        case 104:
             if thursdayContainerView.backgroundColor == .clear {
-                thursdayContainerView.backgroundColor = UIColor.systemGray
-                thursdayLabel.textColor = UIColor.white
+                selectedWeekday(view: thursdayContainerView, label: thursdayLabel)
                 weekdayInt = 4
                 weekdayList[3] = true
-            } else {
-                thursdayContainerView.backgroundColor = .clear
-                thursdayLabel.textColor = UIColor.black
-                weekdayList[3] = false
+                break
             }
-        } else if sender.tag == 105 {
+            
+            unselectedWeekDay(view: thursdayContainerView, label: thursdayLabel)
+            weekdayList[3] = false
+            
+        case 105:
             if fridayContainerView.backgroundColor == .clear {
-                fridayContainerView.backgroundColor = UIColor.systemGray
-                fridayLabel.textColor = UIColor.white
+                selectedWeekday(view: fridayContainerView, label: fridayLabel)
                 weekdayInt = 5
                 weekdayList[4] = true
-            } else {
-                fridayContainerView.backgroundColor = .clear
-                fridayLabel.textColor = UIColor.black
-                weekdayList[4] = false
+                break
             }
+            
+            unselectedWeekDay(view: fridayContainerView, label: fridayLabel)
+            weekdayList[4] = false
+        default:
+            break
         }
     }
     
     
+    /// 모든 버튼의 상태를 초기화 해주는 메소드입니다.
+    func initializeColorButton() {
+        [lightRedButton, redButton, pinkButton, orangeButton, yellowButton,
+         lightGreenButton, greenButton, skyblueButton, blueButton,
+         lightPurpleButton, purpleButton, darkGrayButton].forEach {
+            $0?.setImage(nil, for: .normal)
+        }
+    }
+    
+    
+    /// 선택된 버튼에 체크 표시를 하고, 시간표 색상 값을 정해주는 메소드입니다.
+    /// - Parameter sender: 선택된 버튼
+    func selectedButton(sender: UIButton) {
+        
+        sender.setImage(buttonImage, for: .normal)
+        sender.tintColor = UIColor.black
+        
+        guard let colorName = sender.backgroundColor?.name as? String else { return }
+        
+        
+        colorString = colorName
+    }
+    
+    
+    /// 시간표 색상을 선택하는 메소드입니다.
+    /// - Parameter sender: 선택된 버튼 (색상)
     @IBAction func selectColor(_ sender: UIButton) {
-        if sender.tag == 200 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "lightRed"
-                
-                [redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                
-                textColorString = "white"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "black"
-            }
-        } else if sender.tag == 201 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "red"
-                
-                [lightRedButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                
-                textColorString = "white"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "black"
-            }
-        } else if sender.tag == 202 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "pink"
-                
-                [lightRedButton, redButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                
-                textColorString = "black"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "white"
-            }
-        } else if sender.tag == 203 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "orange"
-                
-                [lightRedButton, redButton, pinkButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                
-                textColorString = "black"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "white"
-            }
-        } else if sender.tag == 204 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "yellow"
-                
-                [lightRedButton, redButton, pinkButton, orangeButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                
-                textColorString = "black"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "white"
-            }
-        } else if sender.tag == 205 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "lightGreen"
-                
-                [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                
-                textColorString = "black"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "white"
-            }
-        } else if sender.tag == 206 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "green"
-                
-                [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                textColorString = "white"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "black"
-            }
-        } else if sender.tag == 207 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "skyblue"
-                
-                [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                textColorString = "black"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "white"
-            }
-        } else if sender.tag == 208 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "blue"
-                
-                [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, lightPurpleButton, purpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                textColorString = "white"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "black"
-            }
-        } else if sender.tag == 209 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "lightPurple"
-                
-                [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, purpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                textColorString = "black"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "white"
-            }
-        } else if sender.tag == 210 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "purple"
-                
-                [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, darkGrayButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                textColorString = "white"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "black"
-            }
-        } else if sender.tag == 211 {
-            if sender.image(for: .normal) == nil {
-                sender.setImage(buttonImage, for: .normal)
-                colorString = "darkGray"
-                
-                [lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton, greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton].forEach {
-                    $0?.setImage(nil, for: .normal)
-                }
-                textColorString = "white"
-            } else {
-                sender.setImage(nil, for: .normal)
-                textColorString = "black"
-            }
+        
+        initializeColorButton()
+        
+        switch sender.tag {
+        case 200:
+            selectedButton(sender: sender)
+            
+            textColorString = "white"
+            
+        case 201:
+            selectedButton(sender: sender)
+            
+            textColorString = "white"
+            
+        case 202:
+            selectedButton(sender: sender)
+            
+            textColorString = "black"
+            
+        case 203:
+            selectedButton(sender: sender)
+            
+            textColorString = "black"
+            
+        case 204:
+            selectedButton(sender: sender)
+            
+            textColorString = "black"
+            
+        case 205:
+            selectedButton(sender: sender)
+            
+            textColorString = "black"
+            
+        case 206:
+            selectedButton(sender: sender)
+            
+            textColorString = "white"
+            
+        case 207:
+            selectedButton(sender: sender)
+            
+            textColorString = "black"
+            
+        case 208:
+            selectedButton(sender: sender)
+            
+            textColorString = "white"
+
+        case 209:
+            selectedButton(sender: sender)
+            
+            textColorString = "black"
+
+        case 210:
+            selectedButton(sender: sender)
+            
+            textColorString = "white"
+            
+        case 211:
+            selectedButton(sender: sender)
+            
+            textColorString = "white"
+            
+        default:
+            break
         }
         
     }
@@ -326,13 +282,17 @@ class AddLectureTableViewController: UITableViewController {
         roomNameField.delegate = self
         professorField.delegate = self
         
-        [mondayContainerView, tuesdayContainerView, wednesdayContainerView, thursdayContainerView, fridayContainerView].forEach {
+        [mondayContainerView, tuesdayContainerView, wednesdayContainerView,
+         thursdayContainerView, fridayContainerView].forEach {
             $0?.layer.cornerRadius = ($0?.frame.width)! / 2
             $0?.backgroundColor = .clear
         }
         
         
-        [lightRedView, redView, pinkView, orangeView, yellowView, lightGreenView, greenView, skyblueView, blueView, lightPurpleView, purpleView, darkGrayView
+        [lightRedView, redView, pinkView, orangeView, yellowView, lightGreenView,
+         greenView, skyblueView, blueView, lightPurpleView, purpleView, darkGrayView,
+         lightRedButton, redButton, pinkButton, orangeButton, yellowButton, lightGreenButton,
+         greenButton, skyblueButton, blueButton, lightPurpleButton, purpleButton, darkGrayButton
         ].forEach {
             $0?.layer.cornerRadius = ($0?.frame.width)! / 2
         }
@@ -342,32 +302,52 @@ class AddLectureTableViewController: UITableViewController {
     
     
     @IBAction func cancel(_ sender: Any) {
-        alertWithTwoButton(title: "경고", message: "정말 취소하시겠습니까?")
+        alertVersion2(title: "경고", message: "정말 취소하시겠습니까?") { action in
+            
+        } handler2: { action in
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     
     @IBAction func save(_ sender: Any) {
         // 시간표에 데이터 전달하기 위한 값
-        guard let courseId = courseIdField.text, courseId.count > 0, let courseName = courseNameField.text, courseName.count > 0, let roomName = roomNameField.text, roomName.count > 0, let professor = professorField.text, professor.count > 0 else {
+        guard let courseId = courseIdField.text, courseId.count > 0,
+                let courseName = courseNameField.text, courseName.count > 0,
+                let roomName = roomNameField.text, roomName.count > 0,
+                let professor = professorField.text, professor.count > 0 else {
+                    
             alert(title: "경고", message: "시간표 정보를 모두 입력해주세요.")
+                    
             return
         }
         
+        /// 요일 정보가 있는지 확인하기 위한 반복문
+        for i in 0...4 {
+            if weekdayList[i] == true {
+                isWeekdayInfoEntered = true
+            }
+        }
         
-        if weekdayList[0] == false, weekdayList[1] == false, weekdayList[2] == false, weekdayList[3] == false, weekdayList[4] == false {
+        
+        /// 요일 정보가 없다면 경고창
+        if !isWeekdayInfoEntered {
             alert(title: "경고", message: "요일 정보를 입력해주세요.")
+            
             return
         }
         
         
         if startTime == endTime {
             alert(title: "경고", message: "강의 시작 시간과 종료 시간이 같습니다.")
+            
             return
         }
         
         
         if startTime > endTime {
             alert(title: "경고", message: "강의 시작 시간이 종료 시간보다 늦습니다.")
+            
             return
         }
         
@@ -383,37 +363,51 @@ class AddLectureTableViewController: UITableViewController {
             if weekdayList[i] == true {
                 let elliotday: ElliotDay = ElliotDay(rawValue: i + 1)!
                 
-                let lectureInfo = ElliottEvent(courseId: courseId, courseName: courseName, roomName: roomName, professor: professor, courseDay: elliotday, startTime: startTime, endTime: endTime, textColor: textColor, backgroundColor: backgroundColor)
+                let lectureInfo = ElliottEvent(courseId: courseId,
+                                               courseName: courseName,
+                                               roomName: roomName,
+                                               professor: professor,
+                                               courseDay: elliotday,
+                                               startTime: startTime,
+                                               endTime: endTime,
+                                               textColor: textColor,
+                                               backgroundColor: backgroundColor)
                 
                 lectureList.append(lectureInfo)
-                
             }
         }
         
         
         if !Lecture.shared.courseList.isEmpty { // 이미 강의 정보가 저장되어있을 경우 시간표 중복 체크
-            print("checkcheck")
             for i in 0...Lecture.shared.courseList.count - 1 {
                 for j in 0...lectureList.count - 1 {
                     if lectureList[j].courseDay == Lecture.shared.courseList[i].courseDay {
                         
-                        if Lecture.shared.courseList[i].startTime == lectureList[j].startTime || Lecture.shared.courseList[i].endTime == lectureList[j].endTime {
+                        if Lecture.shared.courseList[i].startTime == lectureList[j].startTime ||
+                            Lecture.shared.courseList[i].endTime == lectureList[j].endTime {
+                            
                             alert(title: "경고", message: "강의 시간이 겹칩니다.")
+                            
                             return
                         }
                         
-                        if lectureList[j].startTime >= Lecture.shared.courseList[i].startTime && lectureList[j].endTime <= Lecture.shared.courseList[i].endTime {
-                            print("1")
+                        
+                        if lectureList[j].startTime >= Lecture.shared.courseList[i].startTime &&
+                            lectureList[j].endTime <= Lecture.shared.courseList[i].endTime {
+                            
                             alert(title: "경고", message: "강의 시간이 겹칩니다.")
+                            
                             return
                         }
                         
-                        if lectureList[j].startTime > Lecture.shared.courseList[i].startTime && lectureList[j].startTime < Lecture.shared.courseList[j].endTime  {
-                            print("2")
+                        
+                        if lectureList[j].startTime > Lecture.shared.courseList[i].startTime &&
+                            lectureList[j].startTime < Lecture.shared.courseList[j].endTime  {
+                            
                             alert(title: "경고", message: "강의 시간이 겹칩니다.")
+                            
                             return
                         }
-                        
                     }
                 }
             }
@@ -422,7 +416,10 @@ class AddLectureTableViewController: UITableViewController {
         
         delegate?.sendData(data: lectureList)
         
-        alert(title: "알림", message: "저장되었습니다.")
+        
+        alert(title: "알림", message: "저장되었습니다.") { action in
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
 
@@ -431,6 +428,7 @@ class AddLectureTableViewController: UITableViewController {
 
 
 extension AddLectureTableViewController: UITextFieldDelegate {
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
         
@@ -439,35 +437,18 @@ extension AddLectureTableViewController: UITextFieldDelegate {
         return newLength <= 20
     }
     
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == courseIdField {
             courseNameField.becomeFirstResponder()
+            
         } else if textField == courseNameField {
             roomNameField.becomeFirstResponder()
+            
         } else if textField == roomNameField {
             professorField.becomeFirstResponder()
         }
         
         return true
-    }
-}
-
-
-
-
-extension UITableViewController {
-    func alertWithTwoButton(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "이어서", style: .default) { action in
-        }
-        alert.addAction(okAction)
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { action in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
     }
 }

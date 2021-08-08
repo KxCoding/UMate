@@ -37,14 +37,15 @@ extension UIViewController {
     /// - Parameters:
     ///   - title: 알림 타이틀. 기본 값은 "알림"입니다.
     ///   - message: 알림 메시지.
-    ///   - handler: 핸들러. handler의 기본값은 nil입니다.
-    func alertVersion2(title: String = "알림", message: String, handler: ((UIAlertAction) -> Void)? = nil) {
+    ///   - handler: 첫번째 핸들러. handler의 기본값은 nil입니다.
+    ///   - handler2: 두번째 핸들러. handler의 기본값은 nil입니다.
+    func alertVersion2(title: String = "알림", message: String, handler: ((UIAlertAction) -> Void)? = nil, handler2: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "확인", style: .default, handler: handler)
         alert.addAction(okAction)
         
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: handler2)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
