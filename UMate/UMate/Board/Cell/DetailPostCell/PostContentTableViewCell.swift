@@ -25,22 +25,18 @@ class PostContentTableViewCell: UITableViewCell {
     // MARK: 공감 버튼
     @IBOutlet weak var likeImageView: UIImageView!
     @IBAction func likeButton(_ sender: UIButton) {
-        print("+1 like")
+    
         guard let post = selectedPost else { return }
         
         if post.isliked {
-            UIView.animate(withDuration: 0.2) {
-                self.likeImageView.image = UIImage(named: "heart2")
-                self.likeImageView.tintColor = .lightGray
-            }
+            likeImageView.image = UIImage(named: "heart2")
+            likeImageView.tintColor = .lightGray
             
             post.isliked = false
             post.likeCount -= 1
         } else {
-            UIView.animate(withDuration: 0.2) {
-                self.likeImageView.image = UIImage(named: "heart2.fill")
-                self.likeImageView.tintColor = .black
-            }
+            likeImageView.image = UIImage(named: "heart2.fill")
+            likeImageView.tintColor = .black
             
             post.isliked = true
             post.likeCount += 1
@@ -51,24 +47,20 @@ class PostContentTableViewCell: UITableViewCell {
     // MARK: 스크랩 버튼
     @IBOutlet weak var scrapImageView: UIImageView!
     @IBAction func scrapButton(_ sender: UIButton) {
-        print("+1 scrap")
+       
         guard let post = selectedPost else { return }
         
         if post.isScrapped {
-            UIView.animate(withDuration: 0.2) {
-                self.scrapImageView.image = UIImage(named: "bookmark64")
-                self.scrapImageView.tintColor = .lightGray
-            }
+            scrapImageView.image = UIImage(named: "bookmark64")
+            scrapImageView.tintColor = .lightGray
             
             post.isScrapped = false
             post.scrapCount -= 1
             NotificationCenter.default.post(name: .postCancelScrap, object: nil, userInfo: ["unscrappedPost": post])
     
         } else {
-            UIView.animate(withDuration: 0.2) {
-                self.scrapImageView.image = UIImage(named: "bookmark64.fill")
-                self.scrapImageView.tintColor = .black
-            }
+            scrapImageView.image = UIImage(named: "bookmark64.fill")
+            scrapImageView.tintColor = .black
             
             post.isScrapped = true
             post.scrapCount += 1
