@@ -24,7 +24,6 @@ class DetailRegisterViewController: UIViewController {
     @IBAction func nextButtonAction(_ sender: Any) {
         guard let password = passwordTextField.text,
               isPasswordValid(password),
-              password.count >= 8,
               password.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
                   alert(title: "알림", message: "비밀번호는 반드시 영문 숫자 특수문자를 포함해야합니다냐.")
             return
@@ -42,16 +41,11 @@ class DetailRegisterViewController: UIViewController {
         }
         
         
-        transitionToHome()
+        CommonViewController.shared.transitionToHome()
         
     }
     
-    func transitionToHome() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainTabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
-        
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController)
-    }
+ 
     
     var token: NSObjectProtocol?
     
@@ -89,17 +83,27 @@ class DetailRegisterViewController: UIViewController {
         nickNameTextField.delegate = self
         emailTextField.delegate = self
         passwordTextField.delegate = self
-        
+    
         
         
         
     }
     
     func isPasswordValid(_ password : String) -> Bool{
-        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
-        return passwordTest.evaluate(with: password)
+        if let range = password.range(of: Regex.password, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (password.startIndex, password.endIndex) {
+            return true
+        }
+        
+        return false
     }
     
+    func isEmailValid(_ email: String) -> Bool {
+        if let range = email.range(of: Regex.email, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (email.startIndex, email.endIndex) {
+            return true
+        }
+        
+        return false
+    }
     
     deinit {
         if let token = token {
@@ -119,9 +123,11 @@ extension DetailRegisterViewController: UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if emailTextField != nil {
-            return false
+        if textField == emailTextField {
+            let char = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+            return string.rangeOfCharacter(from: char) == nil
         }
+        
         return true
     }
 }
@@ -146,7 +152,10 @@ extension DetailRegisterViewController {
             }
             
             if shouldMoveViewUp {
-                strongSelf.view.frame.origin.y = 0 - keyboardSize.height
+                UIView.animate(withDuration: 0.3) {
+                    strongSelf.view.frame.origin.y = 0 - keyboardSize.height
+                }
+                
             }
         }
     }

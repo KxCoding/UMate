@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let storyboard = UIStoryboard(name: "Account", bundle: nil)
         
-        if let loggedUsername = UserDefaults.standard.string(forKey: "username") {
+        if let _ = UserDefaults.standard.string(forKey: "username") {
             
             let mainTabbarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
             window?.rootViewController = mainTabbarController
