@@ -20,15 +20,17 @@ class TabSectionTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // 탭 버튼의 tag 값 초기화
+        /// 탭 버튼의 tag 값 초기화
         detailButton.tag = 100
         reviewButton.tag = 101
         
+        
+        /// 탭 버튼을 누르면 center 제약을 바꾸는 방식으로 뷰 위치를 바꿉니다. 
         NotificationCenter.default.addObserver(forName: .tapToggleDidRequest, object: nil, queue: .main) { [weak self] noti in
             
             guard let selectedTap = noti.userInfo?["selectedTap"] as? PlaceInfoViewController.SubTab else { return }
             
-            // 전달된 탭에 따라 막대의 위치 변경
+            /// 전달된 탭에 따라 막대의 위치 변경
             switch selectedTap {
             case .detail:
                 self?.centerXToDetailConstraint.priority = UILayoutPriority(1000)

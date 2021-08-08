@@ -83,7 +83,7 @@
                                             <outlet property="pager" destination="vZs-qo-45E" id="HFr-19-aA1"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InfoSectionTableViewCell" rowHeight="129" id="5tN-E0-249" customClass="InfoSectionTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="InfoSectionTableViewCell" rowHeight="129" id="5tN-E0-249" customClass="InfoSectionTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="184.5" width="414" height="129"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5tN-E0-249" id="aQa-EH-Dgf">
@@ -124,14 +124,14 @@
                                                                         <action selector="openInInstagram:" destination="5tN-E0-249" eventType="touchUpInside" id="AYL-t1-6bt"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2NL-98-eiM">
+                                                                <button opaque="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2NL-98-eiM">
                                                                     <rect key="frame" x="41" y="2" width="25" height="24"/>
                                                                     <color key="tintColor" systemColor="labelColor"/>
                                                                     <state key="normal" image="safari" catalog="system">
                                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                                     </state>
                                                                     <connections>
-                                                                        <action selector="openInSafari:" destination="5tN-E0-249" eventType="touchUpInside" id="0Oz-0T-Kbg"/>
+                                                                        <action selector="openInSafari:" destination="5tN-E0-249" eventType="touchUpInside" id="OZ1-dF-v5J"/>
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vwT-3u-Nds">
@@ -213,7 +213,6 @@
                                             <outlet property="districtLabel" destination="71r-oD-dNb" id="O8M-J0-xXy"/>
                                             <outlet property="keywordLabel" destination="5In-Xk-NLb" id="fue-9D-3hs"/>
                                             <outlet property="openInstagramButton" destination="py4-Ry-hRN" id="d1S-Kh-nrU"/>
-                                            <outlet property="openSafariButton" destination="2NL-98-eiM" id="2Nc-SD-0GP"/>
                                             <outlet property="placeNameLabel" destination="d5N-zv-Tqt" id="bwb-Tc-IY6"/>
                                             <outlet property="placeTypeImage" destination="Rdc-Pf-88H" id="yi8-ET-GnQ"/>
                                             <outlet property="placeTypeLabel" destination="jSF-Ga-Mmu" id="uh3-9y-Gau"/>
@@ -278,7 +277,7 @@
                                             <outlet property="reviewButton" destination="yG0-dG-Uo9" id="kIh-GW-SmD"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailTableViewCell" rowHeight="300" id="fGG-LJ-iVq" customClass="DetailTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DetailTableViewCell" rowHeight="300" id="fGG-LJ-iVq" customClass="DetailTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="355.5" width="414" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fGG-LJ-iVq" id="ipw-Ag-AOK">
