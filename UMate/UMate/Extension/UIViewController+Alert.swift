@@ -56,9 +56,12 @@ extension UIViewController {
     
     
     /// 알림 메소드3
+    ///
+    /// 액션시트 입니다.
+    ///
     /// - Parameters:
-    ///   - title: 알림 타이틀
-    ///   - message: <#message description#>
+    ///   - title: 알림 타이틀입니다.
+    ///   - message: 알림 메시지입니다.
     func alertComment(title: String, message: String) {
         let alertCommnet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
@@ -72,15 +75,18 @@ extension UIViewController {
     }
     
     
-    /// <#Description#>
+    /// 알림 메소드4
+    ///
+    /// 게시판 댓글 삭제 알림 메소드 입니다.
+    ///
     /// - Parameters:
-    ///   - title: <#title description#>
-    ///   - message: <#message description#>
-    ///   - completion: <#completion description#>
-    func alertDelete(title: String? = nil, message: String? = nil, completion: ((UIAlertAction) -> Void)? = nil) {
+    ///   - title: 알림 타이틀. 기본값은 nil입니다.
+    ///   - message: 알림 메시지. 기본값은 nil입니다.
+    ///   - completion: 핸들러, 취소버튼은 nil이고, 확인 버튼은 handler로 직접 구현합니다.
+    func alertDelete(title: String? = nil, message: String? = nil, handler: ((UIAlertAction) -> Void)? = nil) {
         let alertDelete = UIAlertController(title: "알림", message: "댓글을 삭제하시겠습니까?", preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "확인", style: .destructive, handler: completion)
+        let okAction = UIAlertAction(title: "확인", style: .destructive, handler: handler)
         alertDelete.addAction(okAction)
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -90,10 +96,13 @@ extension UIViewController {
     }
     
     
-    /// <#Description#>
+    /// 게시판 댓글 신고 알림 메소드입니다.
+    ///
+    /// 액션시트입니다.
+    ///
     /// - Parameters:
-    ///   - title: <#title description#>
-    ///   - message: <#message description#>
+    ///   - title: 알림 타이틀. 기본값은 nil입니다.
+    ///   - message: 알림 메시지입니다.
     func alertComment(title: String? = nil, message: String = "댓글을 신고하시겠습니까?") {
         let alertCommnet = UIAlertController(title: title, message: message , preferredStyle: .actionSheet)
         

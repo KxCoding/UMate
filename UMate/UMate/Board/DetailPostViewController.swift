@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 extension Notification.Name {
     static let newCommentDidInsert = Notification.Name(rawValue: "newCommentDidInsert")
     static let newReCommentDidInsert = Notification.Name(rawValue: "newReCommentDidInsert")
@@ -242,7 +243,7 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReCommentTableViewCell", for: indexPath) as! ReCommentTableViewCell
             
             let target = dummyReCommentList
-            cell.configure(with: target[indexPath.row])
+            cell.configure(with: target[indexPath.row], indexPath: indexPath)
             
             return cell
             

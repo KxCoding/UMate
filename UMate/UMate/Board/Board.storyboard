@@ -1599,48 +1599,61 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                                             <rect key="frame" x="284" y="0.0" width="90" height="30"/>
                                                                                             <subviews>
                                                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="0Q7-4g-Xc5">
-                                                                                                    <rect key="frame" x="12.5" y="5" width="65" height="20"/>
+                                                                                                    <rect key="frame" x="0.5" y="5" width="89" height="20"/>
                                                                                                     <subviews>
-                                                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRm-23-MuN">
-                                                                                                            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                                                                                            <constraints>
-                                                                                                                <constraint firstAttribute="width" constant="20" id="EdC-wT-CSo"/>
-                                                                                                                <constraint firstAttribute="height" constant="20" id="iae-a6-sD3"/>
-                                                                                                            </constraints>
+                                                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kqs-mw-N6p">
+                                                                                                            <rect key="frame" x="0.0" y="0.0" width="32" height="20"/>
                                                                                                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                            <state key="normal" image="comment"/>
-                                                                                                            <connections>
-                                                                                                                <action selector="reCommentBtn:" destination="E9G-7V-VMa" eventType="touchUpInside" id="FZf-us-Oh7"/>
-                                                                                                            </connections>
-                                                                                                        </button>
+                                                                                                            <imageReference key="image" image="comment"/>
+                                                                                                        </imageView>
                                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CrD-zw-sJk">
-                                                                                                            <rect key="frame" x="32" y="0.0" width="1" height="20"/>
+                                                                                                            <rect key="frame" x="44" y="0.0" width="1" height="20"/>
                                                                                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                                                                             <constraints>
                                                                                                                 <constraint firstAttribute="height" constant="20" id="LhP-Vn-uWj"/>
                                                                                                                 <constraint firstAttribute="width" constant="1" id="py6-xB-TgI"/>
                                                                                                             </constraints>
                                                                                                         </view>
-                                                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V0J-wr-qeO">
-                                                                                                            <rect key="frame" x="45" y="0.0" width="20" height="20"/>
-                                                                                                            <constraints>
-                                                                                                                <constraint firstAttribute="height" constant="20" id="eVT-qY-Y88"/>
-                                                                                                                <constraint firstAttribute="width" constant="20" id="gWC-eM-276"/>
-                                                                                                            </constraints>
+                                                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart2" translatesAutoresizingMaskIntoConstraints="NO" id="Gd0-Sy-x7W">
+                                                                                                            <rect key="frame" x="57" y="0.0" width="32" height="20"/>
                                                                                                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                            <state key="normal" image="heart2"/>
-                                                                                                            <connections>
-                                                                                                                <action selector="likeBtn:" destination="YpV-yj-SIs" eventType="touchUpInside" id="zgX-QR-AdR"/>
-                                                                                                            </connections>
-                                                                                                        </button>
+                                                                                                        </imageView>
                                                                                                     </subviews>
                                                                                                 </stackView>
+                                                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRm-23-MuN">
+                                                                                                    <rect key="frame" x="0.0" y="0.0" width="43" height="30"/>
+                                                                                                    <constraints>
+                                                                                                        <constraint firstAttribute="height" constant="30" id="KCL-Pf-Kpc"/>
+                                                                                                        <constraint firstAttribute="width" constant="43" id="U3l-Eu-T5h"/>
+                                                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="omM-8A-hMX"/>
+                                                                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="43" id="y7H-GE-v1f"/>
+                                                                                                    </constraints>
+                                                                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                                    <connections>
+                                                                                                        <action selector="reCommentBtn:" destination="E9G-7V-VMa" eventType="touchUpInside" id="FZf-us-Oh7"/>
+                                                                                                    </connections>
+                                                                                                </button>
+                                                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V0J-wr-qeO">
+                                                                                                    <rect key="frame" x="47" y="0.0" width="43" height="34"/>
+                                                                                                    <constraints>
+                                                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="Zvz-De-l8h"/>
+                                                                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="43" id="e4Y-ph-j0J"/>
+                                                                                                    </constraints>
+                                                                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                                    <connections>
+                                                                                                        <action selector="userDidLike:" destination="YpV-yj-SIs" eventType="touchUpInside" id="d83-qL-XEv"/>
+                                                                                                    </connections>
+                                                                                                </button>
                                                                                             </subviews>
                                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                             <constraints>
+                                                                                                <constraint firstItem="jRm-23-MuN" firstAttribute="top" secondItem="SSW-ca-C9y" secondAttribute="top" id="Bdw-FG-fVz"/>
                                                                                                 <constraint firstItem="0Q7-4g-Xc5" firstAttribute="centerX" secondItem="SSW-ca-C9y" secondAttribute="centerX" id="Kfu-gZ-Cdy"/>
+                                                                                                <constraint firstItem="V0J-wr-qeO" firstAttribute="top" secondItem="SSW-ca-C9y" secondAttribute="top" id="TiF-hs-8pJ"/>
                                                                                                 <constraint firstAttribute="width" constant="90" id="VCd-zu-MVF"/>
+                                                                                                <constraint firstItem="jRm-23-MuN" firstAttribute="leading" secondItem="SSW-ca-C9y" secondAttribute="leading" id="ZIY-uq-bvn"/>
                                                                                                 <constraint firstItem="0Q7-4g-Xc5" firstAttribute="centerY" secondItem="SSW-ca-C9y" secondAttribute="centerY" id="ucW-i5-bzt"/>
+                                                                                                <constraint firstAttribute="trailing" secondItem="V0J-wr-qeO" secondAttribute="trailing" id="z6m-V6-zvb"/>
                                                                                             </constraints>
                                                                                         </view>
                                                                                     </subviews>
@@ -1683,6 +1696,9 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                                             </subviews>
                                                                                         </stackView>
                                                                                     </subviews>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="10" id="wrd-32-YmE"/>
+                                                                                    </constraints>
                                                                                 </stackView>
                                                                             </subviews>
                                                                             <constraints>
@@ -1733,6 +1749,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                             <outlet property="btnContainerView" destination="SSW-ca-C9y" id="Bqb-VM-7sN"/>
                                             <outlet property="commentLabel" destination="UxG-3D-BY5" id="i7S-Iq-ku2"/>
                                             <outlet property="dateTimeLabel" destination="Hyy-4D-eW4" id="AdK-DT-hWf"/>
+                                            <outlet property="hearButtonImageView" destination="Gd0-Sy-x7W" id="12b-24-fZ0"/>
                                             <outlet property="heartCountLabel" destination="43c-Ez-RDO" id="LPO-ac-EpF"/>
                                             <outlet property="heartImageView" destination="XS7-fo-azs" id="lts-mP-8o5"/>
                                             <outlet property="profileImageView" destination="spb-fB-g57" id="MpE-ty-s7E"/>
@@ -1804,24 +1821,31 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BjK-rU-ebC">
                                                                                             <rect key="frame" x="293" y="0.0" width="45" height="30"/>
                                                                                             <subviews>
-                                                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vR8-nl-9pX">
-                                                                                                    <rect key="frame" x="12.5" y="5" width="20" height="20"/>
-                                                                                                    <constraints>
-                                                                                                        <constraint firstAttribute="height" constant="20" id="1cq-5Y-ruZ"/>
-                                                                                                        <constraint firstAttribute="width" constant="20" id="VIT-11-n1u"/>
-                                                                                                    </constraints>
+                                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart2" translatesAutoresizingMaskIntoConstraints="NO" id="5ES-KO-k7c">
+                                                                                                    <rect key="frame" x="7.5" y="5" width="30" height="20"/>
                                                                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                    <state key="normal" image="heart2"/>
+                                                                                                    <constraints>
+                                                                                                        <constraint firstAttribute="height" constant="20" id="3r7-wb-hpU"/>
+                                                                                                        <constraint firstAttribute="width" constant="30" id="as0-FQ-sAn"/>
+                                                                                                    </constraints>
+                                                                                                </imageView>
+                                                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vR8-nl-9pX">
+                                                                                                    <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
+                                                                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                     <connections>
-                                                                                                        <action selector="likeBtn:" destination="ea9-cq-Emi" eventType="touchUpInside" id="A99-1Q-T3y"/>
+                                                                                                        <action selector="userDidLike:" destination="ea9-cq-Emi" eventType="touchUpInside" id="KcR-tb-So7"/>
                                                                                                     </connections>
                                                                                                 </button>
                                                                                             </subviews>
                                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                             <constraints>
-                                                                                                <constraint firstItem="vR8-nl-9pX" firstAttribute="centerX" secondItem="BjK-rU-ebC" secondAttribute="centerX" id="Fkn-wZ-DnS"/>
-                                                                                                <constraint firstItem="vR8-nl-9pX" firstAttribute="centerY" secondItem="BjK-rU-ebC" secondAttribute="centerY" id="MZB-dc-dot"/>
+                                                                                                <constraint firstItem="vR8-nl-9pX" firstAttribute="top" secondItem="BjK-rU-ebC" secondAttribute="top" id="15C-LR-WMz"/>
+                                                                                                <constraint firstItem="5ES-KO-k7c" firstAttribute="centerY" secondItem="BjK-rU-ebC" secondAttribute="centerY" id="P7M-sM-uvo"/>
+                                                                                                <constraint firstAttribute="trailing" secondItem="vR8-nl-9pX" secondAttribute="trailing" id="Qzi-AA-zjs"/>
+                                                                                                <constraint firstAttribute="bottom" secondItem="vR8-nl-9pX" secondAttribute="bottom" id="bIY-U1-02I"/>
+                                                                                                <constraint firstItem="vR8-nl-9pX" firstAttribute="leading" secondItem="BjK-rU-ebC" secondAttribute="leading" id="dHf-uu-Wnh"/>
                                                                                                 <constraint firstAttribute="width" constant="45" id="enK-ca-2eM"/>
+                                                                                                <constraint firstItem="5ES-KO-k7c" firstAttribute="centerX" secondItem="BjK-rU-ebC" secondAttribute="centerX" id="ufF-6R-JT2"/>
                                                                                             </constraints>
                                                                                         </view>
                                                                                     </subviews>
@@ -1864,6 +1888,9 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                                             </subviews>
                                                                                         </stackView>
                                                                                     </subviews>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="10" id="egE-m0-PIL"/>
+                                                                                    </constraints>
                                                                                 </stackView>
                                                                             </subviews>
                                                                             <constraints>
@@ -1909,6 +1936,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                             <outlet property="btnContainerView" destination="BjK-rU-ebC" id="euQ-PO-Gjn"/>
                                             <outlet property="commentLabel" destination="2ok-uZ-W4s" id="uYD-j8-FfC"/>
                                             <outlet property="dateTimeLabel" destination="mkn-um-6ax" id="Xjl-YM-Lp0"/>
+                                            <outlet property="heartButtonImageView" destination="5ES-KO-k7c" id="EZw-FP-kcI"/>
                                             <outlet property="heartCountLabel" destination="y79-Jo-5KU" id="rHy-09-9qY"/>
                                             <outlet property="heartImageView" destination="3Rq-0q-Fpq" id="38f-qo-wIN"/>
                                             <outlet property="profileImageView" destination="OMw-SN-WJS" id="UVr-t9-Kf4"/>

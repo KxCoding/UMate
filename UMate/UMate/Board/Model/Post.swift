@@ -87,7 +87,7 @@ class Comment {
     let writer: String
     let content: String
     let insertDate: Date
-    let heartCount: Int
+    var heartCount: Int
     
     var isliked = false
 }
