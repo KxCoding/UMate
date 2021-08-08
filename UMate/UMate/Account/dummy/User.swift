@@ -9,5 +9,5 @@ import Foundation
 
 struct User {
    static let emailAddress: String = "qwer123@gamil.com"
-   static let password: String = "qwer12345!@"
+   static let password: String = "Qwer12345!@"
 }
