@@ -22,9 +22,7 @@ extension UIViewController {
     func alert(title: String = "알림", message: String, handler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] action in
-            self?.dismiss(animated: true, completion: nil)
-        }
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: handler)
         alert.addAction(okAction)
         
         present(alert, animated: true, completion: nil)
@@ -43,9 +41,7 @@ extension UIViewController {
     func alertVersion2(title: String = "알림", message: String, handler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: { [weak self] (noti) in
-            self?.dismiss(animated: true, completion: nil)
-        })
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: handler)
         alert.addAction(okAction)
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)

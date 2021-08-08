@@ -251,6 +251,9 @@
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HtV-2t-Sr3">
                                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="53"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <connections>
+                                                                                <segue destination="Peo-Y6-9wa" kind="show" id="ZEs-pC-JJj"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -277,6 +280,9 @@
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xEa-Ns-mVU">
                                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="53"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <connections>
+                                                                                <segue destination="AwB-C1-hse" kind="show" id="f4y-PN-jpB"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -373,7 +379,7 @@
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <state key="normal" title=""/>
                                                                             <connections>
-                                                                                <segue destination="9IM-dt-jBX" kind="show" id="TOG-Q0-cDy"/>
+                                                                                <action selector="alertButtonDidTapped:" destination="7h3-5o-ULF" eventType="touchUpInside" id="oIJ-QS-ZrO"/>
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
@@ -967,23 +973,154 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y1M-3O-BLe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2735" y="-3173"/>
+            <point key="canvasLocation" x="2735" y="-2174"/>
         </scene>
-        <!--알림 설정-->
-        <scene sceneID="JxG-pI-NFa">
+        <!--커뮤니티 이용 규칙-->
+        <scene sceneID="9L2-FF-AuO">
             <objects>
-                <viewController id="9IM-dt-jBX" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="KHz-HH-E1Z">
+                <viewController id="AwB-C1-hse" customClass="UMateRuleViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Pzx-7N-e0g">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="443-sr-fCQ"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x0B-Oc-naC">
+                                <rect key="frame" x="20" y="108" width="374" height="734"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sbI-q1-o3O">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="734"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <mutableString key="text">커뮤니티 이용규칙 안내 UMate는 누구나 기분 좋게 참여할 수 있는 커뮤니티를 만들기 위해 커뮤니티 이용 규칙을 제정하여 운영하고 있습니다. 모든 이용자는 커뮤니티 이용 전 반드시 커뮤니티 이용 규칙의 모든 내용을 숙지하여야 합니다.  모든 이용자는 방송통신심의위원회의 정보 통신에 관한 심의규정, 현행 법률, 서비스 이용 약관 및 커뮤니티 이용규칙을 위반하거나, 사회 통념 및 관련 법령을 기준으로 타 이용자에게 악영향을 끼치는 경우, 게시물이 삭제되고 서비스 이용이 일정 기간 제한될 수 있습니다.  커뮤니티 이용 규칙은 불법 행위, 각종 차별 및 혐오, 사회적 갈등 조장, 타인의 권리 침해, 다른 이용자들에게 불쾌감을 주는 행위, 커뮤니티 유출 행위, 시스템 장애를 유발하는 비정상 행위 등 커뮤니티 분위기 형성과 운영에 악영향을 미치는 행위들을 제한하기 위해 지속적으로 개정됩니다. 중대한 변경사항이 있는 경우에는 공지사항을 통해 고지하므로 반드시 확인해주시기 바랍니다.    1. 회원간 서로 배려하고 예의를 지킵니다.
+(1) 내 생각과 다른 의견도 규칙위반이 아닌 한 존중합니다. 다른 의견에 대해 비판할 수는 있어도 무조건 비난해서는 안됩니다.
+
+(2) 다른 이용자에 대한 존중의 의미로 존댓말을 사용하고, 닉네임 뒤에 “님”을 붙여 부릅니다.
+
+(3) 욕설, 비속어의 사용을 금지합니다. (욕설임을 알 수 있는 자음, 기호 등 포함)
+
+(4) 다른 회원에 대한 무분별한 비난이나 인신공격을 하지 않습니다.
+
+(5) 과도한 추측이나 일반화로 다른 회원을 비난하지 않습니다.
+
+(6) 다른 의견에 대하여 무조건적인 비하를 하여서는 안됩니다.
+
+(7) 비방 또는 분란을 조장하는 허위사실이나 근거없는 정보를 유포해서는 안됩니다.
+
+
+
+2. 다른 회원을 속이거나, 개인 또는 단체의 이익을 목적으로 부정하게 활동할 수 없습니다.
+(1) 반복적으로 다른 이용자를 속일 목적으로 게시물을 작성할 수 없습니다.
+
+(2) 일반적인 회원으로 가장하여 홍보성 게시물을 작성하여서는 안됩니다.
+
+(3) 바이럴마케팅이나 전문적인 판매, 홍보(블로그, 동영상, 앱 등)를 위한 활동은 금지됩니다.
+
+(4) 이미지 링크용도, 추천인코드, 권한획득 목적의 게시물 반복 작성 등 개인적 이득을 위한 활동을 하실 수 없습니다.
+
+(5) 특정 단체에 대한 긍정적 또는 부정적 여론조성을 위해 부당하게 활동할 수 없습니다.
+
+
+
+3. 본인의 정보로 회원가입을 하고 활동해야 합니다.
+(1) 1인 1아이디를 사용하며, 타인의 정보로 가입 및 활동할 수 없습니다.
+
+(2) 부당하게 2개 이상의 아이디를 사용하거나 하나의 아이디를 2인 이상이 사용하는 경우 해당 아이디는 이용제한 대상이 될 수 있습니다.
+
+(3) 징계회피 목적의 탈퇴 후 재가입, 타인 명의를 사용하여 활동하는 경우 등이 확인되면 해당 아이디는 이용이 제한됩니다.
+
+
+
+4. 법률 기타 법령 및 공공질서, 미풍양속에 반하는 내용의 게시물을 작성할 수 없습니다.
+(1) 청소년에게 유해할 수 있는 외설적 표현물(글, 사진, 영상, 링크 등)을 게시하지 않습니다.
+
+(2) 불법행위 방법 소개, 의욕 고취 등 범법행위를 교사, 방조하는 내용의 게시물을 작성하지 않습니다.
+
+(3) 법령에 의해 금지되는 게시물을 올릴 수 없습니다.
+
+(4) 유관기관의 요청이나 명령이 있는 경우 그에 따른 조치가 진행될 수 있습니다.
+
+
+
+5. 타인의 권리를 침해하는 행위를 제한합니다.
+(1) 저작권을 침해하는 게시물을 작성하지 않습니다. (기사 전문전재, 음악 배포 등)
+
+      참고 : 예시
+
+(2) 식별가능한 타인의 초상을 무단으로 게시하여서는 안됩니다. (허용된 경우 제외)
+
+      참고 : 예시
+
+(3) 타인의 재산권을 침해하는 내용이거나 허위의 사실로 영업을 방해할 목적의 게시물을 작성하지 않습니다.
+
+(4) 타인의 권리를 침해하는 게시물은 침해 당사자의 요청에 의해 삭제될 수 있습니다. (삭제요청 및 처리과정 안내)
+
+
+
+6. 종교 비난, 선교/포교 활동을 제한합니다.
+(1) 특정 종교에 대한 과도한 비난 및 이를 이유로 한 분란조장 행위를 하지 않습니다.
+
+(2) 자신의 종교적 신념을 강요하거나 포교를 목적으로 한 활동은 제한됩니다.
+
+
+
+7. 특정 집단에 대한 차별 및 무조건적 비난을 하여서는 안됩니다.
+(1) 인종, 성별, 국적, 연령, 지역, 장애 등 구분이 가능한 집단에 대하여 그 구성원에게 굴욕감이나 불이익을 줄 수 있는 게시물을 작성하지 않습니다.
+
+(2) 학벌, 재산, 직업, 생활양식, 취향, 종교, 정치적 견해 등을 이유로 무조건적인 비난을 하지 않습니다.
+
+
+
+8. 다른 이용자의 이용에 방해가 되는 행위를 할 수 없습니다.
+(1) 타인에게 혐오감을 주거나 불쾌하게 할 수 있는 게시물 작성을 금지합니다.
+
+(2) 특수문자의 과도한 사용, 도배성 게시물/댓글 등 다른 이용자에게 불편을 주는 경우 해당 게시물은 삭제될 수 있습니다.
+
+(3) 영화, 소설의 반전 등 스포일러 공개는 가급적 자제하며, 불가피한 경우 적당한 방법으로 표시하여 다른 이용자를 배려합니다.
+
+(4) 이용자를 속이거나 과도하게 놀라게 할 목적의 게시물(이른바 낚시글)은 자제하여 주시기 바랍니다.
+
+(5) 고의적으로 규칙위반 게시물 작성 후 삭제를 반복하는 경우 작성자는 이용이 제한될 수 있습니다.
+
+(6) 바이러스 프로그램 유포, 스팸쪽지 등 타인에게 피해를 주는 행위를  금지합니다.
+
+(7) 무분별하고 반복적인 비난 댓글, 괴롭힘을 위한 쪽지 발송 등의 스토킹 행위를 하지 않습니다.
+
+
+
+9. 게시판의 용도에 맞게 게시물을 작성하셔야 합니다.
+(1) 이용자의 편의를 위해 게시판이 분리되어 있으며, 각 게시판의 목적과 용도에 맞도록 게시물을 작성하고 이용하셔야 합니다.
+
+(2) 사이트 이용규칙 및 각 게시판 규칙을 잘 지키며, 위반에 따른 불이익을 받는 일이 없도록 해주시기 바랍니다.
+
+(3) 의미 없는 내용 또는 공백만 적어서 올리는 게시글은 작성하실 수 없습니다.
+
+(4) 사이트에 맞지 않는 글을 작성하실 경우 해당 게시글 잠정 블럭/이동/삭제 처리 될 수 있으며, 이는 작성자에게 통보 없이 운영자를 통해 처리가 이루어 질 수 있습니다. </mutableString>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="sbI-q1-o3O" secondAttribute="bottom" id="9hU-rM-ggI"/>
+                                    <constraint firstItem="sbI-q1-o3O" firstAttribute="leading" secondItem="x0B-Oc-naC" secondAttribute="leading" id="C7O-eX-fpB"/>
+                                    <constraint firstItem="sbI-q1-o3O" firstAttribute="top" secondItem="x0B-Oc-naC" secondAttribute="top" id="Sg6-ub-HtY"/>
+                                    <constraint firstAttribute="trailing" secondItem="sbI-q1-o3O" secondAttribute="trailing" id="fAi-Kp-bz5"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="axh-m5-vnF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="axh-m5-vnF" firstAttribute="bottom" secondItem="x0B-Oc-naC" secondAttribute="bottom" constant="20" id="6PP-4T-MAh"/>
+                            <constraint firstItem="x0B-Oc-naC" firstAttribute="top" secondItem="axh-m5-vnF" secondAttribute="top" constant="20" id="J4m-GN-cLz"/>
+                            <constraint firstItem="x0B-Oc-naC" firstAttribute="leading" secondItem="axh-m5-vnF" secondAttribute="leading" constant="20" id="hmi-7L-qgR"/>
+                            <constraint firstItem="axh-m5-vnF" firstAttribute="trailing" secondItem="x0B-Oc-naC" secondAttribute="trailing" constant="20" id="nat-E8-FEN"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="알림 설정" id="sZj-5P-N0U"/>
+                    <navigationItem key="navigationItem" title="커뮤니티 이용 규칙" id="fsq-h9-JKa"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BrS-te-I7i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jgm-KY-fni" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2735" y="-2496"/>
+            <point key="canvasLocation" x="3528" y="-2393"/>
         </scene>
         <!--암호 잠금-->
         <scene sceneID="BLw-oA-cKS">
@@ -1087,7 +1224,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yru-AB-ynr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2734.7826086956525" y="-1833.4821428571427"/>
+            <point key="canvasLocation" x="2735" y="-1495"/>
         </scene>
         <!--비밀번호 설정-->
         <scene sceneID="k6m-K0-MFi">
@@ -1218,7 +1355,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lfy-ki-K3n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3792.753623188406" y="-2161.6071428571427"/>
+            <point key="canvasLocation" x="3616" y="-1495"/>
         </scene>
         <!--비밀번호 확인-->
         <scene sceneID="qvc-MN-ZMx">
@@ -1346,6 +1483,46 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eug-dQ-XxK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3616" y="-3877"/>
+        </scene>
+        <!--이용 제한 내역-->
+        <scene sceneID="8h5-pM-Zi9">
+            <objects>
+                <viewController id="Peo-Y6-9wa" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zLB-tb-yFq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jpz-yU-bId">
+                                <rect key="frame" x="20" y="108" width="374" height="734"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이용 제한 내역이 없습니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CyR-RL-rHI">
+                                        <rect key="frame" x="97" y="356.5" width="180" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="CyR-RL-rHI" firstAttribute="centerX" secondItem="Jpz-yU-bId" secondAttribute="centerX" id="Tf6-hy-rd3"/>
+                                    <constraint firstItem="CyR-RL-rHI" firstAttribute="centerY" secondItem="Jpz-yU-bId" secondAttribute="centerY" id="iU0-9Q-FAk"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="E2H-fB-fI9"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="E2H-fB-fI9" firstAttribute="trailing" secondItem="Jpz-yU-bId" secondAttribute="trailing" constant="20" id="IrU-X9-SDM"/>
+                            <constraint firstItem="Jpz-yU-bId" firstAttribute="leading" secondItem="E2H-fB-fI9" secondAttribute="leading" constant="20" id="iU3-5x-jby"/>
+                            <constraint firstItem="Jpz-yU-bId" firstAttribute="top" secondItem="E2H-fB-fI9" secondAttribute="top" constant="20" id="kWi-61-fRW"/>
+                            <constraint firstItem="E2H-fB-fI9" firstAttribute="bottom" secondItem="Jpz-yU-bId" secondAttribute="bottom" constant="20" id="zG7-Mw-F0m"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="이용 제한 내역" id="9PI-SD-cRv"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mb9-tA-4J5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2714" y="-2868"/>
         </scene>
         <!--비밀번호 변경-->
         <scene sceneID="ecd-EC-CbY">
@@ -1809,6 +1986,9 @@
         <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="circle" catalog="system" width="128" height="121"/>
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
