@@ -48,6 +48,7 @@ class DetailPostViewController: UIViewController {
         NotificationCenter.default.post(name: .newCommentDidInsert, object: nil)
     }
     
+    
     @IBAction func reCommentBtn(_ sender: Any) {
         let alertReComment = UIAlertController(title: "알림", message: "대댓글을 작성하시겠습니까?", preferredStyle: .alert)
         
@@ -181,6 +182,7 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 5
     }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         

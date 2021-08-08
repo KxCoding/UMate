@@ -24,7 +24,6 @@ class PostImageTableViewCell: UITableViewCell {
     func configure(post: Post) {
         selectedPost = post
         postImageCollectionView.isHidden = post.images.isEmpty
-        postImageCollectionView.reloadData()
     }
 }
 

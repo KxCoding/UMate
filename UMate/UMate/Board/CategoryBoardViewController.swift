@@ -8,71 +8,48 @@
 
 import UIKit
 
+
 class CategoryBoardViewController: UIViewController {
     
+    @IBOutlet weak var postListTableView: UITableView!
+    
+    @IBAction func showSearchViewController(_ sender: Any) {
+        performSegue(withIdentifier: "searchSegue", sender: self)
+    }
+    
+    
     var selectedBoard: Board?
-    let searchController = UISearchController(searchResultsController: nil)
+    
+    var categoryWidth: CGFloat = .zero
     
     var filteredPostList: [Post] = []
     var nonCliked = true
-    
-    var cachedText: String = ""
     
     @IBOutlet weak var categoryListCollectionView: UICollectionView!
     
     @IBOutlet weak var categoryListTableView: UITableView!
     
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let cell = sender as? UITableViewCell,
+           let indexPath = postListTableView.indexPath(for: cell) {
+            
+            if let vc = segue.destination as? DetailPostViewController {
+                vc.selectedPost = filteredPostList[indexPath.row]
+            }
+            
+        } else if segue.identifier == "searchSegue", let vc = segue.destination as? SearchViewController {
+            vc.selectedBoard = selectedBoard
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = selectedBoard?.boardTitle
         
         filteredPostList = selectedBoard?.posts ?? []
-        
-        setupSearchBar()
-    }
-    
-    
-    func setupSearchBar() {
-        self.definesPresentationContext = true
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.obscuresBackgroundDuringPresentation = true
-        searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "검색어를 입력해주세요."
-    }
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-    }
-}
-
-
-
-
-extension CategoryBoardViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    
-        guard let posts = selectedBoard?.posts else { return }
-        filteredPostList = posts.filter({ post in
-            return post.postTitle.lowercased().contains(searchText.lowercased()) ||
-            post.postContent.lowercased().contains(searchText.lowercased())
-        })
-        
-        if let text = searchBar.text, text.isEmpty && filteredPostList.isEmpty {
-            filteredPostList = selectedBoard?.posts ?? []
-        }
-        
-        cachedText = searchText
-        categoryListTableView.reloadData()
-    }
-    
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        if !(cachedText.isEmpty || filteredPostList.isEmpty) {
-            searchController.searchBar.text = cachedText
-        }
     }
 }
 
@@ -87,13 +64,16 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryBoardCollectionViewCell", for: indexPath) as! CategoryBoardCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryBoardCollectionViewCell",
+                                                      for: indexPath) as! CategoryBoardCollectionViewCell
         
+        categoryWidth = cell.frame.width
+       
         guard let cateigories = selectedBoard?.categories else { return cell }
         
         if indexPath.row == 0 {
             if nonCliked {
-                cell.categoryView.backgroundColor = .black
+                cell.categoryView.backgroundColor = .lightGray
             } else {
                 cell.categoryView.backgroundColor = .white
             }
@@ -161,6 +141,43 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
 
 
 
+
+extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
+    //이 메소드가 cellForRowAt보다 먼저 실행됨.
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
+            return .zero
+        }
+        
+        let width:CGFloat
+        let withoutInsetWidth = (view.frame.width - (flowLayout.minimumInteritemSpacing * 3
+                                     + flowLayout.sectionInset.left
+                                     + flowLayout.sectionInset.right))
+        
+        if selectedBoard?.categories.count == 3 {
+            width = withoutInsetWidth / 3
+            return CGSize(width: width, height: 50)
+            
+        } else if selectedBoard?.categories.count == 4 {
+            if indexPath.row == 0 || indexPath.row == 3 {
+                width = withoutInsetWidth / 2 * 0.4
+                return CGSize(width: width, height: 50)
+                
+            } else {
+                width = withoutInsetWidth / 2 * 0.6
+                return CGSize(width: width, height: 50)
+            }
+        }
+        return .zero
+    }
+}
+
+
+
+
 extension CategoryBoardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -169,7 +186,8 @@ extension CategoryBoardViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell",
+                                                 for: indexPath) as! FreeBoardTableViewCell
         
         let post = filteredPostList[indexPath.row]
         
