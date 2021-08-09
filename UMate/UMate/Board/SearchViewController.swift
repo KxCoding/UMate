@@ -26,6 +26,17 @@ class SearchViewController: UIViewController {
     var cachedText: String?
     
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let cell = sender as? UITableViewCell,
+           let indexPath = postListTableView.indexPath(for: cell) {
+            
+            if let vc = segue.destination as? DetailPostViewController {
+                vc.selectedPost = filteredPostList[indexPath.row]
+            }
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -70,6 +81,11 @@ extension SearchViewController: UISearchBarDelegate {
             searchController.searchBar.text = text
         }
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchController.isActive = false
+        //searchController.searchBar.endEditing(true)
+    }
 }
 
 
@@ -91,3 +107,7 @@ extension SearchViewController: UITableViewDataSource {
         return cell
     }
 }
+
+
+
+
