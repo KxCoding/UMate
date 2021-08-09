@@ -15,6 +15,7 @@ class FirstSectionTableViewCell: UITableViewCell {
     /// 정보를 표시할 가게
     var target: Place!
     
+    /// 이미지 데이터가 없을 때 표시할 더미 데이터
     var dummyImages: [UIImage] {
         var images = [UIImage]()
         for i in 0 ... 5 {
@@ -45,11 +46,11 @@ class FirstSectionTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // 델리게이션
+        /// 델리게이션
         imageCollectionView.dataSource = self
         imageCollectionView.delegate = self
         
-        // pager 초기화
+        /// pager 초기화
         pager.configureStyle(with: [.pillShape])
         pager.backgroundColor = .black.withAlphaComponent(0.1)
     }
@@ -61,6 +62,11 @@ class FirstSectionTableViewCell: UITableViewCell {
 
 extension FirstSectionTableViewCell: UICollectionViewDataSource {
     
+    /// 지정된 섹션에서 몇 개의 item을 표시할 건지 data source에게 묻는 메소드
+    /// - Parameters:
+    ///   - collectionView: 이 정보를 요청하는 collection view
+    ///   - section: 컬렉션 뷰의 특정 섹션을 가리키는 index number
+    /// - Returns: 섹션에 포함되는 아이템의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if target.images.count > 0 {
             return target.images.count
@@ -70,6 +76,11 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
     }
     
     
+    /// data source에게 컬렉션 뷰에서 특정 indexpath의 아이템에 응하는 셀을 요청하는 메소드
+    /// - Parameters:
+    ///   - collectionView: 이 정보를 요청하는 collection view
+    ///   - indexPath: 아이템의 위치를 가리키는 indexpath
+    /// - Returns: 완성된 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceImageCollectionViewCell", for: indexPath) as! PlaceImageCollectionViewCell
@@ -89,8 +100,14 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
 
 
 extension FirstSectionTableViewCell: UICollectionViewDelegateFlowLayout {
+    
+    /// 지정된 셀의 크기를 delegate에게 요청하는 메소드
+    /// - Parameters:
+    ///   - collectionView: 이 정보를 요청하는 collection view
+    ///   - collectionViewLayout: 이 정보를 요청하는 layout 객체
+    ///   - indexPath: 아이템의 위치를 가리키는 indexpath
+    /// - Returns: 높이와 너비
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         return collectionView.frame.size
         
     }
@@ -112,11 +129,12 @@ extension FirstSectionTableViewCell: UICollectionViewDelegate {
 
 
 
-
+// MARK: 가게 관련 이미지 컬렉션 뷰
 class PlaceImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
+    /// 셀 초기화
     override func awakeFromNib() {
         super.awakeFromNib()
         
