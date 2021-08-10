@@ -33,12 +33,15 @@ class DetailRegisterViewController: UIViewController {
                   alert(title: "알림", message: "비밀번호가 같지 않습니다.")
             return
         }
-        guard let name = nickNameTextField.text,
+        guard let name = nameTextField.text,
               let nickName = nickNameTextField.text,
               name.count >= 2, nickName.count >= 2 else {
                   alert(title: "알림", message: "잘못된 형식의 이름 혹은 닉네임입니다.")
             return
         }
+        
+        UserDefaults.standard.set(name, forKey: "nameKey")
+        UserDefaults.standard.set(nickName, forKey: "nickNameKey")
         
         
         CommonViewController.shared.transitionToHome()
