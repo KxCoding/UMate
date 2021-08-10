@@ -56,7 +56,7 @@ class PostContentTableViewCell: UITableViewCell {
         if post.isScrapped {
             scrapImageView.image = UIImage(named: "bookmark64")
             scrapImageView.tintColor = .darkGray
-            scrapImageView.alpha = 0.8
+            scrapImageView.alpha = 0.9
             
             post.isScrapped = false
             post.scrapCount -= 1
@@ -65,6 +65,7 @@ class PostContentTableViewCell: UITableViewCell {
         } else {
             scrapImageView.image = UIImage(named: "bookmark64.fill")
             scrapImageView.tintColor = .black
+            scrapImageView.alpha = 1
             
             post.isScrapped = true
             post.scrapCount += 1
@@ -94,10 +95,11 @@ class PostContentTableViewCell: UITableViewCell {
         if post.isScrapped {
             scrapImageView.image = UIImage(named: "bookmark64.fill")
             scrapImageView.tintColor = .black
+            scrapImageView.alpha = 1
         } else {
             scrapImageView.image = UIImage(named: "bookmark64")
             scrapImageView.tintColor = .darkGray
-            scrapImageView.alpha = 0.8
+            scrapImageView.alpha = 0.9
         }
         
         userNameLabel.text = post.postWriter

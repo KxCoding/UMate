@@ -15,13 +15,16 @@ class SearchViewController: UIViewController {
 
     @IBOutlet weak var postListTableView: UITableView!
     
+    var tableViewHeaderView: UIView = {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 5))
+        return headerView
+    }()
+    
     let searchController = UISearchController(searchResultsController: nil)
+    var cachedText: String?
     
     var selectedBoard: Board?
-    
     var filteredPostList: [Post] = []
-    
-    var cachedText: String?
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -37,6 +40,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        postListTableView.tableHeaderView = tableViewHeaderView
 
         setupSearchBar()
         
