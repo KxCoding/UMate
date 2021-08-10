@@ -8,6 +8,10 @@
 import UIKit
 
 class SettingTableViewController: UITableViewController {
+
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    var token: NSObjectProtocol?
     
     @IBAction func logOutTapped(_ sender: UIButton) {
         
@@ -17,6 +21,7 @@ class SettingTableViewController: UITableViewController {
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginNavController)
         
     }
+    
     
     @IBAction func alertButtonDidTapped(_ sender: Any) {
         alertVersion2(message: "알림 기능 이용을 위해 아이폰의 [설정] > [UMate]에서 알림을 허용해주세요.") { [weak self] action in
@@ -28,18 +33,30 @@ class SettingTableViewController: UITableViewController {
         }
     }
     
+    
     @IBAction func cacheDeleteButtonDidTapped(_ sender: Any) {
         alert(message: "캐시를 삭제하시겠습니까?")
     }
     
     
+   
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+     
+        StorageDataSource.shard.display(with: profileImageView)
+        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+        profileImageView.clipsToBounds = true
+        profileImageView.contentMode = .scaleAspectFill
         
     }
     
-    
+    deinit {
+        if let token = token {
+            NotificationCenter.default.removeObserver(token)
+        }
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

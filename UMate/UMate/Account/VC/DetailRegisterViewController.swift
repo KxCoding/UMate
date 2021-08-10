@@ -45,9 +45,10 @@ class DetailRegisterViewController: UIViewController {
         
     }
     
- 
+
     
     var token: NSObjectProtocol?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,9 +66,12 @@ class DetailRegisterViewController: UIViewController {
  
         token = NotificationCenter.default.addObserver(forName: .didTapProfilePics, object: nil, queue: .main, using: { [weak self] noti  in
             guard let strongSelf = self else { return }
-            guard let profileImageView = noti.userInfo?[ProfilePicturesViewController.picsKey] as? UIImageView else { return }
+            guard let profileImage = noti.userInfo?[ProfilePicturesViewController.picsKey] as? UIImageView else { return }
             
-            strongSelf.profileImageView.image = profileImageView.image
+            strongSelf.profileImageView.image = profileImage.image
+            if let saveImage = profileImage.image {
+                StorageDataSource.shard.save(image: saveImage)
+            }
             
         })
         
@@ -83,8 +87,11 @@ class DetailRegisterViewController: UIViewController {
         nickNameTextField.delegate = self
         emailTextField.delegate = self
         passwordTextField.delegate = self
-    
         
+        nameTextField.text = "황신택"
+        nickNameTextField.text = "TaekToy"
+        passwordTextField.text = User.password
+        repeatPasswordTextField.text = User.password
         
         
     }
