@@ -16,7 +16,7 @@ class ReviewWriteTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         /// reviewSaveButton의 CornerRadius 설정
-        reviewSaveButton.layer.cornerRadius = 10
+        reviewSaveButton.setButtonTheme()
     }
     
     
