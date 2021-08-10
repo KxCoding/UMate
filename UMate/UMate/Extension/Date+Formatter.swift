@@ -32,4 +32,11 @@ extension Date {
         formatter.dateFormat = "MM/dd hh:mm"
         return formatter.string(from: self)
     }
+    
+    var commentDate: String {
+        formatter.dateFormat = "MM/dd"
+        formatter.timeStyle = .short
+        
+        return formatter.string(from: self)
+    }
 }

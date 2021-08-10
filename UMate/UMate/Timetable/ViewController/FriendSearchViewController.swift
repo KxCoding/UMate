@@ -16,7 +16,7 @@ class FriendSearchViewController: UIViewController {
     
     
     @IBAction func addFriendsButton(_ sender: Any) {
-        alertWithNoAction(title: "알림", message: "친구로 등록되었습니다.")
+        alert(title: "알림", message: "친구로 등록되었습니다.")
     }
     
     

@@ -159,8 +159,8 @@ extension BoardViewController: UITableViewDelegate {
         
         if indexPath.section == 0 && indexPath.row == 5 {
             performSegue(withIdentifier: "lectureSegue", sender: self)
+            
         } else if indexPath.section == 2 && indexPath.row == 0 {
-            //정보게시판으로 이동
             performSegue(withIdentifier: "infoSegue", sender: self)
         }
     }

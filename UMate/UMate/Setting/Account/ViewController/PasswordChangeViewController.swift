@@ -18,6 +18,9 @@ class PasswordChangeViewController: UIViewController {
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var checkPasswordLabel: UILabel!
     
+    @IBOutlet weak var changeButton: UIButton!
+    
+    
     @IBAction func changeButtonDidTapped(_ sender: Any) {
         
         guard let password = passwordField.text, password.count > 0 else {
@@ -35,7 +38,7 @@ class PasswordChangeViewController: UIViewController {
             return
         }
         
-        alert(title: "알림", message: "비밀번호가 변경되었습니다.")
+        alert(message: "비밀번호가 변경되었습니다.")
     }
     
     override func viewDidLoad() {
@@ -43,7 +46,7 @@ class PasswordChangeViewController: UIViewController {
 
         passwordField.becomeFirstResponder()
         
-        
+        changeButton.setButtonTheme()
     }
 
 }

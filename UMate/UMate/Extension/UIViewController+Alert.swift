@@ -9,60 +9,56 @@ import UIKit
 
 extension UIViewController {
     
-    /// <#Description#>
+    /// 알림 메소드1 (alert)
+    ///
+    /// 확인 버튼만 존재하는 알림 메소드입니다.
+    ///
+    /// 추가적인 작업을 하고 싶을 경우, handler 파라미터를 이용해주세요.
+    ///
     /// - Parameters:
-    ///   - title: <#title description#>
-    ///   - message: <#message description#>
-    func alert(title: String, message: String) {
+    ///   - title: 알림 타이틀. 기본 값은 "알림"입니다.
+    ///   - message: 알림 메시지.
+    ///   - handler: 핸들러. handler의 기본값은 nil입니다.
+    func alert(title: String = "알림", message: String, handler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "확인", style: .default) { action in
-            self.dismiss(animated: true, completion: nil)
-        }
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: handler)
         alert.addAction(okAction)
         
         present(alert, animated: true, completion: nil)
     }
     
-    
-    /// <#Description#>
+    /// 알림 메소드2  (alert)
+    ///
+    /// 확인, 취소 버튼이 존재하는 알림 메소드입니다.
+    ///
+    /// 추가적인 작업을 하고 싶을 경우, handler 파라미터를 이용해주세요. handler의 기본값은 nil입니다.
+    ///
     /// - Parameters:
-    ///   - title: <#title description#>
-    ///   - message: <#message description#>
-    func alertWithNoAction(title: String, message: String) {
+    ///   - title: 알림 타이틀. 기본 값은 "알림"입니다.
+    ///   - message: 알림 메시지.
+    ///   - handler: 첫번째 핸들러. handler의 기본값은 nil입니다.
+    ///   - handler2: 두번째 핸들러. handler의 기본값은 nil입니다.
+    func alertVersion2(title: String = "알림", message: String, handler: ((UIAlertAction) -> Void)? = nil, handler2: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: handler)
         alert.addAction(okAction)
         
-        present(alert, animated: true, completion: nil)
-    }
-    
-    
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - title: <#title description#>
-    ///   - message: <#message description#>
-    func alertNoContent(title: String = "알림", message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: { [weak self] (noti) in
-            self?.dismiss(animated: true, completion: nil)
-        })
-        alert.addAction(okAction)
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: handler2)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
     }
     
     
-    /// <#Description#>
+    /// 알림 메소드3
+    ///
+    /// 액션시트 입니다.
+    ///
     /// - Parameters:
-    ///   - title: <#title description#>
-    ///   - message: <#message description#>
+    ///   - title: 알림 타이틀입니다.
+    ///   - message: 알림 메시지입니다.
     func alertComment(title: String, message: String) {
         let alertCommnet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
@@ -75,6 +71,35 @@ extension UIViewController {
         present(alertCommnet, animated: true, completion: nil)
     }
     
+    
+    /// 알림 메소드4
+    ///
+    /// 게시판 댓글 삭제 알림 메소드 입니다.
+    ///
+    /// - Parameters:
+    ///   - title: 알림 타이틀. 기본값은 nil입니다.
+    ///   - message: 알림 메시지. 기본값은 nil입니다.
+    ///   - completion: 핸들러, 취소버튼은 nil이고, 확인 버튼은 handler로 직접 구현합니다.
+    func alertDelete(title: String? = nil, message: String? = nil, handler: ((UIAlertAction) -> Void)? = nil) {
+        let alertDelete = UIAlertController(title: "알림", message: "댓글을 삭제하시겠습니까?", preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "확인", style: .destructive, handler: handler)
+        alertDelete.addAction(okAction)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alertDelete.addAction(cancelAction)
+        
+        present(alertDelete, animated: true, completion: nil)
+    }
+    
+    
+    /// 게시판 댓글 신고 알림 메소드입니다.
+    ///
+    /// 액션시트입니다.
+    ///
+    /// - Parameters:
+    ///   - title: 알림 타이틀. 기본값은 nil입니다.
+    ///   - message: 알림 메시지입니다.
     func alertComment(title: String? = nil, message: String = "댓글을 신고하시겠습니까?") {
         let alertCommnet = UIAlertController(title: title, message: message , preferredStyle: .actionSheet)
         

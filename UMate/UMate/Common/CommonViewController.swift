@@ -7,11 +7,21 @@
 
 import UIKit
 
-class CommonViewController: UIViewController {
+class CommonViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    static let shared = CommonViewController()
+    
+    private init() { }
+    
+ 
+    /// go to homeVC
+    func transitionToHome() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainTabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
+        
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController)
     }
+    
+    
     
 }

@@ -87,20 +87,9 @@ class Comment {
     let writer: String
     let content: String
     let insertDate: Date
-    let heartCount: Int
+    var heartCount: Int
     
     var isliked = false
- 
-    
-    static var dummyCommentList = [
-        Comment(image: UIImage(systemName: "person"), writer: "익명1", content: "아자아자!!", insertDate: Date(), heartCount: 3)
-    ]
-    
-    static var dummyReCommentList = [
-        [Comment(image: UIImage(systemName: "person"), writer: "익명3", content: "2차원배열이 맞나", insertDate: Date(), heartCount: 2)],
-        [Comment(image: UIImage(systemName: "person"), writer: "익명4", content: "머리가 아프군", insertDate: Date(), heartCount: 9)]
-    ]
-
 }
 
 
