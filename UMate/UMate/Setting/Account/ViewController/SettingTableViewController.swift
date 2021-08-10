@@ -10,11 +10,12 @@ import UIKit
 class SettingTableViewController: UITableViewController {
 
     @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var enterYearAndUniNameLabel: UILabel!
     
-    var token: NSObjectProtocol?
     
     @IBAction func logOutTapped(_ sender: UIButton) {
-        
         let storyboard = UIStoryboard(name: "Account", bundle: nil)
         let loginNavController = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController")
         
@@ -39,26 +40,26 @@ class SettingTableViewController: UITableViewController {
     }
     
     
-   
-  
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        let name = UserDefaults.standard.string(forKey: "nameKey")
+        let nickName = UserDefaults.standard.string(forKey: "nickNameKey")
+        let enterYearOfUniversity = UserDefaults.standard.string(forKey: "enterenceYearKey")
+        let universityName = UserDefaults.standard.string(forKey: "universityNameKey")
         StorageDataSource.shard.display(with: profileImageView)
+        if let name = name,
+           let nickName = nickName,
+           let enterYearOfUniversity = enterYearOfUniversity,
+           let universityName = universityName {
+            nameLabel.text = "\(name)/ \(nickName)"
+            enterYearAndUniNameLabel.text = "\(enterYearOfUniversity)/ \(universityName)"
+        }
+        
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         profileImageView.clipsToBounds = true
         profileImageView.contentMode = .scaleAspectFill
         
     }
     
-    deinit {
-        if let token = token {
-            NotificationCenter.default.removeObserver(token)
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
+   
 }
