@@ -9,8 +9,6 @@ import UIKit
 
 /* TODO: -
  1. search controller extension으로 빼기.
- 2. return button 눌렀을 시에 검색되도록
- 3. 검색된 테이블 뷰 셀 클릭 시에 detailPost 보여주기
  */
 
 class SearchViewController: UIViewController {
@@ -81,6 +79,7 @@ extension SearchViewController: UISearchBarDelegate {
             searchController.searchBar.text = text
         }
     }
+    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchController.isActive = false

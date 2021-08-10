@@ -13,6 +13,7 @@ class CategoryBoardViewController: UIViewController {
     
     @IBOutlet weak var postListTableView: UITableView!
     
+    
     @IBAction func showSearchViewController(_ sender: Any) {
         performSegue(withIdentifier: "searchSegue", sender: self)
     }
@@ -185,6 +186,7 @@ extension CategoryBoardViewController: UITableViewDataSource {
         
         return filteredPostList.count
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         

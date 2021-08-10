@@ -94,6 +94,7 @@ class BoardViewController: UIViewController {
         for row in 0..<nonExpandableBoardList.count {
             bookmarks[row + 100] = false
         }
+        
         var sectionNum = 2
         for section in expandableBoardList {
             for row in 0..<section.boardNames.count {

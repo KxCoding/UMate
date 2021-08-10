@@ -204,6 +204,7 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
         } //댓글과 대댓글은 section 3,4
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
