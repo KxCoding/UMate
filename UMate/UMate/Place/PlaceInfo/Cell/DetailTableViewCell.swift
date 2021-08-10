@@ -95,6 +95,7 @@ extension DetailTableViewCell: UICollectionViewDataSource {
 
 
 
+// MARK: 단어 전용 컬렉션 뷰
 class WordCollectionViewCell: UICollectionViewCell {
     
     var target: Place?
@@ -111,6 +112,7 @@ class WordCollectionViewCell: UICollectionViewCell {
 
 
 
+// MARK: 인근 지역 컬렉션 뷰
 class DistrictCollectionViewCell: WordCollectionViewCell {
     
     @IBOutlet weak var districtItemView: UIView!
@@ -135,7 +137,7 @@ class DistrictCollectionViewCell: WordCollectionViewCell {
 }
 
 
-
+// MARK: 키워드 컬렉션 뷰
 class KeywordsCollectionViewCell: WordCollectionViewCell {
     @IBOutlet weak var keywordItemView: UIView!
     @IBOutlet weak var keywordLabel: UILabel!

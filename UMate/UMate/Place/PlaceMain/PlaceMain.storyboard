@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Iul-PA-3zo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Iul-PA-3zo">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -20,7 +19,18 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUb-OM-ljv">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="IXa-YA-P58">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    </mapView>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="IXa-YA-P58" firstAttribute="top" secondItem="RUb-OM-ljv" secondAttribute="top" id="ChX-L7-hec"/>
+                                    <constraint firstItem="IXa-YA-P58" firstAttribute="leading" secondItem="RUb-OM-ljv" secondAttribute="leading" id="Epl-oq-q6q"/>
+                                    <constraint firstAttribute="trailing" secondItem="IXa-YA-P58" secondAttribute="trailing" id="Nvj-Rf-oBC"/>
+                                    <constraint firstAttribute="bottom" secondItem="IXa-YA-P58" secondAttribute="bottom" id="m1Z-GI-hDS"/>
+                                </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tru-B1-Enb">
                                 <rect key="frame" x="0.0" y="643" width="414" height="130"/>
@@ -214,7 +224,7 @@
                                                 </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="w6T-mw-che">
-                                                <rect key="frame" x="12" y="12.5" width="20" height="18.5"/>
+                                                <rect key="frame" x="12" y="13" width="20" height="18"/>
                                                 <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="up1-Sw-odU"/>
@@ -255,8 +265,9 @@
                     <navigationItem key="navigationItem" id="oAL-ao-S4a"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="currentLocationLabel" destination="x3e-U5-sEP" id="dOf-y3-E26"/>
                         <outlet property="locationContainer" destination="oy5-8U-eaF" id="rTL-Bv-NDz"/>
-                        <outlet property="mapView" destination="RUb-OM-ljv" id="Ta9-S8-Rwc"/>
+                        <outlet property="mapView" destination="IXa-YA-P58" id="Npc-h3-YRZ"/>
                         <outlet property="nearbyPlaceCollectionView" destination="tru-B1-Enb" id="z28-6Y-lan"/>
                         <outlet property="searchBtnContainer" destination="0s5-0J-qAh" id="uTx-sC-ewe"/>
                     </connections>

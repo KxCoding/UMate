@@ -153,15 +153,17 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
         }
         
         let width:CGFloat
-        let withoutInsetWidth = (view.frame.width - (flowLayout.minimumInteritemSpacing * 3
+        guard let categoryCount = selectedBoard?.categories.count else { return .zero }
+        let withoutInsetWidth = (view.frame.width -
+                                 (flowLayout.minimumInteritemSpacing * CGFloat((categoryCount - 1))
                                      + flowLayout.sectionInset.left
                                      + flowLayout.sectionInset.right))
         
-        if selectedBoard?.categories.count == 3 {
+        if categoryCount == 3 {
             width = withoutInsetWidth / 3
             return CGSize(width: width, height: 50)
             
-        } else if selectedBoard?.categories.count == 4 {
+        } else if categoryCount == 4 {
             if indexPath.row == 0 || indexPath.row == 3 {
                 width = withoutInsetWidth / 2 * 0.4
                 return CGSize(width: width, height: 50)

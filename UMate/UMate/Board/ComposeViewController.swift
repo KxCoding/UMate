@@ -23,7 +23,10 @@ class ComposeViewController: UIViewController {
     @IBOutlet weak var contentCountLabel: UILabel!
     @IBOutlet weak var contentPlacehoderLabel: UILabel!
     @IBOutlet var accessoryBar: UIToolbar!
-    @IBOutlet weak var contentTextViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageCollectionView: UICollectionView!
+    
+    var imageList = [UIImage]()
+    var imageToken: NSObjectProtocol?
     
     
     override func viewDidLoad() {
@@ -34,6 +37,22 @@ class ComposeViewController: UIViewController {
         postTitleTextField.becomeFirstResponder()
         postTitleTextField.inputAccessoryView = accessoryBar
         postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
+        
+        imageToken = NotificationCenter.default.addObserver(forName: .imageDidSelect,
+                                                            object: nil,
+                                                            queue: .main) { [weak self] (noti) in
+            
+            if let img = noti.userInfo?["img"] as? [UIImage] {
+                self?.imageList.append(contentsOf: img)
+                self?.imageCollectionView.reloadData()
+            }
+        }
+    }
+    
+    deinit {
+        if let token = imageToken {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
     
     
@@ -137,7 +156,9 @@ extension ComposeViewController: UITextFieldDelegate {
     }
     
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
         let currentTitle = NSString(string: postTitleTextField.text ?? "")
         let finalTitle = currentTitle.replacingCharacters(in: range, with: " ")
         
@@ -150,3 +171,49 @@ extension ComposeViewController: UITextFieldDelegate {
 }
 
 
+
+
+extension ComposeViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageList.count
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        imageCollectionView.isHidden = imageList.count == 0
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ComposeImageCollectionViewCell",
+                                                      for: indexPath) as! ComposeImageCollectionViewCell
+        cell.composeImageView.image = imageList[indexPath.item]
+        return cell
+    }
+    
+    
+}
+
+
+
+extension ComposeViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 100)
+    }
+}
+
+
+
+
+extension ComposeViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
+        print(#function, indexPath.item, indexPath.section)
+        imageList.remove(at: indexPath.item)
+        imageCollectionView.reloadData()
+        
+    }
+}
