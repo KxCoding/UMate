@@ -66,15 +66,17 @@ class DetailRegisterViewController: UIViewController {
             emailTextField.text = verifiedEmail
         }
         
- 
+        
         token = NotificationCenter.default.addObserver(forName: .didTapProfilePics, object: nil, queue: .main, using: { [weak self] noti  in
             guard let strongSelf = self else { return }
-            guard let profileImage = noti.userInfo?[ProfilePicturesViewController.picsKey] as? UIImageView else { return }
+            guard let profileImage = noti.userInfo?[ProfilePicturesViewController.picsKey] as? Int else { return }
             
-            strongSelf.profileImageView.image = profileImage.image
-            if let saveImage = profileImage.image {
-                StorageDataSource.shard.save(image: saveImage)
-            }
+            guard let image = UIImage(named: "\(profileImage)") else { return }
+            
+            strongSelf.profileImageView.image = image
+            
+            StorageDataSource.shard.save(image: image)
+            
             
         })
         
