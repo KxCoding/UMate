@@ -45,6 +45,7 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
         if let image = selectedPost?.images[indexPath.item] {
             cell.postImageView.image = image
         }
+        
         cell.selectedPost = selectedPost
         cell.index = indexPath.row
         return cell

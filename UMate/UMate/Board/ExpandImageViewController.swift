@@ -10,6 +10,15 @@ import UIKit
 class ExpandImageViewController: UIViewController {
 
     @IBOutlet weak var imageCountLabel: UILabel!
+    @IBOutlet weak var pager: UIPageControl!
+    
+    @IBOutlet weak var imageCollectionView: UICollectionView!
+    
+    @IBAction func controlPage(_ sender: UIPageControl) {
+        let indexPath = IndexPath(item: sender.currentPage, section: 0)
+        imageCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+    
     
     @IBAction func closeImageVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -17,13 +26,16 @@ class ExpandImageViewController: UIViewController {
     
     var selectedPost: Post?
     var imageIndex: Int?
+    var initiatedImage = true
     
     var token: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        pager.configureStyle(with: [.pillShape])
+        pager.backgroundColor = .black.withAlphaComponent(0.1)
+        
         token = NotificationCenter.default.addObserver(forName: .sendImageView, object: nil, queue: .main) { noti in
             guard let post = noti.userInfo?["post"] as? Post else { return }
             guard let index = noti.userInfo?["index"] as? Int else { return }
@@ -33,6 +45,14 @@ class ExpandImageViewController: UIViewController {
             
             let images = post.images
             self.imageCountLabel.text = "\(index + 1) / \(images.count)"
+           
+            if images.count > 1 {
+                self.pager.currentPage = index
+                self.pager.numberOfPages = images.count
+            } else {
+                self.pager.isHidden = true
+            }
+            
         }
     }
     
@@ -57,11 +77,21 @@ extension ExpandImageViewController: UICollectionViewDataSource {
         
         guard let images = selectedPost?.images else { return cell }
    
-        
-        //일단 이미지 배열을 모두 넣어줌.
-        //선택된 이미지 인덱스의 이미지를 보여주어야 함.
         cell.expandImageView.image = images[indexPath.row]
         return cell
+    }
+}
+
+
+
+
+extension ExpandImageViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if initiatedImage {
+            initiatedImage = false
+            collectionView.scrollToItem(at: IndexPath(item: imageIndex ?? 0, section: 0), at: .centeredHorizontally, animated: false)
+        }
     }
 }
 
@@ -71,7 +101,7 @@ extension ExpandImageViewController: UICollectionViewDataSource {
 extension ExpandImageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-        let height = width * 1.5
+        let height = width * 1.65
         
         return CGSize(width: width, height: height)
     }
@@ -83,10 +113,12 @@ extension ExpandImageViewController: UICollectionViewDelegateFlowLayout {
 extension ExpandImageViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let x = scrollView.contentOffset.x
-        
-        let page = Int(x / scrollView.frame.width) + 1
+ 
+        let page = Int( x / scrollView.frame.width)
         
         guard let images = selectedPost?.images else { return }
-        imageCountLabel.text = "\(page) / \(images.count)"
+        imageCountLabel.text = "\(page + 1) / \(images.count)"
+        
+        pager.currentPage = page
     }
 }

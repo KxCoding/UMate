@@ -24,7 +24,7 @@ class FreeBoardViewController: UIViewController {
     var filteredPostList: [Post] = []
     
     var tableViewHeaderView: UIView = {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 10))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 5))
         return headerView
     }()
 
@@ -54,8 +54,8 @@ class FreeBoardViewController: UIViewController {
         postListTableView.tableHeaderView = tableViewHeaderView
         composeContainerView.layer.cornerRadius = composeContainerView.frame.height / 2
         
-        let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 1, height: 1))
-        //navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
+        let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 10, height: 10))
+        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
         navigationController?.navigationBar.shadowImage = navigationBarImage
         
         filteredPostList = selectedBoard?.posts ?? []

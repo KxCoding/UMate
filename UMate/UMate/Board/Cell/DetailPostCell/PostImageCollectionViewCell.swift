@@ -22,10 +22,11 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageContentView: UIView!
     
+    @IBOutlet weak var imageButton: UIButton!
     
     //indexPath와 post를 imageViewController에 전달해야함. 
     @IBAction func imagebtn(_ sender: Any) {
-    
+ 
         NotificationCenter.default.post(name: .showImageVC, object: nil)
         
         guard let selectedPost = selectedPost, let index = index else {
@@ -40,14 +41,17 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        layer.cornerRadius = 15.0
+        layer.cornerRadius = postImageView.frame.height * 0.05
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 2, height: 2)
         layer.shadowRadius = 2
         layer.shadowOpacity = 0.3
         layer.masksToBounds = false
         
-        imageContentView.layer.cornerRadius = postImageView.frame.height * 0.06
+        imageContentView.layer.cornerRadius = postImageView.frame.height * 0.03
         imageContentView.layer.masksToBounds = true
+        
+//        guard let index = index else { return }
+//        imageButton.tag = index
     }
 }

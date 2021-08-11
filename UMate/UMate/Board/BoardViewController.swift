@@ -86,6 +86,14 @@ class BoardViewController: UIViewController {
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.shadowImage = nil
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -186,10 +194,10 @@ extension BoardViewController: UITableViewDelegate {
             let button = UIButton(type: .custom)
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! BoardCustomHeaderView
             view.title.text = expandableBoardList[section - 1].sectionName
-            view.title.textColor = .black
+            view.title.textColor = .darkGray
             view.title.font = UIFont.boldSystemFont(ofSize: 23)
             view.image.image = UIImage(named: "downarrow")
-            view.image.tintColor = .black
+            view.image.tintColor = .darkGray
             
             view.addSubview(button)
             button.translatesAutoresizingMaskIntoConstraints = false
