@@ -12,11 +12,21 @@ class PlaceSearchCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var placeTitle: UILabel!
     @IBOutlet weak var regionNameLabel: UILabel!
     @IBOutlet weak var classificationNameLabel: UILabel!
+    @IBOutlet weak var searchContentView: UIView!
     
     
     /// 초기화 작업을 실행합니다.
     override func awakeFromNib() {
-        imageView.layer.cornerRadius = 10.0
+        /// 그림자 추가
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 2, height: 2)
+        layer.shadowRadius = 2
+        layer.shadowOpacity = 0.3
+        layer.masksToBounds = false
+        
+        /// 뷰 외곽선 깎기
+        searchContentView.layer.cornerRadius = searchContentView.frame.height * 0.06
+        searchContentView.layer.masksToBounds = true
     }
     
     
