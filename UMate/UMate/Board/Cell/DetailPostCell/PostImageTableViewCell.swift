@@ -7,17 +7,19 @@
 
 import UIKit
 
+
 class PostImageTableViewCell: UITableViewCell {
     
     var selectedPost: Post?
     
     @IBOutlet weak var postImageCollectionView: UICollectionView!
 
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
      
         postImageCollectionView.dataSource = self
+        postImageCollectionView.delegate = self
     }
     
     
@@ -43,7 +45,27 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
         if let image = selectedPost?.images[indexPath.item] {
             cell.postImageView.image = image
         }
-        
+        cell.selectedPost = selectedPost
+        cell.index = indexPath.row
         return cell
     }
 }
+
+
+
+
+extension PostImageTableViewCell: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
+
+        let width = (UIScreen.main.bounds.size.width - (flowLayout.minimumInteritemSpacing * 2 + 10)) * 0.4
+
+        return CGSize(width: width, height: width)
+    }
+}
+
+
+
+
+

@@ -57,6 +57,10 @@ class CategoryBoardViewController: UIViewController {
         self.navigationItem.title = selectedBoard?.boardTitle
         postListTableView.tableHeaderView = tableViewHeaderView
         
+        let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 1, height: 1))
+        //navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
+        navigationController?.navigationBar.shadowImage = navigationBarImage
+        
         filteredPostList = selectedBoard?.posts ?? []
     }
 }

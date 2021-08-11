@@ -54,6 +54,10 @@ class FreeBoardViewController: UIViewController {
         postListTableView.tableHeaderView = tableViewHeaderView
         composeContainerView.layer.cornerRadius = composeContainerView.frame.height / 2
         
+        let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 1, height: 1))
+        //navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
+        navigationController?.navigationBar.shadowImage = navigationBarImage
+        
         filteredPostList = selectedBoard?.posts ?? []
         
         var token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main) { noti in
