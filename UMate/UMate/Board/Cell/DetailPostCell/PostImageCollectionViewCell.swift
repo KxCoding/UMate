@@ -7,11 +7,34 @@
 
 import UIKit
 
+
+extension Notification.Name {
+    static let showImageVC = Notification.Name(rawValue: "showImageVC")
+    static let sendImageView = Notification.Name(rawValue: "sendImageView")
+}
+
 class PostImageCollectionViewCell: UICollectionViewCell {
+    
+    var selectedPost: Post?
+    var index: Int?
     
     @IBOutlet weak var postImageView: UIImageView!
     
     @IBOutlet weak var imageContentView: UIView!
+    
+    
+    //indexPath와 post를 imageViewController에 전달해야함. 
+    @IBAction func imagebtn(_ sender: Any) {
+    
+        NotificationCenter.default.post(name: .showImageVC, object: nil)
+        
+        guard let selectedPost = selectedPost, let index = index else {
+            return
+        }
+
+        NotificationCenter.default.post(name: .sendImageView, object: nil,
+                                        userInfo: ["post": selectedPost, "index": index])
+    }
     
     
     override func awakeFromNib() {

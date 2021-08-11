@@ -91,10 +91,6 @@ class BoardViewController: UIViewController {
         
         boardListTableView.register(BoardCustomHeaderView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         
-        let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 1, height: 1))
-        //navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
-        navigationController?.navigationBar.shadowImage = navigationBarImage
-        
         for row in 0..<nonExpandableBoardList.count {
             bookmarks[row + 100] = false
         }
