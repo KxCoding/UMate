@@ -324,7 +324,10 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="1급준비해서 2급" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Du5-xw-oiD">
-                                                                            <rect key="frame" x="0.0" y="27" width="254" height="44"/>
+
+
+                                                                            <rect key="frame" x="0.0" y="27" width="254" height="33"/>
+
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -495,7 +498,7 @@
                                     <constraint firstAttribute="height" constant="1" id="uYB-in-LjH"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="제목을 입력하세요." textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Xr-iL-GRb">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Xr-iL-GRb">
                                 <rect key="frame" x="20" y="108" width="374" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="KDL-m3-jIJ"/>
@@ -513,7 +516,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tx6-lQ-lIb">
-                                <rect key="frame" x="20" y="175" width="374" height="230"/>
+                                <rect key="frame" x="16" y="175" width="382" height="230"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="230" id="k0k-So-Kbn"/>
@@ -601,7 +604,10 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7T4-7L-4gj">
-                                <rect key="frame" x="20" y="175" width="105" height="17"/>
+
+
+                                <rect key="frame" x="16" y="175" width="105" height="17"/>
+
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" systemColor="systemGray3Color"/>
                                 <nil key="highlightedColor"/>
@@ -609,7 +615,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zmz-Iv-0Xw">
                                 <rect key="frame" x="20" y="413" width="374" height="194.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cae-Pl-6pS">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="cae-Pl-6pS">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -617,7 +623,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ComposeImageCollectionViewCell" id="LAY-Uz-8h6" customClass="ComposeImageCollectionViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="0.0" y="33.5" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lVX-AV-5P9">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -645,6 +651,12 @@
                                     <outlet property="delegate" destination="jcD-Qk-L5Q" id="7t0-y6-R3J"/>
                                 </connections>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZPW-pR-x51">
+                                <rect key="frame" x="20" y="114.5" width="378" height="17"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <color key="textColor" systemColor="systemGray3Color"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Fnf-VL-yBm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -653,18 +665,21 @@
                             <constraint firstItem="2fK-JN-5wQ" firstAttribute="top" secondItem="zmz-Iv-0Xw" secondAttribute="bottom" constant="8" symbolic="YES" id="4Hg-QN-f9f"/>
                             <constraint firstItem="C3J-oV-hj6" firstAttribute="leading" secondItem="lKk-gX-GNp" secondAttribute="leading" constant="16" id="6In-FE-RKa"/>
                             <constraint firstItem="2fK-JN-5wQ" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="8lQ-Fg-LF1"/>
+                            <constraint firstItem="ZPW-pR-x51" firstAttribute="leading" secondItem="9Xr-iL-GRb" secondAttribute="leading" id="Eul-0L-A6N"/>
+                            <constraint firstItem="ZPW-pR-x51" firstAttribute="centerY" secondItem="9Xr-iL-GRb" secondAttribute="centerY" id="GFw-yP-uwC"/>
                             <constraint firstItem="Fnf-VL-yBm" firstAttribute="bottom" secondItem="2fK-JN-5wQ" secondAttribute="bottom" constant="20" id="GXv-Z2-AJ0"/>
                             <constraint firstAttribute="trailing" secondItem="2fK-JN-5wQ" secondAttribute="trailing" constant="20" id="J1w-cT-cw3"/>
                             <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="zmz-Iv-0Xw" secondAttribute="trailing" constant="20" id="P5Z-XB-Pxz"/>
                             <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="wQ6-1E-3AQ" secondAttribute="trailing" constant="16" id="PNE-d9-anb"/>
                             <constraint firstAttribute="trailing" secondItem="C3J-oV-hj6" secondAttribute="trailing" constant="16" id="PSm-FR-4mj"/>
                             <constraint firstItem="9Xr-iL-GRb" firstAttribute="top" secondItem="Fnf-VL-yBm" secondAttribute="top" constant="20" id="XSO-Pv-9e8"/>
-                            <constraint firstItem="Tx6-lQ-lIb" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="del-hh-dxU"/>
+                            <constraint firstItem="Tx6-lQ-lIb" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="16" id="del-hh-dxU"/>
                             <constraint firstItem="7T4-7L-4gj" firstAttribute="leading" secondItem="Tx6-lQ-lIb" secondAttribute="leading" id="gIU-W4-dzd"/>
                             <constraint firstItem="wQ6-1E-3AQ" firstAttribute="top" secondItem="C3J-oV-hj6" secondAttribute="bottom" constant="8" symbolic="YES" id="gIo-Qh-Ool"/>
+                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="ZPW-pR-x51" secondAttribute="trailing" constant="16" id="gzh-C4-qWr"/>
                             <constraint firstItem="7T4-7L-4gj" firstAttribute="top" secondItem="Tx6-lQ-lIb" secondAttribute="top" id="hXj-ue-7BJ"/>
                             <constraint firstItem="Tx6-lQ-lIb" firstAttribute="top" secondItem="wQ6-1E-3AQ" secondAttribute="bottom" constant="8" id="rhr-Sp-Ah9"/>
-                            <constraint firstAttribute="trailing" secondItem="Tx6-lQ-lIb" secondAttribute="trailing" constant="20" id="s9n-5b-1Bg"/>
+                            <constraint firstAttribute="trailing" secondItem="Tx6-lQ-lIb" secondAttribute="trailing" constant="16" id="s9n-5b-1Bg"/>
                             <constraint firstItem="zmz-Iv-0Xw" firstAttribute="top" secondItem="Tx6-lQ-lIb" secondAttribute="bottom" constant="8" symbolic="YES" id="uM1-CI-a4Y"/>
                             <constraint firstItem="zmz-Iv-0Xw" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="uSh-Sa-t65"/>
                             <constraint firstItem="9Xr-iL-GRb" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="x3Y-ZZ-PBF"/>
@@ -691,6 +706,7 @@
                         <outlet property="contentPlacehoderLabel" destination="7T4-7L-4gj" id="qHl-oQ-vwc"/>
                         <outlet property="imageCollectionView" destination="zmz-Iv-0Xw" id="yEa-qW-Ekh"/>
                         <outlet property="postContentTextView" destination="Tx6-lQ-lIb" id="bXk-gZ-1Wp"/>
+                        <outlet property="postTitlePlaceholderLabel" destination="ZPW-pR-x51" id="PMn-m8-urD"/>
                         <outlet property="postTitleTextField" destination="9Xr-iL-GRb" id="hi1-LW-Rys"/>
                     </connections>
                 </viewController>
@@ -1316,7 +1332,11 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="1급준비해서 2급" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6jY-jR-enn">
-                                                                            <rect key="frame" x="0.0" y="27" width="254" height="56"/>
+
+                                                                     
+
+                                                                            <rect key="frame" x="0.0" y="27" width="254" height="35"/>
+
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
