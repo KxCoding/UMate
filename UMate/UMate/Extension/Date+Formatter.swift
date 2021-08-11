@@ -39,4 +39,11 @@ extension Date {
         
         return formatter.string(from: self)
     }
+    
+    
+    /// 시간을 HH:mm 형식으로 나타내주는 속성입니다.
+    var timeTableTime: String {
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: self)
+    }
 }

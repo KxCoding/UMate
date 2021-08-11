@@ -19,6 +19,7 @@ class ComposeViewController: UIViewController {
     
     @IBOutlet weak var postTitleTextField: UITextField!
     @IBOutlet weak var postContentTextView: UITextView!
+    @IBOutlet weak var postTitlePlaceholderLabel: UILabel!
     @IBOutlet weak var commmunityRuleView: UIView!
     @IBOutlet weak var contentCountLabel: UILabel!
     @IBOutlet weak var contentPlacehoderLabel: UILabel!
@@ -143,8 +144,23 @@ extension ComposeViewController: UITextViewDelegate {
 }
 
 
-// 제목 글자수 제한(50자)
+// 제목 Placeholder 지정 및 글자수 제한(50자)
 extension ComposeViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textView: UITextField) {
+        postTitlePlaceholderLabel.isHidden = true
+    }
+    
+    
+    func textFieldDidEndEditing(_ textView: UITextField) {
+        guard let title = postTitleTextField.text, title.count > 0 else {
+            postTitlePlaceholderLabel.isHidden = false
+            return
+        }
+        
+        postTitlePlaceholderLabel.isHidden = true
+    }
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
@@ -172,7 +188,7 @@ extension ComposeViewController: UITextFieldDelegate {
 
 
 
-
+// 게시글 이미지 추가
 extension ComposeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -195,6 +211,8 @@ extension ComposeViewController: UICollectionViewDataSource {
 
 
 
+
+// 게시글 이미지 첨부시 사이즈 지정
 extension ComposeViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
@@ -210,8 +228,10 @@ extension ComposeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        
+        #if DEBUG
         print(#function, indexPath.item, indexPath.section)
+        #endif
+        
         imageList.remove(at: indexPath.item)
         imageCollectionView.reloadData()
         

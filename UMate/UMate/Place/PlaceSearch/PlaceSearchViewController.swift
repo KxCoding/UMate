@@ -9,15 +9,17 @@ import UIKit
 
 class PlaceSearchViewController: UIViewController {
     @IBOutlet weak var searchCollectionView: UICollectionView!
+    @IBOutlet weak var dimView: UIView!
     var list = [SearchPlaceItem]()
+    var token: NSObjectProtocol?
     
     let dummyData: [SearchPlaceItem] = [
-        SearchPlaceItem(image: UIImage(named: "place_00"),
+        SearchPlaceItem(image: UIImage(named: "search_00"),
                         placeTitle: "카페 지미스",
                         regionName: "고양",
                         classificationName: "카페"),
         
-        SearchPlaceItem(image: UIImage(named: "place_01"),
+        SearchPlaceItem(image: UIImage(named: "search_01"),
                         placeTitle: "카페 브리타니",
                         regionName: "부산",
                         classificationName: "카페"),
@@ -64,6 +66,34 @@ class PlaceSearchViewController: UIViewController {
         self.navigationItem.titleView = searchBar
         searchBar.becomeFirstResponder()
         searchBar.delegate = self
+        
+        token = NotificationCenter.default.addObserver(forName: .filterWillCancelled, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            
+            UIView.animate(withDuration: 0.3) {
+                self.dimView.alpha = 0.0
+            }
+        }
+    }
+    
+    
+    /// 다음 화면으로 넘어가기 전에 실행할 작업을 추가합니다.
+    /// - Parameters:
+    ///   - segue: segue에 관련된 viewController 정보를 가지고 있는 seuge
+    ///   - sender: 버튼
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        dimView.alpha = 0.4
+    }
+    
+    
+    deinit {
+        #if DEBUG
+        print(#function, self)
+        #endif
+        
+        if let token = token {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
 }
 
@@ -81,7 +111,7 @@ extension PlaceSearchViewController: UICollectionViewDataSource {
     }
     
     
-    /// 데이터소스 객체에게 지정된 섹션에 해당하는 셀에 데이터를 요청합니다.
+    /// 데이터소스 객체에게 지정된 위치에 해당하는 셀에 데이터를 요청합니다.
     /// - Parameters:
     ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
     ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
@@ -105,7 +135,7 @@ extension PlaceSearchViewController: UICollectionViewDelegateFlowLayout {
     ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
     ///   - collectionViewLayout: 정보를 요청하는 layout 객체
     ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
-    /// - Returns: 아이템의 너비와 높이
+    /// - Returns: 아이템 사이즈
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
             return .zero
@@ -115,6 +145,32 @@ extension PlaceSearchViewController: UICollectionViewDelegateFlowLayout {
         let height = width * 1.5
         
         return CGSize(width: Int(width), height: Int(height))
+    }
+    
+    
+    /// 델리게이트에게 컬렉션 뷰에 표시할 supplementary view 데이터를 요청합니다.
+    /// - Parameters:
+    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - kind: supplementary view가 제공하는 종류
+    ///   - indexPath: 새로운 헤더의 위치를 지정하는 IndexPath
+    /// - Returns: supplementary view 객체
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SearchHeaderCollectionViewCell", for: indexPath) as! SearchHeaderCollectionViewCell
+    }
+    
+    
+    /// 델리게이트에게 지정된 섹션에 헤더 뷰의 사이즈를 물어봅니다.
+    /// - Parameters:
+    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - collectionViewLayout: 정보를 요청하는 레이아웃 객체
+    ///   - section: 컬렉션뷰 섹션을 식별하는 Index 번호
+    /// - Returns: 헤더 사이즈
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if list.isEmpty {
+            return .zero
+        }
+        
+        return CGSize(width: 0, height: 50)
     }
 }
 

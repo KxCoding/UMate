@@ -19,12 +19,18 @@ class CategoryBoardViewController: UIViewController {
     }
     
     
-    var selectedBoard: Board?
-    
     var categoryWidth: CGFloat = .zero
     
+    var tableViewHeaderView: UIView = {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 5))
+        return headerView
+    }()
+    
+    
+    var selectedBoard: Board?
     var filteredPostList: [Post] = []
     var nonCliked = true
+    
     
     @IBOutlet weak var categoryListCollectionView: UICollectionView!
     
@@ -49,6 +55,11 @@ class CategoryBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = selectedBoard?.boardTitle
+        postListTableView.tableHeaderView = tableViewHeaderView
+        
+        let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 1, height: 1))
+        //navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
+        navigationController?.navigationBar.shadowImage = navigationBarImage
         
         filteredPostList = selectedBoard?.posts ?? []
     }

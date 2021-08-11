@@ -20,7 +20,7 @@ class CommentTableViewCell: UITableViewCell {
     
     var selectedComment: Comment?
     
-    // TODO: 공감이 0일때는 안보이게 하고, 공감이 1이상일 때 표시하기 -> stackView.isHidden속성 활용할 것
+    
     @IBAction func userDidLike(_ sender: Any) {
         
         guard let comment = selectedComment else { return }
@@ -51,6 +51,7 @@ class CommentTableViewCell: UITableViewCell {
         heartCountLabel.isHidden = false
     }
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -60,6 +61,7 @@ class CommentTableViewCell: UITableViewCell {
         btnContainerView.layer.borderColor = UIColor.lightGray.cgColor
         btnContainerView.layer.borderWidth = 0.5
     }
+    
     
     func configure(with comment: Comment) {
         if comment.isliked {

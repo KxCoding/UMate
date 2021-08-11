@@ -23,7 +23,7 @@ class GeneralReviewTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         /// reviewWriteContainerView의 cornerRadius 설정
-        reviewWriteContainerView.layer.cornerRadius = 10
+        reviewWriteContainerView.configureStyle(with: [.pillShape])
     }
     
     
