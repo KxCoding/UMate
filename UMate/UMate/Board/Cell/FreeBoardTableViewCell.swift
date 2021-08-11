@@ -23,7 +23,7 @@ class FreeBoardTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        postImageView.layer.cornerRadius = postImageView.frame.height * 0.1
+        postImageView.layer.cornerRadius = postImageView.frame.height * 0.05
     }
     
     
