@@ -27,7 +27,6 @@ extension UIView {
         
         for op in options {
             switch op {
-            
             case .lightShadow:
                 self.lightBorder()
                 
@@ -45,9 +44,6 @@ extension UIView {
                 
             case .lightBorder:
                 lightBorder()
-                
-            default:
-                break
             }
         }
         

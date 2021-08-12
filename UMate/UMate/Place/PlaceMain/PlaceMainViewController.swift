@@ -46,16 +46,23 @@ class PlaceMainViewController: UIViewController {
     /// 위치에 따라 컬렉션 뷰에 리스팅할 가게 배열
     var list = [Place]()
     
+    /// 학교 좌표 - 현재는 임시값 저장
+    var univerSityCoordinate = CLLocationCoordinate2D(latitude: 37.545621,
+                                                      longitude: 126.96502)
+    
     /// 컬렉션 뷰 데이터에 따라 지도에 표시할 마커
     lazy var allAnnotations: [MKAnnotation] = { [weak self] in
-        var arr = [MKAnnotation]()
+        var arr = [CafeAnnotation]()
         
         guard let self = self else { return arr }
         
-        for place in self.list {
+        for i in 0 ..< self.list.count {
+            let place = self.list[i]
+            
             guard let coor = place.coordinate else { continue }
             
-            let annotation = MKPointAnnotation()
+            let annotation = CafeAnnotation(coordinate: coor,
+                                            id: i)
             annotation.coordinate = coor
             annotation.title = place.name
             
@@ -163,8 +170,13 @@ class PlaceMainViewController: UIViewController {
         super.viewDidLoad()
         
         /// map view 초기화
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        mapView.register(MKMarkerAnnotationView.self,
+                         forAnnotationViewWithReuseIdentifier: "currentListItems")
+        
         /// 첫 번째 아이템 or 학교 대표 좌표
-        let initialCenterCoor = list.first?.coordinate ?? CLLocationCoordinate2D(latitude: 37.545621, longitude: 126.965011)
+        let initialCenterCoor = list.first?.coordinate ?? univerSityCoordinate
         let region = MKCoordinateRegion(center: initialCenterCoor,
                                         latitudinalMeters: 500,
                                         longitudinalMeters: 500)
@@ -208,9 +220,74 @@ class PlaceMainViewController: UIViewController {
 }
 
 
+// MARK: Annotation Classes
+
+/// 카페를 표시할 커스텀  annotation
+class CafeAnnotation: NSObject, MKAnnotation {
+    
+    @objc dynamic var coordinate: CLLocationCoordinate2D
+    
+    var title: String?
+    var subtitle: String?
+    
+    /// collection view와 동기화에 필요한 id
+    var id: Int
+    
+    init(coordinate: CLLocationCoordinate2D,
+         title: String? = nil, subtitle: String? = nil, id: Int) {
+        self.coordinate = coordinate
+        self.title = title
+        self.subtitle = subtitle
+        self.id = id
+    }
+}
 
 
-// MARK: TableView Delegation
+
+
+// MARK: Map View Delegation
+
+extension PlaceMainViewController: MKMapViewDelegate {
+    
+    /// annotation view가 선택되었을 때  작업을 실행하는 메소드. annotation의 타입으로 분기 실행할 작업을 지정.
+    /// - Parameters:
+    ///   - mapView: 선택된 annotaion이 포함된 map view
+    ///   - view: 선택된 annotation view
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let annotation = view.annotation as? CafeAnnotation {
+        
+            nearbyPlaceCollectionView.selectItem(at: IndexPath(item: annotation.id,
+                                                               section: 0),
+                                                 animated: true,
+                                                 scrollPosition: .centeredHorizontally)
+            
+        }
+    }
+    
+    
+    /// 해당 anntation 객체에 알맞은 annotation view를 리턴해줍니다. 여기서도 annotation의 타입으로 분기.
+    /// - Parameters:
+    ///   - mapView: 해당 annotaion이 포함된 map view
+    ///   - annotation: view를 필요로 하는 annotation
+    /// - Returns: annotation에서 표시할 annotation view, 메소드가 nil을 리턴하면 표준 view를 표시.
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if let annotation = annotation as? CafeAnnotation {
+            let view = mapView.dequeueReusableAnnotationView(withIdentifier: "currentListItems", for: annotation) as! MKMarkerAnnotationView
+            view.glyphImage = UIImage(systemName: "heart.circle")
+            view.markerTintColor = .brown
+            return view
+        }
+        return nil
+    }
+    
+    
+}
+
+
+
+
+// MARK: Collection View Delegation
 
 extension PlaceMainViewController: UICollectionViewDataSource {
     
@@ -275,7 +352,7 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
         switch manager.authorizationStatus {
         case .restricted, .denied:
             tempAlert(title: "위치 서비스 권한 제한",
-                      msg: "현재 위치를 표시할 수 없을 거예요",
+                      msg: "앱의 권한이 제한돼서\n현재 위치를 표시할 수 없을 거예요",
                       actionMsg: "오케이")
             break
         case .authorizedAlways, .authorizedWhenInUse:
@@ -295,7 +372,7 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
         switch status {
         case .restricted, .denied:
             tempAlert(title: "위치 서비스 권한 제한",
-                      msg: "현재 위치를 표시할 수 없을 거예요",
+                      msg: "앱의 권한이 제한돼서\n현재 위치를 표시할 수 없을 거예요",
                       actionMsg: "오케이")
             break
         case .authorizedAlways, .authorizedWhenInUse:
@@ -307,39 +384,66 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
     }
     
     
+    /// 위치 검색에 실패했을 때 호출됩니다.
+    /// - Parameters:
+    ///   - manager: location manager
+    ///   - error: 실패 이유를 포함하고 있는 에러 객체
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        #if DEBUG
+        print(error)
+        #endif
+        
+        manager.stopUpdatingLocation()
+        manager.stopUpdatingHeading()
+        
+        tempAlert(title: "알림", msg: "현재 위치를 불러올 수 없어요ㅜㅜ", actionMsg: "")
+    }
+    
+    
     /// 위치가 업데이트 되면 수행할 작업 (위치 관련 작업은 모두 메인 스레드에서 실행됨)
     /// - Parameters:
     ///   - manager: location manager
     ///   - locations: 업데이트 된 위치
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        if let current = locations.last {
-            
-            let geocoder = CLGeocoder()
-            geocoder.reverseGeocodeLocation(current,
-                                            preferredLocale: Locale(identifier: "ko_kr"))
-            { [weak self] placeMarks, error in
-                guard let self = self else { return }
-                
-                if let error = error {
-                    print(error)
-                }
-                
-                if let place = placeMarks?.first {
-                    let si = place.administrativeArea ?? ""
-                    let gu = place.locality ?? ""
-                    let dong = place.thoroughfare ?? ""
-                    let number = place.subThoroughfare ?? ""
-                    
-                    self.currentLocationLabel.text = si + " " + gu + " " + dong + " " + number
-                }
-            }
+        if let currentLocation = locations.last {
+            updateAddress(with: currentLocation)
+        } else {
         }
         
         manager.stopUpdatingLocation()
-        manager.stopUpdatingHeading()
     }
     
+    
+    /// CLLocation 객체를 문자열 주소로 변환하는 메소드
+    /// - Parameter location: CLLocation 객체
+    /// - Returns: 간단한 문자열 주소. 역 지오코딩 실패시 nil 리턴.
+    func updateAddress(with location: CLLocation) {
+        
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location,
+                                        preferredLocale: Locale(identifier: "ko_kr"))
+        { [weak self] placeMarks, error in
+            
+            guard let self = self else { return }
+            
+            if let error = error {
+                print(error)
+                self.currentLocationLabel.text = "주소를 찾을 수 없습니다"
+            }
+            
+            if let place = placeMarks?.first {
+                let si = place.administrativeArea ?? "ㅎㅎ"
+                let gu = place.locality ?? ""
+                let dong = place.thoroughfare ?? ""
+                let number = place.subThoroughfare ?? ""
+                
+                self.currentLocationLabel.text = "\(si) \(gu) \(dong) \(number)"
+            }
+            
+        }
+        
+    }
     
 }
 
