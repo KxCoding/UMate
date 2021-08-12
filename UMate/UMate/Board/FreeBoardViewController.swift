@@ -21,10 +21,14 @@ class FreeBoardViewController: UIViewController {
         performSegue(withIdentifier: "searchSegue", sender: self)
     }
     
-    
     var filteredPostList: [Post] = []
     
+    var tableViewHeaderView: UIView = {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 5))
+        return headerView
+    }()
 
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let cell = sender as? UITableViewCell,
@@ -47,11 +51,14 @@ class FreeBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = selectedBoard?.boardTitle
-        
-        filteredPostList = selectedBoard?.posts ?? []
-        
+        postListTableView.tableHeaderView = tableViewHeaderView
         composeContainerView.layer.cornerRadius = composeContainerView.frame.height / 2
         
+        let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 10, height: 10))
+        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
+        navigationController?.navigationBar.shadowImage = navigationBarImage
+        
+        filteredPostList = selectedBoard?.posts ?? []
         
         var token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main) { noti in
             
@@ -82,8 +89,11 @@ class FreeBoardViewController: UIViewController {
         }
         tokens.append(token)
         
-        NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
+        newPostToken = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
             [weak self] noti in
+            if let newPost = noti.userInfo?["newPost"] as? Post {
+                self?.filteredPostList.insert(newPost, at: 0)
+            }
             self?.postListTableView.reloadData()
         }
     }
@@ -104,6 +114,7 @@ class FreeBoardViewController: UIViewController {
 
 
 extension FreeBoardViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredPostList.count
     }
@@ -117,5 +128,19 @@ extension FreeBoardViewController: UITableViewDataSource {
         
         cell.configure(post: post)
         return cell
+    }
+}
+
+
+
+
+extension FreeBoardViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
     }
 }

@@ -54,6 +54,8 @@ class RegisterViewController: UIViewController {
         menu.show()
         menu.selectionAction = { [weak self] index, item in
             self?.enterenceTextField.text = item
+            
+            UserDefaults.standard.set(item, forKey: "enterenceYearKey")
         }
     }
     
@@ -78,7 +80,9 @@ class RegisterViewController: UIViewController {
             guard let universityName = noti.userInfo?[SearchLIstUniversityViewController.universityNameTransitionKey] as? String else { return }
             
             strongSelf.universityNameField.text = universityName
+            UserDefaults.standard.set(universityName, forKey: "universityNameKey")
         })
+        
         
     }
     

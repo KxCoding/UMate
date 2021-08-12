@@ -13,6 +13,9 @@ extension  Notification.Name {
     static let postCancelScrap = Notification.Name("postCancelScrap")
 }
 
+
+
+
 class PostContentTableViewCell: UITableViewCell {
     
     var selectedPost: Post?
@@ -30,7 +33,7 @@ class PostContentTableViewCell: UITableViewCell {
         
         if post.isliked {
             likeImageView.image = UIImage(named: "heart2")
-            likeImageView.tintColor = .lightGray
+            likeImageView.tintColor = .darkGray
             
             post.isliked = false
             post.likeCount -= 1
@@ -52,7 +55,8 @@ class PostContentTableViewCell: UITableViewCell {
         
         if post.isScrapped {
             scrapImageView.image = UIImage(named: "bookmark64")
-            scrapImageView.tintColor = .lightGray
+            scrapImageView.tintColor = .darkGray
+            scrapImageView.alpha = 0.9
             
             post.isScrapped = false
             post.scrapCount -= 1
@@ -61,6 +65,7 @@ class PostContentTableViewCell: UITableViewCell {
         } else {
             scrapImageView.image = UIImage(named: "bookmark64.fill")
             scrapImageView.tintColor = .black
+            scrapImageView.alpha = 1
             
             post.isScrapped = true
             post.scrapCount += 1
@@ -80,19 +85,21 @@ class PostContentTableViewCell: UITableViewCell {
     
     func configure(post: Post) {
         if post.isliked {
-            self.likeImageView.image = UIImage(named: "heart2.fill")
-            self.likeImageView.tintColor = .black
+            likeImageView.image = UIImage(named: "heart2.fill")
+            likeImageView.tintColor = .black
         } else {
-            self.likeImageView.image = UIImage(named: "heart2")
-            self.likeImageView.tintColor = .lightGray
+            likeImageView.image = UIImage(named: "heart2")
+            likeImageView.tintColor = .darkGray
         }
         
         if post.isScrapped {
-            self.scrapImageView.image = UIImage(named: "bookmark64.fill")
-            self.scrapImageView.tintColor = .black
+            scrapImageView.image = UIImage(named: "bookmark64.fill")
+            scrapImageView.tintColor = .black
+            scrapImageView.alpha = 1
         } else {
-            self.scrapImageView.image = UIImage(named: "bookmark64")
-            self.scrapImageView.tintColor = .lightGray
+            scrapImageView.image = UIImage(named: "bookmark64")
+            scrapImageView.tintColor = .darkGray
+            scrapImageView.alpha = 0.9
         }
         
         userNameLabel.text = post.postWriter

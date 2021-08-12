@@ -26,6 +26,7 @@ class DetailPostViewController: UIViewController {
     @IBOutlet weak var commentPlaceholderLabel: UILabel!
     @IBOutlet weak var commentContainerViewBottomConstraint: NSLayoutConstraint!
     
+    var imageObserver: NSObjectProtocol?
     var willShowToken: NSObjectProtocol?
     var willHideToken: NSObjectProtocol?
     var newCommentToken: NSObjectProtocol?
@@ -125,6 +126,12 @@ class DetailPostViewController: UIViewController {
             self?.detailPostTableView.reloadData()
             self?.commentTextView.text = nil
         }
+        
+        
+       imageObserver = NotificationCenter.default.addObserver(forName: .showImageVC,
+                                                              object: nil, queue: .main) { _ in
+            self.performSegue(withIdentifier: "imageSegue", sender: nil)
+        }
     }
     
     
@@ -143,6 +150,10 @@ class DetailPostViewController: UIViewController {
         
         if let token = newReCommentToken {
             NotificationCenter.default.removeObserver(token)
+        }
+        
+        if let toekn = imageObserver {
+            NotificationCenter.default.removeObserver(toekn)
         }
     }
     
@@ -177,7 +188,8 @@ class DetailPostViewController: UIViewController {
 
 
 
-extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
+
+extension DetailPostViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 5
@@ -203,6 +215,7 @@ extension DetailPostViewController: UITableViewDataSource,UITableViewDelegate {
         default: return 0
         } //댓글과 대댓글은 section 3,4
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -342,4 +355,6 @@ extension DetailPostViewController: UITextViewDelegate {
         commentPlaceholderLabel.isHidden = true
     }
 }
+
+
 

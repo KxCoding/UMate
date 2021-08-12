@@ -17,13 +17,20 @@ extension Notification.Name {
 
 class ComposeViewController: UIViewController {
     
+    // 게시글 작성(제목, 내용, 정보)을 위한 아울렛
     @IBOutlet weak var postTitleTextField: UITextField!
     @IBOutlet weak var postContentTextView: UITextView!
+    @IBOutlet weak var postTitlePlaceholderLabel: UILabel!
     @IBOutlet weak var commmunityRuleView: UIView!
     @IBOutlet weak var contentCountLabel: UILabel!
     @IBOutlet weak var contentPlacehoderLabel: UILabel!
     @IBOutlet var accessoryBar: UIToolbar!
-    @IBOutlet weak var contentTextViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageCollectionView: UICollectionView!
+    
+    // 게시글에 첨부할 이미지 속성
+    var imageList = [UIImage]()
+    
+    var imageToken: NSObjectProtocol?
     
     
     override func viewDidLoad() {
@@ -34,15 +41,36 @@ class ComposeViewController: UIViewController {
         postTitleTextField.becomeFirstResponder()
         postTitleTextField.inputAccessoryView = accessoryBar
         postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
+        
+        imageToken = NotificationCenter.default.addObserver(forName: .imageDidSelect,
+                                                            object: nil,
+                                                            queue: .main) { [weak self] (noti) in
+            
+            if let img = noti.userInfo?["img"] as? [UIImage] {
+                self?.imageList.append(contentsOf: img)
+                self?.imageCollectionView.reloadData()
+            }
+        }
+    }
+    
+    deinit {
+        if let token = imageToken {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
     
     
+    
+    /// 게시글 작성을 취소하는 메소드
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
+    
+    /// 게시글 저장을 위한 메소드
     @IBAction func savePost(_ sender: Any) {
+        
         guard let title = postTitleTextField.text, title.count > 0,
               let content = postContentTextView.text, content.count > 0 else {
             
@@ -50,15 +78,17 @@ class ComposeViewController: UIViewController {
             return
         }
         
-        let newPost = Post(images: [UIImage(named: "image4")],
+        let newPost = Post(images: imageList,
                            postTitle: title,
                            postContent: content,
-                           postWriter: "아이디 데이터 넣기!",
+                           postWriter: "아이디 데이터 넣기",
                            insertDate: Date(), likeCount: 3,
                            commentCount: 2)
         freeBoard.posts.insert(newPost, at: 0)
         
-        NotificationCenter.default.post(name: .newPostInsert, object: nil)
+        NotificationCenter.default.post(name: .newPostInsert,
+                                        object: nil,
+                                        userInfo: ["newPost" : newPost])
         
         dismiss(animated: true, completion: nil)
     }
@@ -84,11 +114,17 @@ class ComposeViewController: UIViewController {
 // 게시글(본문) placeHolder 설정 및 글자수 제한(500자)
 extension ComposeViewController: UITextViewDelegate {
     
+    
+    /// 본문 편집 시 placeholder를 hidden으로 바꾸는 메소드
+    /// - Parameter textView: 게시글 본문 textView
     func textViewDidBeginEditing(_ textView: UITextView) {
         contentPlacehoderLabel.isHidden = true
     }
     
     
+    
+    /// <#Description#>
+    /// - Parameter textView: <#textView description#>
     func textViewDidEndEditing(_ textView: UITextView) {
         guard let content = postContentTextView.text, content.count > 0 else {
             contentPlacehoderLabel.isHidden = false
@@ -99,6 +135,9 @@ extension ComposeViewController: UITextViewDelegate {
     }
     
     
+    
+    /// <#Description#>
+    /// - Parameter textView: <#textView description#>
     func textViewDidChange(_ textView: UITextView) {
         contentCountLabel.text = "\(postContentTextView.text.count) / 500"
         
@@ -110,6 +149,13 @@ extension ComposeViewController: UITextViewDelegate {
     }
     
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - textView: <#textView description#>
+    ///   - range: <#range description#>
+    ///   - text: <#text description#>
+    /// - Returns: <#description#>
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         let currentContentText = NSString(string: textView.text ?? "")
@@ -124,9 +170,34 @@ extension ComposeViewController: UITextViewDelegate {
 }
 
 
-// 제목 글자수 제한(50자)
+// 제목 Placeholder 지정 및 글자수 제한(50자)
 extension ComposeViewController: UITextFieldDelegate {
     
+    
+    /// <#Description#>
+    /// - Parameter textView: <#textView description#>
+    func textFieldDidBeginEditing(_ textView: UITextField) {
+        postTitlePlaceholderLabel.isHidden = true
+    }
+    
+    
+    
+    /// <#Description#>
+    /// - Parameter textView: <#textView description#>
+    func textFieldDidEndEditing(_ textView: UITextField) {
+        guard let title = postTitleTextField.text, title.count > 0 else {
+            postTitlePlaceholderLabel.isHidden = false
+            return
+        }
+        
+        postTitlePlaceholderLabel.isHidden = true
+    }
+    
+    
+    
+    /// <#Description#>
+    /// - Parameter textField: <#textField description#>
+    /// - Returns: <#description#>
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == postTitleTextField && postTitleTextField.isFirstResponder {
@@ -137,7 +208,16 @@ extension ComposeViewController: UITextFieldDelegate {
     }
     
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - textField: <#textField description#>
+    ///   - range: <#range description#>
+    ///   - string: <#string description#>
+    /// - Returns: <#description#>
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
         let currentTitle = NSString(string: postTitleTextField.text ?? "")
         let finalTitle = currentTitle.replacingCharacters(in: range, with: " ")
         
@@ -150,3 +230,77 @@ extension ComposeViewController: UITextFieldDelegate {
 }
 
 
+
+// 게시글 이미지 추가
+extension ComposeViewController: UICollectionViewDataSource {
+    
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - collectionView: <#collectionView description#>
+    ///   - section: <#section description#>
+    /// - Returns: <#description#>
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageList.count
+    }
+    
+    
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - collectionView: <#collectionView description#>
+    ///   - indexPath: <#indexPath description#>
+    /// - Returns: <#description#>
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        imageCollectionView.isHidden = imageList.count == 0
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ComposeImageCollectionViewCell",
+                                                      for: indexPath) as! ComposeImageCollectionViewCell
+        cell.composeImageView.image = imageList[indexPath.item]
+        return cell
+    }
+    
+    
+}
+
+
+
+
+// 게시글 이미지 첨부시 사이즈 지정
+extension ComposeViewController: UICollectionViewDelegateFlowLayout {
+    
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - collectionView: <#collectionView description#>
+    ///   - collectionViewLayout: <#collectionViewLayout description#>
+    ///   - indexPath: <#indexPath description#>
+    /// - Returns: <#description#>
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 100)
+    }
+}
+
+
+
+
+extension ComposeViewController: UICollectionViewDelegate {
+    
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - collectionView: <#collectionView description#>
+    ///   - indexPath: <#indexPath description#>
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        #if DEBUG
+        print(#function, indexPath.item, indexPath.section)
+        #endif
+        
+        imageList.remove(at: indexPath.item)
+        imageCollectionView.reloadData()
+        
+    }
+}

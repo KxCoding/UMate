@@ -123,7 +123,7 @@ extension EmailVerifyViewController {
             
             if shouldMoveViewUp {
                 UIView.animate(withDuration: 0.3) {
-                    strongSelf.view.frame.origin.y = 0 - keyboardSize.height
+                    strongSelf.view.frame.origin.y = 15 - keyboardSize.height
                 }
                 
             }

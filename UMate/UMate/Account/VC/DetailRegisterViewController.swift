@@ -33,21 +33,25 @@ class DetailRegisterViewController: UIViewController {
                   alert(title: "알림", message: "비밀번호가 같지 않습니다.")
             return
         }
-        guard let name = nickNameTextField.text,
+        guard let name = nameTextField.text,
               let nickName = nickNameTextField.text,
               name.count >= 2, nickName.count >= 2 else {
                   alert(title: "알림", message: "잘못된 형식의 이름 혹은 닉네임입니다.")
             return
         }
         
+        UserDefaults.standard.set(name, forKey: "nameKey")
+        UserDefaults.standard.set(nickName, forKey: "nickNameKey")
+        
         
         CommonViewController.shared.transitionToHome()
         
     }
     
- 
+
     
     var token: NSObjectProtocol?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,12 +66,17 @@ class DetailRegisterViewController: UIViewController {
             emailTextField.text = verifiedEmail
         }
         
- 
+        
         token = NotificationCenter.default.addObserver(forName: .didTapProfilePics, object: nil, queue: .main, using: { [weak self] noti  in
             guard let strongSelf = self else { return }
-            guard let profileImageView = noti.userInfo?[ProfilePicturesViewController.picsKey] as? UIImageView else { return }
+            guard let profileImage = noti.userInfo?[ProfilePicturesViewController.picsKey] as? Int else { return }
             
-            strongSelf.profileImageView.image = profileImageView.image
+            guard let image = UIImage(named: "\(profileImage)") else { return }
+            
+            strongSelf.profileImageView.image = image
+            
+            StorageDataSource.shard.save(image: image)
+            
             
         })
         
@@ -83,8 +92,11 @@ class DetailRegisterViewController: UIViewController {
         nickNameTextField.delegate = self
         emailTextField.delegate = self
         passwordTextField.delegate = self
-    
         
+        nameTextField.text = "황신택"
+        nickNameTextField.text = "TaekToy"
+        passwordTextField.text = User.password
+        repeatPasswordTextField.text = User.password
         
         
     }
