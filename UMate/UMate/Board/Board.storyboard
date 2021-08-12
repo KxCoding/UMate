@@ -324,10 +324,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="1급준비해서 2급" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Du5-xw-oiD">
-
-
-                                                                            <rect key="frame" x="0.0" y="27" width="254" height="33"/>
-
+                                                                            <rect key="frame" x="0.0" y="27" width="254" height="44"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -604,10 +601,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7T4-7L-4gj">
-
-
                                 <rect key="frame" x="16" y="175" width="105" height="17"/>
-
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" systemColor="systemGray3Color"/>
                                 <nil key="highlightedColor"/>
@@ -1224,16 +1218,49 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="6" translatesAutoresizingMaskIntoConstraints="NO" id="9Sn-P8-KDs">
                                                     <rect key="frame" x="0.0" y="0.0" width="242" height="301"/>
                                                 </imageView>
+                                                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-79-Jap">
+                                                    <rect key="frame" x="0.0" y="0.0" width="242" height="301"/>
+                                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                </view>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fOL-ws-SEx">
+                                                    <rect key="frame" x="227" y="286.5" width="15" height="14"/>
+                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="15" id="RjV-fN-LxF"/>
+                                                        <constraint firstAttribute="height" constant="15" id="wjf-Wb-iur"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xK7-xs-QRQ">
+                                                    <rect key="frame" x="227" y="286.5" width="15" height="14"/>
+                                                    <color key="tintColor" systemColor="systemRedColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="15" id="1Qn-2H-u7c"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="15" id="LNH-1g-hSb"/>
+                                                        <constraint firstAttribute="width" constant="15" id="pxO-lt-GvK"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="sLv-50-uJc"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="H9d-79-Jap" firstAttribute="top" secondItem="qRy-af-ElZ" secondAttribute="top" id="582-48-Umt"/>
                                                 <constraint firstAttribute="bottom" secondItem="9Sn-P8-KDs" secondAttribute="bottom" id="5Mj-LG-7U8"/>
                                                 <constraint firstAttribute="trailing" secondItem="9Sn-P8-KDs" secondAttribute="trailing" id="7zU-Gq-xck"/>
                                                 <constraint firstItem="9Sn-P8-KDs" firstAttribute="top" secondItem="qRy-af-ElZ" secondAttribute="top" id="ENf-h8-4LV"/>
+                                                <constraint firstAttribute="bottom" secondItem="fOL-ws-SEx" secondAttribute="bottom" id="GiL-Wk-eWA"/>
+                                                <constraint firstAttribute="trailing" secondItem="xK7-xs-QRQ" secondAttribute="trailing" id="NVV-tp-YGY"/>
+                                                <constraint firstAttribute="bottom" secondItem="xK7-xs-QRQ" secondAttribute="bottom" id="TlS-nX-H4c"/>
+                                                <constraint firstItem="H9d-79-Jap" firstAttribute="leading" secondItem="qRy-af-ElZ" secondAttribute="leading" id="WDI-Az-UM7"/>
+                                                <constraint firstAttribute="trailing" secondItem="H9d-79-Jap" secondAttribute="trailing" id="cWe-89-cbF"/>
                                                 <constraint firstItem="9Sn-P8-KDs" firstAttribute="leading" secondItem="qRy-af-ElZ" secondAttribute="leading" id="gbS-RL-u4t"/>
+                                                <constraint firstAttribute="bottom" secondItem="H9d-79-Jap" secondAttribute="bottom" id="ozM-8E-hvq"/>
+                                                <constraint firstAttribute="trailing" secondItem="fOL-ws-SEx" secondAttribute="trailing" id="qBg-ie-OVh"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
                                             <outlet property="imageView" destination="9Sn-P8-KDs" id="tm0-TV-21W"/>
+                                            <outlet property="overlayView" destination="H9d-79-Jap" id="IWt-x1-ZMw"/>
+                                            <outlet property="selectedImageView" destination="xK7-xs-QRQ" id="D2x-sh-qPa"/>
+                                            <outlet property="unselectedImageView" destination="fOL-ws-SEx" id="nvY-xg-V3t"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -1264,12 +1291,17 @@ XETOWN 운영자로 오인될 수 있는 내용
                                     <action selector="editBtn:" destination="5sr-Hl-lgU" id="eoi-VG-31R"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Select" id="WF3-f5-xOh"/>
+                            <barButtonItem title="Select" id="WF3-f5-xOh">
+                                <connections>
+                                    <action selector="toggleSelectionMode:" destination="5sr-Hl-lgU" id="YuG-KB-jx0"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="editBtn" destination="1zv-s4-DuW" id="qV7-e0-TxZ"/>
                         <outlet property="imageCollectionView" destination="D0r-D2-Ure" id="Fhg-0L-uig"/>
+                        <outlet property="imageSelectBtn" destination="WF3-f5-xOh" id="lC1-vw-fbX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pt4-ab-Z4q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1332,11 +1364,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="1급준비해서 2급" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6jY-jR-enn">
-
-                                                                     
-
-                                                                            <rect key="frame" x="0.0" y="27" width="254" height="35"/>
-
+                                                                            <rect key="frame" x="0.0" y="27" width="254" height="56"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -2891,6 +2919,8 @@ XETOWN 운영자로 오인될 수 있는 내용
         <image name="8" width="149.5" height="149.5"/>
         <image name="bookmark64" width="32" height="32"/>
         <image name="camera" catalog="system" width="128" height="94"/>
+        <image name="checkmark.circle" catalog="system" width="128" height="121"/>
+        <image name="circle" catalog="system" width="128" height="121"/>
         <image name="comment" width="16" height="16"/>
         <image name="heart2" width="32" height="32"/>
         <image name="newspaper" catalog="system" width="128" height="108"/>
@@ -2923,6 +2953,9 @@ XETOWN 운영자로 오인될 수 있는 내용
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -89,8 +89,11 @@ class FreeBoardViewController: UIViewController {
         }
         tokens.append(token)
         
-        NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
+        newPostToken = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
             [weak self] noti in
+            if let newPost = noti.userInfo?["newPost"] as? Post {
+                self?.filteredPostList.insert(newPost, at: 0)
+            }
             self?.postListTableView.reloadData()
         }
     }
