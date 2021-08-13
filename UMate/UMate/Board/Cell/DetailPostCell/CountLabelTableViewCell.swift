@@ -19,7 +19,7 @@ class CountLabelTableViewCell: UITableViewCell {
       
     }
 
-    
+    /// 좋아요 수, 댓글 수, 스크랩 수 초기화
     func configure(post: Post) {
         likeCountLabel.text = post.likeCount.description
         commentCountLabel.text = post.commentCount.description

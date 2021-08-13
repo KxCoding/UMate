@@ -26,11 +26,11 @@ class DetailPostViewController: UIViewController {
     @IBOutlet weak var commentPlaceholderLabel: UILabel!
     @IBOutlet weak var commentContainerViewBottomConstraint: NSLayoutConstraint!
     
-    var imageObserver: NSObjectProtocol?
     var willShowToken: NSObjectProtocol?
     var willHideToken: NSObjectProtocol?
     var newCommentToken: NSObjectProtocol?
     var newReCommentToken: NSObjectProtocol?
+    var imageObserver: NSObjectProtocol?
     
     
     @IBAction func saveCommentBtn(_ sender: Any) {
@@ -86,8 +86,6 @@ class DetailPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        detailPostTableView.rowHeight = UITableView.automaticDimension
-        detailPostTableView.estimatedRowHeight = 180
         writeCommentContainerView.layer.cornerRadius = 14
         
         willShowToken = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main, using: { [weak self]  noti in
@@ -126,10 +124,18 @@ class DetailPostViewController: UIViewController {
             self?.detailPostTableView.reloadData()
             self?.commentTextView.text = nil
         }
+    }
+    
+    
+    /// view계층에 모든 view들이 추가된 이후 호출되는 메소드
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        
-       imageObserver = NotificationCenter.default.addObserver(forName: .showImageVC,
-                                                              object: nil, queue: .main) { _ in
+        /// 이미지를 클릭시에 ExpandImageViewController로 이동
+        imageObserver = NotificationCenter.default.addObserver(forName: .showImageVC,
+                                                               object: nil,
+                                                               queue: .main) {[weak self] _ in
+            guard let self = self else { return }
             self.performSegue(withIdentifier: "imageSegue", sender: nil)
         }
     }
@@ -156,6 +162,7 @@ class DetailPostViewController: UIViewController {
             NotificationCenter.default.removeObserver(toekn)
         }
     }
+    
     
     // TODO: 댓글 신고 기능 구현
     func performNoti(_ indexPath: IndexPath) {
@@ -199,28 +206,38 @@ extension DetailPostViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
+        /// Post Content
         case 0:
             return 1
+            
+        /// Post Image
         case 1:
             if let post = selectedPost, post.images.count == 0 {
                 return 0
             }
             return 1
+            
+        /// Post Count Lable
         case 2:
             return 1
+            
+        /// Post Comment
         case 3:
             return dummyCommentList.count
+            
+        /// Post ReComment
         case 4:
             return dummyReCommentList.count
+            
         default: return 0
-        } //댓글과 대댓글은 section 3,4
+        }
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
-        // 게시글 내용 표시하는 셀
+        /// 게시글 내용 표시하는 셀
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostContentTableViewCell", for: indexPath) as! PostContentTableViewCell
             guard let post = selectedPost else { return cell }
@@ -228,7 +245,7 @@ extension DetailPostViewController: UITableViewDataSource {
             cell.configure(post: post)
             return cell
             
-        // 이미지 표시하는 셀
+        /// 이미지 표시하는 셀
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostImageTableViewCell", for: indexPath) as! PostImageTableViewCell
             guard let post = selectedPost else { return cell }
@@ -236,7 +253,7 @@ extension DetailPostViewController: UITableViewDataSource {
             cell.configure(post: post)
             return cell
             
-        // 카운트 라벨 표시하는 셀
+        /// 카운트 라벨 표시하는 셀
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CountLabelTableViewCell", for: indexPath) as! CountLabelTableViewCell
             guard let post = selectedPost else { return cell }
@@ -244,7 +261,7 @@ extension DetailPostViewController: UITableViewDataSource {
             cell.configure(post: post)
             return cell
             
-        //댓글 표시하는 셀
+        /// 댓글 표시하는 셀
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
             
@@ -253,7 +270,7 @@ extension DetailPostViewController: UITableViewDataSource {
             
             return cell
             
-        // 대댓글 표시하는 셀
+        /// 대댓글 표시하는 셀
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReCommentTableViewCell", for: indexPath) as! ReCommentTableViewCell
             
@@ -270,6 +287,7 @@ extension DetailPostViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
         if indexPath.section >= 3  {
             let noti = UIContextualAction(style: .normal, title: "댓글 신고") { action, v, completion in
                 self.alertComment()
@@ -287,6 +305,7 @@ extension DetailPostViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
         if indexPath.section >= 3 {
             let removeComment = UIContextualAction(style: .destructive, title: "댓글 삭제") { [weak self] action, v, completion in
                 
@@ -315,6 +334,7 @@ extension DetailPostViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath,
                    point: CGPoint) -> UIContextMenuConfiguration? {
+        
         if indexPath.section >= 3 {
             return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
                 let notiAction =
