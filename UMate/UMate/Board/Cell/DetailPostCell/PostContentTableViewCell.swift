@@ -83,7 +83,10 @@ class PostContentTableViewCell: UITableViewCell {
     }
     
     
+    /// PostContent Cell 초기화하는 메소드
+    /// - Parameter post: 선택된 post
     func configure(post: Post) {
+        /// 좋아요 버튼
         if post.isliked {
             likeImageView.image = UIImage(named: "heart2.fill")
             likeImageView.tintColor = .black
@@ -92,6 +95,7 @@ class PostContentTableViewCell: UITableViewCell {
             likeImageView.tintColor = .darkGray
         }
         
+        /// 스크랩 버튼
         if post.isScrapped {
             scrapImageView.image = UIImage(named: "bookmark64.fill")
             scrapImageView.tintColor = .black

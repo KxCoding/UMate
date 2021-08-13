@@ -15,37 +15,37 @@ class FreeBoardViewController: UIViewController {
     @IBOutlet weak var postListTableView: UITableView!
     @IBOutlet weak var composeContainerView: UIView!
     
-    
+    /// 검색 버튼을 눌렀을 시에 SearchViewController로 이동
     @IBAction func showSearchViewController(_ sender: UIBarButtonItem) {
-    
         performSegue(withIdentifier: "searchSegue", sender: self)
     }
     
-    var filteredPostList: [Post] = []
     
+    /// tableView header에 넣을 UIView
     var tableViewHeaderView: UIView = {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 5))
         return headerView
     }()
-
+    
+    
+    var tokens = [NSObjectProtocol]()
+    var newPostToken: NSObjectProtocol?
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let cell = sender as? UITableViewCell,
            let indexPath = postListTableView.indexPath(for: cell) {
-            
+            /// 상세 게시글 화면에 선택된 post에 대한 정보 전달
             if let vc = segue.destination as? DetailPostViewController {
-                vc.selectedPost = filteredPostList[indexPath.row]
+                vc.selectedPost = selectedBoard?.posts[indexPath.row]
             }
-            
-        } else if segue.identifier == "searchSegue", let vc = segue.destination as? SearchViewController {
+        }
+        /// 검색 버튼 클릭시 선택된 board에 대한 정보 전달
+        else if segue.identifier == "searchSegue", let vc = segue.destination as? SearchViewController {
             vc.selectedBoard = selectedBoard
         }
     }
-    
-    
-    var tokens = [NSObjectProtocol]()
-    var newPostToken: NSObjectProtocol?
     
     
     override func viewDidLoad() {
@@ -54,12 +54,12 @@ class FreeBoardViewController: UIViewController {
         postListTableView.tableHeaderView = tableViewHeaderView
         composeContainerView.layer.cornerRadius = composeContainerView.frame.height / 2
         
+        /// 네비게이션 바 초기화
         let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 10, height: 10))
         navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
         navigationController?.navigationBar.shadowImage = navigationBarImage
         
-        filteredPostList = selectedBoard?.posts ?? []
-        
+        /// 상세 게시글 화면에서 스크랩 버튼 클릭시 스크랩 게시판에 게시글 추가
         var token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main) { noti in
             
             if let scrappedPost = noti.userInfo?["scrappedPost"] as? Post {
@@ -69,6 +69,7 @@ class FreeBoardViewController: UIViewController {
         tokens.append(token)
         
         
+        /// 상세 게시글 화면에서 스크랩 버튼 취소시 스크랩 게시판에 게시글 삭제
         token = NotificationCenter.default.addObserver(forName: .postCancelScrap, object: nil, queue: .main) {
             [weak self] noti in
             guard let self = self else { return }
@@ -79,20 +80,17 @@ class FreeBoardViewController: UIViewController {
                 if let unscrappedPostIndex = scrapBoard.posts.firstIndex(where: { $0 === unscrappedPost }) {
                     scrapBoard.posts.remove(at: unscrappedPostIndex)
                     
-                    if self.selectedBoard?.boardTitle == scrapBoard.boardTitle {
-                        self.filteredPostList = scrapBoard.posts
-                    }
-                    
                     self.postListTableView.reloadData()
                 }
             }
         }
         tokens.append(token)
         
+        
         newPostToken = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
             [weak self] noti in
             if let newPost = noti.userInfo?["newPost"] as? Post {
-                self?.filteredPostList.insert(newPost, at: 0)
+                self?.selectedBoard?.posts.insert(newPost, at: 0)
             }
             self?.postListTableView.reloadData()
         }
@@ -116,7 +114,7 @@ class FreeBoardViewController: UIViewController {
 extension FreeBoardViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredPostList.count
+        return selectedBoard?.posts.count ?? 0
     }
     
     
@@ -124,8 +122,9 @@ extension FreeBoardViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
         
-        let post = filteredPostList[indexPath.row]
+        guard let post = selectedBoard?.posts[indexPath.row] else { return cell }
         
+        /// 게시글 목록에 대한 cell 초기화
         cell.configure(post: post)
         return cell
     }
@@ -134,13 +133,3 @@ extension FreeBoardViewController: UITableViewDataSource {
 
 
 
-extension FreeBoardViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
-    }
-    
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView()
-    }
-}

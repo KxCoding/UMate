@@ -31,6 +31,7 @@ class FreeBoardTableViewCell: UITableViewCell {
         
         postImageView.isHidden = post.images.first == nil ? true : false
         
+        /// 포스트에 올린 이미지가 있을 경우 첫번 째 이미지만 게시글 목록에서 표시 
         if post.images.count > 0 {
             postImageView.image = post.images[0]
         }

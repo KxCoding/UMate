@@ -8,7 +8,7 @@
 import UIKit
 
 class ExpandPostImageCollectionViewCell: UICollectionViewCell {
-    
+    /// 상세 게시글 화면에서 이미지 클릭시에 보여줄 이미지 
     @IBOutlet weak var expandImageView: UIImageView!
     
 }
