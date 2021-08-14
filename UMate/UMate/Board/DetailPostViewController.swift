@@ -27,6 +27,8 @@ class DetailPostViewController: UIViewController {
     @IBOutlet weak var commentContainerViewBottomConstraint: NSLayoutConstraint!
     
     var tokens = [NSObjectProtocol]()
+   
+    var imageObserver: NSObjectProtocol?
     
     
     @IBAction func saveCommentBtn(_ sender: Any) {
@@ -135,18 +137,23 @@ class DetailPostViewController: UIViewController {
         super.viewDidAppear(animated)
         
         /// 이미지를 클릭시에 ExpandImageViewController로 이동
-        let token = NotificationCenter.default.addObserver(forName: .showImageVC,
-                                                               object: nil,
-                                                               queue: .main) {[weak self] _ in
-            guard let self = self else { return }
-            self.performSegue(withIdentifier: "imageSegue", sender: nil)
+        if imageObserver == nil {
+            imageObserver = NotificationCenter.default.addObserver(forName: .showImageVC,
+                                                                   object: nil,
+                                                                   queue: .main) {[weak self] _ in
+                guard let self = self else { return }
+                self.performSegue(withIdentifier: "imageSegue", sender: nil)
+            }
         }
-        tokens.append(token)
     }
     
     
     deinit {
         for token in tokens {
+            NotificationCenter.default.removeObserver(token)
+        }
+        
+        if let token = imageObserver {
             NotificationCenter.default.removeObserver(token)
         }
     }

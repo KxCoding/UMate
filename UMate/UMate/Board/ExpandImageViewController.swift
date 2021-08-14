@@ -7,6 +7,13 @@
 
 import UIKit
 
+extension Notification.Name {
+    static let twiceTapped = Notification.Name(rawValue: "twiceTapped")
+}
+
+
+
+
 class ExpandImageViewController: UIViewController {
     
     @IBOutlet weak var imageCountLabel: UILabel!
@@ -94,10 +101,41 @@ extension ExpandImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postImageCell", for: indexPath) as! ExpandPostImageCollectionViewCell
         
+        /// 이미지 확대 제스처
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+        cell.expandImageView.addGestureRecognizer(pinchGesture)
+        
+        /// 이미지 크기를 원래대로 되돌리는 제스처
+        let tpaGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        cell.imageContentView.addGestureRecognizer(tpaGesture)
+        
         guard let images = selectedPost?.images else { return cell }
         
         cell.expandImageView.image = images[indexPath.row]
         return cell
+    }
+    
+    
+    /// 이미지 뷰에 제스처가 인지될 때 호출되는 메소드
+    /// - Parameter gestureRecognizer: 제스처를 인식하는 객체
+    @objc func handlePinch(_ gestureRecognizer: UIPinchGestureRecognizer) {
+        guard gestureRecognizer.view != nil else { return }
+        
+        /// 제스처가 인지되고 있을 때 제스처가 등록된 view에서 scale만큼 변형이 생김
+        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+            guard let view = gestureRecognizer.view else { return }
+            
+            gestureRecognizer.view?.transform = view.transform.scaledBy(x: gestureRecognizer.scale,
+                                                                        y: gestureRecognizer.scale)
+            
+            gestureRecognizer.scale = 1
+        } 
+    }
+    
+    
+    /// collectionView의 contentView가 두 번 탭된 것을 알리는 메소드
+    @objc func doubleTapped() {
+        NotificationCenter.default.post(name: .twiceTapped, object: nil)
     }
 }
 
