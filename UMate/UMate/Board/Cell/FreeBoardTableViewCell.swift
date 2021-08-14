@@ -27,6 +27,8 @@ class FreeBoardTableViewCell: UITableViewCell {
     }
     
     
+    /// 게시글 목록 cell초기화하는 메소드
+    /// - Parameter post: 각 cell에 해당하는 게시글
     func configure(post: Post) {
         
         postImageView.isHidden = post.images.first == nil ? true : false

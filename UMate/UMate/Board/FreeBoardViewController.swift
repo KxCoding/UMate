@@ -29,7 +29,6 @@ class FreeBoardViewController: UIViewController {
     
     
     var tokens = [NSObjectProtocol]()
-    var newPostToken: NSObjectProtocol?
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -76,7 +75,7 @@ class FreeBoardViewController: UIViewController {
             
             if let unscrappedPost = noti.userInfo?["unscrappedPost"] as? Post {
                 
-                //삭제하고 리로드
+                /// 삭제하고 리로드
                 if let unscrappedPostIndex = scrapBoard.posts.firstIndex(where: { $0 === unscrappedPost }) {
                     scrapBoard.posts.remove(at: unscrappedPostIndex)
                     
@@ -87,22 +86,19 @@ class FreeBoardViewController: UIViewController {
         tokens.append(token)
         
         
-        newPostToken = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
+        token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
             [weak self] noti in
             if let newPost = noti.userInfo?["newPost"] as? Post {
                 self?.selectedBoard?.posts.insert(newPost, at: 0)
             }
             self?.postListTableView.reloadData()
         }
+        tokens.append(token)
     }
     
     
     deinit {
         for token in tokens {
-            NotificationCenter.default.removeObserver(token)
-        }
-        
-        if let token = newPostToken {
             NotificationCenter.default.removeObserver(token)
         }
     }

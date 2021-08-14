@@ -29,7 +29,7 @@ class CategoryBoardCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func configure(categories: [String], indexPath: IndexPath) {
-        categoryName.text = categories[indexPath.row]
+    func configure(categoryNames: [String], indexPath: IndexPath) {
+        categoryName.text = categoryNames[indexPath.row]
     }
 }

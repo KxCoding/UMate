@@ -20,16 +20,7 @@ class CategoryBoardViewController: UIViewController {
     @IBAction func showSearchViewController(_ sender: Any) {
         performSegue(withIdentifier: "searchSegue", sender: self)
     }
-    
-    
-    /// 글자수마다 달라질 카테고리cell의 너비에 대한 속성
-    var categoryWidth: CGFloat = .zero
-    
-    var tableViewHeaderView: UIView = {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 5))
-        return headerView
-    }()
-    
+
     
     var selectedBoard: Board?
     var filteredPostList: [Post] = []
@@ -57,7 +48,6 @@ class CategoryBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = selectedBoard?.boardTitle
-        categoryListTableView.tableHeaderView = tableViewHeaderView
         
         /// 네비게이션 바 초기화
         let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 10, height: 10))
@@ -85,7 +75,7 @@ class CategoryBoardViewController: UIViewController {
             
             if let unscrappedPost = noti.userInfo?["unscrappedPost"] as? Post {
                 
-                //삭제하고 리로드
+                /// 삭제하고 리로드
                 if let unscrappedPostIndex = scrapBoard.posts.firstIndex(where: { $0 === unscrappedPost }) {
                     scrapBoard.posts.remove(at: unscrappedPostIndex)
                     
@@ -117,7 +107,7 @@ class CategoryBoardViewController: UIViewController {
 extension CategoryBoardViewController: UICollectionViewDataSource {
     /// 각 게시판이 가진 카테고리 수 만큼 지정해줌
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectedBoard?.categories.count ?? 0
+        return selectedBoard?.categoryNumbers.count ?? 0
     }
     
     
@@ -126,10 +116,7 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryBoardCollectionViewCell",
                                                       for: indexPath) as! CategoryBoardCollectionViewCell
         
-        /// collectionView sizeForItemAt 메소드에서 지정된 cell의 width로 초기화
-        categoryWidth = cell.frame.width
-        
-        guard let cateigories = selectedBoard?.categories else { return cell }
+        guard let categoryNames = selectedBoard?.categoryNames else { return cell }
         
         if indexPath.row == 0 {
             /// 아무것도 선택되지 않았을 시에 row == 0 인 cell 선택된 것처럼 보이도록
@@ -142,7 +129,7 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
             }
         }
         
-        cell.configure(categories: cateigories, indexPath: indexPath)
+        cell.configure(categoryNames: categoryNames, indexPath: indexPath)
         return cell
     }
 }
@@ -166,7 +153,7 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
         
         filteredPostList.removeAll()
         
-        guard let posts = selectedBoard?.posts else { return }
+        guard let selectedBoard = selectedBoard else { return }
         
         /// 전체 카테고리 이외일 경우 true
         var isFiltering: Bool {
@@ -175,31 +162,25 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
         
         if isFiltering {
             /// 선택한 카테고리에 해당하는 게시물만 표시
-            filterPostByCategory(with: posts, indexPath: indexPath)
+            filterPostByCategory(in: selectedBoard, indexPath: indexPath)
         } else {
             /// 모든 게시물 표시
-            filteredPostList = posts
+            filteredPostList = selectedBoard.posts
         }
         
         categoryListTableView.reloadData()
     }
     
     
-    private func filterPostByCategory(with posts: [Post], indexPath: IndexPath) {
+    /// 게시글들을 카테고리별로 분류하여 배열에 저장하는 메소드
+    /// - Parameters:
+    ///   - selectedBoard: 선택된 게시판
+    ///   - indexPath: 선택된 카테고리의 indexPath
+    private func filterPostByCategory(in selectedBoard: Board, indexPath: IndexPath) {
         
-        if posts.first?.publicity != nil {
-            filteredPostList = posts.filter{ post in
-                return post.publicity?.rawValue == selectedBoard?.categories[indexPath.row]
-            }
-        } else if posts.first?.club != nil {
-            filteredPostList = posts.filter{ post in
-                return post.club?.rawValue == selectedBoard?.categories[indexPath.row]
-            }
-        } else if posts.first?.career != nil {
-            filteredPostList = posts.filter{ post in
-                return post.career?.rawValue == selectedBoard?.categories[indexPath.row]
-            }
-        }
+        filteredPostList = selectedBoard.posts.filter({ post in
+            return post.categoryRawValue == selectedBoard.categoryNumbers[indexPath.row]
+        })
     }
 }
 
@@ -211,7 +192,7 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
     /// cell의 size를 delegate에게 알려줌
     /// 이 메소드가 cellForRowAt보다 먼저 실행됨.
     /// - Parameters:
-    ///   - collectionView: flosw layout을 나타낼 collectionView
+    ///   - collectionView: flow layout을 나타낼 collectionView
     ///   - collectionViewLayout: 정보를 요청하는 layout 객체
     ///   - indexPath: item의 indexPath
     /// - Returns: 지정된 item의 size
@@ -224,13 +205,13 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
         }
         
         let width:CGFloat
-        guard let categoryCount = selectedBoard?.categories.count else { return .zero }
+        guard let categoryCount = selectedBoard?.categoryNumbers.count else { return .zero }
         
         /// cell의 inset을 제외한 너비
-        let withoutInsetWidth = (view.frame.width -
+        let withoutInsetWidth = view.frame.width -
                                     (flowLayout.minimumInteritemSpacing * CGFloat((categoryCount - 1))
                                         + flowLayout.sectionInset.left
-                                        + flowLayout.sectionInset.right))
+                                        + flowLayout.sectionInset.right)
         
         /// cell의 개수가 3일 경우
         if categoryCount == 3 {
