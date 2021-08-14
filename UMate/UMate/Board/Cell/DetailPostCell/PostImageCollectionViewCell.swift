@@ -34,7 +34,7 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         guard let selectedPost = selectedPost, let index = index else {
             return
         }
-        /// ExpandedImageViewController에서 collectionView에 이미지를 설정하도록 함. 
+        /// ExpandImageViewController에서 collectionView에 이미지를 설정하도록 함.
         NotificationCenter.default.post(name: .sendImageView, object: nil,
                                         userInfo: ["post": selectedPost, "index": index])
     }

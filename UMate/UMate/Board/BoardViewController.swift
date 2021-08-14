@@ -61,53 +61,19 @@ class BoardViewController: UIViewController {
         /// 정보게시판 더미데이터 전달
         if let vc = segue.destination as? FreeBoardViewController, segue.identifier == "infoSegue" {
             vc.selectedBoard = infoBoard
-        } 
+        }
         
+        /// 나머지 게시판 더미데이터 전달
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
+            let boardKey = (indexPath.section + 1) * 100 + (indexPath.row)
             
-            if let vc = segue.destination as? FreeBoardViewController {
-                
-                if indexPath.section == 0 {
-                    switch indexPath.row {
-                    /// 스크랩게시판 더미데이터 전달
-                    case 0:
-                        vc.selectedBoard = scrapBoard
-                        
-                    /// 자유게시판 더미데이터 전달
-                    case 1:
-                        vc.selectedBoard = freeBoard
-                        
-                    /// 인기게시판 더미데이터 전달
-                    case 2:
-                        vc.selectedBoard = popularPostBoard
-                        
-                    /// 졸업생게시판 더미데이터 전달
-                    case 3:
-                        vc.selectedBoard = graduateBoard
-                        
-                    /// 신입생게시판 더미데이터 전달
-                    case 4:
-                        vc.selectedBoard = freshmanBoard
-                        
-                    default: break
+            boardDict.forEach { element in
+                if element.key == boardKey {
+                    if let vc = segue.destination as? FreeBoardViewController {
+                        vc.selectedBoard = element.value
+                    } else if let vc = segue.destination as? CategoryBoardViewController {
+                        vc.selectedBoard = element.value
                     }
-                }
-            } else if let vc = segue.destination as? CategoryBoardViewController {
-                switch indexPath.section {
-                case 1:
-                    if indexPath.row == 0 {
-                        /// 홍보게시판 더미데이터 전달
-                        vc.selectedBoard = publicityBoard
-                    } else if indexPath.row == 1 {
-                        /// 동아리, 학회 더미데이터 전달
-                        vc.selectedBoard = clubBoard
-                    }
-                case 2:
-                    if indexPath.row == 1 {
-                        /// 취업, 진로 더미데이터 전달
-                        vc.selectedBoard = careerBoard
-                    }
-                default: break
                 }
             }
         }
@@ -307,7 +273,7 @@ extension BoardViewController: UITableViewDelegate {
         if expandableBoardList[section - 1].isExpanded {
             boardListTableView.insertRows(at: indexPathArr, with: .fade)
         }
-        /// isExpanded가 fasle라면 접힌 상태
+        /// isExpanded가 false라면 접힌 상태
         else {
             boardListTableView.deleteRows(at: indexPathArr, with: .fade)
         }

@@ -26,11 +26,7 @@ class DetailPostViewController: UIViewController {
     @IBOutlet weak var commentPlaceholderLabel: UILabel!
     @IBOutlet weak var commentContainerViewBottomConstraint: NSLayoutConstraint!
     
-    var willShowToken: NSObjectProtocol?
-    var willHideToken: NSObjectProtocol?
-    var newCommentToken: NSObjectProtocol?
-    var newReCommentToken: NSObjectProtocol?
-    var imageObserver: NSObjectProtocol?
+    var tokens = [NSObjectProtocol]()
     
     
     @IBAction func saveCommentBtn(_ sender: Any) {
@@ -88,7 +84,7 @@ class DetailPostViewController: UIViewController {
         
         writeCommentContainerView.layer.cornerRadius = 14
         
-        willShowToken = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main, using: { [weak self]  noti in
+        var token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main, using: { [weak self]  noti in
             guard let strongSelf = self else { return }
             
             if let frame = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
@@ -103,8 +99,10 @@ class DetailPostViewController: UIViewController {
                 strongSelf.detailPostTableView.scrollIndicatorInsets = inset
             }
         })
+        tokens.append(token)
         
-        willHideToken = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main, using: { [weak self] (noti) in
+        
+        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main, using: { [weak self] (noti) in
             guard let strongSelf = self else { return }
             
             strongSelf.commentContainerViewBottomConstraint.constant = 8
@@ -114,16 +112,21 @@ class DetailPostViewController: UIViewController {
             strongSelf.detailPostTableView.contentInset = inset
             strongSelf.detailPostTableView.scrollIndicatorInsets = inset
         })
+        tokens.append(token)
         
-        newCommentToken = NotificationCenter.default.addObserver(forName: .newCommentDidInsert, object: nil, queue: .main) { [weak self] (noti) in
+        
+        token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert, object: nil, queue: .main) { [weak self] (noti) in
             self?.detailPostTableView.reloadData()
             self?.commentTextView.text = nil
         }
+        tokens.append(token)
         
-        newReCommentToken = NotificationCenter.default.addObserver(forName: .newReCommentDidInsert, object: nil, queue: .main) { [weak self] (noti) in
+        
+        token = NotificationCenter.default.addObserver(forName: .newReCommentDidInsert, object: nil, queue: .main) { [weak self] (noti) in
             self?.detailPostTableView.reloadData()
             self?.commentTextView.text = nil
         }
+        tokens.append(token)
     }
     
     
@@ -132,34 +135,19 @@ class DetailPostViewController: UIViewController {
         super.viewDidAppear(animated)
         
         /// 이미지를 클릭시에 ExpandImageViewController로 이동
-        imageObserver = NotificationCenter.default.addObserver(forName: .showImageVC,
+        let token = NotificationCenter.default.addObserver(forName: .showImageVC,
                                                                object: nil,
                                                                queue: .main) {[weak self] _ in
             guard let self = self else { return }
             self.performSegue(withIdentifier: "imageSegue", sender: nil)
         }
+        tokens.append(token)
     }
     
     
     deinit {
-        if let token = willShowToken {
+        for token in tokens {
             NotificationCenter.default.removeObserver(token)
-        }
-        
-        if let token = willHideToken {
-            NotificationCenter.default.removeObserver(token)
-        }
-        
-        if let token = newCommentToken {
-            NotificationCenter.default.removeObserver(token)
-        }
-        
-        if let token = newReCommentToken {
-            NotificationCenter.default.removeObserver(token)
-        }
-        
-        if let toekn = imageObserver {
-            NotificationCenter.default.removeObserver(toekn)
         }
     }
     

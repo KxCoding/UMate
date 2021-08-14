@@ -15,14 +15,14 @@ class ExpandImageViewController: UIViewController {
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     
-    /// pageControl의 curreontPage에 따라서 collectionView의 scroll이동
+    /// pageControl의 currentPage에 따라서 collectionView의 scroll이동
     @IBAction func controlPage(_ sender: UIPageControl) {
         let indexPath = IndexPath(item: sender.currentPage, section: 0)
         imageCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
     
-    /// ExpandedImageView를 dissmiss하는 버튼 액션
+    /// ExpandImageView를 dismiss하는 버튼 액션
     @IBAction func closeImageVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -63,7 +63,7 @@ class ExpandImageViewController: UIViewController {
             /// 현재 화면에 나타나는 이미지의 순번
             self.imageCountLabel.text = "\(index + 1) / \(images.count)"
             
-            /// 이미지가 하나 일 경우에는 pageControl 숨김
+            /// 이미지가 하나일 경우에는 pageControl 숨김
             if images.count > 1 {
                 self.pager.currentPage = index
                 self.pager.numberOfPages = images.count
@@ -112,7 +112,7 @@ extension ExpandImageViewController: UICollectionViewDelegate {
     ///   - cell: 추가될 cell
     ///   - indexPath: 나타낼 cell에 대한 indexPath
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        /// 이미지를 클릭해서 ExpandedImageView가 나타났을 때 선택한 이미지를 화면에 표시
+        /// 이미지를 클릭해서 ExpandImageView가 나타났을 때 선택한 이미지를 화면에 표시
         if initiatedImage {
             initiatedImage = false /// 계속해서 처음에 클릭한 이미지만 표시되는 것을 방지
             collectionView.scrollToItem(at: IndexPath(item: imageIndex ?? 0, section: 0), at: .centeredHorizontally, animated: false)
