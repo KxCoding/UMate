@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7h3-5o-ULF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7h3-5o-ULF">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -68,38 +68,45 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HzR-Hu-4Jo">
                                                     <rect key="frame" x="20" y="11" width="374" height="58"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="eyt-C0-2lx">
-                                                            <rect key="frame" x="120" y="0.0" width="134.5" height="61"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="eyt-C0-2lx">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="58"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="qwer123@gmail.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNi-lu-KdR">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="134.5" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="16"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <color key="textColor" systemColor="systemGray2Color"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="21학번 서울대" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ybR-nc-zPq">
-                                                                    <rect key="frame" x="27.5" y="22" width="79" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="21" width="374" height="16"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <color key="textColor" systemColor="systemGray2Color"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="홍길동/ 애국자" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnf-3H-th8">
-                                                                    <rect key="frame" x="26.5" y="44" width="81" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="42" width="374" height="16"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <color key="textColor" systemColor="systemGray2Color"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="61" id="RBR-M0-aas"/>
-                                                                <constraint firstAttribute="width" constant="134.5" id="wgY-4a-1ul"/>
+                                                                <constraint firstItem="lNi-lu-KdR" firstAttribute="leading" secondItem="eyt-C0-2lx" secondAttribute="leading" id="DAx-c7-xbb"/>
+                                                                <constraint firstAttribute="trailing" secondItem="lNi-lu-KdR" secondAttribute="trailing" id="QlT-rJ-SVH"/>
+                                                                <constraint firstItem="ybR-nc-zPq" firstAttribute="leading" secondItem="eyt-C0-2lx" secondAttribute="leading" id="W4p-Zq-Uez"/>
+                                                                <constraint firstItem="cnf-3H-th8" firstAttribute="leading" secondItem="eyt-C0-2lx" secondAttribute="leading" id="XZR-dK-3c4"/>
+                                                                <constraint firstAttribute="trailing" secondItem="ybR-nc-zPq" secondAttribute="trailing" id="cyS-v5-aEF"/>
+                                                                <constraint firstAttribute="trailing" secondItem="cnf-3H-th8" secondAttribute="trailing" id="gex-tX-zdB"/>
                                                             </constraints>
                                                         </stackView>
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
-                                                        <constraint firstItem="eyt-C0-2lx" firstAttribute="centerX" secondItem="HzR-Hu-4Jo" secondAttribute="centerX" id="kBC-i9-yt5"/>
+                                                        <constraint firstItem="eyt-C0-2lx" firstAttribute="top" secondItem="HzR-Hu-4Jo" secondAttribute="top" id="Dz7-Bn-Jho"/>
+                                                        <constraint firstAttribute="bottom" secondItem="eyt-C0-2lx" secondAttribute="bottom" id="YTM-nY-jsA"/>
+                                                        <constraint firstItem="eyt-C0-2lx" firstAttribute="leading" secondItem="HzR-Hu-4Jo" secondAttribute="leading" id="eKn-14-H5J"/>
                                                         <constraint firstItem="eyt-C0-2lx" firstAttribute="top" secondItem="HzR-Hu-4Jo" secondAttribute="top" id="nEE-XB-nGH"/>
+                                                        <constraint firstAttribute="trailing" secondItem="eyt-C0-2lx" secondAttribute="trailing" id="yVU-f3-Be2"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -389,6 +396,9 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="53"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <state key="normal" title=""/>
+                                                                            <connections>
+                                                                                <action selector="changeProfileButton:" destination="7h3-5o-ULF" eventType="touchUpInside" id="ag0-Lt-56x"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>

@@ -39,6 +39,31 @@ class SettingTableViewController: UITableViewController {
         alert(message: "캐시를 삭제하시겠습니까?")
     }
     
+    var token: NSObjectProtocol?
+    
+    @IBAction func changeProfileButton(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Account", bundle: nil)
+        if let nav = storyboard.instantiateViewController(withIdentifier: "profileNav") as? UINavigationController {
+            
+            present(nav, animated: true, completion: nil)
+            
+            token = NotificationCenter.default.addObserver(forName: .didTapProfilePics, object: nil, queue: .main, using: { [weak self] noti in
+                guard let strongSelf = self else { return }
+                guard let profileImages = noti.userInfo?[ProfilePicturesViewController.picsKey] as? Int else { return }
+                guard let image = UIImage(named: "\(profileImages)") else { return }
+                
+                strongSelf.profileImageView.image = image
+                StorageDataSource.shard.save(image: image)
+                
+            })
+        }
+    }
+    
+    deinit {
+        if let token = token {
+            NotificationCenter.default.removeObserver(token)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
