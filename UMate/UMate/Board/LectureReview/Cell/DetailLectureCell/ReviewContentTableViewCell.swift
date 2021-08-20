@@ -17,11 +17,6 @@ class ReviewContentTableViewCell: UITableViewCell {
     
     @IBOutlet weak var reviewContentLabel: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-     
-    }
-    
     
     func configure(lecture: LectureInfo, indexPath: IndexPath) {
         reviewContentLabel.text = lecture.reviews[indexPath.row].reviewContent

@@ -18,24 +18,21 @@ class LectureReviewTableViewCell: UITableViewCell {
     
     @IBOutlet weak var reviewContentLabel: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-    }
     
-    
-    /// 최근 강의평이니까 무조건 첫번째
     func configure(lecture: LectureInfo) {
+        /// 최근 강의평이니까 무조건 첫번째
         guard let recentReview = lecture.reviews.first else { return }
         
         lectureTitleLabel.text = lecture.lectureTitle
         semesterLabel.text = "\(recentReview.semester) 수강자"
         reviewContentLabel.text = recentReview.reviewContent
         
+        /// 종합 리뷰
         let ratingSum = lecture.reviews.reduce(0) { partialResult, review in
             return partialResult + review.rating.rawValue
         }
        
-        ratingView.rating = Double(ratingSum / lecture.reviews.count)
+        let ratingAvg = Double(ratingSum) / Double(lecture.reviews.count)
+        ratingView.rating = ratingAvg.rounded()
     }
 }

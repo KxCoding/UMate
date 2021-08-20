@@ -24,6 +24,7 @@ class LectureReviewBoardViewController: UIViewController {
     var lectureList = [LectureInfo]()
 
     
+    ///  강의 리스트를 파싱하는 메소드
     func parseList() {
         guard let data = NSDataAsset(name: "lecture2019-1")?.data else {
             return
@@ -34,26 +35,20 @@ class LectureReviewBoardViewController: UIViewController {
         }
         
         let lines: [String] = str.components(separatedBy: "\n")
-        lines.forEach { line in
-            print(line)
-        }
-        
-        var index = 0
         
         for line in lines.dropFirst() {
             let values: [String] = line.components(separatedBy: ",")
         
             guard values.count == 7 else { continue }
             
-            let assortment = values[0].trimmingCharacters(in: .whitespaces)
-            let lectureNumber = values[1].trimmingCharacters(in: .whitespaces)
-            let credit = values[2].trimmingCharacters(in: .whitespaces)
-            let lectureTitle = values[3].trimmingCharacters(in: .whitespaces)
-            let professor = values[4].trimmingCharacters(in: .whitespaces)
-            let lectureTime = values[5].trimmingCharacters(in: .whitespaces)
-            let lectureRoom = values[6].replacingOccurrences(of: "\r", with: "")
-            
-            index += 1
+            let assortment = values[0].trimmingCharacters(in: .whitespaces) /// 종별
+            let lectureNumber = values[1].trimmingCharacters(in: .whitespaces) /// 학정번호
+            let credit = values[2].trimmingCharacters(in: .whitespaces) /// 학점
+            let lectureTitle = values[3].trimmingCharacters(in: .whitespaces) /// 교과목명
+            let professor = values[4].trimmingCharacters(in: .whitespaces) /// 담당교수
+            let lectureTime = values[5].trimmingCharacters(in: .whitespaces) /// 강의시간
+            let lectureRoom = values[6].replacingOccurrences(of: "\r", with: "") /// 강의실
+          
             let lectureInfo = LectureInfo(assortment: assortment,
                                           lectureNumber: lectureNumber,
                                           credit: credit,
@@ -165,7 +160,7 @@ extension LectureReviewBoardViewController: UITableViewDataSource {
 extension LectureReviewBoardViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+        return 70
     }
 
     

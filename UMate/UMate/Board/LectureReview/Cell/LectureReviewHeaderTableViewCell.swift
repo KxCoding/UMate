@@ -10,5 +10,4 @@ import UIKit
 class LectureReviewHeaderTableViewCell: UITableViewCell {
 
     @IBOutlet weak var sectionNameLabel: UILabel!
-
 }

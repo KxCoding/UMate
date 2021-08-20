@@ -10,16 +10,10 @@ import UIKit
 class LectureSummaryTableViewCell: UITableViewCell {
 
     @IBOutlet weak var professorNameLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-   
-    }
 
     
     func configure(lecture: LectureInfo){
    
         professorNameLabel.text = lecture.professor.replacingOccurrences(of: "-", with: ",")
     }
-
 }

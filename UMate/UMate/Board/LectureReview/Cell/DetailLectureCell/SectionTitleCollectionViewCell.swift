@@ -13,7 +13,7 @@ class SectionTitleCollectionViewCell: UICollectionViewCell {
     
     
     override var isSelected: Bool {
-        /// 카테고리 선택시에 언더바 색상 변경
+        /// 카테고리 선택시에 타이틀 색상 변경
         didSet {
             if isSelected {
                 UIView.animate(withDuration: 0.3) {

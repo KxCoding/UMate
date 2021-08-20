@@ -97,14 +97,6 @@ struct LectureReview {
 }
 
 
-extension LectureReview.Assignment: CaseIterable { }
-extension LectureReview.GroupMeeting: CaseIterable { }
-extension LectureReview.Evaluation: CaseIterable { }
-extension LectureReview.Attendance: CaseIterable { }
-extension LectureReview.TestNumber: CaseIterable { }
-extension LectureReview.Rating: CaseIterable { }
-
-
 extension LectureReview.Assignment: CustomStringConvertible {
     var description: String {
         switch self {
