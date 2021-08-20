@@ -51,6 +51,11 @@ class BoardViewController: UIViewController {
     }
     
     
+    @IBAction func unwindToBoard(_ unwindSegue: UIStoryboardSegue) {
+        let sourceViewController = unwindSegue.source
+    }
+    
+    
     /// 곧 실행될 view controller에 대해 알리는 메소드.
     /// 새로운 view controller가 실행되기 전에 설정할 수 있다
     /// - Parameters:
