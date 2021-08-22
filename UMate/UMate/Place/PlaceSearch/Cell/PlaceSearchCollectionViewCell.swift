@@ -8,6 +8,7 @@
 import UIKit
 
 class PlaceSearchCollectionViewCell: UICollectionViewCell {
+    /// 검색한 화면 UI와 관련된 변수들
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var placeTitle: UILabel!
     @IBOutlet weak var regionNameLabel: UILabel!

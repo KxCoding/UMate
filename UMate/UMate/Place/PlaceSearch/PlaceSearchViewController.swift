@@ -9,50 +9,69 @@ import UIKit
 
 class PlaceSearchViewController: UIViewController {
     @IBOutlet weak var searchCollectionView: UICollectionView!
-    @IBOutlet weak var dimView: UIView!
+    /// 화면에 표시할 데이터를 담을 변수
     var list = [SearchPlaceItem]()
+    var filterList = [SearchPlaceItem.PlaceType]()
     var token: NSObjectProtocol?
+    
+    /// window에 추가할 DimView
+    lazy var dimView: UIView = {
+        let v = UIView()
+        v.frame = self.view.bounds
+        v.backgroundColor = .black
+        v.alpha = 0.4
+        
+        return v
+    }()
     
     let dummyData: [SearchPlaceItem] = [
         SearchPlaceItem(image: UIImage(named: "search_00"),
                         placeTitle: "카페 지미스",
                         regionName: "고양",
-                        classificationName: "카페"),
+                        classificationName: "카페",
+                        placeType: .cafe),
         
         SearchPlaceItem(image: UIImage(named: "search_01"),
                         placeTitle: "카페 브리타니",
                         regionName: "부산",
-                        classificationName: "카페"),
+                        classificationName: "카페",
+                        placeType: .cafe),
         
         SearchPlaceItem(image: UIImage(named: "search_00"),
                         placeTitle: "가온",
                         regionName: "청담",
-                        classificationName: "카페"),
+                        classificationName: "카페",
+                        placeType: .cafe),
         
         SearchPlaceItem(image: UIImage(named: "search_01"),
                         placeTitle: "인생밥집",
                         regionName: "제주시 서부",
-                        classificationName: "음식점"),
+                        classificationName: "음식점",
+                        placeType: .restaurant),
         
         SearchPlaceItem(image: UIImage(named: "search_02"),
                         placeTitle: "인디안썸머",
                         regionName: "제주시 서부",
-                        classificationName: "와인바"),
+                        classificationName: "와인바",
+                        placeType: .pub),
         
         SearchPlaceItem(image: UIImage(named: "search_03"),
                         placeTitle: "인스밀",
                         regionName: "서귀포시 서부",
-                        classificationName: "카페"),
+                        classificationName: "카페",
+                        placeType: .cafe),
         
         SearchPlaceItem(image: UIImage(named: "search_04"),
                         placeTitle: "인셉트",
                         regionName: "대전",
-                        classificationName: "카페"),
+                        classificationName: "카페",
+                        placeType: .cafe),
         
         SearchPlaceItem(image: UIImage(named: "search_05"),
                         placeTitle: "인센스홀",
                         regionName: "대전",
-                        classificationName: "카페")
+                        classificationName: "카페",
+                        placeType: .cafe)
     ]
     
     
@@ -61,18 +80,76 @@ class PlaceSearchViewController: UIViewController {
         super.viewDidLoad()
         /// 네비게이션바에 백버튼 타이틀 지우고 SearchBar를 추가
         self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
+        addSearchBar()
+        
+        token = NotificationCenter.default.addObserver(forName: .filterWillCancelled, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            
+            /// DimView 제거
+            UIView.animate(withDuration: 0.3) {
+                self.removeViewFromWindow()
+            }
+        }
+        
+        NotificationCenter.default.addObserver(forName: .filterWillApplied, object: nil, queue: .main) {[weak self] noti in
+            guard let self = self else { return }
+            
+            /// DimView 제거
+            UIView.animate(withDuration: 0.3) {
+                self.removeViewFromWindow()
+            }
+            
+            /// 필터 화면에서 보낸 필터링할 열거형 타입 배열을 가져옵니다.
+            if let filterList = noti.userInfo?["filterItem"] as? [SearchPlaceItem.PlaceType] {
+                self.filterList = filterList
+                
+                if !self.filterList.isEmpty {
+                    var data = [SearchPlaceItem]()
+                    
+                    /// 더미데이터에 속한 각 데이터의 placeType과 filterList의 placeType이 같다면 data배열에 추가합니다.
+                    for filterItem in self.filterList {
+                        for item in self.dummyData {
+                            if item.placeType == filterItem {
+                                data.append(item)
+                            }
+                        }
+                    }
+                    
+                    var containData = [SearchPlaceItem]()
+                    /// 현재 화면에 표시하고 있는 list에서 필터링합니다.
+                    for currentItem in self.list {
+                        for filterItem in data {
+                            if currentItem.placeTitle == filterItem.placeTitle {
+                                containData.append(filterItem)
+                            }
+                        }
+                    }
+                    
+                    self.list = containData
+                    self.searchCollectionView.reloadData()
+                }
+            }
+        }
+    }
+    
+    
+    /// 네비게이션아이템에 searchBar를 추가합니다.
+    func addSearchBar() {
         let searchBar = UISearchBar()
         searchBar.placeholder = "검색어를 입력해주세요."
         self.navigationItem.titleView = searchBar
         searchBar.becomeFirstResponder()
         searchBar.delegate = self
+    }
+    
+    
+    /// window에 추가된 DimView를 제거합니다.
+    func removeViewFromWindow() {
+        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
         
-        token = NotificationCenter.default.addObserver(forName: .filterWillCancelled, object: nil, queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            
-            UIView.animate(withDuration: 0.3) {
-                self.dimView.alpha = 0.0
-            }
+        for view in window.subviews as [UIView] where view == dimView {
+            view.removeFromSuperview()
+            break
         }
     }
     
@@ -82,7 +159,13 @@ class PlaceSearchViewController: UIViewController {
     ///   - segue: segue에 관련된 viewController 정보를 가지고 있는 seuge
     ///   - sender: 버튼
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        dimView.alpha = 0.4
+        /// window에 dimming View를 추가
+        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
+        window.addSubview(self.dimView)
+        
+        if let vc = segue.destination as? FilterViewController {
+            vc.filterList = filterList
+        }
     }
     
     

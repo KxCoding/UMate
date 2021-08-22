@@ -450,6 +450,9 @@
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x9K-z6-idz">
                                                                             <rect key="frame" x="0.0" y="0.0" width="108" height="135"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <connections>
+                                                                                <action selector="restauranteButtonTapped:" destination="hbh-yC-1jf" eventType="touchUpInside" id="FlD-PI-XhI"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -501,6 +504,9 @@
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PaJ-M4-MNJ">
                                                                             <rect key="frame" x="0.0" y="0.0" width="108" height="135"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <connections>
+                                                                                <action selector="bakeryButtonTapped:" destination="hbh-yC-1jf" eventType="touchUpInside" id="9av-2x-3Te"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -557,6 +563,9 @@
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5A-hj-6K0">
                                                                             <rect key="frame" x="0.0" y="0.0" width="108" height="135"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <connections>
+                                                                                <action selector="studyCafeButtonTapped:" destination="hbh-yC-1jf" eventType="touchUpInside" id="GfF-XX-ka6"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -608,6 +617,9 @@
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePe-S8-eTa">
                                                                             <rect key="frame" x="0.0" y="0.0" width="108" height="135"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <connections>
+                                                                                <action selector="pubButtonTapped:" destination="hbh-yC-1jf" eventType="touchUpInside" id="WCC-qN-SPP"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -659,6 +671,9 @@
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oB0-3T-DXK">
                                                                             <rect key="frame" x="0.0" y="0.0" width="108" height="135"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <connections>
+                                                                                <action selector="desertButtonTapped:" destination="hbh-yC-1jf" eventType="touchUpInside" id="YeQ-cD-evm"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -700,13 +715,23 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <connections>
+                                            <outlet property="bakeryImageView" destination="cPe-Ax-FZK" id="Kbx-Jc-pji"/>
+                                            <outlet property="bakeryLabel" destination="nve-z0-CGM" id="sRm-sV-4vN"/>
                                             <outlet property="bakeryView" destination="i5f-gu-C7x" id="xG1-MG-Tbk"/>
                                             <outlet property="cafeImageView" destination="Qrd-zq-Yx5" id="hgF-kU-LRf"/>
                                             <outlet property="cafeLabel" destination="1bV-02-ExH" id="spP-Ja-R7J"/>
                                             <outlet property="cafeView" destination="UAf-JW-fL6" id="gsn-JA-9vg"/>
+                                            <outlet property="desertImageView" destination="Q5L-ml-Y1Y" id="V2N-ZT-Wd7"/>
+                                            <outlet property="desertLabel" destination="czf-Jq-TG9" id="Xmb-1m-fub"/>
                                             <outlet property="desertView" destination="iy4-Yy-yBG" id="gHe-82-6bF"/>
+                                            <outlet property="pubImageView" destination="Z64-5p-G3U" id="TYc-c2-kur"/>
+                                            <outlet property="pubLabel" destination="inC-9G-mwk" id="WXy-T3-OuE"/>
                                             <outlet property="pubView" destination="wXV-rl-Sg8" id="0ia-p3-6DG"/>
+                                            <outlet property="restaurantImageView" destination="0iV-py-40Y" id="RG9-O4-v6U"/>
+                                            <outlet property="restaurantLabel" destination="Eh0-cK-c1Z" id="M5Y-Ed-hlN"/>
                                             <outlet property="restaurantView" destination="cgI-ui-vaX" id="Oag-Ph-UXq"/>
+                                            <outlet property="studyCafeImageView" destination="s9w-qt-tMP" id="foT-3b-XiD"/>
+                                            <outlet property="studyCafeLabel" destination="CBb-uF-fXd" id="FLr-z5-jRj"/>
                                             <outlet property="studyCafeView" destination="Tye-Mz-O2S" id="4AB-hj-9is"/>
                                         </connections>
                                     </tableViewCell>

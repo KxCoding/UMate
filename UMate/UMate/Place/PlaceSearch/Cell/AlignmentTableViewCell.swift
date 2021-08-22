@@ -8,6 +8,7 @@
 import UIKit
 
 class AlignmentTableViewCell: UITableViewCell {
+    /// 정렬 관련 변수들
     @IBOutlet weak var ratingButton: RoundedButton!
     @IBOutlet weak var recommendationButton: RoundedButton!
     @IBOutlet weak var reviewButton: RoundedButton!
