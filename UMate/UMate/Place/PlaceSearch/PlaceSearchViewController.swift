@@ -267,6 +267,9 @@ extension PlaceSearchViewController: UISearchBarDelegate {
         /// 버튼을 누르면 list 배열을 초기화
         list = []
         
+        /// 버튼을 누르면 필터 리스트 초기화
+        filterList = []
+        
         guard let text = searchBar.text else { return }
         
         /// 검색한 텍스트로 필터링

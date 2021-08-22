@@ -19,8 +19,13 @@ class StoreTypeTableViewCell: UITableViewCell {
         [cafeView, restaurantView, bakeryView, studyCafeView, pubView, desertView].forEach { view in
             view?.backgroundColor = .white
             view?.configureStyle(with: [.squircleBig])
-            view?.layer.borderWidth = 2
-            view?.layer.borderColor = UIColor.black.cgColor
+            view?.layer.borderWidth = 1
+            view?.layer.borderColor = UIColor.darkGray.cgColor
+        }
+        
+        /// 각 이미지뷰의 색상을 darkGray로 설정
+        [cafeImageView, restaurantImageView, bakeryImageView, studyCafeImageView, pubImageView, desertImageView].forEach {
+            $0?.tintColor = .darkGray
         }
         
         /// 각 레이블의 색상을 darkGray로 설정
@@ -28,6 +33,7 @@ class StoreTypeTableViewCell: UITableViewCell {
             $0?.textColor = .darkGray
         }
     }
+    
     
     // MARK: 카페 관련 그룹
     @IBOutlet weak var cafeView: UIView!
@@ -38,9 +44,9 @@ class StoreTypeTableViewCell: UITableViewCell {
     /// 버튼을 누르면 뷰의 외곽선, 레이블, 이미지뷰의 색상이 변경되고 storeTypeFilterArray 배열에 cafe 타입을 추가합니다.
     /// - Parameter sender: 카페 버튼
     @IBAction func caffeButtonTapped(_ sender: Any) {
-        cafeView.layer.borderColor = cafeView.layer.borderColor == UIColor.black.cgColor ? UIColor.red.cgColor : UIColor.black.cgColor
+        cafeView.layer.borderColor = cafeView.layer.borderColor == UIColor.darkGray.cgColor ? UIColor.red.cgColor : UIColor.darkGray.cgColor
         cafeLabel.textColor = cafeLabel.textColor == .darkGray ? .red : .darkGray
-        cafeImageView.tintColor = cafeImageView.tintColor == .black ? .red : .black
+        cafeImageView.tintColor = cafeImageView.tintColor == .darkGray ? .red : .darkGray
         
         let target = SearchPlaceItem.PlaceType.cafe
         if cafeView.layer.borderColor == UIColor.red.cgColor {
@@ -67,9 +73,9 @@ class StoreTypeTableViewCell: UITableViewCell {
     /// 버튼을 누르면 뷰의 외곽선, 레이블, 이미지뷰의 색상이 변경되고 storeTypeFilterArray 배열에 restaurant 타입을 추가합니다.
     /// - Parameter sender: 식당 버튼
     @IBAction func restauranteButtonTapped(_ sender: Any) {
-        restaurantView.layer.borderColor = restaurantView.layer.borderColor == UIColor.black.cgColor ? UIColor.red.cgColor : UIColor.black.cgColor
+        restaurantView.layer.borderColor = restaurantView.layer.borderColor == UIColor.darkGray.cgColor ? UIColor.red.cgColor : UIColor.darkGray.cgColor
         restaurantLabel.textColor = restaurantLabel.textColor == .darkGray ? .red : .darkGray
-        restaurantImageView.tintColor = restaurantImageView.tintColor == .black ? .red : .black
+        restaurantImageView.tintColor = restaurantImageView.tintColor == .darkGray ? .red : .darkGray
         
         let target = SearchPlaceItem.PlaceType.restaurant
         if restaurantView.layer.borderColor == UIColor.red.cgColor {
@@ -93,9 +99,9 @@ class StoreTypeTableViewCell: UITableViewCell {
     /// 버튼을 누르면 뷰의 외곽선, 레이블, 이미지뷰의 색상이 변경되고 storeTypeFilterArray 배열에 bakery 타입을 추가합니다.
     /// - Parameter sender: 빵집 버튼
     @IBAction func bakeryButtonTapped(_ sender: Any) {
-        bakeryView.layer.borderColor = bakeryView.layer.borderColor == UIColor.black.cgColor ? UIColor.red.cgColor : UIColor.black.cgColor
+        bakeryView.layer.borderColor = bakeryView.layer.borderColor == UIColor.darkGray.cgColor ? UIColor.red.cgColor : UIColor.darkGray.cgColor
         bakeryLabel.textColor = bakeryLabel.textColor == .darkGray ? .red : .darkGray
-        bakeryImageView.tintColor = bakeryImageView.tintColor == .black ? .red : .black
+        bakeryImageView.tintColor = bakeryImageView.tintColor == .darkGray ? .red : .darkGray
         
         let target = SearchPlaceItem.PlaceType.bakery
         if bakeryView.layer.borderColor == UIColor.red.cgColor {
@@ -119,9 +125,9 @@ class StoreTypeTableViewCell: UITableViewCell {
     /// 버튼을 누르면 뷰의 외곽선, 레이블, 이미지뷰의 색상이 변경되고 storeTypeFilterArray 배열에 studyCafe 타입을 추가합니다.
     /// - Parameter sender: 스터디카페 버튼
     @IBAction func studyCafeButtonTapped(_ sender: Any) {
-        studyCafeView.layer.borderColor = studyCafeView.layer.borderColor == UIColor.black.cgColor ? UIColor.red.cgColor : UIColor.black.cgColor
+        studyCafeView.layer.borderColor = studyCafeView.layer.borderColor == UIColor.darkGray.cgColor ? UIColor.red.cgColor : UIColor.darkGray.cgColor
         studyCafeLabel.textColor = studyCafeLabel.textColor == .darkGray ? .red : .darkGray
-        studyCafeImageView.tintColor = studyCafeImageView.tintColor == .black ? .red : .black
+        studyCafeImageView.tintColor = studyCafeImageView.tintColor == .darkGray ? .red : .darkGray
         
         let target = SearchPlaceItem.PlaceType.studyCafe
         if studyCafeView.layer.borderColor == UIColor.red.cgColor {
@@ -145,9 +151,9 @@ class StoreTypeTableViewCell: UITableViewCell {
     /// 버튼을 누르면 뷰의 외곽선, 레이블, 이미지뷰의 색상이 변경되고 storeTypeFilterArray 배열에 pub 타입을 추가합니다.
     /// - Parameter sender: 주점 버튼
     @IBAction func pubButtonTapped(_ sender: Any) {
-        pubView.layer.borderColor = pubView.layer.borderColor == UIColor.black.cgColor ? UIColor.red.cgColor : UIColor.black.cgColor
+        pubView.layer.borderColor = pubView.layer.borderColor == UIColor.darkGray.cgColor ? UIColor.red.cgColor : UIColor.darkGray.cgColor
         pubLabel.textColor = pubLabel.textColor == .darkGray ? .red : .darkGray
-        pubImageView.tintColor = pubImageView.tintColor == .black ? .red : .black
+        pubImageView.tintColor = pubImageView.tintColor == .darkGray ? .red : .darkGray
         
         let target = SearchPlaceItem.PlaceType.pub
         if pubView.layer.borderColor == UIColor.red.cgColor {
@@ -171,9 +177,9 @@ class StoreTypeTableViewCell: UITableViewCell {
     /// 버튼을 누르면 뷰의 외곽선, 레이블, 이미지뷰의 색상이 변경되고 storeTypeFilterArray 배열에 desert 타입을 추가합니다.
     /// - Parameter sender: 디저트 가게 버튼
     @IBAction func desertButtonTapped(_ sender: Any) {
-        desertView.layer.borderColor = desertView.layer.borderColor == UIColor.black.cgColor ? UIColor.red.cgColor : UIColor.black.cgColor
+        desertView.layer.borderColor = desertView.layer.borderColor == UIColor.darkGray.cgColor ? UIColor.red.cgColor : UIColor.darkGray.cgColor
         desertLabel.textColor = desertLabel.textColor == .darkGray ? .red : .darkGray
-        desertImageView.tintColor = desertImageView.tintColor == .black ? .red : .black
+        desertImageView.tintColor = desertImageView.tintColor == .darkGray ? .red : .darkGray
         
         let target = SearchPlaceItem.PlaceType.desert
         if desertView.layer.borderColor == UIColor.red.cgColor {
