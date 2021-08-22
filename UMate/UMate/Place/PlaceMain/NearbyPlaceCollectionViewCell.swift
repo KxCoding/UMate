@@ -34,17 +34,13 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
             keywordContainer2.isHidden = true
         }
         
-        if let image = target.images.first {
-            placeImageView.image = image
-        } else {
-            placeImageView.image = UIImage(named: "dummy-image-landscape")
-        }
+        placeImageView.image = target.images.first ?? UIImage(named: "dummy-image-landscape")
         
     }
     
     /// 셀 내부 UI 초기화
     override func awakeFromNib() {
-        self.configureStyle(with: [.squircleBig, .lightShadow])
+        self.configureStyle(with: [.squircleBig, .lightBorder, .lightShadow])
         keywordContainer1.configureStyle(with: [.squircleSmall])
         keywordContainer2.configureStyle(with: [.squircleSmall])
     }

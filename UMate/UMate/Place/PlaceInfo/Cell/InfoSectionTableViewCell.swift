@@ -46,10 +46,12 @@ class InfoSectionTableViewCell: UITableViewCell {
         keywordLabel.text = target.keywords.first
         placeTypeLabel.text = target.type.rawValue
         
+        /// 인스타그램 아이디가 없으면 버튼을 표시하지 않음
         if target.instagramID == nil {
             openInstagramButton.isHidden = true
         }
         
+        /// 웹페이지가 없으면 버튼을 표시하지 않음
         if target.url == nil {
             openSafariButton.isHidden = true
         }
@@ -82,6 +84,14 @@ class InfoSectionTableViewCell: UITableViewCell {
         viewController?.openUrl(with: url)
     }
     
+    
+    /// 버튼을 누르면 해당 가게가 북마크됨 (사용자 북마크)
+    /// - Parameter sender: 버튼
+    @IBAction func bookmarked(_ sender: UIButton) {
+        
+        
+        
+    }
 }
 
 

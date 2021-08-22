@@ -7,10 +7,12 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
 // 가게
 struct Place {
     
+    /// 가게 종류 = 열거형으로 제한
     enum PlaceType: String {
         case cafe = "카페"
         case restaurant = "식당"
@@ -20,16 +22,25 @@ struct Place {
         case desert = "디저트 가게"
     }
     
+    /// 가게의 ID
     var id = UUID()
     
+    /// 가게 이름
     var name: String
     
+    /// 인근 대학
     var university: String
+    
+    /// 가게가 있는 지역
     var district: String
     
-    var coordinate: CLLocationCoordinate2D?
+    /// 가게 좌표
+    var coordinate: CLLocationCoordinate2D
     
+    /// 가게의 종류
     var type: PlaceType
+    
+    /// 종류를 나타내는 아이콘
     var typeIconImage: UIImage? {
         switch type {
         case .cafe:
@@ -47,13 +58,35 @@ struct Place {
         }
     }
     
+    /// 가게를 나타내는 키워드 (각 키워드는 공백 포함 8자 이내)
     var keywords: [String]
     
+    /// 가게 사진
     var images = [UIImage]()
     
+    /// 인스타그램 아이디(optional), 관련 url(optional)
     var instagramID: String?
     var url: String?
     
+    /// annotation
+    var annotation: MKAnnotation {
+        switch type {
+        case .cafe:
+            return CafeAnnotation(coordinate: coordinate, title: name)
+        case .restaurant:
+            return RestaurantAnnotation(coordinate: coordinate, title: name)
+        case .bakery:
+            return BakeryAnnotation(coordinate: coordinate, title: name)
+        case .studyCafe:
+            return StudyCafeAnnotation(coordinate: coordinate, title: name)
+        case .pub:
+            return PubAnnotation(coordinate: coordinate, title: name)
+        case .desert:
+            return DesertAnnotation(coordinate: coordinate, title: name)
+        }
+    }
+    
+    /// 더미 데이터 (type property)
     static let dummyData: [Place] = [
         Place(name: "데일리루틴",
               university: "숙명여대",
@@ -94,7 +127,15 @@ struct Place {
               type: .restaurant,
               keywords: ["치킨", "맛집", "회식", "뒷풀이"],
               instagramID: nil,
-              url: "http://naver.me/5y4qBz2M")
+              url: "http://naver.me/5y4qBz2M"),
+        Place(name: "본솔 카페",
+              university: "숙명여대",
+              district: "청파동 언덕길",
+              coordinate: CLLocationCoordinate2D(latitude: 37.544997, longitude: 126.966482),
+              type: .cafe,
+              keywords: ["테이크아웃", "아라 맛집", "청귤 에이드"],
+              instagramID: nil,
+              url: nil)
     ]
 }
 
