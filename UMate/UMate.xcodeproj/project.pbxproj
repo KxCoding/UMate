@@ -90,6 +90,12 @@
 		DFEF018826A756D90015829B /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018726A756D90015829B /* Board.swift */; };
 		DFEF018A26A7571A0015829B /* FreeBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018926A7571A0015829B /* FreeBoardTableViewCell.swift */; };
 		F44389D826D2D33500B9A193 /* PlaceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44389D726D2D33500B9A193 /* PlaceAnnotation.swift */; };
+		F44389DB26D2DFC300B9A193 /* UIViewController+OpenUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44389DA26D2DFC300B9A193 /* UIViewController+OpenUrl.swift */; };
+		F44389DE26D2E61400B9A193 /* PlaceSetting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F44389DD26D2E61400B9A193 /* PlaceSetting.storyboard */; };
+		F44389E226D2ED2A00B9A193 /* SetMapStyleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44389E126D2ED2A00B9A193 /* SetMapStyleViewController.swift */; };
+		F44389E526D2ED6F00B9A193 /* SetMapStyle.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F44389E426D2ED6F00B9A193 /* SetMapStyle.storyboard */; };
+		F44389E826D2EF1A00B9A193 /* SetBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F44389E726D2EF1A00B9A193 /* SetBrowser.storyboard */; };
+		F44389EA26D2F52400B9A193 /* SetBrowserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44389E926D2F52400B9A193 /* SetBrowserTableViewController.swift */; };
 		F4666A3126BAEF7800A7AFA5 /* PlaceMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4666A3026BAEF7800A7AFA5 /* PlaceMainViewController.swift */; };
 		F4666A3326BAEF9600A7AFA5 /* PlaceMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4666A3226BAEF9600A7AFA5 /* PlaceMain.storyboard */; };
 		F4666A3726BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4666A3626BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift */; };
@@ -220,6 +226,12 @@
 		DFEF018726A756D90015829B /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DFEF018926A7571A0015829B /* FreeBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeBoardTableViewCell.swift; sourceTree = "<group>"; };
 		F44389D726D2D33500B9A193 /* PlaceAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAnnotation.swift; sourceTree = "<group>"; };
+		F44389DA26D2DFC300B9A193 /* UIViewController+OpenUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+OpenUrl.swift"; sourceTree = "<group>"; };
+		F44389DD26D2E61400B9A193 /* PlaceSetting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlaceSetting.storyboard; sourceTree = "<group>"; };
+		F44389E126D2ED2A00B9A193 /* SetMapStyleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetMapStyleViewController.swift; sourceTree = "<group>"; };
+		F44389E426D2ED6F00B9A193 /* SetMapStyle.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SetMapStyle.storyboard; sourceTree = "<group>"; };
+		F44389E726D2EF1A00B9A193 /* SetBrowser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SetBrowser.storyboard; sourceTree = "<group>"; };
+		F44389E926D2F52400B9A193 /* SetBrowserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBrowserTableViewController.swift; sourceTree = "<group>"; };
 		F4666A3026BAEF7800A7AFA5 /* PlaceMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMainViewController.swift; sourceTree = "<group>"; };
 		F4666A3226BAEF9600A7AFA5 /* PlaceMain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlaceMain.storyboard; sourceTree = "<group>"; };
 		F4666A3626BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPlaceCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -580,6 +592,43 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		F44389D926D2DF9600B9A193 /* OpenUrl */ = {
+			isa = PBXGroup;
+			children = (
+				F4C1500826BEF4C300F763DB /* OpenURLViewController.storyboard */,
+				F44389DA26D2DFC300B9A193 /* UIViewController+OpenUrl.swift */,
+			);
+			path = OpenUrl;
+			sourceTree = "<group>";
+		};
+		F44389DC26D2E2ED00B9A193 /* PlaceSetting */ = {
+			isa = PBXGroup;
+			children = (
+				F44389DD26D2E61400B9A193 /* PlaceSetting.storyboard */,
+				F44389E326D2ED4D00B9A193 /* SetMapStyle */,
+				F44389E626D2ED7700B9A193 /* SetBrowser */,
+			);
+			path = PlaceSetting;
+			sourceTree = "<group>";
+		};
+		F44389E326D2ED4D00B9A193 /* SetMapStyle */ = {
+			isa = PBXGroup;
+			children = (
+				F44389E426D2ED6F00B9A193 /* SetMapStyle.storyboard */,
+				F44389E126D2ED2A00B9A193 /* SetMapStyleViewController.swift */,
+			);
+			path = SetMapStyle;
+			sourceTree = "<group>";
+		};
+		F44389E626D2ED7700B9A193 /* SetBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				F44389E726D2EF1A00B9A193 /* SetBrowser.storyboard */,
+				F44389E926D2F52400B9A193 /* SetBrowserTableViewController.swift */,
+			);
+			path = SetBrowser;
+			sourceTree = "<group>";
+		};
 		F4666A2F26BAEF6200A7AFA5 /* PlaceMain */ = {
 			isa = PBXGroup;
 			children = (
@@ -596,6 +645,7 @@
 			children = (
 				F488438F26ABE512005DB8A3 /* Model */,
 				F4666A2F26BAEF6200A7AFA5 /* PlaceMain */,
+				F44389DC26D2E2ED00B9A193 /* PlaceSetting */,
 				F488439226ABE512005DB8A3 /* PlaceSearch */,
 				F488439426ABE512005DB8A3 /* PlaceInfo */,
 				F48E1D5226BD9D4A00552C35 /* ReviewWrite */,
@@ -627,9 +677,9 @@
 		F488439426ABE512005DB8A3 /* PlaceInfo */ = {
 			isa = PBXGroup;
 			children = (
+				F44389D926D2DF9600B9A193 /* OpenUrl */,
 				F488439626ABE512005DB8A3 /* PlaceInfo.storyboard */,
 				F488439526ABE512005DB8A3 /* PlaceInfoViewController.swift */,
-				F4C1500826BEF4C300F763DB /* OpenURLViewController.storyboard */,
 				F488439726ABE512005DB8A3 /* Cell */,
 			);
 			path = PlaceInfo;
@@ -719,18 +769,21 @@
 			files = (
 				5C92DD28269B4E890094A93C /* Board.storyboard in Resources */,
 				5C92DD26269B4E850094A93C /* Home.storyboard in Resources */,
+				F44389E826D2EF1A00B9A193 /* SetBrowser.storyboard in Resources */,
 				F4C1500926BEF4C300F763DB /* OpenURLViewController.storyboard in Resources */,
 				F48843A726ABE512005DB8A3 /* PlaceInfo.storyboard in Resources */,
 				F4666A3326BAEF9600A7AFA5 /* PlaceMain.storyboard in Resources */,
 				5C92DD16269B4DF00094A93C /* LaunchScreen.storyboard in Resources */,
 				F48E1D5426BD9E2D00552C35 /* ReviewWrite.storyboard in Resources */,
 				5C92DD13269B4DF00094A93C /* Assets.xcassets in Resources */,
+				F44389E526D2ED6F00B9A193 /* SetMapStyle.storyboard in Resources */,
 				6D42480526AAB8C300E1E138 /* Setting.storyboard in Resources */,
 				5C92DD2A269B4E8E0094A93C /* Timetable.storyboard in Resources */,
 				2C3D34C226B6A3770036DF0A /* PlaceSearch.storyboard in Resources */,
 				5C92DD3A269BF8450094A93C /* Account.storyboard in Resources */,
 				5C92DD11269B4DEF0094A93C /* Main.storyboard in Resources */,
 				6D64F78326ADC9D3005BAC82 /* DropDownTableViewCell.xib in Resources */,
+				F44389DE26D2E61400B9A193 /* PlaceSetting.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +836,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44389DB26D2DFC300B9A193 /* UIViewController+OpenUrl.swift in Sources */,
+				F44389E226D2ED2A00B9A193 /* SetMapStyleViewController.swift in Sources */,
 				5C44242E26B7586200A6C23B /* SchoolAuthTableViewController.swift in Sources */,
 				2C3D34C526B6AD400036DF0A /* PlaceSearchCollectionViewCell.swift in Sources */,
 				F5FBBAE926C27667006FE53E /* ComposeImageCollectionViewCell.swift in Sources */,
@@ -874,6 +929,7 @@
 				F48843B126ABE512005DB8A3 /* RoundedButton.swift in Sources */,
 				DFEF018026A756290015829B /* Date+Formatter.swift in Sources */,
 				2C3D34C026B6A3650036DF0A /* PlaceSearchViewController.swift in Sources */,
+				F44389EA26D2F52400B9A193 /* SetBrowserTableViewController.swift in Sources */,
 				DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */,
 				DFEF018A26A7571A0015829B /* FreeBoardTableViewCell.swift in Sources */,
 			);

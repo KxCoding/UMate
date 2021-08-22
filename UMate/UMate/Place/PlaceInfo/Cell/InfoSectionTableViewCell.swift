@@ -88,9 +88,11 @@ class InfoSectionTableViewCell: UITableViewCell {
     /// 버튼을 누르면 해당 가게가 북마크됨 (사용자 북마크)
     /// - Parameter sender: 버튼
     @IBAction func bookmarked(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
         
-        
-        
+        let normal = UIImage(systemName: "bookmark")
+        let highlighted = UIImage(systemName: "bookmark.fill")
+        sender.imageView?.image = sender.isSelected ? highlighted : normal
     }
 }
 

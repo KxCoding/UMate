@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -262,7 +263,15 @@
                             <constraint firstItem="tru-B1-Enb" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="zFM-LT-fpK"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="oAL-ao-S4a"/>
+                    <navigationItem key="navigationItem" id="oAL-ao-S4a">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="rhP-8U-O1z">
+                            <imageReference key="image" image="gearshape" catalog="system"/>
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <segue destination="Z6r-Zg-YAL" kind="show" id="kT3-rg-1ux"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="currentLocationLabel" destination="x3e-U5-sEP" id="dOf-y3-E26"/>
@@ -275,6 +284,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="963.76811594202911" y="137.94642857142856"/>
+        </scene>
+        <!--PlaceSetting-->
+        <scene sceneID="7IW-9a-dKI">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PlaceSetting" id="Z6r-Zg-YAL" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ICL-4s-hRB"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O3d-Sg-ibc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1673" y="-104"/>
         </scene>
         <!--PlaceSearch-->
         <scene sceneID="896-6l-GhU">
@@ -319,6 +338,7 @@
     <resources>
         <image name="downarrow" width="32" height="32"/>
         <image name="dummy-image-landscape" width="512" height="292.5"/>
+        <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="location_64" width="32" height="32"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="map" catalog="system" width="128" height="110"/>
