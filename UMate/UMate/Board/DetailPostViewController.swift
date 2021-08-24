@@ -41,7 +41,7 @@ class DetailPostViewController: UIViewController {
                                  writer: "익명2",
                                  content: comment,
                                  insertDate: Date(),
-                                 heartCount: 3)
+                                 heartCount: 0)
         dummyCommentList.append(newComment)
         
         NotificationCenter.default.post(name: .newCommentDidInsert, object: nil)
@@ -71,7 +71,7 @@ class DetailPostViewController: UIViewController {
                                         writer: "익명2",
                                         content: comment,
                                         insertDate: Date(),
-                                        heartCount: 3)]
+                                        heartCount: 0)]
             dummyReCommentList.append(newReComment)
             
             NotificationCenter.default.post(name: .newReCommentDidInsert, object: nil)

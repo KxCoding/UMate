@@ -127,30 +127,6 @@ var nonExpandableBoardList = [BoardUI(sectionName: nil, boardNames: ["스크랩"
 var expandableBoardList = [BoardUI(sectionName: "홍보", isExpanded: true ,boardNames: ["홍보 게시판", "동아리, 학회"]),
                            BoardUI(sectionName: "정보", isExpanded: true ,boardNames: ["정보 게시판", "취업, 진로"]),]
 
-var dummyCommentList = [
-    Comment(image: UIImage(named: "5"),
-            writer: "익명1",
-            content: "아자아자!!",
-            insertDate: Date(),
-            heartCount: 3),
-    
-    Comment(image: UIImage(named: "8"),
-            writer: "익명1",
-            content: "화이티이하자!!!!",
-            insertDate: Date(),
-            heartCount: 0)
-]
+var dummyCommentList: [Comment] = []
 
-var dummyReCommentList = [
-    [Comment(image: UIImage(named: "5"),
-             writer: "익명3",
-             content: "2차원배열이 맞나",
-             insertDate: Date(),
-             heartCount: 2)],
-    
-    [Comment(image: UIImage(named: "6"),
-             writer: "익명4",
-             content: "머리가 아프군",
-             insertDate: Date(),
-             heartCount: 9)]
-]
+var dummyReCommentList: [[Comment]] = []

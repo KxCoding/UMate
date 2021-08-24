@@ -17,69 +17,53 @@ extension Notification.Name {
 
 class SelectImageViewController: UIViewController {
     
+    // 게시글 작성 시 이미지 첨부를 위한 아울렛
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var editBtn: UIBarButtonItem!
-    @IBOutlet weak var imageSelectBtn: UIBarButtonItem!
     
-    
+    // 첨부한 이미지를 담을 속성
     var imageList = [UIImage]()
+    //
     let imageManager = PHImageManager()
     
     
-    
-    /// <#Description#>
-    /// - Parameter sender: <#sender description#>
+    /// 이미지 첨부를 위한 ViewController를 닫는 메소드
+    /// - Parameter sender: SelectImageViewController
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    
-    /// <#Description#>
-    /// - Parameter sender: <#sender description#>
+    /// 제한된 사진에 접근할 수 있는 경우, 제한 된 사진을 편집할 수 있는 메소드
+    /// - Parameter sender: SelectImageViewController
     @IBAction func editBtn(_ sender: Any) {
         PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
     }
     
     
     /// <#Description#>
-    /// - Parameters:
-    ///   - editing: <#editing description#>
-    ///   - animated: <#animated description#>
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        
-        imageCollectionView.isEditing = editing
-        imageCollectionView.reloadItems(at: imageCollectionView.indexPathsForVisibleItems)
-        
-        if !editing {
-            imageCollectionView.indexPathsForSelectedItems?.forEach({ (indexPath) in
-                print(#function)
-                imageCollectionView.deselectItem(at: indexPath, animated: true)
-            })
-        }
-        
-        updateUserInterface()
-    }
-    
-    
-    /// <#Description#>
     /// - Parameter sender: <#sender description#>
-    @IBAction func toggleSelectionMode(_ sender: Any) {
-        setEditing(!isEditing, animated: true)    }
-    
-    
-    /// <#Description#>
-    func updateUserInterface() {
-        imageSelectBtn.title = isEditing ? "Done" : "Select"
+    @IBAction func imageSelectBtn(_ sender: Any) {
+        guard let indexPath = imageCollectionView.indexPathsForSelectedItems else { return }
+        
+        for index in indexPath {
+            let target = allPhotos.object(at: index.item)
+            let size = CGSize(width: imageCollectionView.frame.width / 4,
+                              height: imageCollectionView.frame.width / 4)
+            
+            imageManager.requestImage(for: target, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
+                
+                NotificationCenter.default.post(name: .imageDidSelect, object: nil, userInfo: ["img": [image]])
+                
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
-    
-    
     
     // 제한된 사진에 접근할 수 있는 권한이 있는지를 확인하는 속성
     var hasLimitedPermission = false
     
-    //
+    // Fetch한 사진을 담을 속성
     var allPhotos: PHFetchResult<PHAsset> = {
         let option = PHFetchOptions()
         
@@ -90,6 +74,8 @@ class SelectImageViewController: UIViewController {
     }()
     
     
+    
+    /// 사진에 접근하기 위한 권한 요청 메소드
     func requestAuthorization() {
         let status: PHAuthorizationStatus
         
@@ -132,10 +118,7 @@ class SelectImageViewController: UIViewController {
         
         requestAuthorization()
         imageCollectionView.allowsSelection = true
-        imageCollectionView.allowsMultipleSelection = false
-        imageCollectionView.allowsSelectionDuringEditing = true
-        setEditing(false, animated: false)
-        updateUserInterface()
+        imageCollectionView.allowsMultipleSelection = true
         
         PHPhotoLibrary.shared().register(self)
     }
@@ -156,9 +139,6 @@ extension SelectImageViewController: UICollectionViewDataSource {
     ///   - section: <#section description#>
     /// - Returns: <#description#>
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if hasLimitedPermission {
-            return allPhotos.count + 1
-        }
         
         return allPhotos.count
     }
@@ -170,21 +150,15 @@ extension SelectImageViewController: UICollectionViewDataSource {
     ///   - indexPath: <#indexPath description#>
     /// - Returns: <#description#>
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0 && hasLimitedPermission {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "MenuCollectionViewCell", for: indexPath)
-        }
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath)
             as! ImageCollectionViewCell
-        
-        let actualIndex = hasLimitedPermission ? indexPath.item - 1 : indexPath.item
-        let target = allPhotos.object(at: actualIndex)
+        let target = allPhotos.object(at: indexPath.item)
         let size = CGSize(width: collectionView.frame.width / 4, height: collectionView.frame.width / 4)
         
         imageManager.requestImage(for: target, targetSize: size, contentMode: .aspectFill, options: nil)
         { image, _ in
             cell.imageView.image = image
-            cell.configure(with: self.isEditing)
         }
         
         return cell
@@ -195,7 +169,6 @@ extension SelectImageViewController: UICollectionViewDataSource {
 
 
 extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
-    
     
     /// <#Description#>
     /// - Parameters:
@@ -212,71 +185,7 @@ extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
 
 
 
-extension SelectImageViewController: UICollectionViewDelegate {
-    
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - collectionView: <#collectionView description#>
-    ///   - indexPath: <#indexPath description#>
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if indexPath.item == 0 && hasLimitedPermission {
-            // TODO: 사진 액세스 허용 알림창
-        } else {
-            let actualIndex = hasLimitedPermission ? indexPath.item - 1 : indexPath.item
-            let target = allPhotos.object(at: actualIndex)
-            let size = CGSize(width: collectionView.frame.width / 4, height: collectionView.frame.width / 4)
-            
-            imageManager.requestImage(for: target, targetSize: size, contentMode: .aspectFill, options: nil) { image, _ in
-                
-                NotificationCenter.default.post(name: .imageDidSelect, object: nil, userInfo: ["img": [image]])
-                
-                self.dismiss(animated: true, completion: nil)
-                
-            }
-        }
-        
-        if isEditing == false {
-            imageCollectionView.deselectItem(at: indexPath, animated: true)
-        }
-    }
-    
-    
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - collectionView: <#collectionView description#>
-    ///   - indexPath: <#indexPath description#>
-    /// - Returns: <#description#>
-    func collectionView(_ collectionView: UICollectionView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - collectionView: <#collectionView description#>
-    ///   - indexPath: <#indexPath description#>
-    func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
-        setEditing(true, animated: true)
-    }
-    
-    
-    
-    /// <#Description#>
-    /// - Parameter collectionView: <#collectionView description#>
-    func collectionViewDidEndMultipleSelectionInteraction(_ collectionView: UICollectionView) {
-        print(#function)
-    }
-}
-
-
-
-
 extension SelectImageViewController: PHPhotoLibraryChangeObserver {
-    
     
     /// <#Description#>
     /// - Parameter changeInstance: <#changeInstance description#>
