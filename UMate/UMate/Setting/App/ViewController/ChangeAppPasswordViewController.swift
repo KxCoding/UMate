@@ -23,6 +23,9 @@ class ChangeAppPasswordViewController: UIViewController {
     @IBOutlet weak var thirdContainerView: UIView!
     @IBOutlet weak var fourthContainerView: UIView!
     
+    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var checkPasswordField: UITextField!
+    
     @objc func process(notification: Notification, textField: UITextField) {
         
         guard let number = notification.userInfo?["number"] as? String else { return }

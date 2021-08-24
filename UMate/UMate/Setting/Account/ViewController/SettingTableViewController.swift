@@ -31,15 +31,19 @@ class SettingTableViewController: UITableViewController {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url)
             }
-        }
+        } handler2: { _ in }
     }
     
     
     @IBAction func cacheDeleteButtonDidTapped(_ sender: Any) {
-        alert(message: "캐시를 삭제하시겠습니까?")
+        alertVersion2(message: "캐시를 삭제하시겠습니까?") { [weak self] action in
+            
+        } handler2: { _ in }
+
     }
     
     var token: NSObjectProtocol?
+    
     
     @IBAction func changeProfileButton(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Account", bundle: nil)
@@ -59,11 +63,13 @@ class SettingTableViewController: UITableViewController {
         }
     }
     
+    
     deinit {
         if let token = token {
             NotificationCenter.default.removeObserver(token)
         }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +91,4 @@ class SettingTableViewController: UITableViewController {
         profileImageView.contentMode = .scaleAspectFill
         
     }
-    
-   
 }

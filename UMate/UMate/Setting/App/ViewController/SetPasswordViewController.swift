@@ -19,11 +19,9 @@ class SetPasswordViewController: UIViewController {
     }
     
     @IBOutlet weak var containerView: UIView!
-
-    
     @IBOutlet weak var setPasswordSwitch: UISwitch!
     
-    
+
     /// 암호 잠금 스위치 값이 변경되면 호출됩니다.
     @IBAction func setPasswordStatusChanged(_ sender: UISwitch) {
         if sender.isOn { /// 암호 잠금이 활성화된 상태
@@ -106,9 +104,9 @@ class SetPasswordViewController: UIViewController {
         
         touchIDSwitch.isEnabled = false
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(process(notification:)),
-                                               name: Notification.Name.PasswordNotSet, object: nil)
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(process(notification:)),
+//                                               name: Notification.Name.PasswordNotSet, object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(completeProcess(notification:)),
