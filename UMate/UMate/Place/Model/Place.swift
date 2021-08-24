@@ -13,13 +13,57 @@ import MapKit
 struct Place {
     
     /// 가게 종류 = 열거형으로 제한
-    enum PlaceType: String {
+    enum PlaceType: String, CustomStringConvertible {
+        
         case cafe = "카페"
         case restaurant = "식당"
         case bakery = "베이커리"
         case studyCafe = "스터디카페"
         case pub = "주점"
-        case desert = "디저트 가게"
+        case dessert = "디저트"
+        
+        /// description 속성
+        var description: String {
+            switch self {
+            case .cafe:
+                return "cafe"
+            case .restaurant:
+                return "restaurant"
+            case .bakery:
+                return "bakery"
+            case .studyCafe:
+                return "studycafe"
+            case .pub:
+                return "pub"
+            case .dessert:
+                return "dessert"
+            }
+        }
+        
+        /// 타입을 나타내는 아이콘
+        var iconImage: UIImage? {
+            switch self {
+            case .cafe:
+                return UIImage(named: "cafe")
+            case .restaurant:
+                return UIImage(named: "restaurant")
+            case .bakery:
+                return UIImage(named: "bakery")
+            case .studyCafe:
+                return UIImage(named: "pencil")
+            case .pub:
+                return UIImage(named: "beer")
+            case .dessert:
+                return UIImage(named: "ice-cream")
+            }
+        }
+        
+        /// 타입을 나타내는 사진
+        var photoImage: UIImage? {
+            return UIImage(named: "\(description)-img")
+        }
+        
+        
     }
     
     /// 가게의 ID
@@ -40,24 +84,6 @@ struct Place {
     /// 가게의 종류
     var type: PlaceType
     
-    /// 종류를 나타내는 아이콘
-    var typeIconImage: UIImage? {
-        switch type {
-        case .cafe:
-            return UIImage(named: "cafe")
-        case .restaurant:
-            return UIImage(named: "restaurant")
-        case .bakery:
-            return UIImage(named: "bakery")
-        case .studyCafe:
-            return UIImage(named: "pencil")
-        case .pub:
-            return UIImage(named: "beer")
-        case .desert:
-            return UIImage(named: "ice-cream")
-        }
-    }
-    
     /// 가게를 나타내는 키워드 (각 키워드는 공백 포함 8자 이내)
     var keywords: [String]
     
@@ -72,17 +98,29 @@ struct Place {
     var annotation: MKAnnotation {
         switch type {
         case .cafe:
-            return CafeAnnotation(coordinate: coordinate, title: name)
+            return CafeAnnotation(coordinate: coordinate,
+                                  title: name,
+                                  subtitle: "\(keywords.first ?? "") \(type.rawValue)")
         case .restaurant:
-            return RestaurantAnnotation(coordinate: coordinate, title: name)
+            return RestaurantAnnotation(coordinate: coordinate,
+                                        title: name,
+                                        subtitle: "\(keywords.first ?? "") \(type.rawValue)")
         case .bakery:
-            return BakeryAnnotation(coordinate: coordinate, title: name)
+            return BakeryAnnotation(coordinate: coordinate,
+                                    title: name,
+                                    subtitle: "\(keywords.first ?? "")")
         case .studyCafe:
-            return StudyCafeAnnotation(coordinate: coordinate, title: name)
+            return StudyCafeAnnotation(coordinate: coordinate,
+                                       title: name,
+                                       subtitle: "\(keywords.first ?? "") \(type.rawValue)")
         case .pub:
-            return PubAnnotation(coordinate: coordinate, title: name)
-        case .desert:
-            return DesertAnnotation(coordinate: coordinate, title: name)
+            return PubAnnotation(coordinate: coordinate,
+                                 title: name,
+                                 subtitle: "\(keywords.first ?? "") \(type.rawValue)")
+        case .dessert:
+            return DesertAnnotation(coordinate: coordinate,
+                                    title: name,
+                                    subtitle: "\(keywords.first ?? "")")
         }
     }
     
@@ -100,7 +138,7 @@ struct Place {
               university: "숙명여대",
               district: "숙대입구역 인근",
               coordinate: CLLocationCoordinate2D(latitude: 37.546489, longitude: 126.973707),
-              type: .desert,
+              type: .dessert,
               keywords: ["수제 아이스크림", "포토존", "핫플", "아기자기한"],
               instagramID: "stickyrickys",
               url: "http://naver.me/xE1xr6kD"),

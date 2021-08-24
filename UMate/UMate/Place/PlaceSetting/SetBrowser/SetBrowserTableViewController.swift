@@ -24,7 +24,7 @@ class SetBrowserTableViewController: UITableViewController {
     
     
     /// 브라우저를 선택하면 알맞은 작업을 처리하는 메소드
-    /// - Parameter option: <#option description#>
+    /// - Parameter option: 선택한 브라우저 옵션
     private func selectPreferredBrowser(prefer option: Preference.PreferredBrowser) {
         /// preferrence 설정
         Preference.preferredBrowser = option
@@ -72,6 +72,7 @@ class SetBrowserTableViewController: UITableViewController {
         /// 첫번째 메뉴 누르면 초기화
         case 0:
             selectPreferredBrowser(prefer: .none)
+            tableView.deselectRow(at: indexPath, animated: true)
             
         /// 선택한 옵션으로 설정 변경
         case 1:

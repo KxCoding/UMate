@@ -37,7 +37,7 @@ class InfoSectionTableViewCell: UITableViewCell {
         target = content
         self.viewController = viewController
         
-        placeTypeImage.image = target.typeIconImage
+        placeTypeImage.image = target.type.iconImage
         placeNameLabel.text = target.name
         
         universityLabel.text = target.university
@@ -88,11 +88,23 @@ class InfoSectionTableViewCell: UITableViewCell {
     /// 버튼을 누르면 해당 가게가 북마크됨 (사용자 북마크)
     /// - Parameter sender: 버튼
     @IBAction func bookmarked(_ sender: UIButton) {
+        /// 선택 상태 전환
         sender.isSelected = !sender.isSelected
         
         let normal = UIImage(systemName: "bookmark")
         let highlighted = UIImage(systemName: "bookmark.fill")
         sender.imageView?.image = sender.isSelected ? highlighted : normal
+        
+        /// 사용자 데이터에 가게가 포함되어 있으면 삭제, 없으면 추가
+        if let index = PlaceUser.tempUser.userData.bookmarkedPlaces.firstIndex(of: target.name) {
+            PlaceUser.tempUser.userData.bookmarkedPlaces.remove(at: index)
+        } else {
+            PlaceUser.tempUser.userData.bookmarkedPlaces.append(target.name)
+        }
+        
+        #if DEBUG
+        print(PlaceUser.tempUser.userData.bookmarkedPlaces)
+        #endif
     }
 }
 

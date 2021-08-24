@@ -53,6 +53,7 @@ class FirstSectionTableViewCell: UITableViewCell {
         /// pager 초기화
         pager.configureStyle(with: [.pillShape])
         pager.backgroundColor = .black.withAlphaComponent(0.1)
+        pager.alpha = 0.5
     }
     
 }

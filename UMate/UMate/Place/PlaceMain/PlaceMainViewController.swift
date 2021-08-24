@@ -299,7 +299,7 @@ extension PlaceMainViewController: MKMapViewDelegate {
                                                          image: UIImage(systemName: "moon"))
         } else if let annotation = annotation as? DesertAnnotation {
             annotationView = setupPlaceAnnotationView(for: annotation, on: mapView,
-                                                         tintColor: UIColor(named: "desert") ?? tempColor,
+                                                         tintColor: UIColor(named: "dessert") ?? tempColor,
                                                          image: UIImage(systemName: "star.fill"))
         }
         
@@ -323,11 +323,28 @@ extension PlaceMainViewController: MKMapViewDelegate {
         if let markerAnnotationView = view as? MKMarkerAnnotationView {
             markerAnnotationView.canShowCallout = true
             markerAnnotationView.markerTintColor = tintColor
-            
             markerAnnotationView.glyphImage = image
+            
+            /// callout 표시
+            let rightButton = UIButton(type: .detailDisclosure)
+            markerAnnotationView.rightCalloutAccessoryView = rightButton
         }
         
         return view
+    }
+    
+    
+    /// callout이 선택되었을 때 가게 정보 페이지를 표시합니다.
+    /// - Parameters:
+    ///   - mapView: annotation view가 표시된 map view
+    ///   - view: callout의 annotation view
+    ///   - control: tap 이벤트가 발생한 컨트롤
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        /// Place Annotation일 때 - 가게 정보 페이지으로 이동
+        if let annotation = view.annotation, annotation.isKind(of: PlaceAnnotation.self) {
+            performSegue(withIdentifier: "toDetail", sender: nil)
+        }
     }
     
 }
@@ -355,8 +372,7 @@ extension PlaceMainViewController: UICollectionViewDataSource {
     ///   - indexPath: 아이템의 위치를 가리키는 indexpath
     /// - Returns: 완성된 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NearbyPlaceCollectionViewCell",
-                                                      for: indexPath) as! NearbyPlaceCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NearbyPlaceCollectionViewCell", for: indexPath) as! NearbyPlaceCollectionViewCell
         
         cell.configure(with: list[indexPath.item])
         

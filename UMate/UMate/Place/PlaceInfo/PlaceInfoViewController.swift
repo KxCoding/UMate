@@ -191,7 +191,7 @@ extension PlaceInfoViewController: UITableViewDelegate {
     /// - Returns: 열이 가져야 할 높이 (음수가 아닌 실수)
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return tableView.frame.width * 0.5
+            return tableView.frame.width * 0.55
         }
         else {
             return UITableView.automaticDimension
