@@ -125,6 +125,8 @@ extension MakingPasswordViewController: UITextFieldDelegate {
                     return false
                 }
                 
+                dummyPassword = password
+                fourthContainerView.backgroundColor = UIColor.black
                 alert(message: "비밀번호가 설정되었습니다.")
                 
                 /// 비밀번호 설정이 최종적으로 완료되면 보내는 Notification. SetPasswordViewController에 옵저버 존재.
@@ -135,7 +137,7 @@ extension MakingPasswordViewController: UITextFieldDelegate {
                 
                 /// navigationController를 자동으로 pop합니다.
                 let completion = {
-                    self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: true)
                 }
                 
                 
@@ -162,16 +164,8 @@ extension MakingPasswordViewController: UITextFieldDelegate {
 
 
 extension NSNotification.Name {
-    /// 이 2개는 지울것
-    /// 비밀번호 하나 하나 입력할 때마다 설정하는 타입
-    static let NumberDidEntered = NSNotification.Name("NumberDidEnteredNotification")
-    
     /// 비밀번호가 설정되다가 사용자에 의해 또는 크래시로 인해 중간에 중단되었을 때 사용하는 타입
     static let PasswordNotSet = NSNotification.Name("PasswordNotSetNotification")
-    
-    
-    
-    
     
     /// 비밀번호가 처음으로 모두 입력되었을 때 설정하는 타입
     static let PasswordDidEntered = NSNotification.Name("PasswordDidEnteredNotification")
@@ -181,4 +175,7 @@ extension NSNotification.Name {
     
     /// 비밀번호 확인 입력 시, 이전 비밀번호와 일치하지 않을 때 사용하는 타입
     static let PasswordNotCorrect = NSNotification.Name("PasswordNotCorrectNotification")
+    
+    /// 비밀번호 변경 시, 이전 비밀번호와 동일한 비밀번호로 설정할 때 사용하는 타입
+    static let PasswordIsSame = NSNotification.Name("PasswordIsSameNotification")
 }

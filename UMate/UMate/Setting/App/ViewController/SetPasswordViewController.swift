@@ -95,6 +95,12 @@ class SetPasswordViewController: UIViewController {
     @objc func completeProcess(notification: Notification) {
         /// 비밀번호가 설정되었을 경우, 암호 잠금 스위치는 활성화.
         setPasswordSwitch.isOn = true
+        
+        guard let password = notification.userInfo?["password"] as? String else {
+                    return
+        }
+                
+        dummyPassword = password
     }
     
     override func viewDidLoad() {
@@ -104,9 +110,9 @@ class SetPasswordViewController: UIViewController {
         
         touchIDSwitch.isEnabled = false
         
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(process(notification:)),
-//                                               name: Notification.Name.PasswordNotSet, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(process(notification:)),
+                                               name: Notification.Name.PasswordNotSet, object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(completeProcess(notification:)),
@@ -115,4 +121,7 @@ class SetPasswordViewController: UIViewController {
         context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
