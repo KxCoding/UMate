@@ -53,11 +53,6 @@ class FreeBoardViewController: UIViewController {
         postListTableView.tableHeaderView = tableViewHeaderView
         composeContainerView.layer.cornerRadius = composeContainerView.frame.height / 2
         
-        /// 네비게이션 바 초기화
-        let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 10, height: 10))
-        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
-        navigationController?.navigationBar.shadowImage = navigationBarImage
-        
         /// 상세 게시글 화면에서 스크랩 버튼 클릭시 스크랩 게시판에 게시글 추가
         var token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main) { noti in
             

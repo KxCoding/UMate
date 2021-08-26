@@ -20,13 +20,18 @@ class BoardViewController: UIViewController {
     /// 게시판 즐겨찾기 버튼의 색상 변경 & 즐겨찾기 속성 변경
     /// - Parameter sender: 즐겨찾기 핀버튼
     @IBAction func updateBookmark(_ sender: UIButton) {
-        sender.tintColor = sender.tintColor == .lightGray ? .black : .lightGray
+        sender.tintColor = sender.tintColor == UIColor.init(named: "lightGrayNonSelectedColor") ? UIColor.init(named: "blackSelectedColor") : UIColor.init(named: "lightGrayNonSelectedColor")
         
         if bookmarks.keys.contains(sender.tag) {
             if let isBookmarked = bookmarks[sender.tag] {
                 bookmarks[sender.tag] = !isBookmarked
             }
         }
+    }
+    
+    
+    @IBAction func unwindToBoard(_ unwindSegue: UIStoryboardSegue) {
+       
     }
     
     
@@ -48,11 +53,6 @@ class BoardViewController: UIViewController {
             }
         }
         return true
-    }
-    
-    
-    @IBAction func unwindToBoard(_ unwindSegue: UIStoryboardSegue) {
-        let sourceViewController = unwindSegue.source
     }
     
     
@@ -82,17 +82,6 @@ class BoardViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    
-    /// view가 view계층에 추가되기 직전에 view controller에게 알리는 메소드
-    /// - Parameter animated: view가 window에 뜰 때 애니메이션의 유무
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        /// 네비게이션 바 초기화
-        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        navigationController?.navigationBar.shadowImage = nil
     }
     
     
@@ -231,10 +220,10 @@ extension BoardViewController: UITableViewDelegate {
             let button = UIButton(type: .custom)
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! BoardCustomHeaderView
             view.title.text = expandableBoardList[section - 1].sectionName
-            view.title.textColor = .darkGray
+            view.title.textColor = UIColor.init(named: "darkGraySubtitleColor")
             view.title.font = UIFont.boldSystemFont(ofSize: 23)
             view.image.image = UIImage(named: "downarrow")
-            view.image.tintColor = .darkGray
+            view.image.tintColor = UIColor.init(named: "darkGraySubtitleColor")
             
             view.addSubview(button)
             button.translatesAutoresizingMaskIntoConstraints = false

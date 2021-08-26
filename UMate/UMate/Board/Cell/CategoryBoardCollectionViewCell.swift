@@ -18,11 +18,11 @@ class CategoryBoardCollectionViewCell: UICollectionViewCell {
         didSet {
             if isSelected {
                 UIView.animate(withDuration: 0.3) {
-                    self.categoryView.backgroundColor = .lightGray
+                    self.categoryView.backgroundColor = UIColor.init(named: "blackSelectedColor")
                 }
             } else {
                 UIView.animate(withDuration: 0.3) {
-                    self.categoryView.backgroundColor = .white
+                    self.categoryView.backgroundColor = UIColor.init(named: "barColor")
                 }
             }
         }
