@@ -50,6 +50,8 @@ class SearchLIstUniversityViewController: UIViewController {
         searchBar.delegate = self
         listTableView.isHidden = true
         
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
     }
     
 }

@@ -20,6 +20,9 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     @IBOutlet weak var infoTextView: UITextView!
     @IBOutlet weak var buttonLabel: UILabel!
     
+    
+    @IBOutlet weak var activatedBar: UIView!
+    
     /// back to previoius view
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true)
@@ -31,8 +34,8 @@ class FindPasswordandEmailTableViewController: UITableViewController {
         passwordLabelCenterX.priority = .defaultLow
         emailTextField.placeholder = "가입한 이메일을 입력하세요."
         buttonLabel.text = "아이디 찾기"
-        buttonLabel.textColor = .white
         infoTextView.isHidden = false
+        activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
         
         /// to make animation effect
         UIView.animate(withDuration: 0.3) {
@@ -41,13 +44,13 @@ class FindPasswordandEmailTableViewController: UITableViewController {
         
         /// to show when user didtap button color effect.
         UIView.transition(with: idLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
-            self.idLabel.textColor = .black
+            self.idLabel.textColor = UIColor.dynamicColor(light: .black, dark: .white)
             
         }
 
         /// to show when user didtap button color effect.
         UIView.transition(with: passwordLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
-            self.passwordLabel.textColor = .systemGray5
+            self.passwordLabel.textColor = UIColor.dynamicColor(light: .systemGray6, dark: .darkGray)
             
         }
         
@@ -59,9 +62,8 @@ class FindPasswordandEmailTableViewController: UITableViewController {
         passwordLabelCenterX.priority = .defaultHigh
         emailTextField.placeholder = "가입된 아이디를 입력해주세요."
         buttonLabel.text = "비밀번호 찾기"
-        buttonLabel.textColor = .white
         infoTextView.isHidden = true
-        
+        activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
         
         
         UIView.animate(withDuration: 0.3) {
@@ -69,12 +71,12 @@ class FindPasswordandEmailTableViewController: UITableViewController {
         }
         
         UIView.transition(with: idLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
-            self.idLabel.textColor = .systemGray5
+            self.idLabel.textColor = UIColor.dynamicColor(light: .systemGray6, dark: .darkGray)
             
         }
 
         UIView.transition(with: passwordLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
-            self.passwordLabel.textColor = .black
+            self.passwordLabel.textColor = UIColor.dynamicColor(light: .black, dark: .white)
             
         }
     }
@@ -103,10 +105,10 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         findIdButton.setButtonTheme()
         infoTextView.delegate = self
-     
+        activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
     }
    
 

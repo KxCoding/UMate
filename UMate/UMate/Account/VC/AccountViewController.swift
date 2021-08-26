@@ -64,6 +64,7 @@ class AccountViewController: UIViewController {
         self.view.addGestureRecognizer(tapGestureRecognizer)
         
         registerButton.setTitleColor(UIColor.dynamicColor(light: .darkGray, dark: .white), for: .normal)
+        
     }
     
     

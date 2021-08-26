@@ -69,6 +69,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
         privacy.text = LocalStorage.database.privacy
         community.text = LocalStorage.database.location
         
+        navigationController?.navigationBar.tintColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
     }
 
 }

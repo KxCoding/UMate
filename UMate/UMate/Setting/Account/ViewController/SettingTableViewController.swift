@@ -89,6 +89,9 @@ class SettingTableViewController: UITableViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         profileImageView.clipsToBounds = true
         profileImageView.contentMode = .scaleAspectFill
+        nameLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
+        enterYearAndUniNameLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
+        emailLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
     }
 }

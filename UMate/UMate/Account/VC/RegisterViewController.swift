@@ -88,6 +88,7 @@ class RegisterViewController: UIViewController {
         
         nextButton.setButtonTheme()
         enterenceYearLabel.text = "2021학번"
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
         /// 학번 메뉴 width, height 조정
         menu.anchorView = enterenceYearView
