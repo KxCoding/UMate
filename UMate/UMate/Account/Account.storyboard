@@ -45,6 +45,7 @@
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
+                                            <action selector="findIDPassword:" destination="3RI-r3-aiS" eventType="touchUpInside" id="Ykz-bl-Xri"/>
                                             <segue destination="WiM-Ku-cOS" kind="presentation" modalPresentationStyle="fullScreen" id="Ys9-4Q-JlI"/>
                                         </connections>
                                     </button>
@@ -55,6 +56,7 @@
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
+                                            <action selector="register:" destination="3RI-r3-aiS" eventType="touchUpInside" id="fkS-gU-Wb9"/>
                                             <segue destination="wQo-zJ-shW" kind="presentation" modalPresentationStyle="fullScreen" id="Lyp-EN-FIc"/>
                                         </connections>
                                     </button>
@@ -138,20 +140,18 @@
         <scene sceneID="fKS-QD-JiS">
             <objects>
                 <tableViewController id="Tsi-8J-cGb" customClass="FindPasswordandEmailTableViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="i5R-nS-mrJ">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="i5R-nS-mrJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
                             <tableViewSection id="t7A-8j-k0n">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="394" id="MDS-bR-5E6">
-                                        <rect key="frame" x="0.0" y="18" width="414" height="394"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="369" id="MDS-bR-5E6">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="369"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MDS-bR-5E6" id="Ilp-go-1n6">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="394"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="369"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZrG-e5-res">
@@ -485,7 +485,6 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="nextButton:" destination="dJp-Wr-kbc" eventType="touchUpInside" id="8Lf-Hz-j9L"/>
                                                     <segue destination="Arp-vK-a9Y" kind="show" id="KDK-C5-mLp"/>
                                                 </connections>
                                             </button>
@@ -950,7 +949,6 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="nextToEamilButton:" destination="Arp-vK-a9Y" eventType="touchUpInside" id="Xaw-hu-jKN"/>
                                                         <segue destination="8tn-kC-Qjq" kind="show" id="F2Y-Va-DWl"/>
                                                     </connections>
                                                 </button>
@@ -1001,7 +999,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vhO-jP-gV2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4479.7101449275369" y="866.51785714285711"/>
+            <point key="canvasLocation" x="4480" y="867"/>
         </scene>
         <!--이메일 인증-->
         <scene sceneID="tCV-gf-WPQ">
@@ -1052,9 +1050,6 @@
                                         <state key="normal" title="인증코드받기">
                                             <color key="titleColor" red="0.91220233480000001" green="0.88447345349999995" blue="0.86745624389999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
-                                        <connections>
-                                            <action selector="sendCodeButtonAction:" destination="8tn-kC-Qjq" eventType="touchUpInside" id="q6o-eN-9o4"/>
-                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="코드를 입력하세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LSP-OI-08O">
                                         <rect key="frame" x="0.0" y="294" width="374" height="34"/>
@@ -1078,7 +1073,6 @@
                                             <color key="titleColor" red="0.91220233480000001" green="0.91163661669999996" blue="0.86423824019999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
-                                            <action selector="emailVerificationButtonAction:" destination="8tn-kC-Qjq" eventType="touchUpInside" id="zRD-L6-QVK"/>
                                             <segue destination="PZr-Ua-C9g" kind="show" id="gdX-UJ-tYs"/>
                                         </connections>
                                     </button>
@@ -1161,7 +1155,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="V0T-h5-nc6" kind="presentation" modalPresentationStyle="fullScreen" id="SQq-9I-P7k"/>
+                                            <segue destination="V0T-h5-nc6" kind="show" id="SQq-9I-P7k"/>
                                         </connections>
                                     </button>
                                 </subviews>
