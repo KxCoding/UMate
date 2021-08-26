@@ -23,18 +23,18 @@ class AccountViewController: UIViewController {
     /// - Parameter sender: 로그인 버튼
     @IBAction func login(_ sender: Any) {
         /// 키체인에 저장한 이메일 비밀번호만 로그인이 가능하게끔 조건문 작성
-        guard let safeEmail = keychain.get(Keys.userEmailKey),
-              let safePassword = keychain.get(Keys.passwordKey),
-              let email = idTextField.text,
-              let password = passwordTextField.text else { return }
-        
-        /// 에러가 발생시 에러문 띄우게끔 작성
-        if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
-           
-        guard email == safeEmail && password == safePassword else {
-            alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
-            return
-        }
+//        guard let safeEmail = keychain.get(Keys.userEmailKey),
+//              let safePassword = keychain.get(Keys.passwordKey),
+//              let email = idTextField.text,
+//              let password = passwordTextField.text else { return }
+//
+//        /// 에러가 발생시 에러문 띄우게끔 작성
+//        if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
+//
+//        guard email == safeEmail && password == safePassword else {
+//            alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
+//            return
+//        }
         
         CommonViewController.shared.transitionToHome()
      
@@ -48,15 +48,15 @@ class AccountViewController: UIViewController {
         addKeyboardWillHide()
         
         /// 로그인버튼 알약모양
-        loginButton.layer.cornerRadius = loginButton.frame.height / 2
+        loginButton.setButtonTheme()
         
         /// delegate 선언
         idTextField.delegate = self
         passwordTextField.delegate = self
         
         ///키체인 이메일/ 비번으로 초기화(작업 편의성)
-        idTextField.text = keychain.get(Keys.userEmailKey)
-        passwordTextField.text = keychain.get(Keys.passwordKey)
+       idTextField.text = keychain.get(Keys.userEmailKey)
+       passwordTextField.text = keychain.get(Keys.passwordKey)
         
         /// 백그라운드 탭하면 키보드 내려가는 기능
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailRegisterViewController.backgroundTap))

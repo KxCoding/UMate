@@ -57,11 +57,12 @@ class TermsOfConditionsTableViewController: UITableViewController {
         })
 
         /// 텍스트뷰 속성 초기화
-        [serviceTOCTextView, personalInformationTOCTextView, communityTOCTextView, advertisementTOCTextView, verifyEmailButton].forEach({
+        [serviceTOCTextView, personalInformationTOCTextView, communityTOCTextView, advertisementTOCTextView].forEach({
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
             
         })
+        verifyEmailButton.setButtonTheme()
         
         /// 더미데이터
         service.text = LocalStorage.database.service

@@ -12,20 +12,20 @@ class RegisterViewController: UIViewController {
     
     @IBOutlet weak var enterenceYearView: UIView!
     @IBOutlet weak var universityView: UIView!
-    @IBOutlet weak var nextButton: UIView!
-    @IBOutlet weak var enterenceTextField: UITextField!
-    
+    @IBOutlet weak var nextView: UIView!
+    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var enterenceYearLabel: UILabel!
     @IBOutlet weak var dismissZone: UIView!
     @IBOutlet weak var dismissZone2: UIView!
-    
     @IBOutlet weak var universityNameField: UILabel!
     
+    /// To save notification data
     var saveText = ""
     
-    // notificationCenter를 저장하기위한 속성
+    /// notificationCenter를 저장하기위한 속성
     var token: NSObjectProtocol?
     
-    // DropDown타입 배열을 클로저로 초기화한 속성
+    /// DropDown타입 배열을 클로저로 초기화한 속성
     let menu: DropDown = {
         let menu = DropDown()
         menu.dataSource = [
@@ -48,17 +48,17 @@ class RegisterViewController: UIViewController {
         return menu
     }()
     
-    // 취소 메소드
+    /// 취소 메소드
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    // 학번 선택하는 메소드
+    /// 학번 선택하는 메소드
     @IBAction func enterenceYearButton(_ sender: UIButton) {
         menu.show()
         menu.selectionAction = { [weak self] index, item in
-            self?.enterenceTextField.text = item
+            self?.enterenceYearLabel.text = item
             
             UserDefaults.standard.set(item, forKey: "enterenceYearKey")
         }
@@ -66,7 +66,7 @@ class RegisterViewController: UIViewController {
     
     
     @IBAction func nextButton(_ sender: Any) {
-        guard let enterenceYearText = enterenceTextField.text,
+        guard let enterenceYearText = enterenceYearLabel.text,
               enterenceYearText.count == 6,
         let universityNameText = universityNameField.text,
         universityNameText == saveText else {
@@ -81,9 +81,13 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ///두 view를 살짝 깎는 클로저
-        [enterenceYearView, nextButton].forEach { $0?.layer.cornerRadius = 10
+        [enterenceYearView, universityView].forEach {
+            $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
         }
+        
+        nextButton.setButtonTheme()
+        enterenceYearLabel.text = "2021학번"
         
         /// 학번 메뉴 width, height 조정
         menu.anchorView = enterenceYearView

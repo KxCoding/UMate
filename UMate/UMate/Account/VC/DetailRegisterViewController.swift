@@ -87,11 +87,13 @@ class DetailRegisterViewController: UIViewController {
         keyboardWillHide()
         
         /// configure textField's view
-        [emailTextField, passwordTextField, repeatPasswordTextField, nameTextField, nickNameTextField, nextButton, changeProfilePicButton].forEach({
+        [emailTextField, passwordTextField, repeatPasswordTextField, nameTextField, nickNameTextField, changeProfilePicButton].forEach({
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
             
         })
+        
+        nextButton.setButtonTheme()
         
         /// load Previous data in emailTextField.text
             if let safeEmail = keyChain.get(Keys.userEmailKey) {
