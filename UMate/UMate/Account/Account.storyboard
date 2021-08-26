@@ -45,7 +45,6 @@
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="findIDPassword:" destination="3RI-r3-aiS" eventType="touchUpInside" id="Ykz-bl-Xri"/>
                                             <segue destination="WiM-Ku-cOS" kind="presentation" modalPresentationStyle="fullScreen" id="Ys9-4Q-JlI"/>
                                         </connections>
                                     </button>
@@ -56,7 +55,6 @@
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="register:" destination="3RI-r3-aiS" eventType="touchUpInside" id="fkS-gU-Wb9"/>
                                             <segue destination="wQo-zJ-shW" kind="presentation" modalPresentationStyle="fullScreen" id="Lyp-EN-FIc"/>
                                         </connections>
                                     </button>
@@ -485,6 +483,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
+                                                    <action selector="nextButton:" destination="dJp-Wr-kbc" eventType="touchUpInside" id="vDe-tw-61S"/>
                                                     <segue destination="Arp-vK-a9Y" kind="show" id="KDK-C5-mLp"/>
                                                 </connections>
                                             </button>
@@ -949,6 +948,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
+                                                        <action selector="nextToEamilButton:" destination="Arp-vK-a9Y" eventType="touchUpInside" id="0zw-mz-n1c"/>
                                                         <segue destination="8tn-kC-Qjq" kind="show" id="F2Y-Va-DWl"/>
                                                     </connections>
                                                 </button>
@@ -1050,6 +1050,9 @@
                                         <state key="normal" title="인증코드받기">
                                             <color key="titleColor" red="0.91220233480000001" green="0.88447345349999995" blue="0.86745624389999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
+                                        <connections>
+                                            <action selector="sendCodeButtonAction:" destination="8tn-kC-Qjq" eventType="touchUpInside" id="lv5-AU-L0j"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="코드를 입력하세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LSP-OI-08O">
                                         <rect key="frame" x="0.0" y="294" width="374" height="34"/>
@@ -1073,6 +1076,7 @@
                                             <color key="titleColor" red="0.91220233480000001" green="0.91163661669999996" blue="0.86423824019999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
+                                            <action selector="emailVerificationButtonAction:" destination="8tn-kC-Qjq" eventType="touchUpInside" id="dO1-d9-iJb"/>
                                             <segue destination="PZr-Ua-C9g" kind="show" id="gdX-UJ-tYs"/>
                                         </connections>
                                     </button>
