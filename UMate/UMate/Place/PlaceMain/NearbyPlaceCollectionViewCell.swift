@@ -9,6 +9,8 @@ import UIKit
 
 class NearbyPlaceCollectionViewCell: UICollectionViewCell {
     
+    // MARK: Outlets
+    
     @IBOutlet weak var placeNameLabel: UILabel!
     @IBOutlet weak var districtLabel: UILabel!
     @IBOutlet weak var keywordLabel1: UILabel!
@@ -17,7 +19,9 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var keywordContainer2: UIView!
     @IBOutlet weak var placeImageView: UIImageView!
     
+    /// 셀에서 표시하는 place 객체
     var target: Place!
+    
     
     /// 각 뷰들이 표시하는 content 초기화
     /// - Parameter content: 뷰에 표시할 내용을 담은 Place 객체
@@ -34,19 +38,19 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
             keywordContainer2.isHidden = true
         }
         
-        if let image = target.images.first {
-            placeImageView.image = image
-        } else {
-            placeImageView.image = UIImage(named: "dummy-image-landscape")
-        }
+        placeImageView.image = target.images.first ?? UIImage(named: "dummy-image-landscape")
         
     }
     
+    
     /// 셀 내부 UI 초기화
     override func awakeFromNib() {
-        self.configureStyle(with: [.squircleBig, .lightShadow])
+        super.awakeFromNib()
+        
+        self.configureStyle(with: [.squircleBig, .lightBorder, .lightShadow])
         keywordContainer1.configureStyle(with: [.squircleSmall])
         keywordContainer2.configureStyle(with: [.squircleSmall])
     }
+    
 }
 

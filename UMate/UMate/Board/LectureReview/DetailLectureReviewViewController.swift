@@ -235,7 +235,7 @@ extension DetailLectureReviewViewController: UICollectionViewDataSource {
         if indexPath.row == 0 {
             /// 아무것도 선택되지 않았을 시에 row == 0 인 cell 선택된 것처럼 보이도록
             if nonCliked {
-                cell.sectionTtileLabel.textColor = .black
+                cell.sectionTtileLabel.textColor = UIColor.init(named: "blackSelectedColor")
             }
             /// 다른 카테고리 선택시
             else {

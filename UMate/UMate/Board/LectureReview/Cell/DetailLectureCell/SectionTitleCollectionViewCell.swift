@@ -17,7 +17,7 @@ class SectionTitleCollectionViewCell: UICollectionViewCell {
         didSet {
             if isSelected {
                 UIView.animate(withDuration: 0.3) {
-                    self.sectionTtileLabel.textColor = .black
+                    self.sectionTtileLabel.textColor = UIColor.init(named: "blackSelectedColor")
                 }
             } else {
                 UIView.animate(withDuration: 0.3) {

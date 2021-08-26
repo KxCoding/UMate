@@ -49,14 +49,8 @@ class CategoryBoardViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.title = selectedBoard?.boardTitle
         
-        /// 네비게이션 바 초기화
-        let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 10, height: 10))
-        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
-        navigationController?.navigationBar.shadowImage = navigationBarImage
-        
         /// 카테코리 별로 filtering되기 전 게시글배열 초기화
         filteredPostList = selectedBoard?.posts ?? []
-        
         
         /// 스크랩 추가
         var token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main) { noti in
@@ -121,11 +115,11 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
         if indexPath.row == 0 {
             /// 아무것도 선택되지 않았을 시에 row == 0 인 cell 선택된 것처럼 보이도록
             if nonCliked {
-                cell.categoryView.backgroundColor = .lightGray
+                cell.categoryView.backgroundColor = UIColor.init(named: "blackSelectedColor")
             }
             /// 다른 카테고리 선택시
             else {
-                cell.categoryView.backgroundColor = .white
+                cell.categoryView.backgroundColor = UIColor.init(named: "barColor")
             }
         }
         

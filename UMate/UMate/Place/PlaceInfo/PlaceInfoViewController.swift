@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SafariServices
 
 extension Notification.Name {
     /// 하위 탭을 선택할 때 post할 notification
@@ -88,109 +87,8 @@ class PlaceInfoViewController: UIViewController {
         }
     }
     
-    @IBAction func openUrl(_ sender: UIButton) {
-        guard let placeURLString = place.url,
-              let placeURL = URL(string: placeURLString) else { return }
-        openUrl(with: placeURL)
-        
-    }
-    
 }
 
-// MARK: Open URL
-
-enum PreferredBrowser: Int {
-    case none
-    case `internal`
-    case external
-}
-
-class Preference {
-    static var preferredBrowser: PreferredBrowser {
-        get {
-            let rawValue = UserDefaults.standard.integer(forKey: "preferToOpenInThisApp")
-            return PreferredBrowser(rawValue: rawValue) ?? .none
-        }
-        set {
-            UserDefaults.standard.set(newValue.rawValue, forKey: "preferToOpenInThisApp")
-        }
-    }
-}
-
-extension UIViewController {
-    
-    /// url을 전달하면 설정에 따라 알맞은 방식으로 url을 열어줍니다.
-    /// - Parameter urlString: 열 url
-    func openUrl(with url: URL) {
-        switch Preference.preferredBrowser {
-        case .none:
-            selectAndOpenUrl(with: url)
-        case .internal:
-            openURLInternal(url: url)
-        case .external:
-            openURLExternal(url: url)
-        }
-    }
-    
-    /// URL을 전달하면 오픈 방식을 선택하도록 하고, 선택된 방식으로 열어줍니다.
-    /// - Parameter url: 오픈할 url
-    private func selectAndOpenUrl(with url: URL) {
-        
-        let openInternal: (UIAlertAction) -> () = { [weak self] _ in
-            guard let self = self else { return }
-            
-            self.openURLInternal(url: url)
-        }
-        
-        let openExternal: (UIAlertAction) -> () = { [weak self] _ in
-            guard let self = self else { return }
-            
-            self.openURLExternal(url: url)
-        }
-            
-            let sheet = UIAlertController(title: nil,
-                                          message: nil,
-                                          preferredStyle: .actionSheet)
-            let openInThisApp = UIAlertAction(title: "이 앱에서 열기",
-                                              style: .default,
-                                              handler: openInternal)
-            let openInOtherApp = UIAlertAction(title: "관련 앱에서 열기",
-                                               style: .default,
-                                               handler: openExternal)
-            
-            let cancelAction = UIAlertAction(title: "취소",
-                                             style: .cancel,
-                                             handler: nil)
-            
-            sheet.addAction(openInThisApp)
-            sheet.addAction(openInOtherApp)
-            sheet.addAction(cancelAction)
-            
-            present(sheet, animated: true, completion: nil)
-        
-    }
-    
-    private func openURLInternal(url: URL) {
-//        guard let openUrlVC = UIStoryboard(name: "OpenURLViewController", bundle: nil).instantiateViewController(identifier: "OpenURLViewController") as? OpenURLViewController else { return }
-//
-//        openUrlVC.url = url
-//
-//        self.present(UINavigationController(rootViewController: openUrlVC), animated: true, completion: nil)
-        
-        let safariVC = SFSafariViewController(url: url)
-        self.present(safariVC, animated: true, completion: nil)
-    }
-    
-    func openURLExternal(url: URL) {
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
-    }
-    
-    func launchApp(url: URL) {
-        
-    }
-}
 
 
 
@@ -293,7 +191,7 @@ extension PlaceInfoViewController: UITableViewDelegate {
     /// - Returns: 열이 가져야 할 높이 (음수가 아닌 실수)
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return tableView.frame.width * 0.5
+            return tableView.frame.width * 0.55
         }
         else {
             return UITableView.automaticDimension
