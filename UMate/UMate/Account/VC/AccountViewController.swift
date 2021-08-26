@@ -13,6 +13,7 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var registerButton: UIButton!
     
     let keychain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
@@ -61,6 +62,8 @@ class AccountViewController: UIViewController {
         /// 백그라운드 탭하면 키보드 내려가는 기능
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailRegisterViewController.backgroundTap))
         self.view.addGestureRecognizer(tapGestureRecognizer)
+        
+        registerButton.setTitleColor(UIColor.dynamicColor(light: .darkGray, dark: .white), for: .normal)
     }
     
     
