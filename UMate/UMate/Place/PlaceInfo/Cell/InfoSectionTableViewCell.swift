@@ -8,6 +8,14 @@
 import UIKit
 import WebKit
 
+extension Notification.Name {
+    /// 북마크 토글 시
+    static let bookmarkUpdate = Notification.Name(rawValue: "bookmarkUpdate")
+}
+
+
+
+
 class InfoSectionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var placeTypeImage: UIImageView!
@@ -56,6 +64,13 @@ class InfoSectionTableViewCell: UITableViewCell {
             openSafariButton.isHidden = true
         }
         
+        /// 북마크가 되어 있으면 select
+        if PlaceUser.tempUser.userData.bookmarkedPlaces.contains(target.name) {
+            bookmarkButton.isSelected = true
+        } else {
+            bookmarkButton.isSelected = false
+        }
+        
         
     }
     
@@ -98,6 +113,8 @@ class InfoSectionTableViewCell: UITableViewCell {
         /// 사용자 데이터에 가게가 포함되어 있으면 삭제, 없으면 추가
         if let index = PlaceUser.tempUser.userData.bookmarkedPlaces.firstIndex(of: target.name) {
             PlaceUser.tempUser.userData.bookmarkedPlaces.remove(at: index)
+            /// 노티피케이션 전송
+            NotificationCenter.default.post(name: .bookmarkUpdate, object: nil)
         } else {
             PlaceUser.tempUser.userData.bookmarkedPlaces.append(target.name)
         }

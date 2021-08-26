@@ -8,7 +8,7 @@
 import UIKit
 
 /// Place
-class PlaceUser {
+struct PlaceUser {
     
     /// Place 사용자의 데이터 클래스
     struct UserData {
@@ -24,6 +24,13 @@ class PlaceUser {
     var userData = UserData()
     
     /// 임시 사용자
-    static var tempUser = PlaceUser()
-
+    static var tempUser: PlaceUser = {
+        var user = PlaceUser()
+        
+        /// 더미 북마크 데이터
+        user.userData.bookmarkedPlaces = ["데일리루틴", "오오비"]
+        
+        return user
+    }()
+    
 }

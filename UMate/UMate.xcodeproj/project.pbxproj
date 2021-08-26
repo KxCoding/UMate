@@ -89,6 +89,7 @@
 		DFEF018626A756C80015829B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018526A756C80015829B /* Post.swift */; };
 		DFEF018826A756D90015829B /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018726A756D90015829B /* Board.swift */; };
 		DFEF018A26A7571A0015829B /* FreeBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018926A7571A0015829B /* FreeBoardTableViewCell.swift */; };
+		F401BE1526D6AD32000C7898 /* PlaceTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401BE1426D6AD32000C7898 /* PlaceTypeCollectionViewCell.swift */; };
 		F44389D826D2D33500B9A193 /* PlaceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44389D726D2D33500B9A193 /* PlaceAnnotation.swift */; };
 		F44389DB26D2DFC300B9A193 /* UIViewController+OpenUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44389DA26D2DFC300B9A193 /* UIViewController+OpenUrl.swift */; };
 		F44389DE26D2E61400B9A193 /* PlaceSetting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F44389DD26D2E61400B9A193 /* PlaceSetting.storyboard */; };
@@ -115,7 +116,6 @@
 		F4ABE8CF26D30D3200F54B3B /* UserPlaceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ABE8CE26D30D3200F54B3B /* UserPlaceInfo.swift */; };
 		F4ABE8D226D38BDE00F54B3B /* ManageBookmark.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4ABE8D126D38BDE00F54B3B /* ManageBookmark.storyboard */; };
 		F4ABE8D426D38C1400F54B3B /* ManageBookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ABE8D326D38C1400F54B3B /* ManageBookmarkViewController.swift */; };
-		F4ABE8D926D3B30000F54B3B /* PlaceTypeSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ABE8D826D3B30000F54B3B /* PlaceTypeSelectionTableViewCell.swift */; };
 		F4ABE8DB26D3B5BF00F54B3B /* BookmarkListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ABE8DA26D3B5BF00F54B3B /* BookmarkListTableViewCell.swift */; };
 		F4C1500926BEF4C300F763DB /* OpenURLViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4C1500826BEF4C300F763DB /* OpenURLViewController.storyboard */; };
 		F50F9B5226B0F6CF007ABEF6 /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F9B5126B0F6CF007ABEF6 /* ComposeViewController.swift */; };
@@ -230,6 +230,7 @@
 		DFEF018526A756C80015829B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		DFEF018726A756D90015829B /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DFEF018926A7571A0015829B /* FreeBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeBoardTableViewCell.swift; sourceTree = "<group>"; };
+		F401BE1426D6AD32000C7898 /* PlaceTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		F44389D726D2D33500B9A193 /* PlaceAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAnnotation.swift; sourceTree = "<group>"; };
 		F44389DA26D2DFC300B9A193 /* UIViewController+OpenUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+OpenUrl.swift"; sourceTree = "<group>"; };
 		F44389DD26D2E61400B9A193 /* PlaceSetting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlaceSetting.storyboard; sourceTree = "<group>"; };
@@ -256,7 +257,6 @@
 		F4ABE8CE26D30D3200F54B3B /* UserPlaceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlaceInfo.swift; sourceTree = "<group>"; };
 		F4ABE8D126D38BDE00F54B3B /* ManageBookmark.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManageBookmark.storyboard; sourceTree = "<group>"; };
 		F4ABE8D326D38C1400F54B3B /* ManageBookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageBookmarkViewController.swift; sourceTree = "<group>"; };
-		F4ABE8D826D3B30000F54B3B /* PlaceTypeSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypeSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		F4ABE8DA26D3B5BF00F54B3B /* BookmarkListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListTableViewCell.swift; sourceTree = "<group>"; };
 		F4C1500826BEF4C300F763DB /* OpenURLViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OpenURLViewController.storyboard; sourceTree = "<group>"; };
 		F50F9B5126B0F6CF007ABEF6 /* ComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
@@ -732,7 +732,7 @@
 		F4ABE8D526D3951500F54B3B /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				F4ABE8D826D3B30000F54B3B /* PlaceTypeSelectionTableViewCell.swift */,
+				F401BE1426D6AD32000C7898 /* PlaceTypeCollectionViewCell.swift */,
 				F4ABE8DA26D3B5BF00F54B3B /* BookmarkListTableViewCell.swift */,
 			);
 			path = Cell;
@@ -873,6 +873,7 @@
 				5C44242E26B7586200A6C23B /* SchoolAuthTableViewController.swift in Sources */,
 				2C3D34C526B6AD400036DF0A /* PlaceSearchCollectionViewCell.swift in Sources */,
 				F5FBBAE926C27667006FE53E /* ComposeImageCollectionViewCell.swift in Sources */,
+				F401BE1526D6AD32000C7898 /* PlaceTypeCollectionViewCell.swift in Sources */,
 				5C2141B626BF162B00F93A84 /* ThemeSettingTableViewController.swift in Sources */,
 				F48843A826ABE512005DB8A3 /* DetailTableViewCell.swift in Sources */,
 				6D88628826BD3FC700E22BF1 /* SearchLIstUniversityViewController.swift in Sources */,
@@ -939,7 +940,6 @@
 				F53A427926BC73DE008D1698 /* ReCommentTableViewCell.swift in Sources */,
 				2C3D34C726B6AF900036DF0A /* Search.swift in Sources */,
 				6D9D9A9126B03A180084C764 /* UniversityTitleData.swift in Sources */,
-				F4ABE8D926D3B30000F54B3B /* PlaceTypeSelectionTableViewCell.swift in Sources */,
 				5C89DA2126C29EDF000DB3D2 /* ChangeAppPasswordViewController.swift in Sources */,
 				F48843A426ABE512005DB8A3 /* Place.swift in Sources */,
 				6DA8990426B91CE900F81AD9 /* DetailRegisterViewController.swift in Sources */,
