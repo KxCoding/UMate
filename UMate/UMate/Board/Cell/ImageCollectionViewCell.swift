@@ -13,8 +13,8 @@ class ImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var selectedImageView: UIImageView!
     
-    private var showSelectionIcons =  false
     
+    /// overlayView의 alpha값을 조절하는 메소드
     private func showOverlayView() {
         let alpha: CGFloat = isSelected ? 0.5 : 0.0
         overlayView.alpha = alpha

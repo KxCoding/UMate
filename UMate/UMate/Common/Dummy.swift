@@ -129,7 +129,4 @@ var expandableBoardList = [BoardUI(sectionName: "홍보", isExpanded: true ,boar
 
 var dummyCommentList: [Comment] = []
 
-var dummyReCommentList: [[Comment]] = []
-
-
 var dummyPassword: String?

@@ -14,6 +14,7 @@ class FreeBoardViewController: UIViewController {
     
     @IBOutlet weak var postListTableView: UITableView!
     @IBOutlet weak var composeContainerView: UIView!
+    @IBOutlet weak var postComposeButton: UIButton!
     
     /// 검색 버튼을 눌렀을 시에 SearchViewController로 이동
     @IBAction func showSearchViewController(_ sender: UIBarButtonItem) {
@@ -51,7 +52,7 @@ class FreeBoardViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.title = selectedBoard?.boardTitle
         postListTableView.tableHeaderView = tableViewHeaderView
-        composeContainerView.layer.cornerRadius = composeContainerView.frame.height / 2
+        postComposeButton.setButtonTheme()
         
         /// 네비게이션 바 초기화
         let navigationBarImage = getImage(withColor: UIColor.white, andSize: CGSize(width: 10, height: 10))
@@ -86,22 +87,15 @@ class FreeBoardViewController: UIViewController {
         tokens.append(token)
         
         
-//        token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
-//            [weak self] noti in
-//            if let newPost = noti.userInfo?["newPost"] as? Post {
-//                self?.selectedBoard?.posts.insert(newPost, at: 0)
-//            }
-//            self?.postListTableView.reloadData()
-//        }
-//        tokens.append(token)
-        
-        NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
+        /// 상세 게시글 화면에 게시글 추가를 위한 옵저버 추가
+        token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
             [weak self] noti in
             if let newPost = noti.userInfo?["newPost"] as? Post {
                 self?.selectedBoard?.posts.insert(newPost, at: 0)
             }
             self?.postListTableView.reloadData()
         }
+        tokens.append(token)
     }
     
     

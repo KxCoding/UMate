@@ -111,13 +111,28 @@ extension Post.Category.Career: CustomStringConvertible {
 
 
 class Comment {
-    internal init(image: UIImage?, writer: String, content: String, insertDate: Date, heartCount: Int, isliked: Bool = false) {
+    internal init(image: UIImage?,
+                  writer: String,
+                  content: String,
+                  insertDate: Date,
+                  heartCount: Int = 0,
+                  commentId: Int = 0,
+                  originalCommentId: Int? = nil,
+                  reCommentId: Int? = nil,
+                  isReComment: Bool = false,
+                  isliked: Bool = false,
+                  postId: String) {
         self.image = image
         self.writer = writer
         self.content = content
         self.insertDate = insertDate
         self.heartCount = heartCount
+        self.commentId = commentId
+        self.originalCommentId = originalCommentId
+        self.reCommentId = reCommentId
         self.isliked = isliked
+        self.isReComment = isReComment
+        self.postId = postId
     }
     
     let image: UIImage?
@@ -125,7 +140,11 @@ class Comment {
     let content: String
     let insertDate: Date
     var heartCount: Int
-    
+    var commentId: Int
+    var originalCommentId: Int?
+    var reCommentId: Int?
+    var isReComment: Bool
+    var postId: String
     var isliked = false
 }
 

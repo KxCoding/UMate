@@ -27,24 +27,77 @@ class DetailPostViewController: UIViewController {
     @IBOutlet weak var commentContainerViewBottomConstraint: NSLayoutConstraint!
     
     var tokens = [NSObjectProtocol]()
-   
     var imageObserver: NSObjectProtocol?
     
+    var commentId: Int = 0
+    var originalCommentId: Int = 0
+    var isReComment = false
+    var reCommentId: Int = 0
     
+    
+    /// 댓글 및 대댓글 저장하는 메소드
+    /// - Parameter sender: DetailPostViewController
     @IBAction func saveCommentBtn(_ sender: Any) {
-        guard let comment = commentTextView.text, comment.count > 0 else {
-            alertVersion2(message: "댓글을 입력하세요")
-            return
+        let originalComment = dummyCommentList.filter { $0.isReComment == false }
+        commentId = (dummyCommentList.count) + 1
+        
+        #if DEBUG
+        print(#function, commentId, originalCommentId, originalComment.count)
+        #endif
+        
+        if isReComment == false {
+            
+            guard let comment = commentTextView.text, comment.count > 0 else {
+                alertVersion2(message: "댓글을 입력하세요")
+                return
+            }
+            
+            let newComment = [Comment(image: UIImage(systemName: "person"),
+                                      writer: "익명2",
+                                      content: comment,
+                                      insertDate: Date(),
+                                      commentId: commentId,
+                                      isReComment: false,
+                                      postId: "")]
+            dummyCommentList.append(contentsOf: newComment)
+            
+            
+            #if DEBUG
+            print("Comment", "CommentId", commentId, "originalCommentId", originalCommentId, "reCommentId", reCommentId)
+            #endif
+            
+            NotificationCenter.default.post(name: .newCommentDidInsert, object: nil)
+        } else {
+            
+            if commentTextView.isFirstResponder {
+                guard let comment = commentTextView.text, comment.count > 0 else {
+                    alertVersion2(message: "대댓글 입력하세요")
+                    return
+                }
+                
+                let reComment = dummyCommentList.filter { $0.isReComment }
+                reCommentId = (reComment.count) + 1
+                
+                let newReComment = [Comment(image: UIImage(systemName: "person"),
+                                            writer: "익명2",
+                                            content: comment,
+                                            insertDate: Date(),
+                                            commentId: dummyCommentList.first?.commentId ?? 0,
+                                            originalCommentId: originalCommentId,
+                                            isReComment: true,
+                                            postId: "")]
+                dummyCommentList.append(contentsOf: newReComment)
+                
+                #if DEBUG
+                print("Recomment", "CommentId", commentId, "originalCommentId", originalCommentId, "reCommentId", reCommentId)
+                #endif
+                
+                NotificationCenter.default.post(name: .newReCommentDidInsert, object: nil)
+                
+                commentTextView.resignFirstResponder()
+                self.isReComment = false
+            }
         }
-        
-        let newComment = Comment(image: UIImage(systemName: "person"),
-                                 writer: "익명2",
-                                 content: comment,
-                                 insertDate: Date(),
-                                 heartCount: 0)
-        dummyCommentList.append(newComment)
-        
-        NotificationCenter.default.post(name: .newCommentDidInsert, object: nil)
     }
     
     
@@ -52,6 +105,7 @@ class DetailPostViewController: UIViewController {
         let alertReComment = UIAlertController(title: "알림", message: "대댓글을 작성하시겠습니까?", preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+            self.isReComment = true
             self.commentTextView.becomeFirstResponder()
         }
         alertReComment.addAction(okAction)
@@ -59,25 +113,8 @@ class DetailPostViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alertReComment.addAction(cancelAction)
         
-        present(alertReComment, animated: true, completion: nil)
         
-        if commentTextView.isFirstResponder {
-            guard let comment = commentTextView.text, comment.count > 0 else {
-                alertVersion2(message: "대댓글 입력하세요")
-                return
-            }
-            
-            let newReComment = [Comment(image: UIImage(systemName: "person"),
-                                        writer: "익명2",
-                                        content: comment,
-                                        insertDate: Date(),
-                                        heartCount: 0)]
-            dummyReCommentList.append(newReComment)
-            
-            NotificationCenter.default.post(name: .newReCommentDidInsert, object: nil)
-            
-            commentTextView.resignFirstResponder()
-        }
+        present(alertReComment, animated: true, completion: nil)
     }
     
     
@@ -86,45 +123,55 @@ class DetailPostViewController: UIViewController {
         
         writeCommentContainerView.layer.cornerRadius = 14
         
-        var token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main, using: { [weak self]  noti in
-            guard let strongSelf = self else { return }
-            
-            if let frame = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-                let height = frame.height - 70
-                let tableViewHeight = frame.height
-                
-                strongSelf.commentContainerViewBottomConstraint.constant = height
-                
-                var inset = strongSelf.detailPostTableView.contentInset
-                inset.bottom = tableViewHeight
-                strongSelf.detailPostTableView.contentInset = inset
-                strongSelf.detailPostTableView.scrollIndicatorInsets = inset
-            }
-        })
+        var token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
+                                                           object: nil,
+                                                           queue: .main,
+                                                           using: { [weak self]  noti in
+                                                            guard let strongSelf = self else { return }
+                                                            
+                                                            if let frame = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                                                                let height = frame.height - 70
+                                                                let tableViewHeight = frame.height
+                                                                
+                                                                strongSelf.commentContainerViewBottomConstraint.constant = height
+                                                                
+                                                                var inset = strongSelf.detailPostTableView.contentInset
+                                                                inset.bottom = tableViewHeight
+                                                                strongSelf.detailPostTableView.contentInset = inset
+                                                                strongSelf.detailPostTableView.scrollIndicatorInsets = inset
+                                                            }
+                                                           })
         tokens.append(token)
         
         
-        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main, using: { [weak self] (noti) in
-            guard let strongSelf = self else { return }
-            
-            strongSelf.commentContainerViewBottomConstraint.constant = 8
-            
-            var inset = strongSelf.detailPostTableView.contentInset
-            inset.bottom = 8
-            strongSelf.detailPostTableView.contentInset = inset
-            strongSelf.detailPostTableView.scrollIndicatorInsets = inset
-        })
+        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
+                                                       object: nil,
+                                                       queue: .main,
+                                                       using: { [weak self] (noti) in
+                                                        guard let strongSelf = self else { return }
+                                                        
+                                                        strongSelf.commentContainerViewBottomConstraint.constant = 8
+                                                        
+                                                        var inset = strongSelf.detailPostTableView.contentInset
+                                                        inset.bottom = 8
+                                                        strongSelf.detailPostTableView.contentInset = inset
+                                                        strongSelf.detailPostTableView.scrollIndicatorInsets = inset
+                                                       })
         tokens.append(token)
         
         
-        token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert, object: nil, queue: .main) { [weak self] (noti) in
+        token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
+                                                       object: nil,
+                                                       queue: .main) { [weak self] (noti) in
             self?.detailPostTableView.reloadData()
             self?.commentTextView.text = nil
         }
         tokens.append(token)
         
         
-        token = NotificationCenter.default.addObserver(forName: .newReCommentDidInsert, object: nil, queue: .main) { [weak self] (noti) in
+        token = NotificationCenter.default.addObserver(forName: .newReCommentDidInsert,
+                                                       object: nil,
+                                                       queue: .main) { [weak self] (noti) in
             self?.detailPostTableView.reloadData()
             self?.commentTextView.text = nil
         }
@@ -159,7 +206,8 @@ class DetailPostViewController: UIViewController {
     }
     
     
-    // TODO: 댓글 신고 기능 구현
+    /// 댓글을 왼쪽으로 Swipre해서 댓글을 신고하는 메소드
+    /// - Parameter indexPath: 댓글의 IndexPath
     func performNoti(_ indexPath: IndexPath) {
         #if DEBUG
         print(#function)
@@ -170,17 +218,18 @@ class DetailPostViewController: UIViewController {
     }
     
     
+    /// 댓글을 오른쪽으로 Swipe해서 댓글을 삭제하는 메소드
+    /// - Parameter indexPath: 댓글의 IndexPath
     func performDelete(_ indexPath: IndexPath) {
         #if DEBUG
         print(#function)
         print("댓글이 삭제되었습니다.")
         #endif
         
+        // 댓글 삭제할 것인지 다시 한 번 묻는 알림창
         alertDelete(title: "알림", message: "댓글을 삭제할까요?") { _ in
             if indexPath.section == 3 {
                 dummyCommentList.remove(at: indexPath.row)
-            } else {
-                dummyReCommentList.remove(at: indexPath.row)
             }
             
             self.detailPostTableView.reloadData()
@@ -194,7 +243,7 @@ class DetailPostViewController: UIViewController {
 extension DetailPostViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 4
     }
     
     
@@ -219,10 +268,6 @@ extension DetailPostViewController: UITableViewDataSource {
         /// Post Comment
         case 3:
             return dummyCommentList.count
-            
-        /// Post ReComment
-        case 4:
-            return dummyReCommentList.count
             
         default: return 0
         }
@@ -256,21 +301,12 @@ extension DetailPostViewController: UITableViewDataSource {
             cell.configure(post: post)
             return cell
             
-        /// 댓글 표시하는 셀
+        /// 댓글 및 대댓글 표시하는 셀
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
             
             let target = dummyCommentList
             cell.configure(with: target[indexPath.row])
-            
-            return cell
-            
-        /// 대댓글 표시하는 셀
-        case 4:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReCommentTableViewCell", for: indexPath) as! ReCommentTableViewCell
-            
-            let target = dummyReCommentList
-            cell.configure(with: target[indexPath.row], indexPath: indexPath)
             
             return cell
             
@@ -281,9 +317,14 @@ extension DetailPostViewController: UITableViewDataSource {
     }
     
     
+    /// 댓글을 오른쪽으로 Swipe하여 댓글을 신고할 수 있는 메소드
+    /// - Parameters:
+    ///   - tableView: 댓글을 포함하고 있는 TableView
+    ///   - indexPath: 댓글의 indexPath
+    /// - Returns: Leading끝에 표시될 SwipeAction
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        if indexPath.section >= 3  {
+        if indexPath.section == 3  {
             let noti = UIContextualAction(style: .normal, title: "댓글 신고") { action, v, completion in
                 self.alertComment()
                 completion(true)
@@ -299,23 +340,25 @@ extension DetailPostViewController: UITableViewDataSource {
     }
     
     
+    /// 댓글을 왼쪽으로 Swipe하여 댓글을 삭제할 수 있는 메소드
+    /// - Parameters:
+    ///   - tableView: 댓글을 포함하고 있는 TableView
+    ///   - indexPath: 댓글의 indexPath
+    /// - Returns: Trailing끝에 표시될 SwipeAction
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        if indexPath.section >= 3 {
+        if indexPath.section == 3 {
             let removeComment = UIContextualAction(style: .destructive, title: "댓글 삭제") { [weak self] action, v, completion in
                 
                 self?.alertDelete(title: "알림", message: "댓글을 삭제할까요?") { _ in
+                    dummyCommentList.remove(at: indexPath.row)
                     
-                    if indexPath.section == 3 {
-                        dummyCommentList.remove(at: indexPath.row)
-                    } else {
-                        dummyReCommentList.remove(at: indexPath.row)
-                    }
                     tableView.deleteRows(at: [indexPath], with: .automatic)
                 }
                 
                 completion(true)
             }
+            
             removeComment.backgroundColor = .darkGray
             
             let conf = UISwipeActionsConfiguration(actions: [removeComment])
@@ -327,22 +370,28 @@ extension DetailPostViewController: UITableViewDataSource {
     }
     
     
+    /// 댓글에 ContextMenu를 표시하는 메소드
+    /// - Parameters:
+    ///   - tableView: 댓글을 포함하고 있는 TableView
+    ///   - indexPath: 댓글의 indexPath
+    ///   - point:
+    /// - Returns: 해당 indexPath의 ContextMenu
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath,
                    point: CGPoint) -> UIContextMenuConfiguration? {
         
-        if indexPath.section >= 3 {
+        if indexPath.section == 3 {
             return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
                 let notiAction =
-                    UIAction(title: NSLocalizedString("댓글 신고", comment: ""),
-                             image: UIImage(named: "siren")) { action in
+                    UIAction(title: NSLocalizedString("댓글 신고", comment: "")) { action in
                         self.performNoti(indexPath)
                     }
+                
                 let deleteAction =
                     UIAction(title: NSLocalizedString("댓글 삭제", comment: ""),
-                             image: UIImage(systemName: "trash"),
                              attributes: .destructive) { action in
                         self.performDelete(indexPath)
                     }
+                
                 return UIMenu(title: "", children: [notiAction, deleteAction])
             })
         }
@@ -353,14 +402,18 @@ extension DetailPostViewController: UITableViewDataSource {
 
 
 
-
+// 댓글의 Placeholder 표시 여부를 결정
 extension DetailPostViewController: UITextViewDelegate {
     
+    /// 댓글을 작성하려고할 때 Placeholder를 숨기는 메소드
+    /// - Parameter textView: commentTextView
     func textViewDidBeginEditing(_ textView: UITextView) {
         commentPlaceholderLabel.isHidden = true
     }
     
     
+    /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시하는 메소드
+    /// - Parameter textView: commentTextView
     func textViewDidEndEditing(_ textView: UITextView) {
         guard let comment = commentTextView.text, comment.count > 0 else {
             commentPlaceholderLabel.isHidden = false

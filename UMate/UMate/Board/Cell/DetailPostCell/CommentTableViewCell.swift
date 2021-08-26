@@ -17,6 +17,10 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var btnContainerView: UIView!
     @IBOutlet weak var heartImageView: UIImageView!
     @IBOutlet weak var hearButtonImageView: UIImageView!
+    @IBOutlet weak var commentContainerView: UIView!
+    @IBOutlet weak var commentSeparationView: UIView!
+    @IBOutlet weak var reCommentContainerView: UIStackView!
+    
     
     var selectedComment: Comment?
     
@@ -78,12 +82,25 @@ class CommentTableViewCell: UITableViewCell {
             heartCountLabel.isHidden = false
         }
         
-        profileImageView.image = comment.image
-        userIdLabel.text = comment.writer
-        commentLabel.text = comment.content
-        dateTimeLabel.text = comment.insertDate.commentDate
-        heartCountLabel.text = comment.heartCount.description
-        
+        if !comment.isReComment {
+            reCommentContainerView.isHidden = true
+            profileImageView.image = comment.image
+            userIdLabel.text = comment.writer
+            commentLabel.text = comment.content
+            dateTimeLabel.text = comment.insertDate.commentDate
+            heartCountLabel.text = comment.heartCount.description
+            
+        } else {
+            reCommentContainerView.isHidden = false
+            commentSeparationView.isHidden = true
+            commentContainerView.backgroundColor = UIColor.systemGray5
+            commentContainerView.layer.cornerRadius = 10
+            profileImageView.image = comment.image
+            userIdLabel.text = comment.writer
+            commentLabel.text = comment.content
+            dateTimeLabel.text = comment.insertDate.commentDate
+            heartCountLabel.text = comment.heartCount.description
+        }
         selectedComment = comment
     }
 }
