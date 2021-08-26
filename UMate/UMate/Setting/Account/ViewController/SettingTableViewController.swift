@@ -31,12 +31,43 @@ class SettingTableViewController: UITableViewController {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url)
             }
-        }
+        } handler2: { _ in }
     }
     
     
     @IBAction func cacheDeleteButtonDidTapped(_ sender: Any) {
-        alert(message: "캐시를 삭제하시겠습니까?")
+        alertVersion2(message: "캐시를 삭제하시겠습니까?") { [weak self] action in
+            
+        } handler2: { _ in }
+
+    }
+    
+    var token: NSObjectProtocol?
+    
+    
+    @IBAction func changeProfileButton(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Account", bundle: nil)
+        if let nav = storyboard.instantiateViewController(withIdentifier: "profileNav") as? UINavigationController {
+            
+            present(nav, animated: true, completion: nil)
+            
+            token = NotificationCenter.default.addObserver(forName: .didTapProfilePics, object: nil, queue: .main, using: { [weak self] noti in
+                guard let strongSelf = self else { return }
+                guard let profileImages = noti.userInfo?[ProfilePicturesViewController.picsKey] as? Int else { return }
+                guard let image = UIImage(named: "\(profileImages)") else { return }
+                
+                strongSelf.profileImageView.image = image
+                StorageDataSource.shard.save(image: image)
+                
+            })
+        }
+    }
+    
+    
+    deinit {
+        if let token = token {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
     
     
@@ -58,8 +89,9 @@ class SettingTableViewController: UITableViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         profileImageView.clipsToBounds = true
         profileImageView.contentMode = .scaleAspectFill
+        nameLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
+        enterYearAndUniNameLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
+        emailLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
     }
-    
-   
 }

@@ -23,133 +23,58 @@ class ChangeAppPasswordViewController: UIViewController {
     @IBOutlet weak var thirdContainerView: UIView!
     @IBOutlet weak var fourthContainerView: UIView!
     
-    @objc func process(notification: Notification, textField: UITextField) {
-        
-        guard let number = notification.userInfo?["number"] as? String else { return }
-        
-        guard let textField = notification.userInfo?["textField"] as? UITextField else { return }
-        
-        
-        switch textField {
+    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var changePasswordField: UITextField!
+    
+    
+    /// PasswordNotCorrect Notification이 전달되면 실행되는 메소드입니다.
+    /// - Parameter notifcation: Notification
+    @objc func passwordNotCorrectProcecss(notifcation: Notification) {
+        DispatchQueue.main.async {
+            self.passwordField.text = ""
             
-        case firstTextField:
-            firstContainerView.backgroundColor = UIColor.black
-            secondTextField.becomeFirstResponder()
-            
-        case secondTextField:
-            secondContainerView.backgroundColor = UIColor.black
-            thirdTextField.becomeFirstResponder()
-            
-        case thirdTextField:
-            thirdContainerView.backgroundColor = UIColor.black
-            fourthTextField.becomeFirstResponder()
-            
-        case fourthTextField:
-            fourthContainerView.backgroundColor = UIColor.black
-            fourthTextField.resignFirstResponder()
-            
-        default:
-            break
-        }
-        
-        
-        if !didPasswordSet { /// 처음에 비밀번호를 설정할 때 실행되는 블록
-            
-            if password == nil {
-                password = number
-            } else {
-                password?.append(number)
+            [self.firstContainerView, self.secondContainerView,
+             self.thirdContainerView, self.fourthContainerView].forEach {
+                $0?.backgroundColor = UIColor.white
             }
-            
-            
-            guard let password = password, password.count == 4 else { return }
-            
-            
-            didPasswordSet = true
-            firstTextField.becomeFirstResponder()
-            
-        } else { /// 비밀번호 재확인 시 실행되는 블록
-            
-            if passwordCheck == nil {
-                passwordCheck = number
-            } else {
-                passwordCheck?.append(number)
-            }
-            
-            
-            guard let pw = passwordCheck, pw.count == 4 else {
-                return
-            }
-            
-            
-            guard let passwordCheck = passwordCheck,
-                  passwordCheck.count == 4,
-                  password == passwordCheck else {
-                      
-                      alert(message: "비밀번호가 일치하지 않습니다. 다시 시도하십시오.")
-                      /// 비밀번호 설정이 완료되지 않았을 때 Notification. SetPasswordViewController에 옵저버 존재.
-                      NotificationCenter.default.post(name: Notification.Name.PasswordNotSet,
-                                                      object: nil)
-                      
-                      [firstContainerView, secondContainerView, thirdContainerView, fourthContainerView].forEach {
-                          $0?.backgroundColor = UIColor.white
-                      }
-                      
-                      
-                      firstTextField.becomeFirstResponder()
-                      passwordCheck = nil
-                      
-                      
-                      return
-                  }
-            
-            alert(message: "비밀번호가 설정되었습니다.")
-            
-            
-            /// 비밀번호 설정이 최종적으로 완료되면 보내는 Notification. SetPasswordViewController에 옵저버 존재.
-            NotificationCenter.default.post(name: Notification.Name.PasswordDidSet,
-                                            object: nil,
-                                            userInfo: ["password": passwordCheck])
-            
-            
-            let completion = {
-                self.navigationController?.popViewController(animated: true)
-            }
-            
-            
-            guard let coordinator = transitionCoordinator else {
-                completion()
-                return
-            }
-            
-            
-            coordinator.animate(alongsideTransition: nil) { _ in
-                completion()
-            }
-        }
-        
-        navigationItem.title = "비밀번호 확인"
-        [firstContainerView, secondContainerView, thirdContainerView, fourthContainerView].forEach {
-            $0?.backgroundColor = UIColor.white
         }
     }
     
+    
+    /// PasswordIsSame Notification이 전달되면 실행되는 메소드입니다.
+    /// - Parameter notifcation: Notification
+    @objc func passwordSameProcess(notifcation: Notification) {
+        DispatchQueue.main.async {
+            self.changePasswordField.text = ""
+            
+            [self.firstContainerView, self.secondContainerView,
+             self.thirdContainerView, self.fourthContainerView].forEach {
+                $0?.backgroundColor = UIColor.white
+            }
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // 뒤로 가기 버튼 없애기
         self.navigationItem.setHidesBackButton(true, animated:true)
         
-        firstTextField.becomeFirstResponder()
+        passwordField.becomeFirstResponder()
+        
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(process(notification:textField:)),
-                                               name: Notification.Name.NumberDidEntered, object: nil)
+                                               selector: #selector(passwordNotCorrectProcecss(notifcation:)),
+                                               name: Notification.Name.PasswordNotCorrect,
+                                               object: nil)
         
-        [firstTextField, secondTextField, thirdTextField, fourthTextField].forEach {
-            $0?.tintColor = .clear
-        }
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(passwordSameProcess(notifcation:)),
+                                               name: Notification.Name.PasswordIsSame,
+                                               object: nil)
     }
+    
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -159,6 +84,16 @@ class ChangeAppPasswordViewController: UIViewController {
 
 
 extension ChangeAppPasswordViewController: UITextFieldDelegate {
+    
+    /// 지정된 텍스트를 변경할 것인지 delegate에게 묻는 메소드입니다.
+    ///
+    /// 비밀번호는 4자리로 제한합니다.
+    ///
+    /// - Parameters:
+    ///   - textField: 텍스트를 포함하고 있는 TextField.
+    ///   - range: 지정된 문자 범위입니다.
+    ///   - string: 지정된 범위에 대한 대체 문자열입니다.
+    /// - Returns: Bool
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
@@ -168,37 +103,93 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
         
         
         switch textField {
-        case firstTextField:
+        case passwordField:
+            // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
+            if let _ = string.rangeOfCharacter(from: charSet) { return false }
+            
             if finalText.count == 1 {
-                NotificationCenter.default.post(name: NSNotification.Name.NumberDidEntered,
-                                                object: nil,
-                                                userInfo: ["number": finalText, "textField": textField])
+                firstContainerView.backgroundColor = UIColor.black
+            } else if finalText.count == 2 {
+                secondContainerView.backgroundColor = UIColor.black
+            } else if finalText.count == 3 {
+                thirdContainerView.backgroundColor = UIColor.black
+            } else {
+                password = finalText
+                
+                fourthContainerView.backgroundColor = UIColor.black
+                
+                guard password == dummyPassword else {
+                    alert(message: "비밀번호가 일치하지 않습니다. 다시 시도하십시오.")
+                    
+                    /// 비밀번호가 일치하지 않을 때 사용하는 Notifcation.
+                    /// MakingPasswordViewController에 옵저버 존재.
+                    NotificationCenter.default.post(name: Notification.Name.PasswordNotCorrect,
+                                                    object: nil)
+                    return false
+                }
+                
+                
+                navigationItem.title = "비밀번호 변경"
+                [firstContainerView, secondContainerView,
+                 thirdContainerView, fourthContainerView].forEach {
+                    $0?.backgroundColor = UIColor.white
+                }
+                
+                changePasswordField.becomeFirstResponder()
             }
             
-        case secondTextField:
-            if finalText.count == 1 {
-                NotificationCenter.default.post(name: NSNotification.Name.NumberDidEntered,
-                                                object: nil,
-                                                userInfo: ["number": finalText, "textField": textField])
-            }
-            
-        case thirdTextField:
-            if finalText.count == 1 {
-                NotificationCenter.default.post(name: NSNotification.Name.NumberDidEntered,
-                                                object: nil,
-                                                userInfo: ["number": finalText, "textField": textField])
-            }
-            
-        case fourthTextField:
-            if finalText.count == 1 {
-                NotificationCenter.default.post(name: NSNotification.Name.NumberDidEntered,
-                                                object: nil,
-                                                userInfo: ["number": finalText, "textField": textField])
-            }
         default:
+            // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
+            if let _ = string.rangeOfCharacter(from: charSet) { return false }
+            
+            if finalText.count == 1 {
+                firstContainerView.backgroundColor = UIColor.black
+            } else if finalText.count == 2 {
+                secondContainerView.backgroundColor = UIColor.black
+            } else if finalText.count == 3 {
+                thirdContainerView.backgroundColor = UIColor.black
+            } else {
+                fourthContainerView.backgroundColor = UIColor.black
+                passwordCheck = finalText
+                
+                guard dummyPassword != passwordCheck else {
+                    
+                    alert(message: "이전 비밀번호와 동일한 비밀번호입니다. 다른 비밀번호를 설정해주세요.")
+                    
+                    /// 비밀번호가 일치하지 않을 때 사용하는 Notifcation.
+                    NotificationCenter.default.post(name: Notification.Name.PasswordIsSame,
+                                                    object: nil)
+                    return false
+                }
+                
+                alert(message: "비밀번호가 변경되었습니다.")
+                
+                /// 비밀번호 설정이 최종적으로 완료되면 보내는 Notification. SetPasswordViewController에 옵저버 존재.
+                NotificationCenter.default.post(name: Notification.Name.PasswordDidSet,
+                                                object: nil,
+                                                userInfo: ["password": passwordCheck])
+                
+                
+                /// navigationController를 자동으로 pop합니다.
+                let completion = {
+                    _ = self.navigationController?.popViewController(animated: true)
+                }
+                
+                
+                guard let coordinator = transitionCoordinator else {
+                    completion()
+                    return false
+                }
+                
+                
+                coordinator.animate(alongsideTransition: nil) { _ in
+                    completion()
+                }
+            }
+            
+            
             return true
         }
-        
         return true
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 
 class CategoryTableViewCell: UITableViewCell {
+    /// 카테고리 관련 변수들
     @IBOutlet weak var allButton: RoundedButton!
     @IBOutlet weak var wantTogoButton: RoundedButton!
     @IBOutlet weak var haveBeenButton: RoundedButton!

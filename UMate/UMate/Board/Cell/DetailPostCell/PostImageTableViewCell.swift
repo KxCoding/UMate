@@ -25,6 +25,8 @@ class PostImageTableViewCell: UITableViewCell {
     
     func configure(post: Post) {
         selectedPost = post
+        
+        /// 사진이 없을 때 이미지를 표시하는 collectionView 숨김
         postImageCollectionView.isHidden = post.images.isEmpty
     }
 }

@@ -33,13 +33,13 @@ class PostContentTableViewCell: UITableViewCell {
         
         if post.isliked {
             likeImageView.image = UIImage(named: "heart2")
-            likeImageView.tintColor = .darkGray
+            likeImageView.tintColor = UIColor.init(named: "darkGraySubtitleColor")
             
             post.isliked = false
             post.likeCount -= 1
         } else {
             likeImageView.image = UIImage(named: "heart2.fill")
-            likeImageView.tintColor = .black
+            likeImageView.tintColor = UIColor.init(named: "blackSelectedColor")
             
             post.isliked = true
             post.likeCount += 1
@@ -55,7 +55,7 @@ class PostContentTableViewCell: UITableViewCell {
         
         if post.isScrapped {
             scrapImageView.image = UIImage(named: "bookmark64")
-            scrapImageView.tintColor = .darkGray
+            scrapImageView.tintColor = UIColor.init(named: "darkGraySubtitleColor")
             scrapImageView.alpha = 0.9
             
             post.isScrapped = false
@@ -64,7 +64,7 @@ class PostContentTableViewCell: UITableViewCell {
     
         } else {
             scrapImageView.image = UIImage(named: "bookmark64.fill")
-            scrapImageView.tintColor = .black
+            scrapImageView.tintColor = UIColor.init(named: "blackSelectedColor")
             scrapImageView.alpha = 1
             
             post.isScrapped = true
@@ -83,22 +83,26 @@ class PostContentTableViewCell: UITableViewCell {
     }
     
     
+    /// PostContent Cell 초기화하는 메소드
+    /// - Parameter post: 선택된 post
     func configure(post: Post) {
+        /// 좋아요 버튼
         if post.isliked {
             likeImageView.image = UIImage(named: "heart2.fill")
-            likeImageView.tintColor = .black
+            likeImageView.tintColor = UIColor.init(named: "blackSelectedColor")
         } else {
             likeImageView.image = UIImage(named: "heart2")
-            likeImageView.tintColor = .darkGray
+            likeImageView.tintColor = UIColor.init(named: "darkGraySubtitleColor")
         }
         
+        /// 스크랩 버튼
         if post.isScrapped {
             scrapImageView.image = UIImage(named: "bookmark64.fill")
-            scrapImageView.tintColor = .black
+            scrapImageView.tintColor = UIColor.init(named: "blackSelectedColor")
             scrapImageView.alpha = 1
         } else {
             scrapImageView.image = UIImage(named: "bookmark64")
-            scrapImageView.tintColor = .darkGray
+            scrapImageView.tintColor = UIColor.init(named: "darkGraySubtitleColor")
             scrapImageView.alpha = 0.9
         }
         

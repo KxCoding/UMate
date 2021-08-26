@@ -12,9 +12,10 @@ import UIKit
 extension UIButton {
     /// 버튼 테마 메소드
     func setButtonTheme() {
-        self.backgroundColor = UIColor.black
+        self.backgroundColor = UIColor(named: "black")
         self.tintColor = UIColor.white
-        self.layer.cornerRadius = self.layer.frame.height / 2
+        self.frame.size.height = 40
+        self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 extension UIViewController {
     
-    /// UIImage를 얻을 때 사용 합니다.
+    /// UIImage를 얻을 때 사용합니다.
     /// navigationBar의 setBackgroundImage와 shadowImage의 커스텀 설정에 사용합니다.
     /// - Parameters:
     ///   - color: 원하는 색상을 배경색으로 전달합니다.

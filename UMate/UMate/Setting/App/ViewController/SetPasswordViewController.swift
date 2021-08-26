@@ -19,11 +19,9 @@ class SetPasswordViewController: UIViewController {
     }
     
     @IBOutlet weak var containerView: UIView!
-
-    
     @IBOutlet weak var setPasswordSwitch: UISwitch!
     
-    
+
     /// 암호 잠금 스위치 값이 변경되면 호출됩니다.
     @IBAction func setPasswordStatusChanged(_ sender: UISwitch) {
         if sender.isOn { /// 암호 잠금이 활성화된 상태
@@ -97,6 +95,12 @@ class SetPasswordViewController: UIViewController {
     @objc func completeProcess(notification: Notification) {
         /// 비밀번호가 설정되었을 경우, 암호 잠금 스위치는 활성화.
         setPasswordSwitch.isOn = true
+        
+        guard let password = notification.userInfo?["password"] as? String else {
+                    return
+        }
+                
+        dummyPassword = password
     }
     
     override func viewDidLoad() {
@@ -117,4 +121,7 @@ class SetPasswordViewController: UIViewController {
         context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }

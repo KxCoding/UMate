@@ -14,21 +14,22 @@ class CategoryBoardCollectionViewCell: UICollectionViewCell {
     
     
     override var isSelected: Bool {
+        /// 카테고리 선택시에 언더바 색상 변경 
         didSet {
             if isSelected {
                 UIView.animate(withDuration: 0.3) {
-                    self.categoryView.backgroundColor = .lightGray
+                    self.categoryView.backgroundColor = UIColor.init(named: "blackSelectedColor")
                 }
             } else {
                 UIView.animate(withDuration: 0.3) {
-                    self.categoryView.backgroundColor = .white
+                    self.categoryView.backgroundColor = UIColor.init(named: "barColor")
                 }
             }
         }
     }
     
     
-    func configure(categories: [String], indexPath: IndexPath) {
-        categoryName.text = categories[indexPath.row]
+    func configure(categoryNames: [String], indexPath: IndexPath) {
+        categoryName.text = categoryNames[indexPath.row]
     }
 }

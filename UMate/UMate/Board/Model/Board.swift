@@ -9,15 +9,17 @@
 import UIKit
 
 class Board {
-    internal init(boardTitle: String, posts: [Post], categories: [String] = []) {
+    internal init(boardTitle: String, posts: [Post], categoryNumbers: [Int] = [], categoryNames: [String] = []) {
         self.boardTitle = boardTitle
         self.posts = posts
-        self.categories = categories
+        self.categoryNumbers = categoryNumbers
+        self.categoryNames = categoryNames
     }
     
     let boardTitle: String
     var posts: [Post]
-    var categories: [String]
+    var categoryNumbers: [Int]
+    var categoryNames: [String]
 }
 
 struct BoardUI {

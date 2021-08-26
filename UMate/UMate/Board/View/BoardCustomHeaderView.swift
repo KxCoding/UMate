@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+/// 게시판 목록 화면에 expandable board에 들어갈 header
 class BoardCustomHeaderView: UITableViewHeaderFooterView {
     
     let title = UILabel()

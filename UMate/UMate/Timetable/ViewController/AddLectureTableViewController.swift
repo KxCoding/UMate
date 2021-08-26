@@ -400,7 +400,10 @@ extension AddLectureTableViewController: UITextFieldDelegate {
     ///   - range: 지정된 문자 범위입니다.
     ///   - string: 지정된 범위에 대한 대체 문자열입니다. 
     /// - Returns: Bool
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
         guard let text = textField.text else { return true }
         
         let newLength = text.count + string.count - range.length
