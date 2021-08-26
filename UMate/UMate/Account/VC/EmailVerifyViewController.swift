@@ -6,16 +6,21 @@
 //
 
 import UIKit
+import KeychainSwift
 
 class EmailVerifyViewController: UIViewController {
+    
     @IBOutlet weak var sendCodeButton: UIButton!
     @IBOutlet weak var emailVerificationButton: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var codeTextField: UITextField!
     
+    /// 특정 텍스트필드 조작을 위한 속성
     var activeTextField: UITextField? = nil
+    var keyChain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
-    
+    /// 이메일 검증 메소드
+    /// - Parameter sender: sendCodeButton
     @IBAction func sendCodeButtonAction(_ sender: Any) {
         guard let email = emailTextField.text,
               isEmailValid(email),
@@ -23,19 +28,31 @@ class EmailVerifyViewController: UIViewController {
                   alert(title: "알림", message: "잘못된 형식의 이메일입니다.")
                   return
               }
+        
+        if keyChain.set(email, forKey: Keys.userEmailKey, withAccess: .accessibleAfterFirstUnlock) {
+            print("Succeed Set email")
+        } else {
+            print("Faild Set")
+        }
     }
     
     
+    /// 코드 전송 버튼
+    /// - Parameter sender: emailVerificationButton
     @IBAction func emailVerificationButtonAction(_ sender: Any) {
         guard let codeField = codeTextField.text, codeField == "19930725" else {
             alert(title: "알림", message: "잘못된 코드입니다.")
             return
         }
         
-        
     }
     
     
+    
+    ///  검증 받은 이메일로 회원가입 진행시 동일하게 적용하는 목적의 메소드.
+    /// - Parameters:
+    ///   - segue: DetailRegisterViewController
+    ///   - sender: Any?
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? DetailRegisterViewController {
             vc.verifiedEmail = emailTextField.text
@@ -45,26 +62,34 @@ class EmailVerifyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 버튼 모양 끝에 살짝 동그랗게
         [sendCodeButton, emailVerificationButton].forEach({
             $0?.layer.cornerRadius = 14
             
         })
+        
+        // 텍스트필드 뷰 깎기
         [emailTextField, codeTextField].forEach {
             $0?.layer.cornerRadius = 16
             $0?.clipsToBounds = true
         }
         
+        // 키보드 노티피케이션 호출
         addKeyboardWillHide()
         addKeyboardWillShow()
         
+        // 더미데이터 및 delegate선언
         codeTextField.delegate = self
         codeTextField.text = "19930725"
         emailTextField.text = "qwer123@gmail.com"
+        
+        // 백그라운드 탭시 키보드 아래로.
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailRegisterViewController.backgroundTap))
         self.view.addGestureRecognizer(tapGestureRecognizer)
     }
     
     
+    // regular expression으로 검증하는 메소드
     func isEmailValid(_ email: String) -> Bool {
         if let range = email.range(of: Regex.email, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (email.startIndex, email.endIndex) {
             return true
@@ -73,13 +98,21 @@ class EmailVerifyViewController: UIViewController {
         return false
     }
     
-    
+    // 키보드 탭시 일어나는 이벤트를 전달
     @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
 }
 
 extension EmailVerifyViewController: UITextFieldDelegate {
+    
+    /// codeTextField 텍스트필드에 숫자를 제외한 다른 텍스트는 작성 불가
+    /// - Parameters:
+    ///   - textField: UITextField
+    ///   - range: NSRange
+    ///   - string: String
+    /// - Returns: 리턴 트루시 텍스트를 입력가능 false일시 불가
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let codeField = codeTextField.text else { return false }
         let finalStr = NSString(string: codeField).replacingCharacters(in: range, with: string)
@@ -90,12 +123,12 @@ extension EmailVerifyViewController: UITextFieldDelegate {
         return false
     }
     
-    
+    /// 특정 텍스트필드에 값이 입력될시 키보드가 텍스트필드를 가려질 경우를 만들기위한 메소드.
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField
     }
     
-    
+    /// 특정 텍스트필드에 입력이 끝났을시 키보드가 텍스트필드를 가려질 경우를 만들기위한 메소드.
     func textFieldDidEndEditing(_ textField: UITextField) {
         activeTextField = nil
     }
@@ -103,6 +136,8 @@ extension EmailVerifyViewController: UITextFieldDelegate {
 }
 
 extension EmailVerifyViewController {
+    
+    /// 텍스트필드에 키보드가 맞닿을경우 해당 메소드가 실행됨
     func addKeyboardWillShow() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return  }
@@ -132,6 +167,7 @@ extension EmailVerifyViewController {
     }
     
     
+    /// 키보드 내리는 메소드
     func addKeyboardWillHide() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return }
