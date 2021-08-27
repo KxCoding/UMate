@@ -9,8 +9,13 @@ import UIKit
 import WebKit
 
 extension Notification.Name {
+    
     /// 북마크 토글 시
-    static let bookmarkUpdate = Notification.Name(rawValue: "bookmarkUpdate")
+    static let updateBookmark = Notification.Name(rawValue: "bookmarkUpdate")
+    
+    /// url 관련 버튼을 눌렀을 때
+    static let openUrl = Notification.Name(rawValue: "openUrl")
+    
 }
 
 
@@ -34,16 +39,12 @@ class InfoSectionTableViewCell: UITableViewCell {
     /// 정보를 표시할 가게
     var target: Place!
     
-    /// 셀의 부모 뷰 컨트롤러
-    weak var viewController: UIViewController?
-    
     
     /// 셀 내부 각 뷰들이 표시하는 content 초기화
     /// - Parameter content: 표시할 내용을 담은 Place 객체
-    func configure(with content: Place, viewController: UIViewController) {
+    func configure(with content: Place) {
         
         target = content
-        self.viewController = viewController
         
         placeTypeImage.image = target.type.iconImage
         placeNameLabel.text = target.name
@@ -87,7 +88,8 @@ class InfoSectionTableViewCell: UITableViewCell {
     @IBAction func openInInstagram(_ sender: UIButton) {
         guard let id = target.instagramID,
               let url = URL(string: "https://instagram.com/\(id)") else { return }
-        viewController?.openUrl(with: url)
+        
+        NotificationCenter.default.post(name: .openUrl, object: nil, userInfo: ["url": url])
     }
     
     
@@ -96,13 +98,13 @@ class InfoSectionTableViewCell: UITableViewCell {
     @IBAction func openInSafari(_ sender: Any) {
         guard let urlString = target.url, let url = URL(string: urlString) else { return }
         
-        viewController?.openUrl(with: url)
+        NotificationCenter.default.post(name: .openUrl, object: nil, userInfo: ["url": url])
     }
     
     
     /// 버튼을 누르면 해당 가게가 북마크됨 (사용자 북마크)
     /// - Parameter sender: 버튼
-    @IBAction func bookmarked(_ sender: UIButton) {
+    @IBAction func updateBookmark(_ sender: UIButton) {
         /// 선택 상태 전환
         sender.isSelected = !sender.isSelected
         
@@ -114,7 +116,7 @@ class InfoSectionTableViewCell: UITableViewCell {
         if let index = PlaceUser.tempUser.userData.bookmarkedPlaces.firstIndex(of: target.name) {
             PlaceUser.tempUser.userData.bookmarkedPlaces.remove(at: index)
             /// 노티피케이션 전송
-            NotificationCenter.default.post(name: .bookmarkUpdate, object: nil)
+            NotificationCenter.default.post(name: .updateBookmark, object: nil)
         } else {
             PlaceUser.tempUser.userData.bookmarkedPlaces.append(target.name)
         }
@@ -129,60 +131,4 @@ class InfoSectionTableViewCell: UITableViewCell {
 
 
 
-/// 웹 링크를 열 수 있는 화면
-class OpenURLViewController: UIViewController {
-    
-    @IBOutlet weak var webView: WKWebView!
-    
-    var urlString: String? {
-        get {
-            return nil
-        }
-        set {
-            guard let urlStr = newValue else { return }
-            url = URL(string: urlStr)
-        }
-    }
-    
-    var url: URL?
-     
-    
-    /// 현재 웹 뷰 화면을 dismiss합니다.
-    /// - Parameter sender: Done 버튼
-    @IBAction func done(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    
-    /// 현재 웹 뷰에서 표시하는 웹 컨텐츠에 대한 공유 작업을 수행할 수 있도록 선택 가능한 메뉴를 표시합니다.
-    /// - Parameter sender: 공유 버튼
-    @IBAction func doContexualAction(_ sender: Any) {
-        
-    }
-    
-    
-    /// 현재 웹 뷰에서 표시하는 웹 컨텐츠를 사파리에서 엽니다.
-    @IBAction func openInSafari(_ sender: Any) {
-        
-        // 현재!!! 링크!!! 여야해요
-        if let currentContent = webView.url, UIApplication.shared.canOpenURL(currentContent) {
-            UIApplication.shared.open(currentContent, options: [:], completionHandler: nil)
-        }
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        print(#function, self)
-        
-        if let str = urlString, let url = URL(string: str) {
-            let request = URLRequest(url: url)
-            webView.load(request)
 
-        }
-        
-        
-    }
-    
-}

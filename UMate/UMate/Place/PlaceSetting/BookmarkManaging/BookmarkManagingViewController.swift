@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ManageBookmarkViewController: UIViewController {
+class BookmarkManagingViewController: UIViewController {
     
     // MARK: Outlets
     
@@ -60,8 +60,11 @@ class ManageBookmarkViewController: UIViewController {
         bookmarkListTableView.dataSource = self
         bookmarkListTableView.delegate = self
         
+        /// tableview configuration
+        bookmarkListTableView.rowHeight = UITableView.automaticDimension
+        
         /// 북마크 수정 사항 팔로우
-        NotificationCenter.default.addObserver(forName: .bookmarkUpdate, object: nil, queue: .main) { [weak self] noti in
+        NotificationCenter.default.addObserver(forName: .updateBookmark, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             /// 삭제 시 테이블 뷰 업데이트
             self.bookmarkListTableView.reloadData()
@@ -96,7 +99,7 @@ class ManageBookmarkViewController: UIViewController {
 
 // MARK: CollectionView Delegation
 
-extension ManageBookmarkViewController: UICollectionViewDataSource {
+extension BookmarkManagingViewController: UICollectionViewDataSource {
     
     /// 컬렉션 뷰의 각 섹션에서 표시할 항목의 수를 제공하는 메소드
     /// - Parameters:
@@ -132,7 +135,7 @@ extension ManageBookmarkViewController: UICollectionViewDataSource {
 
 
 
-extension ManageBookmarkViewController: UICollectionViewDelegate {
+extension BookmarkManagingViewController: UICollectionViewDelegate {
     
     /// collection view의 아이템이 선택되었을 떄 호출되어 구현된 작업을 실행합니다.
     /// - Parameters:
@@ -151,7 +154,7 @@ extension ManageBookmarkViewController: UICollectionViewDelegate {
 
 
 
-extension ManageBookmarkViewController: UICollectionViewDelegateFlowLayout {
+extension BookmarkManagingViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width / 4.5
         return CGSize(width: width, height: width * 1.3)
@@ -163,7 +166,7 @@ extension ManageBookmarkViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: TableView Delegation
 
-extension ManageBookmarkViewController: UITableViewDataSource {
+extension BookmarkManagingViewController: UITableViewDataSource {
     
     /// 테이블 뷰에 표시할 섹션의 수를 제공하는 메소드
     /// - Parameter tableView: 테이블 뷰
@@ -195,23 +198,17 @@ extension ManageBookmarkViewController: UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
 }
 
 
 
 
-extension ManageBookmarkViewController: UITableViewDelegate {
-    
-    /// 각 항목이 표시할 셀의 높이를 제공하는 메소드
-    /// - Parameters:
-    ///   - tableView: 테이블 뷰
-    ///   - indexPath: 항목의 indexPath
-    /// - Returns: 각 항목이 표시할 셀의 높이
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.height / 4.7
-    }
-    
-    
+extension BookmarkManagingViewController: UITableViewDelegate {
+
     /// 우측 contextual action menu를 제공하는 메소드
     /// - Parameters:
     ///   - tableView: 테이블 뷰
@@ -223,11 +220,11 @@ extension ManageBookmarkViewController: UITableViewDelegate {
         
         var conf = UISwipeActionsConfiguration(actions: [])
         
-        let deleteBookmarkMenu = UIContextualAction(style: .normal, title: "북마크\n해제") { [weak self] action, view, completion in
+        let deleteBookmarkMenu = UIContextualAction(style: .destructive, title: "북마크\n삭제") { [weak self] action, view, completion in
             
             guard let self = self else { return }
             
-            /// 북마크된 가게가 [이름으로] 검색 - 삭제
+            /// 북마크된 가게를 [이름으로] 검색 - 삭제
             if let index = PlaceUser.tempUser.userData.bookmarkedPlaces.firstIndex(of: selectedPlace.name) {
                 PlaceUser.tempUser.userData.bookmarkedPlaces.remove(at: index)
             }
@@ -240,10 +237,10 @@ extension ManageBookmarkViewController: UITableViewDelegate {
             completion(true)
         }
         
-        deleteBookmarkMenu.backgroundColor = .systemGray5
+        deleteBookmarkMenu.backgroundColor = .systemRed
         deleteBookmarkMenu.image = UIImage(systemName: "bookmark.slash.fill")
         
-        conf.performsFirstActionWithFullSwipe = true
+        conf.performsFirstActionWithFullSwipe = false
         
         conf = UISwipeActionsConfiguration(actions: [deleteBookmarkMenu])
         

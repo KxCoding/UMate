@@ -1,13 +1,13 @@
 //
-//  SetBrowserTableViewController.swift
-//  SetBrowserTableViewController
+//  BrowserSettingTableViewController.swift
+//  BrowserSettingTableViewController
 //
 //  Created by Effie on 2021/08/23.
 //
 
 import UIKit
 
-class SetBrowserTableViewController: UITableViewController {
+class BrowserSettingTableViewController: UITableViewController {
     
     // MARK: outlets
     

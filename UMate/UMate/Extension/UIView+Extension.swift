@@ -32,28 +32,28 @@ extension UIView {
         for op in options {
             switch op {
             case .lightShadow:
-                self.lightShadow()
+                self.applyLightShadow()
                 
             case .heavyShadow:
-                self.heavyShadow()
+                self.applyHeavyShadow()
                 
             case .circle:
-                self.circle()
+                self.applyCircleShape()
                 
             case .pillShape:
-                pillShape()
+                applyPillShape()
                 
             case .squircleBig:
-                bigRoundedRect()
+                applyBigRoundedRect()
                 
             case .squircleSmall:
-                smallRoundedRect()
+                applySmallRoundedRect()
                 
             case .lightBorder:
-                lightBorder()
+                applyLightBorder()
                 
             case .colorBorder(let color):
-                colorBorder(with: color)
+                applyColorBorder(with: color)
                 
             case .removeBorder:
                 removeBorder()
@@ -67,45 +67,45 @@ extension UIView {
     
     
     /// 원 모양
-    private func circle() {
+    private func applyCircleShape() {
         
     }
     
     /// 알약 모양
-    private func pillShape() {
+    private func applyPillShape() {
         self.layer.cornerRadius = self.frame.height / 2
         
     }
     
     
     /// 상대적으로 큰 스퀘어클
-    private func bigRoundedRect() {
+    private func applyBigRoundedRect() {
         self.layer.cornerRadius = self.frame.height / 6
     }
     
     
     /// 상대적으로 작은 스퀘어클
-    private func smallRoundedRect() {
+    private func applySmallRoundedRect() {
         self.layer.cornerRadius = self.frame.height / 4
     }
     
     
     /// 얇은 보더 추가
-    private func lightBorder() {
+    private func applyLightBorder() {
         self.layer.borderColor = UIColor.systemGray4.cgColor
         self.layer.borderWidth = 1
     }
     
     
     /// 적당한 두께의 컬러 보더 추가
-    private func colorBorder(with borderColor: UIColor) {
+    private func applyColorBorder(with borderColor: UIColor) {
         self.layer.borderColor = borderColor.cgColor
         self.layer.borderWidth = 2
     }
     
     
     /// 옅은 그림자 추가
-    private func lightShadow() {
+    private func applyLightShadow() {
         self.layer.shadowColor = UIColor.lightGray.cgColor
         self.layer.shadowOpacity = 0.3
         self.layer.shadowRadius = 5
@@ -114,7 +114,7 @@ extension UIView {
     }
     
     /// 진한 그림자 추가
-    private func heavyShadow() {
+    private func applyHeavyShadow() {
         
     }
     
