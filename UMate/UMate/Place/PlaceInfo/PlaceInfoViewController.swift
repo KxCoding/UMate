@@ -44,6 +44,17 @@ class PlaceInfoViewController: UIViewController {
         
         placeInfoTableView.dataSource = self
         placeInfoTableView.delegate = self
+        
+        /// add notification observer
+        NotificationCenter.default.addObserver(forName: .openUrl, object: nil, queue: .main) { [weak self] noti in
+            guard let self = self else { return }
+            
+            /// 함께 전송 된 url을 바인딩
+            guard let url = noti.userInfo?["url"] as? URL else { return }
+            
+            /// url 열기
+            self.openUrl(with: url)
+        }
     }
     
     
@@ -139,7 +150,7 @@ extension PlaceInfoViewController: UITableViewDataSource {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InfoSectionTableViewCell", for: indexPath) as! InfoSectionTableViewCell
             
-            cell.configure(with: place, viewController: self)
+            cell.configure(with: place)
             
             return cell
             
@@ -192,7 +203,7 @@ extension PlaceInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return tableView.frame.width * 0.55
+            return tableView.frame.width * 0.5
         case 2:
             return tableView.frame.width / 8
         default:
