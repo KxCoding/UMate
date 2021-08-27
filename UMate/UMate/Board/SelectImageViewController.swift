@@ -23,7 +23,7 @@ class SelectImageViewController: UIViewController {
     
     // 첨부한 이미지를 담을 속성
     var imageList = [UIImage]()
-    //
+    
     let imageManager = PHImageManager()
     
     
@@ -41,7 +41,7 @@ class SelectImageViewController: UIViewController {
     }
     
     
-    /// <#Description#>
+    /// 게시글에 첨부할 이미지를 선택하는 메소드
     /// - Parameter sender: <#sender description#>
     @IBAction func imageSelectBtn(_ sender: Any) {
         guard let indexPath = imageCollectionView.indexPathsForSelectedItems else { return }
