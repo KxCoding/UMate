@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -115,7 +116,7 @@
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                             </subviews>
-                                                                            <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                                            <color key="backgroundColor" name="keywordContainer"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="bottom" secondItem="zbn-UX-Kd9" secondAttribute="bottom" constant="5" id="JzJ-g9-FzA"/>
                                                                                 <constraint firstItem="zbn-UX-Kd9" firstAttribute="leading" secondItem="JOk-RM-Muk" secondAttribute="leading" constant="15" id="QoN-XH-xOa"/>
@@ -133,7 +134,7 @@
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                             </subviews>
-                                                                            <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                                            <color key="backgroundColor" name="keywordContainer"/>
                                                                             <constraints>
                                                                                 <constraint firstItem="6Lo-hU-EAM" firstAttribute="leading" secondItem="da4-lY-WGn" secondAttribute="leading" constant="15" id="98H-K0-SCB"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="6Lo-hU-EAM" secondAttribute="trailing" constant="15" id="9Wo-1y-Tgv"/>
@@ -163,7 +164,7 @@
                                                 <constraint firstItem="aKx-an-mua" firstAttribute="top" secondItem="pE0-gN-Uft" secondAttribute="top" constant="15" id="uYm-3N-fLv"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <size key="customSize" width="341" height="128"/>
                                         <connections>
                                             <outlet property="districtLabel" destination="FEn-Sm-FRa" id="Xae-sb-Rhq"/>
@@ -343,11 +344,11 @@
         <image name="location_64" width="32" height="32"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="map" catalog="system" width="128" height="110"/>
+        <namedColor name="keywordContainer">
+            <color red="0.94900000095367432" green="0.94900000095367432" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

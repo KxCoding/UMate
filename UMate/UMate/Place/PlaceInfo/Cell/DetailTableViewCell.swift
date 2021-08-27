@@ -89,7 +89,6 @@ extension DetailTableViewCell: UICollectionViewDataSource {
         }
     }
     
-    
 }
 
 
@@ -103,8 +102,9 @@ class WordCollectionViewCell: UICollectionViewCell {
     func configure(with content: Place, indexPath: IndexPath) {
         target = content
     }
+    
     override func awakeFromNib() {
-        
+        configureStyle(with: [.squircleSmall])
     }
     
 }
@@ -129,9 +129,6 @@ class DistrictCollectionViewCell: WordCollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        // UI 초기화
-        districtItemView.layer.cornerRadius = districtItemView.frame.height / 4
     }
     
 }
@@ -156,9 +153,6 @@ class KeywordsCollectionViewCell: WordCollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        // UI 초기화
-        keywordItemView.layer.cornerRadius = keywordItemView.frame.height / 4
     }
     
     

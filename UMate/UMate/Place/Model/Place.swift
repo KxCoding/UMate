@@ -42,20 +42,7 @@ struct Place {
         
         /// 타입을 나타내는 아이콘
         var iconImage: UIImage? {
-            switch self {
-            case .cafe:
-                return UIImage(named: "cafe")
-            case .restaurant:
-                return UIImage(named: "restaurant")
-            case .bakery:
-                return UIImage(named: "bakery")
-            case .studyCafe:
-                return UIImage(named: "pencil")
-            case .pub:
-                return UIImage(named: "beer")
-            case .dessert:
-                return UIImage(named: "ice-cream")
-            }
+            return UIImage(named: self.description)
         }
         
         /// 타입을 나타내는 사진
