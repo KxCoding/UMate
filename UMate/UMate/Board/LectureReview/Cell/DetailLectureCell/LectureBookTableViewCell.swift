@@ -14,7 +14,6 @@ class LectureBookTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        bookStoreButton.tintColor = .white
         bookStoreButton.setButtonTheme()
     }
 }
