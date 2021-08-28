@@ -37,8 +37,8 @@ class UserReviewTableViewCell: UITableViewCell {
         recommendationImageView.isHighlighted = recommendationImageView.isHighlighted == true
         
         /// 하이라이트 상태에 따라 뷰 틴트 색상과 레이블 색상 변경
-        recommendationImageView.tintColor = recommendationImageView.isHighlighted ? .white : .lightGray
-        recommendationLabel.textColor = recommendationImageView.isHighlighted ? .white : .lightGray
+        recommendationImageView.tintColor = recommendationImageView.isHighlighted ? .white : .secondaryLabel
+        recommendationLabel.textColor = recommendationImageView.isHighlighted ? .white : .secondaryLabel
         
         /// 하이라이트 상태에 따라 뷰 색상 변경
         recommendationView.backgroundColor = recommendationImageView.isHighlighted ? .systemRed : .systemGray5
