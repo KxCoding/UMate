@@ -10,9 +10,9 @@ import UIKit
 class FilterViewController: UIViewController {
     @IBOutlet weak var filterTableView: UITableView!
     /// StoreTypeTableViewCell의 storeTypeFilterArray 배열을 저장할 배열
-    var list = [SearchPlaceItem.PlaceType]()
+    var list = [Place.PlaceType]()
     /// 이전 화면에서의 filterList를 받아올 배열
-    var filterList: [SearchPlaceItem.PlaceType]?
+    var filterList: [Place.PlaceType]?
     
     
     override func viewDidLoad() {
@@ -98,7 +98,7 @@ extension FilterViewController: UITableViewDataSource {
                     case .pub:
                         cell.pubButtonTapped(self)
                         
-                    case .desert:
+                    case .dessert:
                         cell.desertButtonTapped(self)
                     }
                 }

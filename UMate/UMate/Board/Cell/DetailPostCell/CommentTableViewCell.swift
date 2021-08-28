@@ -9,6 +9,7 @@ import UIKit
 
 class CommentTableViewCell: UITableViewCell {
     
+    //댓글 및 대댓글 저장을 위한 아울렛
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var userIdLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
@@ -21,10 +22,11 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var commentSeparationView: UIView!
     @IBOutlet weak var reCommentContainerView: UIStackView!
     
-    
     var selectedComment: Comment?
     
     
+    /// 사용자가 좋아요 버튼을 눌럿을 때 좋아요 수 및 좋아요 이미지 변경 메소드
+    /// - Parameter sender: 좋아요 Button
     @IBAction func userDidLike(_ sender: Any) {
         
         guard let comment = selectedComment else { return }
@@ -62,7 +64,7 @@ class CommentTableViewCell: UITableViewCell {
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         
         btnContainerView.layer.cornerRadius = 14
-        btnContainerView.layer.borderColor = UIColor.lightGray.cgColor
+        btnContainerView.layer.borderColor = UIColor.init(named: "lightGrayNonSelectedColor")?.cgColor
         btnContainerView.layer.borderWidth = 0.5
     }
     
@@ -101,6 +103,7 @@ class CommentTableViewCell: UITableViewCell {
             dateTimeLabel.text = comment.insertDate.commentDate
             heartCountLabel.text = comment.heartCount.description
         }
+        
         selectedComment = comment
     }
 }

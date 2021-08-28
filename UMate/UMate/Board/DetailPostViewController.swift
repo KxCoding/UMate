@@ -38,6 +38,7 @@ class DetailPostViewController: UIViewController {
     /// 댓글 및 대댓글 저장하는 메소드
     /// - Parameter sender: DetailPostViewController
     @IBAction func saveCommentBtn(_ sender: Any) {
+        
         let originalComment = dummyCommentList.filter { $0.isReComment == false }
         commentId = (dummyCommentList.count) + 1
         
@@ -118,45 +119,48 @@ class DetailPostViewController: UIViewController {
     }
     
     
+    /// 댓글을 단 사용자에게 쪽지를 보낼 수 있는 메소드
+    /// - Parameter sender: <#sender description#>
+    @IBAction func sendNoteBtn(_ sender: Any) {
+        // TODO: 쪽지보내기 ActionSheet
+        #if DEBUG
+        print("쪽지 보내기 성공!")
+        #endif
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         writeCommentContainerView.layer.cornerRadius = 14
         
-        var token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
-                                                           object: nil,
-                                                           queue: .main,
-                                                           using: { [weak self]  noti in
-                                                            guard let strongSelf = self else { return }
-                                                            
-                                                            if let frame = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-                                                                let height = frame.height - 70
-                                                                let tableViewHeight = frame.height
-                                                                
-                                                                strongSelf.commentContainerViewBottomConstraint.constant = height
-                                                                
-                                                                var inset = strongSelf.detailPostTableView.contentInset
-                                                                inset.bottom = tableViewHeight
-                                                                strongSelf.detailPostTableView.contentInset = inset
-                                                                strongSelf.detailPostTableView.scrollIndicatorInsets = inset
-                                                            }
-                                                           })
+        var token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main,using: { [weak self]  noti in
+            guard let strongSelf = self else { return }
+            
+            if let frame = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                let height = frame.height - 70
+                let tableViewHeight = frame.height
+                
+                strongSelf.commentContainerViewBottomConstraint.constant = height
+                
+                var inset = strongSelf.detailPostTableView.contentInset
+                inset.bottom = tableViewHeight
+                strongSelf.detailPostTableView.contentInset = inset
+                strongSelf.detailPostTableView.scrollIndicatorInsets = inset
+            }
+        })
         tokens.append(token)
         
         
-        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
-                                                       object: nil,
-                                                       queue: .main,
-                                                       using: { [weak self] (noti) in
-                                                        guard let strongSelf = self else { return }
-                                                        
-                                                        strongSelf.commentContainerViewBottomConstraint.constant = 8
-                                                        
-                                                        var inset = strongSelf.detailPostTableView.contentInset
-                                                        inset.bottom = 8
-                                                        strongSelf.detailPostTableView.contentInset = inset
-                                                        strongSelf.detailPostTableView.scrollIndicatorInsets = inset
-                                                       })
+        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main, using: { [weak self] (noti) in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.commentContainerViewBottomConstraint.constant = 8
+            
+            var inset = strongSelf.detailPostTableView.contentInset
+            inset.bottom = 8
+            strongSelf.detailPostTableView.contentInset = inset
+            strongSelf.detailPostTableView.scrollIndicatorInsets = inset
+        })
         tokens.append(token)
         
         

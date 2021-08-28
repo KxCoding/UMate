@@ -82,7 +82,7 @@ class DetailLectureReviewViewController: UIViewController {
             var resultCounter = [Count]()
             
             for i in counter {
-                resultCounter.append((i.key, i.value)) /// 빈도수, rawValue값
+                resultCounter.append((i.key, i.value)) /// rawValue값,  빈도수
             }
 
             resultCounter.sort{ $0.value > $1.value } /// 빈도수 높은게 왼쪽에 가도록

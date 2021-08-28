@@ -61,12 +61,10 @@ class ComposeViewController: UIViewController {
     }
     
     
-    
     /// 게시글 작성을 취소하는 메소드
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
     
     
     /// 게시글 저장을 위한 메소드

@@ -33,10 +33,10 @@ class PlaceSearchCollectionViewCell: UICollectionViewCell {
     
     /// 컬렉션뷰셀에 표시할 내용을 설정합니다.
     /// - Parameter searchItem: 표시할 내용을 가진 구조체
-    func configure(with searchItem: SearchPlaceItem) {
-        imageView.image = searchItem.image
-        placeTitle.text = searchItem.placeTitle
-        regionNameLabel.text = searchItem.regionName
-        classificationNameLabel.text = searchItem.classificationName
+    func configure(with searchItem: Place, image: UIImage?) {
+        imageView.image = image
+        placeTitle.text = searchItem.name
+        regionNameLabel.text = searchItem.district
+        classificationNameLabel.text = searchItem.type.rawValue
     }
 }
