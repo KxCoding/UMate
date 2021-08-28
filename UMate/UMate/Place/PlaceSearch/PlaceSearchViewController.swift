@@ -10,8 +10,9 @@ import UIKit
 class PlaceSearchViewController: UIViewController {
     @IBOutlet weak var searchCollectionView: UICollectionView!
     /// 화면에 표시할 데이터를 담을 변수
-    var list = [SearchPlaceItem]()
-    var filterList = [SearchPlaceItem.PlaceType]()
+    var list = [Place]()
+    var images = [UIImage?]()
+    var filterList = [Place.PlaceType]()
     var token: NSObjectProtocol?
     
     /// window에 추가할 DimView
@@ -24,60 +25,14 @@ class PlaceSearchViewController: UIViewController {
         return v
     }()
     
-    let dummyData: [SearchPlaceItem] = [
-        SearchPlaceItem(image: UIImage(named: "search_00"),
-                        placeTitle: "카페 지미스",
-                        regionName: "고양",
-                        classificationName: "카페",
-                        placeType: .cafe),
-        
-        SearchPlaceItem(image: UIImage(named: "search_01"),
-                        placeTitle: "카페 브리타니",
-                        regionName: "부산",
-                        classificationName: "카페",
-                        placeType: .cafe),
-        
-        SearchPlaceItem(image: UIImage(named: "search_00"),
-                        placeTitle: "가온",
-                        regionName: "청담",
-                        classificationName: "카페",
-                        placeType: .cafe),
-        
-        SearchPlaceItem(image: UIImage(named: "search_01"),
-                        placeTitle: "인생밥집",
-                        regionName: "제주시 서부",
-                        classificationName: "음식점",
-                        placeType: .restaurant),
-        
-        SearchPlaceItem(image: UIImage(named: "search_02"),
-                        placeTitle: "인디안썸머",
-                        regionName: "제주시 서부",
-                        classificationName: "와인바",
-                        placeType: .pub),
-        
-        SearchPlaceItem(image: UIImage(named: "search_03"),
-                        placeTitle: "인스밀",
-                        regionName: "서귀포시 서부",
-                        classificationName: "카페",
-                        placeType: .cafe),
-        
-        SearchPlaceItem(image: UIImage(named: "search_04"),
-                        placeTitle: "인셉트",
-                        regionName: "대전",
-                        classificationName: "카페",
-                        placeType: .cafe),
-        
-        SearchPlaceItem(image: UIImage(named: "search_05"),
-                        placeTitle: "인센스홀",
-                        regionName: "대전",
-                        classificationName: "카페",
-                        placeType: .cafe)
-    ]
-    
     
     /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
+        for image in 0...5 {
+            images.append(UIImage(named: "search_0\(image)"))
+        }
+        
         /// 네비게이션바에 백버튼 타이틀 지우고 SearchBar를 추가
         self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
         addSearchBar()
@@ -100,26 +55,26 @@ class PlaceSearchViewController: UIViewController {
             }
             
             /// 필터 화면에서 보낸 필터링할 열거형 타입 배열을 가져옵니다.
-            if let filterList = noti.userInfo?["filterItem"] as? [SearchPlaceItem.PlaceType] {
+            if let filterList = noti.userInfo?["filterItem"] as? [Place.PlaceType] {
                 self.filterList = filterList
                 
                 if !self.filterList.isEmpty {
-                    var data = [SearchPlaceItem]()
+                    var data = [Place]()
                     
                     /// 더미데이터에 속한 각 데이터의 placeType과 filterList의 placeType이 같다면 data배열에 추가합니다.
                     for filterItem in self.filterList {
-                        for item in self.dummyData {
-                            if item.placeType == filterItem {
+                        for item in Place.dummyData {
+                            if item.type == filterItem {
                                 data.append(item)
                             }
                         }
                     }
                     
-                    var containData = [SearchPlaceItem]()
+                    var containData = [Place]()
                     /// 현재 화면에 표시하고 있는 list에서 필터링합니다.
                     for currentItem in self.list {
                         for filterItem in data {
-                            if currentItem.placeTitle == filterItem.placeTitle {
+                            if currentItem.name == filterItem.name {
                                 containData.append(filterItem)
                             }
                         }
@@ -161,10 +116,17 @@ class PlaceSearchViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         /// window에 dimming View를 추가
         guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
-        window.addSubview(self.dimView)
         
         if let vc = segue.destination as? FilterViewController {
+            window.addSubview(self.dimView)
             vc.filterList = filterList
+        }
+        
+        if let cell = sender as? UICollectionViewCell,
+           let indexPath = searchCollectionView.indexPath(for: cell) {
+            if let vc = segue.destination as? PlaceInfoViewController {
+                vc.place = list[indexPath.item]
+            }
         }
     }
     
@@ -203,7 +165,8 @@ extension PlaceSearchViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceSearchCollectionViewCell", for: indexPath) as! PlaceSearchCollectionViewCell
         
         let target = list[indexPath.row]
-        cell.configure(with: target)
+        let image = images[indexPath.row]
+        cell.configure(with: target, image: image)
         
         return cell
     }
@@ -273,10 +236,10 @@ extension PlaceSearchViewController: UISearchBarDelegate {
         guard let text = searchBar.text else { return }
         
         /// 검색한 텍스트로 필터링
-        let containData = dummyData.filter { $0.placeTitle.contains(text) }
+        let containData = Place.dummyData.filter { $0.name.contains(text) }
         
         /// 필터링된 데이터를 장소 이름을 기준으로 오름차순 정렬
-        let sortContainData = containData.sorted { $0.placeTitle < $1.placeTitle }
+        let sortContainData = containData.sorted { $0.name < $1.name }
         
         list.append(contentsOf: sortContainData)
         
