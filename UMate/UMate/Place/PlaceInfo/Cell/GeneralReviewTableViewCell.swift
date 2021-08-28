@@ -22,8 +22,12 @@ class GeneralReviewTableViewCell: UITableViewCell {
     /// 초기화 작업을 실행합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
-        /// reviewWriteContainerView의 cornerRadius 설정
-        reviewWriteContainerView.configureStyle(with: [.pillShape])
+        /// reviewWriteContainerView UI 설정
+        reviewWriteContainerView.backgroundColor = UIColor(named: "black")
+        reviewWriteContainerView.tintColor = .white
+        reviewWriteContainerView.frame.size.height = 40
+        reviewWriteContainerView.layer.cornerRadius = 10
+        reviewWriteContainerView.layer.masksToBounds = true
     }
     
     
