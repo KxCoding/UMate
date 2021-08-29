@@ -15,27 +15,28 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
     
+    /// create instance to get  user acoount data 
     let keychain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
-    // 특정 텍스트필드를 조작하기위한 속성
+    /// 특정 텍스트필드를 조작하기위한 속성
     var activeTextField: UITextField? = nil
     
     /// 로그인 검증 메소드
     /// - Parameter sender: 로그인 버튼
     @IBAction func login(_ sender: Any) {
-        /// 키체인에 저장한 이메일 비밀번호만 로그인이 가능하게끔 조건문 작성
-//        guard let safeEmail = keychain.get(Keys.userEmailKey),
-//              let safePassword = keychain.get(Keys.passwordKey),
-//              let email = idTextField.text,
-//              let password = passwordTextField.text else { return }
-//
-//        /// 에러가 발생시 에러문 띄우게끔 작성
-//        if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
-//
-//        guard email == safeEmail && password == safePassword else {
-//            alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
-//            return
-//        }
+        // 키체인에 저장한 이메일 비밀번호만 로그인이 가능하게끔 조건문 작성
+        guard let safeEmail = keychain.get(Keys.userEmailKey),
+              let safePassword = keychain.get(Keys.passwordKey),
+              let email = idTextField.text,
+              let password = passwordTextField.text else { return }
+
+        /// 에러가 발생시 에러문 띄우게끔 작성
+        if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
+
+        guard email == safeEmail && password == safePassword else {
+            alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
+            return
+        }
         
         CommonViewController.shared.transitionToHome()
      

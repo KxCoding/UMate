@@ -28,10 +28,10 @@ class TermsOfConditionsTableViewController: UITableViewController {
     @IBOutlet weak var privacy: UITextView!
     @IBOutlet weak var community: UITextView!
     @IBOutlet weak var advertisement: UITextView!
-   
+    
     
     @IBAction func nextToEamilButton(_ sender: Any) {
-       let checkBoxList = [checkBox2, checkBox3, checkBox4, checkBox5, checkBox6]
+        let checkBoxList = [checkBox2, checkBox3, checkBox4, checkBox5, checkBox6]
         
         for elem in checkBoxList {
             guard elem?.on == true else {
@@ -55,23 +55,32 @@ class TermsOfConditionsTableViewController: UITableViewController {
             $0?.offAnimationType = .bounce
             
         })
-
+        
         /// 텍스트뷰 속성 초기화
         [serviceTOCTextView, personalInformationTOCTextView, communityTOCTextView, advertisementTOCTextView].forEach({
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
             
         })
+        
         verifyEmailButton.setButtonTheme()
         
-        /// 더미데이터
-        service.text = LocalStorage.database.service
-        privacy.text = LocalStorage.database.privacy
-        community.text = LocalStorage.database.location
+        /// initialze TermsOfConditions's Scripts
+        guard let serviceAssetData = NSDataAsset(name: "Service")?.data else { return }
+        guard let privacyAssetData = NSDataAsset(name: "Privacy")?.data else { return }
+        guard let locationAssetData = NSDataAsset(name: "Location")?.data else { return }
+        
+        guard let serviceStr = String(data: serviceAssetData, encoding: .utf8) else { return }
+        guard let privacyStr = String(data: privacyAssetData, encoding: .utf8) else { return }
+        guard let locationStr = String(data: locationAssetData, encoding: .utf8) else { return }
+        
+        service.text = serviceStr
+        privacy.text = privacyStr
+        community.text = locationStr
         
         navigationController?.navigationBar.tintColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
     }
-
+    
 }
 
 
@@ -86,5 +95,5 @@ extension TermsOfConditionsTableViewController: BEMCheckBoxDelegate {
         }
         
     }
-
+    
 }

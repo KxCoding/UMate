@@ -95,7 +95,7 @@ class DetailRegisterViewController: UIViewController {
         
         nextButton.setButtonTheme()
         
-        /// load Previous data in emailTextField.text
+        /// get to Previous data in emailTextField.text
             if let safeEmail = keyChain.get(Keys.userEmailKey) {
                 emailTextField.text = safeEmail
             }
@@ -191,8 +191,6 @@ extension DetailRegisterViewController: UITextFieldDelegate {
 
 
 extension DetailRegisterViewController {
-    
-    
     /// Invoke only this method when keyboard in case of contact with textField
     func keyboardWillShow() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] noti in
@@ -226,7 +224,6 @@ extension DetailRegisterViewController {
             strongSelf.view.frame.origin.y = 0
         }
     }
-    
     
     /// once didtap background forced to make lower the keyboard
     /// - Parameter sender: UITapGestureRecognizer
