@@ -16,6 +16,7 @@ class ExpandPostImageCollectionViewCell: UICollectionViewCell {
     
 
     override func awakeFromNib() {
+        super.awakeFromNib()
         /// view controller에서 두 번 탭된 것이 감지 됐을 때 옵저버가 등록됨.
         NotificationCenter.default.addObserver(self, selector: #selector(doubleTapped), name: .twiceTapped, object: nil)
     }
