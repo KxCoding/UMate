@@ -21,6 +21,7 @@ class ExpandableBoardTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         bookmarkButton.tintColor = UIColor.init(named: "lightGrayNonSelectedColor")
+        bookmarkButton.alpha = 0.8
     }
     
     
@@ -37,7 +38,7 @@ class ExpandableBoardTableViewCell: UITableViewCell {
         
         /// section을 접었다 펼쳤을 시 북마크 속성에 따른 버튼 색 유지
         if board?.bookmarks[bookmarkButton.tag] == true {
-            bookmarkButton.tintColor = UIColor.init(named: "selectedColor")
+            bookmarkButton.tintColor = UIColor.init(named: "blackSelectedColor")
         } else {
             bookmarkButton.tintColor = UIColor.init(named: "lightGrayNonSelectedColor")
         }

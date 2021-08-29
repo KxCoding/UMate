@@ -19,6 +19,7 @@ class NonExpandableBoardTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         bookmarkButton.tintColor = UIColor.init(named: "lightGrayNonSelectedColor")
+        bookmarkButton.alpha = 0.8
     }
     
     

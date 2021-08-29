@@ -124,8 +124,8 @@ var nonExpandableBoardList = [BoardUI(sectionName: nil, boardNames: ["스크랩"
                               BoardUI(sectionName: nil, boardNames: ["신입생 게시판"]),
                               BoardUI(sectionName: nil, boardNames: ["강의평가 게시판"]),]
 
-var expandableBoardList = [BoardUI(sectionName: "홍보", isExpanded: true ,boardNames: ["홍보 게시판", "동아리, 학회"]),
-                           BoardUI(sectionName: "정보", isExpanded: true ,boardNames: ["정보 게시판", "취업, 진로"]),]
+var expandableBoardList = [BoardUI(sectionName: "홍보", isExpanded: true ,boardNames: ["홍보 게시판", "동아리∙학회"]),
+                           BoardUI(sectionName: "정보", isExpanded: true ,boardNames: ["정보 게시판", "취업∙진로"]),]
 
 var dummyCommentList: [Comment] = []
 

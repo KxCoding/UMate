@@ -8,8 +8,6 @@
 import UIKit
 
 
-// TODO: section접었다 펼쳤을 때 스크롤 조정해야함
-
 class BoardViewController: UIViewController {
     
     var bookmarks: [Int:Bool] = [:]
@@ -218,27 +216,45 @@ extension BoardViewController: UITableViewDelegate {
         /// header에 들어갈 버튼
         if section != 0 {
             let button = UIButton(type: .custom)
-            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! BoardCustomHeaderView
-            view.title.text = expandableBoardList[section - 1].sectionName
-            view.title.textColor = UIColor.init(named: "darkGraySubtitleColor")
-            view.title.font = UIFont.boldSystemFont(ofSize: 23)
-            view.image.image = UIImage(named: "downarrow")
-            view.image.tintColor = UIColor.init(named: "darkGraySubtitleColor")
+            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! BoardCustomHeaderView
             
-            view.addSubview(button)
+            headerView.title.text = expandableBoardList[section - 1].sectionName
+            headerView.title.textColor = UIColor.init(named: "blackSelectedColor")
+            headerView.title.font = UIFont.preferredFont(forTextStyle: .title2)
+            headerView.title.adjustsFontForContentSizeCategory = true
+           
+            headerView.summary.adjustsFontForContentSizeCategory = true
+            /// isExpanded가 true라면 펼친 상태
+            if expandableBoardList[section - 1].isExpanded {
+                headerView.summary.isHidden = true
+                headerView.image.image = UIImage(named: "up-arrow")
+            }
+            /// isExpanded가 false라면 접힌 상태
+            else {
+               
+                headerView.summary.isHidden = false
+                headerView.summary.text = expandableBoardList[section - 1].boardNames.joined(separator: ",")
+                headerView.summary.textColor = UIColor.init(named: "darkGraySubtitleColor")
+                headerView.summary.font = UIFont.preferredFont(forTextStyle: .caption1)
+                headerView.image.image = UIImage(named: "down-arrow")
+            }
+            
+            headerView.image.tintColor = UIColor.init(named: "lightGrayNonSelectedColor")
+            
+            headerView.addSubview(button)
             button.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                button.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                button.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                button.topAnchor.constraint(equalTo: view.topAnchor),
-                button.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+                button.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+                button.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+                button.topAnchor.constraint(equalTo: headerView.topAnchor),
+                button.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
             ])
             
             button.addTarget(self, action: #selector(handleExpandClose(button:)), for: .touchUpInside)
             
             ///  버튼 태그는 1,2
             button.tag = section
-            return view
+            return headerView
         }
         
         let header = UIView()
@@ -266,11 +282,19 @@ extension BoardViewController: UITableViewDelegate {
         /// isExpanded가 true라면 펼친 상태
         if expandableBoardList[section - 1].isExpanded {
             boardListTableView.insertRows(at: indexPathArr, with: .fade)
+            if section == 2 {
+                DispatchQueue.main.async {
+                    self.boardListTableView.scrollToRow(at: IndexPath(row: 1, section: 2),
+                                                        at: .bottom, animated: true)
+                }
+            }
         }
         /// isExpanded가 false라면 접힌 상태
         else {
             boardListTableView.deleteRows(at: indexPathArr, with: .fade)
         }
+        
+        boardListTableView.reloadSections(IndexSet(section...section), with: .automatic)
     }
 }
 
