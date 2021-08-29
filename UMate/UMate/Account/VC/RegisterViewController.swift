@@ -28,22 +28,22 @@ class RegisterViewController: UIViewController {
     /// DropDown타입 배열을 클로저로 초기화한 속성
     let menu: DropDown? = {
         let menu = DropDown()
-        menu.dataSource = [
-            "2021학번",
-            "2020학번",
-            "2019학번",
-            "2018학번",
-            "2017학번",
-            "2016학번",
-            "2015학번",
-            "2013학번",
-            "2012학번",
-            "2011학번",
-            "2010학번",
-            "2009학번",
-            "2008학번",
-            "2007학번"
-        ]
+      
+        func intervalDates(from startingDate:Date, to endDate:Date, with interval:TimeInterval) -> [Date] {
+            guard interval > 0 else { return [] }
+            
+            var dates:[Date] = []
+            var currentDate = startingDate
+            
+            while currentDate <= endDate {
+                currentDate = currentDate.addingTimeInterval(interval)
+                dates.append(currentDate)
+                
+            }
+            
+            return dates
+        }
+
         
         let minimumOfYear = Date(timeIntervalSinceNow: -(60 * 60 * 24 * 365 * 15))
         print(minimumOfYear)
