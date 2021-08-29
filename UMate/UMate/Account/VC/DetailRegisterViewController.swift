@@ -12,6 +12,7 @@ struct Keys {
     static let prefixKey = "prefixKey"
     static let passwordKey = "passwordKey"
     static let userEmailKey = "userEmailKey"
+    static let hasLaunchedKey = "hasLaunchedKey"
 }
 
 class DetailRegisterViewController: UIViewController {
