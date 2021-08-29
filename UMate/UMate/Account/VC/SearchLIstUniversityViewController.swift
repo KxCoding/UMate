@@ -16,6 +16,7 @@ class SearchLIstUniversityViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var listTableView: UITableView!
     
+    var universityName = [String]()
     /// Stores the desired result value as array
     var searchCountry = [String]()
     /// Declaration Boolean property Because in some cases, we have to give different results.
@@ -50,8 +51,22 @@ class SearchLIstUniversityViewController: UIViewController {
         searchBar.delegate = self
         listTableView.isHidden = true
         
+        /// To support color depends on dark mode or light mode
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         navigationItem.rightBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
+        
+        /// Try to persing UniversityName.txt file as Array
+        guard let universityNameData = NSDataAsset(name: "UniversityName")?.data else { return }
+        guard let universityNameStr = String(data: universityNameData, encoding: .utf8) else { return }
+        
+          universityName = universityNameStr.components(separatedBy: ",")
+        
+        for str in universityName {
+            let value = str.trimmingCharacters(in: .whitespaces)
+            universityName.append(value)
+
+        }
+     
     }
     
 }
@@ -69,7 +84,7 @@ extension SearchLIstUniversityViewController: UITableViewDataSource {
             return searchCountry.count
         }
         
-        return universityList.count
+        return universityName.count
     }
     
     /// If true, cell content is implemented differently depending on search results
@@ -79,7 +94,7 @@ extension SearchLIstUniversityViewController: UITableViewDataSource {
         if searching {
             cell.textLabel?.text = searchCountry[indexPath.row]
         } else {
-            cell.textLabel?.text = universityList[indexPath.row]
+            cell.textLabel?.text = universityName[indexPath.row]
         }
         
         return cell
@@ -94,7 +109,7 @@ extension SearchLIstUniversityViewController: UITableViewDelegate {
         if searching {
             searchBar.text = searchCountry[indexPath.row]
         } else {
-            searchBar.text = universityList[indexPath.row]
+            searchBar.text = universityName[indexPath.row]
         }
         
     }
@@ -110,7 +125,7 @@ extension SearchLIstUniversityViewController: UISearchBarDelegate {
     ///   - searchText: searchText
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searching = true
-        searchCountry = universityList.filter{ $0.prefix(searchText.count) == searchText }
+        searchCountry = universityName.filter{ $0.prefix(searchText.count) == searchText }
         
         listTableView.reloadData()
     }

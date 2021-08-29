@@ -28,7 +28,6 @@ extension Date {
     }
     
     var string: String {
-        
         formatter.dateFormat = "MM/dd hh:mm"
         return formatter.string(from: self)
     }
@@ -45,5 +44,37 @@ extension Date {
     var timeTableTime: String {
         formatter.dateFormat = "HH:mm"
         return formatter.string(from: self)
+    }
+    
+    var minimumOfYear: String? {
+        let calendar = Calendar.current
+        let compo = calendar.dateComponents([.year], from: self)
+        var componet = DateComponents()
+        if let maxYear = compo.year {
+            componet.year = maxYear - 14
+        }
+        
+        guard let date = calendar.date(from: componet) else { return nil }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter.string(from: date)
+        
+    }
+    
+    var maxOfYear: String? {
+        let calendar = Calendar.current
+        let compo = calendar.dateComponents([.year], from: self)
+        var componet = DateComponents()
+        if let maxYear = compo.year {
+            componet.year = maxYear
+        }
+        
+        guard let date = calendar.date(from: componet) else { return nil }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter.string(from: date)
+        
     }
 }

@@ -17,7 +17,5 @@ class DropDownTableViewCell: DropDownCell {
         super.awakeFromNib()
     
     }
-
-    
     
 }
