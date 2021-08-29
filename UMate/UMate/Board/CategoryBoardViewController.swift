@@ -24,7 +24,7 @@ class CategoryBoardViewController: UIViewController {
     
     var selectedBoard: Board?
     var filteredPostList: [Post] = []
-    var nonCliked = true
+    var isSelected = true
     
     var tokens = [NSObjectProtocol]()
     
@@ -63,21 +63,13 @@ class CategoryBoardViewController: UIViewController {
         
         
         /// 스크랩 취소
-        token = NotificationCenter.default.addObserver(forName: .postCancelScrap, object: nil, queue: .main) {
-            [weak self] noti in
-            guard let self = self else { return }
+        token = NotificationCenter.default.addObserver(forName: .postCancelScrap, object: nil, queue: .main) { noti in
             
             if let unscrappedPost = noti.userInfo?["unscrappedPost"] as? Post {
                 
-                /// 삭제하고 리로드
+                /// 스크랩 게시판에서 삭제
                 if let unscrappedPostIndex = scrapBoard.posts.firstIndex(where: { $0 === unscrappedPost }) {
                     scrapBoard.posts.remove(at: unscrappedPostIndex)
-                    
-                    if self.selectedBoard?.boardTitle == scrapBoard.boardTitle {
-                        self.filteredPostList = scrapBoard.posts
-                    }
-                    
-                    self.categoryListTableView.reloadData()
                 }
             }
         }
@@ -114,7 +106,7 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
         
         if indexPath.row == 0 {
             /// 아무것도 선택되지 않았을 시에 row == 0 인 cell 선택된 것처럼 보이도록
-            if nonCliked {
+            if isSelected {
                 cell.categoryView.backgroundColor = UIColor.init(named: "blackSelectedColor")
             }
             /// 다른 카테고리 선택시
@@ -134,8 +126,8 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
 extension CategoryBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         /// 다른 카테고리 선택시에 row == 0 인 cell리로드
-        if nonCliked {
-            nonCliked = false
+        if isSelected {
+            isSelected = false
             collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
         }
         

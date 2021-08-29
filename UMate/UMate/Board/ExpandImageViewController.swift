@@ -23,7 +23,7 @@ class ExpandImageViewController: UIViewController {
     
     
     /// pageControl의 currentPage에 따라서 collectionView의 scroll이동
-    @IBAction func controlPage(_ sender: UIPageControl) {
+    @IBAction func currentPageChanged(_ sender: UIPageControl) {
         let indexPath = IndexPath(item: sender.currentPage, section: 0)
         imageCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }

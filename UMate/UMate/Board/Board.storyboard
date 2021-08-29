@@ -34,21 +34,21 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WjU-iN-lml">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="65"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vNl-bg-OUC">
-                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="64"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vNl-bg-OUC">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="65"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZo-Zz-iMu">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="54" height="64"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="54" height="65"/>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8e8-8b-Yta">
-                                                                            <rect key="frame" x="5" y="10" width="44" height="44"/>
+                                                                            <rect key="frame" x="5" y="10" width="44" height="45"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="44" id="qwv-uq-hUb"/>
                                                                                 <constraint firstAttribute="width" constant="44" id="vxq-gE-0SG"/>
                                                                             </constraints>
                                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                            <state key="normal" title="" image="thumbtack48"/>
+                                                                            <state key="normal" title="" image="thumbtack40"/>
                                                                             <connections>
                                                                                 <action selector="updateBookmark:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Ddy-3J-AEr"/>
                                                                             </connections>
@@ -63,28 +63,10 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="자유 게시판" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hyv-tk-vQ8">
-                                                                    <rect key="frame" x="54" y="0.0" width="280" height="64"/>
+                                                                    <rect key="frame" x="64" y="0.0" width="310" height="65"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HgF-5L-QC9">
-                                                                    <rect key="frame" x="334" y="0.0" width="40" height="64"/>
-                                                                    <subviews>
-                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yeN-2R-RNB">
-                                                                            <rect key="frame" x="10" y="0.0" width="10" height="64"/>
-                                                                            <color key="tintColor" name="darkGraySubtitleColor"/>
-                                                                            <imageReference key="image" image="right-arrow"/>
-                                                                        </imageView>
-                                                                    </subviews>
-                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                                    <constraints>
-                                                                        <constraint firstItem="yeN-2R-RNB" firstAttribute="leading" secondItem="HgF-5L-QC9" secondAttribute="leading" constant="10" id="0od-Za-APh"/>
-                                                                        <constraint firstAttribute="width" constant="40" id="JSh-lR-E8A"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="yeN-2R-RNB" secondAttribute="trailing" constant="20" id="Oa8-FF-mHD"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="yeN-2R-RNB" secondAttribute="bottom" id="Pg7-13-dMc"/>
-                                                                        <constraint firstItem="yeN-2R-RNB" firstAttribute="top" secondItem="HgF-5L-QC9" secondAttribute="top" id="r6g-RF-6Fc"/>
-                                                                    </constraints>
-                                                                </view>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstAttribute="bottom" secondItem="EZo-Zz-iMu" secondAttribute="bottom" id="NMM-OO-kHI"/>
@@ -92,8 +74,8 @@
                                                                 <constraint firstItem="EZo-Zz-iMu" firstAttribute="top" secondItem="vNl-bg-OUC" secondAttribute="top" id="sq1-V2-PXT"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BU6-b9-UJw">
-                                                            <rect key="frame" x="0.0" y="64" width="374" height="1"/>
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BU6-b9-UJw">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="1"/>
                                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="1" id="DPu-tO-BEh"/>
@@ -126,21 +108,21 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WVb-JX-7tc">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="65"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VWM-zs-i53">
-                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="64"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VWM-zs-i53">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="65"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i9l-m5-hfr">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="54" height="64"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="54" height="65"/>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Fv-cF-sMg">
-                                                                            <rect key="frame" x="5" y="10" width="44" height="44"/>
+                                                                            <rect key="frame" x="5" y="10" width="44" height="45"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="44" id="MLB-CX-LzN"/>
                                                                                 <constraint firstAttribute="width" constant="44" id="zrD-er-QtK"/>
                                                                             </constraints>
                                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                            <state key="normal" image="thumbtack48"/>
+                                                                            <state key="normal" image="thumbtack40"/>
                                                                             <connections>
                                                                                 <action selector="updateBookmark:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="cAa-QL-XhU"/>
                                                                             </connections>
@@ -155,25 +137,14 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="자유 게시판" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8g-9r-v4K">
-                                                                    <rect key="frame" x="54" y="0.0" width="280" height="64"/>
+                                                                    <rect key="frame" x="64" y="0.0" width="260" height="65"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLF-In-pBE">
-                                                                    <rect key="frame" x="334" y="0.0" width="40" height="64"/>
-                                                                    <subviews>
-                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bfc-w6-OCe">
-                                                                            <rect key="frame" x="10" y="0.0" width="10" height="64"/>
-                                                                            <color key="tintColor" name="darkGraySubtitleColor"/>
-                                                                            <imageReference key="image" image="right-arrow"/>
-                                                                        </imageView>
-                                                                    </subviews>
+                                                                    <rect key="frame" x="334" y="0.0" width="40" height="65"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="bottom" secondItem="Bfc-w6-OCe" secondAttribute="bottom" id="ADu-DR-PTz"/>
-                                                                        <constraint firstItem="Bfc-w6-OCe" firstAttribute="leading" secondItem="nLF-In-pBE" secondAttribute="leading" constant="10" id="CkQ-xT-soC"/>
-                                                                        <constraint firstItem="Bfc-w6-OCe" firstAttribute="top" secondItem="nLF-In-pBE" secondAttribute="top" id="HXX-1k-JwU"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="Bfc-w6-OCe" secondAttribute="trailing" constant="20" id="ZL2-4X-Bwm"/>
                                                                         <constraint firstAttribute="width" constant="40" id="fzT-u2-Jfp"/>
                                                                     </constraints>
                                                                 </view>
@@ -184,8 +155,8 @@
                                                                 <constraint firstAttribute="bottom" secondItem="i9l-m5-hfr" secondAttribute="bottom" id="plV-Yx-xhn"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUg-BX-xKI">
-                                                            <rect key="frame" x="0.0" y="64" width="374" height="1"/>
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUg-BX-xKI">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="1"/>
                                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="1" id="3OF-CV-vHD"/>
@@ -1752,7 +1723,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                         <rect key="frame" x="0.0" y="0.0" width="226" height="227"/>
                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                         <connections>
-                                                                            <action selector="imagebtn:" destination="ZOD-QU-M8X" eventType="touchUpInside" id="xC1-cI-mlq"/>
+                                                                            <action selector="postNotification:" destination="ZOD-QU-M8X" eventType="touchUpInside" id="TsR-a0-TsZ"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -2303,7 +2274,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGH-UQ-Tfp">
-                                <rect key="frame" x="350" y="818" width="44" height="44"/>
+                                <rect key="frame" x="365" y="818" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="u6z-Bq-eMU"/>
                                     <constraint firstAttribute="width" constant="44" id="wZY-HA-gyP"/>
@@ -2356,7 +2327,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nf4-kM-PPz">
-                                <rect key="frame" x="358.5" y="67.5" width="35.5" height="17"/>
+                                <rect key="frame" x="20" y="67.5" width="35.5" height="17"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -2365,10 +2336,11 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 <rect key="frame" x="146.5" y="758" width="121.5" height="28"/>
                                 <connections>
                                     <action selector="controlPage:" destination="95c-RZ-5Vp" eventType="valueChanged" id="hp8-cl-UDA"/>
+                                    <action selector="currentPageChanged:" destination="95c-RZ-5Vp" eventType="valueChanged" id="sjl-dV-mtE"/>
                                 </connections>
                             </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rej-4d-lDb">
-                                <rect key="frame" x="20" y="54" width="44" height="44"/>
+                                <rect key="frame" x="365" y="54" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="88K-KY-bKj"/>
                                     <constraint firstAttribute="width" constant="44" id="C6k-as-g26"/>
@@ -2389,15 +2361,15 @@ XETOWN 운영자로 오인될 수 있는 내용
                             <constraint firstItem="AbU-8s-KA3" firstAttribute="bottom" secondItem="hSK-oX-iGk" secondAttribute="bottom" constant="76" id="1te-jb-vIt"/>
                             <constraint firstItem="nGH-UQ-Tfp" firstAttribute="top" secondItem="nqX-Br-IMK" secondAttribute="bottom" constant="10" id="3b8-jx-9b6"/>
                             <constraint firstItem="Rej-4d-lDb" firstAttribute="top" secondItem="AbU-8s-KA3" secondAttribute="top" constant="10" id="R09-pw-KjY"/>
-                            <constraint firstItem="AbU-8s-KA3" firstAttribute="trailing" secondItem="nf4-kM-PPz" secondAttribute="trailing" constant="20" id="Tbg-6V-ZwB"/>
                             <constraint firstItem="nqX-Br-IMK" firstAttribute="top" secondItem="Rej-4d-lDb" secondAttribute="bottom" constant="10" id="U70-F6-6h4"/>
-                            <constraint firstItem="Rej-4d-lDb" firstAttribute="leading" secondItem="AbU-8s-KA3" secondAttribute="leading" constant="20" id="U7o-Pc-hcL"/>
                             <constraint firstItem="hSK-oX-iGk" firstAttribute="centerX" secondItem="1CC-iL-RDe" secondAttribute="centerX" id="Vhs-o0-wbT"/>
                             <constraint firstItem="nGH-UQ-Tfp" firstAttribute="bottom" secondItem="AbU-8s-KA3" secondAttribute="bottom" id="Wuy-tl-Ub7"/>
+                            <constraint firstItem="AbU-8s-KA3" firstAttribute="trailing" secondItem="Rej-4d-lDb" secondAttribute="trailing" constant="5" id="Y7s-Bn-dFP"/>
                             <constraint firstItem="nf4-kM-PPz" firstAttribute="centerY" secondItem="Rej-4d-lDb" secondAttribute="centerY" id="li9-Xd-fKX"/>
                             <constraint firstItem="nqX-Br-IMK" firstAttribute="trailing" secondItem="AbU-8s-KA3" secondAttribute="trailing" id="lxP-iJ-8mZ"/>
                             <constraint firstItem="nqX-Br-IMK" firstAttribute="leading" secondItem="AbU-8s-KA3" secondAttribute="leading" id="oU3-cb-D6E"/>
-                            <constraint firstItem="AbU-8s-KA3" firstAttribute="trailing" secondItem="nGH-UQ-Tfp" secondAttribute="trailing" constant="20" id="qCA-Ea-6NR"/>
+                            <constraint firstItem="AbU-8s-KA3" firstAttribute="trailing" secondItem="nGH-UQ-Tfp" secondAttribute="trailing" constant="5" id="qCA-Ea-6NR"/>
+                            <constraint firstItem="nf4-kM-PPz" firstAttribute="leading" secondItem="AbU-8s-KA3" secondAttribute="leading" constant="20" id="qL5-4F-yAk"/>
                         </constraints>
                     </view>
                     <connections>
@@ -2705,7 +2677,7 @@ XETOWN 운영자로 오인될 수 있는 내용
         <image name="search" width="16" height="16"/>
         <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
-        <image name="thumbtack48" width="24" height="24"/>
+        <image name="thumbtack40" width="20" height="20"/>
         <image name="turn-right" width="64" height="64"/>
         <image name="vertical_dots" width="12" height="12"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
