@@ -12,6 +12,7 @@ import Cosmos
 class ReviewContentTableViewCell: UITableViewCell {
     
     @IBOutlet weak var ratingView: CosmosView!
+    @IBOutlet weak var ratingLabel: UILabel!
     
     @IBOutlet weak var recommendationView: UIView!
     @IBOutlet weak var recommendationImageView: UIImageView!
@@ -48,5 +49,7 @@ class ReviewContentTableViewCell: UITableViewCell {
     func configure(lecture: LectureInfo, indexPath: IndexPath) {
         reviewContentLabel.text = lecture.reviews[indexPath.row].reviewContent
         ratingView.rating = Double(lecture.reviews[indexPath.row].rating.rawValue)
+        ratingLabel.text = "\(lecture.reviews[indexPath.row].rating.rawValue)"
+        semesterLabel.text = "\(lecture.reviews[indexPath.row].semester) 수강자"
     }
 }

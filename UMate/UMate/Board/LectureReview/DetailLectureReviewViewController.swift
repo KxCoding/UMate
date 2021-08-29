@@ -11,9 +11,22 @@ class DetailLectureReviewViewController: UIViewController {
     
     @IBOutlet weak var lectureInfoTableView: UITableView!
     
+    @IBAction func perfromSegueToWrite(_ sender: UIButton) {
+        if sender.tag == 2 {
+            /// 리뷰쓰기 화면으로 이동
+        } else {
+            performSegue(withIdentifier: "testInfoSegue", sender: self)
+        }
+    }
+    
+    
     var selectedLectrue: LectureInfo?
 
     var isSelected = true
+    
+    @IBAction func unwindToDetailLectureReview(_ unwindSegue: UIStoryboardSegue) {
+       
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -204,13 +217,14 @@ extension DetailLectureReviewViewController: UITableViewDelegate {
         case 2:
             cell.sectionNameLabel.text = "강의평"
             cell.writeButton.setTitle("새 강의평 쓰기", for: .normal)
-            
+            cell.writeButton.tag = 2
             return cell
             
         /// 시험 정보
         case 4:
             cell.sectionNameLabel.text = "시험 정보"
             cell.writeButton.setTitle("시험 정보 공유", for: .normal)
+            cell.writeButton.tag = 4
             
             return cell
             
