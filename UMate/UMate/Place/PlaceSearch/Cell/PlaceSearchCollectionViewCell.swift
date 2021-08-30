@@ -37,6 +37,6 @@ class PlaceSearchCollectionViewCell: UICollectionViewCell {
         imageView.image = image
         placeTitle.text = searchItem.name
         regionNameLabel.text = searchItem.district
-        classificationNameLabel.text = searchItem.type.rawValue
+        classificationNameLabel.text = searchItem.placeType.rawValue
     }
 }

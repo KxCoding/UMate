@@ -38,7 +38,10 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
             keywordContainer2.isHidden = true
         }
         
-        placeImageView.image = target.images.first ?? UIImage(named: "dummy-image-landscape")
+        /// set image
+        placeImageView.image = target.thumbnail
+        
+        
         
     }
     

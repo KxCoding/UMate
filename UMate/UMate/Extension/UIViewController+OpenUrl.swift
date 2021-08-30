@@ -9,6 +9,13 @@ import UIKit
 import WebKit
 import SafariServices
 
+/// url 종류
+enum URLType {
+    case web
+    case tel
+}
+
+
 extension UIViewController {
     
     /// url을 전달하면 설정에 따라 알맞은 방식으로 url을 열어줍니다.
@@ -41,26 +48,26 @@ extension UIViewController {
             self.openURLExternal(url: url)
             Preference.preferredBrowser = .external
         }
-            
-            let sheet = UIAlertController(title: nil,
-                                          message: nil,
-                                          preferredStyle: .actionSheet)
-            let openInThisApp = UIAlertAction(title: "이 앱에서 열기",
-                                              style: .default,
-                                              handler: openInternal)
-            let openInOtherApp = UIAlertAction(title: "관련 앱에서 열기",
-                                               style: .default,
-                                               handler: openExternal)
-            
-            let cancelAction = UIAlertAction(title: "취소",
-                                             style: .cancel,
-                                             handler: nil)
-            
-            sheet.addAction(openInThisApp)
-            sheet.addAction(openInOtherApp)
-            sheet.addAction(cancelAction)
-            
-            present(sheet, animated: true, completion: nil)
+        
+        let sheet = UIAlertController(title: nil,
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+        let openInThisApp = UIAlertAction(title: "이 앱에서 열기",
+                                          style: .default,
+                                          handler: openInternal)
+        let openInOtherApp = UIAlertAction(title: "관련 앱에서 열기",
+                                           style: .default,
+                                           handler: openExternal)
+        
+        let cancelAction = UIAlertAction(title: "취소",
+                                         style: .cancel,
+                                         handler: nil)
+        
+        sheet.addAction(openInThisApp)
+        sheet.addAction(openInOtherApp)
+        sheet.addAction(cancelAction)
+        
+        present(sheet, animated: true, completion: nil)
         
     }
     
@@ -68,12 +75,6 @@ extension UIViewController {
     /// 앱 내부에서 사파리 VC로 url을 엽니다.
     /// - Parameter url: 오픈할 url
     private func openURLInternal(url: URL) {
-        /// 자체 브라우저 vc로 열기
-//        guard let openUrlVC = UIStoryboard(name: "OpenURLViewController", bundle: nil).instantiateViewController(identifier: "OpenURLViewController") as? OpenURLViewController else { return }
-//
-//        openUrlVC.url = url
-//
-//        self.present(UINavigationController(rootViewController: openUrlVC), animated: true, completion: nil)
         
         /// 사파리 vc로 열기
         let safariVC = SFSafariViewController(url: url)
