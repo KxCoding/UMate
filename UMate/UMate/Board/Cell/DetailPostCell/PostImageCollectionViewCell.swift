@@ -26,7 +26,7 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     
     
     /// 이미지를 클릭시에 처리할 동작
-    @IBAction func imagebtn(_ sender: Any) {
+    @IBAction func postNotification(_ sender: Any) {
         
         /// DetailPostViewController에서 performSegue를 실행하도록 함.
         NotificationCenter.default.post(name: .showImageVC, object: nil)
@@ -46,7 +46,7 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         /// 이미지 그림자 설정
         layer.cornerRadius = postImageView.frame.height * 0.03
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 2, height: 2)
+        layer.shadowOffset = CGSize(width: 1, height: 1)
         layer.shadowRadius = 2
         layer.shadowOpacity = 0.3
         layer.masksToBounds = false

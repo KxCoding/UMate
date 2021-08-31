@@ -64,7 +64,7 @@ class PlaceSearchViewController: UIViewController {
                     /// 더미데이터에 속한 각 데이터의 placeType과 filterList의 placeType이 같다면 data배열에 추가합니다.
                     for filterItem in self.filterList {
                         for item in Place.dummyData {
-                            if item.type == filterItem {
+                            if item.placeType == filterItem {
                                 data.append(item)
                             }
                         }

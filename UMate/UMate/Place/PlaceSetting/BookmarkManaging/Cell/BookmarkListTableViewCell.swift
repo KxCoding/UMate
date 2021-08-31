@@ -37,7 +37,7 @@ class BookmarkListTableViewCell: UITableViewCell {
             keywordContainer2.isHidden = true
         }
         
-        placeImageView.image = target.images.first ?? UIImage(named: "dummy-image-landscape")
+        placeImageView.image = target.thumbnail
     }
     
     
@@ -50,5 +50,5 @@ class BookmarkListTableViewCell: UITableViewCell {
         placeImageView.contentMode = .scaleAspectFill
         
     }
-
+    
 }

@@ -26,24 +26,43 @@ class RegisterViewController: UIViewController {
     var token: NSObjectProtocol?
     
     /// DropDown타입 배열을 클로저로 초기화한 속성
-    let menu: DropDown = {
+    let menu: DropDown? = {
         let menu = DropDown()
-        menu.dataSource = [
-            "2021학번",
-            "2020학번",
-            "2019학번",
-            "2018학번",
-            "2017학번",
-            "2016학번",
-            "2015학번",
-            "2013학번",
-            "2012학번",
-            "2011학번",
-            "2010학번",
-            "2009학번",
-            "2008학번",
-            "2007학번"
-        ]
+      
+        func intervalDates(from startingDate:Date, to endDate:Date, with interval:TimeInterval) -> [Date] {
+            guard interval > 0 else { return [] }
+            
+            var dates:[Date] = []
+            var currentDate = startingDate
+            
+            while currentDate <= endDate {
+                currentDate = currentDate.addingTimeInterval(interval)
+                dates.append(currentDate)
+                
+            }
+            
+            return dates
+        }
+
+        
+        let minimumOfYear = Date(timeIntervalSinceNow: -(60 * 60 * 24 * 365 * 15))
+        print(minimumOfYear)
+        let maxOfYear = Date()
+        let intervalBetweenDates: TimeInterval = 60 * 60 * 24 * 365
+
+        let dates: [Date] = intervalDates(from: minimumOfYear, to: maxOfYear, with: intervalBetweenDates)
+
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy"
+        
+        var dateStrings = dates.map{ dateformatter.string(from: $0)}
+        dateStrings.removeLast()
+        print(dateStrings)
+        
+        for year in dateStrings {
+            menu.dataSource.append("\(year)학번")
+        }
+        
         
         return menu
     }()
@@ -56,8 +75,8 @@ class RegisterViewController: UIViewController {
     
     /// 학번 선택하는 메소드
     @IBAction func enterenceYearButton(_ sender: UIButton) {
-        menu.show()
-        menu.selectionAction = { [weak self] index, item in
+        menu?.show()
+        menu?.selectionAction = { [weak self] index, item in
             self?.enterenceYearLabel.text = item
             
             UserDefaults.standard.set(item, forKey: "enterenceYearKey")
@@ -65,15 +84,17 @@ class RegisterViewController: UIViewController {
     }
     
     
+    /// check the conditions
+    /// - Parameter sender: nextButton
     @IBAction func nextButton(_ sender: Any) {
         guard let enterenceYearText = enterenceYearLabel.text,
               enterenceYearText.count == 6,
-        let universityNameText = universityNameField.text,
-        universityNameText == saveText else {
-            alert(title: "알림", message: "입학년도 혹은 학교이름을 선택하세요.")
-            
-            return
-        }
+              let universityNameText = universityNameField.text,
+              universityNameText == saveText else {
+                  alert(title: "알림", message: "입학년도 혹은 학교이름을 선택하세요.")
+                  
+                  return
+              }
         
     }
     
@@ -91,17 +112,17 @@ class RegisterViewController: UIViewController {
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
         /// 학번 메뉴 width, height 조정
-        menu.anchorView = enterenceYearView
-        guard let height = menu.anchorView?.plainView.bounds.height else { return }
-        menu.bottomOffset = CGPoint(x: 0, y: height)
-        menu.width = 150
+        menu?.anchorView = enterenceYearView
+        guard let height = menu?.anchorView?.plainView.bounds.height else { return }
+        menu?.bottomOffset = CGPoint(x: 0, y: height)
+        menu?.width = 150
         
         /// 백그라운드 탭하면 키보드 내려감
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         dismissZone.addGestureRecognizer(tap)
         dismissZone2.addGestureRecognizer(tap)
         
-        ///대학교이름을 받아오는 노티피케이션 + 유저디폴트에 저장
+        /// 대학교이름을 받아오는 노티피케이션 + 유저디폴트에 저장
         token = NotificationCenter.default.addObserver(forName: .didTapSendUniversityName, object: nil, queue: .main, using: { [weak self] noti in
             guard let strongSelf = self else { return }
             guard let universityName = noti.userInfo?[SearchLIstUniversityViewController.universityNameTransitionKey] as? String else { return }
@@ -118,5 +139,5 @@ class RegisterViewController: UIViewController {
     @objc func dismissKeyboard() {
         dismissZone2.endEditing(true)
     }
-
+    
 }

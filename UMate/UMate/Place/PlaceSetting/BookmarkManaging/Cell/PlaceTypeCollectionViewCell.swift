@@ -36,7 +36,7 @@ class PlaceTypeCollectionViewCell: UICollectionViewCell {
         } else {
             guard let selected = type.matchedPlaceType else { return }
             typeImageView.image = selected.photoImage
-            placeTypeLabel.text = selected.rawValue
+            placeTypeLabel.text = selected.description
         }
         
         /// 선택 상태에 따라 UI 업데이트 메소드 호출
@@ -76,7 +76,7 @@ class PlaceTypeCollectionViewCell: UICollectionViewCell {
     /// - Parameter state: 셀의 상태
     override func updateConfiguration(using state: UICellConfigurationState) {
         super.updateConfiguration(using: state)
-
+        
         if state.isSelected {
             didSelect()
         } else {

@@ -20,7 +20,8 @@ class PlaceInfoViewController: UIViewController {
     @IBOutlet weak var placeInfoTableView: UITableView!
     
     /// 가게 더미 데이터
-    var place: Place! = Place.dummyData.first
+    var place: Place!
+    var placeImages = [UIImage]()
     
     /// 리뷰 요약 데이터
     var review = PlaceReviewItem(starPoint: 4.8,
@@ -42,6 +43,22 @@ class PlaceInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /// 이미지 준비
+        if place.imageUrls.isEmpty {
+            placeImages.append(UIImage(named: "dummy-image-landscape")!)
+        } else {
+            for str in place.imageUrls {
+                if let image = DataManager.shared.getImage(from: str) {
+                    placeImages.append(image)
+                }
+            }
+            
+            if placeImages.count == 0 {
+                placeImages.append(UIImage(named: "dummy-image-landscape")!)
+            }
+        }
+        
+        /// delegation
         placeInfoTableView.dataSource = self
         placeInfoTableView.delegate = self
         
@@ -49,11 +66,18 @@ class PlaceInfoViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .openUrl, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
-            /// 함께 전송 된 url을 바인딩
-            guard let url = noti.userInfo?["url"] as? URL else { return }
+            /// 함께 전송 된 url 타입과 url을 바인딩
+            guard let urlType = noti.userInfo?["type"] as? URLType,
+                  let url = noti.userInfo?["url"] as? URL else { return }
             
-            /// url 열기
-            self.openUrl(with: url)
+            ///  타입에 따라 적절한 방식으로 url 열기
+            switch urlType {
+            case .web:
+                self.openUrl(with: url)
+            case .tel:
+                self.openURLExternal(url: url)
+            }
+            
         }
     }
     
@@ -142,7 +166,7 @@ extension PlaceInfoViewController: UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "FirstSectionTableViewCell", for: indexPath) as! FirstSectionTableViewCell
             
-            cell.configure(with: place)
+            cell.configure(with: placeImages)
             
             return cell
             
@@ -193,6 +217,9 @@ extension PlaceInfoViewController: UITableViewDataSource {
     
 }
 
+
+
+
 extension PlaceInfoViewController: UITableViewDelegate {
     
     /// 섹션 - 현재는 이미지 섹션 - 의 높이를 제한하는 메소드
@@ -210,4 +237,5 @@ extension PlaceInfoViewController: UITableViewDelegate {
             return UITableView.automaticDimension
         }
     }
+    
 }

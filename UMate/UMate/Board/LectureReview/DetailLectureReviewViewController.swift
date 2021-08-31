@@ -11,8 +11,22 @@ class DetailLectureReviewViewController: UIViewController {
     
     @IBOutlet weak var lectureInfoTableView: UITableView!
     
+    @IBAction func perfromSegueToWrite(_ sender: UIButton) {
+        if sender.tag == 2 {
+            /// 리뷰쓰기 화면으로 이동
+        } else {
+            performSegue(withIdentifier: "testInfoSegue", sender: self)
+        }
+    }
+    
+    
     var selectedLectrue: LectureInfo?
-    var nonCliked = true
+
+    var isSelected = true
+    
+    @IBAction func unwindToDetailLectureReview(_ unwindSegue: UIStoryboardSegue) {
+       
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +39,7 @@ class DetailLectureReviewViewController: UIViewController {
     typealias Count = (key: Int, value: Int)
     
     /// 각 기준에대해서 항목을 빈도수가 높은 순으로 나열한 배열
-    var resultReview = [[Count]]()
+    var sortedResultReviewList = [[Count]]()
     
     /// 각 항목의 빈도수를 rawValue로 체크
     private func storeRawValue(lecture: LectureInfo) {
@@ -36,9 +50,8 @@ class DetailLectureReviewViewController: UIViewController {
         var attendanceCounter = [Int: Int]() /// 출결에대한 항목 개수 체크
         var testCounter = [Int: Int]() /// 시험 횟수에대한 항목 개수 체크
         
-        
         for review in lecture.reviews {
-           
+            
             /// 과제에 있는 많음/보통/없음 항목 중에 rawValue값이 assignCounter에 있다면 +1, 없다면 rawValue값으로 key등록해주고 +1
             if assignCounter.keys.contains(review.assignment.rawValue) {
                 assignCounter[review.assignment.rawValue]! += 1
@@ -75,10 +88,10 @@ class DetailLectureReviewViewController: UIViewController {
             }
         }
         
-        let CounterList = [assignCounter, groupCounter, evaluationCounter, attendanceCounter, testCounter]
+        let counterList = [assignCounter, groupCounter, evaluationCounter, attendanceCounter, testCounter]
         
         /// 각각의 리뷰 기준에 있는 항목을 빈도수 순으로 정렬하고 resultReview배열에 담는다.
-        for counter in CounterList {
+        for counter in counterList {
             var resultCounter = [Count]()
             
             for i in counter {
@@ -86,7 +99,7 @@ class DetailLectureReviewViewController: UIViewController {
             }
 
             resultCounter.sort{ $0.value > $1.value } /// 빈도수 높은게 왼쪽에 가도록
-            resultReview.append(resultCounter)
+            sortedResultReviewList.append(resultCounter)
         }
     }
 }
@@ -147,7 +160,7 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LectureRatingTableViewCell", for: indexPath) as! LectureRatingTableViewCell
             
-            cell.configure(resultReview: resultReview, lecture: selectedLectrue)
+            cell.configure(resultReview: sortedResultReviewList, lecture: selectedLectrue)
             return cell
             
         /// 개별 리뷰
@@ -204,13 +217,14 @@ extension DetailLectureReviewViewController: UITableViewDelegate {
         case 2:
             cell.sectionNameLabel.text = "강의평"
             cell.writeButton.setTitle("새 강의평 쓰기", for: .normal)
-            
+            cell.writeButton.tag = 2
             return cell
             
         /// 시험 정보
         case 4:
             cell.sectionNameLabel.text = "시험 정보"
             cell.writeButton.setTitle("시험 정보 공유", for: .normal)
+            cell.writeButton.tag = 4
             
             return cell
             
@@ -234,7 +248,7 @@ extension DetailLectureReviewViewController: UICollectionViewDataSource {
         
         if indexPath.row == 0 {
             /// 아무것도 선택되지 않았을 시에 row == 0 인 cell 선택된 것처럼 보이도록
-            if nonCliked {
+            if isSelected {
                 cell.sectionTtileLabel.textColor = UIColor.init(named: "blackSelectedColor")
             }
             /// 다른 카테고리 선택시
@@ -267,8 +281,8 @@ extension DetailLectureReviewViewController: UICollectionViewDataSource {
 extension DetailLectureReviewViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         /// 다른 카테고리 선택시에 row == 0 인 cell리로드
-        if nonCliked {
-            nonCliked = false
+        if isSelected {
+            isSelected = false
             collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
         }
         

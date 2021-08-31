@@ -14,7 +14,7 @@ class SettingTableViewController: UITableViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var enterYearAndUniNameLabel: UILabel!
     
-    
+    /// back to LoginView
     @IBAction func logOutTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Account", bundle: nil)
         let loginNavController = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController")
@@ -42,10 +42,11 @@ class SettingTableViewController: UITableViewController {
 
     }
     
+    /// Declear to remove observer 
     var token: NSObjectProtocol?
     
-    
-    @IBAction func changeProfileButton(_ sender: Any) {
+    /// when user didTap this button, present to ProfilePicturesViewController and then get image
+    @IBAction func isChangeProfile(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Account", bundle: nil)
         if let nav = storyboard.instantiateViewController(withIdentifier: "profileNav") as? UINavigationController {
             
@@ -58,12 +59,11 @@ class SettingTableViewController: UITableViewController {
                 
                 strongSelf.profileImageView.image = image
                 StorageDataSource.shard.save(image: image)
-                
             })
         }
     }
     
-    
+    /// To prevent remained observer
     deinit {
         if let token = token {
             NotificationCenter.default.removeObserver(token)
@@ -73,11 +73,16 @@ class SettingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /// get  register user information data
         let name = UserDefaults.standard.string(forKey: "nameKey")
         let nickName = UserDefaults.standard.string(forKey: "nickNameKey")
         let enterYearOfUniversity = UserDefaults.standard.string(forKey: "enterenceYearKey")
         let universityName = UserDefaults.standard.string(forKey: "universityNameKey")
+        
+        /// get register Profileimage data
         StorageDataSource.shard.display(with: profileImageView)
+        
+        /// To initialize user information in setting
         if let name = name,
            let nickName = nickName,
            let enterYearOfUniversity = enterYearOfUniversity,
@@ -86,12 +91,16 @@ class SettingTableViewController: UITableViewController {
             enterYearAndUniNameLabel.text = "\(enterYearOfUniversity)/ \(universityName)"
         }
         
+        /// initialize
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         profileImageView.clipsToBounds = true
         profileImageView.contentMode = .scaleAspectFill
+        
+        /// To support color depend on dark mode or light mode
         nameLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         enterYearAndUniNameLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         emailLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
+        navigationController?.navigationBar.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
     }
 }

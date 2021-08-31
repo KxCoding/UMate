@@ -11,7 +11,7 @@ import UIKit
 // MARK: 단어 전용 컬렉션 뷰
 class WordCollectionViewCell: UICollectionViewCell {
     
-    var target: Place?
+    var target: Place!
     
     func configure(with content: Place, indexPath: IndexPath) {
         target = content
@@ -36,7 +36,7 @@ class DistrictCollectionViewCell: WordCollectionViewCell {
         super.configure(with: content, indexPath: indexPath)
         
         // 일단은 district 속성이 단일 문자열만 받아서 한 건만 처리 (tbd)
-        districtKeywordLabel.text = content.district
+        districtKeywordLabel.text = target.district
         
         
     }
@@ -56,13 +56,13 @@ class KeywordsCollectionViewCell: WordCollectionViewCell {
     override func configure(with content: Place, indexPath: IndexPath) {
         super.configure(with: content, indexPath: indexPath)
         
-        guard (0 ..< content.keywords.count).contains(indexPath.item) else {
+        guard (0 ..< target.keywords.count).contains(indexPath.item) else {
             print("invalid index")
             return
             
         }
         
-        keywordLabel.text = content.keywords[indexPath.item]
+        keywordLabel.text = target.keywords[indexPath.item]
     }
     
     override func awakeFromNib() {

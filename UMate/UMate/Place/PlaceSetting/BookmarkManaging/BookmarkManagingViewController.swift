@@ -26,7 +26,7 @@ class BookmarkManagingViewController: UIViewController {
     /// 북마크된 데이터
     var bookmarkedItems: [Place] {
         /// 일단 전체 데이터 - 수정 예정
-//        return Place.dummyData
+        //        return Place.dummyData
         
         let entirePlaces = Place.dummyData
         
@@ -42,7 +42,7 @@ class BookmarkManagingViewController: UIViewController {
             return entire
         } else {
             guard let selected = selectedType.matchedPlaceType else { return entire }
-            return bookmarkedItems.filter { $0.type == selected }
+            return bookmarkedItems.filter { $0.placeType == selected }
         }
     }
     
@@ -69,6 +69,9 @@ class BookmarkManagingViewController: UIViewController {
             /// 삭제 시 테이블 뷰 업데이트
             self.bookmarkListTableView.reloadData()
         }
+        
+        let first = IndexPath(row: 0, section: 0)
+        typeSelectionCollectionView.selectItem(at: first, animated: false, scrollPosition: .left)
     }
     
     
@@ -120,7 +123,7 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceTypeCollectionViewCell", for: indexPath) as! PlaceTypeCollectionViewCell
-                
+        
         let typeForDisplaying = types[indexPath.item]
         cell.configure(type: typeForDisplaying,
                        isSelected: typeForDisplaying == selectedType,
@@ -208,7 +211,7 @@ extension BookmarkManagingViewController: UITableViewDataSource {
 
 
 extension BookmarkManagingViewController: UITableViewDelegate {
-
+    
     /// 우측 contextual action menu를 제공하는 메소드
     /// - Parameters:
     ///   - tableView: 테이블 뷰

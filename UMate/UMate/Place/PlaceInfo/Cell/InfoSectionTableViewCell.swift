@@ -46,14 +46,14 @@ class InfoSectionTableViewCell: UITableViewCell {
         
         target = content
         
-        placeTypeImage.image = target.type.iconImage
+        placeTypeImage.image = target.placeType.iconImage
         placeNameLabel.text = target.name
         
-        universityLabel.text = target.university
+        universityLabel.text = PlaceUser.tempUser.university?.name
         districtLabel.text = target.district
         
         keywordLabel.text = target.keywords.first
-        placeTypeLabel.text = target.type.rawValue
+        placeTypeLabel.text = target.placeType.description
         
         /// 인스타그램 아이디가 없으면 버튼을 표시하지 않음
         if target.instagramID == nil {
@@ -89,7 +89,7 @@ class InfoSectionTableViewCell: UITableViewCell {
         guard let id = target.instagramID,
               let url = URL(string: "https://instagram.com/\(id)") else { return }
         
-        NotificationCenter.default.post(name: .openUrl, object: nil, userInfo: ["url": url])
+        NotificationCenter.default.post(name: .openUrl, object: nil, userInfo: ["type": URLType.web, "url": url])
     }
     
     
@@ -98,7 +98,7 @@ class InfoSectionTableViewCell: UITableViewCell {
     @IBAction func openInSafari(_ sender: Any) {
         guard let urlString = target.url, let url = URL(string: urlString) else { return }
         
-        NotificationCenter.default.post(name: .openUrl, object: nil, userInfo: ["url": url])
+        NotificationCenter.default.post(name: .openUrl, object: nil, userInfo: ["type": URLType.web, "url": url])
     }
     
     

@@ -13,10 +13,10 @@ class FirstSectionTableViewCell: UITableViewCell {
     @IBOutlet weak var pager: UIPageControl!
     
     /// 정보를 표시할 가게
-    var target: Place!
+    var images = [UIImage]()
     
     /// 이미지 데이터가 없을 때 표시할 더미 데이터
-    var dummyImages: [UIImage] {
+    lazy var dummyImages: [UIImage] = {
         var images = [UIImage]()
         for i in 0 ... 5 {
             if let image = UIImage(named: "search_0\(i)") {
@@ -24,23 +24,20 @@ class FirstSectionTableViewCell: UITableViewCell {
             }
         }
         return images
-    }
+    }()
     
     /// 셀 내부 각 뷰들이 표시하는 content 초기화
     /// - Parameter content: 표시할 내용을 담은 Place 객체
-    func configure(with content: Place) {
+    func configure(with content: [UIImage]) {
         
-        target = content
+        images = content
         
         // pager가 표시하는 페이지의 수
-        if target.images.count > 0 {
-            pager.numberOfPages = target.images.count
-        } else {
-            pager.numberOfPages = dummyImages.count
+        if images.count < 2 {
+            pager.isHidden = true
         }
         
-        pager.currentPage = 0
-        
+        pager.numberOfPages = images.count
     }
     
     override func awakeFromNib() {
@@ -51,6 +48,7 @@ class FirstSectionTableViewCell: UITableViewCell {
         imageCollectionView.delegate = self
         
         /// pager 초기화
+        pager.currentPage = 0
         pager.configureStyle(with: [.pillShape])
         pager.backgroundColor = .black.withAlphaComponent(0.1)
         pager.alpha = 0.5
@@ -69,11 +67,7 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
     ///   - section: 컬렉션 뷰의 특정 섹션을 가리키는 index number
     /// - Returns: 섹션에 포함되는 아이템의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if target.images.count > 0 {
-            return target.images.count
-        } else {
-            return dummyImages.count
-        }
+        return images.count
     }
     
     
@@ -86,11 +80,7 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceImageCollectionViewCell", for: indexPath) as! PlaceImageCollectionViewCell
         
-        if target.images.count > 0 {
-            cell.imageView.image = target.images[indexPath.item]
-        } else {
-            cell.imageView.image = dummyImages[indexPath.item]
-        }
+        cell.imageView.image = images[indexPath.item]
         
         return cell
     }
