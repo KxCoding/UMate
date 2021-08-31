@@ -40,11 +40,14 @@ class PlaceMainViewController: UIViewController {
         return m
     }()
     
+    /// 위치 관련 알림을 제어할 플래그
+    var locationAlertHasShownAlready = false
+    
     /// 컬렉션 뷰가 현재 표시하는 아이템의 인덱스
     var selectedListItemIndex = 0
     
     /// collection view cell과 annotation selection의 순환 호출을 방지할 플래그
-    var isAnnotationSelected = false
+    var isAnnotationSelected = false /// deprecated
     
     /// 사용자
     var user = PlaceUser.tempUser
@@ -53,7 +56,9 @@ class PlaceMainViewController: UIViewController {
     var list = [Place]()
     
     /// 학교 좌표 - 현재는 임시값 저장
-    var universityCoordinate = University.tempUniversity.coordinate
+    var universityCoordinate: CLLocationCoordinate2D {
+        return user.university?.coordinate ?? University.tempUniversity.coordinate
+    }
     
     /// 컬렉션 뷰 데이터에 따라 지도에 표시할 마커
     lazy var allAnnotations: [MKAnnotation] = { [weak self] in
@@ -61,12 +66,7 @@ class PlaceMainViewController: UIViewController {
         
         guard let self = self else { return arr }
         
-        for i in 0 ..< self.list.count {
-            if let annotation = self.list[i].annotation as? PlaceAnnotation {
-                annotation.id = i
-                arr.append(annotation)
-            }
-        }
+        list.forEach { arr.append($0.annotation) }
         
         return arr
     }()
@@ -105,30 +105,24 @@ class PlaceMainViewController: UIViewController {
         section.visibleItemsInvalidationHandler = { [weak self] visibleItems, scrollOffset, layoutEnvironment in
             guard let self = self else { return }
             
-            /// 선택된 아이템의 인덱스를 속성에 저장
-            self.selectedListItemIndex = Int((scrollOffset.x + 20.7) / 337)
+            /// 선택된 아이템의 인덱스
+            let selectedItemIndex = Int((scrollOffset.x + 20.7) / 337)
             
             /// 선택된 place
-            let selectedItem = self.list[self.selectedListItemIndex]
+            let selectedItem = self.list[selectedItemIndex]
             
             /// 아이템의 좌표를 지도 중앙에 표시
             self.mapView.setCenter(selectedItem.coordinate, animated: true)
             
-            /// 셀이 움직이면 셀에서 표시하는 아이템을 지도에서도 선택
-            
-            /// annotationSelected가 true이면(annotation이 선택되어 셀이 움직였다면) 실행하지 않음
-            //            guard self.isAnnotationSelected else { return }
-            
-            let selectedAnnotation = self.mapView.annotations.first(where: { annot in
+            /// 셀을 움직이면 같은 가게를 표시하는 annotation을 검색
+            guard let selectedAnnotation = self.mapView.annotations.first(where: { annot in
                 if let annot = annot as? PlaceAnnotation {
-                    return annot.id == self.selectedListItemIndex
+                    return annot.placeId == selectedItem.id
                 } else { return false }
-            })
+            }) else { return }
             
-            if let selected = selectedAnnotation {
-                self.mapView.selectAnnotation(selected, animated: true)
-            }
-            
+            /// annotation을 선택
+            self.mapView.selectAnnotation(selectedAnnotation, animated: true)
         }
         
         let layout = UICollectionViewCompositionalLayout(section: section)
@@ -157,7 +151,7 @@ class PlaceMainViewController: UIViewController {
         list = result.places.sorted(by: { return $0.coordinate.longitude < $1.coordinate.longitude })
         
         
-        /// map view 초기 설정
+        /// map view 설정
         mapView.delegate = self
         mapView.showsUserLocation = true
         registerMapAnnotationViews()
@@ -169,14 +163,14 @@ class PlaceMainViewController: UIViewController {
                                         longitudinalMeters: 500)
         mapView.setRegion(region, animated: true)
         
-        /// UI 초기화
+        /// annotation 추가
+        mapView.addAnnotations(allAnnotations)
+        
+        /// 상단 UI 초기화
         locationContainer.configureStyle(with: [.pillShape, .lightBorder, .lightShadow])
         searchBtnContainer.configureStyle(with: [.pillShape, .lightBorder, .lightShadow])
         
-        /// 더미데이터 저장
-        list.append(contentsOf: Place.dummyData)
-        
-        /// 델리게이션
+        /// collectionview 델리게이션
         nearbyPlaceCollectionView.dataSource = self
         nearbyPlaceCollectionView.delegate = self
         
@@ -186,8 +180,6 @@ class PlaceMainViewController: UIViewController {
         nearbyPlaceCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         nearbyPlaceCollectionView.collectionViewLayout = configureLayout()
         
-        /// annotation 추가
-        mapView.addAnnotations(allAnnotations)
     }
     
     
@@ -214,8 +206,9 @@ class PlaceMainViewController: UIViewController {
                 locationManager.requestWhenInUseAuthorization()
                 
             case .restricted, .denied:
+                if locationAlertHasShownAlready { break }
                 alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
-                break
+                locationAlertHasShownAlready = true
                 
             case .authorizedWhenInUse, .authorizedAlways:
                 updateLocation()
@@ -225,7 +218,9 @@ class PlaceMainViewController: UIViewController {
                 break
             }
         } else {
+//            if locationAlertHasShownAlready { return }
             alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
+            locationAlertHasShownAlready = true
         }
     }
     
@@ -248,29 +243,31 @@ class PlaceMainViewController: UIViewController {
 
 
 
-// MARK: Map View Delegation
+// MARK: - Map View Delegation
 
 extension PlaceMainViewController: MKMapViewDelegate {
     
-    //    /// annotation view가 선택되었을 때  작업을 실행하는 메소드. annotation의 타입에 따라 실행할 작업을 분리합니다.
-    //    /// - Parameters:
-    //    ///   - mapView: 선택된 annotaion이 포함된 map view
-    //    ///   - view: 선택된 annotation view
-    //    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-    //        /// annotation 선택 상태를 저장
-    //        isAnnotationSelected = true
-    //
-    //        /*
-    //         if let annotation = view.annotation as? CafeAnnotation,
-    //         let id = annotation.id {
-    //         nearbyPlaceCollectionView.selectItem(at: IndexPath(item: id, section: 0),
-    //         animated: true,
-    //         scrollPosition: .centeredHorizontally)
-    //         }
-    //         */
-    //
-    //        isAnnotationSelected = false
-    //    }
+    /// annotation view가 선택되었을 때  작업을 실행하는 메소드. annotation의 타입에 따라 실행할 작업을 분리합니다.
+    /// - Parameters:
+    ///   - mapView: 선택된 annotaion이 포함된 map view
+    ///   - view: 선택된 annotation view
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        /*
+         /// annotation 선택 상태를 저장
+         isAnnotationSelected = true
+         
+         
+         if let annotation = view.annotation as? CafeAnnotation,
+         let id = annotation.id {
+         nearbyPlaceCollectionView.selectItem(at: IndexPath(item: id, section: 0),
+         animated: true,
+         scrollPosition: .centeredHorizontally)
+         }
+         
+         
+         isAnnotationSelected = false
+         */
+    }
     
     
     /// 해당 anntation 객체에 알맞은 annotation view를 리턴해줍니다. annotation의 타입에 따라 실행할 작업을 분리합니다.
@@ -292,31 +289,12 @@ extension PlaceMainViewController: MKMapViewDelegate {
         }
         
         let tempColor = UIColor.systemRed
+        let tempImage = UIImage(systemName: "mappin.circle")
         
-        if let annotation = annotation as? CafeAnnotation {
-            annotationView = setupPlaceAnnotationView(for: annotation, on: mapView,
-                                                      tintColor: UIColor(named: "cafe") ?? tempColor,
-                                                      image: UIImage(systemName: "heart.circle.fill"))
-        } else if let annotation = annotation as? RestaurantAnnotation {
-            annotationView = setupPlaceAnnotationView(for: annotation, on: mapView,
-                                                      tintColor: UIColor(named: "restaurant") ?? tempColor,
-                                                      image: UIImage(systemName: "seal.fill"))
-        } else if let annotation = annotation as? BakeryAnnotation {
-            annotationView = setupPlaceAnnotationView(for: annotation, on: mapView,
-                                                      tintColor: UIColor(named: "bakery") ?? tempColor,
-                                                      image: UIImage(systemName: "icloud"))
-        } else if let annotation = annotation as? StudyCafeAnnotation {
-            annotationView = setupPlaceAnnotationView(for: annotation, on: mapView,
-                                                      tintColor: UIColor(named: "studycafe") ?? tempColor,
-                                                      image: UIImage(systemName: "highlighter"))
-        } else if let annotation = annotation as? PubAnnotation {
-            annotationView = setupPlaceAnnotationView(for: annotation, on: mapView,
-                                                      tintColor: UIColor(named: "pub") ?? tempColor,
-                                                      image: UIImage(systemName: "moon"))
-        } else if let annotation = annotation as? DesertAnnotation {
-            annotationView = setupPlaceAnnotationView(for: annotation, on: mapView,
-                                                      tintColor: UIColor(named: "dessert") ?? tempColor,
-                                                      image: UIImage(systemName: "star.fill"))
+        if let annotation = annotation as? PlaceAnnotation {
+            let tintColor = UIColor(named: annotation.placeType.rawValue) ?? tempColor
+            let glyphImage = tempImage // 수정 예정
+            annotationView = setupPlaceAnnotationView(for: annotation, on: mapView, tintColor: tintColor, image: glyphImage)
         }
         
         return annotationView
@@ -370,7 +348,7 @@ extension PlaceMainViewController: MKMapViewDelegate {
 
 
 
-// MARK: Collection View Delegation
+// MARK: - Collection View Delegation
 
 extension PlaceMainViewController: UICollectionViewDataSource {
     
@@ -423,7 +401,7 @@ extension PlaceMainViewController: UICollectionViewDelegateFlowLayout {
 
 
 
-// MARK: Location Manager Delegate
+// MARK: - Location Manager Delegate
 
 extension PlaceMainViewController: CLLocationManagerDelegate {
     
@@ -483,7 +461,7 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
         
         alert(message: "현재 위치를 불러올 수 없습니다")
         
-        currentLocationLabel.text = "위치를 불러올 수 없습니다"
+        currentLocationLabel.text = user.university?.name ?? "위치 서비스 사용불가"
     }
     
     
@@ -496,6 +474,7 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
         if let currentLocation = locations.last {
             updateAddress(with: currentLocation)
         } else {
+            alert(message: "현재 위치를 불러올 수 없습니다")
         }
         
         manager.stopUpdatingLocation()
