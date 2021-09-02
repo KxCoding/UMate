@@ -31,7 +31,7 @@ class ExamplesOfQuestionsTableViewCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = NSLayoutConstraint.Axis.horizontal
         stackView.alignment = .center
-        stackView.spacing = 10
+        stackView.spacing = 9
         
         /// 번호 라벨
         let numberLabel = UILabel()
@@ -45,7 +45,10 @@ class ExamplesOfQuestionsTableViewCell: UITableViewCell {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = UIColor(named: "systemGray6BackgroundColor")
-        textField.heightAnchor.constraint(equalToConstant: 34).isActive = true
+        textField.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        textField.font = UIFont.preferredFont(forTextStyle: .body)
+        textField.setLeftPaddingPoints(7)
+        textField.setRightPaddingPoints(10)
         textField.layer.cornerRadius = 5
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.systemGray4.cgColor
@@ -69,4 +72,26 @@ class ExamplesOfQuestionsTableViewCell: UITableViewCell {
         /// 작성 버튼 초기화
         insertTestReviewButton.setButtonTheme()
     }
+}
+
+
+
+
+extension UITextField {
+    
+    /// UITextField의 좌측 padding을 추가하는 메소드
+    /// - Parameter amount: 추가할 padding 값
+    func setLeftPaddingPoints(_ amount: CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: amount))
+        self.leftView = paddingView
+        self.leftViewMode = .always
+    }
+    
+    /// UITextField의 우측 padding을 추가하는 메소드
+    /// - Parameter amount: 추가할 padding 값
+    func setRightPaddingPoints(_ amount:CGFloat) {
+         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+         self.rightView = paddingView
+         self.rightViewMode = .always
+     }
 }
