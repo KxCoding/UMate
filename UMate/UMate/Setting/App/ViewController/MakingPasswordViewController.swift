@@ -7,20 +7,7 @@
 
 import UIKit
 
-class MakingPasswordViewController: UIViewController {
-    
-    var didPasswordSet = false
-    var password: String?
-    var passwordCheck: String?
-    lazy var charSet = CharacterSet(charactersIn: "0123456789").inverted
-
-    @IBOutlet weak var firstContainerView: UIView!
-    @IBOutlet weak var secondContainerView: UIView!
-    @IBOutlet weak var thirdContainerView: UIView!
-    @IBOutlet weak var fourthContainerView: UIView!
-    
-    @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var checkPasswordField: UITextField!
+class MakingPasswordViewController: PasswordRootViewController {
     
     @objc func process(notifcation: Notification) {
         DispatchQueue.main.async {
@@ -36,12 +23,12 @@ class MakingPasswordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        // 뒤로 가기 버튼 없애기
-        self.navigationItem.setHidesBackButton(true, animated:true)
-        
-        passwordField.becomeFirstResponder()
+//        
+//        
+//        // 뒤로 가기 버튼 없애기
+//        self.navigationItem.setHidesBackButton(true, animated:true)
+//        
+//        passwordField.becomeFirstResponder()
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(process(notifcation:)),
