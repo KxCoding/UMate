@@ -9,6 +9,8 @@ import UIKit
 
 class SettingTableViewController: UITableViewController {
 
+    var selectedMenu: String?
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -23,6 +25,11 @@ class SettingTableViewController: UITableViewController {
         
     }
     
+    @IBAction func communityRuleButtonDidTapped(_ sender: Any) {
+        selectedMenu = "커뮤니티 이용 규칙"
+        
+        sendMenuTitle()
+    }
     
     @IBAction func alertButtonDidTapped(_ sender: Any) {
         alertVersion2(message: "알림 기능 이용을 위해 아이폰의 [설정] > [UMate]에서 알림을 허용해주세요.") { [weak self] action in
@@ -40,6 +47,38 @@ class SettingTableViewController: UITableViewController {
             
         } handler2: { _ in }
 
+    }
+    
+    
+    @IBAction func noticeButtonDidTapped(_ sender: Any) {
+        
+    }
+    
+    @IBAction func serviceUseRuleButtonDidTapped(_ sender: Any) {
+        selectedMenu = "서비스 이용약관"
+        
+        sendMenuTitle()
+    }
+   
+    @IBAction func userInfoRuleButtonDidTapped(_ sender: Any) {
+        selectedMenu = "개인정보 처리방침"
+        
+        sendMenuTitle()
+    }
+    
+    @IBAction func openSourceButtonDidTapped(_ sender: Any) {
+        selectedMenu = "오픈소스 라이선스"
+        
+        sendMenuTitle()
+    }
+    
+    func sendMenuTitle() {
+        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "AppInformationVC") as? AppInformationTextViewController else {
+            return
+        }
+        
+        vc.menu = selectedMenu
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     /// Declear to remove observer 
