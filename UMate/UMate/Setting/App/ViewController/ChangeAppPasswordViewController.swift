@@ -7,29 +7,11 @@
 
 import UIKit
 
-class ChangeAppPasswordViewController: UIViewController {
-    
-    var didPasswordSet = false
-    var password: String?
-    var passwordCheck: String?
-    lazy var charSet = CharacterSet(charactersIn: "0123456789").inverted
-    
-    @IBOutlet weak var firstTextField: UITextField!
-    @IBOutlet weak var secondTextField: UITextField!
-    @IBOutlet weak var thirdTextField: UITextField!
-    @IBOutlet weak var fourthTextField: UITextField!
-    @IBOutlet weak var firstContainerView: UIView!
-    @IBOutlet weak var secondContainerView: UIView!
-    @IBOutlet weak var thirdContainerView: UIView!
-    @IBOutlet weak var fourthContainerView: UIView!
-    
-    @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var changePasswordField: UITextField!
-    
-    
+class ChangeAppPasswordViewController: PasswordRootViewController {
+
     /// PasswordNotCorrect Notification이 전달되면 실행되는 메소드입니다.
     /// - Parameter notifcation: Notification
-    @objc func passwordNotCorrectProcecss(notifcation: Notification) {
+    @objc func HandlePasswordNotCorrectNotification(notifcation: Notification) {
         DispatchQueue.main.async {
             self.passwordField.text = ""
             
@@ -45,7 +27,7 @@ class ChangeAppPasswordViewController: UIViewController {
     /// - Parameter notifcation: Notification
     @objc func passwordSameProcess(notifcation: Notification) {
         DispatchQueue.main.async {
-            self.changePasswordField.text = ""
+            self.checkPasswordField.text = ""
             
             [self.firstContainerView, self.secondContainerView,
              self.thirdContainerView, self.fourthContainerView].forEach {
@@ -59,20 +41,22 @@ class ChangeAppPasswordViewController: UIViewController {
         super.viewDidLoad()
         
         // 뒤로 가기 버튼 없애기
-        self.navigationItem.setHidesBackButton(true, animated:true)
+//        self.navigationItem.setHidesBackButton(true, animated:true)
+//        
+//        passwordField.becomeFirstResponder()
         
-        passwordField.becomeFirstResponder()
         
+        NotificationCenter.default
+            .addObserver(self,
+                         selector: #selector(HandlePasswordNotCorrectNotification(notifcation:)),
+                         name: Notification.Name.PasswordNotCorrect,
+                         object: nil)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(passwordNotCorrectProcecss(notifcation:)),
-                                               name: Notification.Name.PasswordNotCorrect,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(passwordSameProcess(notifcation:)),
-                                               name: Notification.Name.PasswordIsSame,
-                                               object: nil)
+        NotificationCenter.default
+            .addObserver(self,
+                    selector: #selector(passwordSameProcess(notifcation:)),
+                    name: Notification.Name.PasswordIsSame,
+                    object: nil)
     }
     
     
@@ -135,7 +119,7 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
                     $0?.backgroundColor = UIColor.white
                 }
                 
-                changePasswordField.becomeFirstResponder()
+                checkPasswordField.becomeFirstResponder()
             }
             
         default:

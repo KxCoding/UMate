@@ -18,7 +18,9 @@ class TimetableViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "show" {
-            let tableViewController : AddLectureTableViewController = segue.destination.children.first as! AddLectureTableViewController
+            let tableViewController : AddLectureTableViewController =
+            segue.destination.children.first as! AddLectureTableViewController
+            
             tableViewController.delegate = self
         }
     }
@@ -32,7 +34,10 @@ class TimetableViewController: UIViewController {
         
         timeTableView.elliotBackgroundColor = UIColor.white
         timeTableView.borderWidth = 1
-        timeTableView.borderColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
+        timeTableView.borderColor = UIColor(red: 0.85,
+                                            green: 0.85,
+                                            blue: 0.85,
+                                            alpha: 1.0)
         
         timeTableView.textEdgeInsets = UIEdgeInsets(top: 2, left: 3, bottom: 2, right: 10)
         timeTableView.courseItemMaxNameLength = 18
@@ -45,8 +50,14 @@ class TimetableViewController: UIViewController {
         timeTableView.courseItemHeight = 70.0
         timeTableView.symbolFontSize = 14
         timeTableView.symbolTimeFontSize = 12
-        timeTableView.symbolFontColor = UIColor(displayP3Red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
-        timeTableView.symbolTimeFontColor = UIColor(displayP3Red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+        timeTableView.symbolFontColor = UIColor(displayP3Red: 0.1,
+                                                green: 0.1,
+                                                blue: 0.1,
+                                                alpha: 1.0)
+        timeTableView.symbolTimeFontColor = UIColor(displayP3Red: 0.5,
+                                                    green: 0.5,
+                                                    blue: 0.5,
+                                                    alpha: 1.0)
         
         timeTableView.isFullBorder = true
         timeTableView.roundCorner = .right
