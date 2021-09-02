@@ -35,19 +35,19 @@ class CommentTableViewCell: UITableViewCell {
             heartImageView.image = UIImage(named: "heart2")
             hearButtonImageView.image = UIImage(named: "heart2")
             comment.isliked = false
-            comment.heartCount -= 1
+            comment.heartCount! -= 1
             heartCountLabel.text = "\(comment.heartCount)"
             
         } else {
             heartImageView.image = UIImage(named: "heart2.fill")
             hearButtonImageView.image = UIImage(named: "heart2.fill")
             comment.isliked = true
-            comment.heartCount += 1
+            comment.heartCount! += 1
             heartCountLabel.text = "\(comment.heartCount)"
         }
         
         
-        guard comment.heartCount > 0 else {
+        guard comment.heartCount! > 0 else {
             heartImageView.isHidden = true
             heartCountLabel.isHidden = true
             return
@@ -90,7 +90,7 @@ class CommentTableViewCell: UITableViewCell {
             userIdLabel.text = comment.writer
             commentLabel.text = comment.content
             dateTimeLabel.text = comment.insertDate.commentDate
-            heartCountLabel.text = comment.heartCount.description
+            heartCountLabel.text = comment.heartCount?.description
             
         } else {
             reCommentContainerView.isHidden = false
@@ -101,7 +101,7 @@ class CommentTableViewCell: UITableViewCell {
             userIdLabel.text = comment.writer
             commentLabel.text = comment.content
             dateTimeLabel.text = comment.insertDate.commentDate
-            heartCountLabel.text = comment.heartCount.description
+            heartCountLabel.text = comment.heartCount?.description
         }
         
         selectedComment = comment

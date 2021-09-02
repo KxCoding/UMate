@@ -26,7 +26,7 @@ class LectureReviewBoardViewController: UIViewController {
     
     ///  강의 리스트를 파싱하는 메소드
     func parseList() {
-        guard let data = NSDataAsset(name: "lecture2019-1")?.data else {
+        guard let data = NSDataAsset(name: "lectures2")?.data else {
             return
         }
         
@@ -39,48 +39,45 @@ class LectureReviewBoardViewController: UIViewController {
         for line in lines.dropFirst() {
             let values: [String] = line.components(separatedBy: ",")
         
-            guard values.count == 7 else { continue }
+            guard values.count == 5 else { continue }
             
-            let assortment = values[0].trimmingCharacters(in: .whitespaces) /// 종별
-            let lectureNumber = values[1].trimmingCharacters(in: .whitespaces) /// 학정번호
-            let credit = values[2].trimmingCharacters(in: .whitespaces) /// 학점
-            let lectureTitle = values[3].trimmingCharacters(in: .whitespaces) /// 교과목명
-            let professor = values[4].trimmingCharacters(in: .whitespaces) /// 담당교수
-            let lectureTime = values[5].trimmingCharacters(in: .whitespaces) /// 강의시간
-            let lectureRoom = values[6].replacingOccurrences(of: "\r", with: "") /// 강의실
-          
-            let lectureInfo = LectureInfo(assortment: assortment,
-                                          lectureNumber: lectureNumber,
-                                          credit: credit,
-                                          lectureTitle: lectureTitle,
-                                          professor: professor,
-                                          lectureTime: lectureTime,
-                                          lectureRoom: lectureRoom,
-                                          reviews: [LectureReview(assignment: .normal,
-                                                                  groupMeeting: .many,
-                                                                  evaluation: .generous,
-                                                                  attendance: .seat,
-                                                                  testNumber: .two,
-                                                                  rating: .four,
-                                                                  semester: "19년 1학기",
-                                                                  reviewContent: "괜찮아요"),
-                                                    LectureReview(assignment: .normal,
-                                                                  groupMeeting: .many,
-                                                                  evaluation: .generous,
-                                                                  attendance: .seat,
-                                                                  testNumber: .two,
-                                                                  rating: .four,
-                                                                  semester: "19년 2학기",
-                                                                  reviewContent: "강력 추천"),
-                                                    LectureReview(assignment: .many,
-                                                                  groupMeeting: .none,
-                                                                  evaluation: .normal,
-                                                                  attendance: .direct,
-                                                                  testNumber: .none,
-                                                                  rating: .three,
-                                                                  semester: "19년 2학기",
-                                                                  reviewContent: "별로에요")
-                                          ])
+            let lectureTitle = values[0].trimmingCharacters(in: .whitespaces) /// 교과목명
+            let professor = values[1].trimmingCharacters(in: .whitespaces) /// 교수명
+            let openingSemester = values[2].trimmingCharacters(in: .whitespaces) /// 개설학기
+            let textbookName = values[3].trimmingCharacters(in: .whitespaces) /// 교재명
+            let bookLink = values[4].trimmingCharacters(in: .whitespaces) /// 교재링크
+            
+            let lectureInfo = LectureInfo(
+                lectureTitle: lectureTitle,
+                professor: professor,
+                openingSemester: openingSemester,
+                textbookName: textbookName,
+                bookLink: bookLink,
+                reviews: [LectureReview(assignment: .normal,
+                                        groupMeeting: .many,
+                                        evaluation: .generous,
+                                        attendance: .seat,
+                                        testNumber: .two,
+                                        rating: .four,
+                                        semester: "19년 1학기",
+                                        reviewContent: "괜찮아요"),
+                          LectureReview(assignment: .normal,
+                                        groupMeeting: .many,
+                                        evaluation: .generous,
+                                        attendance: .seat,
+                                        testNumber: .two,
+                                        rating: .four,
+                                        semester: "19년 2학기",
+                                        reviewContent: "강력 추천"),
+                          LectureReview(assignment: .many,
+                                        groupMeeting: .none,
+                                        evaluation: .normal,
+                                        attendance: .direct,
+                                        testNumber: .none,
+                                        rating: .three,
+                                        semester: "19년 2학기",
+                                        reviewContent: "별로에요")
+                ])
             
             lectureList.append(lectureInfo)
         }
@@ -116,6 +113,7 @@ class LectureReviewBoardViewController: UIViewController {
         setupSearchBar()
     }
 }
+
 
 
 

@@ -32,7 +32,7 @@ class Post {
     var scrapCount: Int = 0
     
     //여기서 all은 카테고리를 선택하지 않을 경우를 나타냄
-    //카테고리 게시판은 무조건 글 작성시에 카테고리를 선택하도록 되어있음. 
+    //카테고리 게시판은 무조건 글 작성시에 카테고리를 선택하도록 되어있음.
     struct Category {
         enum Publicity: Int {
             case all = 2000
@@ -109,19 +109,24 @@ extension Post.Category.Career: CustomStringConvertible {
 }
 
 
+class SocialFeedModel {
+    var id = ""
+    var title = ""
+}
+
+class SocialDataModel {
+    static let shareInstance = SocialDataModel()
+    var arrSocialFeed = [SocialDataModel]()
+}
+
+
+class CommentDataModel {
+    static let shareInstance = CommentDataModel()
+    var arrComment = [Comment]()
+}
 
 class Comment {
-    internal init(image: UIImage?,
-                  writer: String,
-                  content: String,
-                  insertDate: Date,
-                  heartCount: Int = 0,
-                  commentId: Int = 0,
-                  originalCommentId: Int? = nil,
-                  reCommentId: Int? = nil,
-                  isReComment: Bool = false,
-                  isliked: Bool = false,
-                  postId: String) {
+    internal init(image: UIImage?, writer: String, content: String, insertDate: Date, heartCount: Int? = nil, commentId: Int = 0, originalCommentId: Int = 0, reCommentId: Int? = nil, isReComment: Bool, postId: String, isliked: Bool = false) {
         self.image = image
         self.writer = writer
         self.content = content
@@ -130,23 +135,24 @@ class Comment {
         self.commentId = commentId
         self.originalCommentId = originalCommentId
         self.reCommentId = reCommentId
-        self.isliked = isliked
         self.isReComment = isReComment
         self.postId = postId
+        self.isliked = isliked
     }
     
+ 
     let image: UIImage?
     let writer: String
     let content: String
     let insertDate: Date
-    var heartCount: Int
+    var heartCount: Int?
     var commentId: Int
-    var originalCommentId: Int?
+    var originalCommentId: Int
     var reCommentId: Int?
     var isReComment: Bool
     var postId: String
     var isliked = false
+    
 }
-
 
 

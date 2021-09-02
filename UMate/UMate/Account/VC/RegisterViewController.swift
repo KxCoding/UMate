@@ -19,13 +19,15 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var dismissZone2: UIView!
     @IBOutlet weak var universityNameField: UILabel!
     
+
+    
     /// To save notification data
     var saveText = ""
     
     /// notificationCenter를 저장하기위한 속성
     var token: NSObjectProtocol?
     
-    /// DropDown타입 배열을 클로저로 초기화한 속성
+    /// To make intialize year of interval as String Array 
     let menu: DropDown? = {
         let menu = DropDown()
       
