@@ -10,25 +10,21 @@ import Foundation
 
 
 struct LectureInfo {
-    init(assortment: String, lectureNumber: String, credit: String, lectureTitle: String, professor: String, lectureTime: String, lectureRoom: String, reviews: [LectureReview] = []) {
-        self.assortment = assortment
-        self.lectureNumber = lectureNumber
-        self.credit = credit
+    internal init(lectureTitle: String, professor: String, openingSemester: String, textbookName: String, bookLink: String, reviews: [LectureReview] = []) {
+        
         self.lectureTitle = lectureTitle
         self.professor = professor
-        self.lectureTime = lectureTime
-        self.lectureRoom = lectureRoom
+        self.openingSemester = openingSemester
+        self.textbookName = textbookName
+        self.bookLink = bookLink
         self.reviews = reviews
     }
     
-    let assortment: String
-    let lectureNumber: String
-    let credit: String
     let lectureTitle: String
     let professor: String
-    let lectureTime: String
-    let lectureRoom: String
-    
+    let openingSemester: String
+    let textbookName: String
+    let bookLink: String
     
     let reviews: [LectureReview]
 }

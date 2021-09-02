@@ -23,7 +23,7 @@ class LectureReviewTableViewCell: UITableViewCell {
         /// 최근 강의평이니까 무조건 첫번째
         guard let recentReview = lecture.reviews.first else { return }
         
-        lectureTitleLabel.text = lecture.lectureTitle
+        lectureTitleLabel.text = lecture.lectureTitle + " : " + lecture.professor
         semesterLabel.text = "\(recentReview.semester) 수강자"
         reviewContentLabel.text = recentReview.reviewContent
         
