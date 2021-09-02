@@ -110,32 +110,11 @@ struct Place: Codable {
     
     /// annotation
     var annotation: MKAnnotation {
-        switch placeType {
-        case .cafe:
-            return CafeAnnotation(coordinate: coordinate,
-                                  title: name,
-                                  subtitle: keywords.first ?? "")
-        case .restaurant:
-            return RestaurantAnnotation(coordinate: coordinate,
-                                        title: name,
-                                        subtitle: keywords.first ?? "")
-        case .bakery:
-            return BakeryAnnotation(coordinate: coordinate,
-                                    title: name,
-                                    subtitle: keywords.first ?? "")
-        case .studyCafe:
-            return StudyCafeAnnotation(coordinate: coordinate,
-                                       title: name,
-                                       subtitle: keywords.first ?? "")
-        case .pub:
-            return PubAnnotation(coordinate: coordinate,
-                                 title: name,
-                                 subtitle: keywords.first ?? "")
-        case .dessert:
-            return DesertAnnotation(coordinate: coordinate,
-                                    title: name,
-                                    subtitle: keywords.first ?? "")
-        }
+        return PlaceAnnotation(coordinate: coordinate,
+                               title: name,
+                               subtitle: keywords.first ?? "",
+                               placeId: id,
+                               placeType: placeType)
     }
     
     /// 더미 데이터 (type property)

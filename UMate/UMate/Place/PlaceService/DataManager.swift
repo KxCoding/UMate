@@ -97,6 +97,7 @@ class DataManager {
     
     // MARK: Image
     
+    /// 이미지 캐시
     var imageCache = NSCache<NSURL, UIImage>()
     
     
@@ -107,7 +108,11 @@ class DataManager {
         
         let nsUrl = url as NSURL
         
+        /// 캐시에 이미지가 저장되었는지 확인
         if let image = imageCache.object(forKey: nsUrl) { return image } else {
+            #if DEBUG
+            print("can't get data from cache")
+            #endif
             
             guard let data = try? Data(contentsOf: nsUrl as URL) else {
                 #if DEBUG
@@ -132,6 +137,9 @@ class DataManager {
             #if DEBUG
             print("image initialized successfully")
             #endif
+            
+            // 캐시에 이미지 저장
+            imageCache.setObject(image, forKey: nsUrl)
             
             return image
         }
