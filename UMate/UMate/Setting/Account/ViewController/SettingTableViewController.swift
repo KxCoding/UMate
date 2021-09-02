@@ -46,7 +46,7 @@ class SettingTableViewController: UITableViewController {
     var token: NSObjectProtocol?
     
     /// when user didTap this button, present to ProfilePicturesViewController and then get image
-    @IBAction func isChangeProfile(_ sender: Any) {
+    @IBAction func ChangeToProfile(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Account", bundle: nil)
         if let nav = storyboard.instantiateViewController(withIdentifier: "profileNav") as? UINavigationController {
             
