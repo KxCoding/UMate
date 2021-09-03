@@ -48,6 +48,7 @@ class SetPasswordViewController: UIViewController {
     @IBOutlet weak var touchIDSwitch: UISwitch!
     @IBAction func touchIDPasswordStatusChanged(_ sender: UISwitch) {
         if sender.isOn {
+            print("isONNNNN")
             context = LAContext()
 
             context.localizedCancelTitle = "Enter Username/Password"

@@ -11,6 +11,8 @@ struct PlaceReviewItem {
     struct UserReview {
         let reviewText: String
         let date: String
+        let image: UIImage?
+        let placeName: String
     }
     
     
@@ -55,4 +57,11 @@ struct PlaceReviewItem {
         case plenty = "푸짐하다"
     }
     let amount: Amount
+    
+    /// 임시로 사용할 더미데이터
+    static var dummyData = [
+        PlaceReviewItem.UserReview(reviewText: "분위기 너무 좋아요", date: "2021.06.01", image: UIImage(named: "search_00"), placeName: "오오비"),
+        PlaceReviewItem.UserReview(reviewText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", date: "2021.05.28", image: UIImage(named: "search_01"), placeName: "카페 모"),
+        PlaceReviewItem.UserReview(reviewText: "커피는 데일리루틴 나만 알고싶은집", date: "2021.05.23", image: UIImage(named: "search_02"), placeName: "데일리루틴")
+    ]
 }

@@ -18,7 +18,7 @@ class AddLectureTableViewController: UITableViewController {
     var startTime: String = "09:00"
     var endTime: String = "09:00"
     var weekdayInt = 1
-    var weekdayList: [Bool] = [false, false, false, false, false]
+    var weekdayList = [Bool](repeating: false, count: 5)
     var colorString = "lightRed"
     var textColorString = "black"
     var isWeekdayInfoEntered = false
@@ -83,7 +83,7 @@ class AddLectureTableViewController: UITableViewController {
     /// - Parameters:
     ///   - view: 선택된 버튼에 해당하는 뷰
     ///   - label: 선택된 버튼에 해당하는 라벨
-    func selectedWeekday(view: UIView, label: UILabel) {
+    func selectWeekday(view: UIView, label: UILabel) {
         view.backgroundColor = UIColor.systemGray
         label.textColor = UIColor.white
     }
@@ -93,7 +93,7 @@ class AddLectureTableViewController: UITableViewController {
     /// - Parameters:
     ///   - view: 선택 해제된 버튼에 해당하는 뷰
     ///   - label: 선택 해제된 버튼에 해당하는 라벨
-    func unselectedWeekDay(view: UIView, label: UILabel) {
+    func unselectWeekDay(view: UIView, label: UILabel) {
         view.backgroundColor = .clear
         label.textColor = UIColor.black
     }
@@ -106,57 +106,57 @@ class AddLectureTableViewController: UITableViewController {
         switch sender.tag {
         case 101:
             if mondayContainerView.backgroundColor == .clear {
-                selectedWeekday(view: mondayContainerView, label: mondayLabel)
+                selectWeekday(view: mondayContainerView, label: mondayLabel)
                 weekdayInt = 1
                 weekdayList[0] = true
                 break
             }
             
-            unselectedWeekDay(view: mondayContainerView, label: mondayLabel)
+            unselectWeekDay(view: mondayContainerView, label: mondayLabel)
             weekdayList[0] = false
             
         case 102:
             if tuesdayContainerView.backgroundColor == .clear {
-                selectedWeekday(view: tuesdayContainerView, label: tuesdayLabel)
+                selectWeekday(view: tuesdayContainerView, label: tuesdayLabel)
                 weekdayInt = 2
                 weekdayList[1] = true
                 break
             }
             
-            unselectedWeekDay(view: tuesdayContainerView, label: tuesdayLabel)
+            unselectWeekDay(view: tuesdayContainerView, label: tuesdayLabel)
             weekdayList[1] = false
             
         case 103:
             if wednesdayContainerView.backgroundColor == .clear {
-                selectedWeekday(view: wednesdayContainerView, label: wednesdayLabel)
+                selectWeekday(view: wednesdayContainerView, label: wednesdayLabel)
                 weekdayInt = 3
                 weekdayList[2] = true
                 break
             }
             
-            unselectedWeekDay(view: wednesdayContainerView, label: wednesdayLabel)
+            unselectWeekDay(view: wednesdayContainerView, label: wednesdayLabel)
             weekdayList[2] = false
             
         case 104:
             if thursdayContainerView.backgroundColor == .clear {
-                selectedWeekday(view: thursdayContainerView, label: thursdayLabel)
+                selectWeekday(view: thursdayContainerView, label: thursdayLabel)
                 weekdayInt = 4
                 weekdayList[3] = true
                 break
             }
             
-            unselectedWeekDay(view: thursdayContainerView, label: thursdayLabel)
+            unselectWeekDay(view: thursdayContainerView, label: thursdayLabel)
             weekdayList[3] = false
             
         case 105:
             if fridayContainerView.backgroundColor == .clear {
-                selectedWeekday(view: fridayContainerView, label: fridayLabel)
+                selectWeekday(view: fridayContainerView, label: fridayLabel)
                 weekdayInt = 5
                 weekdayList[4] = true
                 break
             }
             
-            unselectedWeekDay(view: fridayContainerView, label: fridayLabel)
+            unselectWeekDay(view: fridayContainerView, label: fridayLabel)
             weekdayList[4] = false
         default:
             break
