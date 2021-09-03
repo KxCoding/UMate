@@ -25,100 +25,86 @@ class DetailPostViewController: UIViewController {
     
     var tokens = [NSObjectProtocol]()
     var imageObserver: NSObjectProtocol?
-    var originalCommentId: Int = 0
+    
     var commentId: Int = 0
+    var originalCommentId: Int = 0
     var isReComment = false
     var reCommentId: Int = 0
-    var postId: Int = 0
-    let modelComment = CommentDataModel.shareInstance
-    var modelSocialFeed = SocialFeedModel()
-    var arrComments = [Comment]()
-    
-    @IBOutlet weak var commentTabieView: UITableView!
+    var depth: Int = 0
     
     /// 댓글 및 대댓글 저장하는 메소드
     /// - Parameter sender: DetailPostViewController
     @IBAction func saveComment(_ sender: Any) {
         let originalComment = dummyCommentList.filter { $0.isReComment == false }
         
-        originalCommentId = dummyCommentList.count + 1
-        
-        commentId = originalCommentId
-        
+   
         if isReComment == false {
-        
+            
             guard let comment = commentTextView.text, comment.count > 0 else {
                 alertVersion2(message: "댓글을 입력하세요")
                 return
             }
-        
-        let newComment = Comment(image: UIImage(systemName: "person"),
-                                 writer: "익명1",
-                                 content: comment,
-                                 insertDate: Date(),
-                                 commentId: commentId,
-                                 originalCommentId: originalCommentId,
-                                 isReComment: false,
-                                 postId: modelSocialFeed.id)
-       
-            dummyCommentList.append(newComment)
-        
-            print(originalCommentId, commentId)
-            NotificationCenter.default.post(name: .newCommentDidInsert, object: nil)
             
+            
+            commentId = dummyCommentList.count + 1
+            
+            let newComment = Comment(image: UIImage(systemName: "person"),
+                                      writer: "익명2",
+                                      content: comment,
+                                      insertDate: Date(),
+                                      commentId: commentId,
+                                      originalCommentId: nil,
+                                      isReComment: false,
+                                      postId: "")
+            
+            dummyCommentList.append(newComment)
+            
+            
+            #if DEBUG
+            print("Comment", "CommentId", commentId, "originalCommentId", originalCommentId, "reCommentId", reCommentId)
+            #endif
+            
+            NotificationCenter.default.post(name: .newCommentDidInsert, object: nil)
         } else {
-        
+            
             if commentTextView.isFirstResponder {
                 guard let comment = commentTextView.text, comment.count > 0 else {
                     alertVersion2(message: "대댓글 입력하세요")
                     return
                 }
-        
-//                let reComment = dummyCommentList.filter { $0.commentId  == $0.reCommentId }
-              
-                reCommentId = originalCommentId + 1
-
+                
+//                let reComment = dummyCommentList.filter { $0.isReComment }
+                reCommentId = commentId + 1
+                
                 let newReComment = Comment(image: UIImage(systemName: "person"),
                                             writer: "익명2",
                                             content: comment,
                                             insertDate: Date(),
                                             commentId: commentId,
+                                            originalCommentId: originalCommentId,
                                             reCommentId: reCommentId,
                                             isReComment: true,
-                                            postId: modelSocialFeed.id)
+                                            postId: "")
                 
-//                dummyCommentList.insert(newReComment, at: commentId )
                 dummyCommentList.append(newReComment)
-
-                print("CommentId", commentId, "originalID", originalCommentId, "reCommentId", reCommentId)
                 
-                dummyCommentList.sort { lhs, rhs in
-                    if lhs.originalCommentId == rhs.originalCommentId {
-                        return lhs.insertDate < rhs.insertDate
-                    } else {
-                         return lhs.originalCommentId > rhs.originalCommentId
-                    }
-
-                }
+//                dummyCommentList.sort(by: { $0.commentId != $0.})
+                
+                #if DEBUG
+                print("Recomment", "CommentId", commentId, "originalCommentId", originalCommentId, "reCommentId", reCommentId)
+                #endif
                 
                 NotificationCenter.default.post(name: .newReCommentDidInsert, object: nil)
-        
+                
                 commentTextView.resignFirstResponder()
                 self.isReComment = false
             }
         }
-
-                                       
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
     }
     
     
-    @IBAction func checkCommentType(_ sender: Any) {
+    
+    @IBAction func reCommentBtn(_ sender: Any) {
         let alertReComment = UIAlertController(title: "알림", message: "대댓글을 작성하시겠습니까?", preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in

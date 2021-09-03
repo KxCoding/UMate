@@ -97,11 +97,11 @@ class AccountViewController: UIViewController {
 
 
 extension AccountViewController: UITextFieldDelegate {
-    // 텍스트필드에 값이 넣어질때
+    /// when enterence a value in textField
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField
     }
-    // 텍스트필드에 값을 입력하는게 끝났을시
+    /// when end editing in textField
     func textFieldDidEndEditing(_ textField: UITextField) {
         activeTextField = nil
     }
@@ -111,8 +111,8 @@ extension AccountViewController: UITextFieldDelegate {
 
 
 extension AccountViewController {
-    /// 텍스트필드에 키보드의 높이가 맞닿을 시 뷰가 올라가는 메소드
-    func addKeyboardWillShow() {
+    /// To avoid the keyboard tries to cover a text field
+    func KeyboardWillShow() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return  }
             guard let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
@@ -126,8 +126,8 @@ extension AccountViewController {
         }
     }
     
-    /// 키보드 내려가는 메소드
-    func addKeyboardWillHide() {
+    /// To make lower keyboard 
+    func KeyboardWillHide() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return }
             strongSelf.view.frame.origin.y = 0
