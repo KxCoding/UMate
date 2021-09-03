@@ -169,7 +169,8 @@ class DataManager {
               let extensionName = arr.last,
               fileName != extensionName else { return nil }
         
-        guard let url = Bundle.main.url(forResource: "places", withExtension: "json") else {
+        guard let url = Bundle.main.url(forResource: fileName,
+                                        withExtension: extensionName) else {
             #if DEBUG
             print("cannot find resource from bundle")
             #endif
