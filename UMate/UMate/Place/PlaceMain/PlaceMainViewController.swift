@@ -131,6 +131,45 @@ class PlaceMainViewController: UIViewController {
     }
     
     
+    /// 위치 서비스 사용 가능 여부 및 권한을 확인하는 메소드
+    private func checkLocationAuth() {
+        if CLLocationManager.locationServicesEnabled() {
+            let status: CLAuthorizationStatus
+            
+            if #available(iOS 14.0, *) {
+                status = locationManager.authorizationStatus
+            } else {
+                status = CLLocationManager.authorizationStatus()
+            }
+            
+            #if DEBUG
+            print(status.description)
+            #endif
+            
+            switch status {
+            case .notDetermined:
+                locationManager.requestWhenInUseAuthorization()
+                
+            case .restricted, .denied:
+                if locationAlertHasShownAlready { break }
+                alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
+                locationAlertHasShownAlready = true
+                
+            case .authorizedWhenInUse, .authorizedAlways:
+                updateLocation()
+                break
+                
+            default:
+                break
+            }
+        } else {
+            if locationAlertHasShownAlready { return }
+            alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
+            locationAlertHasShownAlready = true
+        }
+    }
+    
+    
     // MARK: View Liftcycle method
     
     /// 화면 초기화
@@ -138,7 +177,7 @@ class PlaceMainViewController: UIViewController {
         super.viewDidLoad()
         
         /// 데이터 로드
-        guard let result = DataManager.shared.getObjectFromBundle(fileName: "places.json", type: PlaceList.self) else { return }
+        guard let result = DataManager.shared.getObject(of: PlaceList.self, fromJson: "places") else { return }
         
         /// 사용자 데이터에 추가 (수정 예정)
         user.university?.places = result.places
@@ -187,41 +226,7 @@ class PlaceMainViewController: UIViewController {
     /// - Parameter animated: 애니메이션 사용 여부
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if CLLocationManager.locationServicesEnabled() {
-            let status: CLAuthorizationStatus
-            
-            if #available(iOS 14.0, *) {
-                status = locationManager.authorizationStatus
-                
-                #if DEBUG
-                print(status.description)
-                #endif
-            } else {
-                status = CLLocationManager.authorizationStatus()
-            }
-            
-            switch status {
-            case .notDetermined:
-                locationManager.requestWhenInUseAuthorization()
-                
-            case .restricted, .denied:
-                if locationAlertHasShownAlready { break }
-                alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
-                locationAlertHasShownAlready = true
-                
-            case .authorizedWhenInUse, .authorizedAlways:
-                updateLocation()
-                break
-                
-            default:
-                break
-            }
-        } else {
-//            if locationAlertHasShownAlready { return }
-            alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
-            locationAlertHasShownAlready = true
-        }
+        checkLocationAuth()
     }
     
     

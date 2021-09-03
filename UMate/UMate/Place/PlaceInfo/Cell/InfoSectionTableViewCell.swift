@@ -56,7 +56,7 @@ class InfoSectionTableViewCell: UITableViewCell {
         placeTypeLabel.text = target.placeType.description
         
         /// 인스타그램 아이디가 없으면 버튼을 표시하지 않음
-        if target.instagramID == nil {
+        if target.instagramId == nil {
             openInstagramButton.isHidden = true
         }
         
@@ -66,7 +66,7 @@ class InfoSectionTableViewCell: UITableViewCell {
         }
         
         /// 북마크가 되어 있으면 select
-        if PlaceUser.tempUser.userData.bookmarkedPlaces.contains(target.name) {
+        if PlaceUser.tempUser.userData.bookmarkedPlaces.contains(target.id) {
             bookmarkButton.isSelected = true
         } else {
             bookmarkButton.isSelected = false
@@ -86,7 +86,7 @@ class InfoSectionTableViewCell: UITableViewCell {
     /// 버튼을 누르면 해당 가게 인스타그램 open
     /// - Parameter sender: 버튼
     @IBAction func openInInstagram(_ sender: UIButton) {
-        guard let id = target.instagramID,
+        guard let id = target.instagramId,
               let url = URL(string: "https://instagram.com/\(id)") else { return }
         
         NotificationCenter.default.post(name: .openUrl, object: nil, userInfo: ["type": URLType.web, "url": url])
@@ -113,12 +113,12 @@ class InfoSectionTableViewCell: UITableViewCell {
         sender.imageView?.image = sender.isSelected ? highlighted : normal
         
         /// 사용자 데이터에 가게가 포함되어 있으면 삭제, 없으면 추가
-        if let index = PlaceUser.tempUser.userData.bookmarkedPlaces.firstIndex(of: target.name) {
+        if let index = PlaceUser.tempUser.userData.bookmarkedPlaces.firstIndex(of: target.id) {
             PlaceUser.tempUser.userData.bookmarkedPlaces.remove(at: index)
             /// 노티피케이션 전송
             NotificationCenter.default.post(name: .updateBookmark, object: nil)
         } else {
-            PlaceUser.tempUser.userData.bookmarkedPlaces.append(target.name)
+            PlaceUser.tempUser.userData.bookmarkedPlaces.append(target.id)
         }
         
         #if DEBUG
