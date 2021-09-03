@@ -31,13 +31,6 @@ class PlaceInfoViewController: UIViewController {
                                  price: .affordable,
                                  amount: .suitable)
     
-    /// 리뷰 데이터
-    var reviews = [
-        PlaceReviewItem.UserReview(reviewText: "분위기 너무 좋아요", date: "2021.06.01"),
-        PlaceReviewItem.UserReview(reviewText: "커피 맛이 좋아요", date: "2021.05.28"),
-        PlaceReviewItem.UserReview(reviewText: "커피는 데일리루틴 나만 알고싶은집", date: "2021.05.23")
-    ]
-    
     
     /// 화면 초기화
     override func viewDidLoad() {
@@ -146,7 +139,7 @@ extension PlaceInfoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 4:
-            if selectedTap == .review { return reviews.count }
+            if selectedTap == .review { return PlaceReviewItem.dummyData.count }
             else { return 0 }
         default:
             return 1
@@ -204,8 +197,8 @@ extension PlaceInfoViewController: UITableViewDataSource {
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "UserReviewTableViewCell", for: indexPath) as! UserReviewTableViewCell
             
-            cell.reviewTextLabel.text = reviews[indexPath.row].reviewText
-            cell.dateLabel.text = reviews[indexPath.row].date
+            cell.reviewTextLabel.text = PlaceReviewItem.dummyData[indexPath.row].reviewText
+            cell.dateLabel.text = PlaceReviewItem.dummyData[indexPath.row].date
             
             return cell
             

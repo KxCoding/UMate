@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="p1i-XP-xoX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="p1i-XP-xoX">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -82,6 +83,9 @@
                                                 <constraint firstItem="OcI-jw-IeW" firstAttribute="centerY" secondItem="l7Z-m7-EJY" secondAttribute="centerY" id="dIh-oG-vb4"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="aaa-4B-UQJ" kind="show" id="Hyn-bS-ssj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -214,10 +218,12 @@
             </objects>
             <point key="canvasLocation" x="2573" y="5"/>
         </scene>
-        <!--Storyboard Reference-->
+        <!--ReviewManaging-->
         <scene sceneID="cRK-WQ-9FY">
             <objects>
-                <viewControllerPlaceholder id="aaa-4B-UQJ" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="ReviewManaging" id="aaa-4B-UQJ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="XbY-3m-RaG"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ukx-LS-5f8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2573" y="-67"/>
