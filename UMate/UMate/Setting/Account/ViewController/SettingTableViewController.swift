@@ -8,7 +8,8 @@
 import UIKit
 
 class SettingTableViewController: UITableViewController {
-
+    
+    /// 선택한 메뉴의 문자열을 저장하는 변수입니다.
     var selectedMenu: String?
     
     @IBOutlet weak var profileImageView: UIImageView!
@@ -16,22 +17,28 @@ class SettingTableViewController: UITableViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var enterYearAndUniNameLabel: UILabel!
     
+    
     /// back to LoginView
     @IBAction func logOutTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Account", bundle: nil)
         let loginNavController = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController")
         
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginNavController)
-        
     }
     
-    @IBAction func communityRuleButtonDidTapped(_ sender: Any) {
+    
+    /// 커뮤니티 이용 규칙 메뉴가 클릭될 때 실행되는 메소드입니다.
+    /// - Parameter sender: UIButton
+    @IBAction func communityRuleButtonDidTapped(_ sender: UIButton) {
         selectedMenu = "커뮤니티 이용 규칙"
         
         sendMenuTitle()
     }
     
-    @IBAction func alertButtonDidTapped(_ sender: Any) {
+    
+    /// 알림 설정 메뉴가 클릭될 때 실행되는 메소드입니다.
+    /// - Parameter sender: UIButton
+    @IBAction func alertButtonDidTapped(_ sender: UIButton) {
         alertVersion2(message: "알림 기능 이용을 위해 아이폰의 [설정] > [UMate]에서 알림을 허용해주세요.") { [weak self] action in
             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
             
@@ -42,7 +49,9 @@ class SettingTableViewController: UITableViewController {
     }
     
     
-    @IBAction func cacheDeleteButtonDidTapped(_ sender: Any) {
+    /// 캐시 삭제 메뉴가 클릭될 때 실행되는 메소드입니다.
+    /// - Parameter sender: UIButton
+    @IBAction func cacheDeleteButtonDidTapped(_ sender: UIButton) {
         alertVersion2(message: "캐시를 삭제하시겠습니까?") { [weak self] action in
             
         } handler2: { _ in }
@@ -50,39 +59,54 @@ class SettingTableViewController: UITableViewController {
     }
     
     
-    @IBAction func noticeButtonDidTapped(_ sender: Any) {
+    /// 공지사항 메뉴가 클릭될 때 실행되는 메소드입니다.
+    /// - Parameter sender: UIButton
+    @IBAction func noticeButtonDidTapped(_ sender: UIButton) {
         
     }
     
-    @IBAction func serviceUseRuleButtonDidTapped(_ sender: Any) {
+    
+    /// 서비스 이용약관 메뉴가 클릭될 때 실행되는 메소드입니다.
+    /// - Parameter sender: UIButton
+    @IBAction func serviceUseRuleButtonDidTapped(_ sender: UIButton) {
         selectedMenu = "서비스 이용약관"
         
         sendMenuTitle()
     }
+    
    
-    @IBAction func userInfoRuleButtonDidTapped(_ sender: Any) {
+    /// 개인정보 처리방침 메뉴가 클릭될 때 실행되는 메소드입니다.
+    /// - Parameter sender: UIButton
+    @IBAction func userInfoRuleButtonDidTapped(_ sender: UIButton) {
         selectedMenu = "개인정보 처리방침"
         
         sendMenuTitle()
     }
     
-    @IBAction func openSourceButtonDidTapped(_ sender: Any) {
+    
+    /// 오픈소스 라이선스 메뉴가 클릭될 때 실행되는 메소드입니다.
+    /// - Parameter sender: UIButton
+    @IBAction func openSourceButtonDidTapped(_ sender: UIButton) {
         selectedMenu = "오픈소스 라이선스"
         
         sendMenuTitle()
     }
     
+    
+    /// 선택한 메뉴 타이틀을 다음 뷰컨트롤러로 보내주는 역할을 하는 메소드입니다.
     func sendMenuTitle() {
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "AppInformationVC") as? AppInformationTextViewController else {
-            return
-        }
+        guard let vc =
+                self.storyboard?.instantiateViewController(withIdentifier: "AppInformationVC") as?
+                AppInformationTextViewController else { return }
         
         vc.menu = selectedMenu
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    
     /// Declear to remove observer 
     var token: NSObjectProtocol?
+    
     
     /// when user didTap this button, present to ProfilePicturesViewController and then get image
     @IBAction func ChangeToProfile(_ sender: Any) {
@@ -101,6 +125,7 @@ class SettingTableViewController: UITableViewController {
             })
         }
     }
+    
     
     /// To prevent remained observer
     deinit {
