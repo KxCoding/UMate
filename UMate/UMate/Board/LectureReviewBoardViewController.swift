@@ -22,6 +22,15 @@ class LectureReviewBoardViewController: UIViewController {
     var cachedText: String?
     
     var lectureList = [LectureInfo]()
+    var filteredLectureList = [LectureInfo]()
+    
+    var isSearchBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    var isFiltering: Bool {
+        return searchController.isActive && !isSearchBarEmpty
+    }
 
     
     ///  강의 리스트를 파싱하는 메소드
@@ -82,6 +91,16 @@ class LectureReviewBoardViewController: UIViewController {
             lectureList.append(lectureInfo)
         }
     }
+    
+    
+    func filterContentForSearchText(_ searchText: String) {
+        
+        filteredLectureList = lectureList.filter { (list: LectureInfo) -> Bool in
+            return list.professor.lowercased().contains(searchText.lowercased()) || list.lectureTitle.lowercased().contains(searchText.lowercased())
+        }
+        
+        lectureReviewListTableView.reloadData()
+    }
 
     
     func setupSearchBar() {
@@ -90,7 +109,7 @@ class LectureReviewBoardViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.obscuresBackgroundDuringPresentation = true
         searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "검색어를 입력해주세요."
+        searchController.searchBar.placeholder = "과목명, 교수명으로 검색하세요."
         searchController.searchBar.showsCancelButton = false
     }
 
@@ -119,6 +138,28 @@ class LectureReviewBoardViewController: UIViewController {
 
 extension LectureReviewBoardViewController: UISearchBarDelegate {
     
+    /// 서치바의 검색어가 변경될 때마다 호출되는 메소드
+    /// - Parameters:
+    ///   - searchBar: 검색을 위한 search Bar
+    ///   - searchText: 검색어
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterContentForSearchText(searchText)
+        cachedText = searchText
+    }
+    
+    
+    /// 검색이 마칠 때 호출되는 메소드
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if let text = cachedText, !(text.isEmpty || filteredLectureList.isEmpty) {
+            searchController.searchBar.text = text
+        }
+    }
+    
+    
+    ///키보드의 Return버튼을 입력했을 때, 검색이 실행되는 메소드
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchController.isActive = false
+    }
 }
 
 
@@ -131,10 +172,18 @@ extension LectureReviewBoardViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        switch section {
+        case  0:
+            return 0
+        case 1:
+            if isFiltering {
+                return filteredLectureList.count
+            }
+            
+            return lectureList.count
+        default:
             return 0
         }
-        return lectureList.count
     }
     
     
@@ -142,8 +191,15 @@ extension LectureReviewBoardViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewTableViewCell", for: indexPath) as! LectureReviewTableViewCell
         if indexPath.section == 1 {
             
-            let target = lectureList[indexPath.row]
-            cell.configure(lecture: target)
+            let list: LectureInfo
+            
+            if isFiltering {
+                list = filteredLectureList[indexPath.row]
+            } else {
+                list = lectureList[indexPath.row]
+            }
+            
+            cell.configure(lecture: list)
             
             return cell
         }

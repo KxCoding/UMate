@@ -25,97 +25,83 @@ class DetailPostViewController: UIViewController {
     
     var tokens = [NSObjectProtocol]()
     var imageObserver: NSObjectProtocol?
-    var originalCommentId: Int = 0
+    
     var commentId: Int = 0
+    var originalCommentId: Int = 0
     var isReComment = false
     var reCommentId: Int = 0
-    var postId: Int = 0
-    let modelComment = CommentDataModel.shareInstance
-    var modelSocialFeed = SocialFeedModel()
-    var arrComments = [Comment]()
-    
-    @IBOutlet weak var commentTabieView: UITableView!
+    var depth: Int = 0
     
     /// 댓글 및 대댓글 저장하는 메소드
     /// - Parameter sender: DetailPostViewController
-    @IBAction func saveCommentBtn(_ sender: Any) {
+    @IBAction func saveComment(_ sender: Any) {
         let originalComment = dummyCommentList.filter { $0.isReComment == false }
         
-        originalCommentId = dummyCommentList.count + 1
-        
-        commentId = originalCommentId
-        
+   
         if isReComment == false {
-        
+            
             guard let comment = commentTextView.text, comment.count > 0 else {
                 alertVersion2(message: "댓글을 입력하세요")
                 return
             }
-        
-        let newComment = Comment(image: UIImage(systemName: "person"),
-                                 writer: "익명1",
-                                 content: comment,
-                                 insertDate: Date(),
-                                 commentId: commentId,
-                                 originalCommentId: originalCommentId,
-                                 isReComment: false,
-                                 postId: modelSocialFeed.id)
-       
-            dummyCommentList.append(newComment)
-        
-            print(originalCommentId, commentId)
-            NotificationCenter.default.post(name: .newCommentDidInsert, object: nil)
             
+            
+            commentId = dummyCommentList.count + 1
+            
+            let newComment = Comment(image: UIImage(systemName: "person"),
+                                      writer: "익명2",
+                                      content: comment,
+                                      insertDate: Date(),
+                                      commentId: commentId,
+                                      originalCommentId: nil,
+                                      isReComment: false,
+                                      postId: "")
+            
+            dummyCommentList.append(newComment)
+            
+            
+            #if DEBUG
+            print("Comment", "CommentId", commentId, "originalCommentId", originalCommentId, "reCommentId", reCommentId)
+            #endif
+            
+            NotificationCenter.default.post(name: .newCommentDidInsert, object: nil)
         } else {
-        
+            
             if commentTextView.isFirstResponder {
                 guard let comment = commentTextView.text, comment.count > 0 else {
                     alertVersion2(message: "대댓글 입력하세요")
                     return
                 }
-        
-//                let reComment = dummyCommentList.filter { $0.commentId  == $0.reCommentId }
-              
-                reCommentId = originalCommentId + 1
-
+                
+//                let reComment = dummyCommentList.filter { $0.isReComment }
+                reCommentId = commentId + 1
+                
                 let newReComment = Comment(image: UIImage(systemName: "person"),
                                             writer: "익명2",
                                             content: comment,
                                             insertDate: Date(),
                                             commentId: commentId,
+                                            originalCommentId: originalCommentId,
                                             reCommentId: reCommentId,
                                             isReComment: true,
-                                            postId: modelSocialFeed.id)
+                                            postId: "")
                 
-//                dummyCommentList.insert(newReComment, at: commentId )
                 dummyCommentList.append(newReComment)
-
-                print("CommentId", commentId, "originalID", originalCommentId, "reCommentId", reCommentId)
                 
-                dummyCommentList.sort { lhs, rhs in
-                    if lhs.originalCommentId == rhs.originalCommentId {
-                        return lhs.insertDate < rhs.insertDate
-                    } else {
-                         return lhs.originalCommentId > rhs.originalCommentId
-                    }
-
-                }
+//                dummyCommentList.sort(by: { $0.commentId != $0.})
+                
+                #if DEBUG
+                print("Recomment", "CommentId", commentId, "originalCommentId", originalCommentId, "reCommentId", reCommentId)
+                #endif
                 
                 NotificationCenter.default.post(name: .newReCommentDidInsert, object: nil)
-        
+                
                 commentTextView.resignFirstResponder()
                 self.isReComment = false
             }
         }
-
-                                       
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
-    }
     
     
     @IBAction func reCommentBtn(_ sender: Any) {
@@ -137,7 +123,7 @@ class DetailPostViewController: UIViewController {
     
     /// 댓글을 단 사용자에게 쪽지를 보낼 수 있는 메소드
     /// - Parameter sender: <#sender description#>
-    @IBAction func sendNoteBtn(_ sender: Any) {
+    @IBAction func sendNote(_ sender: Any) {
         // TODO: 쪽지보내기 ActionSheet
         #if DEBUG
         print("쪽지 보내기 성공!")
@@ -228,7 +214,7 @@ class DetailPostViewController: UIViewController {
     
     /// 댓글을 왼쪽으로 Swipre해서 댓글을 신고하는 메소드
     /// - Parameter indexPath: 댓글의 IndexPath
-    func performNoti(_ indexPath: IndexPath) {
+    func alertCommentDelete(_ indexPath: IndexPath) {
         #if DEBUG
         print(#function)
         print("댓글을 신고하시겠습니까?")
@@ -240,7 +226,7 @@ class DetailPostViewController: UIViewController {
     
     /// 댓글을 오른쪽으로 Swipe해서 댓글을 삭제하는 메소드
     /// - Parameter indexPath: 댓글의 IndexPath
-    func performDelete(_ indexPath: IndexPath) {
+    func deleteComment(_ indexPath: IndexPath) {
         #if DEBUG
         print(#function)
         print("댓글이 삭제되었습니다.")
@@ -335,7 +321,9 @@ extension DetailPostViewController: UITableViewDataSource {
         
         return UITableViewCell()
     }
-    
+}
+
+extension DetailPostViewController: UITableViewDelegate {
     
     /// 댓글을 오른쪽으로 Swipe하여 댓글을 신고할 수 있는 메소드
     /// - Parameters:
@@ -403,13 +391,13 @@ extension DetailPostViewController: UITableViewDataSource {
             return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
                 let notiAction =
                     UIAction(title: NSLocalizedString("댓글 신고", comment: "")) { action in
-                        self.performNoti(indexPath)
+                        self.alertCommentDelete(indexPath)
                     }
                 
                 let deleteAction =
                     UIAction(title: NSLocalizedString("댓글 삭제", comment: ""),
                              attributes: .destructive) { action in
-                        self.performDelete(indexPath)
+                        self.deleteComment(indexPath)
                     }
                 
                 return UIMenu(title: "", children: [notiAction, deleteAction])

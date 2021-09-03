@@ -30,7 +30,7 @@ class RegisterViewController: UIViewController {
     /// To make intialize year of interval as String Array 
     let menu: DropDown? = {
         let menu = DropDown()
-      
+      /// To make dynamic enterence year depend on current year
         func intervalDates(from startingDate:Date, to endDate:Date, with interval:TimeInterval) -> [Date] {
             guard interval > 0 else { return [] }
             
@@ -69,13 +69,13 @@ class RegisterViewController: UIViewController {
         return menu
     }()
     
-    /// 취소 메소드
+    /// cancel method
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    /// 학번 선택하는 메소드
+    /// Can choose enterence year
     @IBAction func enterenceYearButton(_ sender: UIButton) {
         menu?.show()
         menu?.selectionAction = { [weak self] index, item in
@@ -113,18 +113,18 @@ class RegisterViewController: UIViewController {
         enterenceYearLabel.text = "2021학번"
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
-        /// 학번 메뉴 width, height 조정
+        /// To initilize enterence menu's View width, height
         menu?.anchorView = enterenceYearView
         guard let height = menu?.anchorView?.plainView.bounds.height else { return }
         menu?.bottomOffset = CGPoint(x: 0, y: height)
         menu?.width = 150
         
-        /// 백그라운드 탭하면 키보드 내려감
+        /// when user didtap background make lower the keyboard.
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         dismissZone.addGestureRecognizer(tap)
         dismissZone2.addGestureRecognizer(tap)
         
-        /// 대학교이름을 받아오는 노티피케이션 + 유저디폴트에 저장
+        ///To receive notification post and then userInfo's data save to userdefaults
         token = NotificationCenter.default.addObserver(forName: .didTapSendUniversityName, object: nil, queue: .main, using: { [weak self] noti in
             guard let strongSelf = self else { return }
             guard let universityName = noti.userInfo?[SearchLIstUniversityViewController.universityNameTransitionKey] as? String else { return }
@@ -137,7 +137,7 @@ class RegisterViewController: UIViewController {
         
     }
     
-    // 키보드 내리는 메소드
+    /// To make lower the keyboard
     @objc func dismissKeyboard() {
         dismissZone2.endEditing(true)
     }

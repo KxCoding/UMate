@@ -23,7 +23,7 @@ class SelectImageViewController: UIViewController {
     
     // 첨부한 이미지를 담을 속성
     var imageList = [UIImage]()
-    
+    // 이미지 fetch를 위한 속성
     let imageManager = PHImageManager()
     
     
@@ -36,14 +36,13 @@ class SelectImageViewController: UIViewController {
     
     /// 제한된 사진에 접근할 수 있는 경우, 제한 된 사진을 편집할 수 있는 메소드
     /// - Parameter sender: SelectImageViewController
-    @IBAction func editBtn(_ sender: Any) {
+    @IBAction func editSelectedImage(_ sender: Any) {
         PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
     }
     
     
     /// 게시글에 첨부할 이미지를 선택하는 메소드
-    /// - Parameter sender: <#sender description#>
-    @IBAction func imageSelectBtn(_ sender: Any) {
+    @IBAction func selectImage(_ sender: Any) {
         guard let indexPath = imageCollectionView.indexPathsForSelectedItems else { return }
         
         for index in indexPath {
@@ -72,7 +71,6 @@ class SelectImageViewController: UIViewController {
         
         return PHAsset.fetchAssets(with: option)
     }()
-    
     
     
     /// 사진에 접근하기 위한 권한 요청 메소드
@@ -133,22 +131,18 @@ class SelectImageViewController: UIViewController {
 
 extension SelectImageViewController: UICollectionViewDataSource {
     
-    /// <#Description#>
+    /// 사용자의 사진앱에 있는 이미지를 표시하기 위한 컬렉션뷰
     /// - Parameters:
-    ///   - collectionView: <#collectionView description#>
-    ///   - section: <#section description#>
-    /// - Returns: <#description#>
+    ///   - collectionView: collectionView
+    ///   - section: 없음
+    /// - Returns: Fetch된 사진의 갯수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return allPhotos.count
     }
     
     
-    /// <#Description#>
-    /// - Parameters:
-    ///   - collectionView: <#collectionView description#>
-    ///   - indexPath: <#indexPath description#>
-    /// - Returns: <#description#>
+    /// 각 셀마다 이미지를 표시하기위한 메소드
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath)
@@ -170,12 +164,7 @@ extension SelectImageViewController: UICollectionViewDataSource {
 
 extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
     
-    /// <#Description#>
-    /// - Parameters:
-    ///   - collectionView: <#collectionView description#>
-    ///   - collectionViewLayout: <#collectionViewLayout description#>
-    ///   - indexPath: <#indexPath description#>
-    /// - Returns: <#description#>
+    ///  Fetch된 이미지의 사이즈를 설정하기 위한 메소드
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 4, height: collectionView.frame.width / 4)
@@ -187,8 +176,7 @@ extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
 
 extension SelectImageViewController: PHPhotoLibraryChangeObserver {
     
-    /// <#Description#>
-    /// - Parameter changeInstance: <#changeInstance description#>
+    /// PhotoLibrary 옵저버 제거를 위한 메소드
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         DispatchQueue.main.async {
             if let changes = changeInstance.changeDetails(for: self.allPhotos) {

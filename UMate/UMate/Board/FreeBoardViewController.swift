@@ -84,9 +84,6 @@ class FreeBoardViewController: UIViewController {
         /// 상세 게시글 화면에 게시글 추가를 위한 옵저버 추가
         token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) {
             [weak self] noti in
-            if let newPost = noti.userInfo?["newPost"] as? Post {
-                self?.selectedBoard?.posts.insert(newPost, at: 0)
-            }
             self?.postListTableView.reloadData()
         }
         tokens.append(token)

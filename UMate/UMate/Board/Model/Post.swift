@@ -126,7 +126,7 @@ class CommentDataModel {
 }
 
 class Comment {
-    internal init(image: UIImage?, writer: String, content: String, insertDate: Date, heartCount: Int? = nil, commentId: Int = 0, originalCommentId: Int = 0, reCommentId: Int? = nil, isReComment: Bool, postId: String, isliked: Bool = false) {
+    internal init(image: UIImage?, writer: String, content: String, insertDate: Date, heartCount: Int = 0, commentId: Int, originalCommentId: Int? = nil, reCommentId: Int? = nil, isReComment: Bool, postId: String, isliked: Bool = false) {
         self.image = image
         self.writer = writer
         self.content = content
@@ -145,9 +145,9 @@ class Comment {
     let writer: String
     let content: String
     let insertDate: Date
-    var heartCount: Int?
+    var heartCount: Int
     var commentId: Int
-    var originalCommentId: Int
+    var originalCommentId: Int?
     var reCommentId: Int?
     var isReComment: Bool
     var postId: String
