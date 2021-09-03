@@ -38,7 +38,7 @@ class DetailPostViewController: UIViewController {
     
     /// 댓글 및 대댓글 저장하는 메소드
     /// - Parameter sender: DetailPostViewController
-    @IBAction func saveCommentBtn(_ sender: Any) {
+    @IBAction func saveComment(_ sender: Any) {
         let originalComment = dummyCommentList.filter { $0.isReComment == false }
         
         originalCommentId = dummyCommentList.count + 1
@@ -118,7 +118,7 @@ class DetailPostViewController: UIViewController {
     }
     
     
-    @IBAction func reCommentBtn(_ sender: Any) {
+    @IBAction func checkCommentType(_ sender: Any) {
         let alertReComment = UIAlertController(title: "알림", message: "대댓글을 작성하시겠습니까?", preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in
@@ -137,7 +137,7 @@ class DetailPostViewController: UIViewController {
     
     /// 댓글을 단 사용자에게 쪽지를 보낼 수 있는 메소드
     /// - Parameter sender: <#sender description#>
-    @IBAction func sendNoteBtn(_ sender: Any) {
+    @IBAction func sendNote(_ sender: Any) {
         // TODO: 쪽지보내기 ActionSheet
         #if DEBUG
         print("쪽지 보내기 성공!")
@@ -228,7 +228,7 @@ class DetailPostViewController: UIViewController {
     
     /// 댓글을 왼쪽으로 Swipre해서 댓글을 신고하는 메소드
     /// - Parameter indexPath: 댓글의 IndexPath
-    func performNoti(_ indexPath: IndexPath) {
+    func alertCommentDelete(_ indexPath: IndexPath) {
         #if DEBUG
         print(#function)
         print("댓글을 신고하시겠습니까?")
@@ -240,7 +240,7 @@ class DetailPostViewController: UIViewController {
     
     /// 댓글을 오른쪽으로 Swipe해서 댓글을 삭제하는 메소드
     /// - Parameter indexPath: 댓글의 IndexPath
-    func performDelete(_ indexPath: IndexPath) {
+    func deleteComment(_ indexPath: IndexPath) {
         #if DEBUG
         print(#function)
         print("댓글이 삭제되었습니다.")
@@ -335,7 +335,9 @@ extension DetailPostViewController: UITableViewDataSource {
         
         return UITableViewCell()
     }
-    
+}
+
+extension DetailPostViewController: UITableViewDelegate {
     
     /// 댓글을 오른쪽으로 Swipe하여 댓글을 신고할 수 있는 메소드
     /// - Parameters:
@@ -403,13 +405,13 @@ extension DetailPostViewController: UITableViewDataSource {
             return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
                 let notiAction =
                     UIAction(title: NSLocalizedString("댓글 신고", comment: "")) { action in
-                        self.performNoti(indexPath)
+                        self.alertCommentDelete(indexPath)
                     }
                 
                 let deleteAction =
                     UIAction(title: NSLocalizedString("댓글 삭제", comment: ""),
                              attributes: .destructive) { action in
-                        self.performDelete(indexPath)
+                        self.deleteComment(indexPath)
                     }
                 
                 return UIMenu(title: "", children: [notiAction, deleteAction])

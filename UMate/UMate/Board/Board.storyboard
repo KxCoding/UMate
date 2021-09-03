@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ONU-BN-eP4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ONU-BN-eP4">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -246,7 +245,7 @@
                                 <color key="sectionIndexColor" systemColor="systemGray5Color"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FreeBoardTableViewCell" rowHeight="132" id="Nou-f5-0eX" customClass="FreeBoardTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="132"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="132"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nou-f5-0eX" id="Bq3-6r-dgG">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="132"/>
@@ -633,7 +632,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="4hS-s3-dzT">
                             <connections>
-                                <action selector="savePost:" destination="jcD-Qk-L5Q" id="KU8-VM-3L3"/>
+                                <action selector="savePost:" destination="jcD-Qk-L5Q" id="sci-7u-aQ5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1171,12 +1170,12 @@ XETOWN 운영자로 오인될 수 있는 내용
                         <rightBarButtonItems>
                             <barButtonItem systemItem="edit" id="1zv-s4-DuW">
                                 <connections>
-                                    <action selector="editBtn:" destination="5sr-Hl-lgU" id="eoi-VG-31R"/>
+                                    <action selector="editSelectedImage:" destination="5sr-Hl-lgU" id="UEg-Wa-ITr"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Select" id="WF3-f5-xOh">
                                 <connections>
-                                    <action selector="imageSelectBtn:" destination="5sr-Hl-lgU" id="uks-75-h3k"/>
+                                    <action selector="selectImage:" destination="5sr-Hl-lgU" id="lap-HH-urJ"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -1224,7 +1223,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 <color key="sectionIndexColor" systemColor="systemGray5Color"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FreeBoardTableViewCell" rowHeight="134" id="jVr-hs-rFH" customClass="FreeBoardTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="134"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="134"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jVr-hs-rFH" id="3a4-D7-Kw5">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="134"/>
@@ -1496,7 +1495,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostContentTableViewCell" rowHeight="203" id="YUc-kN-hZb" customClass="PostContentTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="203"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="203"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YUc-kN-hZb" id="ubi-NR-Y2b">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="203"/>
@@ -1691,7 +1690,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostImageTableViewCell" rowHeight="248" id="thn-0X-CKZ" customClass="PostImageTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="247.5" width="414" height="248"/>
+                                        <rect key="frame" x="0.0" y="227.5" width="414" height="248"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="thn-0X-CKZ" id="Htt-uB-Xpv">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="248"/>
@@ -1761,7 +1760,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CountLabelTableViewCell" rowHeight="54" id="3jE-tw-ZCZ" userLabel="PostContentTableViewCell.swift" customClass="CountLabelTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="495.5" width="414" height="54"/>
+                                        <rect key="frame" x="0.0" y="475.5" width="414" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3jE-tw-ZCZ" id="oG7-RB-xah">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
@@ -1900,7 +1899,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommentTableViewCell" rowHeight="120" id="YpV-yj-SIs" customClass="CommentTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="549.5" width="414" height="120"/>
+                                        <rect key="frame" x="0.0" y="529.5" width="414" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YpV-yj-SIs" id="k23-r7-Geg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
@@ -2028,7 +2027,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                                                                     <rect key="frame" x="12.5" y="0.0" width="26.5" height="31"/>
                                                                                                                     <color key="tintColor" name="darkGray"/>
                                                                                                                     <connections>
-                                                                                                                        <action selector="reCommentBtn:" destination="E9G-7V-VMa" eventType="touchUpInside" id="U6f-16-NBJ"/>
+                                                                                                                        <action selector="checkCommentType:" destination="E9G-7V-VMa" eventType="touchUpInside" id="1Jn-gY-m2u"/>
                                                                                                                     </connections>
                                                                                                                 </button>
                                                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQg-n4-cT9">
@@ -2037,12 +2036,15 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                                                                         <constraint firstAttribute="width" constant="40" id="3Ce-Lh-Bzw"/>
                                                                                                                     </constraints>
                                                                                                                     <color key="tintColor" name="darkGray"/>
+                                                                                                                    <connections>
+                                                                                                                        <action selector="toggleLike:" destination="YpV-yj-SIs" eventType="touchUpInside" id="1Nw-2S-5wc"/>
+                                                                                                                    </connections>
                                                                                                                 </button>
                                                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ShT-9I-EDH">
                                                                                                                     <rect key="frame" x="80" y="0.0" width="30" height="29.5"/>
                                                                                                                     <color key="tintColor" name="darkGray"/>
                                                                                                                     <connections>
-                                                                                                                        <action selector="sendNoteBtn:" destination="E9G-7V-VMa" eventType="touchUpInside" id="tdJ-xl-Mvn"/>
+                                                                                                                        <action selector="sendNote:" destination="E9G-7V-VMa" eventType="touchUpInside" id="MDa-Uq-QDT"/>
                                                                                                                     </connections>
                                                                                                                 </button>
                                                                                                             </subviews>
@@ -2157,7 +2159,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                             <outlet property="commentLabel" destination="UxG-3D-BY5" id="i7S-Iq-ku2"/>
                                             <outlet property="commentSeparationView" destination="q2D-1l-1dw" id="o8B-R0-tcB"/>
                                             <outlet property="dateTimeLabel" destination="Hyy-4D-eW4" id="AdK-DT-hWf"/>
-                                            <outlet property="hearButtonImageView" destination="U1a-wd-eQj" id="YEP-iA-gFW"/>
+                                            <outlet property="heartButtonImageView" destination="U1a-wd-eQj" id="SU4-2H-z1q"/>
                                             <outlet property="heartCountLabel" destination="43c-Ez-RDO" id="LPO-ac-EpF"/>
                                             <outlet property="heartImageView" destination="XS7-fo-azs" id="lts-mP-8o5"/>
                                             <outlet property="profileImageView" destination="JJ1-aS-2SA" id="NHS-Ws-PfI"/>
@@ -2203,7 +2205,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                     <constraint firstAttribute="height" constant="45" id="wSD-sQ-stM"/>
                                                 </constraints>
                                                 <connections>
-                                                    <action selector="saveCommentBtn:" destination="E9G-7V-VMa" eventType="touchUpInside" id="uqO-iq-Up7"/>
+                                                    <action selector="saveComment:" destination="E9G-7V-VMa" eventType="touchUpInside" id="nyo-oj-h2i"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="댓글을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESu-Ey-lQz">
@@ -2335,7 +2337,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 <nil key="highlightedColor"/>
                             </label>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="hSK-oX-iGk">
-                                <rect key="frame" x="129.5" y="760" width="155.5" height="26"/>
+                                <rect key="frame" x="146.5" y="758.5" width="121.5" height="27.5"/>
                                 <connections>
                                     <action selector="controlPage:" destination="95c-RZ-5Vp" eventType="valueChanged" id="hp8-cl-UDA"/>
                                     <action selector="currentPageChanged:" destination="95c-RZ-5Vp" eventType="valueChanged" id="sjl-dV-mtE"/>
@@ -2400,7 +2402,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 <color key="sectionIndexColor" systemColor="systemGray5Color"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FreeBoardTableViewCell" rowHeight="120" id="abx-I6-oue" customClass="FreeBoardTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="120"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="abx-I6-oue" id="kNQ-tj-hpZ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
@@ -2673,7 +2675,7 @@ XETOWN 운영자로 오인될 수 있는 내용
         <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="comment" width="16" height="16"/>
         <image name="heart2" width="32" height="32"/>
-        <image name="newspaper" catalog="system" width="128" height="111"/>
+        <image name="newspaper" catalog="system" width="128" height="108"/>
         <image name="paperplane" catalog="system" width="128" height="118"/>
         <image name="right-arrow" width="12" height="12"/>
         <image name="search" width="16" height="16"/>
