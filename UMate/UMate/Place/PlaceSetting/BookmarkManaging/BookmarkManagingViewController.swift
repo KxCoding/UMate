@@ -31,7 +31,7 @@ class BookmarkManagingViewController: UIViewController {
         let entirePlaces = Place.dummyData
         
         return entirePlaces.filter { place in
-            return PlaceUser.tempUser.userData.bookmarkedPlaces.contains(place.name)
+            return PlaceUser.tempUser.userData.bookmarkedPlaces.contains(place.id)
         }
     }
     
@@ -228,7 +228,7 @@ extension BookmarkManagingViewController: UITableViewDelegate {
             guard let self = self else { return }
             
             /// 북마크된 가게를 [이름으로] 검색 - 삭제
-            if let index = PlaceUser.tempUser.userData.bookmarkedPlaces.firstIndex(of: selectedPlace.name) {
+            if let index = PlaceUser.tempUser.userData.bookmarkedPlaces.firstIndex(of: selectedPlace.id) {
                 PlaceUser.tempUser.userData.bookmarkedPlaces.remove(at: index)
             }
             

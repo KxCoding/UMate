@@ -13,9 +13,6 @@ class DataManager {
     static let shared = DataManager()
     private init() { }
     
-    // MARK:
-    
-    
     
     // MARK: Data
     
@@ -159,12 +156,13 @@ class DataManager {
         return getImage(from: url)
     }
     
+    
     // MARK: Util Methods
     
     /// 주어진 문자열의 이름과 확장자를 가진 파일을  번들에서 찾아서 유효한 문자열이면 url을 제공하는 메소드
     /// - Parameter string: 찾는 리소스 파일의 문자열
     /// - Returns: 일치하는 리소스의 url
-    func generateUrl(atBundle string: String) -> URL? {
+    func generateUrl(forFile string: String) -> URL? {
         
         let arr = string.components(separatedBy: ".")
         guard let fileName = arr.first,
@@ -173,7 +171,7 @@ class DataManager {
         
         guard let url = Bundle.main.url(forResource: "places", withExtension: "json") else {
             #if DEBUG
-            print("can not find resource from bundle")
+            print("cannot find resource from bundle")
             #endif
             return nil
         }
@@ -181,13 +179,24 @@ class DataManager {
         return url
     }
     
-    func getObjectFromBundle<T>(fileName: String, type: T.Type) -> T? where T: Codable {
+    
+    /// 전달된 이름의 json 파일을 특정 타입으로 파싱하는 메소드
+    /// - Parameters:
+    ///   - type: 결과 타입
+    ///   - fileName: 번들에 추가된, 파싱할 json 파일의 이름
+    /// - Returns: 결과 타입의 객체
+    func getObject<T>(of type: T.Type, fromJson fileName: String) -> T? where T: Codable {
         
-        guard let url = generateUrl(atBundle: fileName) else { return nil }
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
+            #if DEBUG
+            print("cannot find json resource from bundle")
+            #endif
+            return nil
+        }
         
         guard let data = try? Data(contentsOf: url) else { return nil }
         
-        guard let result = decodeJson(type: T.self, fromJson: data) else { return nil }
+        guard let result = decodeJson(type: type.self, fromJson: data) else { return nil }
         
         return result
     }

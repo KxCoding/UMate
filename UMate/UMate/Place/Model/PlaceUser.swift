@@ -17,8 +17,8 @@ struct PlaceUser {
     /// Place 사용자의 데이터 클래스
     struct UserData {
         
-        /// 사용자가 북마크한 가게 목록 (가게 이름 > id로 식별할 예정)
-        var bookmarkedPlaces = [String]()
+        /// 사용자가 북마크한 가게 목록 (ID)
+        var bookmarkedPlaces = [Int]()
         
         /// 사용자가 작성한 리뷰 목록
         var reviews = [UUID]()
@@ -36,7 +36,7 @@ struct PlaceUser {
         user.university = University.tempUniversity
         
         /// 더미 북마크 데이터
-        user.userData.bookmarkedPlaces = ["데일리루틴", "오오비"]
+        user.userData.bookmarkedPlaces = [1, 9, 10, 17]
         
         return user
     }()

@@ -104,9 +104,10 @@ struct Place: Codable {
         }
     }
     
-    /// 인스타그램 아이디(optional), 관련 url(optional)
-    var instagramID: String?
+    /// 인스타그램 아이디(optional), 관련 url(optional), 전화번호
+    var instagramId: String?
     var url: String?
+    var tel: String?
     
     /// annotation
     var annotation: MKAnnotation {
@@ -125,7 +126,7 @@ struct Place: Codable {
               type: "cafe",
               keywords: ["레트로", "사진 찍기 좋은", "새로 오픈한", "친절", "따뜻한", "커피 맛집", "목재 가구"],
               imageUrls: [],
-              instagramID: "dailyroutinecoffee",
+              instagramId: "dailyroutinecoffee",
               url: "http://naver.me/xrPcV2Ie")
     ]
     

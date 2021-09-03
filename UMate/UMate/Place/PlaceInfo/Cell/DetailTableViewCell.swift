@@ -13,6 +13,9 @@ class DetailTableViewCell: UITableViewCell {
     @IBOutlet weak var addressView: UIView!
     @IBOutlet weak var districtCollectionView: UICollectionView!
     @IBOutlet weak var keywordsCollectionView: UICollectionView!
+    @IBOutlet weak var telLabel: UILabel!
+    @IBOutlet weak var telView: UIView!
+    
     
     /// 정보를 표시할 가게
     var target: Place!
@@ -23,6 +26,7 @@ class DetailTableViewCell: UITableViewCell {
         target = content
         
         addressLabel.text = target.district
+        telLabel.text = target.tel
         
         districtCollectionView.reloadData()
         keywordsCollectionView.reloadData()
@@ -40,6 +44,18 @@ class DetailTableViewCell: UITableViewCell {
         
         // UI 초기화
         addressView.configureStyle(with: [.squircleSmall])
+        [addressView, telView].forEach { $0?.configureStyle(with: [.squircleSmall]) }
+    }
+    
+    
+    /// 전화번호 레이블 부근을 탭하면 os 전화 기능 실행
+    /// - Parameter sender: 탭한 버튼
+    @IBAction func call(_ sender: Any) {
+        guard let tel = target.tel,
+              let url = URL(string: "tel:\(tel)") else { return }
+        
+        NotificationCenter.default.post(name: .openUrl, object: nil, userInfo: ["type": URLType.tel, "url": url])
+        
     }
     
 }
