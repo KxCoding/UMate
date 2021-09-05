@@ -7,9 +7,20 @@
 
 import UIKit
 
+extension Notification.Name {
+    static let reviewWillApplied = Notification.Name(rawValue: "reviewWillApplied")
+}
+
+
+
+
 class ReviewWriteTableViewController: UITableViewController {
     /// 확인 버튼
     @IBOutlet weak var reviewSaveButton: UIButton!
+    /// 리뷰를 작성하는 텍스트뷰
+    @IBOutlet weak var reviewTextView: UITextView!
+    /// 텍스트뷰에서 사용할 placeholder 레이블
+    @IBOutlet weak var reviewPlaceholderLabel: UILabel!
     
     
     /// 초기화 작업을 실행합니다.
@@ -17,6 +28,9 @@ class ReviewWriteTableViewController: UITableViewController {
         super.viewDidLoad()
         /// reviewSaveButton의 CornerRadius 설정
         reviewSaveButton.setButtonTheme()
+        reviewTextView.layer.cornerRadius = 10
+        
+        reviewTextView.delegate = self
     }
     
     
@@ -30,6 +44,53 @@ class ReviewWriteTableViewController: UITableViewController {
     /// 확인 버튼을 누르면 이전 화면으로 이동합니다.
     /// - Parameter sender: 버튼
     @IBAction func reviewSaveButtonTapped(_ sender: Any) {
+        /// 리뷰를 모두 작성하지 않으면 리뷰가 추가되지 않고 알림창을 띄웁니다.
+        guard deliciousButton.isSelected || freshButton.isSelected || cleanButton.isSelected
+                || plainButton.isSelected || saltyButton.isSelected else {
+            alert(title: "알림", message: "맛 관련 평가를 작성해주세요.")
+            return
+        }
+        
+        guard kindButton.isSelected || unkindButton.isSelected || touchyButton.isSelected else {
+            alert(title: "알림", message: "서비스 관련 평가를 작성해주세요.")
+            return
+        }
+        
+        guard quietButton.isSelected || emotionalButton.isSelected || simpleButton.isSelected
+                || cuteButton.isSelected || clearButton.isSelected else {
+            alert(title: "알림", message: "분위기 관련 평가를 작성해주세요.")
+            return
+        }
+        
+        guard cheapButton.isSelected || affordableButton.isSelected || expensiveButton.isSelected else {
+            alert(title: "알림", message: "가격 관련 평가를 작성해주세요.")
+            return
+        }
+        
+        guard smallButton.isSelected || suitableButton.isSelected || plentyButton.isSelected else {
+            alert(title: "알림", message: "음식양 관련 평가를 작성해주세요.")
+            return
+        }
+        
+        guard onePointButton.isSelected || twoPointButton.isSelected || threePointButton.isSelected
+                || fourPointButton.isSelected || fivePointButton.isSelected else {
+            alert(title: "알림", message: "총평 관련 평가를 작성해주세요.")
+            return
+        }
+        
+        if !reviewTextView.hasText {
+            alert(title: "알림", message: "리뷰를 작성해주세요.") { _ in
+                self.reviewTextView.becomeFirstResponder()
+            }
+            return
+        }
+        
+        /// 저장할 리뷰 데이터
+        let reviewData = PlaceReviewItem.UserReview(reviewText: reviewTextView.text, date: Date().reviewDate, image: nil, placeName: "")
+        PlaceReviewItem.dummyData.insert(reviewData, at: 0)
+        
+        NotificationCenter.default.post(name: .reviewWillApplied, object: nil, userInfo: nil)
+        
         dismiss(animated: true)
     }
     
@@ -195,5 +256,16 @@ class ReviewWriteTableViewController: UITableViewController {
     /// - Returns: 섹션 footer의 높이
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return .zero
+    }
+}
+
+
+
+
+extension ReviewWriteTableViewController: UITextViewDelegate {
+    /// 사용자가 텍스트뷰에서 텍스트 또는 속성을 변경할 때 델리게이트에게 알립니다.
+    /// - Parameter textView: 이 메소드를 호출하는 텍스트뷰
+    func textViewDidChange(_ textView: UITextView) {
+        reviewPlaceholderLabel.isHidden = textView.hasText
     }
 }
