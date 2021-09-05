@@ -21,7 +21,7 @@ class PlaceSearchCollectionViewCell: UICollectionViewCell {
         /// 그림자 추가
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 2, height: 2)
-        layer.shadowRadius = 2
+        layer.shadowRadius = 1
         layer.shadowOpacity = 0.3
         layer.masksToBounds = false
         

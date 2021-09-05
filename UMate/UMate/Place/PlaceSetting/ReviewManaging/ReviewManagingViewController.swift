@@ -9,7 +9,6 @@ import UIKit
 
 class ReviewManagingViewController: UIViewController {
     @IBOutlet weak var reviewManagingTableView: UITableView!
-    var reviewData = PlaceReviewItem.dummyData
     
     
     /// 다음 화면으로 넘어가기 전에 실행할 작업을 추가합니다.
@@ -37,7 +36,7 @@ extension ReviewManagingViewController: UITableViewDataSource {
     ///   - section: 테이블뷰 섹션을 식별하는 Index 번호
     /// - Returns: 섹션에 있는 행의 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reviewData.count
+        return PlaceReviewItem.dummyData.count
     }
     
     
@@ -49,7 +48,7 @@ extension ReviewManagingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReviewListTableViewCell", for: indexPath) as! ReviewListTableViewCell
         
-        let target = reviewData[indexPath.row]
+        let target = PlaceReviewItem.dummyData[indexPath.row]
         cell.configure(with: target)
         
         return cell
@@ -67,7 +66,10 @@ extension ReviewManagingViewController: UITableViewDelegate {
     /// - Returns: 스와이프 액션 Configuration
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let edit = UIContextualAction(style: .normal, title: "리뷰 수정") { act, v, completion in
+            #if DEBUG
             print("리뷰 수정")
+            #endif
+            
             completion(true)
         }
         
@@ -75,7 +77,7 @@ extension ReviewManagingViewController: UITableViewDelegate {
         edit.image = UIImage(systemName: "square.and.pencil")
         
         let delete = UIContextualAction(style: .destructive, title: "리뷰 삭제") { act, v, completion in
-            self.reviewData.remove(at: indexPath.row)
+            PlaceReviewItem.dummyData.remove(at: indexPath.row)
             self.reviewManagingTableView.deleteRows(at: [indexPath], with: .automatic)
             completion(true)
         }

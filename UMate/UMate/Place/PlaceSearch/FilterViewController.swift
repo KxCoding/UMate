@@ -7,6 +7,14 @@
 
 import UIKit
 
+extension Notification.Name {
+    static let filterWillCancelled = Notification.Name(rawValue: "filterWillCancelled")
+    static let filterWillApplied = Notification.Name(rawValue: "filterWillApplied")
+}
+
+
+
+
 class FilterViewController: UIViewController {
     @IBOutlet weak var filterTableView: UITableView!
     /// StoreTypeTableViewCell의 storeTypeFilterArray 배열을 저장할 배열
@@ -40,14 +48,6 @@ class FilterViewController: UIViewController {
         
         dismiss(animated: true, completion: nil)
     }
-}
-
-
-
-
-extension Notification.Name {
-    static let filterWillCancelled = Notification.Name(rawValue: "filterWillCancelled")
-    static let filterWillApplied = Notification.Name(rawValue: "filterWillApplied")
 }
 
 
