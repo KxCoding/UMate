@@ -24,20 +24,20 @@ class AccountViewController: UIViewController {
     /// To verify some conditions for login
     /// - Parameter sender: 로그인 버튼
     @IBAction func login(_ sender: Any) {
-//        // 키체인에 저장한 이메일 비밀번호만 로그인이 가능하게끔 조건문 작성
-//        guard let safeEmail = keychain.get(Keys.userEmailKey),
-//              let safePassword = keychain.get(Keys.passwordKey),
-//              let email = idTextField.text,
-//              let password = passwordTextField.text else { return }
-//
-//        /// 에러가 발생시 에러문 띄우게끔 작성
-//        if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
-//
-//        guard email == safeEmail && password == safePassword else {
-//            alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
-//            return
-//        }
-//
+        /// Only keychain ID users can enter.
+        guard let safeEmail = keychain.get(Keys.userEmailKey),
+              let safePassword = keychain.get(Keys.passwordKey),
+              let email = idTextField.text,
+              let password = passwordTextField.text else { return }
+
+        /// To show if have some keychin error 
+        if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
+
+        guard email == safeEmail && password == safePassword else {
+            alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
+            return
+        }
+
         CommonViewController.shared.transitionToHome()
      
     }
@@ -46,8 +46,8 @@ class AccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         /// Call keyboard method
-        addKeyboardWillShow()
-        addKeyboardWillHide()
+        KeyboardWillShow()
+        KeyboardWillHide()
         
         /// To make shape like pills
         loginButton.setButtonTheme()

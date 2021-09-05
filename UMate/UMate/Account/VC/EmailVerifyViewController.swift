@@ -15,11 +15,11 @@ class EmailVerifyViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var codeTextField: UITextField!
     
-    /// 특정 텍스트필드 조작을 위한 속성
+    /// To handle specific TextField
     var activeTextField: UITextField? = nil
     var keyChain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
-    /// 이메일 검증 메소드
+    /// To check conditions for email
     /// - Parameter sender: sendCodeButton
     @IBAction func sendCodeButtonAction(_ sender: Any) {
         guard let email = emailTextField.text,
@@ -37,7 +37,7 @@ class EmailVerifyViewController: UIViewController {
     }
     
     
-    /// 코드 전송 버튼
+    /// Sending a Code to check user email
     /// - Parameter sender: emailVerificationButton
     @IBAction func emailVerificationButtonAction(_ sender: Any) {
         guard let codeField = codeTextField.text, codeField == "19930725" else {
@@ -49,8 +49,8 @@ class EmailVerifyViewController: UIViewController {
     
     
     
-    ///  검증 받은 이메일로 회원가입 진행시 동일하게 적용하는 목적의 메소드.
-    /// - Parameters:
+    ///  Since verified email be stored for next register step and then it can't be change.
+    ///   - Parameters:
     ///   - segue: DetailRegisterViewController
     ///   - sender: Any?
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
