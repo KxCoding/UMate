@@ -121,7 +121,9 @@ class SettingTableViewController: UITableViewController {
                 guard let image = UIImage(named: "\(profileImages)") else { return }
                 
                 strongSelf.profileImageView.image = image
-                StorageDataSource.shard.save(image: image)
+                if let converToPng = image.pngData() {
+                    UserDefaults.standard.set(converToPng, forKey: "profile")
+                }
             })
         }
     }
@@ -134,7 +136,6 @@ class SettingTableViewController: UITableViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         /// get  register user information data
@@ -144,7 +145,11 @@ class SettingTableViewController: UITableViewController {
         let universityName = UserDefaults.standard.string(forKey: "universityNameKey")
         
         /// get register Profileimage data
-        StorageDataSource.shard.display(with: profileImageView)
+        if let imageData =  UserDefaults.standard.object(forKey: "profile") as? Data {
+            let image = UIImage(data: imageData)
+            
+            profileImageView.image = image
+        }
         
         /// To initialize user information in setting
         if let name = name,

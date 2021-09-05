@@ -110,8 +110,9 @@ class DetailRegisterViewController: UIViewController {
             
             strongSelf.profileImageView.image = image
             
-            StorageDataSource.shard.save(image: image)
-            
+            if let pngData = image.pngData() {
+                UserDefaults.standard.set(pngData, forKey: "profile")
+            }
             
         })
         
