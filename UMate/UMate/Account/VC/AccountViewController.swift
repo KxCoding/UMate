@@ -25,18 +25,18 @@ class AccountViewController: UIViewController {
     /// - Parameter sender: 로그인 버튼
     @IBAction func login(_ sender: Any) {
         /// Only keychain ID users can enter.
-        guard let safeEmail = keychain.get(Keys.userEmailKey),
-              let safePassword = keychain.get(Keys.passwordKey),
-              let email = idTextField.text,
-              let password = passwordTextField.text else { return }
-
-        /// To show if have some keychin error 
-        if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
-
-        guard email == safeEmail && password == safePassword else {
-            alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
-            return
-        }
+//        guard let safeEmail = keychain.get(Keys.userEmailKey),
+//              let safePassword = keychain.get(Keys.passwordKey),
+//              let email = idTextField.text,
+//              let password = passwordTextField.text else { return }
+//
+//        /// To show if have some keychin error
+//        if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
+//
+//        guard email == safeEmail && password == safePassword else {
+//            alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
+//            return
+//        }
 
         CommonViewController.shared.transitionToHome()
      
