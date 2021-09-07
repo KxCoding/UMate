@@ -118,7 +118,7 @@ class LectureReviewBoardViewController: UIViewController {
         if let cell = sender as? UITableViewCell, let indexPath = lectureReviewListTableView.indexPath(for: cell) {
             
             if let vc = segue.destination as? DetailLectureReviewViewController {
-                vc.selectedLectrue = lectureList[indexPath.row]
+                vc.selectedLecture = lectureList[indexPath.row]
             }
         }
     }

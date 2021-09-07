@@ -20,7 +20,7 @@ class DetailLectureReviewViewController: UIViewController {
     }
     
     
-    var selectedLectrue: LectureInfo?
+    var selectedLecture: LectureInfo?
 
     var isSelected = true
     
@@ -28,16 +28,29 @@ class DetailLectureReviewViewController: UIViewController {
        
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? TestInfoWriteViewController {
+            vc.selectedLecture = selectedLecture
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let lectrue = selectedLectrue else { return }
+        guard let lectrue = selectedLecture else { return }
         storeRawValue(lecture: lectrue)
         
         NotificationCenter.default.addObserver(forName: .newLectureReviewDidInput, object: nil, queue: .main) { [weak self] (noti) in
             if let newReview = noti.userInfo?["review"] as? LectureReview {
-                self?.selectedLectrue?.reviews.insert(newReview, at: 0)
+                self?.selectedLecture?.reviews.insert(newReview, at: 0)
                 self?.lectureInfoTableView.reloadData()
+            }
+        }
+        
+        NotificationCenter.default.addObserver(forName: .shareTestInfo, object: nil, queue: .main) { noti in
+            if let testInfo = noti.userInfo?["testInfo"] as? TestInfo {
+                self.selectedLecture?.testInfoList.insert(testInfo, at: 0)
+                self.lectureInfoTableView.reloadData()
             }
         }
     }
@@ -135,11 +148,11 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
             
         /// 개별 리뷰
         case 3:
-            return selectedLectrue?.reviews.count ?? 0
+            return selectedLecture?.reviews.count ?? 0
             
         /// 시험 정보
         case 4:
-            return 1
+            return selectedLecture?.testInfoList.count ?? 0
             
         default:
             return 0
@@ -147,7 +160,7 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let selectedLectrue = selectedLectrue else { return UITableViewCell() }
+        guard let selectedLectrue = selectedLecture else { return UITableViewCell() }
         
         switch indexPath.section {
         /// 강의 개요
@@ -182,6 +195,8 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TestInfoTableViewCell", for: indexPath) as! TestInfoTableViewCell
             
+            guard let lecutre = selectedLecture else { return UITableViewCell() }
+            cell.configure(lecture: lecutre, indexPath: indexPath)
             return cell
             
         default:
@@ -208,7 +223,7 @@ extension DetailLectureReviewViewController: UITableViewDelegate {
         switch section {
         /// 강의 개요
         case 0:
-            cell.sectionNameLabel.text = selectedLectrue?.lectureTitle
+            cell.sectionNameLabel.text = selectedLecture?.lectureTitle
             cell.writeButton.isHidden = true
             
             return cell

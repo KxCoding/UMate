@@ -9,8 +9,8 @@ import Foundation
 
 
 
-struct LectureInfo {
-    internal init(lectureTitle: String, professor: String, openingSemester: String, textbookName: String, bookLink: String, reviews: [LectureReview] = []) {
+class LectureInfo {
+    init(lectureTitle: String, professor: String, openingSemester: String, textbookName: String, bookLink: String, reviews: [LectureReview] = [], testInfoList: [TestInfo] = []) {
         
         self.lectureTitle = lectureTitle
         self.professor = professor
@@ -18,6 +18,7 @@ struct LectureInfo {
         self.textbookName = textbookName
         self.bookLink = bookLink
         self.reviews = reviews
+        self.testInfoList = testInfoList
     }
     
     let lectureTitle: String
@@ -27,10 +28,22 @@ struct LectureInfo {
     let bookLink: String
     
     var reviews: [LectureReview]
+    var testInfoList: [TestInfo]
 }
 
 
-struct LectureReview {
+class LectureReview {
+   init(assignment: LectureReview.Assignment, groupMeeting: LectureReview.GroupMeeting, evaluation: LectureReview.Evaluation, attendance: LectureReview.Attendance, testNumber: LectureReview.TestNumber, rating: LectureReview.Rating, semester: String, reviewContent: String) {
+        self.assignment = assignment
+        self.groupMeeting = groupMeeting
+        self.evaluation = evaluation
+        self.attendance = attendance
+        self.testNumber = testNumber
+        self.rating = rating
+        self.semester = semester
+        self.reviewContent = reviewContent
+    }
+    
     
     enum Assignment: Int {
         case many
@@ -90,6 +103,24 @@ struct LectureReview {
     
     let semester: String
     let reviewContent: String
+}
+
+
+
+class TestInfo {
+    init(semester: String, testType: String, testStrategy: String, questionTypes: [String], examples: [String]) {
+        self.semester = semester
+        self.testType = testType
+        self.testStrategy = testStrategy
+        self.questionTypes = questionTypes
+        self.examples = examples
+    }
+    
+    let semester: String
+    let testType: String
+    let testStrategy: String
+    let questionTypes: [String]
+    let examples:  [String]
 }
 
 
