@@ -43,7 +43,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ///checkBox  속성 초기화
+        ///To initialize checkBox's property
         checkbox1.delegate = self
         [checkbox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6].forEach({
             $0?.animationDuration = 0.3
@@ -56,7 +56,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
             
         })
         
-        /// 텍스트뷰 속성 초기화
+        /// To initilize textView property
         [serviceTOCTextView, personalInformationTOCTextView, communityTOCTextView, advertisementTOCTextView].forEach({
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
@@ -85,13 +85,15 @@ class TermsOfConditionsTableViewController: UITableViewController {
 
 
 extension TermsOfConditionsTableViewController: BEMCheckBoxDelegate {
-    /// 처음 체크박스에 토글하면 모든 체크박스가 온오프 되는 메소드
+    /// once didtap first checkBox mkae turn on All checkBox
     /// - Parameter checkBox: BEMCheckBox:
     func didTap(_ checkBox: BEMCheckBox) {
+        var list = [BEMCheckBox]()
+        list = [checkbox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6]
         if checkBox.on == true {
-            [checkBox2, checkBox3, checkBox4, checkBox5, checkBox6].forEach{ $0?.on = true }
+            list.forEach{ $0.on = true }
         } else {
-            [checkBox2, checkBox3, checkBox4, checkBox5, checkBox6].forEach{ $0?.on = false }
+            list.forEach{ $0.on = false }
         }
         
     }

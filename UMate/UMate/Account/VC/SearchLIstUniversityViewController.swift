@@ -59,12 +59,16 @@ class SearchLIstUniversityViewController: UIViewController {
         guard let universityNameData = NSDataAsset(name: "UniversityName")?.data else { return }
         guard let universityNameStr = String(data: universityNameData, encoding: .utf8) else { return }
         
-          universityName = universityNameStr.components(separatedBy: ",")
+        let removeSpace = universityNameStr.replacingOccurrences(of: " ", with: "")
+        
+        universityName = removeSpace.components(separatedBy: ",")
         
         for str in universityName {
+           guard universityName.count == 6 else { continue }
             let value = str.trimmingCharacters(in: .whitespaces)
             universityName.append(value)
 
+            print("[\(value)]")
         }
      
     }

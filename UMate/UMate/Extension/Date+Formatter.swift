@@ -39,6 +39,11 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    /// 가게 정보 페이지의 리뷰탭에서 사용하는 날짜 형식입니다.
+    var reviewDate: String {
+        formatter.dateFormat = "yyyy.MM.dd"
+        return formatter.string(from: self)
+    }
     
     /// 시간을 HH:mm 형식으로 나타내주는 속성입니다.
     var timeTableTime: String {

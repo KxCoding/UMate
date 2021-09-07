@@ -72,6 +72,11 @@ class PlaceInfoViewController: UIViewController {
             }
             
         }
+        
+        /// add notification observer
+        NotificationCenter.default.addObserver(forName: .reviewWillApplied, object: nil, queue: .main) { _ in
+            self.placeInfoTableView.insertRows(at: [IndexPath(row: 0, section: 4)], with: .none)
+        }
     }
     
     

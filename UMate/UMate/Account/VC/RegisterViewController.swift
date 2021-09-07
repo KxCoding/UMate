@@ -19,52 +19,28 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var dismissZone2: UIView!
     @IBOutlet weak var universityNameField: UILabel!
     
-
-    
     /// To save notification data
     var saveText = ""
     
     /// notificationCenter를 저장하기위한 속성
     var token: NSObjectProtocol?
     
-    /// To make intialize year of interval as String Array 
+    /// To make intialize year of interval as String Array
     let menu: DropDown? = {
         let menu = DropDown()
-      /// To make dynamic enterence year depend on current year
-        func intervalDates(from startingDate:Date, to endDate:Date, with interval:TimeInterval) -> [Date] {
-            guard interval > 0 else { return [] }
+        /// To make dynamic enterence year menu depend on current year
+        let currentYear = 2021
+        let previousYear = currentYear - 14
+    
+        for year in previousYear ... currentYear {
+            let str = String(year)
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "yyyy"
+            let getToDate = dateformatter.date(from: str )
+            let getToStr = dateformatter.string(from: getToDate ?? Date())
             
-            var dates:[Date] = []
-            var currentDate = startingDate
-            
-            while currentDate <= endDate {
-                currentDate = currentDate.addingTimeInterval(interval)
-                dates.append(currentDate)
-                
-            }
-            
-            return dates
+            menu.dataSource.append("\(getToStr)학번")
         }
-
-        
-        let minimumOfYear = Date(timeIntervalSinceNow: -(60 * 60 * 24 * 365 * 15))
-        print(minimumOfYear)
-        let maxOfYear = Date()
-        let intervalBetweenDates: TimeInterval = 60 * 60 * 24 * 365
-
-        let dates: [Date] = intervalDates(from: minimumOfYear, to: maxOfYear, with: intervalBetweenDates)
-
-        let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy"
-        
-        var dateStrings = dates.map{ dateformatter.string(from: $0)}
-        dateStrings.removeLast()
-        print(dateStrings)
-        
-        for year in dateStrings {
-            menu.dataSource.append("\(year)학번")
-        }
-        
         
         return menu
     }()
@@ -100,10 +76,9 @@ class RegisterViewController: UIViewController {
         
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        ///두 view를 살짝 깎는 클로저
+        /// To make carve a view's bound.
         [enterenceYearView, universityView].forEach {
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
@@ -113,11 +88,13 @@ class RegisterViewController: UIViewController {
         enterenceYearLabel.text = "2021학번"
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
-        /// To initilize enterence menu's View width, height
+        /// To initilize enterence menu's view, width, height, color.
         menu?.anchorView = enterenceYearView
         guard let height = menu?.anchorView?.plainView.bounds.height else { return }
         menu?.bottomOffset = CGPoint(x: 0, y: height)
         menu?.width = 150
+        menu?.backgroundColor = UIColor.dynamicColor(light: .white, dark: .darkGray)
+        menu?.textColor = UIColor.dynamicColor(light: .black, dark: .white)
         
         /// when user didtap background make lower the keyboard.
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
