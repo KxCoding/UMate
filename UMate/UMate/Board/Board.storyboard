@@ -587,9 +587,8 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="내용을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7T4-7L-4gj">
-                                <rect key="frame" x="16" y="175" width="105" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7T4-7L-4gj">
+                                <rect key="frame" x="16" y="172" width="382" height="17"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" systemColor="systemGray3Color"/>
                                 <nil key="highlightedColor"/>
@@ -620,7 +619,10 @@
                             <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="1Ms-iJ-U5C" secondAttribute="trailing" constant="16" id="feg-PS-aMT"/>
                             <constraint firstItem="wQ6-1E-3AQ" firstAttribute="top" secondItem="C3J-oV-hj6" secondAttribute="bottom" constant="8" symbolic="YES" id="gIo-Qh-Ool"/>
                             <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="ZPW-pR-x51" secondAttribute="trailing" constant="16" id="gzh-C4-qWr"/>
+                            <constraint firstItem="7T4-7L-4gj" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="16" id="k7u-IL-vb6"/>
+                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="7T4-7L-4gj" secondAttribute="trailing" constant="16" id="rqo-o3-KZh"/>
                             <constraint firstItem="9Xr-iL-GRb" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="x3Y-ZZ-PBF"/>
+                            <constraint firstItem="7T4-7L-4gj" firstAttribute="top" secondItem="Tx6-lQ-lIb" secondAttribute="top" id="xR4-9O-dXh"/>
                             <constraint firstItem="C3J-oV-hj6" firstAttribute="top" secondItem="9Xr-iL-GRb" secondAttribute="bottom" constant="8" id="xvN-Pa-EVF"/>
                         </constraints>
                     </view>
@@ -2559,58 +2561,33 @@ XETOWN 운영자로 오인될 수 있는 내용
                                     <outlet property="dataSource" destination="bYc-D4-79M" id="4LP-fr-AUG"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D9f-t1-tyF">
-                                <rect key="frame" x="147" y="745" width="120" height="60"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="IoE-9p-khS">
-                                        <rect key="frame" x="24.5" y="17.5" width="71.5" height="25"/>
-                                        <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="68h-R1-T1C">
-                                                <rect key="frame" x="0.0" y="0.0" width="25" height="23.5"/>
-                                                <color key="tintColor" name="white"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="25" id="5gJ-Dd-UHM"/>
-                                                    <constraint firstAttribute="height" constant="25" id="YtE-cN-5a8"/>
-                                                </constraints>
-                                                <imageReference key="image" image="square.and.pencil" catalog="system"/>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="글 쓰기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLa-hw-Tkh">
-                                                <rect key="frame" x="31" y="0.0" width="40.5" height="25"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <color key="textColor" name="white"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="tintColor" systemColor="labelColor"/>
-                                    </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nx6-EJ-E31">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <connections>
-                                            <segue destination="HdK-Kj-34H" kind="showDetail" id="CoY-da-i1p"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nx6-EJ-E31">
+                                <rect key="frame" x="157" y="745" width="100" height="60"/>
                                 <color key="backgroundColor" name="black"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="Gpm-Qz-1Zu"/>
-                                    <constraint firstItem="IoE-9p-khS" firstAttribute="centerY" secondItem="D9f-t1-tyF" secondAttribute="centerY" id="YIp-li-13Q"/>
-                                    <constraint firstItem="IoE-9p-khS" firstAttribute="centerX" secondItem="D9f-t1-tyF" secondAttribute="centerX" id="eXS-yP-DxG"/>
-                                    <constraint firstAttribute="height" constant="60" id="fyI-xE-e2L"/>
+                                    <constraint firstAttribute="width" constant="100" id="N8S-2b-RzF"/>
+                                    <constraint firstAttribute="height" constant="60" id="jfM-Cb-Pob"/>
                                 </constraints>
-                            </view>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <color key="tintColor" name="white"/>
+                                <state key="normal" title=" 글 쓰기 ">
+                                    <color key="titleColor" name="white"/>
+                                    <imageReference key="image" image="square.and.pencil" catalog="system" renderingMode="template"/>
+                                </state>
+                                <connections>
+                                    <segue destination="HdK-Kj-34H" kind="showDetail" id="CoY-da-i1p"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vbf-q6-jC2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="eEU-0Q-lYd" firstAttribute="trailing" secondItem="vbf-q6-jC2" secondAttribute="trailing" id="2qs-mu-EI1"/>
-                            <constraint firstItem="vbf-q6-jC2" firstAttribute="bottom" secondItem="D9f-t1-tyF" secondAttribute="bottom" constant="8" id="Bhw-xl-Wve"/>
+                            <constraint firstItem="nx6-EJ-E31" firstAttribute="centerX" secondItem="jLy-22-mj4" secondAttribute="centerX" id="KH0-ff-49O"/>
                             <constraint firstItem="eEU-0Q-lYd" firstAttribute="top" secondItem="jLy-22-mj4" secondAttribute="top" id="Qb5-Mh-F3K"/>
                             <constraint firstItem="eEU-0Q-lYd" firstAttribute="leading" secondItem="vbf-q6-jC2" secondAttribute="leading" id="afX-8l-IY9"/>
                             <constraint firstAttribute="bottom" secondItem="eEU-0Q-lYd" secondAttribute="bottom" id="gUp-qp-VEC"/>
-                            <constraint firstItem="D9f-t1-tyF" firstAttribute="centerX" secondItem="jLy-22-mj4" secondAttribute="centerX" id="v4S-Kl-OcF"/>
+                            <constraint firstItem="vbf-q6-jC2" firstAttribute="bottom" secondItem="nx6-EJ-E31" secondAttribute="bottom" constant="8" id="jYR-yh-6IW"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="12G-5b-P3R">
@@ -2622,7 +2599,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="composeContainerView" destination="D9f-t1-tyF" id="8EA-Hy-lN8"/>
+                        <outlet property="composeButton" destination="nx6-EJ-E31" id="V1K-w8-gqj"/>
                         <outlet property="postListTableView" destination="eEU-0Q-lYd" id="hwn-35-Mp3"/>
                         <segue destination="Dfd-Uo-fvw" kind="show" identifier="searchSegue" id="gfX-L4-eYg"/>
                     </connections>
@@ -2670,20 +2647,20 @@ XETOWN 운영자로 오인될 수 있는 내용
         <image name="6" width="105.5" height="119.5"/>
         <image name="8" width="149.5" height="149.5"/>
         <image name="bookmark64" width="32" height="32"/>
-        <image name="camera" catalog="system" width="128" height="94"/>
-        <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="camera" catalog="system" width="32" height="32"/>
+        <image name="checkmark.circle.fill" catalog="system" width="32" height="32"/>
         <image name="comment" width="16" height="16"/>
         <image name="heart2" width="32" height="32"/>
-        <image name="newspaper" catalog="system" width="128" height="108"/>
-        <image name="paperplane" catalog="system" width="128" height="118"/>
+        <image name="newspaper" catalog="system" width="32" height="32"/>
+        <image name="paperplane" catalog="system" width="32" height="32"/>
         <image name="right-arrow" width="12" height="12"/>
         <image name="search" width="16" height="16"/>
-        <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
-        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
+        <image name="square.and.arrow.down" catalog="system" width="32" height="32"/>
+        <image name="square.and.pencil" catalog="system" width="32" height="32"/>
         <image name="thumbtack40" width="20" height="20"/>
         <image name="turn-right" width="64" height="64"/>
         <image name="vertical_dots" width="12" height="12"/>
-        <image name="xmark" catalog="system" width="128" height="113"/>
+        <image name="xmark" catalog="system" width="32" height="32"/>
         <namedColor name="barColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

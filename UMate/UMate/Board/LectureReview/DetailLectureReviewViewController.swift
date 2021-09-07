@@ -13,7 +13,7 @@ class DetailLectureReviewViewController: UIViewController {
     
     @IBAction func perfromSegueToWrite(_ sender: UIButton) {
         if sender.tag == 2 {
-            /// 리뷰쓰기 화면으로 이동
+            performSegue(withIdentifier: "writeReviewSegue", sender: self)
         } else {
             performSegue(withIdentifier: "testInfoSegue", sender: self)
         }
@@ -33,6 +33,13 @@ class DetailLectureReviewViewController: UIViewController {
         
         guard let lectrue = selectedLectrue else { return }
         storeRawValue(lecture: lectrue)
+        
+        NotificationCenter.default.addObserver(forName: .newLectureReviewDidInput, object: nil, queue: .main) { [weak self] (noti) in
+            if let newReview = noti.userInfo?["review"] as? LectureReview {
+                self?.selectedLectrue?.reviews.insert(newReview, at: 0)
+                self?.lectureInfoTableView.reloadData()
+            }
+        }
     }
     
     /// 리뷰 총합

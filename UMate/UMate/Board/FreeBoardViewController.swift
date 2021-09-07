@@ -13,7 +13,7 @@ class FreeBoardViewController: UIViewController {
     var selectedBoard: Board?
     
     @IBOutlet weak var postListTableView: UITableView!
-    @IBOutlet weak var composeContainerView: UIView!
+    @IBOutlet weak var composeButton: UIButton!
     
     /// 검색 버튼을 눌렀을 시에 SearchViewController로 이동
     @IBAction func showSearchViewController(_ sender: UIBarButtonItem) {
@@ -51,7 +51,7 @@ class FreeBoardViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.title = selectedBoard?.boardTitle
         postListTableView.tableHeaderView = tableViewHeaderView
-        composeContainerView.layer.cornerRadius = 10
+        composeButton.setButtonTheme()
         
         /// 상세 게시글 화면에서 스크랩 버튼 클릭시 스크랩 게시판에 게시글 추가
         var token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main) { noti in

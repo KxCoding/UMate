@@ -26,7 +26,7 @@ struct LectureInfo {
     let textbookName: String
     let bookLink: String
     
-    let reviews: [LectureReview]
+    var reviews: [LectureReview]
 }
 
 

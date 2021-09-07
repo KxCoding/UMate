@@ -142,6 +142,10 @@
 		F50F9B5426B0F932007ABEF6 /* CommunityRuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F9B5326B0F932007ABEF6 /* CommunityRuleViewController.swift */; };
 		F53A427B26BC7FB0008D1698 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F560368726B9EE5C0093DDC7 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F560368626B9EE5C0093DDC7 /* CommentTableViewCell.swift */; };
+		F5E00E6A26E6461100E4068C /* LectureReviewWriteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E00E6926E6461100E4068C /* LectureReviewWriteTableViewController.swift */; };
+		F5E00E6D26E6466A00E4068C /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E00E6C26E6466A00E4068C /* HeaderTableViewCell.swift */; };
+		F5E00E7126E6468D00E4068C /* ReflectedGradeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E00E7026E6468D00E4068C /* ReflectedGradeTableViewCell.swift */; };
+		F5E00E7326E646BA00E4068C /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E00E7226E646BA00E4068C /* OverviewTableViewCell.swift */; };
 		F5FBBAE326C27604006FE53E /* SelectImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FBBAE226C27604006FE53E /* SelectImageViewController.swift */; };
 		F5FBBAE526C2762A006FE53E /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FBBAE426C2762A006FE53E /* ImageCollectionViewCell.swift */; };
 		F5FBBAE926C27667006FE53E /* ComposeImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FBBAE826C27667006FE53E /* ComposeImageCollectionViewCell.swift */; };
@@ -300,6 +304,10 @@
 		F50F9B5126B0F6CF007ABEF6 /* ComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 		F50F9B5326B0F932007ABEF6 /* CommunityRuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRuleViewController.swift; sourceTree = "<group>"; };
 		F560368626B9EE5C0093DDC7 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		F5E00E6926E6461100E4068C /* LectureReviewWriteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReviewWriteTableViewController.swift; sourceTree = "<group>"; };
+		F5E00E6C26E6466A00E4068C /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
+		F5E00E7026E6468D00E4068C /* ReflectedGradeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectedGradeTableViewCell.swift; sourceTree = "<group>"; };
+		F5E00E7226E646BA00E4068C /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTableViewCell.swift; sourceTree = "<group>"; };
 		F5FBBAE226C27604006FE53E /* SelectImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageViewController.swift; sourceTree = "<group>"; };
 		F5FBBAE426C2762A006FE53E /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		F5FBBAE826C27667006FE53E /* ComposeImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -647,6 +655,7 @@
 				DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */,
 				DFE3DD6226CFC5C7002F98D9 /* DetailLectureReviewViewController.swift */,
 				DF4F048B26DBE55F00700E7A /* TestInfoWriteViewController.swift */,
+				F5E00E6926E6461100E4068C /* LectureReviewWriteTableViewController.swift */,
 				DFE3DD6426CFC60A002F98D9 /* Cell */,
 				DFE3DD7826CFC730002F98D9 /* Model */,
 			);
@@ -660,6 +669,7 @@
 				DFE3DD6726CFC640002F98D9 /* LectureReviewTableViewCell.swift */,
 				DFE3DD6926CFC671002F98D9 /* DetailLectureCell */,
 				DF4F048D26DBE5BB00700E7A /* TestWriteCell */,
+				F5E00E6B26E6464700E4068C /* LectureReviewWriteCell */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -840,6 +850,16 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		F5E00E6B26E6464700E4068C /* LectureReviewWriteCell */ = {
+			isa = PBXGroup;
+			children = (
+				F5E00E6C26E6466A00E4068C /* HeaderTableViewCell.swift */,
+				F5E00E7026E6468D00E4068C /* ReflectedGradeTableViewCell.swift */,
+				F5E00E7226E646BA00E4068C /* OverviewTableViewCell.swift */,
+			);
+			path = LectureReviewWriteCell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -986,6 +1006,7 @@
 				DFE3DD6F26CFC6D8002F98D9 /* LectureSummaryTableViewCell.swift in Sources */,
 				DF36281526A93207007AC5D2 /* ExpandableBoardTableViewCell.swift in Sources */,
 				2C715DA026C043FE00B0B22B /* FilterViewController.swift in Sources */,
+				F5E00E6D26E6466A00E4068C /* HeaderTableViewCell.swift in Sources */,
 				6D9E0CEB26ABC7B300ABB37F /* RegisterViewController.swift in Sources */,
 				DFEF018226A756880015829B /* FreeBoardViewController.swift in Sources */,
 				DFEF018826A756D90015829B /* Board.swift in Sources */,
@@ -996,7 +1017,9 @@
 				DFE3DD7726CFC728002F98D9 /* TestInfoTableViewCell.swift in Sources */,
 				6D64F78226ADC9D3005BAC82 /* DropDownTableViewCell.swift in Sources */,
 				F560368726B9EE5C0093DDC7 /* CommentTableViewCell.swift in Sources */,
+				F5E00E7126E6468D00E4068C /* ReflectedGradeTableViewCell.swift in Sources */,
 				2C715DAC26C072C100B0B22B /* StoreTypeTableViewCell.swift in Sources */,
+				F5E00E6A26E6461100E4068C /* LectureReviewWriteTableViewController.swift in Sources */,
 				5CAFD3AD26A74B9D0002D0EC /* AddLectureTableViewController.swift in Sources */,
 				DFE3DD7A26CFC790002F98D9 /* LectureInfo.swift in Sources */,
 				5C0D977726A768A600F396B7 /* UIViewController+Alert.swift in Sources */,
@@ -1051,6 +1074,7 @@
 				5C92DD3C269BF84F0094A93C /* AccountViewController.swift in Sources */,
 				F48843AA26ABE512005DB8A3 /* InfoSectionTableViewCell.swift in Sources */,
 				5C89DA2126C29EDF000DB3D2 /* ChangeAppPasswordViewController.swift in Sources */,
+				F5E00E7326E646BA00E4068C /* OverviewTableViewCell.swift in Sources */,
 				F48843A426ABE512005DB8A3 /* Place.swift in Sources */,
 				2C7854A726DFD0530079F6F4 /* ReviewManagingViewController.swift in Sources */,
 				6DA8990426B91CE900F81AD9 /* DetailRegisterViewController.swift in Sources */,
@@ -1259,7 +1283,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83P9XUMFCW;
+				DEVELOPMENT_TEAM = K6MHP3M8UT;
 				INFOPLIST_FILE = UMate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
