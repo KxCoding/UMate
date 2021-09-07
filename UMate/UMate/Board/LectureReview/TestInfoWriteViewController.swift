@@ -2,81 +2,70 @@
 //  TestInfoWriteTableViewController.swift
 //  UMate
 //
-//  Created by 남정은 on 2021/08/30.
+//  Created by 남정은 on 2021/09/07.
 //
 
 import UIKit
+import DropDown
+
+
+extension Notification.Name {
+    static let shareTestInfo = Notification.Name("shareTestInfo")
+}
+
 
 class TestInfoWriteViewController: UIViewController {
-    
+
     @IBOutlet weak var testInfoTableView: UITableView!
     
-    var token: NSObjectProtocol?
+    var selectedLecture: LectureInfo?
+    
+    var tokens = [NSObjectProtocol]()
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         /// 입력란 추가시 테이블 뷰 리로드
-        token = NotificationCenter.default.addObserver(forName: .insertTestInfoInputField, object: nil, queue: .main) { [weak self] _ in
+        var token = NotificationCenter.default.addObserver(forName: .insertTestInfoInputField, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             self.testInfoTableView.reloadData()
         }
+        tokens.append(token)
+        
+        /// 시험정보 공유 버튼 클릭시 화면 dismiss
+        token = NotificationCenter.default.addObserver(forName: .shareTestInfo, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            self.dismiss(animated: true, completion: nil)
+        }
+        tokens.append(token)
     }
     
     
     deinit {
-        if let token = token {
+        for token in tokens {
             NotificationCenter.default.removeObserver(token)
         }
     }
 }
 
+
+
+
 extension TestInfoWriteViewController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
-        switch indexPath.section {
-        /// 타이틀
-        case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "TestInfoHeaderTableViewCell", for: indexPath) as! TestInfoHeaderTableViewCell
-          
-        /// 응시한 시험
-        case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicatedTestTableViewCell", for: indexPath) as! ApplicatedTestTableViewCell
-            
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TestInfoWriteTableViewCell", for: indexPath) as! TestInfoWriteTableViewCell
+        guard let lecture = selectedLecture else {
             return cell
-        
-        /// 시험 전략
-        case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TestStrategyTableViewCell", for: indexPath) as! TestStrategyTableViewCell
-            
-            return cell
-            
-        /// 문제 유형
-        case 3:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TypesOfQuestionsTableViewCell", for: indexPath) as! TypesOfQuestionsTableViewCell
-            
-            return cell
-            
-        /// 문제 예시
-        case 4:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ExamplesOfQuestionsTableViewCell", for: indexPath) as! ExamplesOfQuestionsTableViewCell
-            
-            return cell
-            
-        default:
-            return UITableViewCell()
         }
+        
+        let semesters = lecture.openingSemester.components(separatedBy: "/")
+        cell.receiveSemestersAndAddDropDownData(openingSemester: semesters)
+        return cell
     }
 }
-
-
