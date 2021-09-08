@@ -24,12 +24,33 @@ class TestInfoTableViewCell: UITableViewCell {
         testStrategyLabel.text = target.testStrategy
         questionType.text = target.questionTypes.map{ $0.trimmingCharacters(in: .whitespaces) }.joined(separator: ",")
         
+        /// 문제예시
+        exaplesStackView.removeFullyAllArrangedSubviews()
         for ex in target.examples {
             let label = UILabel()
+            label.lineBreakMode = NSLineBreakMode.byWordWrapping
+            label.numberOfLines = 0
             let mutable = NSMutableAttributedString(string: ex)
             mutable.addAttribute(.backgroundColor, value: UIColor.init(named: "systemGray6BackgroundColor") ?? .lightGray, range: NSRange(ex.startIndex..<ex.endIndex, in: ex))
             label.attributedText = mutable
             exaplesStackView.addArrangedSubview(label)
+        }
+    }
+}
+
+
+
+
+extension UIStackView {
+    
+    func removeFully(view: UIView) {
+        removeArrangedSubview(view)
+        view.removeFromSuperview()
+    }
+    
+    func removeFullyAllArrangedSubviews() {
+        arrangedSubviews.forEach { (view) in
+            removeFully(view: view)
         }
     }
 }

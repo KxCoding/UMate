@@ -53,7 +53,7 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
             summary.centerYAnchor.constraint(equalTo: title.centerYAnchor),
             
             image.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30),
+            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -38),
             image.widthAnchor.constraint(equalToConstant: 15),
             image.heightAnchor.constraint(equalToConstant: 15)
         ])

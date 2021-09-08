@@ -27,17 +27,21 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        /// 수강학기 drop down view 설정no
+        /// 수강학기 drop down view 설정
         semestersView.anchorView = selectSemesterView
         guard let height = semestersView.anchorView?.plainView.bounds.height else { return }
         semestersView.bottomOffset = CGPoint(x: 0, y: height)
         semestersView.width = 150
+        semestersView.backgroundColor = UIColor.init(named: "systemGray6BackgroundColor")
+        semestersView.textColor = .label
         
         /// 시험종류 drop down view 설정
         testTypesView.anchorView = selectTestView
         guard let height = testTypesView.anchorView?.plainView.bounds.height else { return }
         testTypesView.bottomOffset = CGPoint(x: 0, y: height)
         testTypesView.width = 150
+        testTypesView.backgroundColor = UIColor.init(named: "systemGray6BackgroundColor")
+        testTypesView.textColor = .label
         
         selectSemesterView.layer.cornerRadius = 10
         selectTestView.layer.cornerRadius = 10
@@ -193,6 +197,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         testInfoStackView.arrangedSubviews.forEach { view in
             let textFiled = view.subviews.last as? UITextField
             examplesOfQuestions.append(textFiled?.text ?? "")
+            print(">>>>>>>>>subviews>>>>>>>>>>>", textFiled?.text)
         }
         
         /// 시험정보 인스턴스

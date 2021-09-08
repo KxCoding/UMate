@@ -409,43 +409,42 @@
                                             <outlet property="professorNameLabel" destination="N5M-KW-RQS" id="X6N-GT-8bJ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LectureBookTableViewCell" rowHeight="137" id="sXU-fg-oxK" customClass="LectureBookTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="237.5" width="414" height="137"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LectureBookTableViewCell" rowHeight="103" id="sXU-fg-oxK" customClass="LectureBookTableViewCell" customModule="UMate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="237.5" width="414" height="103"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sXU-fg-oxK" id="Nqg-dn-AWl">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="137"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="103"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="dQp-kd-EdK">
-                                                    <rect key="frame" x="20" y="15" width="374" height="122"/>
+                                                    <rect key="frame" x="20" y="15" width="374" height="88"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="752" text="등록된 교재 정보가 없습니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u1I-D0-0PR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="37"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <nil key="textColor"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="752" text="(링크로 이동합니다.)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u1I-D0-0PR">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="13.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdA-vZ-Mdg">
-                                                            <rect key="frame" x="0.0" y="52" width="374" height="40"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="38.5" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-pI-9cH">
+                                                            <rect key="frame" x="0.0" y="28.5" width="374" height="29.5"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAP-4u-ebK">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="교재명" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhU-5b-coV">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="36.5" height="29.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <state key="normal" title="책방으로 가기"/>
-                                                                </button>
+                                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="book link" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="805-YP-Fuk">
+                                                                    <rect key="frame" x="75" y="0.0" width="299" height="29.5"/>
+                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                    <color key="textColor" systemColor="labelColor"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                                </textView>
                                                             </subviews>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="kAP-4u-ebK" secondAttribute="trailing" id="B0B-i3-mwc"/>
-                                                                <constraint firstItem="kAP-4u-ebK" firstAttribute="leading" secondItem="fdA-vZ-Mdg" secondAttribute="leading" id="DZb-5e-SmK"/>
-                                                                <constraint firstAttribute="bottom" secondItem="kAP-4u-ebK" secondAttribute="bottom" id="X9Y-H0-tWX"/>
-                                                                <constraint firstItem="kAP-4u-ebK" firstAttribute="top" secondItem="fdA-vZ-Mdg" secondAttribute="top" id="kEq-Se-8bu"/>
-                                                                <constraint firstAttribute="height" constant="40" id="zfH-ZM-aC5"/>
-                                                            </constraints>
-                                                        </view>
+                                                        </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bUz-Lq-NRc">
-                                                            <rect key="frame" x="0.0" y="107" width="374" height="15"/>
+                                                            <rect key="frame" x="0.0" y="73" width="374" height="15"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ct-sj-6co">
                                                                     <rect key="frame" x="0.0" y="14" width="374" height="1"/>
@@ -475,11 +474,13 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <connections>
-                                            <outlet property="bookStoreButton" destination="kAP-4u-ebK" id="IxA-xr-dFs"/>
+                                            <outlet property="bookLinkTextView" destination="805-YP-Fuk" id="Cgw-wK-7eh"/>
+                                            <outlet property="bookNameLabel" destination="dhU-5b-coV" id="N8S-xH-MSJ"/>
+                                            <outlet property="explainLabel" destination="u1I-D0-0PR" id="Cyd-Ri-cSj"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LectureRatingTableViewCell" rowHeight="206" id="oyv-aR-87F" customClass="LectureRatingTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="374.5" width="414" height="206"/>
+                                        <rect key="frame" x="0.0" y="340.5" width="414" height="206"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oyv-aR-87F" id="Hkr-wJ-u9l">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="206"/>
@@ -658,7 +659,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReviewContentTableViewCell" rowHeight="192" id="DoR-hU-kVG" customClass="ReviewContentTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="580.5" width="414" height="192"/>
+                                        <rect key="frame" x="0.0" y="546.5" width="414" height="192"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DoR-hU-kVG" id="DeI-qU-B2L">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="192"/>
@@ -835,7 +836,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TestInfoTableViewCell" id="NIT-HT-B73" customClass="TestInfoTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="772.5" width="414" height="217"/>
+                                        <rect key="frame" x="0.0" y="738.5" width="414" height="217"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NIT-HT-B73" id="QeC-0s-KCa">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="217"/>

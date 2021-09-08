@@ -174,6 +174,7 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LectureBookTableViewCell", for: indexPath) as! LectureBookTableViewCell
             
+            cell.configure(lecture: selectedLectrue)
             return cell
             
         /// 종합 리뷰
