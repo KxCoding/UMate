@@ -24,13 +24,13 @@ class LectureBookTableViewCell: UITableViewCell {
         }
         /// 등록된 교재가 있을 경우
         else {
-            let attribuedString = NSMutableAttributedString(string: lecture.textbookName,
+            let attributedString = NSMutableAttributedString(string: lecture.textbookName,
                                                             attributes: [.font: UIFont.preferredFont(forTextStyle: .body)])
             if let encoded = lecture.bookLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
                let url = URL(string: encoded)
             {
-                attribuedString.addAttribute(.link, value: url, range: NSMakeRange(0, attribuedString.length))
-                bookLinkTextView.attributedText = attribuedString
+                attributedString.addAttribute(.link, value: url, range: NSMakeRange(0, attributedString.length))
+                bookLinkTextView.attributedText = attributedString
                 bookLinkTextView.linkTextAttributes = [
                     .foregroundColor: UIColor.label,
                     .underlineStyle: NSUnderlineStyle.single.rawValue,

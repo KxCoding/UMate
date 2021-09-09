@@ -10,6 +10,7 @@ import DropDown
 
 extension Notification.Name {
     static let insertTestInfoInputField = Notification.Name("insertTestInfoInputField")
+    static let sendAlert = Notification.Name("sendAlert")
 }
 
 
@@ -46,12 +47,10 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         selectSemesterView.layer.cornerRadius = 10
         selectTestView.layer.cornerRadius = 10
         
-        
         testStrategyTextView.delegate = self
         
+        /// 시험전략 설정
         testStrategyTextView.layer.cornerRadius = 10
-        
-       
         
         /// 입력란 추가 버튼 초기화
         addTestInfoButtonView.layer.cornerRadius = 5
@@ -123,6 +122,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     // MARK: 문제 예시
     /// 입력란을 담는 스택뷰
     @IBOutlet weak var testInfoStackView: UIStackView!
+    @IBOutlet weak var firstTextField: UITextField!
     
     /// 입력란 추가 뷰
     @IBOutlet weak var addTestInfoButtonView: UIView!
@@ -180,31 +180,55 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         let buttonList = [multipleChoiceButton,subjectiveButton,trueAndFalseButton,AbbreviatedFormButton,
                       essayTypeButton,oralStatementButton,etceteraButton]
         
-        /// 문제 유형
-        let questionTypes = buttonList.filter { button in
+        let selectedButton = buttonList.filter { button in
             if let button = button {
                 return button.isSelected
             }
             return false
-        }.map { button -> String in
-            if let button = button {
-                return button.titleLabel?.text ?? ""
+        }
+        
+        /// 수강학기 미선택시
+        if semestersView.selectedItem == nil {
+            NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":0])
+        }
+        /// 시험죵류 미선택시
+        else if testTypesView.selectedItem == nil {
+            NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":1])
+        }
+        /// 시험전략 미작성시
+        else if testStrategyTextView.text.count < 20 {
+            NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":2])
+        }
+        /// 문제유형 미선택시
+        else if selectedButton.count == 0 {
+            NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":3])
+        }
+        /// 문제예시 미작성시
+        else if !firstTextField.hasText {
+            NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":4])
+        }
+        /// 다 입력했을 경우
+        else {
+            /// 문제 유형
+            let questionTypes = selectedButton.map { button -> String in
+                if let button = button {
+                    return button.titleLabel?.text ?? ""
+                }
+                return ""
             }
-            return ""
-        }
-        
-        /// 문제 예시
-        testInfoStackView.arrangedSubviews.forEach { view in
-            let textFiled = view.subviews.last as? UITextField
-            examplesOfQuestions.append(textFiled?.text ?? "")
-            print(">>>>>>>>>subviews>>>>>>>>>>>", textFiled?.text)
-        }
-        
-        /// 시험정보 인스턴스
-        let testInfo = TestInfo(semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypes, examples: examplesOfQuestions)
+            
+            /// 문제 예시
+            testInfoStackView.arrangedSubviews.forEach { view in
+                let textField = view.subviews.last as? UITextField
+                examplesOfQuestions.append(textField?.text ?? "")
+            }
+            
+            /// 시험정보 인스턴스
+            let testInfo = TestInfo(semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypes, examples: examplesOfQuestions)
 
-        /// tableView에 시험정보 전달하는 노티피케이션
-        NotificationCenter.default.post(name: .shareTestInfo, object: nil, userInfo: ["testInfo":testInfo])
+            /// tableView에 시험정보 전달하는 노티피케이션
+            NotificationCenter.default.post(name: .shareTestInfo, object: nil, userInfo: ["testInfo":testInfo])
+        }
     }
 }
 

@@ -24,7 +24,7 @@ class LectureReviewTableViewCell: UITableViewCell {
         guard let recentReview = lecture.reviews.first else { return }
         
         lectureTitleLabel.text = lecture.lectureTitle + " : " + lecture.professor
-        semesterLabel.text = "\(recentReview.semester) 수강자"
+        semesterLabel.text = "\(recentReview.semester)학기 수강자"
         reviewContentLabel.text = recentReview.reviewContent
         
         /// 종합 리뷰

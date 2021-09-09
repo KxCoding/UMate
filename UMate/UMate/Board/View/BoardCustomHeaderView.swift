@@ -11,7 +11,6 @@ import UIKit
 /// 게시판 목록 화면에 expandable board에 들어갈 header
 class BoardCustomHeaderView: UITableViewHeaderFooterView {
     
-    let headerBar = UIView()
     let title = UILabel()
     let summary = UILabel()
     let image = UIImageView()
@@ -30,12 +29,10 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
     
     func configureContents() {
         
-        headerBar.translatesAutoresizingMaskIntoConstraints = false
         title.translatesAutoresizingMaskIntoConstraints = false
         summary.translatesAutoresizingMaskIntoConstraints = false
         image.translatesAutoresizingMaskIntoConstraints = false
         
-        contentView.addSubview(headerBar)
         contentView.addSubview(title)
         contentView.addSubview(summary)
         contentView.addSubview(image)
@@ -45,9 +42,6 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
             title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             title.heightAnchor.constraint(equalToConstant: 30),
             title.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30),
-            
-            headerBar.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            headerBar.widthAnchor.constraint(equalToConstant: 3),
             
             summary.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 10),
             summary.centerYAnchor.constraint(equalTo: title.centerYAnchor),
