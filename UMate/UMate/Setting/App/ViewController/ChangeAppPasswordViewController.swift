@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import KeychainSwift
 
 class ChangeAppPasswordViewController: PasswordRootViewController {
 
@@ -40,11 +41,7 @@ class ChangeAppPasswordViewController: PasswordRootViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 뒤로 가기 버튼 없애기
-//        self.navigationItem.setHidesBackButton(true, animated:true)
-//        
-//        passwordField.becomeFirstResponder()
-        
+        passwordField.becomeFirstResponder()
         
         NotificationCenter.default
             .addObserver(self,
@@ -57,6 +54,10 @@ class ChangeAppPasswordViewController: PasswordRootViewController {
                     selector: #selector(passwordSameProcess(notifcation:)),
                     name: Notification.Name.PasswordIsSame,
                     object: nil)
+        
+        
+        password = keychain.get(Keys.appLockPasswordKey)
+        print("ChangeAppPassword pasword \(password))")
     }
     
     
@@ -98,11 +99,11 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
             } else if finalText.count == 3 {
                 thirdContainerView.backgroundColor = UIColor.black
             } else {
-                password = finalText
+                passwordCheck = finalText
                 
                 fourthContainerView.backgroundColor = UIColor.black
                 
-                guard password == dummyPassword else {
+                guard password == passwordCheck else {
                     alert(message: "비밀번호가 일치하지 않습니다. 다시 시도하십시오.")
                     
                     /// 비밀번호가 일치하지 않을 때 사용하는 Notifcation.
@@ -136,7 +137,7 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
                 fourthContainerView.backgroundColor = UIColor.black
                 passwordCheck = finalText
                 
-                guard dummyPassword != passwordCheck else {
+                guard password != passwordCheck else {
                     
                     alert(message: "이전 비밀번호와 동일한 비밀번호입니다. 다른 비밀번호를 설정해주세요.")
                     
@@ -144,6 +145,17 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
                     NotificationCenter.default.post(name: Notification.Name.PasswordIsSame,
                                                     object: nil)
                     return false
+                }
+                
+                keychain.delete(Keys.appLockPasswordKey)
+                
+                guard let changedPassword = passwordCheck else { return false }
+                
+                if keychain.set(changedPassword, forKey: Keys.appLockPasswordKey, withAccess: .accessibleWhenUnlocked) {
+                    
+                    print("App Lock Password Changed")
+                } else {
+                    print("App Lock Password Change Fail")
                 }
                 
                 alert(message: "비밀번호가 변경되었습니다.")

@@ -10,6 +10,7 @@ import UIKit
 class CommonViewController {
 
     static let shared = CommonViewController()
+//    var faceIdDidSet: Bool?
     
     private init() { }
     
@@ -18,10 +19,15 @@ class CommonViewController {
     func transitionToHome() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainTabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
-        
+        print("vc \(mainTabBarController)")
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController)
     }
     
     
-    
+    func showPasswordViewController() {
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        let passwordViewController = storyboard.instantiateViewController(withIdentifier: "CommonPasswordSB")
+        
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(passwordViewController)
+    }
 }

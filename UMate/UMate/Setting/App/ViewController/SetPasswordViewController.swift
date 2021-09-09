@@ -7,6 +7,7 @@
 
 import UIKit
 import LocalAuthentication
+import KeychainSwift
 
 class SetPasswordViewController: UIViewController {
 
@@ -20,8 +21,9 @@ class SetPasswordViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var setPasswordSwitch: UISwitch!
+    @IBOutlet weak var changePasswordButton: UIButton!
     
-
+    
     /// 암호 잠금 스위치 값이 변경되면 호출됩니다.
     @IBAction func setPasswordStatusChanged(_ sender: UISwitch) {
         if sender.isOn { /// 암호 잠금이 활성화된 상태
@@ -36,6 +38,7 @@ class SetPasswordViewController: UIViewController {
             /// TouchID가 활성화된 상태인 경우, false로 변경
             touchIDSwitch.isOn = false
             touchIDSwitch.isEnabled = false
+            changePasswordButton.isEnabled = false
         }
     }
     
@@ -62,8 +65,12 @@ class SetPasswordViewController: UIViewController {
 
                     if success {
                         // FaceID 성공시
-                        print("success")
+                        print("face id success")
                         // Move to the main thread because a state update triggers UI changes.
+                        
+//                        NotificationCenter.default.post(name: Notification.Name.FaceIdDidSet, object: nil)
+//                        self.faceIdDidSet = true
+                        
                         DispatchQueue.main.async { [unowned self] in
 //                            self.state = .loggedin
                         }
@@ -71,7 +78,7 @@ class SetPasswordViewController: UIViewController {
                     } else {
                         /// FaceID 허용하지 않고, 비밀번호 입력창으로 바뀌는데 사용자가 취소한 것.
                         print(error?.localizedDescription ?? "Failed to authenticate")
-
+                        print("face id fail.. password.. cancel..")
                         // Fall back to a asking for username and password.
                         // ...
                     }
@@ -81,6 +88,8 @@ class SetPasswordViewController: UIViewController {
 
                 // Fall back to a asking for username and password.
                 // ...
+                print("face id not set")
+//                self.faceIdDidSet = false
             }
         } else {
             print("thisssss")
@@ -91,25 +100,37 @@ class SetPasswordViewController: UIViewController {
     @objc func process(notification: Notification) {
         /// 비밀번호가 설정되지 않았을 경우, 암호 잠금 스위치는 비활성화.
         setPasswordSwitch.isOn = false
+        changePasswordButton.isEnabled = false
     }
     
     @objc func completeProcess(notification: Notification) {
         /// 비밀번호가 설정되었을 경우, 암호 잠금 스위치는 활성화.
         setPasswordSwitch.isOn = true
+        changePasswordButton.isEnabled = true
         
         guard let password = notification.userInfo?["password"] as? String else {
                     return
         }
-                
-        dummyPassword = password
+            
     }
+    
+    
+    
+//    /// 지원 가능한 디바이스를 구분합니다.
+//    /// - Returns: 지원 가능한 기기라면 true, 아니라면 false를 리턴.
+//    func canEvaluatePolicy() -> Bool {
+//        let evaluatePolicyStatus = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+//
+//        return evaluatePolicyStatus
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         containerView.setViewTheme()
         
-        touchIDSwitch.isEnabled = false
+        setPasswordSwitch.isOn = true
+        changePasswordButton.isEnabled = false
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(process(notification:)),
@@ -119,10 +140,69 @@ class SetPasswordViewController: UIViewController {
                                                selector: #selector(completeProcess(notification:)),
                                                name: Notification.Name.PasswordDidSet, object: nil)
         
+        NotificationCenter.default.addObserver(forName: .PasswordNotUse, object: nil, queue: OperationQueue.main) { (noti) in
+            
+        }
+        
         context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+        
+        
+        
+        // 암호가 이미 설정되어있는지 체크
+        let keychain = KeychainSwift(keyPrefix: Keys.appLockPasswordKey)
+        let isPasswordSet = keychain.get(Keys.appLockPasswordKey)
+        
+
+        guard let isPasswordSet = isPasswordSet else { // 암호가 설정되어있지 않다면 아래 코드는 실행 x
+            setPasswordSwitch.isOn = false
+            changePasswordButton.isEnabled = false
+            return
+        }
+        
+        print("password set ok \(isPasswordSet)")
+        
+        if setPasswordSwitch.isOn {
+            print("상태11")
+            touchIDSwitch.isEnabled = true
+            changePasswordButton.isEnabled = true
+        } else {
+            print("상태22")
+            touchIDSwitch.isEnabled = false
+            changePasswordButton.isEnabled = false
+        }
+        
+        
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? MakingPasswordViewController {
+            if setPasswordSwitch.isOn { // password가 설정되지 않은 상태
+                print("1")
+                vc.isPasswordSet = false
+            } else { // password가 설정된 상태
+                print("2")
+                vc.isPasswordSet = true
+            }
+        }
+    }
+    
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+}
+
+
+
+
+
+extension Notification.Name {
+    /// 앱 암호 잠금이 해제되었을 경우 사용되는 타입
+    static let PasswordDidCancel = NSNotification.Name("PasswordDidCancelNotification")
+    
+//    /// Face ID 암호 사용이 설정되었을 때 사용되는 타입
+//    static let FaceIdDidSet = NSNotification.Name("FaceIdDidSetNotification")
+//
+//    /// Face ID 암호 사용이 해제되었을 때 사용되는 타입
+//    static let FaceIdDidCancel = NSNotification.Name("FaceIdDidCancelNotification")
 }
