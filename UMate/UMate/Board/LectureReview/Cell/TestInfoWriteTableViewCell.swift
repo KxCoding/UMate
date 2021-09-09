@@ -169,7 +169,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         }
     }
     
-    /// 문제 예시
+    /// 문제 예시들을 담는 배열
     var examplesOfQuestions = [String]()
     
     // MARK: 시험정보 공유
@@ -262,4 +262,7 @@ extension UITextField {
          self.rightViewMode = .always
      }
 }
+
+
+
 

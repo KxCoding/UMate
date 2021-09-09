@@ -1012,11 +1012,11 @@
             <objects>
                 <viewController id="w6B-F2-rcx" customClass="TestInfoWriteViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2cu-ly-bdQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="1146"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1046"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T2D-I4-OsJ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="1146"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="1046"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TestInfoWriteTableViewCell" rowHeight="913" id="2dp-de-TFe" customClass="TestInfoWriteTableViewCell" customModule="UMate" customModuleProvider="target">
@@ -1649,8 +1649,9 @@
                             <constraint firstItem="T2D-I4-OsJ" firstAttribute="leading" secondItem="fGc-mG-Clt" secondAttribute="leading" id="vZw-A9-11s"/>
                         </constraints>
                     </view>
-                    <size key="freeformSize" width="414" height="1200"/>
+                    <size key="freeformSize" width="414" height="1100"/>
                     <connections>
+                        <outlet property="tableViewbottomConstraint" destination="G7D-tn-jdI" id="AAk-Oi-nJW"/>
                         <outlet property="testInfoTableView" destination="T2D-I4-OsJ" id="DAx-S7-L7v"/>
                     </connections>
                 </viewController>
