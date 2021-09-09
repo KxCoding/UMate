@@ -68,7 +68,7 @@ class LectureReviewBoardViewController: UIViewController {
                                         attendance: .seat,
                                         testNumber: .two,
                                         rating: .four,
-                                        semester: "19년 1학기",
+                                        semester: "2019-2",
                                         reviewContent: "괜찮아요"),
                           LectureReview(assignment: .normal,
                                         groupMeeting: .many,
@@ -76,7 +76,7 @@ class LectureReviewBoardViewController: UIViewController {
                                         attendance: .seat,
                                         testNumber: .two,
                                         rating: .four,
-                                        semester: "19년 2학기",
+                                        semester: "2019-2",
                                         reviewContent: "강력 추천"),
                           LectureReview(assignment: .many,
                                         groupMeeting: .none,
@@ -84,7 +84,7 @@ class LectureReviewBoardViewController: UIViewController {
                                         attendance: .direct,
                                         testNumber: .none,
                                         rating: .three,
-                                        semester: "19년 2학기",
+                                        semester: "2019-2",
                                         reviewContent: "별로에요")
                 ])
             
