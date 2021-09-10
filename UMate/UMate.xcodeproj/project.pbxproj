@@ -122,6 +122,9 @@
 		F4666A3326BAEF9600A7AFA5 /* PlaceMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4666A3226BAEF9600A7AFA5 /* PlaceMain.storyboard */; };
 		F4666A3726BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4666A3626BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift */; };
 		F47EEDAE26E92DEF0036E8F7 /* PlaceSettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47EEDAD26E92DEF0036E8F7 /* PlaceSettingTableViewController.swift */; };
+		F47EEDB626E9F5270036E8F7 /* UnsplashImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47EEDB526E9F5260036E8F7 /* UnsplashImageInfo.swift */; };
+		F47EEDDD26EA30A30036E8F7 /* BlurHashEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47EEDDB26EA30A30036E8F7 /* BlurHashEncode.swift */; };
+		F47EEDDE26EA30A30036E8F7 /* BlurHashDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47EEDDC26EA30A30036E8F7 /* BlurHashDecode.swift */; };
 		F48843A326ABE512005DB8A3 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488439026ABE512005DB8A3 /* Review.swift */; };
 		F48843A426ABE512005DB8A3 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488439126ABE512005DB8A3 /* Place.swift */; };
 		F48843A626ABE512005DB8A3 /* PlaceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488439526ABE512005DB8A3 /* PlaceInfoViewController.swift */; };
@@ -284,6 +287,9 @@
 		F4666A3226BAEF9600A7AFA5 /* PlaceMain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlaceMain.storyboard; sourceTree = "<group>"; };
 		F4666A3626BAFFF900A7AFA5 /* NearbyPlaceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPlaceCollectionViewCell.swift; sourceTree = "<group>"; };
 		F47EEDAD26E92DEF0036E8F7 /* PlaceSettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSettingTableViewController.swift; sourceTree = "<group>"; };
+		F47EEDB526E9F5260036E8F7 /* UnsplashImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashImageInfo.swift; sourceTree = "<group>"; };
+		F47EEDDB26EA30A30036E8F7 /* BlurHashEncode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurHashEncode.swift; sourceTree = "<group>"; };
+		F47EEDDC26EA30A30036E8F7 /* BlurHashDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurHashDecode.swift; sourceTree = "<group>"; };
 		F488439026ABE512005DB8A3 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		F488439126ABE512005DB8A3 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		F488439526ABE512005DB8A3 /* PlaceInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceInfoViewController.swift; sourceTree = "<group>"; };
@@ -712,6 +718,8 @@
 		F401BE1B26DAC095000C7898 /* PlaceService */ = {
 			isa = PBXGroup;
 			children = (
+				F47EEDDA26EA30950036E8F7 /* BlurHash */,
+				F47EEDB426E9F4D80036E8F7 /* Model */,
 				F401BE1C26DAC356000C7898 /* DataManager.swift */,
 			);
 			path = PlaceService;
@@ -756,6 +764,23 @@
 				F401BE1626D90A4B000C7898 /* Cell */,
 			);
 			path = PlaceMain;
+			sourceTree = "<group>";
+		};
+		F47EEDB426E9F4D80036E8F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F47EEDB526E9F5260036E8F7 /* UnsplashImageInfo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F47EEDDA26EA30950036E8F7 /* BlurHash */ = {
+			isa = PBXGroup;
+			children = (
+				F47EEDDC26EA30A30036E8F7 /* BlurHashDecode.swift */,
+				F47EEDDB26EA30A30036E8F7 /* BlurHashEncode.swift */,
+			);
+			path = BlurHash;
 			sourceTree = "<group>";
 		};
 		F488438D26ABE512005DB8A3 /* Place */ = {
@@ -1013,6 +1038,7 @@
 				DF454E2726C2E1450031F92C /* ExpandImageViewController.swift in Sources */,
 				DFE3DD7726CFC728002F98D9 /* TestInfoTableViewCell.swift in Sources */,
 				6D64F78226ADC9D3005BAC82 /* DropDownTableViewCell.swift in Sources */,
+				F47EEDDE26EA30A30036E8F7 /* BlurHashDecode.swift in Sources */,
 				F560368726B9EE5C0093DDC7 /* CommentTableViewCell.swift in Sources */,
 				2C715DAC26C072C100B0B22B /* StoreTypeTableViewCell.swift in Sources */,
 				5CAFD3AD26A74B9D0002D0EC /* AddLectureTableViewController.swift in Sources */,
@@ -1020,6 +1046,7 @@
 				5C0D977726A768A600F396B7 /* UIViewController+Alert.swift in Sources */,
 				DFE3DD6626CFC624002F98D9 /* LectureReviewHeaderTableViewCell.swift in Sources */,
 				DF4F048F26DBE64C00700E7A /* ApplicatedTestTableViewCell.swift in Sources */,
+				F47EEDB626E9F5270036E8F7 /* UnsplashImageInfo.swift in Sources */,
 				F401BE1826D90E54000C7898 /* WordCollectionViewCell.swift in Sources */,
 				DF25EF4C26AFDD1F00949AAB /* BoardCustomHeaderView.swift in Sources */,
 				F47EEDAE26E92DEF0036E8F7 /* PlaceSettingTableViewController.swift in Sources */,
@@ -1103,6 +1130,7 @@
 				DFE3DD7326CFC700002F98D9 /* LectureRatingTableViewCell.swift in Sources */,
 				F48843B126ABE512005DB8A3 /* RoundedButton.swift in Sources */,
 				DFEF018026A756290015829B /* Date+Formatter.swift in Sources */,
+				F47EEDDD26EA30A30036E8F7 /* BlurHashEncode.swift in Sources */,
 				2C3D34C026B6A3650036DF0A /* PlaceSearchViewController.swift in Sources */,
 				DF4F049326DBE6C300700E7A /* TypesOfQuestionsTableViewCell.swift in Sources */,
 				F44389EA26D2F52400B9A193 /* BrowserSettingTableViewController.swift in Sources */,

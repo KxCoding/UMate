@@ -130,3 +130,14 @@ var expandableBoardList = [BoardUI(sectionName: "홍보", isExpanded: true ,boar
 var dummyCommentList = [Comment]()
 
 var dummyPassword: String?
+
+
+
+
+// MARK: - Place Dummy
+
+/// placeholder 이미지
+let placeholderImage = UIImage(named: "dummy-image-landscape")
+
+/// dummy URL
+let tempUrl = URL(string: "https://kxcoding.com")!

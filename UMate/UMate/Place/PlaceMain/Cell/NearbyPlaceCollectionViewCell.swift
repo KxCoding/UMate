@@ -39,9 +39,8 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
         }
         
         /// set image
-        placeImageView.image = target.thumbnail
-        
-        
+        placeImageView.image = placeholderImage
+        DataManager.shared.lazyUpdate(.thumbnail, of: placeImageView, with: target.thumbnailUrl)
         
     }
     

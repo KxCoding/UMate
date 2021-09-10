@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-/// [Demo] DTO
+/// DTO
 struct PlaceList: Codable {
     var university: String
     var places: [Place]
@@ -87,22 +87,11 @@ struct Place: Codable {
     /// 가게를 나타내는 키워드 (각 키워드는 공백 포함 8자 이내)
     var keywords: [String]
     
-    /// 가게 사진
+    /// 미리보기 이미지(썸네일)의 url
+    var thumbnailUrl: String
+    
+    /// 상세 화면에 표시할 이미지의 url - 이미지가 없으면 빈 배열
     var imageUrls: [String]
-    var thumbnail: UIImage {
-        if imageUrls.isEmpty {
-            /// url 배열이 비어 있으면 더미 이미지 추가
-            return UIImage(named: "dummy-image-landscape")!
-        } else {
-            /// url이 하나라도 있으면 download thumbnail
-            guard let urlStr = imageUrls.first,
-                  let image = DataManager.shared.getImage(from: urlStr) else {
-                return  UIImage(named: "dummy-image-landscape")!
-                
-            }
-            return image
-        }
-    }
     
     /// 인스타그램 아이디(optional), 관련 url(optional), 전화번호
     var instagramId: String?
@@ -125,6 +114,7 @@ struct Place: Codable {
               latitude: 37.544055, longitude: 126.972906,
               type: "cafe",
               keywords: ["레트로", "사진 찍기 좋은", "새로 오픈한", "친절", "따뜻한", "커피 맛집", "목재 가구"],
+              thumbnailUrl: "cafe",
               imageUrls: [],
               instagramId: "dailyroutinecoffee",
               url: "http://naver.me/xrPcV2Ie")

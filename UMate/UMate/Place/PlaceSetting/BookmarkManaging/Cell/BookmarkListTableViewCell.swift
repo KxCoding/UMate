@@ -37,7 +37,10 @@ class BookmarkListTableViewCell: UITableViewCell {
             keywordContainer2.isHidden = true
         }
         
-        placeImageView.image = target.thumbnail
+        /// placeholder 이미지 등록
+        placeImageView.image = placeholderImage
+        /// 응답에 따라 이미지 뷰 업데이트
+        DataManager.shared.lazyUpdate(.thumbnail, of: placeImageView, with: target.thumbnailUrl)
     }
     
     
