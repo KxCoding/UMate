@@ -69,16 +69,22 @@ extension CommonPasswordViewController: UITextFieldDelegate {
             // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
             if let _ = string.rangeOfCharacter(from: charSet) { return false }
             
-            if finalText.count == 1 {
+            if finalText.count == 0 {
+                firstContainerView.backgroundColor = UIColor.white
+            } else if finalText.count == 1 {
                 firstContainerView.backgroundColor = UIColor.black
+                secondContainerView.backgroundColor = UIColor.white
             } else if finalText.count == 2 {
                 secondContainerView.backgroundColor = UIColor.black
+                thirdContainerView.backgroundColor = UIColor.white
             } else if finalText.count == 3 {
                 thirdContainerView.backgroundColor = UIColor.black
-            } else {
+                fourthContainerView.backgroundColor = UIColor.white
+            } else if finalText.count == 4 {
                 passwordCheck = finalText
                 
                 fourthContainerView.backgroundColor = UIColor.black
+                
                 
                 guard password == passwordCheck else {
                     alert(message: "비밀번호가 일치하지 않습니다. 다시 시도하십시오.")

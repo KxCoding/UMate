@@ -28,10 +28,7 @@ class MakingPasswordViewController: PasswordRootViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("password \(isPasswordSet)")
-        
         let keychainPassword = keychain.get(Keys.appLockPasswordKey)
-        print("keychain testtt1 \(keychainPassword))")
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(process(notification:)),
@@ -81,18 +78,24 @@ extension MakingPasswordViewController: UITextFieldDelegate {
         let currentText = NSString(string: textField.text ?? "")
         let finalText = currentText.replacingCharacters(in: range, with: string)
         
+        
         switch textField {
         case passwordField:
             // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
             if let _ = string.rangeOfCharacter(from: charSet) { return false }
             
-            if finalText.count == 1 {
+            if finalText.count == 0 {
+                firstContainerView.backgroundColor = UIColor.white
+            } else if finalText.count == 1 {
                 firstContainerView.backgroundColor = UIColor.black
+                secondContainerView.backgroundColor = UIColor.white
             } else if finalText.count == 2 {
                 secondContainerView.backgroundColor = UIColor.black
+                thirdContainerView.backgroundColor = UIColor.white
             } else if finalText.count == 3 {
                 thirdContainerView.backgroundColor = UIColor.black
-            } else {
+                fourthContainerView.backgroundColor = UIColor.white
+            } else if finalText.count == 4 {
                 password = finalText
                 
                 fourthContainerView.backgroundColor = UIColor.black
@@ -112,13 +115,18 @@ extension MakingPasswordViewController: UITextFieldDelegate {
                 // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
                 if let _ = string.rangeOfCharacter(from: charSet) { return false }
                 
-                if finalText.count == 1 {
+                if finalText.count == 0 {
+                    firstContainerView.backgroundColor = UIColor.white
+                } else if finalText.count == 1 {
                     firstContainerView.backgroundColor = UIColor.black
+                    secondContainerView.backgroundColor = UIColor.white
                 } else if finalText.count == 2 {
                     secondContainerView.backgroundColor = UIColor.black
+                    thirdContainerView.backgroundColor = UIColor.white
                 } else if finalText.count == 3 {
                     thirdContainerView.backgroundColor = UIColor.black
-                } else {
+                    fourthContainerView.backgroundColor = UIColor.white
+                } else if finalText.count == 4 {
                     passwordCheck = finalText
                     
                     guard password == passwordCheck else {
@@ -165,13 +173,18 @@ extension MakingPasswordViewController: UITextFieldDelegate {
                 // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
                 if let _ = string.rangeOfCharacter(from: charSet) { return false }
                 
-                if finalText.count == 1 {
+                if finalText.count == 0 {
+                    firstContainerView.backgroundColor = UIColor.white
+                } else if finalText.count == 1 {
                     firstContainerView.backgroundColor = UIColor.black
+                    secondContainerView.backgroundColor = UIColor.white
                 } else if finalText.count == 2 {
                     secondContainerView.backgroundColor = UIColor.black
+                    thirdContainerView.backgroundColor = UIColor.white
                 } else if finalText.count == 3 {
                     thirdContainerView.backgroundColor = UIColor.black
-                } else {
+                    fourthContainerView.backgroundColor = UIColor.white
+                } else if finalText.count == 4 {
                     passwordCheck = finalText
                     
                     guard password == passwordCheck else {
@@ -188,11 +201,13 @@ extension MakingPasswordViewController: UITextFieldDelegate {
                     
                     fourthContainerView.backgroundColor = UIColor.black
                     
-//                    let keychain = KeychainSwift(keyPrefix: Keys.appLockPasswordKey)
                     
                     guard let finalPassword = password else { return false }
                     
-                    if keychain.set(finalPassword, forKey: Keys.appLockPasswordKey, withAccess: .accessibleWhenUnlocked) {
+                    
+                    if keychain.set(finalPassword,
+                                    forKey: Keys.appLockPasswordKey,
+                                    withAccess: .accessibleWhenUnlocked) {
                         
                         print("App Lock Password Set")
                     } else {

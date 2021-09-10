@@ -127,13 +127,19 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
             // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
             if let _ = string.rangeOfCharacter(from: charSet) { return false }
             
-            if finalText.count == 1 {
+            
+            if finalText.count == 0 {
+                firstContainerView.backgroundColor = UIColor.white
+            } else if finalText.count == 1 {
                 firstContainerView.backgroundColor = UIColor.black
+                secondContainerView.backgroundColor = UIColor.white
             } else if finalText.count == 2 {
                 secondContainerView.backgroundColor = UIColor.black
+                thirdContainerView.backgroundColor = UIColor.white
             } else if finalText.count == 3 {
                 thirdContainerView.backgroundColor = UIColor.black
-            } else {
+                fourthContainerView.backgroundColor = UIColor.white
+            } else if finalText.count == 4 {
                 fourthContainerView.backgroundColor = UIColor.black
                 passwordCheck = finalText
                 
@@ -151,12 +157,10 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
                 
                 guard let changedPassword = passwordCheck else { return false }
                 
-                if keychain.set(changedPassword, forKey: Keys.appLockPasswordKey, withAccess: .accessibleWhenUnlocked) {
-                    
-                    print("App Lock Password Changed")
-                } else {
-                    print("App Lock Password Change Fail")
-                }
+                keychain.set(changedPassword,
+                             forKey: Keys.appLockPasswordKey,
+                             withAccess: .accessibleWhenUnlocked)
+                
                 
                 alert(message: "비밀번호가 변경되었습니다.")
                 
