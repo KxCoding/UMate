@@ -12,6 +12,8 @@ class FirstSectionTableViewCell: UITableViewCell {
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var pager: UIPageControl!
     
+    let manager = DataManager.shared
+    
     /// 정보를 표시할 가게
     var target: Place!
     
@@ -81,10 +83,8 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceImageCollectionViewCell", for: indexPath) as! PlaceImageCollectionViewCell
         
-        /// placeholder 이미지 등록
-        cell.imageView.image = placeholderImage
         /// 응답에 따라 이미지 뷰 업데이트
-        DataManager.shared.lazyUpdate(.detail, of: cell.imageView, with: target.imageUrls[indexPath.row])
+        manager.lazyUpdate(.detailImage, of: cell.imageView, with: target.imageUrls[indexPath.row])
         
         return cell
     }

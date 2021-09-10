@@ -80,6 +80,7 @@ class DataManager {
     
     // MARK: - JSON
     
+    /// 커스텀 디코더
     private let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
@@ -112,70 +113,40 @@ class DataManager {
     var imageCache = NSCache<NSURL, UIImage>()
     
     
-    /// 주어진 url로부터 이미지를 가져오는 메소드
+    /// 주어진 url로부터 이미지를 가져와서 캐싱하는 메소드
     /// - Parameter url: url
     /// - Returns: 캐시에 저장된 이미지가 있거나 url로 해당 이미지를 가져올 수 있으면 이미지를 리턴, 실패하면 nil
     func getImage(from url: URL) -> UIImage? {
+        
+        var result: UIImage? = nil
         
         let nsUrl = url as NSURL
         
         /// 캐시에 이미지가 저장되었는지 확인
         if let image = imageCache.object(forKey: nsUrl) {
-            return image
+            result = image
         } else {
-            
+            /// 전달된 url 키로 캐싱된 이미지가 없다면
             #if DEBUG
             print("can't get data from cache")
             #endif
             
-            
-            guard let data = try? Data(contentsOf: nsUrl as URL) else {
-                #if DEBUG
-                print("can't get data from url")
-                #endif
+            /// 이미지 다운로드
+            fetchData(with: url) { data in
+                guard let image = UIImage(data: data) else {
+                    print("cannot convert data to image")
+                    return
+                }
                 
-                return nil
-            }
-            
-            #if DEBUG
-            print("downloaded successfully")
-            #endif
-            
-            guard let image = UIImage(data: data) else {
-                #if DEBUG
-                print("can't initialize image from data")
-                #endif
+                /// 캐싱
+                self.imageCache.setObject(image, forKey: nsUrl)
                 
-                return nil
+                /// 저장
+                result = image
             }
-            
-            #if DEBUG
-            print("image initialized successfully")
-            #endif
-            
-            // 캐시에 이미지 저장
-            imageCache.setObject(image, forKey: nsUrl)
-            
-            return image
-            
-            /*
-            
-             guard let data = fetchData(with: url) else { return nil }
-             
-             guard let image = UIImage(data: data) else {
-             #if DEBUG
-             print("cannot convert data to image")
-             #endif
-             
-             return nil
-             }
-             
-             imageCache.setObject(image, forKey: nsUrl)
-             
-             return image
-             
- */
         }
+        
+        return result
     }
     
     
@@ -192,119 +163,75 @@ class DataManager {
     }
     
     
-    // MARK: - Unsplash API
     
-    /// Demo 앱으로 등록, 50 request / hour
-    let unsplashKey = "RZoyv1JUGLzedP_O6q1OBthZTnne2ME7lwkE_gDZmOI"
-    
-    func lazyUpdate(_ type: PlaceImageDataType, of imageView: UIImageView, with query: String) {
-        /// info  데이터 요청
-        let count = 1
-        let orientation = "landscape"
-        guard let url = URL(string: "https://api.unsplash.com/photos/random?client_id=\(unsplashKey)&query=\(query)&count=\(count)&orientation=\(orientation)") else { return }
-        
-        session.dataTask(with: url) { [weak self] data, response, error in
-            guard let self = self else { return }
-            
-            if let error = error {
-                print(error)
+    /// 이미지를 요청하고, 전송된 이미지로 특정 작업을 수행하는 메소드
+    /// - Parameters:
+    ///   - url: URL
+    ///   - completion: 이미지를 가지고 수행할 작업
+    func fetchImage(with url: URL, completion: ((UIImage) -> ())?) {
+        fetchData(with: url) { data in
+            guard let image = UIImage(data: data) else {
+                print("cannot convert data to image")
                 return
             }
             
-            guard let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
-                print((response as? HTTPURLResponse)?.statusCode)
-                print("info 응답 코드가 없거나 정상 응답 아님")
-                return
+            if let completion = completion {
+                completion(image)
             }
-            
-            /// 데이터가 있으면
-            guard let data = data else {
-                print("data 없음")
-                return
-            }
-            /// 디코딩
-            guard let imagesInfo = DataManager.shared.decodeJson(type: [UnsplashImagesInfo].self,
-                                                                 fromJson: data) else {
-                print("디코딩 실패")
-                return
-            }
-            guard let item = imagesInfo.first else {
-                print("아이템이 하나도 없음")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                let blurHash = item.blur_hash
-                let image = UIImage(blurHash: blurHash, size: imageView.frame.size)
-                imageView.image = image
-            }
-            
-            var url = tempUrl
-            
-            if type == .thumbnail {
-                guard let thumbnailUrl = URL(string: item.urls.thumb) else {
-                    print("url 변환 실패")
-                    return
-                }
-                url = thumbnailUrl
-            } else if type == .detail {
-                guard let smallUrl = URL(string: item.urls.small) else {
-                    print("url 변환 실패")
-                    return
-                }
-                url = smallUrl
-            }
-            
-            self.session.dataTask(with: url) { [weak self] data, response, error in
-                guard let self = self else { return }
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let httpResponse = response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    print((response as? HTTPURLResponse)?.statusCode)
-                    print("응답 코드가 없거나 정상 응답 아님")
-                    return
-                }
-                
-                guard let data = data else {
-                    print("data 없음")
-                    return
-                }
-                
-                guard let image = UIImage(data: data) else {
-                    print("이미지 변환 실패")
-                    return
-                }
-                
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    
-                    UIView.animate(withDuration: 0.3) {
-                        imageView.image = image
-                    }
-                    
-                }
-                
-                
-                
-            }.resume()
-            
-//            fetchData(with: <#T##URL#>, completion: <#T##((Data?) -> ())?##((Data?) -> ())?##(Data?) -> ()#>)
-            
-            
-        }.resume()
-        
-        
+        }
     }
     
     
+    // MARK: - Unsplash API
     
+    /// Demo - 50 request / hour
+    let unsplashKey = "RZoyv1JUGLzedP_O6q1OBthZTnne2ME7lwkE_gDZmOI"
+    
+    
+    /// 특정 키워드의 이미지를 unsplash에 요청하고, 받은 이미지로 특정 작업을 수행하는 메소드
+    /// - Parameters:
+    ///   - query: 키워드(쿼리)
+    ///   - completion: 이미지와 함께 실행할 작업
+    func fetchUnsplashInfo(with query: String, completion: ((UnsplashImagesInfo) -> ())?) {
+        
+        /// URL 세팅
+        let count = 1
+        let orientation = "landscape"
+        let urlString = "https://api.unsplash.com/photos/random?client_id=\(unsplashKey)&query=\(query)&count=\(count)&orientation=\(orientation)"
+        
+        guard let url = URL(string: urlString) else {
+            #if DEBUG
+            print("invalid api request url (Unsplash)")
+            #endif
+            return
+        }
+        
+        fetchData(with: url) { [weak self] data in
+            guard let self = self else { return }
+            
+            /// 전송된 data를 디코딩
+            guard let imagesInfo = self.decodeJson(type: [UnsplashImagesInfo].self,
+                                                   fromJson: data) else {
+                #if DEBUG
+                print("or maybe it's error invalid api key or query")
+                #endif
+                return
+            }
+            
+            /// 첫번째 이미지를 언래핑
+            guard let item = imagesInfo.first else {
+                #if DEBUG
+                print("no acual data in [UnsplashImagesInfo]")
+                #endif
+                return
+            }
+            
+            if let completion = completion {
+                completion(item)
+            }
+        }
+        
+    }
     
     
     // MARK: - Util Methods
@@ -352,6 +279,50 @@ class DataManager {
         return result
     }
     
+    
+    /// Unsplash 이미지가 필요한 이미지 뷰의 이미지를 lazy 하게 이미지를 업데이트하는 유틸 메소드
+    ///  기본 placeholder 이미지  > hash blur 이미지 > 최종 이미지
+    /// - Parameters:
+    ///   - type: 원하는 이미지의 타입
+    ///   - imageView: 사용할 이미지 뷰
+    ///   - query: 이미지의 키워드
+    func lazyUpdate(_ type: PlaceImageDataType, of imageView: UIImageView, with query: String) {
+        /// 1. placeholder 이미지로 설정
+        imageView.image = placeholderImage
+        
+        /// unsplash 이미지 정보 받아오기
+        fetchUnsplashInfo(with: query) { info in
+            
+            /// 2. Blur Hash 이미지 생성 및 업데이트
+            let blurImage = UIImage(blurHash: info.blur_hash, size: imageView.frame.size)
+            imageView.image = blurImage
+            
+            /// 필요한 이미지의 타입에 따라 요청 url 설정
+            var imageUrl: URL? = nil
+            
+            switch type {
+            case .thumbnail:
+                imageUrl = URL(string: info.urls.thumb)
+            case .detailImage:
+                imageUrl = URL(string: info.urls.small)
+            default:
+                break
+            }
+            
+            guard let url = imageUrl else {
+                #if DEBUG
+                print("url -- nil or invalid url")
+                #endif
+                return
+            }
+            
+            self.fetchImage(with: url) { image in
+                /// 3. 원본 이미지로 image view 업데이트
+                imageView.image = image
+            }
+        }
+    }
+    
 }
 
 
@@ -362,5 +333,5 @@ enum PlaceImageDataType {
     case placeholder
     case blurHash
     case thumbnail
-    case detail
+    case detailImage
 }
