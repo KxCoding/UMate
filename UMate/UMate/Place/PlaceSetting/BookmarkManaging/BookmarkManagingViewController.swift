@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Loaf
 
 class BookmarkManagingViewController: UIViewController {
     
@@ -45,6 +46,14 @@ class BookmarkManagingViewController: UIViewController {
             return bookmarkedItems.filter { $0.placeType == selected }
         }
     }
+    
+    lazy var bookmarkDeletedLoaf: Loaf = Loaf("북마크가 삭제되었습니다",
+                                              state: .info,
+                                              location: .bottom,
+                                              presentingDirection: .vertical,
+                                              dismissingDirection: .vertical,
+                                              sender: self)
+
     
     
     // MARK: View Lifecycle method
@@ -236,6 +245,8 @@ extension BookmarkManagingViewController: UITableViewDelegate {
             self.bookmarkListTableView.beginUpdates()
             self.bookmarkListTableView.deleteRows(at: [indexPath], with: .automatic)
             self.bookmarkListTableView.endUpdates()
+            
+            self.bookmarkDeletedLoaf.show(.custom(1.2))
             
             completion(true)
         }

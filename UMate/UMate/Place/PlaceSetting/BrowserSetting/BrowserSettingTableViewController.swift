@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Loaf
 
 class BrowserSettingTableViewController: UITableViewController {
     
@@ -22,6 +23,12 @@ class BrowserSettingTableViewController: UITableViewController {
     let testInstagramURL = URL(string: "https://instagram.com/lagrillia")
     let testWebURL = URL(string: "http://naver.me/xKQWQLcD")
     
+    lazy var selectedBrowserLoaf: Loaf = Loaf("선호 브라우저가 변경되었습니다",
+                                              state: .info,
+                                              location: .bottom,
+                                              presentingDirection: .vertical,
+                                              dismissingDirection: .vertical,
+                                              sender: self)
     
     /// 브라우저를 선택하면 알맞은 작업을 처리하는 메소드
     /// - Parameter option: 선택한 브라우저 옵션
@@ -79,10 +86,10 @@ class BrowserSettingTableViewController: UITableViewController {
             switch indexPath.row {
             case 0:
                 selectPreferredBrowser(prefer: .internal)
-                
+                selectedBrowserLoaf.show(.custom(1.2))
             case 1:
                 selectPreferredBrowser(prefer: .external)
-                
+                selectedBrowserLoaf.show(.custom(1.2))
             default:
                 break
             }
