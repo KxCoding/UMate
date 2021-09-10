@@ -13,6 +13,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     let keychain = KeychainSwift(keyPrefix: Keys.appLockPasswordKey)
+    let bioKeychain = KeychainSwift(keyPrefix: Keys.bioLockPasswordKey)
+    
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -75,10 +77,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // 암호가 이미 설정되어있는지 체크
         let isPasswordSet = keychain.get(Keys.appLockPasswordKey)
-        
+        let isBioUnlockSet = bioKeychain.getBool(Keys.bioLockPasswordKey)
+        print("isPasswordSet \(isPasswordSet), bioSet \(isBioUnlockSet)")
 
         if let isPasswordSet = isPasswordSet {
-            CommonViewController.shared.showPasswordViewController()
+            guard let isBioUnlockSet = isBioUnlockSet, isBioUnlockSet == true else {
+                CommonViewController.shared.showPasswordViewController()
+                return
+            }
+            CommonViewController.shared.showFaceIdViewController()
         }
     }
     
@@ -90,6 +97,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
     
     func changeRootViewController(_ vc: UIViewController, animated: Bool = true) {
         guard let window = window else {

@@ -14,6 +14,7 @@ struct Keys {
     static let userEmailKey = "userEmailKey"
     static let hasLaunchedKey = "hasLaunchedKey"
     static let appLockPasswordKey = "appLockPasswordKey"
+    static let bioLockPasswordKey = "bioLockPasswordKey"
 }
 
 class DetailRegisterViewController: UIViewController {

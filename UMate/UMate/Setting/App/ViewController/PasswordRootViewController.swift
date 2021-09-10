@@ -11,6 +11,7 @@ import KeychainSwift
 class PasswordRootViewController: UIViewController {
 
     let keychain = KeychainSwift(keyPrefix: Keys.appLockPasswordKey)
+    let bioKeychain = KeychainSwift(keyPrefix: Keys.bioLockPasswordKey)
     
     var didPasswordSet = false
     var password: String?
