@@ -164,7 +164,7 @@ extension PlaceInfoViewController: UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "FirstSectionTableViewCell", for: indexPath) as! FirstSectionTableViewCell
             
-            cell.configure(with: placeImages)
+            cell.configure(with: place)
             
             return cell
             

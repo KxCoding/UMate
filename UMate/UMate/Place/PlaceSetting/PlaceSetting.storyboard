@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="p1i-XP-xoX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="p1i-XP-xoX">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +11,7 @@
         <!--관리 및 설정-->
         <scene sceneID="Fsf-8l-mU6">
             <objects>
-                <tableViewController id="p1i-XP-xoX" sceneMemberID="viewController">
+                <tableViewController id="p1i-XP-xoX" customClass="PlaceSettingTableViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="vvc-yg-X27">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -185,6 +184,9 @@
                                                 <constraint firstItem="EXC-JP-vDB" firstAttribute="leading" secondItem="9re-Cb-LBM" secondAttribute="trailing" constant="8" id="okT-kX-sRb"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="aGP-m5-d11" kind="show" id="lnp-Wv-aB3"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -238,10 +240,12 @@
             </objects>
             <point key="canvasLocation" x="2527" y="76"/>
         </scene>
-        <!--Storyboard Reference-->
+        <!--TemplateManaging-->
         <scene sceneID="H3Y-fY-sct">
             <objects>
-                <viewControllerPlaceholder id="aGP-m5-d11" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="TemplateManaging" id="aGP-m5-d11" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ZBu-V6-Lqg"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CmG-mk-sY5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2573" y="113"/>

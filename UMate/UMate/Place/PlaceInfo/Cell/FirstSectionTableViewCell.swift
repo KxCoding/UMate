@@ -12,8 +12,10 @@ class FirstSectionTableViewCell: UITableViewCell {
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var pager: UIPageControl!
     
+    let manager = DataManager.shared
+    
     /// 정보를 표시할 가게
-    var images = [UIImage]()
+    var target: Place!
     
     /// 이미지 데이터가 없을 때 표시할 더미 데이터
     lazy var dummyImages: [UIImage] = {
@@ -28,16 +30,16 @@ class FirstSectionTableViewCell: UITableViewCell {
     
     /// 셀 내부 각 뷰들이 표시하는 content 초기화
     /// - Parameter content: 표시할 내용을 담은 Place 객체
-    func configure(with content: [UIImage]) {
+    func configure(with content: Place) {
         
-        images = content
+        target = content
         
         // pager가 표시하는 페이지의 수
-        if images.count < 2 {
+        if target.imageUrls.count < 2 {
             pager.isHidden = true
         }
         
-        pager.numberOfPages = images.count
+        pager.numberOfPages = target.imageUrls.count
     }
     
     override func awakeFromNib() {
@@ -58,6 +60,7 @@ class FirstSectionTableViewCell: UITableViewCell {
 
 
 
+// MARK: - Collection view delegation
 
 extension FirstSectionTableViewCell: UICollectionViewDataSource {
     
@@ -67,7 +70,7 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
     ///   - section: 컬렉션 뷰의 특정 섹션을 가리키는 index number
     /// - Returns: 섹션에 포함되는 아이템의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return target.imageUrls.count
     }
     
     
@@ -80,7 +83,8 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceImageCollectionViewCell", for: indexPath) as! PlaceImageCollectionViewCell
         
-        cell.imageView.image = images[indexPath.item]
+        /// 응답에 따라 이미지 뷰 업데이트
+        manager.lazyUpdate(.detailImage, of: cell.imageView, with: target.imageUrls[indexPath.row])
         
         return cell
     }
@@ -120,7 +124,7 @@ extension FirstSectionTableViewCell: UICollectionViewDelegate {
 
 
 
-// MARK: 가게 관련 이미지 컬렉션 뷰
+// MARK: - 상세 이미지 컬렉션 뷰
 class PlaceImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
