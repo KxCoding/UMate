@@ -19,6 +19,8 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var keywordContainer2: UIView!
     @IBOutlet weak var placeImageView: UIImageView!
     
+    let manager = DataManager.shared
+    
     /// 셀에서 표시하는 place 객체
     var target: Place!
     
@@ -38,10 +40,8 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
             keywordContainer2.isHidden = true
         }
         
-        /// set image
-        placeImageView.image = target.thumbnail
-        
-        
+        /// 응답에 따라 이미지 뷰 업데이트
+        manager.lazyUpdate(.thumbnail, of: placeImageView, with: target.thumbnailUrl)
         
     }
     

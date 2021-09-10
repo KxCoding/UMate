@@ -23,6 +23,24 @@ struct PlaceUser {
         /// 사용자가 작성한 리뷰 목록
         var reviews = [UUID]()
         
+        /// 자주 사용하는 문장 (템플릿)
+        var reviewTemplate: String = """
+            (Sample Template)
+            
+            [🥢맛]
+            건강한 맛을 선호하는데...
+            
+            [🎨분위기]
+            자타공인 감성 벌레...🐛
+            
+            [🧼위생]
+            민감한 편은 아닌데...
+            
+            [✔️추천 메뉴]
+            하나만 먹는다면 -
+            추천 조합 -
+            """
+        
     }
     
     /// Place 사용자의 Place Info
