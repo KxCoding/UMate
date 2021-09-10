@@ -29,7 +29,9 @@ class TermsOfConditionsTableViewController: UITableViewController {
     @IBOutlet weak var community: UITextView!
     @IBOutlet weak var advertisement: UITextView!
     
+    var list = [BEMCheckBox]()
     
+    /// To make toggle All CheckBox 
     @IBAction func nextToEamilButton(_ sender: Any) {
         let checkBoxList = [checkBox2, checkBox3, checkBox4, checkBox5, checkBox6]
         
@@ -88,10 +90,9 @@ extension TermsOfConditionsTableViewController: BEMCheckBoxDelegate {
     /// once didtap first checkBox mkae turn on All checkBox
     /// - Parameter checkBox: BEMCheckBox:
     func didTap(_ checkBox: BEMCheckBox) {
-        var list = [BEMCheckBox]()
         list = [checkbox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6]
         if checkBox.on == true {
-            list.forEach{ $0.on = true }
+            list.forEach({ $0.on = true })
         } else {
             list.forEach{ $0.on = false }
         }

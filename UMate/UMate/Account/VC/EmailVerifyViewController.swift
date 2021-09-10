@@ -47,8 +47,6 @@ class EmailVerifyViewController: UIViewController {
         
     }
     
-    
-    
     ///  Since verified email be stored for next register step and then it can't be change.
     ///   - Parameters:
     ///   - segue: DetailRegisterViewController

@@ -17,11 +17,11 @@ class StorageDataSource {
     static let shard = StorageDataSource()
     private init() { }
     
-    /// 유저 디폴트에 저장하거나 파일매니저 경로에 이미지를 저장하는 메소드
+    /// To save userDefaults or  To save Image with FileManager Path
     /// - Parameters:
-    ///   - image: 저장할 이미지
-    ///   - key: Userdefault의 키 / FilePath 키
-    ///   - storageType: 저장소 타입
+    ///   - image: desired Image
+    ///   - key: Userdefault key / FilePath key
+    ///   - storageType: repository Type
     private func store(image: UIImage, forkey key: String, withStorageType storageType: StorageType) {
         if let pngRepresentation = image.pngData() {
             switch storageType {
@@ -39,8 +39,7 @@ class StorageDataSource {
             }
         }
     }
-    
-    /// 유저 디폴트에서 이미지를 가져오거나 파일매니저에서 가져오는 메소드
+    /// To get Image from userDefaults or Filemanger
     /// - Parameters:
     ///   - key: 저장된 키를 data타입으로 캐스팅하는 용도
     ///   - storageType: 타입을 선택하는 용도
@@ -64,6 +63,7 @@ class StorageDataSource {
         return nil
     }
     
+    /// To make FileManager new path
     /// 파일매니저로 새로운 경로를 만드는 메소드
     /// - Parameter key: 전달될 키
     /// - Returns: url 경로
@@ -74,7 +74,7 @@ class StorageDataSource {
         return documentURL.appendingPathComponent(key + ".png")
     }
     
-    /// 이미지 저장 메소드
+    /// To save the image to use
     /// - Parameter image: image
     func save(image: UIImage) {
         DispatchQueue.global().async {
@@ -82,7 +82,7 @@ class StorageDataSource {
         }
     }
     
-    /// 이미지를 가져오는 메소드
+    /// To get the image to use
     /// - Parameter model: image
     func display(with model: UIImageView) {
         DispatchQueue.global(qos: .background).async {

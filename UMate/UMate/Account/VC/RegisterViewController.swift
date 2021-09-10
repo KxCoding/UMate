@@ -29,19 +29,38 @@ class RegisterViewController: UIViewController {
     let menu: DropDown? = {
         let menu = DropDown()
         /// To make dynamic enterence year menu depend on current year
-        let currentYear = 2021
-        let previousYear = currentYear - 14
-    
-        for year in previousYear ... currentYear {
-            let str = String(year)
-            let dateformatter = DateFormatter()
-            dateformatter.dateFormat = "yyyy"
-            let getToDate = dateformatter.date(from: str )
-            let getToStr = dateformatter.string(from: getToDate ?? Date())
+        let calender = Calendar.current
+        let compo = calender.dateComponents([.year], from: Date())
+        var currentyear = DateComponents()
+        currentyear.year = compo.year
+        
+        var previous = DateComponents()
+        if let previousYear = compo.year {
+            previous.year = previousYear - 14
+        }
+        guard let currentDate = calender.date(from: currentyear) else { return nil }
+        guard let previousDate = calender.date(from: previous) else { return nil }
+        
+        func dates(from fromDate: Date, to toDate: Date) -> [Date] {
+            var dates: [Date] = []
+            var date = fromDate
             
-            menu.dataSource.append("\(getToStr)학번")
+            while date <= toDate {
+                dates.append(date)
+                guard let newDate = Calendar.current.date(byAdding: .year, value: 1, to: date) else { break }
+                date = newDate
+            }
+            return dates
         }
         
+        let datesBetweenArray = dates(from: previousDate, to: currentDate)
+        for str in datesBetweenArray {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy"
+            let getToStr = formatter.string(from: str)
+            menu.dataSource.append("\(getToStr)학번")
+        }
+
         return menu
     }()
     
@@ -49,6 +68,7 @@ class RegisterViewController: UIViewController {
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    
     
     
     /// Can choose enterence year
