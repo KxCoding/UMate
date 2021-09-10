@@ -26,6 +26,10 @@ class PasswordRootViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var checkPasswordField: UITextField!
     
+    @IBOutlet weak var firstPasswordImageView: UIImageView!
+    @IBOutlet weak var secondPasswordImageView: UIImageView!
+    @IBOutlet weak var thirdPasswordImageView: UIImageView!
+    @IBOutlet weak var fourthPasswordImageView: UIImageView!
     
     
     override func viewDidLoad() {

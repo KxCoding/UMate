@@ -17,9 +17,8 @@ class CommonPasswordViewController: PasswordRootViewController {
         DispatchQueue.main.async {
             self.passwordField.text = ""
             
-            [self.firstContainerView, self.secondContainerView,
-             self.thirdContainerView, self.fourthContainerView].forEach {
-                $0?.backgroundColor = UIColor.white
+            [self.firstPasswordImageView, self.secondPasswordImageView, self.thirdPasswordImageView, self.fourthPasswordImageView].forEach {
+                $0?.image = UIImage(named: "line")
             }
         }
     }
@@ -70,20 +69,20 @@ extension CommonPasswordViewController: UITextFieldDelegate {
             if let _ = string.rangeOfCharacter(from: charSet) { return false }
             
             if finalText.count == 0 {
-                firstContainerView.backgroundColor = UIColor.white
+                firstPasswordImageView.image = UIImage(named: "line")
             } else if finalText.count == 1 {
-                firstContainerView.backgroundColor = UIColor.black
-                secondContainerView.backgroundColor = UIColor.white
+                firstPasswordImageView.image = UIImage(named: "lock")
+                secondPasswordImageView.image = UIImage(named: "line")
             } else if finalText.count == 2 {
-                secondContainerView.backgroundColor = UIColor.black
-                thirdContainerView.backgroundColor = UIColor.white
+                secondPasswordImageView.image = UIImage(named: "lock")
+                thirdPasswordImageView.image = UIImage(named: "line")
             } else if finalText.count == 3 {
-                thirdContainerView.backgroundColor = UIColor.black
-                fourthContainerView.backgroundColor = UIColor.white
+                thirdPasswordImageView.image = UIImage(named: "lock")
+                fourthPasswordImageView.image = UIImage(named: "line")
             } else if finalText.count == 4 {
                 passwordCheck = finalText
                 
-                fourthContainerView.backgroundColor = UIColor.black
+                fourthPasswordImageView.image = UIImage(named: "lock")
                 
                 
                 guard password == passwordCheck else {

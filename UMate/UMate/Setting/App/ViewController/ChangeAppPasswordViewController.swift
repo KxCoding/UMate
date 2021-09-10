@@ -16,9 +16,8 @@ class ChangeAppPasswordViewController: PasswordRootViewController {
         DispatchQueue.main.async {
             self.passwordField.text = ""
             
-            [self.firstContainerView, self.secondContainerView,
-             self.thirdContainerView, self.fourthContainerView].forEach {
-                $0?.backgroundColor = UIColor.white
+            [self.firstPasswordImageView, self.secondPasswordImageView, self.thirdPasswordImageView, self.fourthPasswordImageView].forEach {
+                $0?.image = UIImage(named: "line")
             }
         }
     }
@@ -30,9 +29,8 @@ class ChangeAppPasswordViewController: PasswordRootViewController {
         DispatchQueue.main.async {
             self.checkPasswordField.text = ""
             
-            [self.firstContainerView, self.secondContainerView,
-             self.thirdContainerView, self.fourthContainerView].forEach {
-                $0?.backgroundColor = UIColor.white
+            [self.firstPasswordImageView, self.secondPasswordImageView, self.thirdPasswordImageView, self.fourthPasswordImageView].forEach {
+                $0?.image = UIImage(named: "line")
             }
         }
     }
@@ -92,16 +90,21 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
             // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
             if let _ = string.rangeOfCharacter(from: charSet) { return false }
             
-            if finalText.count == 1 {
-                firstContainerView.backgroundColor = UIColor.black
+            if finalText.count == 0 {
+                firstPasswordImageView.image = UIImage(named: "line")
+            } else if finalText.count == 1 {
+                firstPasswordImageView.image = UIImage(named: "lock")
+                secondPasswordImageView.image = UIImage(named: "line")
             } else if finalText.count == 2 {
-                secondContainerView.backgroundColor = UIColor.black
+                secondPasswordImageView.image = UIImage(named: "lock")
+                thirdPasswordImageView.image = UIImage(named: "line")
             } else if finalText.count == 3 {
-                thirdContainerView.backgroundColor = UIColor.black
-            } else {
+                thirdPasswordImageView.image = UIImage(named: "lock")
+                fourthPasswordImageView.image = UIImage(named: "line")
+            } else if finalText.count == 4 {
                 passwordCheck = finalText
                 
-                fourthContainerView.backgroundColor = UIColor.black
+                fourthPasswordImageView.image = UIImage(named: "line")
                 
                 guard password == passwordCheck else {
                     alert(message: "비밀번호가 일치하지 않습니다. 다시 시도하십시오.")
@@ -115,9 +118,8 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
                 
                 
                 navigationItem.title = "비밀번호 변경"
-                [firstContainerView, secondContainerView,
-                 thirdContainerView, fourthContainerView].forEach {
-                    $0?.backgroundColor = UIColor.white
+                [firstPasswordImageView, secondPasswordImageView, thirdPasswordImageView, fourthPasswordImageView].forEach {
+                    $0?.image = UIImage(named: "line")
                 }
                 
                 checkPasswordField.becomeFirstResponder()
@@ -129,18 +131,18 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
             
             
             if finalText.count == 0 {
-                firstContainerView.backgroundColor = UIColor.white
+                firstPasswordImageView.image = UIImage(named: "line")
             } else if finalText.count == 1 {
-                firstContainerView.backgroundColor = UIColor.black
-                secondContainerView.backgroundColor = UIColor.white
+                firstPasswordImageView.image = UIImage(named: "lock")
+                secondPasswordImageView.image = UIImage(named: "line")
             } else if finalText.count == 2 {
-                secondContainerView.backgroundColor = UIColor.black
-                thirdContainerView.backgroundColor = UIColor.white
+                secondPasswordImageView.image = UIImage(named: "lock")
+                thirdPasswordImageView.image = UIImage(named: "line")
             } else if finalText.count == 3 {
-                thirdContainerView.backgroundColor = UIColor.black
-                fourthContainerView.backgroundColor = UIColor.white
+                thirdPasswordImageView.image = UIImage(named: "lock")
+                fourthPasswordImageView.image = UIImage(named: "line")
             } else if finalText.count == 4 {
-                fourthContainerView.backgroundColor = UIColor.black
+                fourthPasswordImageView.image = UIImage(named: "lock")
                 passwordCheck = finalText
                 
                 guard password != passwordCheck else {
