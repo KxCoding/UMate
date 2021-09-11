@@ -24,23 +24,9 @@ struct PlaceUser {
         var reviews = [UUID]()
         
         /// 자주 사용하는 문장 (템플릿)
-        var reviewTemplate: String = """
-            (Sample Template)
-            
-            [🥢맛]
-            건강한 맛을 선호하는데...
-            
-            [🎨분위기]
-            자타공인 감성 벌레...🐛
-            
-            [🧼위생]
-            민감한 편은 아닌데...
-            
-            [✔️추천 메뉴]
-            하나만 먹는다면 -
-            추천 조합 -
-            """
-        
+        var reviewTemplate: [ReviewTemplate] = [ReviewTemplate.temp1,
+                                                ReviewTemplate.temp2,
+                                                ReviewTemplate.temp3]
     }
     
     /// Place 사용자의 Place Info
@@ -58,5 +44,36 @@ struct PlaceUser {
         
         return user
     }()
+    
+}
+
+
+struct ReviewTemplate: Codable {
+    let id: Int
+    let name: String
+    let content: String
+    
+    static let temp1 = ReviewTemplate(id: 0,
+                                     name: "항목별",
+                                     content: """
+                                        [🥢맛] 건강한 맛을 선호하는데...
+                                        [🎨분위기] 자타공인 감성 벌레...🐛
+                                        [🧼위생] 민감한 편은 아닌데...
+                                        """)
+    
+    static let temp2 = ReviewTemplate(id: 1,
+                                     name: "추천 메뉴",
+                                     content: """
+                                        [✔️추천 메뉴]
+                                        하나만 먹는다면 -
+                                        추천 조합 -
+                                        """)
+    
+    static let temp3 = ReviewTemplate(id: 2,
+                                     name: "블로그 홍보",
+                                     content: """
+                                        블로그에도 리뷰 올렸어요! 구경오세요
+                                        https://blog.naver.com/blogpeople
+                                        """)
     
 }
