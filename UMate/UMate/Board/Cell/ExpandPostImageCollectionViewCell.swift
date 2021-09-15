@@ -28,9 +28,6 @@ class ExpandPostImageCollectionViewCell: UICollectionViewCell {
         /// 이미지 크기를 원래대로 되돌리는 제스처
         let tpaGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
         imageContentView.addGestureRecognizer(tpaGesture)
-        
-        /// 뷰 컨트롤러에서 두 번 탭된 것이 감지 됐을 때 옵저버가 등록됨.
-        NotificationCenter.default.addObserver(self, selector: #selector(doubleTapped), name: .twiceTapped, object: nil)
     }
     
     
