@@ -8,13 +8,16 @@
 import UIKit
 
 
+/// 이미지 컬렉션 뷰가 포함될 테이블 뷰 셀
+/// - Author: 남정은
 class PostImageTableViewCell: UITableViewCell {
-    
-    var selectedPost: Post?
-    
+    /// 이미지를 나타낼 컬렉션 뷰
     @IBOutlet weak var postImageCollectionView: UICollectionView!
 
-
+    /// 선택된 게시글
+    var selectedPost: Post?
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
      
@@ -23,6 +26,9 @@ class PostImageTableViewCell: UITableViewCell {
     }
     
     
+    
+    /// 셀을 초기화
+    /// - Parameter post: 선택된 게시글
     func configure(post: Post) {
         selectedPost = post
         
@@ -33,13 +39,16 @@ class PostImageTableViewCell: UITableViewCell {
 
 
 
-
+/// 이미지 컬렉션뷰에대한 데이터소스
+/// - Author: 남정은
 extension PostImageTableViewCell: UICollectionViewDataSource {
+    /// 게시글에 포함된 이미지 수를 리턴
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedPost?.images.count ?? 0
     }
     
     
+    /// 셀에 해당하는 이미지를 초기화
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostImageCollectionViewCell", for: indexPath) as! PostImageCollectionViewCell
@@ -48,6 +57,7 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
             cell.postImageView.image = image
         }
         
+        /// 컬렉션 뷰 셀에서 필요한 데이터 저장
         cell.selectedPost = selectedPost
         cell.index = indexPath.row
         return cell
@@ -56,7 +66,8 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
 
 
 
-
+/// 이미지 컬렉션 뷰 셀의 레이아웃 조정
+/// - Author: 남정은
 extension PostImageTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 

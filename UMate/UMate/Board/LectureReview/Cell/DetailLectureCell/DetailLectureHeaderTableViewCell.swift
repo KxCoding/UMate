@@ -7,10 +7,14 @@
 
 import UIKit
 
-class DetailLectureHeaderTableViewCell: UITableViewCell {
 
+/// 강의정보에 섹션을 나누는 헤더 테이블 뷰 셀
+/// - Author: 남정은
+class DetailLectureHeaderTableViewCell: UITableViewCell {
+    /// 섹션이름을 나타내는 레이블
     @IBOutlet weak var sectionNameLabel: UILabel!
     
+    /// 작성버튼을 나타내는 뷰
     @IBOutlet weak var writeButton: UIButton!
     
     override func awakeFromNib() {

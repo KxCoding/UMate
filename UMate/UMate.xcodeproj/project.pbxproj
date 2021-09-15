@@ -89,6 +89,9 @@
 		DF27D74B26B936780046D7BF /* CategoryBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF27D74A26B936780046D7BF /* CategoryBoardViewController.swift */; };
 		DF27D74D26B937240046D7BF /* CategoryBoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF27D74C26B937240046D7BF /* CategoryBoardCollectionViewCell.swift */; };
 		DF2F6B0226C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2F6B0126C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift */; };
+		DF3381E626F24E3F00001478 /* RemoveObserverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3381E526F24E3F00001478 /* RemoveObserverViewController.swift */; };
+		DF3381E826F257E200001478 /* LectureReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3381E726F257E200001478 /* LectureReview.swift */; };
+		DF3381EA26F257EF00001478 /* TestInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3381E926F257EF00001478 /* TestInfo.swift */; };
 		DF36281526A93207007AC5D2 /* ExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */; };
 		DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */; };
 		DF40510726C05335009FCA17 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF40510626C05335009FCA17 /* SearchViewController.swift */; };
@@ -266,6 +269,9 @@
 		DF27D74A26B936780046D7BF /* CategoryBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBoardViewController.swift; sourceTree = "<group>"; };
 		DF27D74C26B937240046D7BF /* CategoryBoardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBoardCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF2F6B0126C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandPostImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		DF3381E526F24E3F00001478 /* RemoveObserverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveObserverViewController.swift; sourceTree = "<group>"; };
+		DF3381E726F257E200001478 /* LectureReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReview.swift; sourceTree = "<group>"; };
+		DF3381E926F257EF00001478 /* TestInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInfo.swift; sourceTree = "<group>"; };
 		DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
 		DF40510626C05335009FCA17 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		DF42108726E7B00800C6E9F5 /* TestInfoWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInfoWriteViewController.swift; sourceTree = "<group>"; };
@@ -448,6 +454,7 @@
 				5C7E4C4E26BD6FD4009DF776 /* Dummy.swift */,
 				5C2C36D726E9BBB600D61B01 /* CommonPasswordViewController.swift */,
 				5C2C36D926EAFC7800D61B01 /* EmptyViewController.swift */,
+				DF3381E526F24E3F00001478 /* RemoveObserverViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -536,8 +543,8 @@
 				DF454E2626C2E1450031F92C /* ExpandImageViewController.swift */,
 				DF40510626C05335009FCA17 /* SearchViewController.swift */,
 				DF46AEAA26A1C70A00435D94 /* Cell */,
-				DF3EA85926A3FF4500424E7E /* Model */,
 				DF25EF4A26AFDD0100949AAB /* View */,
+				DF3EA85926A3FF4500424E7E /* Model */,
 				DFE3DD5F26CFC4BD002F98D9 /* LectureReview */,
 			);
 			path = Board;
@@ -722,8 +729,8 @@
 				DFE3DD5D26CFC474002F98D9 /* LectureReview.storyboard */,
 				DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */,
 				DFE3DD6226CFC5C7002F98D9 /* DetailLectureReviewViewController.swift */,
-				DF42108726E7B00800C6E9F5 /* TestInfoWriteViewController.swift */,
 				F5E00E6926E6461100E4068C /* LectureReviewWriteTableViewController.swift */,
+				DF42108726E7B00800C6E9F5 /* TestInfoWriteViewController.swift */,
 				DFE3DD6426CFC60A002F98D9 /* Cell */,
 				DFE3DD7826CFC730002F98D9 /* Model */,
 			);
@@ -735,9 +742,9 @@
 			children = (
 				DFE3DD6526CFC624002F98D9 /* LectureReviewHeaderTableViewCell.swift */,
 				DFE3DD6726CFC640002F98D9 /* LectureReviewTableViewCell.swift */,
-				DF42108926E7D1E400C6E9F5 /* TestInfoWriteTableViewCell.swift */,
 				DFE3DD6926CFC671002F98D9 /* DetailLectureCell */,
 				F5E00E6B26E6464700E4068C /* LectureReviewWriteCell */,
+				DF42108926E7D1E400C6E9F5 /* TestInfoWriteTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -760,6 +767,8 @@
 			isa = PBXGroup;
 			children = (
 				DFE3DD7926CFC790002F98D9 /* LectureInfo.swift */,
+				DF3381E726F257E200001478 /* LectureReview.swift */,
+				DF3381E926F257EF00001478 /* TestInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1111,6 +1120,8 @@
 				DFEF018226A756880015829B /* FreeBoardViewController.swift in Sources */,
 				DFEF018826A756D90015829B /* Board.swift in Sources */,
 				6D3EC62926B10B6C00907A68 /* TermsOfConditionsTableViewController.swift in Sources */,
+				DF3381EA26F257EF00001478 /* TestInfo.swift in Sources */,
+				DF3381E626F24E3F00001478 /* RemoveObserverViewController.swift in Sources */,
 				DF42108826E7B00800C6E9F5 /* TestInfoWriteViewController.swift in Sources */,
 				5C5A69A026E1046C00470E45 /* AppInformationTextViewController.swift in Sources */,
 				F44389D826D2D33500B9A193 /* PlaceAnnotation.swift in Sources */,
@@ -1169,6 +1180,7 @@
 				F4ABE8CF26D30D3200F54B3B /* PlaceUser.swift in Sources */,
 				6D8019C026A525900042A288 /* User.swift in Sources */,
 				F4666A3126BAEF7800A7AFA5 /* PlaceMainViewController.swift in Sources */,
+				DF3381E826F257E200001478 /* LectureReview.swift in Sources */,
 				5C7E4C4D26BD6FC9009DF776 /* CommonViewController.swift in Sources */,
 				5C89D9D226C017F8000DB3D2 /* MakingPasswordViewController.swift in Sources */,
 				5C92DD32269B4ED20094A93C /* BoardViewController.swift in Sources */,

@@ -7,19 +7,27 @@
 
 import UIKit
 
-extension Notification.Name {
-    static let twiceTapped = Notification.Name(rawValue: "twiceTapped")
-}
 
-
-
-
-class ExpandImageViewController: UIViewController {
-    
+/// 게시글 상세화면에서 이미지 클릭시 확대된 이미지를 보여주는 화면에대한 클래스
+/// - Author: 남정은
+class ExpandImageViewController: RemoveObserverViewController {
+    /// 이미지의 순번을 알려주는 레이블
     @IBOutlet weak var imageCountLabel: UILabel!
+    
+    /// 이미지의 페이지를 나타내는 페이지 컨트롤러
     @IBOutlet weak var pager: UIPageControl!
     
+    /// 이미지를 보여주는 컬렉션 뷰
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    
+    /// 선택된 게시글에 대한 정보
+    var selectedPost: Post?
+    
+    /// 선택된 이미지의 index row
+    var imageIndex: Int?
+    
+    /// 처음 나타낼 이미지에 대한 속성
+    var initiatedImage = true
     
     
     /// pageControl의 currentPage에 따라서 collectionView의 scroll이동
@@ -35,15 +43,6 @@ class ExpandImageViewController: UIViewController {
     }
     
     
-    var selectedPost: Post?
-    /// 선택된 Image의 index row
-    var imageIndex: Int?
-    /// 처음 나타낼 이미지에 대한 속성
-    var initiatedImage = true
-    
-    var token: NSObjectProtocol?
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,7 +52,7 @@ class ExpandImageViewController: UIViewController {
         
         
         /// 선택된 이미지에 대한 정보를 초기화
-        token = NotificationCenter.default.addObserver(forName: .sendImageView,
+        let token = NotificationCenter.default.addObserver(forName: .sendImageView,
                                                        object: nil,
                                                        queue: .main) { [weak self] noti in
             guard let self = self else { return }
@@ -77,78 +76,40 @@ class ExpandImageViewController: UIViewController {
             } else {
                 self.pager.isHidden = true
             }
-            
         }
-    }
-    
-    
-    deinit {
-        if let token = token {
-            NotificationCenter.default.removeObserver(token)
-        }
+        tokens.append(token)
     }
 }
 
 
 
-
+/// 이미지를 나타낼 컬렉션뷰에대한 데이터소스
 extension ExpandImageViewController: UICollectionViewDataSource {
+    /// 이미지의 개수를 나타냄
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedPost?.images.count ?? 0
     }
     
-    
+    /// 인덱스에 알맞은 이미지를 보여주는 셀을 리턴
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postImageCell", for: indexPath) as! ExpandPostImageCollectionViewCell
-        
-        /// 이미지 확대 제스처
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
-        cell.expandImageView.addGestureRecognizer(pinchGesture)
-        
-        /// 이미지 크기를 원래대로 되돌리는 제스처
-        let tpaGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
-        cell.imageContentView.addGestureRecognizer(tpaGesture)
         
         guard let images = selectedPost?.images else { return cell }
         
         cell.expandImageView.image = images[indexPath.row]
         return cell
     }
-    
-    
-    /// 이미지 뷰에 제스처가 인지될 때 호출되는 메소드
-    /// - Parameter gestureRecognizer: 제스처를 인식하는 객체
-    @objc func handlePinch(_ gestureRecognizer: UIPinchGestureRecognizer) {
-        guard gestureRecognizer.view != nil else { return }
-        
-        /// 제스처가 인지되고 있을 때 제스처가 등록된 view에서 scale만큼 변형이 생김
-        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-            guard let view = gestureRecognizer.view else { return }
-            
-            gestureRecognizer.view?.transform = view.transform.scaledBy(x: gestureRecognizer.scale,
-                                                                        y: gestureRecognizer.scale)
-            
-            gestureRecognizer.scale = 1
-        } 
-    }
-    
-    
-    /// collectionView의 contentView가 두 번 탭된 것을 알리는 메소드
-    @objc func doubleTapped() {
-        NotificationCenter.default.post(name: .twiceTapped, object: nil)
-    }
 }
 
 
 
-
+/// 이미지 컬렉션뷰에대한  동작 처리
 extension ExpandImageViewController: UICollectionViewDelegate {
-    
-    /// 특정 cell이 collectionView에 나타나기 직전에 호출되는 메소드
+    /// 특정 cell이 collectionView에 나타나기 직전에 호출
     /// - Parameters:
-    ///   - collectionView: cell을 추가할 collectionView
-    ///   - cell: 추가될 cell
-    ///   - indexPath: 나타낼 cell에 대한 indexPath
+    ///   - collectionView: 셀을 추가할 컬렉션 뷰
+    ///   - cell: 추가될 셀
+    ///   - indexPath: 나타낼 셀에대한 인덱스패스
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         /// 이미지를 클릭해서 ExpandImageView가 나타났을 때 선택한 이미지를 화면에 표시
         if initiatedImage {
@@ -160,31 +121,37 @@ extension ExpandImageViewController: UICollectionViewDelegate {
 
 
 
-
+/// 이미지 컬렉션뷰에대한 레이아웃
 extension ExpandImageViewController: UICollectionViewDelegateFlowLayout {
+    /// 원하는 셀의 사이즈를 리턴
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
         let height = collectionView.frame.height
         
+        /// 정사각형 사이즈
         return CGSize(width: width, height: height)
     }
 }
 
 
 
-
+/// 컬렉션 뷰의 스크롤 뷰에 대한 동작 처리
 extension ExpandImageViewController: UIScrollViewDelegate {
-    
-    /// scrollView안에 content View에서 스크롤 발생시에 호출되는 메소드
+    /// 스크롤 뷰안에 컨텐트 뷰에서 스크롤 발생시에 호출
     /// - Parameter scrollView: 스크롤이 발생되는 scrollView 객체
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        /// 스크롤 뷰의 x좌표
         let x = scrollView.contentOffset.x
         
+        /// 이미지의 순서에 알맞게 페이지 저장
         let page = Int( x / scrollView.frame.width)
         
         guard let images = selectedPost?.images else { return }
+        
+        /// 페이지에 따라서 이미지 번호를 바꿔줌
         imageCountLabel.text = "\(page + 1) / \(images.count)"
         
+        /// 페이지에 따라서 페이저의 현재 페이지를 바꿔줌
         pager.currentPage = page
     }
 }

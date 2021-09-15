@@ -12,8 +12,8 @@ class CommonViewController {
     static let shared = CommonViewController()
     
     private init() { }
+
     
- 
     /// go to homeVC
     func transitionToHome() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

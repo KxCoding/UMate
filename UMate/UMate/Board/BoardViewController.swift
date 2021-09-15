@@ -8,11 +8,15 @@
 import UIKit
 
 
+/// 게시판 목록에 관한 클래스
+/// - Author: 남정은
 class BoardViewController: UIViewController {
-    
-    var bookmarks: [Int:Bool] = [:]
-    
+    /// 게시판 목록에 대한 정보를 나타내는 테이블 뷰
+    /// - Author: 남정은
     @IBOutlet weak var boardListTableView: UITableView!
+    
+    /// 북마크 속성에 관한 딕셔너리
+    var bookmarks: [Int:Bool] = [:]
     
     
     /// 게시판 즐겨찾기 버튼의 색상 변경 & 즐겨찾기 속성 변경
@@ -28,25 +32,28 @@ class BoardViewController: UIViewController {
     }
     
     
+    /// 강의평가 게시판에서 게시판 화면으로 돌아올 때 사용
+    /// - Author: 남정은
     @IBAction func unwindToBoard(_ unwindSegue: UIStoryboardSegue) {
-       
     }
     
     
-    /// 지정된 identifier의 segue의 실행여부를 결정하는 메소드
+    /// 지정된 식별자의 세그의 실행여부를 결정
     /// - Parameters:
-    ///   - identifier: segue의 identifier
-    ///   - sender: segue가 시작된 객체
-    /// - Returns: segue를 실행하길 원한다면 true, 아니라면 false
+    ///   - identifier: 세그의 식별자
+    ///   - sender: 세그가 시작된 객체
+    /// - Returns: 세그를 실행하길 원한다면 true, 아니라면 false
+    /// - Author: 남정은
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
             /// 강의 평가 게시판은 performSegue를 이용
-            if cell.reuseIdentifier == "NonExpandableBoardTableViewCell" && indexPath.row == 5 {
+            if let _ = sender as? NonExpandableBoardTableViewCell, indexPath == IndexPath(row: 5, section: 0) {
                 return false
             }
+            
             /// 정보게시판은 performSegue를 이용
-            if cell.reuseIdentifier == "ExpandableBoardTableViewCell" && indexPath == IndexPath(row: 0, section: 2){
+            if let _ = sender as? ExpandableBoardTableViewCell, indexPath == IndexPath(row: 0, section: 2){
                 return false
             }
         }
@@ -54,11 +61,12 @@ class BoardViewController: UIViewController {
     }
     
     
-    /// 곧 실행될 view controller에 대해 알리는 메소드.
-    /// 새로운 view controller가 실행되기 전에 설정할 수 있다
+    /// 곧 실행될 뷰 컨트롤러에 대해 알림
+    /// 새로운 뷰 컨트롤러r가 실행되기 전에 설정할 수 있다
     /// - Parameters:
-    ///   - segue: 호출된 segue
-    ///   - sender: segue가 시작된 객체
+    ///   - segue: 호출된 세그
+    ///   - sender: 세그가 시작된 객체
+    /// - Author: 남정은
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         /// 정보게시판 더미데이터 전달
@@ -83,11 +91,11 @@ class BoardViewController: UIViewController {
     }
     
     
-    /// controller의 view가 메모리에 올라간 뒤 호출되는 메소드
+    /// 뷰컨트롤러의 뷰계층이 메모리에 올라간 뒤 호출됨.
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /// custom tableView header등록
+        /// 커스텀 테이블 뷰 헤더 등록
         boardListTableView.register(BoardCustomHeaderView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         
         /// nonExpandableBoard에대한 북마크 속성 초기화
@@ -108,22 +116,24 @@ class BoardViewController: UIViewController {
 
 
 
-
+/// 게시판 목록을 나타내는 테이블 뷰에대한 데이터소스
+/// - Author: 남정은
 extension BoardViewController: UITableViewDataSource {
-    
-    /// tableView section의 개수를 지정하는 메소드
+    /// 테이블 뷰 섹션의 개수를 지정
     /// - Parameter tableView: 요청한 정보를 나타낼 객체
-    /// - Returns: 나타낼 section 수
+    /// - Returns: 나타낼 섹션 수
+    /// - Author: 남정은
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
     
-    /// 하나의 section안에 나타낼 row수를 지정하는 메소드
+    /// 하나의 섹션안에 나타낼 row수를 지정
     /// - Parameters:
     ///   - tableView: 요청한 정보를 나타낼 객체
-    ///   - section: tableView의 section index number
-    /// - Returns: section안에 나타낼 row수
+    ///   - section: 테이블 뷰의 섹션
+    /// - Returns: 섹션안에 나타낼 row수
+    /// - Author: 남정은
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
@@ -143,11 +153,12 @@ extension BoardViewController: UITableViewDataSource {
     }
     
     
-    /// cell의 data source를  tableView의 특정 위치에 insert하기위해 호출하는 메소드
+    /// 셀의 데이터소스를  테이블 뷰의 특정 위치에 추가하기위해 호출
     /// - Parameters:
     ///   - tableView: 요청한 정보를 나타낼 객체
-    ///   - indexPath: tableView의 row의 위치를 나타내는 index path
-    /// - Returns: 구현을 완료한 cell
+    ///   - indexPath: 테이블 뷰의 row의 위치를 나타내는 인덱스패스
+    /// - Returns: 구현을 완료한 셀
+    /// - Author: 남정은
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         /// nonExxpandableBoard cell을 구성
@@ -169,13 +180,14 @@ extension BoardViewController: UITableViewDataSource {
 
 
 
-
+/// 게시판 목록을 표시한 테이블 뷰에대한  동작 처리
+/// - Author: 남정은
 extension BoardViewController: UITableViewDelegate {
-    
-    /// 선택된 cell을 delegate에게 알려주는 메소드
+    /// 선택된 셀을 델리게이트에게 알려주어 특정 게시판으로 이동
     /// - Parameters:
     ///   - tableView: 요청한 정보를 나타낼 객체
-    ///   - indexPath: 선택된 cell에 대한 index path
+    ///   - indexPath: 선택된 셀에 대한 인덱스
+    /// - Author: 남정은
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         /// IndexPath( row: 5, section: 0 ) 인 cell을 선택시 강의평가 게시판으로 이동
@@ -189,11 +201,12 @@ extension BoardViewController: UITableViewDelegate {
     }
     
     
-    /// 특정 section에 사용할 header의 높이를 delegate에게 알려주는 메소드
+    /// 특정 섹션에 사용할 헤더의 높이를 델리게이트에게 알려줌
     /// - Parameters:
     ///   - tableView: 요청한 정보를 나타낼 객체
-    ///   - section: tableView의 section을 구분할 index number
-    /// - Returns: header의 높이
+    ///   - section: 테이블 뷰의 섹션을 구분할 인덱스
+    /// - Returns: 헤더의 높이
+    /// - Author: 남정은
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0:
@@ -206,11 +219,12 @@ extension BoardViewController: UITableViewDelegate {
     }
     
     
-    /// 지정된 section의 header에 나타낼 view를 delegate에게 알려주는 메소드
+    /// 지정된 섹션의 헤더에 나타낼 뷰를 델리게이트에게 알려줌
     /// - Parameters:
     ///   - tableView: 요청한 정보를 나타낼 객체
-    ///   - section: tableView의 section을 구분할 index number
-    /// - Returns: 지정될 section위에 나타낼 UILabel, UIImageView, 혹은 커스 텀 뷰
+    ///   - section: 테이블 뷰의 섹션을 구분할 인덱스
+    /// - Returns: 지정될 섹션위에 나타낼 UILabel, UIImageView, 혹은 커스 텀 뷰
+    /// - Author: 남정은
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         /// header에 들어갈 버튼
@@ -262,8 +276,9 @@ extension BoardViewController: UITableViewDelegate {
     }
     
     
-    /// section에 들어갈 버튼에 action부여
-    /// - Parameter button: header의 button
+    /// 섹션에 들어갈 버튼에 액션부여
+    /// - Parameter button: 헤더의 버튼
+    /// - Author: 남정은
     @objc func handleExpandClose(button: UIButton) {
         ///  섹션은 1,2
         let section = button.tag
