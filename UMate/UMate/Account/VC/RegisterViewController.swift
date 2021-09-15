@@ -114,12 +114,12 @@ class RegisterViewController: UIViewController {
         menu?.bottomOffset = CGPoint(x: 0, y: height)
         menu?.width = 150
         menu?.backgroundColor = UIColor.dynamicColor(light: .white, dark: .darkGray)
-        menu?.textColor = UIColor.dynamicColor(light: .black, dark: .white)
         
         /// when user didtap background make lower the keyboard.
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         dismissZone.addGestureRecognizer(tap)
         dismissZone2.addGestureRecognizer(tap)
+        
         
         ///To receive notification post and then userInfo's data save to userdefaults
         token = NotificationCenter.default.addObserver(forName: .didTapSendUniversityName, object: nil, queue: .main, using: { [weak self] noti in
