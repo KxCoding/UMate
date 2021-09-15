@@ -1012,18 +1012,18 @@
             <objects>
                 <viewController id="w6B-F2-rcx" customClass="TestInfoWriteViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2cu-ly-bdQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="1046"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1146"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T2D-I4-OsJ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="1046"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="1146"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TestInfoWriteTableViewCell" rowHeight="913" id="2dp-de-TFe" customClass="TestInfoWriteTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="913"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TestInfoWriteTableViewCell" rowHeight="918" id="2dp-de-TFe" customClass="TestInfoWriteTableViewCell" customModule="UMate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="918"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2dp-de-TFe" id="opx-Tx-fcf">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="913"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="918"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQh-qg-MZL">
@@ -1420,13 +1420,13 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="예) 게임이론의 정의와 두 가지 이상의 사례를 작성하시오." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kWa-sF-Rj2">
-                                                    <rect key="frame" x="20" y="680" width="374" height="18"/>
+                                                    <rect key="frame" x="20" y="680" width="374" height="23"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="uAX-OB-zCU">
-                                                    <rect key="frame" x="20" y="706" width="374" height="80"/>
+                                                    <rect key="frame" x="20" y="711" width="374" height="80"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="noX-sD-aHL">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="34"/>
@@ -1462,10 +1462,61 @@
                                                                 </textField>
                                                             </subviews>
                                                         </stackView>
+                                                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="aii-BN-GQk">
+                                                            <rect key="frame" x="0.0" y="80" width="374" height="0.0"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHH-I2-Cu8">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="12.5" height="0.0"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p2a-S6-xHj">
+                                                                    <rect key="frame" x="22.5" y="0.0" width="351.5" height="0.0"/>
+                                                                    <color key="backgroundColor" name="systemGray6BackgroundColor"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <textInputTraits key="textInputTraits"/>
+                                                                </textField>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2sG-dj-xvB">
+                                                            <rect key="frame" x="0.0" y="80" width="374" height="0.0"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nDS-Cp-sXa">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="12.5" height="0.0"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="77B-KA-wDv">
+                                                                    <rect key="frame" x="22.5" y="0.0" width="351.5" height="0.0"/>
+                                                                    <color key="backgroundColor" name="systemGray6BackgroundColor"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <textInputTraits key="textInputTraits"/>
+                                                                </textField>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9it-Ic-thb">
+                                                            <rect key="frame" x="0.0" y="80" width="374" height="0.0"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ot6-Qx-thd">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="12.5" height="0.0"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="evb-yq-w4C">
+                                                                    <rect key="frame" x="22.5" y="0.0" width="351.5" height="0.0"/>
+                                                                    <color key="backgroundColor" name="systemGray6BackgroundColor"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                    <textInputTraits key="textInputTraits"/>
+                                                                </textField>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ikW-qC-xf4">
-                                                    <rect key="frame" x="20" y="798" width="374" height="24"/>
+                                                    <rect key="frame" x="20" y="803" width="374" height="24"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ieD-p2-CkN">
                                                             <rect key="frame" x="0.0" y="0.0" width="15" height="24"/>
@@ -1534,7 +1585,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvp-zf-e9C">
-                                                    <rect key="frame" x="20" y="842" width="374" height="40"/>
+                                                    <rect key="frame" x="20" y="847" width="374" height="40"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOz-iH-wzb">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -1619,7 +1670,9 @@
                                             <outlet property="addTestInfoButtonView" destination="AoT-zV-Wga" id="5IM-yV-jXH"/>
                                             <outlet property="essayTypeButton" destination="7QB-CQ-w54" id="Wfk-6j-khe"/>
                                             <outlet property="etceteraButton" destination="1HQ-BR-j8c" id="cb2-Hk-xY6"/>
+                                            <outlet property="fifthTextFieldStackView" destination="9it-Ic-thb" id="sxq-Mv-CfK"/>
                                             <outlet property="firstTextField" destination="pc2-pU-7ar" id="aW9-I5-tW8"/>
+                                            <outlet property="fourthTextFieldStackView" destination="2sG-dj-xvB" id="xOb-86-p4j"/>
                                             <outlet property="insertTestReviewButton" destination="kOz-iH-wzb" id="yNA-6z-fLc"/>
                                             <outlet property="multipleChoiceButton" destination="E1T-pf-lgq" id="cVK-1L-OPb"/>
                                             <outlet property="oralStatementButton" destination="M4g-WW-0aK" id="Rkc-Wa-UZ0"/>
@@ -1628,9 +1681,10 @@
                                             <outlet property="selectTestView" destination="FJH-hi-sJs" id="6gw-q1-rM0"/>
                                             <outlet property="semesterLabel" destination="VRr-PH-zbL" id="Y0O-gI-1PC"/>
                                             <outlet property="subjectiveButton" destination="Itg-ZZ-Bez" id="ihD-eA-4Pu"/>
-                                            <outlet property="testInfoStackView" destination="uAX-OB-zCU" id="rIh-tt-qdf"/>
+                                            <outlet property="testInfoStackView" destination="uAX-OB-zCU" id="yQL-Hc-4He"/>
                                             <outlet property="testLabel" destination="tlr-Jh-XUK" id="67h-94-Qx9"/>
                                             <outlet property="testStrategyTextView" destination="F6w-Jq-ENm" id="jyx-1j-xEq"/>
+                                            <outlet property="thirdTextFieldStackView" destination="aii-BN-GQk" id="O8Q-Ro-o1F"/>
                                             <outlet property="trueAndFalseButton" destination="UHc-De-rTT" id="CSE-X8-19p"/>
                                         </connections>
                                     </tableViewCell>
@@ -1649,7 +1703,7 @@
                             <constraint firstItem="T2D-I4-OsJ" firstAttribute="leading" secondItem="fGc-mG-Clt" secondAttribute="leading" id="vZw-A9-11s"/>
                         </constraints>
                     </view>
-                    <size key="freeformSize" width="414" height="1100"/>
+                    <size key="freeformSize" width="414" height="1200"/>
                     <connections>
                         <outlet property="tableViewbottomConstraint" destination="G7D-tn-jdI" id="AAk-Oi-nJW"/>
                         <outlet property="testInfoTableView" destination="T2D-I4-OsJ" id="DAx-S7-L7v"/>

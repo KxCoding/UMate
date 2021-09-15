@@ -8,21 +8,29 @@
 import UIKit
 
 
+/// 이미지 클릭시 뷰 컨트롤러에서 처리되는 동작에대한 노티피케이션
+/// - Author: 남정은
 extension Notification.Name {
     static let showImageVC = Notification.Name(rawValue: "showImageVC")
     static let sendImageView = Notification.Name(rawValue: "sendImageView")
 }
 
+
+
+/// 테이블 뷰 셀안에 포함된 컬렉션 뷰 셀에대한 클래스
+/// - Author: 남정은
 class PostImageCollectionViewCell: UICollectionViewCell {
-    
-    var selectedPost: Post?
-    var index: Int?
-    
+   /// 게시물 이미지가 표시되는 이미지 뷰
     @IBOutlet weak var postImageView: UIImageView!
     
+    /// 이미지가 담겨있는 컨텐트 뷰
     @IBOutlet weak var imageContentView: UIView!
     
-    @IBOutlet weak var imageButton: UIButton!
+    /// 선택된 게시글
+    var selectedPost: Post?
+    
+    /// 선택된 이미지의 인덱스
+    var index: Int?
     
     
     /// 이미지를 클릭시에 처리할 동작
@@ -34,7 +42,7 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         guard let selectedPost = selectedPost, let index = index else {
             return
         }
-        /// ExpandImageViewController에서 collectionView에 이미지를 설정하도록 함.
+        /// ExpandImageViewController에서 컬렉션 뷰에 이미지를 설정하도록 함.
         NotificationCenter.default.post(name: .sendImageView, object: nil,
                                         userInfo: ["post": selectedPost, "index": index])
     }

@@ -11,6 +11,8 @@ import Foundation
 fileprivate let formatter = DateFormatter()
 
 extension Date {
+    /// 현재 시간과 비교하여 시간을 나타내는 속성
+    /// - Author: 남정은
     var relativeDate: String {
         let seconds = Date().timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
         
@@ -27,7 +29,9 @@ extension Date {
         }
     }
     
-    var string: String {
+    /// 게시글 상세화면에 나타낼 데이트 형식
+    /// - Author: 남정은
+    var detailPostDate: String {
         formatter.dateFormat = "MM/dd hh:mm"
         return formatter.string(from: self)
     }

@@ -5,15 +5,13 @@
 //  Created by 남정은 on 2021/08/20.
 //
 
-import UIKit
 import Cosmos
+import UIKit
 
 
+/// 강의에 대한 총평을 보여주는 테이블 뷰 셀
+/// - Author: 남정은
 class LectureRatingTableViewCell: UITableViewCell {
-    
-    /// Count에 key는 각 항목(Enum의 case)의 rawValue이고 value는 빈도수를 나타냄
-    typealias Count = (key: Int, value: Int)
-    
     /// 별점
     @IBOutlet weak var ratingView: CosmosView!
     @IBOutlet weak var ratingLabel: UILabel!
@@ -25,7 +23,14 @@ class LectureRatingTableViewCell: UITableViewCell {
     @IBOutlet weak var attendanceLabel: UILabel!
     @IBOutlet weak var testNumberLabel: UILabel!
 
+    /// Count에 key는 각 항목(Enum의 case)의 rawValue이고 value는 빈도수를 나타냄
+    typealias Count = (key: Int, value: Int)
     
+    
+    /// 셀 초기화
+    /// - Parameters:
+    ///   - resultReview: 종합 강의평에 대한 정보가 담긴 배열
+    ///   - lecture: 선택된 강의에 대한 정보
     func configure(resultReview: [[Count]], lecture: LectureInfo) {
         
         /// resultReview는 [Assingment, Groupmeeting, Evaluation, Attendance, TestNumer]에 대해서 각각의 항목중 빈도 수 높은 것이 왼쪽에 오도록 정렬되어 있음.

@@ -8,29 +8,33 @@
 import UIKit
 
 
+/// 펼치지않는 게시판 목록을 나타내는 테이블 뷰 셀
+/// - Author: 남정은
 class NonExpandableBoardTableViewCell: UITableViewCell {
-    
+    /// 게시판 이름
     @IBOutlet weak var boardLabel: UILabel!
     
+    /// 게시판 북마크 버튼
     @IBOutlet weak var bookmarkButton: UIButton!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        /// 북마크 버튼 설정
         bookmarkButton.tintColor = UIColor.init(named: "lightGrayNonSelectedColor")
         bookmarkButton.alpha = 0.8
     }
     
     
-    /// 게시판 cell을 초기화하는 메소드
+    /// 게시판 셀을 초기화
     /// - Parameters:
-    ///   - boardList: cell에 나타낼 게시판 정보가 들어갈 배열
-    ///   - indexPath: 각 게시판의 index path 
+    ///   - boardList: 셀에 나타낼 게시판 정보가 들어갈 배열
+    ///   - indexPath: 각 게시판의 인덱스패스
     func configure(boardList: [BoardUI], indexPath: IndexPath) {
         boardLabel.text = boardList[indexPath.row].boardNames.first
         
-        /// index path로 북마크 버튼의 tag초기화
+        /// 인덱스패스로 북마크 버튼의 tag초기화
         /// 100, 101 ... 200, 201 .... 300, 301
         bookmarkButton.tag = indexPath.row + 100 * (indexPath.section + 1)
     }

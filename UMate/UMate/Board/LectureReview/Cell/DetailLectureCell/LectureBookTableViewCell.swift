@@ -7,13 +7,22 @@
 
 import UIKit
 
-class LectureBookTableViewCell: UITableViewCell {
 
+/// 교재정보를 나타내는 테이블 뷰 셀
+/// - Author: 남정은
+class LectureBookTableViewCell: UITableViewCell {
+    /// 안내문에 대한 레이블
     @IBOutlet weak var explainLabel: UILabel!
+    
+    /// '교재명'에 대한 레이블
     @IBOutlet weak var bookNameLabel: UILabel!
+    
+    /// 교재명을 나타내는 텍스트 뷰
     @IBOutlet weak var bookLinkTextView: UITextView!
     
     
+    /// 셀을 초기화
+    /// - Parameter lecture: 선택된 강의
     func configure(lecture: LectureInfo) {
         /// 등록된 교재가 없을 경우
         if lecture.textbookName.isEmpty {

@@ -1581,7 +1581,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                     <connections>
-                                                                                                        <action selector="likeButton:" destination="YUc-kN-hZb" eventType="touchUpInside" id="VM0-e0-sgd"/>
+                                                                                                        <action selector="toggleLikeButton:" destination="YUc-kN-hZb" eventType="touchUpInside" id="bSb-dX-obG"/>
                                                                                                     </connections>
                                                                                                 </button>
                                                                                             </subviews>
@@ -1613,7 +1613,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                     <connections>
-                                                                                                        <action selector="scrapButton:" destination="YUc-kN-hZb" eventType="touchUpInside" id="gyc-U6-hkp"/>
+                                                                                                        <action selector="toggleScrapButton:" destination="YUc-kN-hZb" eventType="touchUpInside" id="lPu-Vj-XyX"/>
                                                                                                     </connections>
                                                                                                 </button>
                                                                                             </subviews>
@@ -1743,7 +1743,6 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                             </collectionViewCellContentView>
                                                             <size key="customSize" width="226" height="227"/>
                                                             <connections>
-                                                                <outlet property="imageButton" destination="xAj-Im-a7w" id="T4r-gq-TeK"/>
                                                                 <outlet property="imageContentView" destination="xVm-Hw-bdu" id="Lm6-Sl-v8l"/>
                                                                 <outlet property="postImageView" destination="xVm-Hw-bdu" id="kgr-27-Yba"/>
                                                             </connections>
@@ -2640,7 +2639,7 @@ XETOWN 운영자로 오인될 수 있는 내용
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="lhq-DI-sFt"/>
-        <segue reference="eHG-27-U9S"/>
+        <segue reference="Baj-eL-GPr"/>
         <segue reference="gfX-L4-eYg"/>
     </inferredMetricsTieBreakers>
     <resources>
