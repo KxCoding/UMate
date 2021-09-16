@@ -15,29 +15,34 @@ extension Notification.Name {
 
 
 
+/// 게시글 작성 클래스
+/// - Author: 김정민
 class ComposeViewController: UIViewController {
     
     // 게시글 작성(제목, 내용, 정보), 사용자의 앨범에 접근을 위한 아울렛
+    /// - Author: 김정민
     @IBOutlet weak var postTitleTextField: UITextField!
     @IBOutlet weak var postContentTextView: UITextView!
     @IBOutlet weak var postTitlePlaceholderLabel: UILabel!
-    @IBOutlet weak var commmunityRuleView: UIView!
+    @IBOutlet weak var commmunityRuleBtn: UIButton!
     @IBOutlet weak var contentCountLabel: UILabel!
     @IBOutlet weak var contentPlacehoderLabel: UILabel!
     @IBOutlet var accessoryBar: UIToolbar!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     // 게시글에 첨부할 이미지 속성
+    /// - Author: 김정민
     var imageList = [UIImage]()
     
     // 게시글에 이미지 추가 후 노티피케이션을 해제하기 위한 속성
+    /// - Author: 김정민
     var imageToken: NSObjectProtocol?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        commmunityRuleView.layer.cornerRadius = commmunityRuleView.frame.height / 2
+        commmunityRuleBtn.setButtonTheme()
         
         postTitleTextField.becomeFirstResponder()
         postTitleTextField.inputAccessoryView = accessoryBar

@@ -20,6 +20,10 @@ class CategoryBoardViewController: RemoveObserverViewController {
     /// - Author: 남정은
     @IBOutlet weak var categoryListTableView: UITableView!
     
+    /// 게시글 작성 버튼
+    /// - Author: 김정민
+    @IBOutlet weak var composeBtn: UIButton!
+    
     /// 카테고리에 의해 필터링 된 게시글 목록을 담는 배열
     /// - Author: 남정은
     var filteredPostList: [Post] = []
@@ -60,6 +64,9 @@ class CategoryBoardViewController: RemoveObserverViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /// 게시글 작성 버튼의 테마 설정
+        composeBtn.setButtonTheme()
 
         /// 네비게이션 바에 타이틀 초기화
         /// - Author: 남정은

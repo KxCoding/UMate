@@ -167,30 +167,14 @@ class CommentDataModel {
     var arrComment = [Comment]()
 }
 
-class Comment {
-    internal init(image: UIImage?, writer: String, content: String, insertDate: Date, heartCount: Int = 0, commentId: Int, originalCommentId: Int? = nil, reCommentId: Int? = nil, isReComment: Bool, postId: String, isliked: Bool = false) {
-        self.image = image
-        self.writer = writer
-        self.content = content
-        self.insertDate = insertDate
-        self.heartCount = heartCount
-        self.commentId = commentId
-        self.originalCommentId = originalCommentId
-        self.reCommentId = reCommentId
-        self.isReComment = isReComment
-        self.postId = postId
-        self.isliked = isliked
-    }
-    
- 
+struct Comment {
     let image: UIImage?
     let writer: String
     let content: String
     let insertDate: Date
     var heartCount: Int
     var commentId: Int
-    var originalCommentId: Int?
-    var reCommentId: Int?
+    var originalCommentId: Int
     var isReComment: Bool
     var postId: String
     var isliked = false

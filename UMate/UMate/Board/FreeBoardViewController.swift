@@ -15,6 +15,8 @@ class FreeBoardViewController: RemoveObserverViewController {
     /// - Author: 남정은
     @IBOutlet weak var postListTableView: UITableView!
     
+    /// 게시글 작성 버튼
+    /// - Author: 김정민
     @IBOutlet weak var composeButton: UIButton!
     
     /// 선택된 게시판
@@ -49,6 +51,14 @@ class FreeBoardViewController: RemoveObserverViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /// 스크랩 게시판에 게시글 작성 버튼을 숨김
+        /// - Author: 김정민
+        if selectedBoard?.boardTitle == "스크랩" {
+            composeButton.isHidden = true
+        }
+        
+        composeButton.setButtonTheme()
 
         /// 네비게이션 바에 타이틀 초기화
         /// - Author: 남정은
