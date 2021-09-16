@@ -57,7 +57,8 @@ class PlaceInfoViewController: UIViewController {
                                  mood: .clear,
                                  price: .cheap,
                                  amount: .suitable,
-                                 totalPoint: .fivePoint)
+                                 totalPoint: .fivePoint,
+                                 recommendationCount: 5)
     
     /// 선택된 하위 탭을 저장하는 속성
     ///
@@ -140,8 +141,27 @@ class PlaceInfoViewController: UIViewController {
     }
     
     
+    /// 뷰가 나타나기 전에 호출됩니다.
+    /// - Parameter animated: 애니메이션 사용 여부
+    /// - Author: 장현우(heoun3089@gmail.com)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationItem.title = "가게 정보"
+    }
+    
+    
+    /// 다음 화면으로 넘어가기 전에 호출됩니다.
+    /// - Parameters:
+    ///   - segue: 다음 화면 뷰컨트롤러에 대한 정보를 가지고 있는 segue 객체
+    ///   - sender: segue를 연결한 객체
+    /// - Author: 장현우(heoun3089@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? ReviewWriteTableViewController {
+            vc.placeName = place.name
+        }
+        
+        if let vc = segue.destination as? AllReviewViewController {
             vc.placeName = place.name
         }
     }
@@ -166,6 +186,9 @@ extension PlaceInfoViewController: UITableViewDataSource {
     /// - Parameter tableView: 이 정보를 요청하는 table view
     /// - Returns: 섹션의 개수
     func numberOfSections(in tableView: UITableView) -> Int {
+        if selectedTap == .review {
+            return 6
+        }
         return 5
     }
     
@@ -244,8 +267,12 @@ extension PlaceInfoViewController: UITableViewDataSource {
             
             cell.reviewTextLabel.text = PlaceReviewItem.dummyData[indexPath.row].reviewText
             cell.dateLabel.text = PlaceReviewItem.dummyData[indexPath.row].date
+            cell.recommendationCountLabel.text = PlaceReviewItem.dummyData[indexPath.row].recommendationCount.description
             
             return cell
+            
+        case 5:
+            return tableView.dequeueReusableCell(withIdentifier: "AllReviewTableViewCell", for: indexPath)
             
         default:
             fatalError()

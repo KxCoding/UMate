@@ -20,7 +20,7 @@ extension Notification.Name {
 
 
 
-/// 필터 화면 관련 뷰컨트롤러 클래스
+/// 필터 화면과 관련된 뷰컨트롤러 클래스
 /// - Author: 장현우(heoun3089@gmail.com)
 class FilterViewController: UIViewController {
     /// 필터 화면을 표시할 테이블뷰

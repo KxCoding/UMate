@@ -110,6 +110,9 @@ struct PlaceReviewItem {
     /// 평점
     let totalPoint: TotalPoint
     
+    /// 추천수
+    let recommendationCount: Int
+    
     /// 임시로 사용할 더미데이터
     static var dummyData = [
         PlaceReviewItem(reviewText: "분위기 너무 좋아요",
@@ -122,7 +125,8 @@ struct PlaceReviewItem {
                         mood: .clear,
                         price: .cheap,
                         amount: .suitable,
-                        totalPoint: .fourPoint),
+                        totalPoint: .fourPoint,
+                        recommendationCount: 20),
         PlaceReviewItem(reviewText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                         date: "2021.05.28",
                         image: UIImage(named: "search_01"),
@@ -133,7 +137,8 @@ struct PlaceReviewItem {
                         mood: .cute,
                         price: .affordable,
                         amount: .plenty,
-                        totalPoint: .fivePoint),
+                        totalPoint: .fivePoint,
+                        recommendationCount: 15),
         PlaceReviewItem(reviewText: "좋아요",
                         date: "2021.05.21",
                         image: UIImage(named: "search_00"),
@@ -144,7 +149,8 @@ struct PlaceReviewItem {
                         mood: .clear,
                         price: .cheap,
                         amount: .suitable,
-                        totalPoint: .fourPoint),
+                        totalPoint: .fourPoint,
+                        recommendationCount: 13),
         PlaceReviewItem(reviewText: "깔끔해요",
                         date: "2021.04.10",
                         image: UIImage(named: "search_00"),
@@ -155,6 +161,7 @@ struct PlaceReviewItem {
                         mood: .clear,
                         price: .cheap,
                         amount: .suitable,
-                        totalPoint: .fourPoint)
+                        totalPoint: .fourPoint,
+                        recommendationCount: 33)
     ]
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 가게 검색탭 관련 뷰컨트롤러 클래스
+/// 가게 검색탭과 관련된 뷰컨트롤러 클래스
 /// - Author: 장현우(heoun3089@gmail.com)
 class PlaceSearchViewController: UIViewController {
     /// 검색한 결과를 표시할 컬렉션뷰

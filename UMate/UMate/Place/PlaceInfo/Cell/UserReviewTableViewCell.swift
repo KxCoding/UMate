@@ -50,6 +50,10 @@ class UserReviewTableViewCell: UITableViewCell {
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var reportButton: UIButton!
     
+    /// 추천수를 표시할 레이블
+    /// - Author: 장현우(heoun3089@gmail.com)
+    @IBOutlet weak var recommendationCountLabel: UILabel!
+    
     
     /// 초기화 작업을 실행합니다.
     /// - Author: 장현우(heoun3089@gmail.com)

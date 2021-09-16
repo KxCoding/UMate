@@ -32,7 +32,7 @@ class ReviewWriteTableViewController: UITableViewController {
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var reviewTextView: UITextView!
     
-    /// 텍스트뷰에서 사용할 placeholder 레이블
+    /// 텍스트뷰에서 사용할 플레이스홀더 레이블
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var reviewPlaceholderLabel: UILabel!
     
@@ -40,7 +40,7 @@ class ReviewWriteTableViewController: UITableViewController {
     /// - Author: 장현우(heoun3089@gmail.com)
     var reviewData: PlaceReviewItem?
     
-    /// 가게 이름을 받을 변수
+    /// 이전 화면에서 가게 이름을 받아올 변수
     /// - Author: 장현우(heoun3089@gmail.com)
     var placeName: String?
     
@@ -125,7 +125,8 @@ class ReviewWriteTableViewController: UITableViewController {
                                      mood: .cute,
                                      price: .affordable,
                                      amount: .plenty,
-                                     totalPoint: .fivePoint)
+                                     totalPoint: .fivePoint,
+                                     recommendationCount: 20)
         
         PlaceReviewItem.dummyData.insert(review, at: 0)
         
