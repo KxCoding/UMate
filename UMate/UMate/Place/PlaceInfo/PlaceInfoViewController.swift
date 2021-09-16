@@ -10,7 +10,7 @@ import UIKit
 
 /// Notification Name Extension
 extension Notification.Name {
-    // 하위 탭을 선택할 때 post할 notification
+    /// 하위 탭을 선택할 때 post할 notification
     /// - Author: 박혜정(mailmelater11@gmail.com)
     static let tapToggleDidRequest = Notification.Name(rawValue: "tapToggleDidRequest")
 }
