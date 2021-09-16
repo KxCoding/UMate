@@ -11,6 +11,8 @@ import Foundation
 fileprivate let formatter = DateFormatter()
 
 extension Date {
+    /// 현재 시간과 비교하여 시간을 나타내는 속성
+    /// - Author: 남정은
     var relativeDate: String {
         let seconds = Date().timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
         
@@ -27,17 +29,20 @@ extension Date {
         }
     }
     
-    var string: String {
+    /// 게시글 상세화면에 나타낼 데이트 형식
+    /// - Author: 남정은
+    var detailPostDate: String {
         formatter.dateFormat = "MM/dd hh:mm"
         return formatter.string(from: self)
     }
     
+    /// 댓글, 대댓글에 표시할 데이트 형식
+    /// - Author: 김정민
     var commentDate: String {
-        formatter.dateFormat = "MM/dd"
-        formatter.timeStyle = .short
-        
-        return formatter.string(from: self)
-    }
+            formatter.dateFormat = "yy.MM.dd HH:mm"
+            
+            return formatter.string(from: self)
+        }
     
     /// 가게 정보 페이지의 리뷰탭에서 사용하는 날짜 형식입니다.
     var reviewDate: String {

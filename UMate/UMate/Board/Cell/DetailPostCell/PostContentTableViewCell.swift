@@ -8,6 +8,8 @@
 import UIKit
 
 
+/// 스크랩에대한 노티피케이션
+/// - Author: 남정은
 extension  Notification.Name {
     static let postDidScrap = Notification.Name("postDidScrap")
     static let postCancelScrap = Notification.Name("postCancelScrap")
@@ -15,19 +17,31 @@ extension  Notification.Name {
 
 
 
-
+/// 게시글 작성자, 제목, 내용에 관한 테이블 뷰 셀
+/// - Author: 남정은
 class PostContentTableViewCell: UITableViewCell {
-    
-    var selectedPost: Post?
-    
+    /// 작성자 프로필 이미지를 나타낼 이미지 뷰
     @IBOutlet weak var userImageView: UIImageView!
+    
+    /// 작성자 이름을 나타낼 레이블
     @IBOutlet weak var userNameLabel: UILabel!
+    
+    /// 작성일을 나타낼 레이블
     @IBOutlet weak var dateLabel: UILabel!
+    
+    /// 게시글 제목 레이블
+    @IBOutlet weak var postTitleLabel: UILabel!
+    
+    /// 게시글 내용 레이블
+    @IBOutlet weak var postContentLabel: UILabel!
+    
+    /// 선택된 게시글
+    var selectedPost: Post?
     
     
     // MARK: 공감 버튼
     @IBOutlet weak var likeImageView: UIImageView!
-    @IBAction func likeButton(_ sender: UIButton) {
+    @IBAction func toggleLikeButton(_ sender: UIButton) {
     
         guard let post = selectedPost else { return }
         
@@ -49,7 +63,7 @@ class PostContentTableViewCell: UITableViewCell {
     
     // MARK: 스크랩 버튼
     @IBOutlet weak var scrapImageView: UIImageView!
-    @IBAction func scrapButton(_ sender: UIButton) {
+    @IBAction func toggleScrapButton(_ sender: UIButton) {
        
         guard let post = selectedPost else { return }
         
@@ -73,10 +87,6 @@ class PostContentTableViewCell: UITableViewCell {
         }
     }
    
-    
-    @IBOutlet weak var postTitleLabel: UILabel!
-    @IBOutlet weak var postContentLabel: UILabel!
-  
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -109,7 +119,7 @@ class PostContentTableViewCell: UITableViewCell {
         }
         
         userNameLabel.text = post.postWriter
-        dateLabel.text = post.insertDate.string
+        dateLabel.text = post.insertDate.detailPostDate
         postTitleLabel.text = post.postTitle
         postContentLabel.text = post.postContent
     

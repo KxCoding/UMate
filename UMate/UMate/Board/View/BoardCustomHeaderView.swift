@@ -8,11 +8,16 @@
 import UIKit
 
 
-/// 게시판 목록 화면에 expandable board에 들어갈 header
+/// 게시판 목록 화면에 expandable board에 들어갈 헤더
+/// - Author: 남정은
 class BoardCustomHeaderView: UITableViewHeaderFooterView {
-    
+    /// 섹션이름을 나타낼 레이블
     let title = UILabel()
+    
+    /// 섹션이 접혔을 때 게시판 이름을 나타낼 레이블
     let summary = UILabel()
+    
+    /// 우측에 넣을 화살표를 나타낼 이미지 뷰
     let image = UIImageView()
     
     
@@ -28,17 +33,18 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
     
     
     func configureContents() {
-        
+        /// 코드로 제약을 조정하기 위한 속성
         title.translatesAutoresizingMaskIntoConstraints = false
         summary.translatesAutoresizingMaskIntoConstraints = false
         image.translatesAutoresizingMaskIntoConstraints = false
         
+        /// 헤더를 만들기 위해 필요한 뷰 추가
         contentView.addSubview(title)
         contentView.addSubview(summary)
         contentView.addSubview(image)
         
+        /// 제약 설정
         NSLayoutConstraint.activate([
-            
             title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             title.heightAnchor.constraint(equalToConstant: 30),
             title.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30),

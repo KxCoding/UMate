@@ -475,6 +475,13 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="93Y-XS-f2W">
                                                     <rect key="frame" x="0.0" y="0.0" width="370" height="96"/>
                                                     <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vv5-BW-0qj">
+                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="96"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <connections>
+                                                                <segue destination="3aU-KP-xkg" kind="show" id="pzk-2U-tZr"/>
+                                                            </connections>
+                                                        </button>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dSU-Xy-xC6">
                                                             <rect key="frame" x="10" y="30" width="210.5" height="48"/>
                                                             <subviews>
@@ -499,16 +506,9 @@
                                                                 <constraint firstAttribute="height" constant="70" id="ZXo-by-hUw"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vv5-BW-0qj">
-                                                            <rect key="frame" x="0.0" y="0.0" width="370" height="96"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <connections>
-                                                                <segue destination="3aU-KP-xkg" kind="show" id="pzk-2U-tZr"/>
-                                                            </connections>
-                                                        </button>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="Vv5-BW-0qj" secondAttribute="trailing" id="4Lg-lt-ip2"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Vv5-BW-0qj" secondAttribute="trailing" constant="4" id="4Lg-lt-ip2"/>
                                                         <constraint firstItem="dSU-Xy-xC6" firstAttribute="leading" secondItem="93Y-XS-f2W" secondAttribute="leading" constant="10" id="8bi-Jj-QIq"/>
                                                         <constraint firstItem="Vv5-BW-0qj" firstAttribute="top" secondItem="93Y-XS-f2W" secondAttribute="top" id="Lpo-hg-4Yf"/>
                                                         <constraint firstItem="T0b-Co-8dG" firstAttribute="centerY" secondItem="93Y-XS-f2W" secondAttribute="centerY" id="Nlf-ov-Ieb"/>

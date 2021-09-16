@@ -29,7 +29,7 @@ class CommentTableViewCell: UITableViewCell {
     /// - Parameter sender: 좋아요 Button
     @IBAction func toggleLike(_ sender: Any) {
         
-        guard let comment = selectedComment else { return }
+        guard var comment = selectedComment else { return }
         
         if comment.isliked {
             heartImageView.image = UIImage(named: "heart2")

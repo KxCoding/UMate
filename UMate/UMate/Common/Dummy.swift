@@ -34,7 +34,7 @@ let freeBoard = Board(boardTitle: "자유 게시판",
                                    insertDate: Date(timeIntervalSinceNow: -388),
                                    likeCount: 3,
                                    commentCount: 32)
-                             ])
+                      ])
 let popularPostBoard = Board(boardTitle: "인기글 게시판",
                              posts: [Post(images: [UIImage(named:"image3")],
                                           postTitle: "아자아자",
@@ -57,7 +57,7 @@ let popularPostBoard = Board(boardTitle: "인기글 게시판",
                                           insertDate: Date(),
                                           likeCount: 3,
                                           commentCount: 13),
-                                    ])
+                             ])
 let graduateBoard = Board(boardTitle: "졸업생 게시판",
                           posts: [Post(images: [UIImage(named:"image5")],
                                        postTitle: "아자아자",
@@ -73,7 +73,7 @@ let graduateBoard = Board(boardTitle: "졸업생 게시판",
                                        insertDate: Date(),
                                        likeCount: 3,
                                        commentCount: 32),
-                                 ])
+                          ])
 let freshmanBoard =  Board(boardTitle: "신입생 게시판",
                            posts: [Post(images: [UIImage(named:"image7")],
                                         postTitle: "Lorem ipsum dolor sit ame",
@@ -89,7 +89,7 @@ let freshmanBoard =  Board(boardTitle: "신입생 게시판",
                                         insertDate: Date(),
                                         likeCount: 3,
                                         commentCount: 18),
-                                  ])
+                           ])
 
 let infoBoard = Board(boardTitle: "정보 게시판", posts: [Post(images: [], postTitle: "사회적 거리두기", postContent: "2단계 2020.09/14부터 9월 27일까지 2단계 시행", postWriter: "캔버스", insertDate: Date(), likeCount: 4, commentCount: 3)])
 
@@ -127,7 +127,15 @@ var nonExpandableBoardList = [BoardUI(sectionName: nil, boardNames: ["스크랩"
 var expandableBoardList = [BoardUI(sectionName: "홍보", isExpanded: true ,boardNames: ["홍보 게시판", "동아리∙학회"]),
                            BoardUI(sectionName: "정보", isExpanded: true ,boardNames: ["정보 게시판", "취업∙진로"]),]
 
-var dummyCommentList = [Comment]()
+/// 댓글, 대댓글 더미 데이터
+var dummyCommentList: [Comment] = [
+    Comment(image: UIImage(named: "3"), writer: "익명1", content: "댓글1", insertDate: Date(timeIntervalSinceNow: -2000), heartCount: 0, commentId: 1, originalCommentId: 1, isReComment: false, postId: ""),
+    Comment(image: UIImage(named: "3"), writer: "익명2", content: "댓글2", insertDate: Date(timeIntervalSinceNow: -1700), heartCount: 1, commentId: 2, originalCommentId: 2, isReComment: false, postId: ""),
+    Comment(image: UIImage(named: "3"), writer: "익명3", content: "댓글3", insertDate: Date(timeIntervalSinceNow: -1500), heartCount: 2, commentId: 3, originalCommentId: 3, isReComment: false, postId: ""),
+    Comment(image: UIImage(named: "3"), writer: "익명4", content: "댓글4", insertDate: Date(timeIntervalSinceNow: -1200), heartCount: 3, commentId: 4, originalCommentId: 4, isReComment: false, postId: ""),
+    Comment(image: UIImage(named: "3"), writer: "익명5", content: "댓글5", insertDate: Date(timeIntervalSinceNow: -1000), heartCount: 4, commentId: 5, originalCommentId: 5, isReComment: false, postId: ""),
+    Comment(image: UIImage(named: "3"), writer: "익명6", content: "대댓글1", insertDate: Date(timeIntervalSinceNow: -800), heartCount: 5, commentId: 6, originalCommentId: 1, isReComment: true, postId: "")
+]
 
 
 

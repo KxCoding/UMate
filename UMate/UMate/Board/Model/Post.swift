@@ -7,7 +7,75 @@
 
 import UIKit
 
+
+/// 게시글 모델 클래스
+/// - Author: 남정은
 class Post {
+    /// 여기서 all은 카테고리를 선택하지 않을 경우를 나타냄
+    /// 카테고리 게시판은 무조건 글 작성시에 카테고리를 선택하도록 되어있음.
+    /// 카테고리를 나타내는 구조체
+    /// - Author: 남정은
+    struct Category {
+        /// 홍보게시판에 들어갈 카테고리를 나타내는 열거형
+        /// - Author: 남정은
+        enum Publicity: Int {
+            case all = 2000
+            case lectureAndEvent = 2001
+            case partTimeJob = 2002
+            case etcetera = 2003
+        }
+        
+        /// 동아리•학회 게시판에 들어갈 카테고리를 나타내는 열거형
+        /// - Author: 남정은
+        enum Club: Int {
+            case all = 2010
+            case inside = 2011
+            case union = 2012
+        }
+        
+        /// 취업•진로 게시판에 들어갈 카테고리를 나타내는 열거형
+        /// - Author: 남정은
+        enum Career: Int {
+            case all = 3010
+            case QNA = 3011
+            case review = 3012
+        }
+    }
+    
+    /// 게시글에 들어갈 이미지들
+    let images: [UIImage?]
+    
+    /// 게시글 제목
+    let postTitle: String
+    
+    /// 게시글 내용
+    let postContent: String
+    
+    /// 게시글 작성자
+    let postWriter: String
+    
+    /// 작성일
+    let insertDate: Date
+    
+    /// 좋아요 수
+    var likeCount: Int = 0
+    
+    /// 댓글 수
+    let commentCount: Int
+    
+    /// 스크랩 수
+    var scrapCount: Int = 0
+    
+    /// 게시글이 어느 카테고리에 속하는지 나타내는 값
+    let categoryRawValue: Int?
+    
+    /// 스크랩여부
+    var isScrapped = false
+    
+    /// 좋아요여부
+    var isliked = false
+    
+    
     init(images: [UIImage?], postTitle: String, postContent: String, postWriter: String, insertDate: Date, likeCount: Int = 0, commentCount: Int, scrapCount: Int = 0, categoryRawValue: Int = -1) {
         self.images = images
         self.postTitle = postTitle
@@ -19,54 +87,20 @@ class Post {
         self.scrapCount = scrapCount
         self.categoryRawValue = categoryRawValue
     }
-    
-    //let imageURL: [String]
-    let images: [UIImage?]
-    let postTitle: String
-    let postContent: String
-    let postWriter: String
-    
-    let insertDate: Date
-    var likeCount: Int = 0
-    let commentCount: Int
-    var scrapCount: Int = 0
-    
-    //여기서 all은 카테고리를 선택하지 않을 경우를 나타냄
-    //카테고리 게시판은 무조건 글 작성시에 카테고리를 선택하도록 되어있음.
-    struct Category {
-        enum Publicity: Int {
-            case all = 2000
-            case lectureAndEvent = 2001
-            case partTimeJob = 2002
-            case etcetera = 2003
-        }
-        
-        enum Club: Int {
-            case all = 2010
-            case inside = 2011
-            case union = 2012
-        }
-        
-        enum Career: Int {
-            case all = 3010
-            case QNA = 3011
-            case review = 3012
-        }
-    }
-    
-    let categoryRawValue: Int?
-    
-    var isScrapped = false
-    var isliked = false
-    
-    let postID: String = ""
-    let writerID: Int = 0
 }
 
+
+
+/// 더미데이터를 만들 때 allCases활용
+/// - Author: 남정은
 extension Post.Category.Publicity: CaseIterable { }
 extension Post.Category.Club: CaseIterable { }
 extension Post.Category.Career: CaseIterable { }
 
+
+
+/// 카테고리명에 접근하기위해 사용
+/// - Author: 남정은
 extension Post.Category.Publicity: CustomStringConvertible {
     public var description: String {
         switch self {
@@ -82,6 +116,10 @@ extension Post.Category.Publicity: CustomStringConvertible {
     }
 }
 
+
+
+/// 카테고리명에 접근하기위해 사용
+/// - Author: 남정은
 extension Post.Category.Club: CustomStringConvertible {
     public var description: String {
         switch self {
@@ -95,6 +133,10 @@ extension Post.Category.Club: CustomStringConvertible {
     }
 }
 
+
+
+/// 카테고리명에 접근하기위해 사용
+/// - Author: 남정은
 extension Post.Category.Career: CustomStringConvertible {
     public var description: String {
         switch self {
@@ -125,30 +167,14 @@ class CommentDataModel {
     var arrComment = [Comment]()
 }
 
-class Comment {
-    internal init(image: UIImage?, writer: String, content: String, insertDate: Date, heartCount: Int = 0, commentId: Int, originalCommentId: Int? = nil, reCommentId: Int? = nil, isReComment: Bool, postId: String, isliked: Bool = false) {
-        self.image = image
-        self.writer = writer
-        self.content = content
-        self.insertDate = insertDate
-        self.heartCount = heartCount
-        self.commentId = commentId
-        self.originalCommentId = originalCommentId
-        self.reCommentId = reCommentId
-        self.isReComment = isReComment
-        self.postId = postId
-        self.isliked = isliked
-    }
-    
- 
+struct Comment {
     let image: UIImage?
     let writer: String
     let content: String
     let insertDate: Date
     var heartCount: Int
     var commentId: Int
-    var originalCommentId: Int?
-    var reCommentId: Int?
+    var originalCommentId: Int
     var isReComment: Bool
     var postId: String
     var isliked = false
