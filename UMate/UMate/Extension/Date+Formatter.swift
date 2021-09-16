@@ -45,6 +45,7 @@ extension Date {
         }
     
     /// 가게 정보 페이지의 리뷰탭에서 사용하는 날짜 형식입니다.
+    /// - Author: 장현우(heoun3089@gmail.com)
     var reviewDate: String {
         formatter.dateFormat = "yyyy.MM.dd"
         return formatter.string(from: self)

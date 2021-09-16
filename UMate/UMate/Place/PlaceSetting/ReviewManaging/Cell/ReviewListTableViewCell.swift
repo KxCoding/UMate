@@ -7,17 +7,31 @@
 
 import UIKit
 
+
+/// 내가 쓴 리뷰를 표시할 테이블뷰셀 클래스
+/// - Author: 장현우(heoun3089@gmail.com)
 class ReviewListTableViewCell: UITableViewCell {
-    /// 내가 쓴 리뷰 화면 UI와 관련된 변수들
+    /// 가게 이름을 표시하는 레이블
+    /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var placeTitleLabel: UILabel!
+    
+    /// 날짜를 표시하는 레이블
+    /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var dateLabel: UILabel!
+    
+    /// 작성한 리뷰 텍스트를 표시하는 레이블
+    /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var contentLabel: UILabel!
+    
+    /// 가게 이미지를 표시하는 이미지뷰
+    /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var storeImageView: UIImageView!
     
     
     /// 테이블뷰셀에 표시할 내용을 설정합니다.
     /// - Parameter reviewItem: 표시할 내용을 가진 구조체
-    func configure(with reviewItem: PlaceReviewItem.UserReview) {
+    /// - Author: 장현우(heoun3089@gmail.com)
+    func configure(with reviewItem: PlaceReviewItem) {
         placeTitleLabel.text = reviewItem.placeName
         dateLabel.text = reviewItem.date
         contentLabel.text = reviewItem.reviewText

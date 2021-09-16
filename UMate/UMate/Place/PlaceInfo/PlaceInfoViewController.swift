@@ -18,7 +18,7 @@ extension Notification.Name {
 
 
 /// 가게 상세 정보 화면 VC 클래스
-/// - Author: 박혜정(mailmelater11@gmail.com), 장현우()
+/// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
 class PlaceInfoViewController: UIViewController {
     
     // MARK: Nested Types
@@ -46,13 +46,18 @@ class PlaceInfoViewController: UIViewController {
     var place: Place!
     
     /// 리뷰 요약 데이터
-    /// - Author: 장현우()
-    var review = PlaceReviewItem(starPoint: 4.8,
+    /// - Author: 장현우(heoun3089@gmail.com)
+    var review = PlaceReviewItem(reviewText: "분위기 너무 좋아요",
+                                 date: "2021.06.01",
+                                 image: UIImage(named: "search_00"),
+                                 placeName: "오오비",
+                                 starPoint: 4.5,
                                  taste: .clean,
                                  service: .kind,
-                                 mood: .emotional,
-                                 price: .affordable,
-                                 amount: .suitable)
+                                 mood: .clear,
+                                 price: .cheap,
+                                 amount: .suitable,
+                                 totalPoint: .fivePoint)
     
     /// 선택된 하위 탭을 저장하는 속성
     ///
@@ -128,10 +133,17 @@ class PlaceInfoViewController: UIViewController {
         tokens.append(token)
         
         token = NotificationCenter.default.addObserver(forName: .reviewWillApplied, object: nil, queue: .main) { _ in
-            self.placeInfoTableView.insertRows(at: [IndexPath(row: 0, section: 4)], with: .none)
+            self.placeInfoTableView.reloadData()
         }
         
         tokens.append(token)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? ReviewWriteTableViewController {
+            vc.placeName = place.name
+        }
     }
     
     
@@ -166,7 +178,13 @@ extension PlaceInfoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 4:
-            if selectedTap == .review { return PlaceReviewItem.dummyData.count }
+            if selectedTap == .review {
+                if PlaceReviewItem.dummyData.count < 3 {
+                    return PlaceReviewItem.dummyData.count
+                } else {
+                    return 3
+                }
+            }
             else { return 0 }
         default:
             return 1
