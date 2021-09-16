@@ -7,13 +7,18 @@
 
 import UIKit
 
-class FriendsListTableViewController: UITableViewController {
 
+/// TimeTable 탭에서 시간표 친구 목록을 보여주는 TableViewController
+/// - Author: 안상희
+class FriendsListTableViewController: UITableViewController {
+    
+    /// 친구 이름을 표시하는 UILabel
     @IBOutlet weak var nameLabel: UILabel!
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? FriendLectureViewController {
-            vc.name = nameLabel.text
+            vc.friendName = nameLabel.text
         }
     }
     
