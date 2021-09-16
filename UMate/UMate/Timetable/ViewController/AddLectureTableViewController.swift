@@ -9,7 +9,7 @@ import Elliotable
 import UIKit
 
 
-/// TimeTable 탭의 메인화면 ViewController
+/// TimeTable 탭의 메인화면 ViewController 클래스
 /// - Author: 안상희
 class AddLectureTableViewController: UITableViewController {
     
@@ -270,7 +270,7 @@ class AddLectureTableViewController: UITableViewController {
     
     
     /// 모든 버튼의 상태를 초기화합니다.
-    func initializeColorButton() {
+    func colorInitialize() {
         [lightRedButton, redButton, pinkButton, orangeButton, yellowButton,
          lightGreenButton, greenButton, skyblueButton, blueButton,
          lightPurpleButton, purpleButton, darkGrayButton].forEach {
@@ -280,8 +280,8 @@ class AddLectureTableViewController: UITableViewController {
     
     
     /// 선택된 버튼에 체크 표시를 하고, 시간표 색상 값을 저장합니다.
-    /// - Parameter sender: 선택된 버튼
-    func selectedButton(sender: UIButton) {
+    /// - Parameter sender: 선택된 버튼 (색상)
+    func colorSelect(sender: UIButton) {
         
         // 버튼 상태 변경
         sender.setImage(buttonImage, for: .normal)
@@ -298,10 +298,10 @@ class AddLectureTableViewController: UITableViewController {
     @IBAction func selectColor(_ sender: UIButton) {
         
         // 먼저 시간표 색상 선택을 초기화합니다.
-        initializeColorButton()
+        colorInitialize()
         
         // 선택된 색상 (버튼)에 체크 표시를 하고, 시간표 색상 값을 저장합니다.
-        selectedButton(sender: sender)
+        colorSelect(sender: sender)
         
         
         // 선택된 버튼 (색상)에 따라 텍스트 색상을 변경합니다.

@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// TimeTable 탭에서 친구를 검색하는 ViewController
+/// TimeTable 탭에서 친구를 검색하는 ViewController 클래스
 /// - Author: 안상희
 class FriendSearchViewController: UIViewController {
     

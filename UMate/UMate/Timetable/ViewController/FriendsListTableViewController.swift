@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// TimeTable 탭에서 시간표 친구 목록을 보여주는 TableViewController
+/// TimeTable 탭에서 시간표 친구 목록을 보여주는 TableViewController 클래스
 /// - Author: 안상희
 class FriendsListTableViewController: UITableViewController {
     

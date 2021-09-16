@@ -5,22 +5,27 @@
 //  Created by 안상희 on 2021/08/08.
 //
 
-import UIKit
-import LocalAuthentication
 import KeychainSwift
+import LocalAuthentication
+import UIKit
 
+
+/// 사용자 계정 화면에서 암호 잠금 화면을 보여주는 ViewController 클래스
+/// - Author: 안상희
 class SetPasswordViewController: UIViewController {
 
+    enum AuthenticationState {
+        case locked
+        case unlocked
+    }
+    
+    
     let bioKeychain = KeychainSwift(keyPrefix: Keys.bioLockPasswordKey)
     
 
     /// UI 업데이트 중에 사용할 수 있도록 클래스 범위에 저장된 인증 컨텍스트입니다.
     var context = LAContext()
     
-    enum AuthenticationState {
-        case locked
-        case unlocked
-    }
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var setPasswordSwitch: UISwitch!

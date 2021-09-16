@@ -7,16 +7,18 @@
 
 import UIKit
 
+/// 사용자 계정 화면에서 서비스 이용약관, 개인정보 처리방침, 오픈소스 라이선스, 커뮤니티 이용 규칙을 보여주는 ViewController
+/// - Author: 안상희
 class AppInformationTextViewController: UIViewController {
     
-    /// 선택한 메뉴에 맞는 메뉴 타이틀이 저장된 변수입니다.
+    /// 선택한 메뉴에 맞는 메뉴 타이틀이 저장된 변수
     var menu: String?
     
-    /// 데이터가 나타나는 textView입니다.
+    /// 데이터가 나타나는 textView
     @IBOutlet weak var textView: UITextView!
     
     
-    /// 메뉴에 맞는 데이터를 불러오는 메소드입니다.
+    /// 메뉴에 해당하는 데이터를 불러옵니다.
     func getTextFile() {
         if menu! == "서비스 이용약관" {
             guard let serviceAssetData = NSDataAsset(name: "Service")?.data else { return }

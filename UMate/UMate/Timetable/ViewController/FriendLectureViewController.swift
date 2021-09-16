@@ -9,7 +9,7 @@ import Elliotable
 import UIKit
 
 
-/// TimeTable 탭에서 친구 시간표를 볼 수 있는 ViewController
+/// TimeTable 탭에서 친구 시간표를 볼 수 있는 ViewController 클래스
 /// - Author: 안상희
 class FriendLectureViewController: UIViewController {
 
@@ -89,8 +89,14 @@ class FriendLectureViewController: UIViewController {
         timeTableView.courseItemHeight = 70.0
         timeTableView.symbolFontSize = 14
         timeTableView.symbolTimeFontSize = 12
-        timeTableView.symbolFontColor = UIColor(displayP3Red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
-        timeTableView.symbolTimeFontColor = UIColor(displayP3Red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+        timeTableView.symbolFontColor = UIColor(displayP3Red: 0.1,
+                                                green: 0.1,
+                                                blue: 0.1,
+                                                alpha: 1.0)
+        timeTableView.symbolTimeFontColor = UIColor(displayP3Red: 0.5,
+                                                    green: 0.5,
+                                                    blue: 0.5,
+                                                    alpha: 1.0)
         timeTableView.isFullBorder = true
         timeTableView.roundCorner = .right
         timeTableView.reloadData()

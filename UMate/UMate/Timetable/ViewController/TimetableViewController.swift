@@ -9,7 +9,7 @@ import Elliotable
 import UIKit
 
 
-/// 본인의 시간표를 볼 수 있는 ViewController 입니다.
+/// 본인의 시간표를 볼 수 있는 ViewController 클래스
 /// - Author: 안상희
 class TimetableViewController: UIViewController {
     
@@ -42,19 +42,13 @@ class TimetableViewController: UIViewController {
         // TimeTableView의 기본 속성 설정
         timeTableView.elliotBackgroundColor = UIColor.white
         timeTableView.borderWidth = 1
-        timeTableView.borderColor = UIColor(red: 0.85,
-                                            green: 0.85,
-                                            blue: 0.85,
-                                            alpha: 1.0)
-        
+        timeTableView.borderColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
         timeTableView.textEdgeInsets = UIEdgeInsets(top: 2, left: 3, bottom: 2, right: 10)
         timeTableView.courseItemMaxNameLength = 18
         timeTableView.courseItemTextSize = 12.5
         timeTableView.courseTextAlignment = .left
-        
         timeTableView.borderCornerRadius = 24
         timeTableView.roomNameFontSize = 8
-        
         timeTableView.courseItemHeight = 70.0
         timeTableView.symbolFontSize = 14
         timeTableView.symbolTimeFontSize = 12
@@ -66,7 +60,6 @@ class TimetableViewController: UIViewController {
                                                     green: 0.5,
                                                     blue: 0.5,
                                                     alpha: 1.0)
-        
         timeTableView.isFullBorder = true
         timeTableView.roundCorner = .right
         
@@ -129,7 +122,7 @@ extension TimetableViewController: ElliotableDataSource {
 
 
 
-extension TimetableViewController : SendTimeTableDataDelegate {
+extension TimetableViewController: SendTimeTableDataDelegate {
     /// 시간표 데이터를 전달합니다.
     /// - Parameter data: 시간표 정보를 담은 리스트 [ElliottEvent]
     func sendData(data: [ElliottEvent]) {
