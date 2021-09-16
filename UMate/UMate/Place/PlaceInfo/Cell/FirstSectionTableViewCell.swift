@@ -7,11 +7,23 @@
 
 import UIKit
 
+
+/// 가게 상세 정보 화면 VC 클래스
+/// - Author: 박혜정(mailmelater11@gmail.com)
 class FirstSectionTableViewCell: UITableViewCell {
     
+    // MARK: Outlets
+    
+    /// 이미지를 표시하는 컬렉션 뷰
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    
+    /// 페이저
     @IBOutlet weak var pager: UIPageControl!
     
+    
+    // MARK: Properties
+    
+    /// 메소드 사용을 위한
     let manager = DataManager.shared
     
     /// 정보를 표시할 가게
@@ -28,7 +40,10 @@ class FirstSectionTableViewCell: UITableViewCell {
         return images
     }()
     
-    /// 셀 내부 각 뷰들이 표시하는 content 초기화
+    
+    // MARK: Methods
+    
+    /// 셀 내부 각 뷰들이 표시하는 content를 초기화합니다.
     /// - Parameter content: 표시할 내용을 담은 Place 객체
     func configure(with content: Place) {
         
@@ -42,14 +57,17 @@ class FirstSectionTableViewCell: UITableViewCell {
         pager.numberOfPages = target.imageUrls.count
     }
     
+    
+    // MARK: Cell Lifecycle Method
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        /// 델리게이션
+        // 델리게이션
         imageCollectionView.dataSource = self
         imageCollectionView.delegate = self
         
-        /// pager 초기화
+        // pager 초기화
         pager.currentPage = 0
         pager.configureStyle(with: [.pillShape])
         pager.backgroundColor = .black.withAlphaComponent(0.1)
@@ -64,7 +82,7 @@ class FirstSectionTableViewCell: UITableViewCell {
 
 extension FirstSectionTableViewCell: UICollectionViewDataSource {
     
-    /// 지정된 섹션에서 몇 개의 item을 표시할 건지 data source에게 묻는 메소드
+    /// 지정된 섹션에서 표시할 아이템의 개수를 제공합니다.
     /// - Parameters:
     ///   - collectionView: 이 정보를 요청하는 collection view
     ///   - section: 컬렉션 뷰의 특정 섹션을 가리키는 index number
@@ -74,7 +92,7 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
     }
     
     
-    /// data source에게 컬렉션 뷰에서 특정 indexpath의 아이템에 응하는 셀을 요청하는 메소드
+    /// 지정된 컬렉션 뷰, 지정된 indexPath에 표시할 셀을 제공합니다.
     /// - Parameters:
     ///   - collectionView: 이 정보를 요청하는 collection view
     ///   - indexPath: 아이템의 위치를 가리키는 indexpath
@@ -83,8 +101,8 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceImageCollectionViewCell", for: indexPath) as! PlaceImageCollectionViewCell
         
-        /// 응답에 따라 이미지 뷰 업데이트
-        manager.lazyUpdate(.detailImage, of: cell.imageView, with: target.imageUrls[indexPath.row])
+        // 응답에 따라 이미지 뷰 업데이트
+        manager.download(.detailImage, andUpdate: cell.imageView, with: target.imageUrls[indexPath.row])
         
         return cell
     }
@@ -93,10 +111,9 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
 
 
 
-
 extension FirstSectionTableViewCell: UICollectionViewDelegateFlowLayout {
     
-    /// 지정된 셀의 크기를 delegate에게 요청하는 메소드
+    /// 지정된 indexPath에 표시할 셀의 크기를 결정합니다.
     /// - Parameters:
     ///   - collectionView: 이 정보를 요청하는 collection view
     ///   - collectionViewLayout: 이 정보를 요청하는 layout 객체
@@ -110,10 +127,11 @@ extension FirstSectionTableViewCell: UICollectionViewDelegateFlowLayout {
 
 
 
-
 extension FirstSectionTableViewCell: UICollectionViewDelegate {
     
-    /// 사용자가 collection view를 스크롤 할 때마다 호출됨. 스크롤에 따른 offset을 계산해서 pager 업데이트.
+    /// 사용자가 collection view를 스크롤 할 때마다 필요한 작업을 수행합니다.
+    ///
+    /// 스크롤에 따른 offset을 계산해서 pager 업데이트.
     /// - Parameter scrollView: 스크롤 이벤트가 발생하는 collection view
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let x = scrollView.contentOffset.x
@@ -125,14 +143,22 @@ extension FirstSectionTableViewCell: UICollectionViewDelegate {
 
 
 // MARK: - 상세 이미지 컬렉션 뷰
+
+/// 이미지를 표시하는 컬렉션 뷰의 셀 클래스
+/// - Author: 박혜정(mailmelater11@gmail.com)
 class PlaceImageCollectionViewCell: UICollectionViewCell {
     
+    // MARK: Outlets
+    
+    /// 이미지를 표시하는 이미지 뷰
     @IBOutlet weak var imageView: UIImageView!
     
-    /// 셀 초기화
+    // MARK: Cell Lifecycle Method
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        // UI 초기화
         imageView.contentMode = .scaleAspectFill
         
     }

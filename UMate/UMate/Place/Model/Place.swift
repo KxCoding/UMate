@@ -5,39 +5,14 @@
 //  Created by Effie on 2021/07/16.
 //
 
-import UIKit
 import CoreLocation
 import MapKit
-
-/// DTO
-struct PlaceList: Codable {
-    var university: String
-    var places: [Place]
-}
+import UIKit
 
 
-
-
-/// 가게
+/// 가게 정보를 담고 있는 클래스
+/// - Author: 박혜정(mailmelater11@gmail.com)
 struct Place: Codable {
-    
-    /// 가게의 ID
-    var id: Int//= UUID()
-    
-    /// 가게 이름
-    var name: String
-    
-    /// 가게가 있는 지역
-    var district: String
-    
-    /// 가게 좌표
-    let latitude: Double
-    let longitude: Double
-    var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude,
-                                      longitude: longitude)
-        
-    }
     
     /// 가게 종류 = 열거형으로 제한
     enum PlaceType: String, CustomStringConvertible {
@@ -77,7 +52,29 @@ struct Place: Codable {
             return UIImage(named: "\(rawValue)-img") // 영어
         }
         
-        
+    }
+    
+    
+    
+    /// 가게의 ID
+    var id: Int//= UUID()
+    
+    /// 가게 이름
+    var name: String
+    
+    /// 가게가 있는 지역
+    var district: String
+    
+    /// 가게 좌표 - 위도
+    let latitude: Double
+    
+    /// 가게 좌표 - 경도
+    let longitude: Double
+    
+    /// 가게 좌표
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude,
+                                      longitude: longitude)
     }
     
     /// 가게의 종류
@@ -93,9 +90,13 @@ struct Place: Codable {
     /// 상세 화면에 표시할 이미지의 url - 이미지가 없으면 빈 배열
     var imageUrls: [String]
     
-    /// 인스타그램 아이디(optional), 관련 url(optional), 전화번호
+    /// 인스타그램 아이디(optional)
     var instagramId: String?
+    
+    /// 관련 url(optional)
     var url: String?
+    
+    /// 전화번호
     var tel: String?
     
     /// annotation
@@ -120,32 +121,4 @@ struct Place: Codable {
               url: "http://naver.me/xrPcV2Ie")
     ]
     
-}
-
-
-
-
-/// 가게 종류 필터 기능을 위한 열거형 (all 포함)
-enum PlaceTypePattern: String {
-    case all
-    case cafe, restaurant, bakery, dessert, pub, studyCafe
-    
-    var matchedPlaceType: Place.PlaceType? {
-        switch self {
-        case .all:
-            return .none
-        case .cafe:
-            return .cafe
-        case .restaurant:
-            return .restaurant
-        case .bakery:
-            return .bakery
-        case .dessert:
-            return .dessert
-        case .pub:
-            return .pub
-        case .studyCafe:
-            return .studyCafe
-        }
-    }
 }

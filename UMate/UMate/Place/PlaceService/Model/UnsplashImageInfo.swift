@@ -7,6 +7,9 @@
 
 import Foundation
 
+
+/// Unsplash 응답 데이터를 파싱하기 위한 타입
+/// - Author: 박혜정(mailmelater11@gmail.com)
 struct UnsplashImagesInfo: Codable {
     
     /// 이미지가 로드되기 전에 표시할 placeholder 이미지를 위한 blur hash  문자열

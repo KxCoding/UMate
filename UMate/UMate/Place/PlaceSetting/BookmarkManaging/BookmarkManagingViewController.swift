@@ -5,30 +5,33 @@
 //  Created by Effie on 2021/08/23.
 //
 
-import UIKit
 import Loaf
+import UIKit
 
+
+/// 북마크 관리 메뉴 화면 VC 클래스
+/// - Author: 박혜정(mailmelater11@gmail.com)
 class BookmarkManagingViewController: UIViewController {
     
     // MARK: Outlets
     
+    /// 북마크된 가게를 필터링할 타입의 collection view
     @IBOutlet weak var typeSelectionCollectionView: UICollectionView!
+    
+    /// 북마크 리스트 테이블 뷰
     @IBOutlet weak var bookmarkListTableView: UITableView!
     
     
     // MARK: Properties
     
-    // 컬렉션 뷰에서 표시할 가게 타입
+    /// 컬렉션 뷰에서 표시할 가게 타입
     var types: [PlaceTypePattern] = [.all, .cafe, .restaurant, .bakery, .dessert, .pub, .studyCafe]
     
     /// 현재 선택된 가게 타입
     var selectedType: PlaceTypePattern = .all
     
-    /// 북마크된 데이터
+    /// 북마크된 전체 가게
     var bookmarkedItems: [Place] {
-        /// 일단 전체 데이터 - 수정 예정
-        //        return Place.dummyData
-        
         let entirePlaces = Place.dummyData
         
         return entirePlaces.filter { place in
@@ -36,7 +39,7 @@ class BookmarkManagingViewController: UIViewController {
         }
     }
     
-    /// 테이블에 표시할 가게 데이터 - 종류별
+    /// 테이블에 표시할 가게 - 가게 타입별
     var list: [Place] {
         let entire = bookmarkedItems
         if selectedType == .all {
@@ -47,13 +50,14 @@ class BookmarkManagingViewController: UIViewController {
         }
     }
     
+    /// 북마크가 삭제되었을 때 표시할 토스트
     lazy var bookmarkDeletedLoaf: Loaf = Loaf("북마크가 삭제되었습니다",
                                               state: .info,
                                               location: .bottom,
                                               presentingDirection: .vertical,
                                               dismissingDirection: .vertical,
                                               sender: self)
-
+    
     
     
     // MARK: View Lifecycle method
@@ -79,6 +83,7 @@ class BookmarkManagingViewController: UIViewController {
             self.bookmarkListTableView.reloadData()
         }
         
+        /// 전체 가게 표시
         let first = IndexPath(row: 0, section: 0)
         typeSelectionCollectionView.selectItem(at: first, animated: false, scrollPosition: .left)
     }
@@ -90,14 +95,15 @@ class BookmarkManagingViewController: UIViewController {
     ///   - sender: segue를 실행시키는 트리거 객체
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? BookmarkListTableViewCell {
-            /// 전체 데이터에서 [이름으로] 가게 검색
-            guard let place = Place.dummyData.first(where: { $0.name == cell.target.name }) else {
-                /// 검색 실패시 리턴
+            /// 전체 가게 데이터에서 id로 가게 검색
+            guard let place = Place.dummyData.first(where: { $0.id == cell.target.id }) else {
                 #if DEBUG
                 print("검색 실패, 북마크한 가게 찾을 수 없음")
                 #endif
                 return
             }
+            
+            /// 상세 정보 화면의 가게 설정
             if let vc = segue.destination as? PlaceInfoViewController {
                 vc.place = place
             }
@@ -105,7 +111,6 @@ class BookmarkManagingViewController: UIViewController {
         
     }
 }
-
 
 
 
@@ -119,7 +124,6 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
     ///   - section: 섹션
     /// - Returns: 섹션에서 표시할 항목의 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return types.count 
     }
     
@@ -146,10 +150,9 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
 
 
 
-
 extension BookmarkManagingViewController: UICollectionViewDelegate {
     
-    /// collection view의 아이템이 선택되었을 떄 호출되어 구현된 작업을 실행합니다.
+    /// collection view의 아이템이 선택되었을 때 호출되어 구현된 작업을 실행합니다.
     /// - Parameters:
     ///   - collectionView: 아이템이 포함된 collection view
     ///   - indexPath: 아이템의 indexPath
@@ -165,14 +168,12 @@ extension BookmarkManagingViewController: UICollectionViewDelegate {
 
 
 
-
 extension BookmarkManagingViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width / 4.5
         return CGSize(width: width, height: width * 1.3)
     }
 }
-
 
 
 
@@ -210,12 +211,18 @@ extension BookmarkManagingViewController: UITableViewDataSource {
         return cell
     }
     
+    
+    
+    /// 테이블 뷰의 편집을 허용할지의 여부를 제공하는 데이터
+    /// - Parameters:
+    ///   - tableView: 편집 여부를 결정할 테이블 뷰
+    ///   - indexPath: 편집 여부를 결정할 셀의 indexPath
+    /// - Returns: 해당 테이블 뷰 셀의 편집 여부
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
 }
-
 
 
 
@@ -251,6 +258,7 @@ extension BookmarkManagingViewController: UITableViewDelegate {
             completion(true)
         }
         
+        /// contexual menu의 UI 설정
         deleteBookmarkMenu.backgroundColor = .systemRed
         deleteBookmarkMenu.image = UIImage(systemName: "bookmark.slash.fill")
         
@@ -262,11 +270,12 @@ extension BookmarkManagingViewController: UITableViewDelegate {
     }
     
     
-    /// 항목이 선택되면 작업을 실행하는 메소드 - 선택 상태를 즉시 해제
+    /// 항목이 선택되면 작업을 실행하는 메소드
     /// - Parameters:
     ///   - tableView: 테이블 뷰
     ///   - indexPath: 선택된 항목의 indexPath
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 선택 상태를 즉시 해제
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

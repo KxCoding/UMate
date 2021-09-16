@@ -9,17 +9,23 @@ import UIKit
 import WebKit
 import SafariServices
 
-/// url 종류
+
+/// URL 타입
+///
+/// 전송된 Notification에서 URL 오픈 방식을 식별하기 위한 케이스입니다.
+/// - Author: 박혜정(mailmelater11@gmail.com)
 enum URLType {
     case web
     case tel
 }
 
 
+
 extension UIViewController {
     
     /// url을 전달하면 설정에 따라 알맞은 방식으로 url을 열어줍니다.
     /// - Parameter urlString: 열 url
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func openUrl(with url: URL) {
         switch Preference.preferredBrowser {
         case .none:
@@ -33,6 +39,7 @@ extension UIViewController {
     
     /// URL을 전달하면 오픈 방식을 선택하도록 하고, 선택된 방식으로 열어줍니다.
     /// - Parameter url: 오픈할 url
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     private func selectAndOpenUrl(with url: URL) {
         
         let openInternal: (UIAlertAction) -> () = { [weak self] _ in
@@ -74,6 +81,7 @@ extension UIViewController {
     
     /// 앱 내부에서 사파리 VC로 url을 엽니다.
     /// - Parameter url: 오픈할 url
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     private func openURLInternal(url: URL) {
         
         /// 사파리 vc로 열기
@@ -84,6 +92,7 @@ extension UIViewController {
     
     /// 앱 외부 - 관련 앱이나 브라우저로 url을 엽니다.
     /// - Parameter url: 오픈할 url
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func openURLExternal(url: URL) {
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)

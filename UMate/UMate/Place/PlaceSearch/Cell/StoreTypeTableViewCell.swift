@@ -18,7 +18,7 @@ class StoreTypeTableViewCell: UITableViewCell {
         /// 각 뷰의 background 색상과 외곽선 스타일, 두께, 색상을 설정
         [cafeView, restaurantView, bakeryView, studyCafeView, pubView, desertView].forEach { view in
             view?.backgroundColor = .white
-            view?.configureStyle(with: [.squircleBig])
+            view?.configureStyle(with: [.bigRoundedRect])
             view?.layer.borderWidth = 1
             view?.layer.borderColor = UIColor.darkGray.cgColor
         }

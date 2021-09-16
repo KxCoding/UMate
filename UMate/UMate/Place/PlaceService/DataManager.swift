@@ -7,17 +7,26 @@
 
 import UIKit
 
+
+/// 네트워크 요청을 통해 받은 데이터를 다루는 메소드를 포함하는 클래스
+///
+/// 이 클래스의 메소드는 단일 공유 객체를 통해 호출합니다.
+/// - Author: 박혜정(mailmelater11@gmail.com)
 class DataManager {
+    
+    // MARK: Properties
     
     /// singleton instance
     static let shared = DataManager()
     private init() { }
     
-    let session = URLSession.shared
     
     // MARK: - Data
     
-    /// 전달된 URL로 요청을 실행하고, 요청 후 전달한 handler 를 실행하는 메소드
+    /// 공유 URLSession 객체
+    let session = URLSession.shared
+    
+    /// 전달된 URL로 요청을 실행하고, 요청 후 전달한 작업을 실행합니다.
     /// - Parameters:
     ///   - url: URL
     ///   - completion: 요청 이후에 실행할 작업
@@ -60,7 +69,7 @@ class DataManager {
     }
     
     
-    /// 전달된 문자열로 URL을 생성해 요청을 실행하고, 요청 이후 전달한 handler 를 실행하는 메소드
+    /// 전달된 문자열로 URL을 생성해 요청을 실행하고, 요청 이후 전달한 handler 를 실행합니다.
     /// - Parameters:
     ///   - url: URL
     ///   - completion: 요청 이후에 실행할 작업
@@ -184,6 +193,8 @@ class DataManager {
     
     // MARK: - Unsplash API
     
+    /// Unsplash API 키
+    ///
     /// Demo - 50 request / hour
     let unsplashKey = "RZoyv1JUGLzedP_O6q1OBthZTnne2ME7lwkE_gDZmOI"
     
@@ -281,12 +292,13 @@ class DataManager {
     
     
     /// Unsplash 이미지가 필요한 이미지 뷰의 이미지를 lazy 하게 이미지를 업데이트하는 유틸 메소드
-    ///  기본 placeholder 이미지  > hash blur 이미지 > 최종 이미지
+    ///
+    /// 기본 placeholder 이미지  > hash blur 이미지 > 최종 이미지 순서로 적용됩니다.
     /// - Parameters:
     ///   - type: 원하는 이미지의 타입
     ///   - imageView: 사용할 이미지 뷰
     ///   - query: 이미지의 키워드
-    func lazyUpdate(_ type: PlaceImageDataType, of imageView: UIImageView, with query: String) {
+    func download(_ type: PlaceImageDataType, andUpdate imageView: UIImageView, with query: String) {
         /// 1. placeholder 이미지로 설정
         imageView.image = placeholderImage
         
@@ -323,15 +335,4 @@ class DataManager {
         }
     }
     
-}
-
-
-
-
-enum PlaceImageDataType {
-    /// used on Place
-    case placeholder
-    case blurHash
-    case thumbnail
-    case detailImage
 }

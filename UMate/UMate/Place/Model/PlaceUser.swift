@@ -5,10 +5,14 @@
 //  Created by Effie on 2021/08/23.
 //
 
-import UIKit
 import CoreLocation
+import UIKit
 
-/// Place
+
+/// Place 사용자 클래스
+///
+/// 타입 선언 중복이 우려되어 임시로 선언한 클래스입니다.
+/// - Author: 박혜정(mailmelater11@gmail.com)
 struct PlaceUser {
     
     /// 사용자의 소속 대학
@@ -44,36 +48,5 @@ struct PlaceUser {
         
         return user
     }()
-    
-}
-
-
-struct ReviewTemplate: Codable {
-    let id: Int
-    let name: String
-    let content: String
-    
-    static let temp1 = ReviewTemplate(id: 0,
-                                     name: "항목별",
-                                     content: """
-                                        [🥢맛] 건강한 맛을 선호하는데...
-                                        [🎨분위기] 자타공인 감성 벌레...🐛
-                                        [🧼위생] 민감한 편은 아닌데...
-                                        """)
-    
-    static let temp2 = ReviewTemplate(id: 1,
-                                     name: "추천 메뉴",
-                                     content: """
-                                        [✔️추천 메뉴]
-                                        하나만 먹는다면 -
-                                        추천 조합 -
-                                        """)
-    
-    static let temp3 = ReviewTemplate(id: 2,
-                                     name: "블로그 홍보",
-                                     content: """
-                                        블로그에도 리뷰 올렸어요! 구경오세요
-                                        https://blog.naver.com/blogpeople
-                                        """)
     
 }
