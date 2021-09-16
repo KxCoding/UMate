@@ -27,9 +27,9 @@ func getToHomeDataList() -> [CellType] {
     
     list = [
         .main(CellData(cellTitle: "즐겨찾는 게시판", detailTitle: nil, backgoundImageName: "wish-list")),
-        .main(CellData(cellTitle: "HOT 게시판", detailTitle: nil, backgoundImageName: "features")),
+        .main(CellData(cellTitle: "HOT 게시판", detailTitle: nil, backgoundImageName: "social-media")),
         .main(CellData(cellTitle: "Q&A 게시판", detailTitle: nil, backgoundImageName: "question")),
-        .main(CellData(cellTitle: "교내홍보 게시판", detailTitle: nil, backgoundImageName: "megaphone")),
+        .main(CellData(cellTitle: "교내홍보 게시판", detailTitle: nil, backgoundImageName: "promotion")),
         .promotion(CellData(cellTitle: "채용정보", detailTitle: "많은 채용정보를 여기서 확인하세요.", backgoundImageName: "team")),
         .contest(CellData(cellTitle: "공모전/ 대외활동", detailTitle: "다양한 공모전 대외활동을 확인하세요.", backgoundImageName: "contest"))
     ]
