@@ -7,6 +7,9 @@
 
 import UIKit
 
+
+/// 댓글 및 대댓글을 표시하는 테이블뷰 셀
+/// - Author: 김정민
 class CommentTableViewCell: UITableViewCell {
     
     //댓글 및 대댓글 저장을 위한 아울렛
@@ -22,11 +25,13 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var commentSeparationView: UIView!
     @IBOutlet weak var reCommentContainerView: UIStackView!
     
+    /// 선택된 댓글
     var selectedComment: Comment?
     
     
-    /// 사용자가 좋아요 버튼을 눌럿을 때 좋아요 수 및 좋아요 이미지 변경 메소드
+    /// 좋아요 버튼 클릭시 처리할 동작입니다.
     /// - Parameter sender: 좋아요 Button
+    /// - Author: 김정민
     @IBAction func toggleLike(_ sender: Any) {
         
         guard var comment = selectedComment else { return }
