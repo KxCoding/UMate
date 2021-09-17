@@ -7,23 +7,18 @@
 
 import UIKit
 
-/// Make  new notification name
+/// 새로운 노티피케이션 이름을 만듬.
 extension Notification.Name {
     static let didTapProfilePics = Notification.Name("didTapProfilePics")
 }
 
 class ProfilePicturesViewController: UIViewController {
     
-    /// Make userInfoKey
+    /// 오타방지를 유저 인포 ID를 만듬
     static let picsKey = "picsKey"
     
-    /// Cancel method
-    @IBAction func cancel(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    /// Cancel profile View
-    @IBAction func selectedProfilePic(_ sender: Any) {
+    /// 사진을 선택시 dismiss, 취소 버튼도 동일.
+    @IBAction func cancelProfileView(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -36,9 +31,10 @@ class ProfilePicturesViewController: UIViewController {
 }
 
 
+
 extension ProfilePicturesViewController {
-    /// Declaration notification post using userInfo's dictionary and tried match a value to  Asset image ID
-    @IBAction func selectedProfilePicsButton1(_ sender: UIButton) {
+    /// 노티피케이션 포스트를 등록하고, 유저인포 딕셔너리를 이용하여 Assets 이미지 id와 매칭시킴.
+    @IBAction func matchTheSelectedPicture(_ sender: UIButton) {
         NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: sender.tag / 100])
         
     }

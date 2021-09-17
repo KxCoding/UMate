@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -192,14 +192,14 @@
                                                             <rect key="frame" x="94" y="10" width="93" height="20.5"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <connections>
-                                                                <action selector="selectedId:" destination="Tsi-8J-cGb" eventType="touchUpInside" id="aiS-7x-G2Z"/>
+                                                                <action selector="didTapId:" destination="Tsi-8J-cGb" eventType="touchUpInside" id="0ca-Gb-Vq2"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qmw-UD-bSC">
                                                             <rect key="frame" x="187" y="10" width="93" height="20.5"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <connections>
-                                                                <action selector="selectedPassword:" destination="Tsi-8J-cGb" eventType="touchUpInside" id="1xz-yN-kjL"/>
+                                                                <action selector="didTapPassword:" destination="Tsi-8J-cGb" eventType="touchUpInside" id="8OS-02-nlg"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -242,7 +242,7 @@
                                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <connections>
-                                                                                <action selector="isCheckedEamilButton:" destination="Tsi-8J-cGb" eventType="touchUpInside" id="kk3-aa-UGg"/>
+                                                                                <action selector="checkToEmailCondtions:" destination="Tsi-8J-cGb" eventType="touchUpInside" id="LGU-64-IfG"/>
                                                                             </connections>
                                                                         </button>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아이디 찾기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lFX-16-0RW">
@@ -402,7 +402,7 @@
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <connections>
-                                                    <action selector="enterenceYearButton:" destination="dJp-Wr-kbc" eventType="touchUpInside" id="gNG-3c-3X6"/>
+                                                    <action selector="makeEnterenceOfYearData:" destination="dJp-Wr-kbc" eventType="touchUpInside" id="ONl-li-wUt"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NFM-2i-lOv">
@@ -485,7 +485,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="nextButton:" destination="dJp-Wr-kbc" eventType="touchUpInside" id="vDe-tw-61S"/>
+                                                    <action selector="checkToConditions:" destination="dJp-Wr-kbc" eventType="touchUpInside" id="UwU-Mp-oAv"/>
                                                     <segue destination="Arp-vK-a9Y" kind="show" id="KDK-C5-mLp"/>
                                                 </connections>
                                             </button>
@@ -609,7 +609,7 @@
                         <barButtonItem key="rightBarButtonItem" title="확인" id="H3e-aM-aMz">
                             <color key="tintColor" red="0.05594095558" green="0.05594095558" blue="0.05594095558" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <connections>
-                                <action selector="completeButton:" destination="Djf-jZ-fpe" id="rv2-UP-9BJ"/>
+                                <action selector="checkToUniversityName:" destination="Djf-jZ-fpe" id="kAn-i0-nxX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -949,7 +949,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="nextToEamilButton:" destination="Arp-vK-a9Y" eventType="touchUpInside" id="0zw-mz-n1c"/>
+                                                        <action selector="checkToAllcheckboxes:" destination="Arp-vK-a9Y" eventType="touchUpInside" id="KT3-aq-egf"/>
                                                         <segue destination="8tn-kC-Qjq" kind="show" id="F2Y-Va-DWl"/>
                                                     </connections>
                                                 </button>
@@ -981,7 +981,6 @@
                     <size key="freeformSize" width="414" height="1339"/>
                     <connections>
                         <outlet property="advertisement" destination="9N8-zw-9rv" id="gyx-Fn-p30"/>
-                        <outlet property="advertisementTOCTextView" destination="9N8-zw-9rv" id="QkV-oT-Pep"/>
                         <outlet property="checkBox2" destination="J7n-6F-Vrj" id="Vwt-by-m0o"/>
                         <outlet property="checkBox3" destination="cLY-4D-wvh" id="kNY-lC-ExF"/>
                         <outlet property="checkBox4" destination="kpn-V9-o11" id="KWw-Lu-jXJ"/>
@@ -989,12 +988,9 @@
                         <outlet property="checkBox6" destination="Acf-Oa-2NF" id="SQf-9F-BUK"/>
                         <outlet property="checkbox1" destination="F6i-yF-1te" id="8Oh-IC-bG5"/>
                         <outlet property="community" destination="5Yz-1P-gHa" id="C5q-8Y-VrK"/>
-                        <outlet property="communityTOCTextView" destination="5Yz-1P-gHa" id="3g4-dy-k50"/>
                         <outlet property="minimumAge" destination="6Uk-hi-6t8" id="fuh-is-aZA"/>
-                        <outlet property="personalInformationTOCTextView" destination="1Dt-DM-cUv" id="ZWn-I9-0jH"/>
                         <outlet property="privacy" destination="1Dt-DM-cUv" id="MTH-EA-umb"/>
                         <outlet property="service" destination="ZnQ-bG-5EA" id="i6I-w7-Cj7"/>
-                        <outlet property="serviceTOCTextView" destination="ZnQ-bG-5EA" id="hVV-jV-GSi"/>
                         <outlet property="verifyEmailButton" destination="BB8-Ze-l99" id="Nkm-k3-ANI"/>
                     </connections>
                 </tableViewController>
@@ -1052,7 +1048,7 @@
                                             <color key="titleColor" red="0.91220233480000001" green="0.88447345349999995" blue="0.86745624389999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
-                                            <action selector="sendCodeButtonAction:" destination="8tn-kC-Qjq" eventType="touchUpInside" id="lv5-AU-L0j"/>
+                                            <action selector="sendTheCode:" destination="8tn-kC-Qjq" eventType="touchUpInside" id="JyQ-ZA-W35"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="코드를 입력하세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LSP-OI-08O">
@@ -1077,7 +1073,7 @@
                                             <color key="titleColor" red="0.91220233480000001" green="0.91163661669999996" blue="0.86423824019999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
-                                            <action selector="emailVerificationButtonAction:" destination="8tn-kC-Qjq" eventType="touchUpInside" id="dO1-d9-iJb"/>
+                                            <action selector="checkToVerifiedCode:" destination="8tn-kC-Qjq" eventType="touchUpInside" id="XOl-vW-v2I"/>
                                             <segue destination="PZr-Ua-C9g" kind="show" id="gdX-UJ-tYs"/>
                                         </connections>
                                     </button>
@@ -1227,7 +1223,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="nextButtonAction:" destination="PZr-Ua-C9g" eventType="touchUpInside" id="iGO-XF-KcY"/>
+                                    <action selector="checkToRegisterConditions:" destination="PZr-Ua-C9g" eventType="touchUpInside" id="JWh-GM-Jeo"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1287,8 +1283,8 @@
                                                                     <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D7C-WE-jkR">
                                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="258"/>
                                                                         <connections>
-                                                                            <action selector="selectedProfilePic:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="p9c-ia-bkl"/>
-                                                                            <action selector="selectedProfilePicsButton1:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="SGh-0s-a96"/>
+                                                                            <action selector="cancelProfileView:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="t7b-fP-wRr"/>
+                                                                            <action selector="matchTheSelectedPicture:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="ozg-LQ-6j5"/>
                                                                         </connections>
                                                                     </button>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="m8c-g9-iXx">
@@ -1313,8 +1309,8 @@
                                                                     <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ly-dr-6hr">
                                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="258"/>
                                                                         <connections>
-                                                                            <action selector="selectedProfilePic:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="w0d-4Y-4j9"/>
-                                                                            <action selector="selectedProfilePicsButton1:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="Jn5-8r-5VJ"/>
+                                                                            <action selector="cancelProfileView:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="cw1-Zl-KvL"/>
+                                                                            <action selector="matchTheSelectedPicture:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="ZWI-gZ-Xtb"/>
                                                                         </connections>
                                                                     </button>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2" translatesAutoresizingMaskIntoConstraints="NO" id="R7y-Dp-cuM">
@@ -1339,8 +1335,8 @@
                                                                     <button opaque="NO" tag="300" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qxu-5b-kdf">
                                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="258"/>
                                                                         <connections>
-                                                                            <action selector="selectedProfilePic:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="vpM-vK-uTN"/>
-                                                                            <action selector="selectedProfilePicsButton1:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="zLj-1i-sDZ"/>
+                                                                            <action selector="cancelProfileView:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="6Ci-3Q-Zfj"/>
+                                                                            <action selector="matchTheSelectedPicture:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="YJT-Ao-hsr"/>
                                                                         </connections>
                                                                     </button>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3" translatesAutoresizingMaskIntoConstraints="NO" id="DJI-fZ-6gj">
@@ -1382,8 +1378,8 @@
                                                                     <button opaque="NO" tag="400" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3w-QQ-vtp">
                                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="258"/>
                                                                         <connections>
-                                                                            <action selector="selectedProfilePic:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="Drc-Lo-zUL"/>
-                                                                            <action selector="selectedProfilePicsButton1:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="f1n-zK-3UM"/>
+                                                                            <action selector="cancelProfileView:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="EsS-8t-kGN"/>
+                                                                            <action selector="matchTheSelectedPicture:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="ZyB-lY-hNc"/>
                                                                         </connections>
                                                                     </button>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="4" translatesAutoresizingMaskIntoConstraints="NO" id="3N0-Gw-6WM">
@@ -1408,8 +1404,8 @@
                                                                     <button opaque="NO" tag="500" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcg-43-fqP">
                                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="258"/>
                                                                         <connections>
-                                                                            <action selector="selectedProfilePic:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="fR3-Ki-gAB"/>
-                                                                            <action selector="selectedProfilePicsButton1:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="FqK-vW-SpC"/>
+                                                                            <action selector="cancelProfileView:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="A3G-sk-NcF"/>
+                                                                            <action selector="matchTheSelectedPicture:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="UNw-2M-j3J"/>
                                                                         </connections>
                                                                     </button>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5" translatesAutoresizingMaskIntoConstraints="NO" id="FEM-9Q-wf0">
@@ -1434,8 +1430,8 @@
                                                                     <button opaque="NO" tag="600" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b4C-5y-Akm">
                                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="258"/>
                                                                         <connections>
-                                                                            <action selector="selectedProfilePic:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="FxI-qv-7zE"/>
-                                                                            <action selector="selectedProfilePicsButton1:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="SX1-1p-bZ9"/>
+                                                                            <action selector="cancelProfileView:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="aZB-Kh-ynf"/>
+                                                                            <action selector="matchTheSelectedPicture:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="GYK-zc-s1J"/>
                                                                         </connections>
                                                                     </button>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="6" translatesAutoresizingMaskIntoConstraints="NO" id="YtW-Jn-t0I">
@@ -1477,8 +1473,8 @@
                                                                     <button opaque="NO" tag="700" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ic9-Za-brb">
                                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="258"/>
                                                                         <connections>
-                                                                            <action selector="selectedProfilePic:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="vMX-VQ-SZ4"/>
-                                                                            <action selector="selectedProfilePicsButton1:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="gJE-zX-f1M"/>
+                                                                            <action selector="cancelProfileView:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="7Xi-qg-y9U"/>
+                                                                            <action selector="matchTheSelectedPicture:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="Mfu-kf-oQK"/>
                                                                         </connections>
                                                                     </button>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="7" translatesAutoresizingMaskIntoConstraints="NO" id="54g-1m-Ya9">
@@ -1503,8 +1499,8 @@
                                                                     <button opaque="NO" tag="800" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XGQ-Cv-Kbc">
                                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="258"/>
                                                                         <connections>
-                                                                            <action selector="selectedProfilePic:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="goC-ds-AnU"/>
-                                                                            <action selector="selectedProfilePicsButton1:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="wLW-ib-N0c"/>
+                                                                            <action selector="cancelProfileView:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="mRX-tg-FAe"/>
+                                                                            <action selector="matchTheSelectedPicture:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="4Uf-Xi-XlY"/>
                                                                         </connections>
                                                                     </button>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="8" translatesAutoresizingMaskIntoConstraints="NO" id="w5E-P6-TQq">
@@ -1529,8 +1525,8 @@
                                                                     <button opaque="NO" tag="900" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qkC-zL-OpV">
                                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="258"/>
                                                                         <connections>
-                                                                            <action selector="selectedProfilePic:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="YnZ-NM-JXl"/>
-                                                                            <action selector="selectedProfilePicsButton1:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="2L2-yL-RZU"/>
+                                                                            <action selector="cancelProfileView:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="H3N-mB-9GB"/>
+                                                                            <action selector="matchTheSelectedPicture:" destination="QBK-Vl-uLp" eventType="touchUpInside" id="5Tl-wX-7gV"/>
                                                                         </connections>
                                                                     </button>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9" translatesAutoresizingMaskIntoConstraints="NO" id="4Og-Qe-iZD">
@@ -1585,7 +1581,7 @@
                         <barButtonItem key="leftBarButtonItem" image="xmark" catalog="system" id="5Lf-S1-YC7">
                             <color key="tintColor" systemColor="labelColor"/>
                             <connections>
-                                <action selector="cancel:" destination="QBK-Vl-uLp" id="nbp-t7-nv3"/>
+                                <action selector="cancelProfileView:" destination="QBK-Vl-uLp" id="hKd-yd-kbx"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

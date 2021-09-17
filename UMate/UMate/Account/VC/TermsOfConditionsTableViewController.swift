@@ -10,6 +10,7 @@ import BEMCheckBox
 
 
 class TermsOfConditionsTableViewController: UITableViewController {
+    ///CheckBox 아울렛
     @IBOutlet weak var checkbox1: BEMCheckBox!
     @IBOutlet weak var checkBox2: BEMCheckBox!
     @IBOutlet weak var checkBox3: BEMCheckBox!
@@ -17,22 +18,20 @@ class TermsOfConditionsTableViewController: UITableViewController {
     @IBOutlet weak var checkBox5: BEMCheckBox!
     @IBOutlet weak var checkBox6: BEMCheckBox!
     
-    @IBOutlet weak var serviceTOCTextView: UITextView!
-    @IBOutlet weak var personalInformationTOCTextView: UITextView!
-    @IBOutlet weak var communityTOCTextView: UITextView!
-    @IBOutlet weak var advertisementTOCTextView: UITextView!
     @IBOutlet weak var minimumAge: UILabel!
     @IBOutlet weak var verifyEmailButton: UIButton!
     
+    /// 텍스트뷰 아울렛
     @IBOutlet weak var service: UITextView!
     @IBOutlet weak var privacy: UITextView!
     @IBOutlet weak var community: UITextView!
     @IBOutlet weak var advertisement: UITextView!
     
+    /// 체크박스 아울렛을 저장하기위한 배열 선언
     var list = [BEMCheckBox]()
     
-    /// To make toggle All CheckBox 
-    @IBAction func nextToEamilButton(_ sender: Any) {
+    /// 체크박스가 모두 체크 되어있는지 환인
+    @IBAction func checkToAllcheckboxes(_ sender: Any) {
         let checkBoxList = [checkBox2, checkBox3, checkBox4, checkBox5, checkBox6]
         
         for elem in checkBoxList {
@@ -45,7 +44,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ///To initialize checkBox's property
+        ///체크박스의 각종 속성등을 초기화.
         checkbox1.delegate = self
         [checkbox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6].forEach({
             $0?.animationDuration = 0.3
@@ -58,36 +57,38 @@ class TermsOfConditionsTableViewController: UITableViewController {
             
         })
         
-        /// To initilize textView property
-        [serviceTOCTextView, personalInformationTOCTextView, communityTOCTextView, advertisementTOCTextView].forEach({
+        /// 아울렛의 바운드를 깍는다.
+        [service, community, privacy, advertisement].forEach({
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
             
         })
         
+        /// 규격해놓은 버튼모양으로 만듬.
         verifyEmailButton.setButtonTheme()
         
-        /// initialze TermsOfConditions's Scripts
-        guard let serviceAssetData = NSDataAsset(name: "Service")?.data else { return }
-        guard let privacyAssetData = NSDataAsset(name: "Privacy")?.data else { return }
-        guard let locationAssetData = NSDataAsset(name: "Location")?.data else { return }
-        
-        guard let serviceStr = String(data: serviceAssetData, encoding: .utf8) else { return }
-        guard let privacyStr = String(data: privacyAssetData, encoding: .utf8) else { return }
-        guard let locationStr = String(data: locationAssetData, encoding: .utf8) else { return }
-        
-        service.text = serviceStr
-        privacy.text = privacyStr
-        community.text = locationStr
+        /// Assets에 추가해놓은 이용약관 스크립트  txt파일을 문자열로 가져옴.
+        if let serviceAssetData = NSDataAsset(name: "Service")?.data,
+           let privacyAssetData = NSDataAsset(name: "Privacy")?.data,
+           let locationAssetData = NSDataAsset(name: "Location")?.data,
+           let serviceStr = String(data: serviceAssetData, encoding: .utf8),
+           let privacyStr = String(data: privacyAssetData, encoding: .utf8),
+           let locationStr = String(data: locationAssetData, encoding: .utf8)   {
+            
+            service.text = serviceStr
+            privacy.text = privacyStr
+            community.text = locationStr
+        }
         
         navigationController?.navigationBar.tintColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
+        
     }
     
 }
 
 
 extension TermsOfConditionsTableViewController: BEMCheckBoxDelegate {
-    /// once didtap first checkBox mkae turn on All checkBox
+    /// 첫번째 체크박스를 탭할시 모든 체크박스가 on
     /// - Parameter checkBox: BEMCheckBox:
     func didTap(_ checkBox: BEMCheckBox) {
         list = [checkbox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6]

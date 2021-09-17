@@ -15,20 +15,23 @@ class EmailVerifyViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var codeTextField: UITextField!
     
-    /// To handle specific TextField
+    /// 특정 텍스트필드를 컨트롤하기위해 선언.
     var activeTextField: UITextField? = nil
+    /// 이메일을 키체인에 저장하기위해서 선언
     var keyChain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
-    /// To check conditions for email
+    /// 이메일 검증을 받기위해 코드를 보낸다.
     /// - Parameter sender: sendCodeButton
-    @IBAction func sendCodeButtonAction(_ sender: Any) {
+    @IBAction func sendTheCode(_ sender: Any) {
         guard let email = emailTextField.text,
+              /// regular expression  으로 검증하는 메소드
               isEmailValid(email),
               email.trimmingCharacters(in: .whitespacesAndNewlines)  != "" else {
                   alert(title: "알림", message: "잘못된 형식의 이메일입니다.")
                   return
               }
         
+        /// 이메일을 키체인에 저장합니다.
         if keyChain.set(email, forKey: Keys.userEmailKey, withAccess: .accessibleAfterFirstUnlock) {
             print("Succeed Set email")
         } else {
@@ -37,17 +40,17 @@ class EmailVerifyViewController: UIViewController {
     }
     
     
-    /// Sending a Code to check user email
+    /// 입력한 코드가 맞는지 검사.
     /// - Parameter sender: emailVerificationButton
-    @IBAction func emailVerificationButtonAction(_ sender: Any) {
-        guard let codeField = codeTextField.text, codeField == "19930725" else {
+    @IBAction func checkToVerifiedCode(_ sender: Any) {
+        guard let codeField = codeTextField.text, codeField == "12345678" else {
             alert(title: "알림", message: "잘못된 코드입니다.")
             return
         }
         
     }
     
-    ///  Since verified email be stored for next register step and then it can't be change.
+    ///  회원가입시 인증받은 이메일로만 가입할수있게 전달.
     ///   - Parameters:
     ///   - segue: DetailRegisterViewController
     ///   - sender: Any?
@@ -77,28 +80,12 @@ class EmailVerifyViewController: UIViewController {
         
         // 더미데이터 및 delegate선언
         codeTextField.delegate = self
-        codeTextField.text = "19930725"
-        emailTextField.text = "qwer123@gmail.com"
         
         // 백그라운드 탭시 키보드 아래로.
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailRegisterViewController.backgroundTap))
         self.view.addGestureRecognizer(tapGestureRecognizer)
     }
-    
-    
-    // regular expression으로 검증하는 메소드
-    func isEmailValid(_ email: String) -> Bool {
-        if let range = email.range(of: Regex.email, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (email.startIndex, email.endIndex) {
-            return true
-        }
-        
-        return false
-    }
-    
-    // 키보드 탭시 일어나는 이벤트를 전달
-    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
-    }
+   
 }
 
 extension EmailVerifyViewController: UITextFieldDelegate {

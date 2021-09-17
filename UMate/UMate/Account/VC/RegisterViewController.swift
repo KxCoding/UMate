@@ -19,60 +19,34 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var dismissZone2: UIView!
     @IBOutlet weak var universityNameField: UILabel!
     
-    /// To save notification data
+    /// 노티피케이션 데이타를 저장하기 위해서 빈 문자열 속성 선언
     var saveText = ""
     
-    /// notificationCenter를 저장하기위한 속성
+    /// 노티피케이션을 저장하고 deinit 하기위한 속성
     var token: NSObjectProtocol?
     
-    /// To make intialize year of interval as String Array
+    /// 메뉴 인스턴스를 클로저로 초기화.
+    /// 실제 연도에 맞춰서 14년 인터벌의  학번을 문자열 배열로 리턴함
     let menu: DropDown? = {
         let menu = DropDown()
-        /// To make dynamic enterence year menu depend on current year
-        let calender = Calendar.current
-        let compo = calender.dateComponents([.year], from: Date())
-        var currentyear = DateComponents()
-        currentyear.year = compo.year
+        let current = Calendar.current.component(.year, from: Date())
         
-        var previous = DateComponents()
-        if let previousYear = compo.year {
-            previous.year = previousYear - 14
+        for n in 0 ... 14 {
+            let interval = current - n
+            menu.dataSource.append("\(interval)학번")
         }
-        guard let currentDate = calender.date(from: currentyear) else { return nil }
-        guard let previousDate = calender.date(from: previous) else { return nil }
-        
-        func dates(from fromDate: Date, to toDate: Date) -> [Date] {
-            var dates: [Date] = []
-            var date = fromDate
-            
-            while date <= toDate {
-                dates.append(date)
-                guard let newDate = Calendar.current.date(byAdding: .year, value: 1, to: date) else { break }
-                date = newDate
-            }
-            return dates
-        }
-        
-        let datesBetweenArray = dates(from: previousDate, to: currentDate)
-        for str in datesBetweenArray {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy"
-            let getToStr = formatter.string(from: str)
-            menu.dataSource.append("\(getToStr)학번")
-        }
-
         return menu
     }()
     
-    /// cancel method
+    /// 화면을 dismiss함.
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
     
     
     
-    /// Can choose enterence year
-    @IBAction func enterenceYearButton(_ sender: UIButton) {
+    /// 입학년도를 고를수있는 버튼 메소드
+    @IBAction func makeEnterenceOfYearData(_ sender: UIButton) {
         menu?.show()
         menu?.selectionAction = { [weak self] index, item in
             self?.enterenceYearLabel.text = item
@@ -82,9 +56,9 @@ class RegisterViewController: UIViewController {
     }
     
     
-    /// check the conditions
+    /// 입혁년도와 학교이름이 입력되어있는지 확인함.
     /// - Parameter sender: nextButton
-    @IBAction func nextButton(_ sender: Any) {
+    @IBAction func checkToConditions(_ sender: Any) {
         guard let enterenceYearText = enterenceYearLabel.text,
               enterenceYearText.count == 6,
               let universityNameText = universityNameField.text,
@@ -98,30 +72,33 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// To make carve a view's bound.
+        /// 뷰 바운드를 깎음.
         [enterenceYearView, universityView].forEach {
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
         }
         
+        /// 규격화된 버튼모양으로 만듬.
         nextButton.setButtonTheme()
+        
+        /// 입학년도 텍스트필드를 초기화합니다
         enterenceYearLabel.text = "2021학번"
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
-        /// To initilize enterence menu's view, width, height, color.
+        /// 메뉴인스턴스의 height, width, color, bottomoffset을 초기화.
         menu?.anchorView = enterenceYearView
         guard let height = menu?.anchorView?.plainView.bounds.height else { return }
         menu?.bottomOffset = CGPoint(x: 0, y: height)
         menu?.width = 150
         menu?.backgroundColor = UIColor.dynamicColor(light: .white, dark: .darkGray)
         
-        /// when user didtap background make lower the keyboard.
+        /// 사용자가 view를 탭할시 키보드가 내려감.
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         dismissZone.addGestureRecognizer(tap)
         dismissZone2.addGestureRecognizer(tap)
         
         
-        ///To receive notification post and then userInfo's data save to userdefaults
+        /// 노티피케이션 포스트를 받아서 유저인포 데이타를 받은뒤 유저 디폴트에 저장.
         token = NotificationCenter.default.addObserver(forName: .didTapSendUniversityName, object: nil, queue: .main, using: { [weak self] noti in
             guard let strongSelf = self else { return }
             guard let universityName = noti.userInfo?[SearchLIstUniversityViewController.universityNameTransitionKey] as? String else { return }
@@ -134,7 +111,7 @@ class RegisterViewController: UIViewController {
         
     }
     
-    /// To make lower the keyboard
+    /// 키보드를 내려가게 한다.
     @objc func dismissKeyboard() {
         dismissZone2.endEditing(true)
     }

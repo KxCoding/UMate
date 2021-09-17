@@ -8,6 +8,7 @@
 import UIKit
 import KeychainSwift
 
+/// 오타 방지를위한 Identifier 구조체만듬
 struct Keys {
     static let prefixKey = "prefixKey"
     static let passwordKey = "passwordKey"
@@ -28,18 +29,19 @@ class DetailRegisterViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var changeProfilePicButton: UIButton!
 
-    /// To configure specific textfield
+    /// 특정 텍스트필드에 조건을 추가 하기위해 선언
     var activeTextField: UITextField? = nil
     
-    /// To save email data
+    /// 이메일 데이타를 저장하기위해서 선언.
     var verifiedEmail: String?
     
-    /// declarion Keychain Instance
+    /// 키체인에 유저 계정을 저장하기위해 선언
     var keyChain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
+    /// 회원가입에 필요한 조건들을 검사함.
     /// Register Button
     /// - Parameter sender: nextButton
-    @IBAction func nextButtonAction(_ sender: Any) {
+    @IBAction func checkToRegisterConditions(_ sender: Any) {
         guard let password = passwordTextField.text,
               isPasswordValid(password),
               password.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
@@ -47,6 +49,7 @@ class DetailRegisterViewController: UIViewController {
             return
         }
         
+        /// 암호를 키체인 저장
         if keyChain.set(password, forKey: Keys.passwordKey, withAccess: .accessibleAfterFirstUnlock) {
             print("Set")
         } else {
@@ -67,43 +70,42 @@ class DetailRegisterViewController: UIViewController {
             return
         }
         
-        // Save name, nickName data in userDefaults
+        /// 유저디폴트에 사용자 이름 닉네임 저장.
         UserDefaults.standard.set(name, forKey: "nameKey")
         UserDefaults.standard.set(nickName, forKey: "nickNameKey")
         
         
-        // Make transition to HomeViewController
+        /// 성공시 홈화면으로 가게한다
         CommonViewController.shared.transitionToHome()
         
     }
     
-
-    // 노티피케이션센터를 저장하기위한 속성
+    /// 노티피케이션센터를 저장하기위한 속성
     var token: NSObjectProtocol?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        /// call keyboard notification method
+        /// 키보드 올리고 내리는 메소드
         keyboardWillShow()
         keyboardWillHide()
         
-        /// configure textField's view
+        /// 아울렛의 바운드를 10포인트 깎는다.
         [emailTextField, passwordTextField, repeatPasswordTextField, nameTextField, nickNameTextField, changeProfilePicButton].forEach({
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
             
         })
         
+        /// 규격해놓은 버튼으로 모양을 만듬.
         nextButton.setButtonTheme()
-        
-        /// get to Previous data in emailTextField.text
+       
+        /// 이메일 검증 화면에서 검증받은 이메일을 가져옴.
             if let safeEmail = keyChain.get(Keys.userEmailKey) {
                 emailTextField.text = safeEmail
             }
         
-        /// received a notification from ProfilePicturesViewController and save image data
+        /// ProfilePicturesController에서 선택한 사진을 가져오고 유저디폴트에 저장.
         token = NotificationCenter.default.addObserver(forName: .didTapProfilePics, object: nil, queue: .main, using: { [weak self] noti  in
             guard let strongSelf = self else { return }
             guard let profileImage = noti.userInfo?[ProfilePicturesViewController.picsKey] as? Int else { return }
@@ -118,51 +120,28 @@ class DetailRegisterViewController: UIViewController {
             
         })
         
-        /// configure profileImageView's shape like a circle
+        /// 프로파일 이미지뷰를 동그란 이미지로 바꿈.
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2.0
         profileImageView.clipsToBounds = true
         profileImageView.contentMode = .scaleAspectFill
         
         
-        /// when user didTap background made a keyboard down
+        /// 사용자가 뷰를 탭할시 키보드 내려감.
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailRegisterViewController.backgroundTap))
         self.view.addGestureRecognizer(tapGestureRecognizer)
         
         
+        /// 텍스트필드 델리게이트 선언
         nameTextField.delegate = self
         repeatPasswordTextField.delegate = self
         nickNameTextField.delegate = self
         emailTextField.delegate = self
         passwordTextField.delegate = self
         
-        /// dummy data
-        nameTextField.text = "황신택"
-        nickNameTextField.text = "TaekToy"
-        passwordTextField.text = "Qwer1234567!"
-        repeatPasswordTextField.text = "Qwer1234567!"
-        
-        
     }
     
-    /// verify using regular expression
-    func isPasswordValid(_ password : String) -> Bool{
-        if let range = password.range(of: Regex.password, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (password.startIndex, password.endIndex) {
-            return true
-        }
-        
-        return false
-    }
-    
-    /// verify using regular expression
-    func isEmailValid(_ email: String) -> Bool {
-        if let range = email.range(of: Regex.email, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (email.startIndex, email.endIndex) {
-            return true
-        }
-        
-        return false
-    }
-    
-    /// remove observer
+
+    /// 노티피케이션 옵저버를 제거한다
     deinit {
         if let token = token {
             NotificationCenter.default.removeObserver(token)
@@ -172,17 +151,17 @@ class DetailRegisterViewController: UIViewController {
 }
 
 extension DetailRegisterViewController: UITextFieldDelegate {
-    /// To recognize when user enter a value in textfield
+    /// 선언해놓은 activeTextField 텍스트필드 편집시 호출
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField
     }
 
-    /// To recognize when user stop enter a value in textfield
+    /// 선언해놓은 activeTextField 텍스트필드 편집 끝날시 호출
     func textFieldDidEndEditing(_ textField: UITextField) {
         activeTextField = nil
     }
     
-    /// emailTextField can't enter any chracters
+    /// 이미 검증된 이메일 외에 그 어떠한 다른 문자가 들어올수없음.
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == emailTextField {
             let char = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
@@ -195,7 +174,7 @@ extension DetailRegisterViewController: UITextFieldDelegate {
 
 
 extension DetailRegisterViewController {
-    /// Invoke only this method when keyboard in case of contact with textField
+    /// 키보드가 텍스트필드에 맞닿을시에만 해당 메소드 호출.
     func keyboardWillShow() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return  }
@@ -221,18 +200,12 @@ extension DetailRegisterViewController {
         }
     }
     
-    /// Make lower the keyboard
+    /// 키보드를 내려가게한다.
     func keyboardWillHide() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return }
             strongSelf.view.frame.origin.y = 0
         }
-    }
-    
-    /// once didtap background forced to make lower the keyboard
-    /// - Parameter sender: UITapGestureRecognizer
-    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
     }
 
 }

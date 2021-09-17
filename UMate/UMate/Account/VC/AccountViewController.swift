@@ -8,35 +8,40 @@
 import UIKit
 import KeychainSwift
 
+/// 로그인 화면을 구성하는 클래스.
+/// 키체인에 저장된 아이디 비밀번호를 로그인시 확인.
 class AccountViewController: UIViewController {
     
+    /// 로그인화면을 구성하는 아울렛
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
     
-    /// create instance to get  user acoount data 
+    /// 키체인 계정을 가져오기 위한 인스턴스를 생성.
     let keychain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
-    /// To Handle specific  some of TextField
+    /// 특정 텍스트필드에 조건을 줘야하기 때문에 속성을 추가.
     var activeTextField: UITextField? = nil
     
-    /// To verify some conditions for login
+    /// 로그인시 키체인 계정을 체크합니다. 성공시 홈화면으로 이동.
+    /// 협업을 하기위해서 잠시 주석처리.
     /// - Parameter sender: 로그인 버튼
     @IBAction func login(_ sender: Any) {
-        /// Only keychain ID users can enter.
-//        guard let safeEmail = keychain.get(Keys.userEmailKey),
-//              let safePassword = keychain.get(Keys.passwordKey),
-//              let email = idTextField.text,
-//              let password = passwordTextField.text else { return }
-//
-//        /// To show if have some keychin error
-//        if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
-//
-//        guard email == safeEmail && password == safePassword else {
-//            alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
-//            return
-//        }
+       /*
+        guard let safeEmail = keychain.get(Keys.userEmailKey),
+              let safePassword = keychain.get(Keys.passwordKey),
+              let email = idTextField.text,
+              let password = passwordTextField.text else { return }
+
+         To show if have some keychin error
+        if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
+
+        guard email == safeEmail && password == safePassword else {
+            alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
+            return
+        }
+        */
 
         CommonViewController.shared.transitionToHome()
      
@@ -45,22 +50,22 @@ class AccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// Call keyboard method
+        /// 키보드 메소드르 호출함.
         KeyboardWillShow()
         KeyboardWillHide()
         
-        /// To make shape like pills
+        /// 규격해 놓은 버튼 모양으로 만듬.
         loginButton.setButtonTheme()
         
-        /// delegate
+        /// 텍스트필드 델리게이트 지정
         idTextField.delegate = self
         passwordTextField.delegate = self
         
-        /// Initialize to email, password field using keychain Bc to convinient work
+        /// 작업하기 편하게 미리 저장된 키체인 계정으로 초기화함.
        idTextField.text = keychain.get(Keys.userEmailKey)
        passwordTextField.text = keychain.get(Keys.passwordKey)
         
-        /// when user didtap backgrond make lower keyboard.
+        /// 뷰를 탭하면 키보드가 내려감.
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailRegisterViewController.backgroundTap))
         self.view.addGestureRecognizer(tapGestureRecognizer)
         
@@ -69,39 +74,15 @@ class AccountViewController: UIViewController {
     }
     
     
-    /// To verify user password using regular expression
-    /// - Parameter password: 패스워드 텍스트필드
-    /// - Returns: boolean 값
-    func isPasswordValid(_ password : String) -> Bool{
-        if let range = password.range(of: Regex.password, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (password.startIndex, password.endIndex) {
-            return true
-        }
-        
-        return false
-    }
-    
-    
-    /// To verify user email using regular expression
-    /// - Parameter email: 이메일 텍스트필드
-    /// - Returns: boolean값
-    func isEmailValid(_ email: String) -> Bool {
-        if let range = email.range(of: Regex.email, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (email.startIndex, email.endIndex) {
-            return true
-        }
-        
-        return false
-    }
-    
-    
 }
 
 
 extension AccountViewController: UITextFieldDelegate {
-    /// when enterence a value in textField
+    /// 텍스트필드에 편집이 시작되면 호출
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField
     }
-    /// when end editing in textField
+    /// 텍스트필드에 편집이 끝나면 호출
     func textFieldDidEndEditing(_ textField: UITextField) {
         activeTextField = nil
     }
@@ -111,7 +92,7 @@ extension AccountViewController: UITextFieldDelegate {
 
 
 extension AccountViewController {
-    /// To avoid the keyboard tries to cover a text field
+    /// 키보드가 텍스트필드를 덮는것을 피하기위한 메소드
     func KeyboardWillShow() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return  }
@@ -126,7 +107,7 @@ extension AccountViewController {
         }
     }
     
-    /// To make lower keyboard 
+    /// 키보드가 내려가게 하는 메소드
     func KeyboardWillHide() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return }
@@ -134,11 +115,4 @@ extension AccountViewController {
         }
     }
     
-    
-    
-    /// 백그라운드 클릭시 키보드 내려가는 메소드
-    /// - Parameter sender:UITapGestureRecognizer
-    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
-    }
 }

@@ -9,7 +9,7 @@ import UIKit
 
 class FindPasswordandEmailTableViewController: UITableViewController {
 
-    /// these constraints need to deal with animation.
+    /// 애니메이션 효과를 주기위한 제약속성
     @IBOutlet weak var idLabelCenterX: NSLayoutConstraint!
     @IBOutlet weak var passwordLabelCenterX: NSLayoutConstraint!
     
@@ -20,35 +20,40 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     @IBOutlet weak var infoTextView: UITextView!
     @IBOutlet weak var buttonLabel: UILabel!
     
-    
+    /// 좌우로 움직이는 뷰.
     @IBOutlet weak var activatedBar: UIView!
     
-    /// back to previoius view
+    /// Dismiss한다
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true)
     }
     
-    @IBAction func selectedId(_ sender: Any) {
-        /// Initialization created according to button
+    /// 아이디란을 탭할시 activatedBar 애니메이션 효과와 아울렛 값이 달라짐.
+    @IBAction func didTapId(_ sender: Any) {
+        
+        /// Priority의 값을 high, low로 토글하면서 좌우 애니매이션 효과를줌.
         idLabelCenterX.priority = .defaultHigh
         passwordLabelCenterX.priority = .defaultLow
+        
         emailTextField.placeholder = "가입한 이메일을 입력하세요."
         buttonLabel.text = "아이디 찾기"
         infoTextView.isHidden = false
+        
+        /// 다크모드 라이트모드 지원
         activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
         
-        /// to make animation effect
+        /// 애니메이션 효과.
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
         
-        /// to show when user didtap button color effect.
+        /// 버튼을 누를시 id label 라이트 모드 다크모드 효과 지원
         UIView.transition(with: idLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
             self.idLabel.textColor = UIColor.dynamicColor(light: .black, dark: .white)
             
         }
 
-        /// to show when user didtap button color effect.
+        /// 버튼을 누를시 password label 라이트 모드 다크모드 효과 지원
         UIView.transition(with: passwordLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
             self.passwordLabel.textColor = UIColor.dynamicColor(light: .systemGray6, dark: .darkGray)
             
@@ -56,7 +61,7 @@ class FindPasswordandEmailTableViewController: UITableViewController {
         
     }
     
-    @IBAction func selectedPassword(_ sender: Any) {
+    @IBAction func didTapPassword(_ sender: Any) {
         /// Initialization created according to button
         idLabelCenterX.priority = .defaultLow
         passwordLabelCenterX.priority = .defaultHigh
@@ -81,8 +86,8 @@ class FindPasswordandEmailTableViewController: UITableViewController {
         }
     }
     
-    /// verify specfic regular expression when user didtap
-    @IBAction func isCheckedEamilButton(_ sender: Any) {
+    /// 이메일 형식을 체크.
+    @IBAction func checkToEmailCondtions(_ sender: Any) {
         guard let email = emailTextField.text,
               email.count > 0,
               isEmailValid(email),
@@ -94,31 +99,21 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     
     }
     
-    /// create regular expression about email format
-    func isEmailValid(_ email: String) -> Bool {
-        if let range = email.range(of: Regex.email, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (email.startIndex, email.endIndex) {
-            return true
-        }
-        
-        return false
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /// 규격화한 버튼 모양으로 만듬.
         findIdButton.setButtonTheme()
-        infoTextView.delegate = self
+        /// activatedBar 컬러 초기화 라이트 다크 모드에 따라서
         activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
+        /// leftBarButtonItem 컬러 초기화 라이트 다크 모드에 따라서
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
+        
+        /// 텍스트뷰 편집 불가하게 초기화.
+        infoTextView.isEditable = false
+        infoTextView.isSelectable = false
     }
-   
-
-    
+       
 }
 
-extension FindPasswordandEmailTableViewController: UITextViewDelegate {
-    /// Forbidden information textView
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        return false
-    }
-    
-}
+
