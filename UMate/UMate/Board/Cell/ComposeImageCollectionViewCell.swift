@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+/// 게시글에 선택한 이미지를 표시하는 클래스뷰 셀
 class ComposeImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var composeImageView: UIImageView!
