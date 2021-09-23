@@ -8,12 +8,14 @@
 import Foundation
 
 /// 직무 형태 구분을 위한 구조체
+/// Author: 황신택
 struct Classification {
     let title: String
     let detail: String
 }
 
 /// 회사 정보입력을 위한 구조체
+/// Author: 황신택
 struct Company {
     let popular: String
     let field: String
@@ -25,7 +27,8 @@ struct Company {
     
 }
 
-/// 작업할 뷰컨트롤러를 위해서 메소드화시킴
+/// 작업할 뷰컨트롤러를 위해서 타입을 배열로 리턴.
+/// Author: 황신택
 func generateClassificationModelList() -> [Classification] {
     var list = [Classification]()
     list = [
@@ -33,14 +36,15 @@ func generateClassificationModelList() -> [Classification] {
         Classification(title: "지역:", detail: " 전체"),
         Classification(title: "학력:", detail: " 전체"),
         Classification(title: "경력:", detail: " 전체"),
-        Classification(title: "근무형태:", detail: " 전체")
+        Classification(title: "형태:", detail: " 전체")
     
     ]
     
     return list
 }
 
-/// 작업할 뷰컨트롤러를 위해서 메소드화시킴
+/// 작업할 뷰컨트롤러를 위해서 타입을 배열로 리턴.
+/// Author: 황신택
 func generateCompanyList() -> [Company] {
     var list = [Company]()
     

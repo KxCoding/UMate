@@ -8,16 +8,25 @@
 import UIKit
 import KeychainSwift
 
+/// 이메일을 검증하고 보안 코드를 발송하는 클래스입니다.
+/// Author:  황신택
 class EmailVerifyViewController: UIViewController {
-    
+    /// 보안코드를 발송하는 버튼.
     @IBOutlet weak var sendCodeButton: UIButton!
+    
+    /// 다음 화면으로 가는 버튼.
     @IBOutlet weak var emailVerificationButton: UIButton!
+    
+    /// 이메일을 입력하는 텍스트필드.
     @IBOutlet weak var emailTextField: UITextField!
+    
+    /// 인증받은 코드를 입력하는 텍스트필드.
     @IBOutlet weak var codeTextField: UITextField!
     
-    /// 특정 텍스트필드를 컨트롤하기위해 선언.
+    /// 특정 텍스트필드에 조건을 주기위한 속성.
     var activeTextField: UITextField? = nil
-    /// 이메일을 키체인에 저장하기위해서 선언
+    
+    /// 이메일을 키체인에 저장하기위해서 KeychainSwift 인스턴스 선언
     var keyChain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
     /// 이메일 검증을 받기위해 코드를 보낸다.
@@ -88,8 +97,9 @@ class EmailVerifyViewController: UIViewController {
    
 }
 
+
+
 extension EmailVerifyViewController: UITextFieldDelegate {
-    
     /// codeTextField 텍스트필드에 숫자를 제외한 다른 텍스트는 작성 불가
     /// - Parameters:
     ///   - textField: UITextField
@@ -120,8 +130,7 @@ extension EmailVerifyViewController: UITextFieldDelegate {
 }
 
 extension EmailVerifyViewController {
-    
-    /// 텍스트필드에 키보드가 맞닿을경우 해당 메소드가 실행됨
+    /// 텍스트필드에 키보드가 닿을경우 호출되고 뷰가 위로 올라갑니다.
     func addKeyboardWillShow() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return  }

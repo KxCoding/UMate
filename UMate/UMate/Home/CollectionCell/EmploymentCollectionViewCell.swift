@@ -10,6 +10,8 @@ import UIKit
 class EmploymentCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var major: UILabel!
     @IBOutlet weak var classification: UILabel!
+    @IBOutlet weak var configureButton: UIButton!
+    
     
     /// 직업 조건 콜렉션뷰 둥글게 초기화
     override func awakeFromNib() {
@@ -19,11 +21,18 @@ class EmploymentCollectionViewCell: UICollectionViewCell {
         layer.shadowColor = UIColor.gray.cgColor
         layer.shadowOffset = CGSize(width: 3, height: 3)
         layer.shadowOpacity = 0.5
+    
     }
     
     func configure(with model: Classification) {
-        major.text = model.title
-        classification.text = model.detail
+        NotificationCenter.default.addObserver(forName: .selectedJob, object: nil, queue: .main) { [weak self] noti in
+            guard let storngSelf = self else { return }
+            guard let jobdata = noti.userInfo?[UserInfoIdentifires.fistJobData] as? String else { return }
+            
+            storngSelf.major.text = model.title
+            storngSelf.classification.text = jobdata
+        }
+        
     }
 }
 

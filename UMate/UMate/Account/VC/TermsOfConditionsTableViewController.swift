@@ -8,7 +8,8 @@
 import UIKit
 import BEMCheckBox
 
-
+/// 이용약관 스크립트를 구현하고 해당 스크립트에 관한 체크박스를 구현하는 클래스입니다.
+/// Author: 황신택
 class TermsOfConditionsTableViewController: UITableViewController {
     ///CheckBox 아울렛
     @IBOutlet weak var checkbox1: BEMCheckBox!
@@ -18,7 +19,10 @@ class TermsOfConditionsTableViewController: UITableViewController {
     @IBOutlet weak var checkBox5: BEMCheckBox!
     @IBOutlet weak var checkBox6: BEMCheckBox!
     
+    /// 최소 나이 레이블.
     @IBOutlet weak var minimumAge: UILabel!
+    
+    /// 다음화면으로 가는 버튼
     @IBOutlet weak var verifyEmailButton: UIButton!
     
     /// 텍스트뷰 아울렛
@@ -31,6 +35,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
     var list = [BEMCheckBox]()
     
     /// 체크박스가 모두 체크 되어있는지 환인
+    /// - Parameter sender: BEMCheckBox
     @IBAction func checkToAllcheckboxes(_ sender: Any) {
         let checkBoxList = [checkBox2, checkBox3, checkBox4, checkBox5, checkBox6]
         
@@ -42,9 +47,10 @@ class TermsOfConditionsTableViewController: UITableViewController {
         }
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        ///체크박스의 각종 속성등을 초기화.
+        ///체크박스의 각종 속성들을 클로저로 초기화.
         checkbox1.delegate = self
         [checkbox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6].forEach({
             $0?.animationDuration = 0.3
@@ -57,17 +63,17 @@ class TermsOfConditionsTableViewController: UITableViewController {
             
         })
         
-        /// 아울렛의 바운드를 깍는다.
+        /// service, community, privacy, advertisement 아울렛의 바운드를 깎는다.
         [service, community, privacy, advertisement].forEach({
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
             
         })
         
-        /// 규격해놓은 버튼모양으로 만듬.
+        /// 규격해놓은 버튼모양으로 만든다.
         verifyEmailButton.setButtonTheme()
         
-        /// Assets에 추가해놓은 이용약관 스크립트  txt파일을 문자열로 가져옴.
+        /// Assets에 추가해놓은 이용약관 스크립트  txt파일을 문자열로 가져온다.
         if let serviceAssetData = NSDataAsset(name: "Service")?.data,
            let privacyAssetData = NSDataAsset(name: "Privacy")?.data,
            let locationAssetData = NSDataAsset(name: "Location")?.data,
@@ -80,13 +86,14 @@ class TermsOfConditionsTableViewController: UITableViewController {
             community.text = locationStr
         }
         
+        /// 네이게이션 back button 라이트 다크모드 지원합니다.
         navigationController?.navigationBar.tintColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
         
     }
     
 }
 
-
+/// CheckboxDidTap메소드를 구현하기 위해 확장자로 Delegate선언합니다.
 extension TermsOfConditionsTableViewController: BEMCheckBoxDelegate {
     /// 첫번째 체크박스를 탭할시 모든 체크박스가 on
     /// - Parameter checkBox: BEMCheckBox:

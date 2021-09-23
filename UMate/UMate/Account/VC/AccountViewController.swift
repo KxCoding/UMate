@@ -8,14 +8,19 @@
 import UIKit
 import KeychainSwift
 
-/// 로그인 화면을 구성하는 클래스.
-/// 키체인에 저장된 아이디 비밀번호를 로그인시 확인.
+/// 로그인 화면을 구성하는 클래스.  
+/// Author: 황신택
 class AccountViewController: UIViewController {
-    
-    /// 로그인화면을 구성하는 아울렛
+    /// 아이디 텍스트필드
     @IBOutlet weak var idTextField: UITextField!
+                                
+    /// 비밀번호 텍스트 필드
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    /// 로그인 버튼
     @IBOutlet weak var loginButton: UIButton!
+    
+    /// 회원가입 버튼
     @IBOutlet weak var registerButton: UIButton!
     
     /// 키체인 계정을 가져오기 위한 인스턴스를 생성.
@@ -25,74 +30,60 @@ class AccountViewController: UIViewController {
     var activeTextField: UITextField? = nil
     
     /// 로그인시 키체인 계정을 체크합니다. 성공시 홈화면으로 이동.
-    /// 협업을 하기위해서 잠시 주석처리.
     /// - Parameter sender: 로그인 버튼
     @IBAction func login(_ sender: Any) {
        /*
+         MARK: 협업을 하기위해서 잠시 주석처리.
+        /// 키체인에 저장되어있는 이메일 데이타를 바인딩 합니다
         guard let safeEmail = keychain.get(Keys.userEmailKey),
+        /// 키체인에 저장되어있는 비밀번호 데이타를 바인딩 합니다.
               let safePassword = keychain.get(Keys.passwordKey),
               let email = idTextField.text,
               let password = passwordTextField.text else { return }
 
-         To show if have some keychin error
+        /// 키체인에 저장된 데이타를 가져오는데 문제가 에러가 있다면 에러코드를 전달합니다.
         if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
 
+        /// 키체인에 저장된 이메일, 비밀번호를 확인하고 아니라면 경고를 출력합니다.
         guard email == safeEmail && password == safePassword else {
             alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
             return
         }
+        
         */
-
         CommonViewController.shared.transitionToHome()
-     
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// 키보드 메소드르 호출함.
+        /// 키보드 메소드르 호출합니다.
         KeyboardWillShow()
         KeyboardWillHide()
         
-        /// 규격해 놓은 버튼 모양으로 만듬.
+        /// 규격해 놓은 버튼 모양으로 만듭니다.
         loginButton.setButtonTheme()
         
-        /// 텍스트필드 델리게이트 지정
-        idTextField.delegate = self
-        passwordTextField.delegate = self
-        
-        /// 작업하기 편하게 미리 저장된 키체인 계정으로 초기화함.
+        /// 작업하기 편하게 미리 저장된 키체인 계정으로 초기화합니다.
        idTextField.text = keychain.get(Keys.userEmailKey)
        passwordTextField.text = keychain.get(Keys.passwordKey)
         
-        /// 뷰를 탭하면 키보드가 내려감.
+        /// 뷰를 탭하면 키보드가 내려갑니다.
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailRegisterViewController.backgroundTap))
         self.view.addGestureRecognizer(tapGestureRecognizer)
         
+        /// 회원가입 버튼 다크모드 라이트모드를 지원합니다.
         registerButton.setTitleColor(UIColor.dynamicColor(light: .darkGray, dark: .white), for: .normal)
         
     }
     
-    
 }
 
 
-extension AccountViewController: UITextFieldDelegate {
-    /// 텍스트필드에 편집이 시작되면 호출
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField
-    }
-    /// 텍스트필드에 편집이 끝나면 호출
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        activeTextField = nil
-    }
-    
-    
-}
-
-
+/// 키보드 노티피케이션 확장자
+/// Author: 황신택
 extension AccountViewController {
-    /// 키보드가 텍스트필드를 덮는것을 피하기위한 메소드
+    ///키보드가 텍스트필드를 가리게 되면 뷰가 위로 올라가게 만들어 줍니다.   
     func KeyboardWillShow() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return  }
@@ -106,6 +97,7 @@ extension AccountViewController {
             
         }
     }
+    
     
     /// 키보드가 내려가게 하는 메소드
     func KeyboardWillHide() {

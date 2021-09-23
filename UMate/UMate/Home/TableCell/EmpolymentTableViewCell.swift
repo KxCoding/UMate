@@ -7,14 +7,18 @@
 
 import UIKit
 
+extension Notification.Name {
+    static let DidTapWillShowList = Notification.Name("DidTapWillShowList")
+}
+
 /// 테이블뷰 셀에 콜렉션뷰를 구현하는 클래스
 class EmploymentTableViewCell: UITableViewCell {
-    
+
+    @IBOutlet weak var listCollectionView: UICollectionView!
     /// 직무 설계를 배열로 선언
     var list = [Classification]()
-    
-    @IBOutlet weak var listCollectionView: UICollectionView!
-    
+    var didTapButton = UIButton()
+
     /// EmploymentInfoViewController에 있는 Classificationllist를 전달 받고 초기화 함.
     func configure(with models: [Classification]) {
         self.list = models
@@ -39,7 +43,7 @@ extension EmploymentTableViewCell: UICollectionViewDataSource {
         let model = list[indexPath.item]
         
         cell.configure(with: model)
-        
+
         return cell
     }
     
@@ -50,7 +54,7 @@ extension EmploymentTableViewCell: UICollectionViewDataSource {
 extension EmploymentTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
-        let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 3
+        let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 4
         
         let height = width * 0.4
         

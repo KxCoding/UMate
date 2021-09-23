@@ -29,7 +29,6 @@ class SearchLIstUniversityViewController: UIViewController {
         
     }
     
-    
     /// 대학교이름이 들어갔는지와 대학교이름을 이전 화면에 전달
     /// - Parameter sender: completeButton
     @IBAction func checkToUniversityName(_ sender: Any) {
@@ -49,25 +48,30 @@ class SearchLIstUniversityViewController: UIViewController {
         /// 테이블뷰 델리게이트, 데이타소스 선언
         listTableView.delegate = self
         listTableView.dataSource = self
+        
         /// 서치바 델리게이트 선언
         searchBar.delegate = self
+        
         /// 테이블뷰 히든속성 초기화
         listTableView.isHidden = true
         
-        /// 라이트모드 다크모드 지원
+        /// 네비게이션 왼쪽 바버튼 오른쪾 바버튼 라이트모드 다크모드 지원
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         navigationItem.rightBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
-        /// 대학교이름을 파싱.
+        /// Asset에 있는 txt파일을 데이타로 타입을 바인딩 합니다 .
         guard let universityNameData = NSDataAsset(name: "UniversityName")?.data else { return }
+       
+        /// Data로 만든 파일을 String 파일로 바인딩 합니다.
         guard let universityNameStr = String(data: universityNameData, encoding: .utf8) else { return }
-        /// trimmingCharacters로 해결안되는 txt파일 불필요한 공백을 없애버림
+        
+        /// trimmingCharacters로 해결안되는 txt파일 불필요한 공백을 없애줍니다.
         let removeSpace = universityNameStr.replacingOccurrences(of: " ", with: "")
         
+        /// , 기준으로 문자열 배열로 만들어줍니다
         universityName = removeSpace.components(separatedBy: ",")
         
         for str in universityName {
-           guard universityName.count == 6 else { continue }
             let value = str.trimmingCharacters(in: .whitespaces)
             universityName.append(value)
 
@@ -93,7 +97,12 @@ extension SearchLIstUniversityViewController: UITableViewDataSource {
         return universityName.count
     }
     
+    
     /// 검색을 할때와 안할때 셀의 콘텐츠가 달라지도록 구현.
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - indexPath: IndexPath
+    /// - Returns: searching true일 경우에는 searchUniversity[indexPath.row] searching false 일 경우에는 universityName[indexPath.row]
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.selectionStyle = .none
@@ -110,7 +119,11 @@ extension SearchLIstUniversityViewController: UITableViewDataSource {
 }
 
 extension SearchLIstUniversityViewController: UITableViewDelegate {
-    /// 셀을 탭할시에 나오는 값을 서치바에  등록.
+    /// 검색을 할때와 안할때 셀의 탭할시 row가 달라짐
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - indexPath: IndexPath
+    /// - Returns: searching true일 경우에는 searchUniversity[indexPath.row] searching false 일 경우에는 universityName[indexPath.row]
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if searching {
             searchBar.text = searchUniversity[indexPath.row]
@@ -136,7 +149,9 @@ extension SearchLIstUniversityViewController: UISearchBarDelegate {
         listTableView.reloadData()
     }
     
+    
     /// 서치바를 탭할시 테이블뷰가 보이도록 구현
+    /// - Parameter searchBar: searchBar
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()

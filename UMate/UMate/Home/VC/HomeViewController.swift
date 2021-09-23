@@ -92,15 +92,15 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: Int(width), height: Int(height))
             
         case .promotion(_):
-            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right))
+            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) * 1.05
             
             let height = width * 0.3
             
             return CGSize(width: Int(width), height: Int(height))
             
         case .contest(_):
-            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right))
-            
+            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) * 1.05
+             
             let height = width * 0.3
             
             return CGSize(width: Int(width), height: Int(height))
