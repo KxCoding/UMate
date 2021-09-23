@@ -8,13 +8,22 @@
 import UIKit
 import DropDown
 
+
+/// 새로운 강의평가 등록 시 뷰 컨트롤러에서 처리되는 동작에대한 노티피케이션
+/// - Author: 김정민
 extension Notification.Name {
     static let newLectureReviewDidInput = Notification.Name(rawValue: "newLectureReviewDidInput")
 }
 
+
+
+
+/// 강의평가 작성 클래스
+/// - Author: 김정민
 class LectureReviewWriteTableViewController: UITableViewController {
 
     // MARK: 리뷰를 저장하기 위한 속성
+    /// - Author: 김정민
     var reviewAssignment: LectureReview.Assignment?
     var reviewGroupMeeting: LectureReview.GroupMeeting?
     var reviewEvaluation: LectureReview.Evaluation?
@@ -23,11 +32,15 @@ class LectureReviewWriteTableViewController: UITableViewController {
     var reviewRating: LectureReview.Rating?
     
     // MARK: 과제버튼 아울렛
+    /// - Author: 김정민
     @IBOutlet weak var manyAssignmentBtn: RoundedButton!
     @IBOutlet weak var normalAssignmentBtn: RoundedButton!
     @IBOutlet weak var noneAssignmentBtn: RoundedButton!
     
     
+    /// 과제버튼 클릭에 대한 이벤트를 처리합니다.
+    /// - Parameter sender: Assignment 버튼
+    /// - Author: 김정민
     @IBAction func selectAssignment(_ sender: UIButton) {
         manyAssignmentBtn.isSelected = sender.tag == 101
         normalAssignmentBtn.isSelected = sender.tag == 102
@@ -59,6 +72,9 @@ class LectureReviewWriteTableViewController: UITableViewController {
     @IBOutlet weak var noneGroupMeetingBtn: RoundedButton!
     
     
+    /// 조모임버튼 클릭에 대한 이벤트를 처리합니다.
+    /// - Parameter sender: Groupmetting 버튼
+    /// - Author: 김정민
     @IBAction func selectGroupMeeting(_ sender: UIButton) {
         manyGroupMeetingBtn.isSelected = sender.tag == 201
         normalGroupMeetingBtn.isSelected = sender.tag == 202
@@ -92,6 +108,9 @@ class LectureReviewWriteTableViewController: UITableViewController {
     @IBOutlet weak var hellEvaluationBtn: RoundedButton!
     
     
+    /// 학점비율버튼 클릭에 대한 이벤트를 처리합니다.
+    /// - Parameter sender: Evaluation 버튼
+    /// - Author: 김정민
     @IBAction func selectEvaluation(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         
@@ -131,6 +150,9 @@ class LectureReviewWriteTableViewController: UITableViewController {
     @IBOutlet weak var noneAttendanceBtn: RoundedButton!
     
     
+    /// 출결버튼 클릭에 대한 이벤트를 처리합니다.
+    /// - Parameter sender: Attendance 버튼
+    /// - Author: 김정민
     @IBAction func selectAttendance(_ sender: UIButton) {
         mixAttendanceBtn.isSelected = sender.tag == 401
         directAttendanceBtn.isSelected = sender.tag == 402
@@ -170,6 +192,9 @@ class LectureReviewWriteTableViewController: UITableViewController {
     @IBOutlet weak var noneTestNumberBtn: RoundedButton!
     
     
+    /// 시험횟수버튼 클릭에 대한 이벤트를 처리합니다.
+    /// - Parameter sender: Testnumber 버튼
+    /// - Author: 김정민
     @IBAction func selectTestNumber(_ sender: UIButton) {
         fourTestNumberBtn.isSelected = sender.tag == 501
         threeTestNumberBtn.isSelected = sender.tag == 502
@@ -209,7 +234,9 @@ class LectureReviewWriteTableViewController: UITableViewController {
     @IBOutlet weak var fiveRatingBtn: RoundedButton!
     
     
-    /// 총점버튼을 눌렀을 때 버튼의 배경색상 변경
+    /// 총점버튼 클릭에 대한 이벤트를 처리합니다.
+    /// - Parameter sender: Rating 버튼
+    /// - Author: 김정민
     @IBAction func selectRating(_ sender: UIButton) {
         oneRatingBtn.isSelected = sender.tag == 601
         twoRatingBtn.isSelected = sender.tag == 602
@@ -240,7 +267,9 @@ class LectureReviewWriteTableViewController: UITableViewController {
         }
     }
     
+    
     /// 수강학기 선택을 위한 메뉴 속성
+    /// - Author: 김정민
     let menu: DropDown? = {
         let menu = DropDown()
         let now = Date()
@@ -259,8 +288,9 @@ class LectureReviewWriteTableViewController: UITableViewController {
     }()
     
     
-    /// 수강학기 선택 메소드
+    /// 수강학기 선택합니다.
     /// - Parameter sender: 수강학기 선택 버튼
+    /// - Author: 김정민
     @IBAction func selectSemester(_ sender: UIButton) {
         menu?.show()
         menu?.anchorView = sender
@@ -279,8 +309,9 @@ class LectureReviewWriteTableViewController: UITableViewController {
     @IBOutlet weak var reviewSaveButton: UIButton!
     
     
-    
     /// 강의리뷰 저장 메소드
+    /// - Parameter sender: 강의평가 저장 버튼
+    /// - Author: 김정민
     @IBAction func saveLectureReview(_ sender: Any) {
         
         guard let reviewContent = reviewcontentTextView.text, reviewContent.count > 0 else {
@@ -288,22 +319,16 @@ class LectureReviewWriteTableViewController: UITableViewController {
             return
         }
         
-        // TODO: 강제추출 -> optionalBinding으로 바꿀것!
-        // TODO: 알림 메소드로 비어있는 항목있는 경우 저장 불가 구현!
-        
         let newReview = LectureReview(assignment: reviewAssignment!, groupMeeting: reviewGroupMeeting!, evaluation: reviewEvaluation!, attendance: reviewAttendance!, testNumber: reviewTestNumber!, rating: reviewRating!, semester: semesterLabel.text!, reviewContent: reviewContent)
         
         NotificationCenter.default.post(name: .newLectureReviewDidInput, object: nil, userInfo: ["review": newReview])
         
         dismiss(animated: true, completion: nil)
-        
-        #if DEBUG
-        print(#function, "강의리뷰 저장완료!", reviewContent)
-        #endif
     }
     
     
-    /// 강의리뷰 작성화면을 닫는 메소드
+    /// 강의리뷰 작성화면을 닫습니다.
+    /// - Author: 김정민
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -322,7 +347,8 @@ class LectureReviewWriteTableViewController: UITableViewController {
 
 extension LectureReviewWriteTableViewController: UITextViewDelegate {
     
-    /// 리뷰를 작성할 경우 placeholder를 가리는 메소드
+    /// 리뷰를 작성할 경우 placeholder를 처리합니다.
+    /// - Author: 김정민
     func textViewDidChange(_ textView: UITextView) {
         reviewPlaceholder.isHidden = textView.hasText
     }

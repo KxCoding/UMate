@@ -30,7 +30,7 @@ class DetailPostViewController: RemoveObserverViewController {
     /// 이미지를 클릭시에 추가되는 옵저버를 저장할 토큰
     /// - Author: 남정은
     var imageObserver: NSObjectProtocol?
-
+    
     
     /// 댓글, 대댓글 작성을 위한 속성
     /// - Author: 김정민
@@ -48,57 +48,49 @@ class DetailPostViewController: RemoveObserverViewController {
     var depth: Int = 0
     
     /// 댓글 및 대댓글 저장하는 메소드
-    /// - Parameter sender: DetailPostViewController
+    /// - Parameter sender: 댓글 저장 버튼
     /// - Author: 김정민
     @IBAction func saveComment(_ sender: Any) {
-        let indexPath = detailPostTableView.indexPathForSelectedRow
-                
-                guard let content = commentTextView.text, content.count > 0 else {
-                    alert(message: "댓글 내용을 입력해주세요 :)")
-                    return
-                }
-                
-                if !isReComment {
-                    commentId = (sortedCommentList.max { $0.commentId < $1.commentId }?.commentId ?? 1) + 1
-                    originalCommentId = commentId
-                }
-                
-                let newComment = Comment(image: UIImage(named: "3"),
-                                         writer: "익명입니다",
-                                         content: content,
-                                         insertDate: Date(),
-                                         heartCount: 0,
-                                         commentId: commentId ?? 1,
-                                         originalCommentId: originalCommentId ?? 1,
-                                         isReComment: isReComment,
-                                         postId: "")
-                
-                print(#function, commentId, originalCommentId, isReComment, indexPath)
-                
-                NotificationCenter.default.post(name: .newCommentDidInsert,
-                                                object: nil,
-                                                userInfo: ["data": newComment])
-                isReComment = false
-                
-                dismiss(animated: true, completion: nil)
-    }
-    
-    
-    
-    @IBAction func reCommentBtn(_ sender: Any) {
-       // MARK: 여기는 삭제하자
+        
+        guard let content = commentTextView.text, content.count > 0 else {
+            alert(message: "댓글 내용을 입력해주세요 :)")
+            return
+        }
+        
+        if !isReComment {
+            commentId = (sortedCommentList.max { $0.commentId < $1.commentId }?.commentId ?? 1) + 1
+            originalCommentId = commentId
+        }
+        
+        let newComment = Comment(image: UIImage(named: "3"),
+                                 writer: "익명입니다",
+                                 content: content,
+                                 insertDate: Date(),
+                                 heartCount: 0,
+                                 commentId: commentId ?? 1,
+                                 originalCommentId: originalCommentId ?? 1,
+                                 isReComment: isReComment,
+                                 postId: "")
+        
+        
+        NotificationCenter.default.post(name: .newCommentDidInsert,
+                                        object: nil,
+                                        userInfo: ["data": newComment])
+        isReComment = false
+        
+        dismiss(animated: true, completion: nil)
     }
     
     
     /// 댓글을 단 사용자에게 쪽지를 보낼 수 있는 메소드
     /// - Author: 김정민
     @IBAction func sendNote(_ sender: Any) {
-        // TODO: 쪽지보내기 ActionSheet
         #if DEBUG
         print("쪽지 보내기 성공!")
         #endif
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -136,26 +128,26 @@ class DetailPostViewController: RemoveObserverViewController {
         
         
         token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
-                                                               object: nil,
-                                                               queue: .main) { [weak self] (noti) in
-                    if let newComment = noti.userInfo?["data"] as? Comment {
-                        self?.sortedCommentList.append(newComment)
-                        
-                        self?.sortedCommentList.sort {
-                            if $0.originalCommentId == $1.originalCommentId {
-                                return $0.commentId < $1.commentId
-                            }
-                            
-                            return $0.originalCommentId < $1.originalCommentId
-                        }
-                        
-                        self?.detailPostTableView.reloadData()
-                        self?.commentTextView.text = nil
+                                                       object: nil,
+                                                       queue: .main) { [weak self] (noti) in
+            if let newComment = noti.userInfo?["data"] as? Comment {
+                self?.sortedCommentList.append(newComment)
+                
+                self?.sortedCommentList.sort {
+                    if $0.originalCommentId == $1.originalCommentId {
+                        return $0.commentId < $1.commentId
                     }
+                    
+                    return $0.originalCommentId < $1.originalCommentId
                 }
                 
-                tokens.append(token)
-
+                self?.detailPostTableView.reloadData()
+                self?.commentTextView.text = nil
+            }
+        }
+        
+        tokens.append(token)
+        
     }
     
     
@@ -198,7 +190,7 @@ class DetailPostViewController: RemoveObserverViewController {
     }
     
     
-    /// 댓글을 오른쪽으로 Swipe해서 댓글을 삭제하는 메소드
+    /// 댓글을 오른쪽으로 Swipe해서 댓글을 삭제합니다
     /// - Parameter indexPath: 댓글의 IndexPath
     /// - Author: 김정민
     func deleteComment(_ indexPath: IndexPath) {
@@ -312,7 +304,7 @@ extension DetailPostViewController: UITableViewDataSource {
 
 extension DetailPostViewController: UITableViewDelegate {
     
-    /// 댓글을 오른쪽으로 Swipe하여 댓글을 신고할 수 있는 메소드
+    /// 댓글을 오른쪽으로 Swipe하여 댓글을 신고합니다.
     /// - Parameters:
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath
@@ -336,7 +328,7 @@ extension DetailPostViewController: UITableViewDelegate {
     }
     
     
-    /// 댓글을 왼쪽으로 Swipe하여 댓글을 삭제할 수 있는 메소드
+    /// 댓글을 왼쪽으로 Swipe하여 댓글을 삭제합니다.
     /// - Parameters:
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath
@@ -367,12 +359,12 @@ extension DetailPostViewController: UITableViewDelegate {
     }
     
     
-    /// 댓글에 ContextMenu를 표시하는 메소드
+    /// 댓글에 ContextMenu를 표시합니다.
     /// - Parameters:
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath
-    ///   - point:
-    /// - Returns: 해당 indexPath의 ContextMenu
+    ///   - point: 컨텍스트 메뉴를 표시하기 위한
+    /// - Returns: 선택한 indexPath의 포인트
     /// - Author: 김정민
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath,
                    point: CGPoint) -> UIContextMenuConfiguration? {
@@ -396,32 +388,32 @@ extension DetailPostViewController: UITableViewDelegate {
         
         return nil
     }
-
     
-    /// <#Description#>
+    
+    /// 댓글을 선택했을 때, 대댓글 작성 여부를 확인합니다.
     /// - Parameters:
-    ///   - tableView: <#tableView description#>
-    ///   - indexPath: <#indexPath description#>
-    /// - Returns: <#description#>
+    ///   - tableView: 디테일포스트 테이블 뷰
+    ///   - indexPath: 선택될 셀의 indexPath
+    /// - Returns: 선택된 셀의 indexPath
     /// - Author: 김정민
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-            let target = sortedCommentList[indexPath.row]
-            
-            if target.commentId != target.originalCommentId {
-                return nil
-            }
-            
-            return indexPath
+        let target = sortedCommentList[indexPath.row]
+        
+        if target.commentId != target.originalCommentId {
+            return nil
         }
-
+        
+        return indexPath
+    }
     
-    /// <#Description#>
+    
+    /// 댓글을 선택할 때, 대댓글을 작성합니다.
     /// - Parameters:
-    ///   - tableView: <#tableView description#>
-    ///   - indexPath: <#indexPath description#>
+    ///   - tableView: 디테일포슽트 테이블 뷰
+    ///   - indexPath: 선택된 셀의 indexPath
     /// - Author: 김정민
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            
+        if indexPath.section == 3 {
             alertVersion2(title: "알림", message: "대댓글을 작성하시겠습니까? :)") { _ in
                 self.isReComment = true
                 self.commentTextView.becomeFirstResponder()
@@ -433,23 +425,26 @@ extension DetailPostViewController: UITableViewDelegate {
             commentId = (sortedCommentList.max { $0.commentId < $1.commentId }?.commentId ?? 1) + 1
             originalCommentId = target.commentId
         }
-    
+    }
 }
 
 
 
 // 댓글의 Placeholder 표시 여부를 결정
+/// - Author: 김정민
 extension DetailPostViewController: UITextViewDelegate {
     
-    /// 댓글을 작성하려고할 때 Placeholder를 숨기는 메소드
+    /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
     /// - Parameter textView: commentTextView
+    /// - Author: 김정민
     func textViewDidBeginEditing(_ textView: UITextView) {
         commentPlaceholderLabel.isHidden = true
     }
     
     
-    /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시하는 메소드
+    /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시합니다.
     /// - Parameter textView: commentTextView
+    /// - Author: 김정민
     func textViewDidEndEditing(_ textView: UITextView) {
         guard let comment = commentTextView.text, comment.count > 0 else {
             commentPlaceholderLabel.isHidden = false
