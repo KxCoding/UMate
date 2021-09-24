@@ -95,18 +95,12 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ukf-AC-6SI">
                                                                         <rect key="frame" x="0.0" y="0.0" width="371" height="63"/>
                                                                         <subviews>
-                                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="O0G-oQ-FUU">
+                                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="O0G-oQ-FUU">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="371" height="63"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="근무형태: " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Owd-E6-qGE">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="258" height="63"/>
-                                                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                                                                                        <color key="textColor" systemColor="systemGray2Color"/>
-                                                                                        <nil key="highlightedColor"/>
-                                                                                    </label>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXd-k4-dhH">
-                                                                                        <rect key="frame" x="258" y="0.0" width="113" height="63"/>
-                                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="전체" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXd-k4-dhH">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="371" height="63"/>
+                                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
@@ -142,7 +136,6 @@
                                                             <connections>
                                                                 <outlet property="classification" destination="XXd-k4-dhH" id="wmt-K9-YoL"/>
                                                                 <outlet property="configureButton" destination="Hw3-0L-M7O" id="rUT-Sw-ewY"/>
-                                                                <outlet property="major" destination="Owd-E6-qGE" id="ZVv-PP-Y0S"/>
                                                             </connections>
                                                         </collectionViewCell>
                                                     </cells>
@@ -304,10 +297,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hXC-Vm-HbD">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hXC-Vm-HbD">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConfigureTableViewCell" rowHeight="118" id="5MB-KB-Qi2" customClass="ConfigureTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConfigureTableViewCell" rowHeight="118" id="5MB-KB-Qi2" customClass="WorkTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="118"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5MB-KB-Qi2" id="pdy-qs-fSp">
@@ -386,7 +379,7 @@
                                             <outlet property="classificationLabel2" destination="c4O-ge-vLw" id="AMD-5Q-xKJ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RegionTableViewCell" rowHeight="102" id="n2v-lU-tUo" customClass="RegionTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="RegionTableViewCell" rowHeight="102" id="n2v-lU-tUo" customClass="RegionTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="162.5" width="414" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n2v-lU-tUo" id="chr-Ad-vEY">
@@ -573,7 +566,7 @@
                                             <outlet property="region5" destination="871-Fr-NPP" id="lPX-ki-mYz"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SegmentTableViewCell" rowHeight="93" id="kBK-Wm-iRv" customClass="SegmentTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SegmentTableViewCell" rowHeight="93" id="kBK-Wm-iRv" customClass="DegreeTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="264.5" width="414" height="93"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kBK-Wm-iRv" id="OBx-63-RiG">
@@ -592,6 +585,9 @@
                                                                 <segment title=""/>
                                                                 <segment title=""/>
                                                             </segments>
+                                                            <connections>
+                                                                <action selector="toggleSegmentItem:" destination="kBK-Wm-iRv" eventType="valueChanged" id="map-nc-CFO"/>
+                                                            </connections>
                                                         </segmentedControl>
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -614,7 +610,7 @@
                                             <outlet property="degreeSegment" destination="sRs-ha-tpw" id="W0Y-Is-JY2"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CareerTableViewCell" rowHeight="107" id="2i4-k2-JiE" customClass="CareerTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CareerTableViewCell" rowHeight="107" id="2i4-k2-JiE" customClass="CareerTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="357.5" width="414" height="107"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2i4-k2-JiE" id="vHV-Oo-BQX">
@@ -737,7 +733,7 @@
                                             <outlet property="newLabel" destination="951-ie-EX7" id="dW9-Em-V2a"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlatFormTableViewCell" rowHeight="103" id="Yw8-kp-QwF" customClass="PlatFormTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PlatFormTableViewCell" rowHeight="103" id="Yw8-kp-QwF" customClass="PlatFormTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="464.5" width="414" height="103"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yw8-kp-QwF" id="35l-GM-LSz">
@@ -820,7 +816,7 @@
                                             <outlet property="secondPlatFormLabel" destination="Kep-SS-qM1" id="icX-MO-dbe"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ButtonTableViewCell" rowHeight="100" id="Vk2-nT-h6U" customClass="ButtonTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ButtonTableViewCell" rowHeight="100" id="Vk2-nT-h6U" customClass="ButtonTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="567.5" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vk2-nT-h6U" id="zD7-TP-1Ds">
@@ -831,8 +827,11 @@
                                                     <rect key="frame" x="20" y="11" width="374" height="78"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nzx-DJ-r7Z">
-                                                            <rect key="frame" x="0.0" y="0.0" width="48.5" height="78"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="80" height="78"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="80" id="uRW-OE-xuX"/>
+                                                            </constraints>
                                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="plain" title="닫기"/>
@@ -1355,9 +1354,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

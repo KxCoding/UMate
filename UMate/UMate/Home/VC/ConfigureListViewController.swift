@@ -8,10 +8,11 @@
 import UIKit
 
 struct UserInfoIdentifires {
-    static let fistJobData = "fistJobData"
-    static let secondJobData = "secondJobData"
-    static let finalfistJobData = "finalfistJobData"
-    static let finalsecondJobData = "finalsecondJobData"
+    static let workData = "workData"
+    static let regionData = "regionData"
+    static let degreeData = "degreeData"
+    static let careerData = "careerData"
+    static let platFormData = "platFormData"
 }
 
 class ConfigureListViewController: UIViewController {
@@ -44,6 +45,8 @@ class ConfigureListViewController: UIViewController {
     
     
     @IBAction func resetAllConfigure(_ sender: Any) {
+        configureListTableView.reloadData()
+        dismiss(animated: true, completion: nil)
     }
     
     
@@ -91,7 +94,7 @@ extension ConfigureListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ConfigureTableViewCell", for: indexPath) as! ConfigureTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ConfigureTableViewCell", for: indexPath) as! WorkTableViewCell
             cell.selectionStyle = .none
             let target = workList[indexPath.row]
             cell.classificationLabel.text = target.classification1
@@ -111,7 +114,7 @@ extension ConfigureListViewController: UITableViewDataSource {
             return cell
             
         case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SegmentTableViewCell", for: indexPath) as! SegmentTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SegmentTableViewCell", for: indexPath) as! DegreeTableViewCell
             cell.selectionStyle = .none
             let target = degreeList[indexPath.row]
             cell.degreeSegment.setTitle(target.none, forSegmentAt: 0)

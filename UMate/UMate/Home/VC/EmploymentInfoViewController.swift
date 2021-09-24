@@ -67,7 +67,7 @@ class EmploymentInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
     }
     
@@ -98,6 +98,7 @@ extension EmploymentInfoViewController: UITableViewDataSource {
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "EmploymentTableViewCell", for: indexPath) as! EmploymentTableViewCell
+            
             cell.configure(with: classsificationList)
             return cell
             

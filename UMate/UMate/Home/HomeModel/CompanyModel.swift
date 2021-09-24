@@ -7,16 +7,82 @@
 
 import Foundation
 
+enum ItemType {
+    case work(ClassificationWork)
+    case region(ClassificationRegion)
+    case degree(ClassificationDegree)
+    case career(ClassificationCareer)
+    case platForm(ClassificationPlatForm)
+}
+
 /// 직무 형태 구분을 위한 구조체
 /// Author: 황신택
-struct Classification {
+class ClassificationWork {
+     init(title: String) {
+        self.title = title
+    }
     let title: String
-    let detail: String
 }
+
+class ClassificationRegion {
+     init(title: String) {
+        self.title = title
+    }
+    
+    let title: String
+}
+
+class ClassificationDegree {
+     init(title: String) {
+        self.title = title
+    }
+    let title: String
+}
+
+class ClassificationCareer {
+     init(title: String) {
+        self.title = title
+    }
+    let title: String
+}
+
+class ClassificationPlatForm {
+     init(title: String) {
+        self.title = title
+     }
+    let title: String
+}
+
+
+/// 작업할 뷰컨트롤러를 위해서 타입을 배열로 리턴.
+/// Author: 황신택
+func generateClassificationModelList() -> [ItemType] {
+    var list = [ItemType]()
+    list = [
+        .work(ClassificationWork(title: "직무")),
+        .region(ClassificationRegion(title: "지역")),
+        .degree(ClassificationDegree(title: "학력")),
+        .career(ClassificationCareer(title: "경력")),
+        .platForm(ClassificationPlatForm(title: "직무형태"))
+    ]
+    
+    return list
+}
+
 
 /// 회사 정보입력을 위한 구조체
 /// Author: 황신택
-struct Company {
+class Company {
+     init(popular: String, field: String, title: String, detail: String, image: String, favoriteImage: String, day: String) {
+        self.popular = popular
+        self.field = field
+        self.title = title
+        self.detail = detail
+        self.image = image
+        self.favoriteImage = favoriteImage
+        self.day = day
+    }
+    
     let popular: String
     let field: String
     let title: String
@@ -27,21 +93,6 @@ struct Company {
     
 }
 
-/// 작업할 뷰컨트롤러를 위해서 타입을 배열로 리턴.
-/// Author: 황신택
-func generateClassificationModelList() -> [Classification] {
-    var list = [Classification]()
-    list = [
-        Classification(title: "직무:", detail: " 전체"),
-        Classification(title: "지역:", detail: " 전체"),
-        Classification(title: "학력:", detail: " 전체"),
-        Classification(title: "경력:", detail: " 전체"),
-        Classification(title: "형태:", detail: " 전체")
-    
-    ]
-    
-    return list
-}
 
 /// 작업할 뷰컨트롤러를 위해서 타입을 배열로 리턴.
 /// Author: 황신택

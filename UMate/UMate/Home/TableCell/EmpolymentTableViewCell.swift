@@ -16,11 +16,11 @@ class EmploymentTableViewCell: UITableViewCell {
 
     @IBOutlet weak var listCollectionView: UICollectionView!
     /// 직무 설계를 배열로 선언
-    var list = [Classification]()
+    var list = [ItemType]()
     var didTapButton = UIButton()
 
     /// EmploymentInfoViewController에 있는 Classificationllist를 전달 받고 초기화 함.
-    func configure(with models: [Classification]) {
+    func configure(with models: [ItemType]) {
         self.list = models
         listCollectionView.reloadData()
     }
@@ -29,7 +29,6 @@ class EmploymentTableViewCell: UITableViewCell {
         super.awakeFromNib()
        
     }
-    
     
 }
 
@@ -40,9 +39,21 @@ extension EmploymentTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmploymentCollectionViewCell", for: indexPath) as! EmploymentCollectionViewCell
-        let model = list[indexPath.item]
+        let itemType = list[indexPath.item]
         
-        cell.configure(with: model)
+        switch itemType {
+        case .work(let model):
+            cell.configureWork(with: model)
+        case .region(let model):
+            cell.configureRegion(with: model)
+        case .degree(let model):
+            cell.configureDegree(with: model)
+        case .career(let model):
+            cell.configureCareer(with: model)
+        case .platForm(let model):
+            cell.configurePlatForm(with: model)
+        }
+       
 
         return cell
     }

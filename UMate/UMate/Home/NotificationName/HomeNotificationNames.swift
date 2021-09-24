@@ -9,5 +9,10 @@ import Foundation
 
 extension Notification.Name {
     static let selectedJob = Notification.Name("selectedJob")
-    static let finalSelectedJob = Notification.Name("finalSelectedJob")
+    static let selectedRegion = Notification.Name("SelectedRegion")
+    static let selectedDegree = Notification.Name("selectedDegree")
+    static let selectedCareer = Notification.Name("selectedCareer")
+    static let selectedPlatForm = Notification.Name("selectedPlatForm")
 }
+
+

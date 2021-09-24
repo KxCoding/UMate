@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ConfigureTableViewCell: UITableViewCell {
+class WorkTableViewCell: UITableViewCell {
     /// 직업 분류 레이블 1
     @IBOutlet weak var classificationLabel: UILabel!
     
@@ -24,7 +24,7 @@ class ConfigureTableViewCell: UITableViewCell {
         classificationLabel.isHighlighted.toggle()
         job1 = classificationLabel.text
         print(job1)
-        NotificationCenter.default.post(name: .selectedJob, object: nil, userInfo: [UserInfoIdentifires.fistJobData: job1 ?? "전체"])
+        NotificationCenter.default.post(name: .selectedJob, object: nil, userInfo: [UserInfoIdentifires.workData: job1 ?? "전체"])
         
         print("sent")
     }
@@ -34,7 +34,7 @@ class ConfigureTableViewCell: UITableViewCell {
         classificationLabel2.isHighlighted.toggle()
         job2 = classificationLabel2.text
         print(job2)
-//        NotificationCenter.default.post(name: .selectedJob, object: nil, userInfo: [UserInfoIdentifires.secondJobData: job2 ?? "전체"])
+        NotificationCenter.default.post(name: .selectedJob, object: nil, userInfo: [UserInfoIdentifires.workData: job2 ?? "전체"])
     }
     
     

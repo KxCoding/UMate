@@ -13,7 +13,14 @@ import Foundation
 //
 //}
 
-struct WorkListModel {
+class WorkListModel {
+     init(classification1: String, classification2: String, state: Bool, header: String?) {
+        self.classification1 = classification1
+        self.classification2 = classification2
+        self.state = state
+        self.header = header
+    }
+    
     let classification1: String
     let classification2: String
     var state: Bool
@@ -35,7 +42,16 @@ func generateWorkList() -> [WorkListModel] {
 }
 
 
-struct WorkRegionList {
+class WorkRegionList {
+     init(region1: String, region2: String, region3: String, region4: String, region5: String, header: String?) {
+        self.region1 = region1
+        self.region2 = region2
+        self.region3 = region3
+        self.region4 = region4
+        self.region5 = region5
+        self.header = header
+    }
+    
     let region1: String
     let region2: String
     let region3: String
@@ -58,7 +74,16 @@ func generateWorkRegionList() -> [WorkRegionList] {
 }
 
 
-struct Degree {
+class Degree {
+     init(none: String, college: String, university: String, graduateSchool: String, doctorate: String, header: String) {
+        self.none = none
+        self.college = college
+        self.university = university
+        self.graduateSchool = graduateSchool
+        self.doctorate = doctorate
+        self.header = header
+    }
+    
     let none: String
     let college: String
     let university: String
@@ -78,7 +103,13 @@ func generateDegreeList() -> [Degree] {
 }
 
 
-struct PlatForm {
+class PlatForm {
+    internal init(first: String, second: String, header: String?) {
+        self.first = first
+        self.second = second
+        self.header = header
+    }
+    
     let first: String
     let second: String
     let header: String?
