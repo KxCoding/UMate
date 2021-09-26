@@ -82,10 +82,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         if let isPasswordSet = isPasswordSet {
             guard let isBioUnlockSet = isBioUnlockSet, isBioUnlockSet == true else {
-                CommonViewController.shared.showPasswordViewController()
+                CommonViewController.showPasswordViewController()
                 return
             }
-            CommonViewController.shared.showFaceIdViewController()
+            CommonViewController.showFaceIdViewController()
         }
     }
     

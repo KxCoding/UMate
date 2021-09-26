@@ -33,7 +33,7 @@ class ExpandableBoardTableViewCell: UITableViewCell {
     ///   - boardList: 셀에 나타낼 게시판 정보가 들어갈 배열
     ///   - indexPath: 각 게시판의 인덱스패스
     func configure(boardList: [BoardUI], indexPath: IndexPath) {
-        boardLabel.text = boardList[indexPath.section - 1].boardNames[indexPath.row]
+        boardLabel.text = boardList[indexPath.section - 2].boardNames[indexPath.row]
         
         /// 인덱스패스로 북마크 버튼의 tag초기화
         /// 100, 101 ... 200, 201 .... 300, 301

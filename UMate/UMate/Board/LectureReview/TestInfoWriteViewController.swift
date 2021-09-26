@@ -19,7 +19,7 @@ extension Notification.Name {
 
 /// 시험작성 공유화면에대한 클래스
 /// - Author: 남정은
-class TestInfoWriteViewController: RemoveObserverViewController {
+class TestInfoWriteViewController: CommonViewController {
     /// 시험작성 공유에대한 테이블 뷰
     @IBOutlet weak var testInfoTableView: UITableView!
     

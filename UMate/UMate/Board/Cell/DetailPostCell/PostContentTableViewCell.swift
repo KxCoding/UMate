@@ -86,7 +86,13 @@ class PostContentTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .postDidScrap, object: nil, userInfo: ["scrappedPost": post])
         }
     }
-   
+    
+    
+    /// 신고 혹은 게시글 수정, 삭제를 액션시트로 나타내기위해 노티피케이션 보냄
+    @IBAction func showMenu(_ sender: Any) {
+        NotificationCenter.default.post(name: .sendAlert, object: nil)
+    }
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()

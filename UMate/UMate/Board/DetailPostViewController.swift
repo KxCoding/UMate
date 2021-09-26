@@ -16,7 +16,7 @@ extension Notification.Name {
 
 /// 게시글 상세화면에대한 클래스
 /// - Author: 남정은, 김정민
-class DetailPostViewController: RemoveObserverViewController {
+class DetailPostViewController: CommonViewController {
     @IBOutlet weak var writeCommentContainerView: UIView!
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var detailPostTableView: UITableView!
@@ -145,9 +145,28 @@ class DetailPostViewController: RemoveObserverViewController {
                 self?.commentTextView.text = nil
             }
         }
-        
         tokens.append(token)
         
+        
+        token = NotificationCenter.default.addObserver(forName: .sendAlert, object: nil, queue: .main, using: { _ in
+            let alertMenu = UIAlertController(title: "", message: "메뉴를 선택하세요.", preferredStyle: .actionSheet)
+            
+            let editAction = UIAlertAction(title: "게시글 수정", style: .default) { _ in
+                print("수정")
+            }
+            alertMenu.addAction(editAction)
+            
+            let deleteAction = UIAlertAction(title: "게시글 삭제", style: .default) { _ in
+                print("삭제")
+            }
+            alertMenu.addAction(deleteAction)
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            alertMenu.addAction(cancelAction)
+            
+            self.present(alertMenu, animated: true, completion: nil)
+        })
+        tokens.append(token)
     }
     
     

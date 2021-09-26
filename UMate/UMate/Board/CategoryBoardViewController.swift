@@ -11,7 +11,7 @@ import UIKit
 
 /// 카테고리를 가진 게시판에대한 클래스
 /// - Author: 남정은
-class CategoryBoardViewController: RemoveObserverViewController {
+class CategoryBoardViewController: CommonViewController {
     /// 카테고리 목록을 나타내는 컬렉션 뷰
     /// - Author: 남정은
     @IBOutlet weak var categoryListCollectionView: UICollectionView!

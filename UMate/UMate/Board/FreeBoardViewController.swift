@@ -10,7 +10,7 @@ import UIKit
 
 /// 기본 게시판에 관한 클래스
 /// - Author: 김정민, 남정은
-class FreeBoardViewController: RemoveObserverViewController {
+class FreeBoardViewController: CommonViewController {
     /// 선택된 게시판의 게시글 목록을 나타내는 테이블 뷰
     /// - Author: 남정은
     @IBOutlet weak var postListTableView: UITableView!
@@ -118,7 +118,6 @@ extension FreeBoardViewController: UITableViewDataSource {
     /// - Returns: 구현을 완료한 셀
     /// - Author: 남정은
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
         
         guard let post = selectedBoard?.posts[indexPath.row] else { return cell }

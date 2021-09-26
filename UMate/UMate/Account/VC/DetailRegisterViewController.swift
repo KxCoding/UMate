@@ -76,7 +76,7 @@ class DetailRegisterViewController: UIViewController {
         
         
         /// 성공시 홈화면으로 가게한다
-        CommonViewController.shared.transitionToHome()
+        CommonViewController.transitionToHome()
         
     }
     

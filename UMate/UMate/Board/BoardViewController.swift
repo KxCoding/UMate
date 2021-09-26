@@ -48,12 +48,12 @@ class BoardViewController: UIViewController {
         
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
             /// 강의 평가 게시판은 performSegue를 이용
-            if let _ = sender as? NonExpandableBoardTableViewCell, indexPath == IndexPath(row: 5, section: 0) {
+            if let _ = sender as? NonExpandableBoardTableViewCell, indexPath == IndexPath(row: 5, section: 1) {
                 return false
             }
             
             /// 정보게시판은 performSegue를 이용
-            if let _ = sender as? ExpandableBoardTableViewCell, indexPath == IndexPath(row: 0, section: 2){
+            if let _ = sender as? ExpandableBoardTableViewCell, indexPath == IndexPath(row: 0, section: 3){
                 return false
             }
         }
@@ -100,11 +100,11 @@ class BoardViewController: UIViewController {
         
         /// nonExpandableBoard에대한 북마크 속성 초기화
         for row in 0..<nonExpandableBoardList.count {
-            bookmarks[row + 100] = false
+            bookmarks[row + 200] = false
         }
         
         /// expandableBoard에대한 북마크 속성 초기화
-        var sectionNum = 2
+        var sectionNum = 3
         for section in expandableBoardList {
             for row in 0..<section.boardNames.count {
                 bookmarks[sectionNum * 100 + row] = false
@@ -124,7 +124,7 @@ extension BoardViewController: UITableViewDataSource {
     /// - Returns: 나타낼 섹션 수
     /// - Author: 남정은
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     
@@ -137,14 +137,18 @@ extension BoardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
-        /// non expandable board
+        /// 내가 쓴 글, 댓글 단 글, 남긴 강의 정보
         case 0:
+            return 3
+            
+        /// non expandable board
+        case 1:
             return nonExpandableBoardList.count
             
         /// expandable board
-        case 1,2:
-            if expandableBoardList[section - 1].isExpanded {
-                return expandableBoardList[section - 1].boardNames.count
+        case 2,3:
+            if expandableBoardList[section - 2].isExpanded {
+                return expandableBoardList[section - 2].boardNames.count
             }
             return 0
             
@@ -160,9 +164,16 @@ extension BoardViewController: UITableViewDataSource {
     /// - Returns: 구현을 완료한 셀
     /// - Author: 남정은
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        /// 내가 남긴 글
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
+            
+            cell.configure(indexPath: indexPath)
+            return cell
+        }
         
         /// nonExxpandableBoard cell을 구성
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
             
             cell.configure(boardList: nonExpandableBoardList, indexPath: indexPath)
@@ -191,11 +202,11 @@ extension BoardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         /// IndexPath( row: 5, section: 0 ) 인 cell을 선택시 강의평가 게시판으로 이동
-        if indexPath.section == 0 && indexPath.row == 5 {
+        if indexPath.section == 1 && indexPath.row == 5 {
             performSegue(withIdentifier: "lectureSegue", sender: self)
         }
         /// IndexPath( row: 0, section: 2 ) 인 cell을 선택시 정보 게시판으로 이동
-        else if indexPath.section == 2 && indexPath.row == 0 {
+        else if indexPath.section == 3 && indexPath.row == 0 {
             performSegue(withIdentifier: "infoSegue", sender: self)
         }
     }
@@ -209,9 +220,9 @@ extension BoardViewController: UITableViewDelegate {
     /// - Author: 남정은
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
-        case 0:
+        case 1:
             return 10
-        case 1, 2:
+        case 2,3:
             return 80
         default: break
         }
@@ -228,18 +239,18 @@ extension BoardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         /// header에 들어갈 버튼
-        if section != 0 {
+        if section > 1 {
             let button = UIButton(type: .custom)
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! BoardCustomHeaderView
             
-            headerView.title.text = expandableBoardList[section - 1].sectionName
+            headerView.title.text = expandableBoardList[section - 2].sectionName
             headerView.title.textColor = UIColor.init(named: "blackSelectedColor")
             headerView.title.font = UIFont.preferredFont(forTextStyle: .title2)
             headerView.title.adjustsFontForContentSizeCategory = true
            
             headerView.summary.adjustsFontForContentSizeCategory = true
             /// isExpanded가 true라면 펼친 상태
-            if expandableBoardList[section - 1].isExpanded {
+            if expandableBoardList[section - 2].isExpanded {
                 headerView.summary.isHidden = true
                 headerView.image.image = UIImage(named: "up-arrow")
             }
@@ -247,7 +258,7 @@ extension BoardViewController: UITableViewDelegate {
             else {
                
                 headerView.summary.isHidden = false
-                headerView.summary.text = expandableBoardList[section - 1].boardNames.joined(separator: ",")
+                headerView.summary.text = expandableBoardList[section - 2].boardNames.joined(separator: ",")
                 headerView.summary.textColor = UIColor.init(named: "darkGraySubtitleColor")
                 headerView.summary.font = UIFont.preferredFont(forTextStyle: .caption1)
                 headerView.image.image = UIImage(named: "down-arrow")
@@ -266,7 +277,7 @@ extension BoardViewController: UITableViewDelegate {
             
             button.addTarget(self, action: #selector(handleExpandClose(button:)), for: .touchUpInside)
             
-            ///  버튼 태그는 1,2
+            ///  버튼 태그는 2,3
             button.tag = section
             return headerView
         }
@@ -280,26 +291,26 @@ extension BoardViewController: UITableViewDelegate {
     /// - Parameter button: 헤더의 버튼
     /// - Author: 남정은
     @objc func handleExpandClose(button: UIButton) {
-        ///  섹션은 1,2
+        ///  섹션은 2,3
         let section = button.tag
         
         var indexPathArr = [IndexPath]()
         
         /// expandableBoard의 각 게시판에 대한 indexPath를 배열로 추가
-        for row in expandableBoardList[section - 1].boardNames.indices {
+        for row in expandableBoardList[section - 2].boardNames.indices {
             let indexPath = IndexPath(row: row, section: section)
             indexPathArr.append(indexPath)
         }
         
         /// expandableBoard의 펼침 /접힘에 대한 속성 변경
-        expandableBoardList[section - 1].isExpanded = !expandableBoardList[section - 1].isExpanded
+        expandableBoardList[section - 2].isExpanded = !expandableBoardList[section - 2].isExpanded
         
         /// isExpanded가 true라면 펼친 상태
-        if expandableBoardList[section - 1].isExpanded {
+        if expandableBoardList[section - 2].isExpanded {
             boardListTableView.insertRows(at: indexPathArr, with: .fade)
-            if section == 2 {
+            if section == 3 {
                 DispatchQueue.main.async {
-                    self.boardListTableView.scrollToRow(at: IndexPath(row: 1, section: 2),
+                    self.boardListTableView.scrollToRow(at: IndexPath(row: 1, section: 3),
                                                         at: .bottom, animated: true)
                 }
             }

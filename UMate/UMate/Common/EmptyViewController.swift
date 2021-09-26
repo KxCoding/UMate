@@ -38,7 +38,7 @@ class EmptyViewController: UIViewController {
                                        withAccess: .accessibleWhenUnlocked)
                     
                     DispatchQueue.main.async { [unowned self] in
-                        CommonViewController.shared.transitionToHome()
+                        CommonViewController.transitionToHome()
                     }
 
                 } else {
@@ -47,7 +47,7 @@ class EmptyViewController: UIViewController {
                     status = false
                     
                     DispatchQueue.main.async {
-                        CommonViewController.shared.showPasswordViewController()
+                        CommonViewController.showPasswordViewController()
                     }
                     
                 }

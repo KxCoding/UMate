@@ -10,7 +10,7 @@ import UIKit
 
 /// 게시글 상세화면에서 이미지 클릭시 확대된 이미지를 보여주는 화면에대한 클래스
 /// - Author: 남정은
-class ExpandImageViewController: RemoveObserverViewController {
+class ExpandImageViewController: CommonViewController {
     /// 이미지의 순번을 알려주는 레이블
     @IBOutlet weak var imageCountLabel: UILabel!
     

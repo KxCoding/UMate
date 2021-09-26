@@ -96,7 +96,7 @@ extension CommonPasswordViewController: UITextFieldDelegate {
                 }
                 
                 
-                CommonViewController.shared.transitionToHome()
+                CommonViewController.transitionToHome()
             }
             
         default:
