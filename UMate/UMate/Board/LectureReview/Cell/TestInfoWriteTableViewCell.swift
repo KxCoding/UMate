@@ -17,6 +17,7 @@ extension Notification.Name {
 }
 
 
+
 /// 시험정보작성을 위한 테이블 뷰 셀
 /// - Author: 남정은
 class TestInfoWriteTableViewCell: UITableViewCell {
@@ -95,19 +96,21 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     @IBOutlet weak var testInfoStackView: UIStackView!
     
     
-    /// 입력란 추가 버튼을 누른 횟수
-    var addTestClickednumber = 0
+    /// 문제예시 번호
+    var exampleNumber = 3
+    
     
     /// 입력란 추가
     @IBAction func addTestInfoField(_ sender: Any) {
-        addTestClickednumber += 1
-        
         let textFieldList = [thirdTextFieldStackView, fourthTextFieldStackView, fifthTextFieldStackView]
         
-        textFieldList[addTestClickednumber - 1]?.isHidden = false
-        
-            /// 입력란을 추가할 때 보내는 노티피케이션
-        NotificationCenter.default.post(name: .insertTestInfoInputField, object: nil)
+        if exampleNumber <= 5 {
+            textFieldList[exampleNumber - 3]?.isHidden = false
+            
+                /// 입력란을 추가할 때 보내는 노티피케이션
+            NotificationCenter.default.post(name: .insertTestInfoInputField, object: nil)
+        }
+        exampleNumber += 1
     }
     
     
@@ -116,6 +119,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     
     /// 문제 예시들을 담는 배열
     var examplesOfQuestions = [String]()
+    
     
     @IBAction func shareTestInfo(_ sender: Any) {
         
@@ -185,7 +189,6 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     let semestersView = DropDown()
     let testTypesView = DropDown()
     
-    
     /// 데이터를 한 번만 추가하기 위한 속성
     var isAppended = false
     
@@ -233,6 +236,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         /// 뷰의 모서리 깎기
         selectSemesterView.layer.cornerRadius = 10
         selectTestView.layer.cornerRadius = 10
+        
         
         /// 텍스트 뷰 델리게이트 설정
         testStrategyTextView.delegate = self

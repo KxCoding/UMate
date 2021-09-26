@@ -19,8 +19,8 @@ class ExpandPostImageCollectionViewCell: UICollectionViewCell {
     
 
     override func awakeFromNib() {
-        
         super.awakeFromNib()
+        
         /// 이미지 확대 제스처
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
         expandImageView.addGestureRecognizer(pinchGesture)
@@ -38,6 +38,7 @@ class ExpandPostImageCollectionViewCell: UICollectionViewCell {
             self.expandImageView.transform = CGAffineTransform.identity
         }
     }
+    
     
     /// 이미지 뷰에 제스처가 인지될 때 호출
     /// - Parameter gestureRecognizer: 제스처를 인식하는 객체

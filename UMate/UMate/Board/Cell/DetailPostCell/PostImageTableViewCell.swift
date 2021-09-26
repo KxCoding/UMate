@@ -26,7 +26,6 @@ class PostImageTableViewCell: UITableViewCell {
     }
     
     
-    
     /// 셀을 초기화
     /// - Parameter post: 선택된 게시글
     func configure(post: Post) {

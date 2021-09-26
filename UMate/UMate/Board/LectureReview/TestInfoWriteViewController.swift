@@ -138,7 +138,6 @@ extension UIView {
                 return firstResponder
             }
         }
-
         return nil
     }
 }

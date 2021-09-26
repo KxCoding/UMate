@@ -281,6 +281,7 @@ extension CategoryBoardViewController: UITableViewDataSource {
         return filteredPostList.count
     }
     
+    
     /// 셀의 데이터소스를  테이블 뷰의 특정 위치에 추가하기위해 호출
     /// - Parameters:
     ///   - tableView: 요청한 정보를 나타낼 객체

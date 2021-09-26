@@ -20,6 +20,7 @@ class ExpandableBoardTableViewCell: UITableViewCell {
     /// 게시판 북마크 버튼
     @IBOutlet weak var bookmarkButton: UIButton!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -27,6 +28,7 @@ class ExpandableBoardTableViewCell: UITableViewCell {
         bookmarkButton.tintColor = UIColor.init(named: "lightGrayNonSelectedColor")
         bookmarkButton.alpha = 0.8
     }
+    
     
     /// 게시판 셀을 초기화
     /// - Parameters:

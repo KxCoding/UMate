@@ -30,7 +30,7 @@ class ExpandImageViewController: CommonViewController {
     var initiatedImage = true
     
     
-    /// pageControl의 currentPage에 따라서 collectionView의 scroll이동
+    /// pageControl의 currentPage에 따라서 컬렉션 뷰의 스크롤이동
     @IBAction func currentPageChanged(_ sender: UIPageControl) {
         let indexPath = IndexPath(item: sender.currentPage, section: 0)
         imageCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -105,7 +105,7 @@ extension ExpandImageViewController: UICollectionViewDataSource {
 
 /// 이미지 컬렉션뷰에대한  동작 처리
 extension ExpandImageViewController: UICollectionViewDelegate {
-    /// 특정 cell이 collectionView에 나타나기 직전에 호출
+    /// 특정 셀이 컬렉션 뷰에 나타나기 직전에 호출
     /// - Parameters:
     ///   - collectionView: 셀을 추가할 컬렉션 뷰
     ///   - cell: 추가될 셀
@@ -138,7 +138,7 @@ extension ExpandImageViewController: UICollectionViewDelegateFlowLayout {
 /// 컬렉션 뷰의 스크롤 뷰에 대한 동작 처리
 extension ExpandImageViewController: UIScrollViewDelegate {
     /// 스크롤 뷰안에 컨텐트 뷰에서 스크롤 발생시에 호출
-    /// - Parameter scrollView: 스크롤이 발생되는 scrollView 객체
+    /// - Parameter scrollView: 스크롤이 발생되는 스크롤 뷰 객체
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         /// 스크롤 뷰의 x좌표
         let x = scrollView.contentOffset.x

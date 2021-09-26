@@ -35,7 +35,6 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     
     /// 이미지를 클릭시에 처리할 동작
     @IBAction func postNotification(_ sender: Any) {
-        
         /// DetailPostViewController에서 performSegue를 실행하도록 함.
         NotificationCenter.default.post(name: .showImageVC, object: nil)
         

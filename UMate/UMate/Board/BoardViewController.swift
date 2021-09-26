@@ -21,6 +21,7 @@ class BoardViewController: UIViewController {
     
     /// 게시판 즐겨찾기 버튼의 색상 변경 & 즐겨찾기 속성 변경
     /// - Parameter sender: 즐겨찾기 핀버튼
+    /// - Author: 남정은
     @IBAction func updateBookmark(_ sender: UIButton) {
         sender.tintColor = sender.tintColor == UIColor.init(named: "lightGrayNonSelectedColor") ? UIColor.init(named: "blackSelectedColor") : UIColor.init(named: "lightGrayNonSelectedColor")
         
@@ -45,7 +46,6 @@ class BoardViewController: UIViewController {
     /// - Returns: 세그를 실행하길 원한다면 true, 아니라면 false
     /// - Author: 남정은
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
             /// 강의 평가 게시판은 performSegue를 이용
             if let _ = sender as? NonExpandableBoardTableViewCell, indexPath == IndexPath(row: 5, section: 1) {
@@ -62,13 +62,12 @@ class BoardViewController: UIViewController {
     
     
     /// 곧 실행될 뷰 컨트롤러에 대해 알림
-    /// 새로운 뷰 컨트롤러r가 실행되기 전에 설정할 수 있다
+    /// 새로운 뷰 컨트롤러가 실행되기 전에 설정할 수 있다
     /// - Parameters:
     ///   - segue: 호출된 세그
     ///   - sender: 세그가 시작된 객체
     /// - Author: 남정은
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         /// 정보게시판 더미데이터 전달
         if let vc = segue.destination as? FreeBoardViewController, segue.identifier == "infoSegue" {
             vc.selectedBoard = infoBoard
@@ -135,7 +134,6 @@ extension BoardViewController: UITableViewDataSource {
     /// - Returns: 섹션안에 나타낼 row수
     /// - Author: 남정은
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         switch section {
         /// 내가 쓴 글, 댓글 단 글, 남긴 강의 정보
         case 0:
