@@ -17,8 +17,10 @@ class EmploymentInfoViewController: UIViewController {
     /// 회사 정보 리스트
     var companyList = generateCompanyList()
     
-    /// dimming View
+    /// 디밍뷰
     let transParentView = UIView()
+    
+    var jobList = [JobData.Job]()
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? ConfigureListViewController {
@@ -65,13 +67,35 @@ class EmploymentInfoViewController: UIViewController {
     }
     
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        listTableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
+        guard let jobData = DataManager.shared.getObject(of: JobData.self, fromJson: "companies") else { return }
+        jobList = jobData.jobs.sorted(by: { $0.id < $1.id })
+        listTableView.prefetchDataSource = self
+        
         
     }
     
 }
+
+
+extension EmploymentInfoViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard indexPaths.contains(where: { $0.row >= self.jobList.count - 5}) else {
+            return
+        }
+        
+        listTableView.reloadData()
+    }
+}
+
+
 
 
 extension EmploymentInfoViewController: UITableViewDataSource {
@@ -86,7 +110,7 @@ extension EmploymentInfoViewController: UITableViewDataSource {
         } else if section == 1 {
             return 0
         } else  {
-            return companyList.count
+            return jobList.count
         }
         
     }
@@ -104,7 +128,7 @@ extension EmploymentInfoViewController: UITableViewDataSource {
             
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CompanyTableViewCell", for: indexPath) as! CompanyTableViewCell
-            let model = companyList[indexPath.row]
+            let model = jobList[indexPath.row]
             cell.configureCompany(with: model)
             return cell
         }

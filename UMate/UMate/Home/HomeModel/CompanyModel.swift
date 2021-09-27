@@ -72,8 +72,18 @@ func generateClassificationModelList() -> [ItemType] {
 
 /// 회사 정보입력을 위한 구조체
 /// Author: 황신택
+
+enum FieldType: String {
+    case sales
+    case planning
+    case advertisement
+    case Distribution
+    case it
+}
+
+
 class Company {
-     init(popular: String, field: String, title: String, detail: String, image: String, favoriteImage: String, day: String) {
+     init(popular: String, field: FieldType, title: String, detail: String, image: String, favoriteImage: String, day: String) {
         self.popular = popular
         self.field = field
         self.title = title
@@ -84,7 +94,7 @@ class Company {
     }
     
     let popular: String
-    let field: String
+    let field: FieldType
     let title: String
     let detail: String
     let image: String
@@ -100,13 +110,19 @@ func generateCompanyList() -> [Company] {
     var list = [Company]()
     
     list = [
-        Company(popular: "인기", field: "IT.SW", title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
-        Company(popular: "인기", field: "IT.SW", title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
-        Company(popular: "인기", field: "IT.SW", title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
-        Company(popular: "인기", field: "IT.SW", title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
-        Company(popular: "인기", field: "IT.SW", title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
-        Company(popular: "인기", field: "IT.SW", title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
-        Company(popular: "인기", field: "IT.SW", title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14")
+        Company(popular: "인기", field: FieldType.it, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.Distribution, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.advertisement, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.planning, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.sales, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.it, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.it, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.Distribution, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.advertisement, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.planning, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.sales, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14"),
+        Company(popular: "인기", field: FieldType.it, title: "엔씨소프트", detail: "사내 정보시스템 back-end 개발자 모집", image: "building.2.crop.circle", favoriteImage: "star", day: "D-14")
+      
         
     ]
     

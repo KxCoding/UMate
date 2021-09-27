@@ -20,7 +20,6 @@ class DataManager {
     static let shared = DataManager()
     private init() { }
     
-    
     // MARK: - Data
     
     /// 공유 URLSession 객체
