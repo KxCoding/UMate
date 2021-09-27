@@ -34,17 +34,17 @@ class AccountViewController: UIViewController {
     @IBAction func login(_ sender: Any) {
        /*
          MARK: 협업을 하기위해서 잠시 주석처리.
-        /// 키체인에 저장되어있는 이메일 데이타를 바인딩 합니다
+        // 키체인에 저장되어있는 이메일 데이타를 바인딩 합니다
         guard let safeEmail = keychain.get(Keys.userEmailKey),
-        /// 키체인에 저장되어있는 비밀번호 데이타를 바인딩 합니다.
+        // 키체인에 저장되어있는 비밀번호 데이타를 바인딩 합니다.
               let safePassword = keychain.get(Keys.passwordKey),
               let email = idTextField.text,
               let password = passwordTextField.text else { return }
 
-        /// 키체인에 저장된 데이타를 가져오는데 문제가 에러가 있다면 에러코드를 전달합니다.
+        // 키체인에 저장된 데이타를 가져오는데 문제가 에러가 있다면 에러코드를 전달합니다.
         if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
 
-        /// 키체인에 저장된 이메일, 비밀번호를 확인하고 아니라면 경고를 출력합니다.
+        // 키체인에 저장된 이메일, 비밀번호를 확인하고 아니라면 경고를 출력합니다.
         guard email == safeEmail && password == safePassword else {
             alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
             return
