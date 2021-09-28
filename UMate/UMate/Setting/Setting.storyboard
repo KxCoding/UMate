@@ -1081,7 +1081,6 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="334" height="30"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <connections>
-                                                    <action selector="changePasswordButtonDidTapped:" destination="K0c-qR-sdq" eventType="touchUpInside" id="5SS-qU-UFO"/>
                                                     <segue destination="bXJ-gX-Xhk" kind="show" id="2Mf-vy-Zq6"/>
                                                 </connections>
                                             </button>
@@ -1096,7 +1095,7 @@
                                             <constraint firstItem="cMz-HZ-ZsG" firstAttribute="leading" secondItem="b2a-l2-Fyh" secondAttribute="leading" id="rtD-Mw-VH5"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID 사용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2b-vg-3fX">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID / Face ID 사용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2b-vg-3fX">
                                         <rect key="frame" x="20" y="141" width="265" height="31"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -1143,7 +1142,7 @@
                         <outlet property="changePasswordButton" destination="lvy-gU-6Uv" id="DBu-yu-f4j"/>
                         <outlet property="containerView" destination="buJ-1H-ook" id="Nqd-XV-bRd"/>
                         <outlet property="setPasswordSwitch" destination="KS6-OC-99m" id="1h5-yK-t7c"/>
-                        <outlet property="touchIDSwitch" destination="Kp8-JY-Hdm" id="AuK-OW-eGI"/>
+                        <outlet property="touchIDSwitch" destination="Kp8-JY-Hdm" id="WWE-ox-a4F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yru-AB-ynr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2119,7 +2118,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ec-ce-7BN">
                                 <rect key="frame" x="20" y="189.5" width="374" height="13.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="잘못된 비밀번호 형식입니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9y-8M-v1N">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="잘못된 비밀번호 형식입니다." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9y-8M-v1N">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="13.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                         <color key="textColor" systemColor="systemRedColor"/>
@@ -2137,7 +2136,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kh0-i0-4mJ">
                                 <rect key="frame" x="20" y="254" width="374" height="14"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="비밀번호가 일치하지 않습니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBH-Jg-67V">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="비밀번호가 일치하지 않습니다." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBH-Jg-67V">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="14"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                         <color key="textColor" systemColor="systemRedColor"/>
