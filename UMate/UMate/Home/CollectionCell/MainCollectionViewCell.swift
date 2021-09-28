@@ -7,9 +7,13 @@
 
 import UIKit
 
+/// 홈뷰 컨트롤러 콜렉션 뷰 셀
+/// Author: 황신택
 class MainCollectionViewCell: UICollectionViewCell {
-    
+    /// 홈뷰 컨트롤러에 각 카테고리 타이틀
     @IBOutlet weak var title: UILabel!
+    
+    /// 카테고리 이미지
     @IBOutlet weak var favoriteImageVIew: UIImageView!
     
     /// 메인화면  콜렉션 뷰 둥글게 초기화

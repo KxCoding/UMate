@@ -11,10 +11,12 @@ import UIKit
 /// Author: 황신택
 class FindPasswordandEmailTableViewController: UITableViewController {
 
-    /// 애니메이션 효과를 주기위한 제약속성
+    /// 아이디 레이블 수평 가운데 제약
+    /// 애니메이션 효과를 주기위해서 사용.
     @IBOutlet weak var idLabelCenterX: NSLayoutConstraint!
     
-    /// 애니메이션 효과를 주기위한 제약속성.
+    /// 비밀번호 레이블 수평 가운데 제약
+    /// 애니메이션 효과를 주기위해서 사용.
     @IBOutlet weak var passwordLabelCenterX: NSLayoutConstraint!
     
     /// ID 레이블.
@@ -45,14 +47,20 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     }
     
 
-    /// 아이디란을 탭할시 activatedBar 애니메이션이 달라진다.
+    /// 아이디란을 탭할시 activatedBar 뷰의 수평가운데 제약에 우선순위 CH/ CR 값을 토글하면서 애니메이션효과를 준다.
     /// - Parameter sender: UIbutton
     @IBAction func didTapId(_ sender: Any) {
-        /// Priority의 값을 high, low로 토글하면서 좌우 애니매이션 효과를 줍니다.
+        /// Priority의 값을 high, low로 토글하면서 좌우 애니매이션 효과.
         idLabelCenterX.priority = .defaultHigh
         passwordLabelCenterX.priority = .defaultLow
+        
+        /// 이메일 placeholder 초기화
         emailTextField.placeholder = "가입한 이메일을 입력하세요."
+        
+        /// 버튼 이름 초기화
         buttonLabel.text = "아이디 찾기"
+        
+        /// 비밀번호 탭으로 이동시 숨김.
         infoTextView.isHidden = false
         
         /// 다크모드 라이트모드 지원
@@ -78,26 +86,38 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     }
     
     
-    /// 비밀번호란을 탭할시 activatedBar 애니메이션 효과가 달라진다.
+    /// 비밀번호를 탭할시 activatedBar 뷰의 수평가운데 제약에 CH/ CR 우선순위 값을 토글하면서 애니메이션효과를 준다.
     /// - Parameter sender: UIbutton
     @IBAction func didTapPassword(_ sender: Any) {
         /// Priority의 값을 high, low로 토글하면서 좌우 애니매이션 효과를 줍니다.
         passwordLabelCenterX.priority = .defaultHigh
+        idLabelCenterX.priority = .defaultLow
+        
+        /// 이메일 placeholder 초기화
         emailTextField.placeholder = "가입된 아이디를 입력해주세요."
+        
+        /// 버튼 이름 초기화
         buttonLabel.text = "비밀번호 찾기"
+        
+        /// 아이디 탭으로 이동시 숨김.
         infoTextView.isHidden = true
+        
+        /// 다크모드 지원
         activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
         
         
+        /// 애니메이션 효과.
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
         
+        /// 버튼을 누를시 id label 라이트 모드 다크모드 효과 지원
         UIView.transition(with: idLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
             self.idLabel.textColor = UIColor.dynamicColor(light: .systemGray6, dark: .darkGray)
             
         }
 
+        /// 버튼을 누를시 password label 라이트 모드 다크모드 효과 지원
         UIView.transition(with: passwordLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
             self.passwordLabel.textColor = UIColor.dynamicColor(light: .black, dark: .white)
             
@@ -105,7 +125,7 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     }
     
     
-    /// 이메일 조건을 체크합니다.
+    /// 이메일 조건을 체크.
     /// - Parameter sender: IdButton
     @IBAction func checkToEmailCondtions(_ sender: Any) {
         guard let email = emailTextField.text,
@@ -120,10 +140,12 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// 규격화한 버튼 모양으로 만든다.
+        /// 버튼에 공통 스타일을 적용.
         findIdButton.setButtonTheme()
+        
         /// activatedBar 컬러를 다크모드 라이트 모드에 따라서 초기화.
         activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
+        
         /// 네베이게션 왼쪽 바버튼 라이트 모드 다크모드에 따라서 색상이 다르게 초기화.
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
         

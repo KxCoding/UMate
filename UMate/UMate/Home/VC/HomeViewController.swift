@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var listCollectionView: UICollectionView!
     
     /// 홈화면 설계리스트 메소드
-  var list = getToHomeDataList()
+  var list = getHomeDataList()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -7,10 +7,17 @@
 
 import UIKit
 
+/// 채용정보 셀을 구성하는 클래스
+/// Author: 황신택
 class PromotionCollectionViewCell: UICollectionViewCell {
 
+    /// 프로모션 카테고리 이미지
     @IBOutlet weak var promotionImageView: UIImageView!
+    
+    /// 프로모션 카테고리 레이블
     @IBOutlet weak var promotionLabel: UILabel!
+    
+    /// 프로모션 카테고리 플레이스홀더
     @IBOutlet weak var detailLabel: UILabel!
     
     /// 채용정보 콜렉션뷰 둥글게 초기화

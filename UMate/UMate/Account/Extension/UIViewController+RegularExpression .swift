@@ -32,12 +32,7 @@ extension UIViewController {
         return false
     }
 
-    /// 뷰를 탭할시 키보드 내려감.
-    /// - Parameter sender: UITapGestureRecognizer
-    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
-    }
-
+   
 }
 
 

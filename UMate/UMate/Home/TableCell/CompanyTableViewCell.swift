@@ -8,7 +8,7 @@
 import UIKit
 
 class CompanyTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var fieldLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
@@ -30,31 +30,39 @@ class CompanyTableViewCell: UITableViewCell {
         titleLabel.text = model.title
         detailLabel.text = model.detail
         careerLabel.text = model.career
-//        degreeLabel.text = model.degree
+        degreeLabel.text = model.degree
         regionLabel.text = model.region
-      
-        DispatchQueue.global().async {
-            guard let url = URL(string: model.image) else { return }
-            let image = DataManager.shared.getImage(from: url)
-            
-            DispatchQueue.main.async {
-                self.companyImage.image = image
-            }
-        }
-    
+        fetchImage(with: model)
         favoriteImage.image = UIImage(systemName: "bookmark")
     }
+    
+    
+    
+    func fetchImage(with model: JobData.Job) {
+        guard let url = URL(string: model.url) else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print(error)
+            }
+            
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.companyImage.image = image
+                }
+            }
+        }.resume()
+    }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         [fieldLabel].forEach({
             $0?.layer.cornerRadius = 10
             $0?.layer.masksToBounds = true
-            
         })
         
     }
-
+    
 }
 
 

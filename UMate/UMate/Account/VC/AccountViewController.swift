@@ -29,6 +29,8 @@ class AccountViewController: UIViewController {
     /// 특정 텍스트필드에 조건을 줘야하기 때문에 속성을 추가.
     var activeTextField: UITextField? = nil
     
+    
+    
     /// 로그인시 키체인 계정을 체크합니다. 성공시 홈화면으로 이동.
     /// - Parameter sender: 로그인 버튼
     @IBAction func login(_ sender: Any) {
@@ -61,7 +63,7 @@ class AccountViewController: UIViewController {
         KeyboardWillShow()
         KeyboardWillHide()
         
-        /// 규격해 놓은 버튼 모양으로 만듭니다.
+        /// 버튼에 공통 스타일 적용.
         loginButton.setButtonTheme()
         
         /// 작업하기 편하게 미리 저장된 키체인 계정으로 초기화합니다.
@@ -75,9 +77,18 @@ class AccountViewController: UIViewController {
         /// 회원가입 버튼 다크모드 라이트모드를 지원합니다.
         registerButton.setTitleColor(UIColor.dynamicColor(light: .darkGray, dark: .white), for: .normal)
         
+        
+    }
+    
+    
+    /// 뷰를 탭할시 키보드 내려감.
+    /// - Parameter sender: UITapGestureRecognizer
+    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
 }
+
 
 
 /// 키보드 노티피케이션 확장자
@@ -106,5 +117,7 @@ extension AccountViewController {
             strongSelf.view.frame.origin.y = 0
         }
     }
+    
+  
     
 }

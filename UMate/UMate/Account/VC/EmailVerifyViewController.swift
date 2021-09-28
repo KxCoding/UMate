@@ -11,7 +11,7 @@ import KeychainSwift
 /// 이메일을 검증하고 보안 코드를 발송하는 클래스입니다.
 /// Author:  황신택
 class EmailVerifyViewController: UIViewController {
-    /// 보안코드를 발송하는 버튼.
+    /// 보안코드를 발송 버튼.
     @IBOutlet weak var sendCodeButton: UIButton!
     
     /// 다음 화면으로 가는 버튼.
@@ -23,24 +23,24 @@ class EmailVerifyViewController: UIViewController {
     /// 인증받은 코드를 입력하는 텍스트필드.
     @IBOutlet weak var codeTextField: UITextField!
     
-    /// 특정 텍스트필드에 조건을 주기위한 속성.
+    /// 편집이 활성화 된 텍스트필드.
+    /// 편집 상태에 따라 조건을 판단하기 위해서 사용합니다.
     var activeTextField: UITextField? = nil
     
     /// 이메일을 키체인에 저장하기위해서 KeychainSwift 인스턴스 선언
     var keyChain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
-    /// 이메일 검증을 받기위해 코드를 보낸다.
+    /// 이메일 검증을 받기위해 코드 전송.
     /// - Parameter sender: sendCodeButton
     @IBAction func sendTheCode(_ sender: Any) {
         guard let email = emailTextField.text,
-              /// regular expression  으로 검증하는 메소드
               isEmailValid(email),
               email.trimmingCharacters(in: .whitespacesAndNewlines)  != "" else {
                   alert(title: "알림", message: "잘못된 형식의 이메일입니다.")
                   return
               }
         
-        /// 이메일을 키체인에 저장합니다.
+        /// 이메일을 키체인에 저장.
         if keyChain.set(email, forKey: Keys.userEmailKey, withAccess: .accessibleAfterFirstUnlock) {
             print("Succeed Set email")
         } else {
@@ -94,6 +94,13 @@ class EmailVerifyViewController: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailRegisterViewController.backgroundTap))
         self.view.addGestureRecognizer(tapGestureRecognizer)
     }
+    
+    /// 뷰를 탭할시 키보드 내려감.
+    /// - Parameter sender: UITapGestureRecognizer
+    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+
    
 }
 

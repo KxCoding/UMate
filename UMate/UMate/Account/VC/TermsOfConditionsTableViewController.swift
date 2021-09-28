@@ -8,7 +8,7 @@
 import UIKit
 import BEMCheckBox
 
-/// 이용약관 스크립트를 구현하고 해당 스크립트에 관한 체크박스를 구현하는 클래스입니다.
+/// 이용약관 스크립트를 구현하고 해당 스크립트에 관한 체크박스를 구현하는 클래스.
 /// Author: 황신택
 class TermsOfConditionsTableViewController: UITableViewController {
     ///CheckBox 아울렛
@@ -70,7 +70,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
             
         })
         
-        /// 규격해놓은 버튼모양으로 만든다.
+        /// 버튼에 공통 스타일 적용.
         verifyEmailButton.setButtonTheme()
         
         /// Assets에 추가해놓은 이용약관 스크립트  txt파일을 문자열로 가져온다.
@@ -93,9 +93,9 @@ class TermsOfConditionsTableViewController: UITableViewController {
     
 }
 
-/// CheckboxDidTap메소드를 구현하기 위해 확장자로 Delegate선언합니다.
+
 extension TermsOfConditionsTableViewController: BEMCheckBoxDelegate {
-    /// 첫번째 체크박스를 탭할시 모든 체크박스가 on
+    /// 첫번째 체크박스를 탭할시 모든 체크박스가 ON or OFF
     /// - Parameter checkBox: BEMCheckBox:
     func didTap(_ checkBox: BEMCheckBox) {
         list = [checkbox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6]

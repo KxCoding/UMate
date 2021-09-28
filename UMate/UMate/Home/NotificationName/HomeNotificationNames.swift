@@ -7,12 +7,4 @@
 
 import Foundation
 
-extension Notification.Name {
-    static let selectedJob = Notification.Name("selectedJob")
-    static let selectedRegion = Notification.Name("SelectedRegion")
-    static let selectedDegree = Notification.Name("selectedDegree")
-    static let selectedCareer = Notification.Name("selectedCareer")
-    static let selectedPlatForm = Notification.Name("selectedPlatForm")
-}
-
-
+// 추후에 노티피케이션 포스팅을 위해서...
