@@ -12,32 +12,37 @@ import UIKit
 /// 본인의 시간표를 볼 수 있는 ViewController 클래스
 /// - Author: 안상희
 class TimetableViewController: UIViewController {
-    
     /// 요일 (월, 화, 수, 목, 금) 정보를 담은 배열입니다.
     let weekdays = Lecture.shared.dayString
     
+    // MARK: Outlet
     /// 시간표를 나타내는 View
     @IBOutlet weak var timeTableView: Elliotable!
     
     
+    /// 친구 이름을 클릭하면 화면이 넘어가기 전에 호출됩니다.
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: UITableViewCell
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "show" {
             let tableViewController : AddLectureTableViewController =
             segue.destination.children.first as! AddLectureTableViewController
-            
+    
             tableViewController.timeTableDelegate = self
         }
     }
     
     
+    /// ViewController가 메모리에 로드되면 호출됩니다.
+    ///
+    /// View의 초기화 작업을 진행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         // Delegate 설정
         timeTableView.delegate = self
         timeTableView.dataSource = self
-        
         
         // TimeTableView의 기본 속성 설정
         timeTableView.elliotBackgroundColor = UIColor.white
@@ -62,11 +67,9 @@ class TimetableViewController: UIViewController {
                                                     alpha: 1.0)
         timeTableView.isFullBorder = true
         timeTableView.roundCorner = .right
-        
         timeTableView.reloadData()
     }
 }
-
 
 
 
@@ -76,7 +79,6 @@ extension TimetableViewController: ElliotableDelegate {
     ///   - elliotable: Elliotable
     ///   - selectedCourse: ElliottEvent
     func elliotable(elliotable: Elliotable, didSelectCourse selectedCourse: ElliottEvent) {
-        
     }
     
     
@@ -85,10 +87,8 @@ extension TimetableViewController: ElliotableDelegate {
     ///   - elliotable: Elliotable
     ///   - longSelectedCourse: ElliottEvent
     func elliotable(elliotable: Elliotable, didLongSelectCourse longSelectedCourse: ElliottEvent) {
-        
     }
 }
-
 
 
 
@@ -121,16 +121,13 @@ extension TimetableViewController: ElliotableDataSource {
 
 
 
-
 extension TimetableViewController: SendTimeTableDataDelegate {
     /// 시간표 데이터를 전달합니다.
     /// - Parameter data: 시간표 정보를 담은 리스트 [ElliottEvent]
     func sendData(data: [ElliottEvent]) {
-        
         for i in 0...data.count - 1 {
             Lecture.shared.courseList.append(data[i])
         }
-        
         timeTableView.reloadData()
     }
 }

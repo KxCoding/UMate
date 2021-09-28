@@ -11,7 +11,7 @@ import UIKit
 /// TimeTable 탭에서 친구를 검색하는 ViewController 클래스
 /// - Author: 안상희
 class FriendSearchViewController: UIViewController {
-    
+    // MARK: Outlet
     /// 친구 아이디를 검색할 수 있는 TextField
     @IBOutlet weak var searchField: UITextField!
     
@@ -24,10 +24,11 @@ class FriendSearchViewController: UIViewController {
     /// 친구 아이디가 검색되면 나타나는 UILabel
     @IBOutlet weak var idLabel: UILabel!
     
-    
     /// 친구 아이디가 검색될 경우, 친구를 추가하기 위한 UIButton
     @IBOutlet weak var addFriends: UIButton!
     
+    
+    // MARK: Action
     /// 친구를 등록합니다.
     /// - Parameter sender: UIButton
     @IBAction func addFriendsButton(_ sender: Any) {
@@ -35,6 +36,7 @@ class FriendSearchViewController: UIViewController {
     }
     
     
+    /// ViewController가 메모리에 로드되면 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,9 +47,7 @@ class FriendSearchViewController: UIViewController {
         foundContainerView.isHidden = true
         notFoundContainerView.isHidden = true
     }
-
 }
-
 
 
 
@@ -56,7 +56,6 @@ extension FriendSearchViewController: UITextFieldDelegate {
     /// - Parameter textField: Return 버튼이 눌려진 해당 TextField
     /// - Returns: TextField가 return 버튼에 대한 동작을 구현해야하는 경우 true이고, 그렇지 않으면 false입니다.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         // 아이디가 존재한다면 친구 목록을 보여줍니다.
         if textField.text == "Hello" || textField.text == "Hi" || textField.text == "aaa" {
             idLabel.text = textField.text
@@ -68,7 +67,6 @@ extension FriendSearchViewController: UITextFieldDelegate {
             foundContainerView.isHidden = true
             notFoundContainerView.isHidden = false
         }
-        
         return true
     }
 }

@@ -12,54 +12,14 @@ import UIKit
 /// TimeTable 탭에서 친구 시간표를 볼 수 있는 ViewController 클래스
 /// - Author: 안상희
 class FriendLectureViewController: UIViewController {
-
     /// 친구 이름이 저장된 속성
     var friendName: String?
     
     /// 요일 (월, 화, 수, 목, 금) 정보를 담은 배열
     let weekdays = Lecture.shared.dayString
-    
-    /// 강의 정보를 담은 Dummy Data
-    let courseList: [ElliottEvent] =
-    [ElliottEvent(courseId: "F1234",
-                  courseName: "자료구조",
-                  roomName: "팔308",
-                  professor: "교수님",
-                  courseDay: .monday,
-                  startTime: "09:00",
-                  endTime: "10:15",
-                  textColor: UIColor.white,
-                  backgroundColor: .purple),
-     ElliottEvent(courseId: "F1234",
-                  courseName: "자료구조",
-                  roomName: "팔308",
-                  professor: "교수님",
-                  courseDay: .wednesday,
-                  startTime: "09:00",
-                  endTime: "10:15",
-                  textColor: UIColor.white,
-                  backgroundColor: .purple),
-     ElliottEvent(courseId: "F5678",
-                  courseName: "컴퓨터그래픽스",
-                  roomName: "팔1025",
-                  professor: "교수님",
-                  courseDay: .monday,
-                  startTime: "10:30",
-                  endTime: "11:45",
-                  textColor: UIColor.white,
-                  backgroundColor: .cyan),
-     ElliottEvent(courseId: "F5678",
-                  courseName: "컴퓨터그래픽스",
-                  roomName: "팔1025",
-                  professor: "교수님",
-                  courseDay: .thursday,
-                  startTime: "10:30",
-                  endTime: "11:45",
-                  textColor: UIColor.white,
-                  backgroundColor: .cyan)]
 
     
-    
+    // MARK: Outlet
     /// 친구 이름을 나타내는 UILabel
     @IBOutlet weak var friendNameLabel: UILabel!
     
@@ -68,6 +28,9 @@ class FriendLectureViewController: UIViewController {
     
     
     
+    /// ViewController가 메모리에 로드되면 호출됩니다.
+    ///
+    /// View의 초기화 작업을 진행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -109,14 +72,12 @@ class FriendLectureViewController: UIViewController {
 
 
 
-
 extension FriendLectureViewController: ElliotableDelegate {
     /// 강의 목록을 터치하면 호출됩니다.
     /// - Parameters:
     ///   - elliotable: Elliotable
     ///   - selectedCourse: ElliottEvent
     func elliotable(elliotable: Elliotable, didSelectCourse selectedCourse: ElliottEvent) {
-        
     }
     
     
@@ -125,10 +86,8 @@ extension FriendLectureViewController: ElliotableDelegate {
     ///   - elliotable: Elliotable
     ///   - longSelectedCourse: ElliottEvent
     func elliotable(elliotable: Elliotable, didLongSelectCourse longSelectedCourse: ElliottEvent) {
-        
     }
 }
-
 
 
 
@@ -155,6 +114,6 @@ extension FriendLectureViewController: ElliotableDataSource {
     /// - Parameter elliotable: Elliotable
     /// - Returns: 강의 정보 리스트
     func courseItems(in elliotable: Elliotable) -> [ElliottEvent] {
-        return courseList
+        return friendCourseList
     }
 }

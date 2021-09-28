@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7h3-5o-ULF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7h3-5o-ULF">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -2119,7 +2119,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ec-ce-7BN">
                                 <rect key="frame" x="20" y="189.5" width="374" height="13.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="비밀번호를 형식에 맞게 설정해주세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9y-8M-v1N">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="잘못된 비밀번호 형식입니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9y-8M-v1N">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="13.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                         <color key="textColor" systemColor="systemRedColor"/>
@@ -2196,12 +2196,12 @@
                     <navigationItem key="navigationItem" title="비밀번호 변경" id="9KP-OI-cVh"/>
                     <connections>
                         <outlet property="changeButton" destination="IWI-bd-aFD" id="gWk-Ab-ZZk"/>
-                        <outlet property="checkField" destination="dQI-wL-cs5" id="ksJ-rD-PKB"/>
-                        <outlet property="checkPasswordContainerView" destination="Kh0-i0-4mJ" id="2HS-WS-w0R"/>
-                        <outlet property="checkPasswordLabel" destination="aBH-Jg-67V" id="uLe-gr-Hhs"/>
-                        <outlet property="passwordContainerView" destination="4Ec-ce-7BN" id="gBY-A1-Bc1"/>
+                        <outlet property="checkPasswordField" destination="dQI-wL-cs5" id="xWR-lC-006"/>
+                        <outlet property="checkPasswordMessageContainerView" destination="Kh0-i0-4mJ" id="PHQ-Eh-K7o"/>
+                        <outlet property="checkPasswordMessageLabel" destination="aBH-Jg-67V" id="VkF-5J-FT2"/>
                         <outlet property="passwordField" destination="ZGC-ZN-H1n" id="RHs-Jv-VCx"/>
-                        <outlet property="passwordLabel" destination="r9y-8M-v1N" id="laL-PB-shj"/>
+                        <outlet property="passwordMessageContainerView" destination="4Ec-ce-7BN" id="mTQ-qN-Bxi"/>
+                        <outlet property="passwordMessageLabel" destination="r9y-8M-v1N" id="yRe-Ml-C7h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ib3-DK-a2c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2268,7 +2268,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PDx-5c-Myp">
                                 <rect key="frame" x="20" y="179.5" width="374" height="13.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이메일 형식이 잘못되었습니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Md-Zm-aDm">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="잘못된 이메일 형식입니다." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Md-Zm-aDm">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="13.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <color key="textColor" systemColor="systemRedColor"/>
@@ -2303,8 +2303,9 @@
                     <navigationItem key="navigationItem" title="이메일 변경" id="4eh-Zw-LLf"/>
                     <connections>
                         <outlet property="changeButton" destination="bqd-Xo-F8X" id="5RK-mi-QuP"/>
-                        <outlet property="emailErrorContainerView" destination="PDx-5c-Myp" id="fOM-5S-9a7"/>
                         <outlet property="emailField" destination="Z1E-le-8yT" id="aP2-mF-neK"/>
+                        <outlet property="emailMessageContainerView" destination="PDx-5c-Myp" id="KqD-dU-JE0"/>
+                        <outlet property="messageLabel" destination="9Md-Zm-aDm" id="DD6-ar-R3P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HCu-R3-B05" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
