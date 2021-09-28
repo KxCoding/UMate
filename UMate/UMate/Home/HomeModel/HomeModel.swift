@@ -16,7 +16,7 @@ enum HomeViewCellType {
     case contest(HomeViewCellData)
 }
 
-/// 실제 데이타를 저장할 구조체
+/// 홈뷰 구성화면 데이타
 /// Author: 황신택
 struct HomeViewCellData {
     let cellTitle: String

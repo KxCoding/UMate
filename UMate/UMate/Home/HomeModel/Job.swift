@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-/// Json형식을 파싱하기 위한 구조체
+/// Json형식 파싱 형태
 /// Author: 황신택
 struct JobData: Codable {
     struct Job: Codable {
