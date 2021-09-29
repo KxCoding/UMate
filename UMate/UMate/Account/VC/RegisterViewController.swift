@@ -64,7 +64,7 @@ class RegisterViewController: UIViewController {
     @IBAction func makeEnterenceOfYearData(_ sender: UIButton) {
         /// 높이가 적절 하다면 드롭다운을 show 합니다.
         menu?.show()
-        /// 사용자가 셀을 선택시 액션을 클로저로 받는데 enterenceYearLabel에 선택한 셀의 item을 전달한다.
+        /// 사용자가 셀을 선택시 enterenceYearLabel에 선택한 셀의 item을 전달한다.
         menu?.selectionAction = { [weak self] index, item in
             self?.enterenceYearLabel.text = item
             UserDefaults.standard.set(item, forKey: "enterenceYearKey")
@@ -73,7 +73,7 @@ class RegisterViewController: UIViewController {
     
     
     /// 입혁년도와 학교이름이 입력되어있는지 확인
-    /// 검증되면 다음화면으로 이동.
+    /// 검증되면 다음화면으로 이동
     /// - Parameter sender: nextButton
     @IBAction func checkToConditions(_ sender: Any) {
         guard let enterenceYearText = enterenceYearLabel.text,
@@ -93,37 +93,37 @@ class RegisterViewController: UIViewController {
             $0?.clipsToBounds = true
         }
         
-        /// 버튼에 공통 스타일 적용.
+        /// 버튼에 공통 스타일 적용
         nextButton.setButtonTheme()
         
-        /// 입학년도 텍스트필드를 초기화.
+        /// 입학년도 텍스트필드를 초기화
         enterenceYearLabel.text = "2021학번"
         
-        /// 네비게이션 back button을 다크모드 라이트모드를 지원.
+        /// 네비게이션 back button을 다크모드 라이트모드를 지원
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
-        /// 메뉴 anchorView를 아울렛 enterenceYearView 로 저장.
+        /// 메뉴 anchorView를 아울렛 enterenceYearView 로 저장
         menu?.anchorView = enterenceYearView
         
-        /// 메뉴의 앵커뷰 높이를 바인딩.
+        /// 메뉴의 앵커뷰 높이를 바인딩
         guard let height = menu?.anchorView?.plainView.bounds.height else { return }
         
-        /// 메뉴의 bottomOffset을 초기화,
+        /// 메뉴의 bottomOffset을 초기화
         menu?.bottomOffset = CGPoint(x: 0, y: height)
         
-        /// 메뉴의 width 를 초기화.
+        /// 메뉴의 width 를 초기화
         menu?.width = 150
         
-        /// 메뉴의 백그라운드 컬러를 다크모드 라이트모드를 지원.
+        /// 메뉴의 백그라운드 컬러를 다크모드 라이트모드를 지원
         menu?.backgroundColor = UIColor.dynamicColor(light: .white, dark: .darkGray)
         
-        /// 사용자가 view를 탭할시 키보드가 내려감.
+        /// 사용자가 view를 탭할시 키보드가 내려감
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         dismissZone.addGestureRecognizer(tap)
         dismissZone2.addGestureRecognizer(tap)
         
         
-        /// 노티피케이션 포스트를 받아서 userInfo 데이타를 받은뒤 유저 디폴트에 저장.
+        /// 노티피케이션 포스트를 받아서 userInfo 데이타를 받은뒤 유저 디폴트에 저장
         token = NotificationCenter.default.addObserver(forName: .didTapSendUniversityName, object: nil, queue: .main, using: { [weak self] noti in
             guard let strongSelf = self else { return }
             guard let universityName = noti.userInfo?[SearchLIstUniversityViewController.universityNameTransitionKey] as? String else { return }
@@ -144,7 +144,7 @@ class RegisterViewController: UIViewController {
     }
     
     
-    /// 키보드를 내려가게 함.
+    /// 키보드를 내려가게 함
     @objc func dismissKeyboard() {
         dismissZone2.endEditing(true)
     }

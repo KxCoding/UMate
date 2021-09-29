@@ -20,15 +20,15 @@ class SearchLIstUniversityViewController: UIViewController {
     @IBOutlet weak var listTableView: UITableView!
     
     /// 학교리스트를 저장하는 문자열 배열
-    var universityName = [String]()
+    var universityNames = [String]()
     
     /// 검색시 나오는 학교리스트 문자열 배열
-    var searchUniversity = [String]()
+    var searchedUniversity = [String]()
     
     /// 검색을 안했을때의 결과와 검색을 했을때의 결과값을
     var searching = false
     
-    /// 노티피케이션으로 잔달할 유저인포키
+    /// 노티피케이션으로 전달할 유저인포키
     static let universityNameTransitionKey = "universityNameTransitionKey"
     
     /// 이전화면으로 가는 메소드
@@ -77,12 +77,12 @@ class SearchLIstUniversityViewController: UIViewController {
         let removeSpace = universityNameStr.replacingOccurrences(of: " ", with: "")
         
         /// 쉼표 기준으로 문자를 배열로 만든다.
-        universityName = removeSpace.components(separatedBy: ",")
+        universityNames = removeSpace.components(separatedBy: ",")
         
         /// 배열로 만든 universityName을 포인문을 이용하여 공백을 제거하고 universityName배열에 append한다.
-        for str in universityName {
+        for str in universityNames {
             let value = str.trimmingCharacters(in: .whitespaces)
-            universityName.append(value)
+            universityNames.append(value)
 
         }
      
@@ -100,10 +100,10 @@ extension SearchLIstUniversityViewController: UITableViewDataSource {
     /// - Returns: Int
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching {
-            return searchUniversity.count
+            return searchedUniversity.count
         }
         
-        return universityName.count
+        return universityNames.count
     }
     
     
@@ -116,9 +116,9 @@ extension SearchLIstUniversityViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.selectionStyle = .none
         if searching {
-            cell.textLabel?.text = searchUniversity[indexPath.row]
+            cell.textLabel?.text = searchedUniversity[indexPath.row]
         } else {
-            cell.textLabel?.text = universityName[indexPath.row]
+            cell.textLabel?.text = universityNames[indexPath.row]
         }
         
         return cell
@@ -135,9 +135,9 @@ extension SearchLIstUniversityViewController: UITableViewDelegate {
     /// - Returns: searching true일 경우에는 searchUniversity[indexPath.row] searching false 일 경우에는 universityName[indexPath.row]
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if searching {
-            searchBar.text = searchUniversity[indexPath.row]
+            searchBar.text = searchedUniversity[indexPath.row]
         } else {
-            searchBar.text = universityName[indexPath.row]
+            searchBar.text = universityNames[indexPath.row]
         }
         
     }
@@ -153,7 +153,7 @@ extension SearchLIstUniversityViewController: UISearchBarDelegate {
     ///   - searchText: searchText
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searching = true
-        searchUniversity = universityName.filter{ $0.prefix(searchText.count) == searchText }
+        searchedUniversity = universityNames.filter{ $0.prefix(searchText.count) == searchText }
         
         listTableView.reloadData()
     }

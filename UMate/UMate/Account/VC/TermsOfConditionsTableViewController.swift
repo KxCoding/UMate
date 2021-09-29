@@ -19,7 +19,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
     @IBOutlet weak var checkBox5: BEMCheckBox!
     @IBOutlet weak var checkBox6: BEMCheckBox!
     
-    /// 최소 나이 레이블.
+    /// 최소 나이 레이블
     @IBOutlet weak var minimumAge: UILabel!
     
     /// 다음화면으로 가는 버튼
@@ -50,7 +50,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ///체크박스의 각종 속성들을 클로저로 초기화.
+        ///체크박스의 각종 속성들을 클로저로 초기화
         checkbox1.delegate = self
         [checkbox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6].forEach({
             $0?.animationDuration = 0.3
@@ -70,10 +70,10 @@ class TermsOfConditionsTableViewController: UITableViewController {
             
         })
         
-        /// 버튼에 공통 스타일 적용.
+        /// 버튼에 공통 스타일 적용
         verifyEmailButton.setButtonTheme()
         
-        /// Assets에 추가해놓은 이용약관 스크립트  txt파일을 문자열로 가져온다.
+        /// Assets에 추가해놓은 이용약관 스크립트  txt파일을 문자열로 가져온다
         if let serviceAssetData = NSDataAsset(name: "Service")?.data,
            let privacyAssetData = NSDataAsset(name: "Privacy")?.data,
            let locationAssetData = NSDataAsset(name: "Location")?.data,

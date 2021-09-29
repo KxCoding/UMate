@@ -19,28 +19,28 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     /// 애니메이션 효과를 주기위해서 사용.
     @IBOutlet weak var passwordLabelCenterX: NSLayoutConstraint!
     
-    /// ID 레이블.
+    /// ID 레이블
     @IBOutlet weak var idLabel: UILabel!
     
-    /// PW 레이블.
+    /// PW 레이블
     @IBOutlet weak var passwordLabel: UILabel!
     
-    /// Email 텍스트 필드.
+    /// Email 텍스트 필드
     @IBOutlet weak var emailTextField: UITextField!
     
-    /// 아이디 찾기 버튼.
+    /// 아이디 찾기 버튼
     @IBOutlet weak var findIdButton: UIButton!
     
-    /// Information 정보를 주기 위한 텍스트뷰.
+    /// Information 정보를 주기 위한 텍스트뷰
     @IBOutlet weak var infoTextView: UITextView!
     
-    /// Button이름을 넣기위한 레이블.
+    /// Button이름을 넣기위한 레이블
     @IBOutlet weak var buttonLabel: UILabel!
     
-    /// 좌우로 움직이는 뷰.
+    /// 좌우로 움직이는 뷰
     @IBOutlet weak var activatedBar: UIView!
     
-    /// Dismiss한다
+    /// Dismiss한다.
     /// - Parameter sender: Left UIbutton
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true)
@@ -50,7 +50,7 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     /// 아이디란을 탭할시 activatedBar 뷰의 수평가운데 제약에 우선순위 CH/ CR 값을 토글하면서 애니메이션효과를 준다.
     /// - Parameter sender: UIbutton
     @IBAction func didTapId(_ sender: Any) {
-        /// Priority의 값을 high, low로 토글하면서 좌우 애니매이션 효과.
+        /// Priority의 값을 high, low로 토글하면서 좌우 애니매이션 효과
         idLabelCenterX.priority = .defaultHigh
         passwordLabelCenterX.priority = .defaultLow
         
@@ -60,7 +60,7 @@ class FindPasswordandEmailTableViewController: UITableViewController {
         /// 버튼 이름 초기화
         buttonLabel.text = "아이디 찾기"
         
-        /// 비밀번호 탭으로 이동시 숨김.
+        /// 비밀번호 탭으로 이동시 숨김
         infoTextView.isHidden = false
         
         /// 다크모드 라이트모드 지원
@@ -89,7 +89,7 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     /// 비밀번호를 탭할시 activatedBar 뷰의 수평가운데 제약에 CH/ CR 우선순위 값을 토글하면서 애니메이션효과를 준다.
     /// - Parameter sender: UIbutton
     @IBAction func didTapPassword(_ sender: Any) {
-        /// Priority의 값을 high, low로 토글하면서 좌우 애니매이션 효과를 줍니다.
+        /// Priority의 값을 high, low로 토글하면서 좌우 애니매이션 효과를 줍니다
         passwordLabelCenterX.priority = .defaultHigh
         idLabelCenterX.priority = .defaultLow
         
@@ -125,7 +125,7 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     }
     
     
-    /// 이메일 조건을 체크.
+    /// 이메일 조건을 체크
     /// - Parameter sender: IdButton
     @IBAction func checkToEmailCondtions(_ sender: Any) {
         guard let email = emailTextField.text,
@@ -140,16 +140,16 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// 버튼에 공통 스타일을 적용.
+        /// 버튼에 공통 스타일을 적용
         findIdButton.setButtonTheme()
         
-        /// activatedBar 컬러를 다크모드 라이트 모드에 따라서 초기화.
+        /// activatedBar 컬러를 다크모드 라이트 모드에 따라서 초기화
         activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
         
-        /// 네베이게션 왼쪽 바버튼 라이트 모드 다크모드에 따라서 색상이 다르게 초기화.
+        /// 네베이게션 왼쪽 바버튼 라이트 모드 다크모드에 따라서 색상이 다르게 초기화
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
         
-        /// 텍스트뷰 편집 불가하게 초기화.
+        /// 텍스트뷰 편집 불가하게 초기화
         infoTextView.isEditable = false
         infoTextView.isSelectable = false
     }

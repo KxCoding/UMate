@@ -8,7 +8,7 @@
 import UIKit
 import KeychainSwift
 
-/// 로그인 화면을 구성하는 클래스.  
+/// 로그인 화면을 구성하는 클래스
 /// Author: 황신택
 class AccountViewController: UIViewController {
     /// 아이디 텍스트필드
@@ -26,17 +26,17 @@ class AccountViewController: UIViewController {
     /// 키체인 계정을 가져오기 위한 인스턴스를 생성.
     let keychain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
-    /// 특정 텍스트필드에 조건을 줘야하기 때문에 속성을 추가.
+    /// 특정 텍스트필드에 조건을 줘야하기 때문에 속성을 추가
     var activeTextField: UITextField? = nil
     
     
     
-    /// 로그인시 키체인 계정을 체크합니다. 성공시 홈화면으로 이동.
+    /// 로그인시 키체인 계정을 체크합니다. 성공시 홈화면으로 이동
     /// - Parameter sender: 로그인 버튼
     @IBAction func login(_ sender: Any) {
        /*
          MARK: 협업을 하기위해서 잠시 주석처리.
-        // 키체인에 저장되어있는 이메일 데이타를 바인딩 합니다
+        // 키체인에 저장되어있는 이메일 데이타를 바인딩 합니다.
         guard let safeEmail = keychain.get(Keys.userEmailKey),
         // 키체인에 저장되어있는 비밀번호 데이타를 바인딩 합니다.
               let safePassword = keychain.get(Keys.passwordKey),
@@ -63,7 +63,7 @@ class AccountViewController: UIViewController {
         KeyboardWillShow()
         KeyboardWillHide()
         
-        /// 버튼에 공통 스타일 적용.
+        /// 버튼에 공통 스타일 적용
         loginButton.setButtonTheme()
         
         /// 작업하기 편하게 미리 저장된 키체인 계정으로 초기화합니다.
@@ -81,7 +81,7 @@ class AccountViewController: UIViewController {
     }
     
     
-    /// 뷰를 탭할시 키보드 내려감.
+    /// 뷰를 탭할시 키보드 내려간다.
     /// - Parameter sender: UITapGestureRecognizer
     @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
@@ -94,7 +94,7 @@ class AccountViewController: UIViewController {
 /// 키보드 노티피케이션 확장자
 /// Author: 황신택
 extension AccountViewController {
-    ///키보드가 텍스트필드를 가리게 되면 뷰가 위로 올라가게 만들어 줍니다.   
+    ///키보드가 텍스트필드를 가리게 되면 뷰가 위로 올라가게 만들어 줍니다.
     func KeyboardWillShow() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return  }

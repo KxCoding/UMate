@@ -7,10 +7,13 @@
 
 import UIKit
 
+/// 홈화면을 담당하는 클래스입니다.
+/// Author: 황신택
 class HomeViewController: UIViewController {
+    /// 홈화면 콜렉션뷰
     @IBOutlet weak var listCollectionView: UICollectionView!
     
-    /// 홈화면 설계리스트 메소드
+    /// 홈화면 설계리스트 속성
   var list = getHomeDataList()
     
     override func viewDidLoad() {
@@ -22,11 +25,23 @@ class HomeViewController: UIViewController {
 }
 
 
+
 extension HomeViewController: UICollectionViewDataSource {
+    /// 섹션에 아이템을 개수를 지정하는 메소드
+    /// - Parameters:
+    ///   - collectionView: 해당 요청을 보낸 UICollectionView
+    ///   - section: 섹션의 위치
+    /// - Returns: 아이템 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
     
+    
+    /// 셀에 데이타를 지정하는 메소드
+    /// - Parameters:
+    ///   - collectionView: 관련 요청을 보낸 UICollectionView
+    ///   - indexPath: 셀의 IndexPath
+    /// - Returns: 안성된 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let type = list[indexPath.item]
         
@@ -60,12 +75,16 @@ extension HomeViewController: UICollectionViewDataSource {
     
 }
 
-extension HomeViewController: UICollectionViewDelegate {
-    
-}
 
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    
+    /// 델리게이트에게 지정된 아이템의 셀의 사이즈를 물어봅니다.
+    /// - Parameters:
+    ///   - collectionView: 이 메소드를 호출하는 컬렉션 뷰
+    ///   - collectionViewLayout: 정보를 요청하는 layout 객체
+    ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
+    /// - Returns: 셀의 사이즈
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
         

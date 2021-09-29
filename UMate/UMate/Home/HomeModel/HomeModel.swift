@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// 셀타입 열거형으로 만들고 연관값 사용.
-/// 속성 전부 동일하나 구분지어 사용해야하기 때문에 연관값을 사용.
+/// 셀타입 열거형으로 만들고 연관값 사용
+/// 속성 전부 동일하나 구분지어 사용해야하기 때문에 연관값을 사용
 /// Author: 황신택
 enum HomeViewCellType {
     case main(HomeViewCellData)

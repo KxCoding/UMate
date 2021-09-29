@@ -11,26 +11,26 @@ import KeychainSwift
 /// 이메일을 검증하고 보안 코드를 발송하는 클래스입니다.
 /// Author:  황신택
 class EmailVerifyViewController: UIViewController {
-    /// 보안코드를 발송 버튼.
+    /// 보안코드를 발송 버튼
     @IBOutlet weak var sendCodeButton: UIButton!
     
-    /// 다음 화면으로 가는 버튼.
+    /// 다음 화면으로 가는 버튼
     @IBOutlet weak var emailVerificationButton: UIButton!
     
-    /// 이메일을 입력하는 텍스트필드.
+    /// 이메일을 입력하는 텍스트필드
     @IBOutlet weak var emailTextField: UITextField!
     
-    /// 인증받은 코드를 입력하는 텍스트필드.
+    /// 인증받은 코드를 입력하는 텍스트필드
     @IBOutlet weak var codeTextField: UITextField!
     
-    /// 편집이 활성화 된 텍스트필드.
+    /// 편집이 활성화 된 텍스트필드
     /// 편집 상태에 따라 조건을 판단하기 위해서 사용합니다.
     var activeTextField: UITextField? = nil
     
     /// 이메일을 키체인에 저장하기위해서 KeychainSwift 인스턴스 선언
     var keyChain = KeychainSwift(keyPrefix: Keys.prefixKey)
     
-    /// 이메일 검증을 받기위해 코드 전송.
+    /// 이메일 검증을 받기위해 코드 전송
     /// - Parameter sender: sendCodeButton
     @IBAction func sendTheCode(_ sender: Any) {
         guard let email = emailTextField.text,
@@ -40,7 +40,7 @@ class EmailVerifyViewController: UIViewController {
                   return
               }
         
-        /// 이메일을 키체인에 저장.
+        /// 이메일을 키체인에 저장
         if keyChain.set(email, forKey: Keys.userEmailKey, withAccess: .accessibleAfterFirstUnlock) {
             print("Succeed Set email")
         } else {
@@ -49,7 +49,7 @@ class EmailVerifyViewController: UIViewController {
     }
     
     
-    /// 입력한 코드가 맞는지 검사.
+    /// 입력한 코드가 맞는지 검사
     /// - Parameter sender: emailVerificationButton
     @IBAction func checkToVerifiedCode(_ sender: Any) {
         guard let codeField = codeTextField.text, codeField == "12345678" else {
@@ -59,7 +59,7 @@ class EmailVerifyViewController: UIViewController {
         
     }
     
-    ///  회원가입시 인증받은 이메일로만 가입할수있게 전달.
+    ///  회원가입시 인증받은 이메일로만 가입할수있게 전달
     ///   - Parameters:
     ///   - segue: DetailRegisterViewController
     ///   - sender: Any?
@@ -90,12 +90,12 @@ class EmailVerifyViewController: UIViewController {
         // 더미데이터 및 delegate선언
         codeTextField.delegate = self
         
-        // 백그라운드 탭시 키보드 아래로.
+        // 백그라운드 탭시 키보드 아래로
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailRegisterViewController.backgroundTap))
         self.view.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    /// 뷰를 탭할시 키보드 내려감.
+    /// 뷰를 탭할시 키보드 내려감
     /// - Parameter sender: UITapGestureRecognizer
     @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
