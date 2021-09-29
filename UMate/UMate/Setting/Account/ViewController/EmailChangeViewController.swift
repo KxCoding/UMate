@@ -8,28 +8,28 @@
 import UIKit
 
 
-/// 사용자 계정 화면에서 이메일 변경 화면을 보여주는 ViewController 클래스
+/// 사용자 계정 설정의 이메일 변경 화면 ViewController 클래스.
+///
+/// 이메일 변경 작업을 수행합니다.
 /// - Author: 안상희
 class EmailChangeViewController: UIViewController {
-    // MARK: Outlet
-    /// 이메일을 입력하는 textField입니다.
+    /// 이메일을 입력하는 textField.
     @IBOutlet weak var emailField: UITextField!
     
-    /// 이메일 형식이 잘못되면 나타나는 UIView입니다.
+    /// 이메일 형식이 잘못되면 나타나는 UIView.
     @IBOutlet weak var emailMessageContainerView: UIView!
     
-    /// 이메일 형식이 올바른 형식인지 알려주는 메시지 라벨입니다.
+    /// 이메일 형식이 올바른 형식인지 알려주는 메시지 UILabel.
     @IBOutlet weak var messageLabel: UILabel!
     
-    /// 이메일을 변경하는 UIButton입니다.
+    /// 이메일을 변경하는 UIButton.
     @IBOutlet weak var changeButton: UIButton!
+
     
-    
-    // MARK: Action
     /// 이메일 변경 버튼이 눌리면 호출됩니다.
     ///
     /// 이메일 변경 확인 창이 뜨고, 사용자 계정 설정 화면으로 pop 됩니다.
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: UIButton.
     @IBAction func changeButtonDidTapped(_ sender: UIButton) {
         emailMessageContainerView.isHidden = true
         
@@ -71,12 +71,13 @@ extension EmailChangeViewController: UITextFieldDelegate {
     ///
     /// - Parameters:
     ///   - textField: 텍스트를 포함하고 있는 TextField.
-    ///   - range: 지정된 문자 범위입니다.
-    ///   - string: 지정된 범위에 대한 대체 문자열입니다.
+    ///   - range: 지정된 문자 범위.
+    ///   - string: 지정된 범위에 대한 대체 문자열.
     /// - Returns: Bool
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
+        // textField에 텍스트가 입력되었을 경우에 수행됩니다.
         if var email = textField.text {
             // 현재 사용자가 입력한 문자까지 포함하는 이메일
             let currentEmail: String
@@ -91,7 +92,6 @@ extension EmailChangeViewController: UITextFieldDelegate {
                 currentEmail = email + string
             }
             
-            
             guard let _ = currentEmail.range(of: Regex.email, options: .regularExpression) else {
                 messageLabel.text = "잘못된 이메일 형식입니다."
                 messageLabel.textColor = .systemRed
@@ -100,7 +100,6 @@ extension EmailChangeViewController: UITextFieldDelegate {
                 changeButton.disabledButton()
                 return true
             }
-            
             
             messageLabel.text = "올바른 이메일 형식입니다."
             messageLabel.textColor = .systemBlue
@@ -115,7 +114,7 @@ extension EmailChangeViewController: UITextFieldDelegate {
     /// Return 버튼을 눌렀을 때의 process에 대해 delegate에게 묻습니다.
     ///
     /// Return 버튼을 누르면 입력 커서가 사라집니다.
-    /// - Parameter textField: Return 버튼이 눌려진 해당 TextField
+    /// - Parameter textField: Return 버튼이 눌려진 해당 TextField.
     /// - Returns: TextField가 return 버튼에 대한 동작을 구현해야하는 경우 true이고, 그렇지 않으면 false입니다.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         emailField.resignFirstResponder()

@@ -7,14 +7,16 @@
 
 import UIKit
 
-/// 사용자 계정 화면에서 이메일 변경을 할 것인지, 비밀번호 변경을 할 것인지의 화면을 보여주는 ViewController 클래스
+
+/// 사용자 계정 설정의 이메일 변경 / 비밀번호 변경을 선택하는 화면 ViewController 클래스.
+///
+/// 이메일 변경을 할 것인지, 비밀번호 변경을 할 것인지 선택합니다.
 /// - Author: 안상희
 class ChooseEmailPasswordViewController: UIViewController {
-    // MARK: Outlet
-    /// 이메일 변경 UIButton 버튼입니다.
+    /// 이메일 변경 UIButton.
     @IBOutlet weak var emailButton: UIButton!
     
-    /// 비밀번호 변경 UIButton 버튼입니다.
+    /// 비밀번호 변경 UIButton.
     @IBOutlet weak var passwordButton: UIButton!
     
     

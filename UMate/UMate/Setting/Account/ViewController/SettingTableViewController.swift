@@ -8,12 +8,15 @@
 import UIKit
 
 
-/// 사용자 계정 화면을 보여주는 TableViewController 클래스
+/// 사용자 계정 설정 화면 TableViewController 클래스.
+///
+/// 사용자 계정 설정과 관련된 메뉴를 선택하여 수행합니다.
 /// - Author: 황신택, 안상희
 class SettingTableViewController: UITableViewController {
-    /// 선택한 메뉴의 문자열을 저장하는 변수입니다.
+    /// 선택한 메뉴의 문자열을 저장하는 변수.
     /// - Author: 안상희
     var selectedMenu: String?
+    
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var emailLabel: UILabel!
@@ -31,7 +34,7 @@ class SettingTableViewController: UITableViewController {
     
     
     /// 커뮤니티 이용 규칙 메뉴가 클릭될 때 실행됩니다.
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: UIButton.
     /// - Author: 안상희
     @IBAction func communityRuleButtonDidTapped(_ sender: UIButton) {
         selectedMenu = "커뮤니티 이용 규칙"
@@ -40,7 +43,7 @@ class SettingTableViewController: UITableViewController {
     
     
     /// 알림 설정 메뉴가 클릭될 때 실행됩니다.
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: UIButton.
     /// - Author: 안상희
     @IBAction func alertButtonDidTapped(_ sender: UIButton) {
         alertVersion2(message: "알림 기능 이용을 위해 아이폰의 [설정] > [UMate]에서 알림을 허용해주세요.") { [weak self] action in
@@ -54,7 +57,7 @@ class SettingTableViewController: UITableViewController {
     
     
     /// 캐시 삭제 메뉴가 클릭될 때 실행됩니다.
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: UIButton.
     /// - Author: 안상희
     @IBAction func cacheDeleteButtonDidTapped(_ sender: UIButton) {
         alertVersion2(message: "캐시를 삭제하시겠습니까?") { [weak self] action in
@@ -63,14 +66,14 @@ class SettingTableViewController: UITableViewController {
     
     
     /// 공지사항 메뉴가 클릭될 때 실행됩니다.
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: UIButton.
     /// - Author: 안상희
     @IBAction func noticeButtonDidTapped(_ sender: UIButton) {
     }
     
     
     /// 서비스 이용약관 메뉴가 클릭될 때 실행됩니다.
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: UIButton.
     /// - Author: 안상희
     @IBAction func serviceUseRuleButtonDidTapped(_ sender: UIButton) {
         selectedMenu = "서비스 이용약관"
@@ -79,7 +82,7 @@ class SettingTableViewController: UITableViewController {
     
    
     /// 개인정보 처리방침 메뉴가 클릭될 때 실행됩니다.
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: UIButton.
     /// - Author: 안상희
     @IBAction func userInfoRuleButtonDidTapped(_ sender: UIButton) {
         selectedMenu = "개인정보 처리방침"
@@ -88,24 +91,13 @@ class SettingTableViewController: UITableViewController {
     
     
     /// 오픈소스 라이선스 메뉴가 클릭될 때 실행됩니다.
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: UIButton.
     /// - Author: 안상희
     @IBAction func openSourceButtonDidTapped(_ sender: UIButton) {
         selectedMenu = "오픈소스 라이선스"
         sendMenuTitle()
     }
     
-    
-    /// 선택한 메뉴 타이틀을 다음 뷰컨트롤러로 보내주는 역할을 합니다.
-    /// - Author: 안상희
-    func sendMenuTitle() {
-        guard let vc =
-                self.storyboard?.instantiateViewController(withIdentifier: "AppInformationVC") as?
-                AppInformationTextViewController else { return }
-        
-        vc.menu = selectedMenu
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
     
     
     /// Declear to remove observer 
@@ -130,6 +122,18 @@ class SettingTableViewController: UITableViewController {
                 }
             })
         }
+    }
+    
+    
+    /// 선택한 메뉴 타이틀을 다음 뷰컨트롤러로 보내주는 역할을 합니다.
+    /// - Author: 안상희
+    func sendMenuTitle() {
+        guard let vc =
+                self.storyboard?.instantiateViewController(withIdentifier: "AppInformationVC") as?
+                AppInformationTextViewController else { return }
+        
+        vc.menu = selectedMenu
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -175,6 +179,5 @@ class SettingTableViewController: UITableViewController {
         enterYearAndUniNameLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         emailLabel.textColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         navigationController?.navigationBar.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
-        
     }
 }
