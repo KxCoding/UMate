@@ -9,21 +9,22 @@ import Elliotable
 import UIKit
 
 
-/// 본인의 시간표를 볼 수 있는 ViewController 클래스
+/// TimteTable 탭의 시간표 화면 ViewController 클래스.
+///
+/// 본인의 시간표를 볼 수 있습니다.
 /// - Author: 안상희
 class TimetableViewController: UIViewController {
     /// 요일 (월, 화, 수, 목, 금) 정보를 담은 배열입니다.
     let weekdays = Lecture.shared.dayString
     
-    // MARK: Outlet
-    /// 시간표를 나타내는 View
+    /// 시간표를 나타내는 View.
     @IBOutlet weak var timeTableView: Elliotable!
     
     
     /// 친구 이름을 클릭하면 화면이 넘어가기 전에 호출됩니다.
     /// - Parameters:
-    ///   - segue: UIStoryboardSegue
-    ///   - sender: UITableViewCell
+    ///   - segue: UIStoryboardSegue.
+    ///   - sender: UITableViewCell.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "show" {
             let tableViewController : AddLectureTableViewController =
@@ -76,16 +77,16 @@ class TimetableViewController: UIViewController {
 extension TimetableViewController: ElliotableDelegate {
     /// 강의 목록을 터치하면 호출됩니다.
     /// - Parameters:
-    ///   - elliotable: Elliotable
-    ///   - selectedCourse: ElliottEvent
+    ///   - elliotable: Elliotable.
+    ///   - selectedCourse: ElliottEvent.
     func elliotable(elliotable: Elliotable, didSelectCourse selectedCourse: ElliottEvent) {
     }
     
     
     /// 강의 목록을 길게 터치하면 호출됩니다.
     /// - Parameters:
-    ///   - elliotable: Elliotable
-    ///   - longSelectedCourse: ElliottEvent
+    ///   - elliotable: Elliotable.
+    ///   - longSelectedCourse: ElliottEvent.
     func elliotable(elliotable: Elliotable, didLongSelectCourse longSelectedCourse: ElliottEvent) {
     }
 }
@@ -95,25 +96,25 @@ extension TimetableViewController: ElliotableDelegate {
 extension TimetableViewController: ElliotableDataSource {
     /// 요일 텍스트를 가져옵니다.
     /// - Parameters:
-    ///   - elliotable: Elliotable
-    ///   - dayPerIndex: 요일의 갯수 (월, 화, 수, 목, 금의 5개)
-    /// - Returns: 요일 정보 (월, 화, 수, 목, 금)
+    ///   - elliotable: Elliotable.
+    ///   - dayPerIndex: 요일의 갯수 (월, 화, 수, 목, 금의 5개).
+    /// - Returns: 요일 정보 (월, 화, 수, 목, 금).
     func elliotable(elliotable: Elliotable, at dayPerIndex: Int) -> String {
         return weekdays[dayPerIndex]
     }
     
     
     /// 요일이 몇 개 있는지 가져옵니다.
-    /// - Parameter elliotable: Elliotable
-    /// - Returns: 요일의 갯수
+    /// - Parameter elliotable: Elliotable.
+    /// - Returns: 요일의 갯수.
     func numberOfDays(in elliotable: Elliotable) -> Int {
         return weekdays.count
     }
     
     
     /// 강의 정보를 가져옵니다.
-    /// - Parameter elliotable: Elliotable
-    /// - Returns: 강의 정보 리스트
+    /// - Parameter elliotable: Elliotable.
+    /// - Returns: 강의 정보 리스트.
     func courseItems(in elliotable: Elliotable) -> [ElliottEvent] {
         return Lecture.shared.courseList
     }
@@ -123,7 +124,7 @@ extension TimetableViewController: ElliotableDataSource {
 
 extension TimetableViewController: SendTimeTableDataDelegate {
     /// 시간표 데이터를 전달합니다.
-    /// - Parameter data: 시간표 정보를 담은 리스트 [ElliottEvent]
+    /// - Parameter data: 시간표 정보를 담은 리스트 [ElliottEvent].
     func sendData(data: [ElliottEvent]) {
         for i in 0...data.count - 1 {
             Lecture.shared.courseList.append(data[i])
