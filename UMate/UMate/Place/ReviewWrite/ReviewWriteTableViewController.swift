@@ -40,7 +40,7 @@ class ReviewWriteTableViewController: UITableViewController {
     /// - Author: 장현우(heoun3089@gmail.com)
     var reviewData: PlaceReviewItem?
     
-    /// 이전 화면에서 가게 이름을 받아올 변수
+    /// 이전 화면에서 가게 이름을 받아올 속성
     /// - Author: 장현우(heoun3089@gmail.com)
     var placeName: String?
     
@@ -116,7 +116,7 @@ class ReviewWriteTableViewController: UITableViewController {
         guard let placeName = placeName else { return }
 
         let review = PlaceReviewItem(reviewText: reviewTextView.text,
-                                     date: Date().reviewDate,
+                                     date: Date(),
                                      image: UIImage(named: "search_02"),
                                      placeName: placeName,
                                      starPoint: 4.5,
@@ -360,7 +360,6 @@ class ReviewWriteTableViewController: UITableViewController {
         let reviewLoaf = Loaf(message, state: .warning, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self)
         
         reviewLoaf.show(.short, completionHandler: handler)
-
     }
     
     
