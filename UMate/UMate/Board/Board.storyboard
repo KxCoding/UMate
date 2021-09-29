@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ONU-BN-eP4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ONU-BN-eP4">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -245,7 +246,7 @@
                                 <color key="sectionIndexColor" systemColor="systemGray5Color"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FreeBoardTableViewCell" rowHeight="132" id="Nou-f5-0eX" customClass="FreeBoardTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="132"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="132"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nou-f5-0eX" id="Bq3-6r-dgG">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="132"/>
@@ -427,21 +428,20 @@
             <objects>
                 <viewController id="jcD-Qk-L5Q" customClass="ComposeViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lKk-gX-GNp">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
+                        <rect key="frame" x="0.0" y="0.0" width="416" height="900"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C3J-oV-hj6">
-                                <rect key="frame" x="16" y="146" width="382" height="1"/>
+                                <rect key="frame" x="16" y="146" width="384" height="1"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="HaX-WV-H1W"/>
-                                    <constraint firstAttribute="height" constant="1" id="uYB-in-LjH"/>
+                                    <constraint firstAttribute="height" constant="1" id="1uG-aV-FRy"/>
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Xr-iL-GRb">
-                                <rect key="frame" x="20" y="108" width="374" height="30"/>
+                                <rect key="frame" x="20" y="108" width="376" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="KDL-m3-jIJ"/>
+                                    <constraint firstAttribute="height" constant="30" id="Aay-1l-lqJ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -450,19 +450,19 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 / 500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQ6-1E-3AQ">
-                                <rect key="frame" x="363" y="155" width="35" height="12"/>
+                                <rect key="frame" x="365" y="155" width="35" height="12"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1Ms-iJ-U5C">
-                                <rect key="frame" x="16" y="172" width="382" height="432.5"/>
+                                <rect key="frame" x="16" y="175" width="384" height="357.5"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tx6-lQ-lIb">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="230"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="384" height="200"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="230" id="k0k-So-Kbn"/>
+                                            <constraint firstAttribute="height" constant="200" id="k0k-So-Kbn"/>
                                         </constraints>
                                         <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -472,8 +472,8 @@
                                             <outlet property="delegate" destination="jcD-Qk-L5Q" id="AMc-HC-ins"/>
                                         </connections>
                                     </textView>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zmz-Iv-0Xw">
-                                        <rect key="frame" x="0.0" y="238" width="382" height="194.5"/>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="102" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zmz-Iv-0Xw">
+                                        <rect key="frame" x="0.0" y="208" width="384" height="149.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="cae-Pl-6pS">
                                             <size key="itemSize" width="128" height="128"/>
@@ -483,7 +483,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ComposeImageCollectionViewCell" id="LAY-Uz-8h6" customClass="ComposeImageCollectionViewCell" customModule="UMate" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="33.5" width="128" height="128"/>
+                                                <rect key="frame" x="0.0" y="11" width="128" height="128"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lVX-AV-5P9">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -513,21 +513,21 @@
                                     </collectionView>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="2fK-JN-5wQ">
-                                <rect key="frame" x="20" y="609.5" width="374" height="536.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="2fK-JN-5wQ">
+                                <rect key="frame" x="20" y="540.5" width="376" height="317.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XfB-qX-gFN">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="376" height="30"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="x9h-iM-YYU">
-                                                <rect key="frame" x="0.0" y="0.0" width="186" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="188" height="30"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="Lgy-5V-Mu7"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="1wq-be-8Nt">
-                                                <rect key="frame" x="194" y="0.0" width="180" height="30"/>
+                                                <rect key="frame" x="196" y="0.0" width="180" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u6E-Ct-9a4">
                                                         <rect key="frame" x="30" y="0.0" width="150" height="30"/>
@@ -561,7 +561,7 @@
                                         </constraints>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AvS-hx-b66">
-                                        <rect key="frame" x="0.0" y="60" width="374" height="476.5"/>
+                                        <rect key="frame" x="0.0" y="65" width="376" height="252.5"/>
                                         <string key="text">Umate는 누구나 기분 좋게 참여할 수 있는 커뮤니티를 만들기 위해 커뮤니티 이용규칙을 제정하여 운영하고 있습니다. 위반 시 게시물이 삭제되고 서비스 이용이 일정 기간 제한 될 수 있습니다.  아래는 이 게시판에 해당하는 핵심 내용에 대한 요약 사항이며, 게시물 작성 전 커뮤니티 이용규칙 전문을 반드시 확인하시기 바랍니다.  ※ 홍보게시판 작성 가능 게시물 - 비영리 목적의 강연 및 행사 - 개인 간 아르바이트 및 과외 소개 - 주변상권 소개 - 학업 목적의 설문조사  ※ 홍보게시판 이용 안내 - 홍보게시판과 동아리 및 학회 게시판 중 어느 한 곳에 글을 작성했을 경우, 두 게시판 모두 3일동안 글을 작성할 수 없습니다. - 글 작성 후 60분이 지나면, 3일간 작성한 글을 수정하거나 삭제할 수 없습니다.</string>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <color key="textColor" name="blackSelectedColor"/>
@@ -569,14 +569,15 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7T4-7L-4gj">
-                                <rect key="frame" x="16" y="172" width="382" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="내용을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7T4-7L-4gj">
+                                <rect key="frame" x="16" y="187" width="384" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" systemColor="systemGray3Color"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZPW-pR-x51">
-                                <rect key="frame" x="20" y="114.5" width="378" height="17"/>
+                                <rect key="frame" x="16" y="114.5" width="384" height="17"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" systemColor="systemGray3Color"/>
                                 <nil key="highlightedColor"/>
@@ -585,27 +586,24 @@
                         <viewLayoutGuide key="safeArea" id="Fnf-VL-yBm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="9Xr-iL-GRb" secondAttribute="trailing" constant="20" id="1UJ-DU-zwy"/>
-                            <constraint firstItem="C3J-oV-hj6" firstAttribute="leading" secondItem="lKk-gX-GNp" secondAttribute="leading" constant="16" id="6In-FE-RKa"/>
-                            <constraint firstItem="2fK-JN-5wQ" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="8lQ-Fg-LF1"/>
-                            <constraint firstItem="ZPW-pR-x51" firstAttribute="leading" secondItem="9Xr-iL-GRb" secondAttribute="leading" id="Eul-0L-A6N"/>
-                            <constraint firstItem="ZPW-pR-x51" firstAttribute="centerY" secondItem="9Xr-iL-GRb" secondAttribute="centerY" id="GFw-yP-uwC"/>
-                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="bottom" secondItem="2fK-JN-5wQ" secondAttribute="bottom" constant="20" id="GXv-Z2-AJ0"/>
-                            <constraint firstAttribute="trailing" secondItem="2fK-JN-5wQ" secondAttribute="trailing" constant="20" id="J1w-cT-cw3"/>
-                            <constraint firstItem="1Ms-iJ-U5C" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="16" id="O1P-x3-Ddd"/>
-                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="wQ6-1E-3AQ" secondAttribute="trailing" constant="16" id="PNE-d9-anb"/>
-                            <constraint firstAttribute="trailing" secondItem="C3J-oV-hj6" secondAttribute="trailing" constant="16" id="PSm-FR-4mj"/>
-                            <constraint firstItem="9Xr-iL-GRb" firstAttribute="top" secondItem="Fnf-VL-yBm" secondAttribute="top" constant="20" id="XSO-Pv-9e8"/>
-                            <constraint firstItem="1Ms-iJ-U5C" firstAttribute="top" secondItem="wQ6-1E-3AQ" secondAttribute="bottom" constant="5" id="aCJ-d7-R8w"/>
-                            <constraint firstItem="2fK-JN-5wQ" firstAttribute="top" secondItem="1Ms-iJ-U5C" secondAttribute="bottom" constant="5" id="cdD-Xw-c90"/>
-                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="1Ms-iJ-U5C" secondAttribute="trailing" constant="16" id="feg-PS-aMT"/>
-                            <constraint firstItem="wQ6-1E-3AQ" firstAttribute="top" secondItem="C3J-oV-hj6" secondAttribute="bottom" constant="8" symbolic="YES" id="gIo-Qh-Ool"/>
-                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="ZPW-pR-x51" secondAttribute="trailing" constant="16" id="gzh-C4-qWr"/>
-                            <constraint firstItem="7T4-7L-4gj" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="16" id="k7u-IL-vb6"/>
-                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="7T4-7L-4gj" secondAttribute="trailing" constant="16" id="rqo-o3-KZh"/>
-                            <constraint firstItem="9Xr-iL-GRb" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="x3Y-ZZ-PBF"/>
-                            <constraint firstItem="7T4-7L-4gj" firstAttribute="top" secondItem="Tx6-lQ-lIb" secondAttribute="top" id="xR4-9O-dXh"/>
-                            <constraint firstItem="C3J-oV-hj6" firstAttribute="top" secondItem="9Xr-iL-GRb" secondAttribute="bottom" constant="8" id="xvN-Pa-EVF"/>
+                            <constraint firstItem="C3J-oV-hj6" firstAttribute="leading" secondItem="lKk-gX-GNp" secondAttribute="leading" constant="16" id="4Nq-mf-mbV"/>
+                            <constraint firstAttribute="trailing" secondItem="2fK-JN-5wQ" secondAttribute="trailing" constant="20" id="63Z-Gk-nH0"/>
+                            <constraint firstItem="wQ6-1E-3AQ" firstAttribute="top" secondItem="C3J-oV-hj6" secondAttribute="bottom" constant="8" symbolic="YES" id="7km-dO-FxD"/>
+                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="ZPW-pR-x51" secondAttribute="trailing" constant="16" id="82R-lf-wNs"/>
+                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="bottom" secondItem="2fK-JN-5wQ" secondAttribute="bottom" constant="8" id="9HT-ao-TjA"/>
+                            <constraint firstItem="C3J-oV-hj6" firstAttribute="top" secondItem="9Xr-iL-GRb" secondAttribute="bottom" constant="8" symbolic="YES" id="A9X-ha-hNs"/>
+                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="wQ6-1E-3AQ" secondAttribute="trailing" constant="16" id="Cbx-RX-eIG"/>
+                            <constraint firstItem="ZPW-pR-x51" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="16" id="J7c-nk-Bnx"/>
+                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="1Ms-iJ-U5C" secondAttribute="trailing" constant="16" id="KSG-mm-8Sn"/>
+                            <constraint firstItem="1Ms-iJ-U5C" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="16" id="Zof-If-muS"/>
+                            <constraint firstItem="9Xr-iL-GRb" firstAttribute="top" secondItem="Fnf-VL-yBm" secondAttribute="top" constant="20" id="fb8-yj-d9x"/>
+                            <constraint firstItem="2fK-JN-5wQ" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="gPi-Nn-qRU"/>
+                            <constraint firstItem="9Xr-iL-GRb" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="ga0-bM-kEZ"/>
+                            <constraint firstItem="1Ms-iJ-U5C" firstAttribute="top" secondItem="wQ6-1E-3AQ" secondAttribute="bottom" constant="8" symbolic="YES" id="jCk-TU-VeB"/>
+                            <constraint firstAttribute="trailing" secondItem="C3J-oV-hj6" secondAttribute="trailing" constant="16" id="nez-7O-Gld"/>
+                            <constraint firstItem="ZPW-pR-x51" firstAttribute="centerY" secondItem="9Xr-iL-GRb" secondAttribute="centerY" id="qjf-rH-8fy"/>
+                            <constraint firstItem="2fK-JN-5wQ" firstAttribute="top" secondItem="1Ms-iJ-U5C" secondAttribute="bottom" constant="8" symbolic="YES" id="zBk-YI-x3P"/>
+                            <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="9Xr-iL-GRb" secondAttribute="trailing" constant="20" id="zGP-q4-l09"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="글 쓰기" largeTitleDisplayMode="never" id="VMu-wb-I18">
@@ -620,13 +618,14 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <size key="freeformSize" width="414" height="1200"/>
+                    <size key="freeformSize" width="416" height="900"/>
                     <connections>
                         <outlet property="accessoryBar" destination="DzR-W8-KjO" id="PB8-PD-fRr"/>
                         <outlet property="commmunityRuleBtn" destination="u6E-Ct-9a4" id="b3m-7m-0vD"/>
                         <outlet property="contentCountLabel" destination="wQ6-1E-3AQ" id="Ein-ir-mme"/>
                         <outlet property="contentPlacehoderLabel" destination="7T4-7L-4gj" id="qHl-oQ-vwc"/>
                         <outlet property="imageCollectionView" destination="zmz-Iv-0Xw" id="yEa-qW-Ekh"/>
+                        <outlet property="infoContainerView" destination="2fK-JN-5wQ" id="YYV-eu-b1d"/>
                         <outlet property="postContentTextView" destination="Tx6-lQ-lIb" id="bXk-gZ-1Wp"/>
                         <outlet property="postTitlePlaceholderLabel" destination="ZPW-pR-x51" id="PMn-m8-urD"/>
                         <outlet property="postTitleTextField" destination="9Xr-iL-GRb" id="hi1-LW-Rys"/>
@@ -647,7 +646,7 @@
                     </items>
                 </toolbar>
             </objects>
-            <point key="canvasLocation" x="2744.9275362318845" y="697.76785714285711"/>
+            <point key="canvasLocation" x="2746.376811594203" y="697.76785714285711"/>
         </scene>
         <!--커뮤니티 이용규칙-->
         <scene sceneID="ikg-F8-dBZ">
@@ -1165,7 +1164,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pt4-ab-Z4q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4121.739130434783" y="1616.5178571428571"/>
+            <point key="canvasLocation" x="5031.884057971015" y="1616.5178571428571"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Ia-hQ-Q9y">
@@ -1201,7 +1200,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 <color key="sectionIndexColor" systemColor="systemGray5Color"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FreeBoardTableViewCell" rowHeight="134" id="jVr-hs-rFH" customClass="FreeBoardTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="134"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="134"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jVr-hs-rFH" id="3a4-D7-Kw5">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="134"/>
@@ -1359,10 +1358,10 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vh7-ma-AiW">
-                                <rect key="frame" x="157" y="745" width="100" height="60"/>
+                                <rect key="frame" x="157" y="743" width="100" height="50"/>
                                 <color key="backgroundColor" name="black"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="GvT-9d-bXv"/>
+                                    <constraint firstAttribute="height" constant="50" id="GvT-9d-bXv"/>
                                     <constraint firstAttribute="width" constant="100" id="nGb-xb-XXs"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -1372,7 +1371,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                     <imageReference key="image" image="square.and.pencil" catalog="system" renderingMode="template"/>
                                 </state>
                                 <connections>
-                                    <segue destination="HdK-Kj-34H" kind="presentation" modalPresentationStyle="fullScreen" id="Qss-e5-aex"/>
+                                    <segue destination="HdK-Kj-34H" kind="presentation" identifier="composeCategoryBoard" modalPresentationStyle="fullScreen" id="y7U-qi-gqD"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.90000000000000002" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9LX-Z7-xv9">
@@ -1452,7 +1451,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                             <constraint firstItem="Nnt-IL-WVk" firstAttribute="trailing" secondItem="9LX-Z7-xv9" secondAttribute="trailing" id="6jd-Hj-TTe"/>
                             <constraint firstAttribute="bottom" secondItem="ray-rX-xSp" secondAttribute="bottom" id="AFm-yF-Ixv"/>
                             <constraint firstItem="ray-rX-xSp" firstAttribute="top" secondItem="9LX-Z7-xv9" secondAttribute="bottom" id="KJy-G8-hj4"/>
-                            <constraint firstItem="Nnt-IL-WVk" firstAttribute="bottom" secondItem="Vh7-ma-AiW" secondAttribute="bottom" constant="8" id="PDY-C6-dn4"/>
+                            <constraint firstItem="Nnt-IL-WVk" firstAttribute="bottom" secondItem="Vh7-ma-AiW" secondAttribute="bottom" constant="20" id="PDY-C6-dn4"/>
                             <constraint firstItem="9LX-Z7-xv9" firstAttribute="leading" secondItem="Nnt-IL-WVk" secondAttribute="leading" id="SNb-Hh-rpb"/>
                             <constraint firstItem="Vh7-ma-AiW" firstAttribute="centerX" secondItem="3Xn-6s-yBp" secondAttribute="centerX" id="k59-dd-snF"/>
                             <constraint firstItem="ray-rX-xSp" firstAttribute="trailing" secondItem="Nnt-IL-WVk" secondAttribute="trailing" id="lzX-XY-qV3"/>
@@ -1493,7 +1492,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostContentTableViewCell" rowHeight="203" id="YUc-kN-hZb" customClass="PostContentTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="203"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="203"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YUc-kN-hZb" id="ubi-NR-Y2b">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="203"/>
@@ -1688,7 +1687,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostImageTableViewCell" rowHeight="248" id="thn-0X-CKZ" customClass="PostImageTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="227.5" width="414" height="248"/>
+                                        <rect key="frame" x="0.0" y="247.5" width="414" height="248"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="thn-0X-CKZ" id="Htt-uB-Xpv">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="248"/>
@@ -1757,7 +1756,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CountLabelTableViewCell" rowHeight="54" id="3jE-tw-ZCZ" userLabel="PostContentTableViewCell.swift" customClass="CountLabelTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="475.5" width="414" height="54"/>
+                                        <rect key="frame" x="0.0" y="495.5" width="414" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3jE-tw-ZCZ" id="oG7-RB-xah">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
@@ -1896,7 +1895,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommentTableViewCell" rowHeight="120" id="YpV-yj-SIs" customClass="CommentTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="529.5" width="414" height="120"/>
+                                        <rect key="frame" x="0.0" y="549.5" width="414" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YpV-yj-SIs" id="k23-r7-Geg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
@@ -2048,8 +2047,8 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                                             <nil key="textColor"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
-                                                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xq5-59-WzO">
-                                                                                            <rect key="frame" x="0.0" y="90" width="97.5" height="10"/>
+                                                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="xq5-59-WzO">
+                                                                                            <rect key="frame" x="0.0" y="90" width="92.5" height="10"/>
                                                                                             <subviews>
                                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text=" 07/31 01:40" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hyy-4D-eW4">
                                                                                                     <rect key="frame" x="0.0" y="0.0" width="64.5" height="10"/>
@@ -2059,7 +2058,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                                                                                     <nil key="highlightedColor"/>
                                                                                                 </label>
                                                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Rle-9H-Ize">
-                                                                                                    <rect key="frame" x="72.5" y="0.0" width="25" height="10"/>
+                                                                                                    <rect key="frame" x="67.5" y="0.0" width="25" height="10"/>
                                                                                                     <subviews>
                                                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XS7-fo-azs">
                                                                                                             <rect key="frame" x="0.0" y="0.0" width="15" height="10"/>
@@ -2307,7 +2306,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 <nil key="highlightedColor"/>
                             </label>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="hSK-oX-iGk">
-                                <rect key="frame" x="146.5" y="758.5" width="121.5" height="27.5"/>
+                                <rect key="frame" x="129.5" y="760" width="155.5" height="26"/>
                                 <connections>
                                     <action selector="controlPage:" destination="95c-RZ-5Vp" eventType="valueChanged" id="hp8-cl-UDA"/>
                                     <action selector="currentPageChanged:" destination="95c-RZ-5Vp" eventType="valueChanged" id="sjl-dV-mtE"/>
@@ -2372,7 +2371,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 <color key="sectionIndexColor" systemColor="systemGray5Color"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FreeBoardTableViewCell" rowHeight="120" id="abx-I6-oue" customClass="FreeBoardTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="120"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="abx-I6-oue" id="kNQ-tj-hpZ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
@@ -2528,14 +2527,15 @@ XETOWN 운영자로 오인될 수 있는 내용
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="bYc-D4-79M" id="4LP-fr-AUG"/>
+                                    <outlet property="delegate" destination="bYc-D4-79M" id="emi-nW-LqR"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nx6-EJ-E31">
-                                <rect key="frame" x="157" y="745" width="100" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nx6-EJ-E31" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
+                                <rect key="frame" x="157" y="743" width="100" height="50"/>
                                 <color key="backgroundColor" name="black"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="N8S-2b-RzF"/>
-                                    <constraint firstAttribute="height" constant="60" id="jfM-Cb-Pob"/>
+                                    <constraint firstAttribute="height" constant="50" id="GpX-es-Q2j"/>
+                                    <constraint firstAttribute="width" constant="100" id="M3W-i1-AhN"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="tintColor" name="white"/>
@@ -2544,7 +2544,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                                     <imageReference key="image" image="square.and.pencil" catalog="system" renderingMode="template"/>
                                 </state>
                                 <connections>
-                                    <segue destination="HdK-Kj-34H" kind="presentation" modalPresentationStyle="fullScreen" id="Q8z-h5-bF5"/>
+                                    <segue destination="HdK-Kj-34H" kind="presentation" identifier="composeFreeBoard" modalPresentationStyle="fullScreen" id="Q8z-h5-bF5"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -2552,11 +2552,11 @@ XETOWN 운영자로 오인될 수 있는 내용
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="eEU-0Q-lYd" firstAttribute="trailing" secondItem="vbf-q6-jC2" secondAttribute="trailing" id="2qs-mu-EI1"/>
-                            <constraint firstItem="nx6-EJ-E31" firstAttribute="centerX" secondItem="jLy-22-mj4" secondAttribute="centerX" id="KH0-ff-49O"/>
                             <constraint firstItem="eEU-0Q-lYd" firstAttribute="top" secondItem="jLy-22-mj4" secondAttribute="top" id="Qb5-Mh-F3K"/>
+                            <constraint firstItem="vbf-q6-jC2" firstAttribute="bottom" secondItem="nx6-EJ-E31" secondAttribute="bottom" constant="20" id="Yfj-sV-6a4"/>
                             <constraint firstItem="eEU-0Q-lYd" firstAttribute="leading" secondItem="vbf-q6-jC2" secondAttribute="leading" id="afX-8l-IY9"/>
                             <constraint firstAttribute="bottom" secondItem="eEU-0Q-lYd" secondAttribute="bottom" id="gUp-qp-VEC"/>
-                            <constraint firstItem="vbf-q6-jC2" firstAttribute="bottom" secondItem="nx6-EJ-E31" secondAttribute="bottom" constant="8" id="jYR-yh-6IW"/>
+                            <constraint firstItem="nx6-EJ-E31" firstAttribute="centerX" secondItem="jLy-22-mj4" secondAttribute="centerX" id="l9J-Rq-DO9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="12G-5b-P3R">
@@ -2593,7 +2593,7 @@ XETOWN 운영자로 오인될 수 있는 내용
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V5g-ah-Cn1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3211.594202898551" y="1616.5178571428571"/>
+            <point key="canvasLocation" x="4121.739130434783" y="1616.5178571428571"/>
         </scene>
         <!--LectureReview-->
         <scene sceneID="P5H-nu-irB">
@@ -2606,10 +2606,15 @@ XETOWN 운영자로 오인될 수 있는 내용
             <point key="canvasLocation" x="1912" y="-858"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="nx6-EJ-E31">
+            <size key="intrinsicContentSize" width="68.5" height="19.5"/>
+        </designable>
+    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="U1X-Om-Xij"/>
         <segue reference="GFs-cN-Yd9"/>
-        <segue reference="Qss-e5-aex"/>
+        <segue reference="y7U-qi-gqD"/>
         <segue reference="eDP-0C-eTF"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -2617,19 +2622,19 @@ XETOWN 운영자로 오인될 수 있는 내용
         <image name="6" width="105.5" height="119.5"/>
         <image name="8" width="149.5" height="149.5"/>
         <image name="bookmark64" width="32" height="32"/>
-        <image name="camera" catalog="system" width="32" height="32"/>
-        <image name="checkmark.circle.fill" catalog="system" width="32" height="32"/>
+        <image name="camera" catalog="system" width="128" height="94"/>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="comment" width="16" height="16"/>
         <image name="heart2" width="32" height="32"/>
-        <image name="newspaper" catalog="system" width="32" height="32"/>
-        <image name="paperplane" catalog="system" width="32" height="32"/>
+        <image name="newspaper" catalog="system" width="128" height="111"/>
+        <image name="paperplane" catalog="system" width="128" height="118"/>
         <image name="search" width="16" height="16"/>
-        <image name="square.and.arrow.down" catalog="system" width="32" height="32"/>
-        <image name="square.and.pencil" catalog="system" width="32" height="32"/>
+        <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <image name="thumbtack40" width="20" height="20"/>
         <image name="turn-right" width="64" height="64"/>
         <image name="vertical_dots" width="12" height="12"/>
-        <image name="xmark" catalog="system" width="32" height="32"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="barColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

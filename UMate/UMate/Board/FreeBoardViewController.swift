@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import CoreMedia
+import CoreMIDI
 
 
 /// 기본 게시판에 관한 클래스
@@ -42,6 +44,7 @@ class FreeBoardViewController: RemoveObserverViewController {
                 vc.selectedPost = selectedBoard?.posts[indexPath.row]
             }
         }
+        
         /// 검색 버튼 클릭시 선택된 게시판에 대한 정보 전달
         else if segue.identifier == "searchSegue", let vc = segue.destination as? SearchViewController {
             vc.selectedBoard = selectedBoard
@@ -53,11 +56,13 @@ class FreeBoardViewController: RemoveObserverViewController {
         super.viewDidLoad()
         
         /// 스크랩 게시판에 게시글 작성 버튼을 숨김
-        /// - Author: 김정민
+        /// - Author: 김정민(kimjm010@icloud.com)
         if selectedBoard?.boardTitle == "스크랩" {
             composeButton.isHidden = true
         }
         
+        /// 글쓰기 버튼의 테마 설정
+        /// - Author: 김정민(kimjm010@icloud.com)
         composeButton.setButtonTheme()
 
         /// 네비게이션 바에 타이틀 초기화
@@ -91,6 +96,27 @@ class FreeBoardViewController: RemoveObserverViewController {
                 }
             }
         }
+        tokens.append(token)
+        
+        
+        token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main, using: { [weak self] (noti) in
+            if let newPost = noti.userInfo?["newPost"] as? Post {
+                // 각 게시판에만 게시글이 추가될 수 있게 게시판 이름에 따라 분기하여 게시글을 저장
+                switch self?.selectedBoard?.boardTitle {
+                case "자유 게시판":
+                    freeBoard.posts.insert(newPost, at: 0)
+                case "인기글 게시판":
+                    popularPostBoard.posts.insert(newPost, at: 0)
+                case "졸업생 게시판":
+                    graduateBoard.posts.insert(newPost, at: 0)
+                case "신입생 게시판":
+                    freshmanBoard.posts.insert(newPost, at: 0)
+                default:
+                    break
+                }
+                self?.postListTableView.reloadData()
+            }
+        })
         tokens.append(token)
     }
 }
@@ -128,7 +154,3 @@ extension FreeBoardViewController: UITableViewDataSource {
         return cell
     }
 }
-
-
-
-

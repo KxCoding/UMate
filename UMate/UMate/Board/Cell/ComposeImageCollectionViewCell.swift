@@ -9,9 +9,15 @@ import UIKit
 
 
 /// 게시글에 선택한 이미지를 표시하는 클래스뷰 셀
+/// - Author: 김정민(kimjm010@icloud.com)
 class ComposeImageCollectionViewCell: UICollectionViewCell {
     
+    /// 게시글에 추가할 이미지를 표시하는 이미지 뷰
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var composeImageView: UIImageView!
+    
+    /// 게시글에 표시한 이미지 뷰를 포함한 컨테이너 뷰
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var imageContainerView: UIView!
     
     

@@ -9,10 +9,11 @@ import UIKit
 
 
 /// 댓글 및 대댓글을 표시하는 테이블뷰 셀
-/// - Author: 김정민
+/// - Author: 김정민(kimjm010@icloud.com)
 class CommentTableViewCell: UITableViewCell {
     
-    //댓글 및 대댓글 저장을 위한 아울렛
+    /// 댓글 및 대댓글 저장을 위한 아울렛
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var userIdLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
@@ -25,13 +26,15 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var commentSeparationView: UIView!
     @IBOutlet weak var reCommentContainerView: UIStackView!
     
-    /// 선택된 댓글
+    /// 선택된 댓글을 담을 속성
+    /// - Author: 김정민(kimjm010@icloud.com)
     var selectedComment: Comment?
     
     
     /// 좋아요 버튼 클릭시 처리할 동작입니다.
+    /// 좋아요 버튼을 클릭할 때 좋아요 갯수와 이미지 뷰의 상태가 바뀝니다.
     /// - Parameter sender: 좋아요 Button
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func toggleLike(_ sender: Any) {
         
         guard var comment = selectedComment else { return }
@@ -52,6 +55,7 @@ class CommentTableViewCell: UITableViewCell {
         }
         
         
+        // 좋아요 수가 0인경우 하트 이미지를 표시하지 않습니다.
         guard comment.heartCount > 0 else {
             heartImageView.isHidden = true
             heartCountLabel.isHidden = true
