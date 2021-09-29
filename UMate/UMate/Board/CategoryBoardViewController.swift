@@ -42,7 +42,7 @@ class CategoryBoardViewController: CommonViewController {
     @IBAction func showSearchViewController(_ sender: Any) {
         performSegue(withIdentifier: "searchSegue", sender: self)
     }
-
+    
     
     /// 게시글을 선택하거나 검색을 할 경우에 데이터 전달
     /// - Author: 남정은
@@ -66,8 +66,9 @@ class CategoryBoardViewController: CommonViewController {
         super.viewDidLoad()
         
         /// 게시글 작성 버튼의 테마 설정
+        /// - Author: 김정민(kimjm010@icloud.com)
         composeBtn.setButtonTheme()
-
+        
         /// 네비게이션 바에 타이틀 초기화
         /// - Author: 남정은
         self.navigationItem.title = selectedBoard?.boardTitle
@@ -102,6 +103,30 @@ class CategoryBoardViewController: CommonViewController {
                 }
             }
         }
+        tokens.append(token)
+        
+        
+        // TODO: 카테고리에 따라 게시글 추가하는 기능
+        /// - Author: 김정민(kimjm010@icloud.com)
+        token = NotificationCenter.default.addObserver(forName: .newCategoryPostInsert, object: nil, queue: .main, using: { [weak self] (noti) in
+            if let category = noti.userInfo?["category"] as? Int {
+                if let newPost = noti.userInfo?["newPost"] as? Post {
+                    switch category {
+                    case 2000:
+                        publicityBoard.posts.insert(newPost, at: 0)
+                    case 2001:
+                        publicityBoard.posts.insert(newPost, at: 0)
+                    case 2002:
+                        publicityBoard.posts.insert(newPost, at: 0)
+                    case 2003:
+                        publicityBoard.posts.insert(newPost, at: 0)
+                    default:
+                        break
+                    }
+                    self?.categoryListTableView.reloadData()
+                }
+            }
+        })
         tokens.append(token)
     }
 }
@@ -241,9 +266,9 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
         
         /// 셀의 inset을 제외한 너비
         let withoutInsetWidth = view.frame.width -
-                                    (flowLayout.minimumInteritemSpacing * CGFloat((categoryCount - 1))
-                                        + flowLayout.sectionInset.left
-                                        + flowLayout.sectionInset.right)
+        (flowLayout.minimumInteritemSpacing * CGFloat((categoryCount - 1))
+         + flowLayout.sectionInset.left
+         + flowLayout.sectionInset.right)
         
         /// 셀의 개수가 3일 경우
         if categoryCount == 3 {

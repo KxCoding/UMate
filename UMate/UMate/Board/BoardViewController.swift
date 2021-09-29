@@ -207,6 +207,14 @@ extension BoardViewController: UITableViewDelegate {
         else if indexPath.section == 3 && indexPath.row == 0 {
             performSegue(withIdentifier: "infoSegue", sender: self)
         }
+        
+        if indexPath.section == 0 {
+            print(#function)
+            print(nonExpandableBoardList[indexPath.row].boardNames)
+        } else if indexPath.section == 1 {
+            print("홍보게시판입니다")
+            print(expandableBoardList[indexPath.row].boardNames[indexPath.row])
+        }
     }
     
     
