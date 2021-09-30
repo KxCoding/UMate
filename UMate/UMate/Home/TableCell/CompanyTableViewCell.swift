@@ -90,6 +90,25 @@ class CompanyTableViewCell: UITableViewCell {
         }
     }
     
+    func fetch(with model: JobData.Job) {
+        if let url = URL(string: model.url) {
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    print(error)
+                }
+                DispatchQueue.global().async {
+                    if let data = data, let image = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            self.companyImage.image = image
+                        }
+
+                    }
+                }
+               
+            }.resume()
+        }
+    }
+
     
     override func awakeFromNib() {
         super.awakeFromNib()

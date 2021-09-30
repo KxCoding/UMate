@@ -28,7 +28,7 @@ class DetailRegisterViewController: UIViewController {
     /// 비밀번호를 입력하는 텍스트 필드
     @IBOutlet weak var passwordTextField: UITextField!
     
-    /// 입력한 비밀번호를 한번더 입력하는 텍스트 필드
+    /// 입력한 비밀번호를 한번더 입력하는 텍스트필드
     @IBOutlet weak var repeatPasswordTextField: UITextField!
     
     /// 사용자 이름을 입력하는 텍스트 필드
