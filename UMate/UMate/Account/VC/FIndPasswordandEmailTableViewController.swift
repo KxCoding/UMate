@@ -12,11 +12,11 @@ import UIKit
 class FindPasswordandEmailTableViewController: UITableViewController {
 
     /// 아이디 레이블 수평 가운데 제약
-    /// 애니메이션 효과를 주기위해서 사용.
+    /// 애니메이션 효과를 주기위해서 사용
     @IBOutlet weak var idLabelCenterX: NSLayoutConstraint!
     
     /// 비밀번호 레이블 수평 가운데 제약
-    /// 애니메이션 효과를 주기위해서 사용.
+    /// 애니메이션 효과를 주기위해서 사용
     @IBOutlet weak var passwordLabelCenterX: NSLayoutConstraint!
     
     /// ID 레이블
@@ -40,7 +40,7 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     /// 좌우로 움직이는 뷰
     @IBOutlet weak var activatedBar: UIView!
     
-    /// Dismiss한다.
+    /// Dismiss합니다.
     /// - Parameter sender: Left UIbutton
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true)

@@ -63,7 +63,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
             
         })
         
-        /// service, community, privacy, advertisement 아울렛의 바운드를 깎는다.
+        /// service, community, privacy, advertisement 아울렛의 바운드를 둥글게 만듭니다.
         [service, community, privacy, advertisement].forEach({
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true

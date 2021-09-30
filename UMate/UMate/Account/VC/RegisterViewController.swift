@@ -52,7 +52,7 @@ class RegisterViewController: UIViewController {
     }()
     
     
-    /// 화면을 Dismiss.
+    /// 화면을 Dismiss 합니다.
     /// - Parameter sender: UIButton
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
@@ -144,7 +144,7 @@ class RegisterViewController: UIViewController {
     }
     
     
-    /// 키보드를 내려가게 함
+    /// 키보드를 내려가게 합니다.
     @objc func dismissKeyboard() {
         dismissZone2.endEditing(true)
     }

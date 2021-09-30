@@ -11,16 +11,16 @@ import KeychainSwift
 /// 이메일을 검증하고 보안 코드를 발송하는 클래스입니다.
 /// Author:  황신택
 class EmailVerifyViewController: UIViewController {
-    /// 보안코드를 발송 버튼
+    /// 보안코드 발송 버튼
     @IBOutlet weak var sendCodeButton: UIButton!
     
     /// 다음 화면으로 가는 버튼
     @IBOutlet weak var emailVerificationButton: UIButton!
     
-    /// 이메일을 입력하는 텍스트필드
+    /// 이메일을 입력하는 텍스트 필드
     @IBOutlet weak var emailTextField: UITextField!
     
-    /// 인증받은 코드를 입력하는 텍스트필드
+    /// 인증받은 코드를 입력하는 텍스트 필드
     @IBOutlet weak var codeTextField: UITextField!
     
     /// 편집이 활성화 된 텍스트필드
@@ -107,7 +107,7 @@ class EmailVerifyViewController: UIViewController {
 
 
 extension EmailVerifyViewController: UITextFieldDelegate {
-    /// codeTextField 텍스트필드에 숫자를 제외한 다른 텍스트는 작성 불가
+    /// codeTextField 텍스트필드에 숫자를 제외한 다른 텍스트는 작성 불가합니다.
     /// - Parameters:
     ///   - textField: UITextField
     ///   - range: NSRange
@@ -124,12 +124,12 @@ extension EmailVerifyViewController: UITextFieldDelegate {
         return false
     }
     
-    /// 특정 텍스트필드에 값이 입력될시 키보드가 텍스트필드를 가려질 경우를 만들기위한 메소드.
+    /// 특정 텍스트필드에 값이 입력될시 키보드가 텍스트필드를 가려질 경우를 만들기위한 메소드
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField
     }
     
-    /// 특정 텍스트필드에 입력이 끝났을시 키보드가 텍스트필드를 가려질 경우를 만들기위한 메소드.
+    /// 특정 텍스트필드에 입력이 끝났을시 키보드가 텍스트필드를 가려질 경우를 만들기위한 메소드
     func textFieldDidEndEditing(_ textField: UITextField) {
         activeTextField = nil
     }
