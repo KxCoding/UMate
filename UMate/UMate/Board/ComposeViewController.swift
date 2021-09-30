@@ -34,19 +34,30 @@ class ComposeViewController: RemoveObserverViewController {
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var infoContainerView: UIStackView!
     
+    /// 게시글 작성시 카테고리를 표시하는 컬렉션뷰
+    /// - Author: 김정민(kimjm010@icloud.com)
+    @IBOutlet weak var categoryListCollectionView: UICollectionView!
+    
     // 게시글에 첨부할 이미지 속성
     /// - Author: 김정민(kimjm010@icloud.com)
     var imageList = [UIImage]()
-    
-    // 게시글에 이미지 추가 후 노티피케이션을 해제하기 위한 속성
-    /// - Author: 김정민(kimjm010@icloud.com)
-    var imageToken: NSObjectProtocol?
     
     /// 선택된 게시판
     /// - Author: 김정민(kimjm010@icloud.com)
     var selectedBoard: Board?
     
-
+    /// 선택된 카테고리
+    /// - Author: 김정민(kimjm010@icloud.com)
+    var selectedCategoryList = [String]()
+    
+    /// CollectionView Item의 선택상태를 확인하는 속성
+    /// - Author: 김정민(kimjm010@icloud.com)
+    var isSelected = true
+    
+#if DEBUG
+    var tempList = ["전체", "강연 및 행사", "알바 및 과외", "기타"]
+#endif
+    
     /// 게시글 작성을 취소
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closeVC(_ sender: Any) {
@@ -74,6 +85,10 @@ class ComposeViewController: RemoveObserverViewController {
                            likeCount: 3,
                            commentCount: 2)
         
+        NotificationCenter.default.post(name: .newPostInsert,
+                                        object: nil,
+                                        userInfo: ["newPost" : newPost])
+        
         // 카테고리 게시판에 추가될 게시물
         let newCategoryPost = Post(images: imageList,
                                    postTitle: title,
@@ -85,10 +100,6 @@ class ComposeViewController: RemoveObserverViewController {
                                    scrapCount: 1,
                                    categoryRawValue: 2003)
         
-        NotificationCenter.default.post(name: .newPostInsert,
-                                        object: nil,
-                                        userInfo: ["newPost" : newPost])
-        
         NotificationCenter.default.post(name: .newCategoryPostInsert,
                                         object: nil,
                                         userInfo: ["newPost" : newCategoryPost,
@@ -97,9 +108,19 @@ class ComposeViewController: RemoveObserverViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "composeCategoryBoardSegue" {
+            let vc = segue.destination as! CategoryBoardViewController
+            vc.sendDataDelegate = self
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+#if DEBUG
+#endif
         
         /// 커뮤니티 이용규칙 버튼의 테마 설정
         /// - Author: 김정민(kimjm010@icloud.com)
@@ -117,8 +138,8 @@ class ComposeViewController: RemoveObserverViewController {
         /// SelectImageViewController로부터 사용자가 선택한 이미지를 게시글 작성 화면에 표시
         /// - Author: 김정민(kimjm010@icloud.com)
         let token = NotificationCenter.default.addObserver(forName: .imageDidSelect,
-                                                            object: nil,
-                                                            queue: .main) { [weak self] (noti) in
+                                                           object: nil,
+                                                           queue: .main) { [weak self] (noti) in
             if let img = noti.userInfo?["img"] as? [UIImage] {
                 self?.imageList.append(contentsOf: img)
                 self?.imageCollectionView.reloadData()
@@ -264,7 +285,13 @@ extension ComposeViewController: UICollectionViewDataSource {
     /// - Returns: 표시할 컬렉션뷰 셀의 갯수
     /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageList.count
+        print(#function)
+        
+        guard collectionView.tag == 101 else {
+            return imageList.count
+        }
+        
+        return tempList.count
     }
     
     
@@ -275,19 +302,34 @@ extension ComposeViewController: UICollectionViewDataSource {
     /// - Returns: 이미지 컬렉션뷰 셀
     /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print(#function)
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ComposeImageCollectionViewCell",
-                                                      for: indexPath) as! ComposeImageCollectionViewCell
+        if collectionView.tag == 101 {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectCategoryBoardCollectionViewCell",
+                                                          for: indexPath) as! SelectCategoryBoardCollectionViewCell
+            
+            cell.selectCategoryLabel.text = tempList[indexPath.item]
+            
+            return cell
+        } else if collectionView.tag == 102 {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ComposeImageCollectionViewCell",
+                                                          for: indexPath) as! ComposeImageCollectionViewCell
+            
+            cell.composeImageView.image = imageList[indexPath.item]
+            
+            return cell
+        }
         
-        cell.composeImageView.image = imageList[indexPath.item]
-        
-        return cell
+        return UICollectionViewCell()
     }
 }
 
 
 
-
+/// 게시글 작성시 카테고리를 표시하는 컬렉션뷰
+/// - Author: 김정민(kimjm010@icloud.com)
 /// 게시글 이미지 첨부시 사이즈 지정
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UICollectionViewDelegateFlowLayout {
@@ -301,7 +343,43 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
     /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+        if collectionView.tag == 102 {
+            return CGSize(width: 100, height: 100)
+        }
+        
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
+            return .zero
+        }
+        
+        // 셀의 너비
+        let width: CGFloat
+        
+        // 카테고리 개수
+        //guard let categoryCount = selectedBoard?.categoryNumbers.count else { return .zero }
+        
+        // 셀의 inset을 제외한 너비
+        let withoutInsetWidth = view.frame.width -
+        (flowLayout.minimumInteritemSpacing * CGFloat((tempList.count - 1))
+         + flowLayout.sectionInset.left
+         + flowLayout.sectionInset.right)
+        
+        // 셀의 개수가 3일 경우
+        if tempList.count == 3 {
+            width = withoutInsetWidth / 3
+            return CGSize(width: width, height:40)
+        }
+        // 셀의 개수가 4일 경우
+        else if tempList.count == 4 {
+            if indexPath.row == 0 || indexPath.row == 3 {
+                width = withoutInsetWidth / 2 * 0.4
+                return CGSize(width: width, height: 40)
+                
+            } else {
+                width = withoutInsetWidth / 2 * 0.6
+                return CGSize(width: width, height: 40)
+            }
+        }
+        return .zero
     }
 }
 
@@ -312,14 +390,38 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if collectionView.tag == 101 {
+            if isSelected {
+                isSelected = false
+                collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+            }
+        }
+        return true
+    }
+    
     /// 첨부한 이미지를 탭하면 첨부이미지 목록에서 삭제하는 메소드
     /// - Parameters:
     ///   - collectionView: imageCollectionView
     ///   - indexPath: 탭한 이미지컬렉션뷰 셀의 indexPath
     /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView.tag == 102 {
+            imageList.remove(at: indexPath.item)
+            imageCollectionView.deleteItems(at: [indexPath])
+        }
         
-        imageList.remove(at: indexPath.item)
-        imageCollectionView.deleteItems(at: [indexPath])
+#if DEBUG
+        print(tempList[indexPath.section], tempList[indexPath.item])
+#endif
+    }
+}
+
+
+
+
+extension ComposeViewController: SendDataDelegate {
+    func sendData(data: [String]) {
+        selectedCategoryList = data
     }
 }
