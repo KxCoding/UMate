@@ -50,7 +50,7 @@ class AllReviewViewController: UIViewController {
     /// - Parameter sender: 날짜순으로 정렬하는 버튼
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBAction func toggleDateAlignment(_ sender: UIButton) {
-        sender.isSelected = sender.isSelected == false ? true : false
+        sender.isSelected = !sender.isSelected
         
         if !pointAlignmentArrowImageView.isHidden {
             pointAlignmentLabel.textColor = .systemGray2
@@ -65,15 +65,13 @@ class AllReviewViewController: UIViewController {
             dateAlignmentArrowImageView.image = UIImage(systemName: "arrow.up")
             
             PlaceReviewItem.dummyData.sort { $0.date > $1.date }
-            
-            allReviewTableView.reloadData()
         } else {
             dateAlignmentArrowImageView.image = UIImage(systemName: "arrow.down")
             
             PlaceReviewItem.dummyData.sort { $0.date < $1.date }
-            
-            allReviewTableView.reloadData()
         }
+        
+        allReviewTableView.reloadData()
     }
     
     
@@ -81,7 +79,7 @@ class AllReviewViewController: UIViewController {
     /// - Parameter sender: 별점순으로 정렬하는 버튼
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBAction func togglePointAlignment(_ sender: UIButton) {
-        sender.isSelected = sender.isSelected == false ? true : false
+        sender.isSelected = !sender.isSelected
         
         if !dateAlignmentArrowImageView.isHidden {
             dateAlignmentLabel.textColor = .systemGray2
@@ -97,16 +95,14 @@ class AllReviewViewController: UIViewController {
             pointAlignmentArrowImageView.image = UIImage(systemName: "arrow.up")
             
             PlaceReviewItem.dummyData.sort { $0.starPoint > $1.starPoint }
-            
-            allReviewTableView.reloadData()
         } else {
             pointAlignmentLabel.text = "별점낮은순"
             pointAlignmentArrowImageView.image = UIImage(systemName: "arrow.down")
             
             PlaceReviewItem.dummyData.sort { $0.starPoint < $1.starPoint }
-            
-            allReviewTableView.reloadData()
         }
+        
+        allReviewTableView.reloadData()
     }
     
     
