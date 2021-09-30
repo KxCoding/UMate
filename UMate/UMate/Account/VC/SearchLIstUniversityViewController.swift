@@ -147,7 +147,7 @@ extension SearchLIstUniversityViewController: UITableViewDelegate {
 
 extension SearchLIstUniversityViewController: UISearchBarDelegate {
     
-    /// 등록된 모든 대학교이름 접두어 개수와 서치바에 입력된 문자열 접두어를 비교한다.
+    /// 등록된 모든 대학교이름 접두어 개수와 서치바에 입력된 문자열 접두어를 비교합니다.
     /// - Parameters:
     ///   - searchBar: searchBar
     ///   - searchText: searchText

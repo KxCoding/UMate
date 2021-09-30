@@ -52,7 +52,7 @@ class RegisterViewController: UIViewController {
     }()
     
     
-    /// 화면을 Dismiss.
+    /// 화면을 Dismiss 합니다.
     /// - Parameter sender: UIButton
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

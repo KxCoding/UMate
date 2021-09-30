@@ -22,13 +22,13 @@ struct Keys {
 /// 회원정보를 입력하고 프로필 이미지를 저장하는 클래스
 /// Author: 황신택
 class DetailRegisterViewController: UIViewController {
-    /// 이메일을 입력하는 텍스트필드
+    /// 이메일을 입력하는 텍스트 필드
     @IBOutlet weak var emailTextField: UITextField!
     
-    /// 비밀번호를 입력하는 텍스트필드
+    /// 비밀번호를 입력하는 텍스트 필드
     @IBOutlet weak var passwordTextField: UITextField!
     
-    /// 입력한 비밀번호를 한번더 입력하는 텍스트 필드
+    /// 입력한 비밀번호를 한번더 입력하는 텍스트필드
     @IBOutlet weak var repeatPasswordTextField: UITextField!
     
     /// 사용자 이름을 입력하는 텍스트 필드
@@ -40,10 +40,10 @@ class DetailRegisterViewController: UIViewController {
     /// 회원가입을 완료하는 버튼
     @IBOutlet weak var nextButton: UIButton!
     
-    /// 사용자가 선택한 이미지
+    /// 사용자가 선택한 이미지뷰
     @IBOutlet weak var profileImageView: UIImageView!
     
-    /// 프로파일 이미지를 버튼
+    /// 프로파일 이미지 버튼
     @IBOutlet weak var changeProfilePicButton: UIButton!
 
     /// 특정 텍스트필드에 조건을 추가 하기위해 선언
@@ -58,7 +58,7 @@ class DetailRegisterViewController: UIViewController {
     /// 옵저버 제거를 위한 변수
     var token: NSObjectProtocol?
     
-    /// 회원가입에 필요한 조건들을 검사한다.
+    /// 회원가입에 필요한 조건들을 검사합니다.
     /// Register Button
     /// - Parameter sender: nextButton
     @IBAction func checkToRegisterConditions(_ sender: Any) {

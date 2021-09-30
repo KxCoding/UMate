@@ -11,7 +11,7 @@ import KeychainSwift
 /// 로그인 화면을 구성하는 클래스
 /// Author: 황신택
 class AccountViewController: UIViewController {
-    /// 아이디 텍스트필드
+    /// 아이디 텍스트 필드
     @IBOutlet weak var idTextField: UITextField!
                                 
     /// 비밀번호 텍스트 필드
@@ -81,7 +81,7 @@ class AccountViewController: UIViewController {
     }
     
     
-    /// 뷰를 탭할시 키보드 내려간다.
+    /// 뷰를 탭할시 키보드 내려갑니다.
     /// - Parameter sender: UITapGestureRecognizer
     @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)

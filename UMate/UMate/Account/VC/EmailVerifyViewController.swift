@@ -11,16 +11,16 @@ import KeychainSwift
 /// 이메일을 검증하고 보안 코드를 발송하는 클래스입니다.
 /// Author:  황신택
 class EmailVerifyViewController: UIViewController {
-    /// 보안코드를 발송 버튼
+    /// 보안코드 발송 버튼
     @IBOutlet weak var sendCodeButton: UIButton!
     
     /// 다음 화면으로 가는 버튼
     @IBOutlet weak var emailVerificationButton: UIButton!
     
-    /// 이메일을 입력하는 텍스트필드
+    /// 이메일을 입력하는 텍스트 필드
     @IBOutlet weak var emailTextField: UITextField!
     
-    /// 인증받은 코드를 입력하는 텍스트필드
+    /// 인증받은 코드를 입력하는 텍스트 필드
     @IBOutlet weak var codeTextField: UITextField!
     
     /// 편집이 활성화 된 텍스트필드

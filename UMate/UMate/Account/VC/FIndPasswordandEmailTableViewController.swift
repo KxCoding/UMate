@@ -40,7 +40,7 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     /// 좌우로 움직이는 뷰
     @IBOutlet weak var activatedBar: UIView!
     
-    /// Dismiss한다.
+    /// Dismiss합니다.
     /// - Parameter sender: Left UIbutton
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true)
