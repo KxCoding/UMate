@@ -10,7 +10,7 @@ import UIKit
 
 /// 가게 검색탭과 관련된 뷰컨트롤러 클래스
 /// - Author: 장현우(heoun3089@gmail.com)
-class PlaceSearchViewController: UIViewController {
+class PlaceSearchViewController: RemoveObserverViewController {
     /// 검색한 결과를 표시할 컬렉션뷰
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var searchCollectionView: UICollectionView!
@@ -28,9 +28,6 @@ class PlaceSearchViewController: UIViewController {
     /// - Author: 장현우(heoun3089@gmail.com)
     var filterList = [Place.PlaceType]()
     
-    /// 옵저버 해제를 위한 변수
-    /// - Author: 장현우(heoun3089@gmail.com)
-    var tokens = [NSObjectProtocol]()
     
     /// window에 추가할 DimView
     /// - Author: 장현우(heoun3089@gmail.com)
@@ -154,17 +151,6 @@ class PlaceSearchViewController: UIViewController {
             if let vc = segue.destination as? PlaceInfoViewController {
                 vc.place = list[indexPath.item]
             }
-        }
-    }
-    
-    
-    deinit {
-        #if DEBUG
-        print(#function, self)
-        #endif
-        
-        for token in tokens {
-            NotificationCenter.default.removeObserver(token)
         }
     }
 }

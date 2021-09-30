@@ -81,7 +81,7 @@ struct PlaceReviewItem {
     let reviewText: String
     
     /// 날짜
-    let date: String
+    let date: Date
 
     /// 가게 이미지
     let image: UIImage?
@@ -116,7 +116,7 @@ struct PlaceReviewItem {
     /// 임시로 사용할 더미데이터
     static var dummyData = [
         PlaceReviewItem(reviewText: "분위기 너무 좋아요",
-                        date: "2021.06.01",
+                        date: Date() - TimeInterval(300000),
                         image: UIImage(named: "search_00"),
                         placeName: "오오비",
                         starPoint: 4.5,
@@ -128,7 +128,7 @@ struct PlaceReviewItem {
                         totalPoint: .fourPoint,
                         recommendationCount: 20),
         PlaceReviewItem(reviewText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                        date: "2021.05.28",
+                        date: Date() - TimeInterval(500000),
                         image: UIImage(named: "search_01"),
                         placeName: "카페 모",
                         starPoint: 4.0,
@@ -140,7 +140,7 @@ struct PlaceReviewItem {
                         totalPoint: .fivePoint,
                         recommendationCount: 15),
         PlaceReviewItem(reviewText: "좋아요",
-                        date: "2021.05.21",
+                        date: Date() - TimeInterval(1000000),
                         image: UIImage(named: "search_00"),
                         placeName: "오오비",
                         starPoint: 4.5,
@@ -152,7 +152,7 @@ struct PlaceReviewItem {
                         totalPoint: .fourPoint,
                         recommendationCount: 13),
         PlaceReviewItem(reviewText: "깔끔해요",
-                        date: "2021.04.10",
+                        date: Date() - TimeInterval(1500000),
                         image: UIImage(named: "search_00"),
                         placeName: "오오비",
                         starPoint: 4.5,
