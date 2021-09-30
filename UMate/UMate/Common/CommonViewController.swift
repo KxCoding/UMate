@@ -7,35 +7,42 @@
 
 import UIKit
 
+
+/// 공통적으로 사용하는 화면 ViewController 클래스.
+/// - Author: 안상희, 황신택
 class CommonViewController {
-
-    static let shared = CommonViewController()
-    
-    private init() { }
-
-    
-    /// go to homeVC
-    func transitionToHome() {
+    /// 메인 화면인 홈으로 이동합니다.
+    /// - Author: 황신택, 안상희
+    static func transitionToHome() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainTabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
+        let mainTabBarController =
+        storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
 
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController)
+        (UIApplication.shared.connectedScenes.first?.delegate as?
+         SceneDelegate)?.changeRootViewController(mainTabBarController)
     }
     
     
-    func showPasswordViewController() {
+    /// 암호 입력 화면을 보여줍니다.
+    /// - Author: 안상희
+    static func showPasswordViewController() {
         let storyboard = UIStoryboard(name: "Setting", bundle: nil)
-        let passwordViewController = storyboard.instantiateViewController(withIdentifier: "CommonPasswordSB")
+        let passwordViewController =
+        storyboard.instantiateViewController(withIdentifier: "CommonPasswordSB")
         
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(passwordViewController)
+        (UIApplication.shared.connectedScenes.first?.delegate as?
+         SceneDelegate)?.changeRootViewController(passwordViewController)
     }
     
     
-    
-    func showFaceIdViewController() {
+    /// Touch ID / Face ID 암호 화면을 보여줍니다.
+    /// - Author: 안상희
+    static func showFaceIdViewController() {
         let storyboard = UIStoryboard(name: "Setting", bundle: nil)
-        let emptyViewController = storyboard.instantiateViewController(withIdentifier: "EmptySB")
+        let emptyViewController =
+        storyboard.instantiateViewController(withIdentifier: "EmptySB")
         
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(emptyViewController)
+        (UIApplication.shared.connectedScenes.first?.delegate as?
+         SceneDelegate)?.changeRootViewController(emptyViewController)
     }
 }

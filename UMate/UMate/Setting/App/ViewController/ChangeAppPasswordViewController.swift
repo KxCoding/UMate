@@ -5,69 +5,71 @@
 //  Created by 안상희 on 2021/08/10.
 //
 
-import UIKit
 import KeychainSwift
+import UIKit
 
+
+/// 사용자 계정 설정의 비밀번호 변경 화면 ViewController 클래스.
+///
+/// 비밀번호를 변경합니다.
+/// - Author: 안상희
 class ChangeAppPasswordViewController: PasswordRootViewController {
-
-    /// PasswordNotCorrect Notification이 전달되면 실행되는 메소드입니다.
-    /// - Parameter notifcation: Notification
-    @objc func HandlePasswordNotCorrectNotification(notifcation: Notification) {
-        DispatchQueue.main.async {
-            self.passwordField.text = ""
-            
-            [self.firstPasswordImageView, self.secondPasswordImageView, self.thirdPasswordImageView, self.fourthPasswordImageView].forEach {
-                $0?.image = UIImage(named: "line")
-            }
-        }
-    }
+    /// 노티피케이션 제거를 위해 토큰을 담는 배열.
+    var tokens = [NSObjectProtocol]()
     
     
-    /// PasswordIsSame Notification이 전달되면 실행되는 메소드입니다.
-    /// - Parameter notifcation: Notification
-    @objc func passwordSameProcess(notifcation: Notification) {
-        DispatchQueue.main.async {
-            self.checkPasswordField.text = ""
-            
-            [self.firstPasswordImageView, self.secondPasswordImageView, self.thirdPasswordImageView, self.fourthPasswordImageView].forEach {
-                $0?.image = UIImage(named: "line")
-            }
-        }
-    }
-    
-    
+    /// ViewController가 메모리에 로드되면 호출됩니다.
+    ///
+    /// View의 초기화 작업을 진행하고, Notification Observer를 등록합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
         passwordField.becomeFirstResponder()
         
-        NotificationCenter.default
-            .addObserver(self,
-                         selector: #selector(HandlePasswordNotCorrectNotification(notifcation:)),
-                         name: Notification.Name.PasswordNotCorrect,
-                         object: nil)
+        var token = NotificationCenter.default.addObserver(forName: .PasswordNotCorrect,
+                                                           object: nil,
+                                                           queue: .main) { [weak self] _ in
+            self?.passwordField.text = ""
+            
+            [self?.firstPasswordImageView, self?.secondPasswordImageView,
+             self?.thirdPasswordImageView, self?.fourthPasswordImageView].forEach {
+                $0?.image = UIImage(named: "line")
+            }
+        }
+        tokens.append(token)
         
-        NotificationCenter.default
-            .addObserver(self,
-                    selector: #selector(passwordSameProcess(notifcation:)),
-                    name: Notification.Name.PasswordIsSame,
-                    object: nil)
+        token = NotificationCenter.default.addObserver(forName: .PasswordIsSame,
+                                                       object: nil,
+                                                       queue: .main) { [weak self] _ in
+            self?.checkPasswordField.text = ""
+            
+            [self?.firstPasswordImageView, self?.secondPasswordImageView,
+             self?.thirdPasswordImageView, self?.fourthPasswordImageView].forEach {
+                $0?.image = UIImage(named: "line")
+            }
+        }
+        tokens.append(token)
         
         
+        // 이미 설정된 비밀번호를 가져옵니다.
         password = keychain.get(Keys.appLockPasswordKey)
+        #if DEBUG
         print("ChangeAppPassword pasword \(password))")
+        #endif
     }
     
     
+    /// 소멸자에서 Observer를 제거합니다.
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        for token in tokens {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
 }
 
 
 
 extension ChangeAppPasswordViewController: UITextFieldDelegate {
-    
     /// 지정된 텍스트를 변경할 것인지 delegate에게 묻는 메소드입니다.
     ///
     /// 비밀번호는 4자리로 제한합니다.
@@ -80,10 +82,8 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
-        
         let currentText = NSString(string: textField.text ?? "")
         let finalText = currentText.replacingCharacters(in: range, with: string)
-        
         
         switch textField {
         case passwordField:
@@ -116,19 +116,16 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
                     return false
                 }
                 
-                
                 navigationItem.title = "비밀번호 변경"
-                [firstPasswordImageView, secondPasswordImageView, thirdPasswordImageView, fourthPasswordImageView].forEach {
+                [firstPasswordImageView, secondPasswordImageView,
+                 thirdPasswordImageView, fourthPasswordImageView].forEach {
                     $0?.image = UIImage(named: "line")
                 }
-                
                 checkPasswordField.becomeFirstResponder()
             }
-            
         default:
             // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
             if let _ = string.rangeOfCharacter(from: charSet) { return false }
-            
             
             if finalText.count == 0 {
                 firstPasswordImageView.image = UIImage(named: "line")
@@ -163,33 +160,28 @@ extension ChangeAppPasswordViewController: UITextFieldDelegate {
                              forKey: Keys.appLockPasswordKey,
                              withAccess: .accessibleWhenUnlocked)
                 
-                
                 alert(message: "비밀번호가 변경되었습니다.")
                 
-                /// 비밀번호 설정이 최종적으로 완료되면 보내는 Notification. SetPasswordViewController에 옵저버 존재.
+                // 비밀번호 설정이 최종적으로 완료되면 보내는 Notification.
+                // SetPasswordViewController에 옵저버가 존재합니다.
                 NotificationCenter.default.post(name: Notification.Name.PasswordDidSet,
                                                 object: nil,
                                                 userInfo: ["password": passwordCheck])
                 
-                
-                /// navigationController를 자동으로 pop합니다.
+                // navigationController를 자동으로 pop합니다.
                 let completion = {
                     _ = self.navigationController?.popViewController(animated: true)
                 }
-                
                 
                 guard let coordinator = transitionCoordinator else {
                     completion()
                     return false
                 }
                 
-                
                 coordinator.animate(alongsideTransition: nil) { _ in
                     completion()
                 }
             }
-            
-            
             return true
         }
         return true
