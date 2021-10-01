@@ -10,7 +10,7 @@ import UIKit
 
 /// 게시판 목록에 관한 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com)
-class BoardViewController: UIViewController {
+class BoardViewController: CommonViewController {
     /// 게시판 목록에 대한 정보를 나타내는 테이블 뷰
     @IBOutlet weak var boardListTableView: UITableView!
     
@@ -32,6 +32,7 @@ class BoardViewController: UIViewController {
     
     
     /// 강의평가 게시판에서 게시판 화면으로 돌아올 때 사용합니다.
+    /// - Parameter unwindSegue: DetailLectureReviewViewController -> BoardViewController
     @IBAction func unwindToBoard(_ unwindSegue: UIStoryboardSegue) {
     }
     
@@ -43,7 +44,7 @@ class BoardViewController: UIViewController {
     /// - Returns: segue를 실행하길 원한다면 true, 아니라면 false
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
-            /// 강의 평가 게시판은 performSegue를 이용
+            // 강의 평가 게시판은 performSegue를 이용
             if let _ = sender as? NonExpandableBoardTableViewCell, indexPath == IndexPath(row: 5, section: 1) {
                 return false
             }
@@ -94,7 +95,7 @@ class BoardViewController: UIViewController {
         boardListTableView.register(headerNib, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         
         // 게시판 목록 section별로 펼치고 접는 동작
-        NotificationCenter.default.addObserver(forName: .expandOrFoldSection, object: nil, queue: .main) { [weak self] noti in
+        let token = NotificationCenter.default.addObserver(forName: .expandOrFoldSection, object: nil, queue: .main) { [weak self] noti in
             if let section = noti.userInfo?["section"] as? Int {
                 guard let self = self else { return }
                 
@@ -124,6 +125,7 @@ class BoardViewController: UIViewController {
                 self.boardListTableView.reloadSections(IndexSet(section...section), with: .automatic)
             }
         }
+        tokens.append(token)
         
         // nonExpandableBoard에대한 북마크 속성 초기화
         for row in 0..<nonExpandableBoardList.count {
@@ -185,7 +187,7 @@ extension BoardViewController: UITableViewDataSource {
     /// 각 게시판에 대한 정보를 셀에 나타냅니다.
     /// - Parameters:
     ///   - tableView: 게시판 목록을 나타내는 tableView
-    ///   - indexPath: indexPath. 게시판 cell의 위치를 나타냅니다.
+    ///   - indexPath: 게시판 목록을 나타내는 cell의 indexPath
     /// - Returns: 구현을 완료한 셀
     /// - Author: 남정은
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -221,7 +223,7 @@ extension BoardViewController: UITableViewDelegate {
     /// 선택된 셀을 통해 특정 게시판으로 이동합니다.
     /// - Parameters:
     ///   - tableView: 게시판 목록을 나타내는 tableView
-    ///   - indexPath: indexPath. 게시판 cell의 위치를 나타냅니다.
+    ///   - indexPath: 게시판 목록을 나타내는 cell의 indexPath
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // IndexPath( row: 5, section: 1 ) 인 cell을 선택시 강의평가 게시판으로 이동
