@@ -53,11 +53,11 @@ class LectureReviewBoardViewController: UIViewController {
         
             guard values.count == 5 else { continue }
             
-            let lectureTitle = values[0].trimmingCharacters(in: .whitespaces) /// 교과목명
-            let professor = values[1].trimmingCharacters(in: .whitespaces) /// 교수명
-            let openingSemester = values[2].trimmingCharacters(in: .whitespaces) /// 개설학기
-            let textbookName = values[3].trimmingCharacters(in: .whitespaces) /// 교재명
-            let bookLink = values[4].trimmingCharacters(in: .whitespaces) /// 교재링크
+            let lectureTitle = values[0].trimmingCharacters(in: .whitespaces) // 교과목명
+            let professor = values[1].trimmingCharacters(in: .whitespaces) // 교수명
+            let openingSemester = values[2].trimmingCharacters(in: .whitespaces) // 개설학기
+            let textbookName = values[3].trimmingCharacters(in: .whitespaces) // 교재명
+            let bookLink = values[4].trimmingCharacters(in: .whitespaces) // 교재링크
             
             let lectureInfo = LectureInfo(
                 lectureTitle: lectureTitle,

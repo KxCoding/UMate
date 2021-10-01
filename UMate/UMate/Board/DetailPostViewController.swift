@@ -239,22 +239,22 @@ extension DetailPostViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
-        /// 작성자, 제목, 내용
+        // 작성자, 제목, 내용
         case 0:
             return 1
             
-        /// 게시글에 첨부된 이미지
+        // 게시글에 첨부된 이미지
         case 1:
             if let post = selectedPost, post.images.count == 0 {
                 return 0
             }
             return 1
             
-        /// 게시글에 포함된 좋아요, 댓글, 스크랩 개수
+        // 게시글에 포함된 좋아요, 댓글, 스크랩 개수
         case 2:
             return 1
             
-        /// 게시글에 포함된 댓글
+        // 게시글에 포함된 댓글
         case 3:
             return sortedCommentList.count
             
@@ -272,7 +272,7 @@ extension DetailPostViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
-        /// 게시글 내용 표시하는 셀
+        // 게시글 내용 표시하는 셀
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostContentTableViewCell", for: indexPath) as! PostContentTableViewCell
             if let post = selectedPost {
@@ -281,7 +281,7 @@ extension DetailPostViewController: UITableViewDataSource {
                 return cell
             }
             
-        /// 이미지 표시하는 셀
+        // 이미지 표시하는 셀
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostImageTableViewCell", for: indexPath) as! PostImageTableViewCell
             if let post = selectedPost {
@@ -290,7 +290,7 @@ extension DetailPostViewController: UITableViewDataSource {
                 return cell
             }
             
-        /// 카운트 라벨 표시하는 셀
+        // 카운트 라벨 표시하는 셀
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CountLabelTableViewCell", for: indexPath) as! CountLabelTableViewCell
             if let post = selectedPost {
@@ -299,7 +299,7 @@ extension DetailPostViewController: UITableViewDataSource {
                 return cell
             }
             
-        /// 댓글 및 대댓글 표시하는 셀
+        // 댓글 및 대댓글 표시하는 셀
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
             

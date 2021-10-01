@@ -36,7 +36,7 @@ class FreeBoardTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        /// 이미지의 모서리 깎기
+        // 이미지의 모서리 깎기
         postImageView.layer.cornerRadius = postImageView.frame.height * 0.05
     }
     
@@ -44,10 +44,10 @@ class FreeBoardTableViewCell: UITableViewCell {
     /// 게시글 목록 셀 초기화
     /// - Parameter post: 각 cell에 해당하는 게시글
     func configure(post: Post) {
-        /// 이미지가 없을 시 표시하지 않음
+        // 이미지가 없을 시 표시하지 않음
         postImageView.isHidden = post.images.first == nil ? true : false
         
-        /// 포스트에 올린 이미지가 있을 경우 첫번 째 이미지만 게시글 목록에서 표시 
+        // 포스트에 올린 이미지가 있을 경우 첫번 째 이미지만 게시글 목록에서 표시
         if post.images.count > 0 {
             postImageView.image = post.images[0]
         }

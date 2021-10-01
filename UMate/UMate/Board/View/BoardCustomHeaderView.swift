@@ -33,17 +33,17 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
     
     
     func configureContents() {
-        /// 코드로 제약을 조정하기 위한 속성
+        // 코드로 제약을 조정하기 위한 속성
         title.translatesAutoresizingMaskIntoConstraints = false
         summary.translatesAutoresizingMaskIntoConstraints = false
         image.translatesAutoresizingMaskIntoConstraints = false
         
-        /// 헤더를 만들기 위해 필요한 뷰 추가
+        // 헤더를 만들기 위해 필요한 뷰 추가
         contentView.addSubview(title)
         contentView.addSubview(summary)
         contentView.addSubview(image)
         
-        /// 제약 설정
+        // 제약 설정
         NSLayoutConstraint.activate([
             title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             title.heightAnchor.constraint(equalToConstant: 30),

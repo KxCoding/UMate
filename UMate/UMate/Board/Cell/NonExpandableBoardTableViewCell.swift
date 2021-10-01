@@ -24,7 +24,7 @@ class NonExpandableBoardTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        /// 북마크 버튼 설정
+        // 북마크 버튼 설정
         bookmarkButton.tintColor = UIColor.init(named: "lightGrayNonSelectedColor")
         bookmarkButton.alpha = 0.8
     }
@@ -37,8 +37,8 @@ class NonExpandableBoardTableViewCell: UITableViewCell {
     func configure(boardList: [BoardUI], indexPath: IndexPath) {
         boardLabel.text = boardList[indexPath.row].boardNames.first
         
-        /// 인덱스패스로 북마크 버튼의 tag초기화
-        /// 100, 101 ... 200, 201 .... 300, 301
+        // 인덱스패스로 북마크 버튼의 tag초기화
+        // 100, 101 ... 200, 201 .... 300, 301
         bookmarkButton.tag = indexPath.row + 100 * (indexPath.section + 1)
     }
     

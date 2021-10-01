@@ -46,18 +46,18 @@ class ExpandImageViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /// pageControl초기화
+        // pageControl초기화
         pager.configureStyle(with: [.pillShape])
         pager.backgroundColor = .black.withAlphaComponent(0.1)
         
         
-        /// 선택된 이미지에 대한 정보를 초기화
+        // 선택된 이미지에 대한 정보를 초기화
         let token = NotificationCenter.default.addObserver(forName: .sendImageView,
                                                        object: nil,
                                                        queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
-            /// 이미지정보가 들어있는 게시글
+            // 이미지정보가 들어있는 게시글
             guard let post = noti.userInfo?["post"] as? Post else { return }
             /// 선택된 이미지의 index row
             guard let index = noti.userInfo?["index"] as? Int else { return }
@@ -66,10 +66,10 @@ class ExpandImageViewController: CommonViewController {
             self.imageIndex = index
             
             let images = post.images
-            /// 현재 화면에 나타나는 이미지의 순번
+            // 현재 화면에 나타나는 이미지의 순번
             self.imageCountLabel.text = "\(index + 1) / \(images.count)"
             
-            /// 이미지가 하나일 경우에는 pageControl 숨김
+            // 이미지가 하나일 경우에는 pageControl 숨김
             if images.count > 1 {
                 self.pager.currentPage = index
                 self.pager.numberOfPages = images.count
@@ -90,7 +90,7 @@ extension ExpandImageViewController: UICollectionViewDataSource {
         return selectedPost?.images.count ?? 0
     }
     
-    /// 인덱스에 알맞은 이미지를 보여주는 셀을 리턴
+    // 인덱스에 알맞은 이미지를 보여주는 셀을 리턴
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postImageCell", for: indexPath) as! ExpandPostImageCollectionViewCell
         
@@ -111,9 +111,9 @@ extension ExpandImageViewController: UICollectionViewDelegate {
     ///   - cell: 추가될 셀
     ///   - indexPath: 나타낼 셀에대한 인덱스패스
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        /// 이미지를 클릭해서 ExpandImageView가 나타났을 때 선택한 이미지를 화면에 표시
+        // 이미지를 클릭해서 ExpandImageView가 나타났을 때 선택한 이미지를 화면에 표시
         if initiatedImage {
-            initiatedImage = false /// 계속해서 처음에 클릭한 이미지만 표시되는 것을 방지
+            initiatedImage = false // 계속해서 처음에 클릭한 이미지만 표시되는 것을 방지
             collectionView.scrollToItem(at: IndexPath(item: imageIndex ?? 0, section: 0), at: .centeredHorizontally, animated: false)
         }
     }
@@ -123,12 +123,11 @@ extension ExpandImageViewController: UICollectionViewDelegate {
 
 /// 이미지 컬렉션뷰에대한 레이아웃
 extension ExpandImageViewController: UICollectionViewDelegateFlowLayout {
-    /// 원하는 셀의 사이즈를 리턴
+    // 원하는 셀의 사이즈를 리턴
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
         let height = collectionView.frame.height
-        
-        /// 정사각형 사이즈
+       
         return CGSize(width: width, height: height)
     }
 }
@@ -140,18 +139,18 @@ extension ExpandImageViewController: UIScrollViewDelegate {
     /// 스크롤 뷰안에 컨텐트 뷰에서 스크롤 발생시에 호출
     /// - Parameter scrollView: 스크롤이 발생되는 스크롤 뷰 객체
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        /// 스크롤 뷰의 x좌표
+        // 스크롤 뷰의 x좌표
         let x = scrollView.contentOffset.x
         
-        /// 이미지의 순서에 알맞게 페이지 저장
+        // 이미지의 순서에 알맞게 페이지 저장
         let page = Int( x / scrollView.frame.width)
         
         guard let images = selectedPost?.images else { return }
         
-        /// 페이지에 따라서 이미지 번호를 바꿔줌
+        // 페이지에 따라서 이미지 번호를 바꿔줌
         imageCountLabel.text = "\(page + 1) / \(images.count)"
         
-        /// 페이지에 따라서 페이저의 현재 페이지를 바꿔줌
+        // 페이지에 따라서 페이저의 현재 페이지를 바꿔줌
         pager.currentPage = page
     }
 }
