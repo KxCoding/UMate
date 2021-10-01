@@ -82,7 +82,7 @@ class ComposeViewController: UIViewController {
         
         /// 커뮤니티 이용규칙 버튼의 테마 설정
         /// - Author: 김정민
-        commmunityRuleBtn.setButtonTheme()
+        commmunityRuleBtn.setToEnabledButtonTheme()
         
         postTitleTextField.becomeFirstResponder()
         

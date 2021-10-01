@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     /// - Author: 안상희
     let keychain = KeychainSwift(keyPrefix: Keys.appLockPasswordKey)
     
-    /// keyPrefix로 전달된 값을 통해 KeychainSwift 객체를 초기화하기 위한 속성.생체인증을 위한 키체인입니다.
+    /// keyPrefix로 전달된 값을 통해 KeychainSwift 객체를 초기화하기 위한 속성. 생체인증을 위한 키체인입니다.
     /// - Author: 안상희
     let bioKeychain = KeychainSwift(keyPrefix: Keys.bioLockPasswordKey)
     
@@ -56,7 +56,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     
-    /// 사용자가 Scene과의 상호작용을 중지할 때호출됩니다.
+    /// 사용자가 Scene과의 상호작용을 중지할 때 호출됩니다.
     ///
     /// 앱 밖으로 나갈 때 호출됩니다.
     /// - Parameter scene: UIScene
@@ -98,8 +98,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     /// RootViewController를 변경합니다.
     /// - Parameters:
-    ///   - vc: UIViewController.
-    ///   - animated: Bool.
+    ///   - vc: 변경하려고 하는 UIViewController
+    ///   - animated: 기본값은 true로 true면 애니메이션 효과를 사용하고, false이면 애니메이션 효과를 사용하지 않습니다.
     /// - Author: 황신택, 안상희
     func changeRootViewController(_ vc: UIViewController, animated: Bool = true) {
         guard let window = window else {

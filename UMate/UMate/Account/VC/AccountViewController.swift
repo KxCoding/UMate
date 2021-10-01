@@ -55,7 +55,7 @@ class AccountViewController: UIViewController {
         KeyboardWillHide()
         
         /// 규격해 놓은 버튼 모양으로 만듬.
-        loginButton.setButtonTheme()
+        loginButton.setToEnabledButtonTheme()
         
         /// 텍스트필드 델리게이트 지정
         idTextField.delegate = self

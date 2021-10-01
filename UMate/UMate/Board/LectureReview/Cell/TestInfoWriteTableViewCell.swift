@@ -241,7 +241,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         testStrategyTextView.layer.cornerRadius = 10
         
         /// 시험정보 공유 버튼 초기화
-        insertTestReviewButton.setButtonTheme()
+        insertTestReviewButton.setToEnabledButtonTheme()
     }
 }
 

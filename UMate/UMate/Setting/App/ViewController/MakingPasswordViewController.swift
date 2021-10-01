@@ -9,19 +9,13 @@ import KeychainSwift
 import UIKit
 
 
-/// 사용자 계정 설정의 비밀번호 생성 화면 ViewController 클래스.
+/// 사용자 계정 설정의 비밀번호 생성 화면 ViewController 클래스
 ///
 /// 비밀번호를 생성합니다.
 /// - Author: 안상희
 class MakingPasswordViewController: PasswordRootViewController {
-    /// 비밀번호가 설정되었는지 파악하기 위한 속성.
+    /// 비밀번호가 설정되었는지 파악하기 위한 속성
     var isPasswordSet: Bool?
-    
-    /// 노티피케이션 제거를 위해 토큰을 담는 배열.
-    var tokens = [NSObjectProtocol]()
-    
-    /// NSObjectProtocol를 리턴하는 속성. Notification에 이용합니다.
-    var token: NSObjectProtocol?
     
     
     /// ViewController가 메모리에 로드되면 호출됩니다.
@@ -30,10 +24,10 @@ class MakingPasswordViewController: PasswordRootViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // keyPrefix로 전달된 값을 통해 KeychainSwift 객체를 초기화하기 위한 속성.생체인증을 위한 키체인입니다.
+        // keyPrefix로 전달된 값을 통해 KeychainSwift 객체를 초기화하기 위한 속성. 생체인증을 위한 키체인입니다.
         let keychainPassword = keychain.get(Keys.appLockPasswordKey)
         
-        token = NotificationCenter.default.addObserver(forName: .PasswordNotCorrect,
+        let token = NotificationCenter.default.addObserver(forName: .PasswordNotCorrect,
                                                        object: nil,
                                                        queue: .main) { [weak self] noti in
             self?.checkPasswordField.text = ""
@@ -43,12 +37,14 @@ class MakingPasswordViewController: PasswordRootViewController {
                 $0?.image = UIImage(named: "line")
             }
         }
+        tokens.append(token)
         
         #if DEBUG
         print("ispassword Set \(isPasswordSet!)")
         #endif
         
-        if isPasswordSet! {
+        
+        if let isPasswordSet = isPasswordSet, isPasswordSet == true {
             // 비밀번호가 설정되어있을 경우, 비밀번호를 키체인에서 가져옵니다.
             // 설정된 비밀번호를 입력받도록 합니다.
             #if DEBUG
@@ -64,14 +60,6 @@ class MakingPasswordViewController: PasswordRootViewController {
             passwordField.becomeFirstResponder()
         }
     }
-    
-    
-    /// 소멸자에서 Observer를 제거합니다.
-    deinit {
-        for token in tokens {
-            NotificationCenter.default.removeObserver(token)
-        }
-    }
 }
 
 
@@ -83,10 +71,10 @@ extension MakingPasswordViewController: UITextFieldDelegate {
     /// 비밀번호는 4자리로 제한합니다.
     ///
     /// - Parameters:
-    ///   - textField: 텍스트를 포함하고 있는 TextField.
-    ///   - range: 지정된 문자 범위입니다.
-    ///   - string: 지정된 범위에 대한 대체 문자열입니다.
-    /// - Returns: Bool
+    ///   - textField: 텍스트를 포함하고 있는 TextField
+    ///   - range: 지정된 문자 범위
+    ///   - string: 지정된 범위에 대한 대체 문자열
+    /// - Returns: 지정된 텍스트를 변경할 경우 true, 아니라면 false를 리턴합니다.
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
@@ -129,7 +117,7 @@ extension MakingPasswordViewController: UITextFieldDelegate {
         case checkPasswordField:
             // 비밀번호가 설정되어있을 경우는 암호 잠금을 해제하기 위한 것이므로
             // 비밀번호 한번만 입력받아서 기존의 비밀번호와 확인하고 키체인의 비밀번호 정보를 제거합니다.
-            if isPasswordSet! {
+            if let isPasswordSet = isPasswordSet, isPasswordSet == true {
                 // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
                 if let _ = string.rangeOfCharacter(from: charSet) { return false }
                 
@@ -163,7 +151,8 @@ extension MakingPasswordViewController: UITextFieldDelegate {
                     // 키체인에서 비밀번호를 제거합니다.
                     keychain.delete(Keys.appLockPasswordKey)
                     
-                    /// 비밀번호 설정이 취소되면 보내는 Notification. SetPasswordViewController에 옵저버 존재.
+                    // 비밀번호 설정이 취소되면 보내는 Notification
+                    // SetPasswordViewController에 옵저버가 존재합니다.
                     NotificationCenter.default.post(name: Notification.Name.PasswordNotUse,
                                                     object: nil)
                     
@@ -182,7 +171,7 @@ extension MakingPasswordViewController: UITextFieldDelegate {
                     }
                 }
             } else {
-                // 비밀번호가 설정되어있을 경우, 비밀번호 한번만 입력받도록 합니다.
+                // 비밀번호를 설정하기 위해 앞서 입력한 비밀번호를 다시 한번 체크합니다.
                 // 숫자만 입력 가능하고, 숫자는 4자리로 제한합니다.
                 if let _ = string.rangeOfCharacter(from: charSet) { return false }
                 

@@ -58,7 +58,7 @@ class FreeBoardViewController: RemoveObserverViewController {
             composeButton.isHidden = true
         }
         
-        composeButton.setButtonTheme()
+        composeButton.setToEnabledButtonTheme()
 
         /// 네비게이션 바에 타이틀 초기화
         /// - Author: 남정은

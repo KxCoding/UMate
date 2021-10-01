@@ -15,7 +15,7 @@ import UIKit
 /// 잠금이 설정된 경우에 앱이 백그라운드에 있다가 사용자가 다시 앱으로 돌아가면 이 화면이 나타납니다.
 /// - Author: 안상희
 class EmptyViewController: UIViewController {
-    /// UI 업데이트 중에 사용할 수 있도록 클래스 범위에 저장된 인증 컨텍스트.
+    /// UI 업데이트 중에 사용할 수 있도록 클래스 범위에 저장된 인증 컨텍스트
     var context = LAContext()
     
     /// keyPrefix로 전달된 값을 통해 KeychainSwift 객체를 초기화하기 위한 속성.생체인증을 위한 키체인입니다.

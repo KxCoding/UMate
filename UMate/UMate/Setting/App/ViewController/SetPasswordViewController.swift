@@ -10,25 +10,22 @@ import LocalAuthentication
 import UIKit
 
 
-/// 사용자 계정 설정의 암호 잠금 메뉴 화면 ViewController 클래스.
+/// 사용자 계정 설정의 암호 잠금 메뉴 화면 ViewController 클래스
 ///
 /// 암호 잠금과 관련된 작업을 수행할 수 있습니다.
 /// - Author: 안상희
-class SetPasswordViewController: UIViewController {
-    /// 노티피케이션 제거를 위해 토큰을 담는 배열.
-    var tokens = [NSObjectProtocol]()
-    
+class SetPasswordViewController: RemoveObserverViewController {
     /// keyPrefix로 전달된 값을 통해 KeychainSwift 객체를 초기화하기 위한 속성. 생체인증을 위한 키체인입니다.
     let bioKeychain = KeychainSwift(keyPrefix: Keys.bioLockPasswordKey)
     
-    /// UI 업데이트 중에 사용할 수 있도록 클래스 범위에 저장된 인증 컨텍스트.
+    /// UI 업데이트 중에 사용할 수 있도록 클래스 범위에 저장된 인증 컨텍스트
     var context = LAContext()
     
     
-    /// 암호 잠금 메뉴들을 표시하는 UIView.
+    /// 암호 잠금 메뉴들을 표시하는 UIView
     @IBOutlet weak var containerView: UIView!
     
-    /// 암호 잠금 설정하는 UISwitch.
+    /// 암호 잠금 설정하는 UISwitch
     @IBOutlet weak var setPasswordSwitch: UISwitch!
     
     /// 암호 변경 UIButton. 암호 잠금이 설정되었을 때만 활성화됩니다.
@@ -39,7 +36,7 @@ class SetPasswordViewController: UIViewController {
     
     
     /// 암호 잠금 스위치 값이 변경되면 호출됩니다.
-    /// - Parameter sender: UISwitch.
+    /// - Parameter sender: 암호 잠금 설정하는 스위치
     @IBAction func setPasswordStatusChanged(_ sender: UISwitch) {
         // 암호 잠금이 활성화된 상태
         if sender.isOn {
@@ -57,7 +54,7 @@ class SetPasswordViewController: UIViewController {
     
     
     /// Touch ID / Face ID 스위치 값이 변경되면 호출됩니다.
-    /// - Parameter sender: UISwitch.
+    /// - Parameter sender: 생체 인증 설정하는 스위치
     @IBAction func touchIDPasswordStatusChanged(_ sender: UISwitch) {
         // 스위치가 on 상태라면 아래의 작업을 수행합니다.
         if sender.isOn {
@@ -182,19 +179,18 @@ class SetPasswordViewController: UIViewController {
                                                        queue: .main) { _ in }
         tokens.append(token)
         
-        
         context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
         
         
-        // 암호가 이미 설정되어있는지 체크하기 위한 상수들.
+        // 암호가 이미 설정되어있는지 체크하기 위한 상수들
         let keychain = KeychainSwift(keyPrefix: Keys.appLockPasswordKey)
         let isPasswordSet = keychain.get(Keys.appLockPasswordKey)
         let bioPasswordSet = bioKeychain.getBool(Keys.bioLockPasswordKey)
 
         
-//        #if DEBUG
+        #if DEBUG
         print("bioPasswordDidSet \(bioPasswordSet ?? false)")
-//        #endif
+        #endif
         
         
         // 암호가 설정되어있지 않다면 암호 변경 버튼, TouchID/FaceID 스위치를 비활성화합니다.
@@ -231,26 +227,18 @@ class SetPasswordViewController: UIViewController {
     
     /// 암호 잠금 스위치의 상태가 변경되면, 비밀번호 설정 화면으로 넘어가기 전에 호출됩니다.
     /// - Parameters:
-    ///   - segue: UIStoryboardSegue.
-    ///   - sender: UISwitch.
+    ///   - segue: 뷰컨트롤러에 포함된 segue에 대한 정보를 갖는 객체
+    ///   - sender: 암호 잠금 설정하는 스위치
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? MakingPasswordViewController {
             // Switch의 상태에 따라 작업을 분기합니다.
             if setPasswordSwitch.isOn {
-                // 암호 잠금 스위치가 on으로 변경된 상태일 경우, 암호가 아직 설정되지 않은 상태이므로 false.
+                // 암호 잠금 스위치가 on으로 변경된 상태일 경우, 암호가 아직 설정되지 않은 상태이므로 false
                 vc.isPasswordSet = false
             } else {
-                // 암호 잠금 스위치가 off로 변경된 상태일 경우, 암호가 아직 설정된 상태이므로 true.
+                // 암호 잠금 스위치가 off로 변경된 상태일 경우, 암호가 아직 설정된 상태이므로 true
                 vc.isPasswordSet = true
             }
-        }
-    }
-    
-    
-    /// 소멸자에서 Observer를 제거합니다.
-    deinit {
-        for token in tokens {
-            NotificationCenter.default.removeObserver(token)
         }
     }
 }

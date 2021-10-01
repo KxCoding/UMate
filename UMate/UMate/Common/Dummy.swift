@@ -153,7 +153,7 @@ let tempUrl = URL(string: "https://kxcoding.com")!
 
 
 // MARK: - TimeTable Dummy
-/// 강의 정보를 담은 Dummy Data 리스트.
+/// 강의 정보를 담은 Dummy Data 리스트
 /// - Author: 안상희
 let friendCourseList: [ElliottEvent] =
 [ElliottEvent(courseId: "F1234",

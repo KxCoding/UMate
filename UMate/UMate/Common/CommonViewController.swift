@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 공통적으로 사용하는 화면 ViewController 클래스.
+/// 공통적으로 사용하는 화면 ViewController 클래스
 /// - Author: 안상희, 황신택
 class CommonViewController {
     /// 메인 화면인 홈으로 이동합니다.

@@ -65,7 +65,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
         })
         
         /// 규격해놓은 버튼모양으로 만듬.
-        verifyEmailButton.setButtonTheme()
+        verifyEmailButton.setToEnabledButtonTheme()
         
         /// Assets에 추가해놓은 이용약관 스크립트  txt파일을 문자열로 가져옴.
         if let serviceAssetData = NSDataAsset(name: "Service")?.data,

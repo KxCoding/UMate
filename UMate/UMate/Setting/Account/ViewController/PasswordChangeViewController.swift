@@ -8,33 +8,33 @@
 import UIKit
 
 
-/// 사용자 계정 설정의 비밀번호 변경 화면 ViewController 클래스.
+/// 사용자 계정 설정의 비밀번호 변경 화면 ViewController 클래스
 ///
 /// 비밀번호를 변경하는 작업을 수행합니다.
 /// - Author: 안상희
 class PasswordChangeViewController: UIViewController {
     // MARK: Outlet
-    /// 새 비밀번호를 입력하는 TextField.
+    /// 새 비밀번호를 입력하는 TextField
     @IBOutlet weak var passwordField: UITextField!
     
-    /// 입력된 새 비밀번호를 다시 한번 입력하는 TextField.
+    /// 입력된 새 비밀번호를 다시 한번 입력하는 TextField
     @IBOutlet weak var checkPasswordField: UITextField!
     
     
-    /// 새 비밀번호가 형식에 맞게 설정되었는지 체크하는 메세지를 표시하는 컨테이너를 담는 UIView.
+    /// 비밀번호 형식 확인 메시지 컨테이너 뷰
     @IBOutlet weak var passwordMessageContainerView: UIView!
     
-    /// 입력된 새 비밀번호가 앞서 입력된 비밀번호와 동일한지의 여부를 나타나는 메세지를 표시하는 컨테이너를 담는 UIView.
+    /// 비밀번호 형식 재확인 메시지 컨테이너 뷰
     @IBOutlet weak var checkPasswordMessageContainerView: UIView!
     
     
-    /// 새 비밀번호가 형식에 맞게 설정되었는지 체크하는 메세지를 표시하는 UILabel.
+    /// 새 비밀번호가 형식에 맞는지 체크하는 메세지를 표시하는 UILabel
     @IBOutlet weak var passwordMessageLabel: UILabel!
     
-    /// 입력된 새 비밀번호가 앞서 입력된 비밀번호와 동일한지의 여부를 나타나는 메세지를 표시하는 UILabel.
+    /// 재입력된 비밀번호가 앞서 입력된 비밀번호와 동일한지의 여부를 나타나는 메세지를 표시하는 UILabel
     @IBOutlet weak var checkPasswordMessageLabel: UILabel!
     
-    /// 비밀번호 변경 UIButton.
+    /// 비밀번호 변경 버튼
     @IBOutlet weak var changeButton: UIButton!
     
     
@@ -42,7 +42,7 @@ class PasswordChangeViewController: UIViewController {
     /// 비밀번호 변경 버튼이 눌리면 호출됩니다.
     ///
     /// 비밀번호 변경 확인 창이 뜨고, 사용자 계정 설정 화면으로 pop 됩니다.
-    /// - Parameter sender: UIButton.
+    /// - Parameter sender: 비밀번호 변경 버튼
     @IBAction func changeButtonDidTapped(_ sender: UIButton) {
         passwordMessageContainerView.isHidden = true
         checkPasswordMessageContainerView.isHidden = true
@@ -69,7 +69,7 @@ class PasswordChangeViewController: UIViewController {
 
         passwordField.becomeFirstResponder()
         
-        changeButton.setButtonTheme()
+        changeButton.setToEnabledButtonTheme()
     }
 }
 
@@ -82,10 +82,10 @@ extension PasswordChangeViewController: UITextFieldDelegate {
     /// 이메일 형식이 올바를 경우, emailField 밑에 올바른 형식이라고 메시지를 출력합니다.
     ///
     /// - Parameters:
-    ///   - textField: 텍스트를 포함하고 있는 TextField.
-    ///   - range: 지정된 문자 범위.
-    ///   - string: 지정된 범위에 대한 대체 문자열.
-    /// - Returns: Bool
+    ///   - textField: 텍스트를 포함하고 있는 TextField
+    ///   - range: 지정된 문자 범위
+    ///   - string: 지정된 범위에 대한 대체 문자열
+    /// - Returns: 지정된 텍스트를 변경할 경우 true, 아니라면 false를 리턴합니다.
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
@@ -93,7 +93,7 @@ extension PasswordChangeViewController: UITextFieldDelegate {
         case passwordField:
             // textField에 문자가 입력된 경우에 아래 작업을 수행합니다.
             if var password = textField.text {
-                // 현재 사용자가 입력한 문자까지 포함하는 패스워드.
+                // 현재 사용자가 입력한 문자까지 포함하는 패스워드
                 let currentPassword: String
                 
                 // string이 empty라면,
@@ -113,7 +113,7 @@ extension PasswordChangeViewController: UITextFieldDelegate {
                     passwordMessageLabel.textColor = .systemRed
                     passwordMessageContainerView.isHidden = false
                     changeButton.isEnabled = false
-                    changeButton.disabledButton()
+                    changeButton.setToDisabledButtonTheme()
                     return true
                 }
                 
@@ -143,7 +143,7 @@ extension PasswordChangeViewController: UITextFieldDelegate {
                     checkPasswordMessageLabel.textColor = .systemRed
                     checkPasswordMessageContainerView.isHidden = false
                     changeButton.isEnabled = false
-                    changeButton.disabledButton()
+                    changeButton.setToDisabledButtonTheme()
                     return true
                 }
                 
@@ -151,13 +151,13 @@ extension PasswordChangeViewController: UITextFieldDelegate {
                     checkPasswordMessageLabel.text = "비밀번호가 일치합니다."
                     checkPasswordMessageLabel.textColor = .systemBlue
                     changeButton.isEnabled = true
-                    changeButton.setButtonTheme()
+                    changeButton.setToDisabledButtonTheme()
                 } else {
                     checkPasswordMessageLabel.text = "비밀번호가 일치하지 않습니다."
                     checkPasswordMessageLabel.textColor = .systemRed
                     checkPasswordMessageContainerView.isHidden = false
                     changeButton.isEnabled = false
-                    changeButton.disabledButton()
+                    changeButton.setToDisabledButtonTheme()
                 }
             }
         default:
@@ -170,7 +170,7 @@ extension PasswordChangeViewController: UITextFieldDelegate {
     /// Return 버튼을 눌렀을 때의 process에 대해 delegate에게 묻습니다.
     ///
     /// Return 버튼을 누르면 커서가 다음 textField로 이동합니다.
-    /// - Parameter textField: Return 버튼이 눌려진 해당 TextField.
+    /// - Parameter textField: Return 버튼이 눌려진 해당 TextField
     /// - Returns: TextField가 return 버튼에 대한 동작을 구현해야하는 경우 true이고, 그렇지 않으면 false입니다.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {

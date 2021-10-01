@@ -20,6 +20,6 @@ class DetailLectureHeaderTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        writeButton.setButtonTheme()
+        writeButton.setToEnabledButtonTheme()
     }
 }
