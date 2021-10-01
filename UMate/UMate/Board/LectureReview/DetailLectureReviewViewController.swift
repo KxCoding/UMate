@@ -23,7 +23,7 @@ class DetailLectureReviewViewController: RemoveObserverViewController {
     
     /// 강의평 쓰기와 시험정보 쓰기 버튼 클릭시 화면 이동
     /// - Author: 김정민, 남정은
-    @IBAction func perfromSegueToWrite(_ sender: UIButton) {
+    @IBAction func perfromSeguPhotoSegueToWrite(_ sender: UIButton) {
         if sender.tag == 2 {
             performSegue(withIdentifier: "writeReviewSegue", sender: self)
         } else {

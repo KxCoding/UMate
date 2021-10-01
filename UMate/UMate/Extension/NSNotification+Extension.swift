@@ -32,5 +32,10 @@ extension NSNotification.Name {
     /// 새로운 강의평가가 등록될 때 Broadcast 하기 위한 Notification속성
     /// - Author: 김정민(kimjm010@icloud.com)
     static let newLectureReviewDidInput = Notification.Name(rawValue: "newLectureReviewDidInput")
-
+    
+    /// - Author: 김정민(kimjm010@icloud.com)
+    static var imagehasCaptured = Notification.Name(rawValue: "imagehasCaptured")
+    
+    static let newImageCaptured = Notification.Name(rawValue: "newImageCaptured")
+    
 }

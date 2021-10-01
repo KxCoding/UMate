@@ -38,6 +38,10 @@ class ComposeViewController: RemoveObserverViewController {
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var categoryListCollectionView: UICollectionView!
     
+    /// 게시글에 첨부할 이미지를 선택
+    /// - Author: 김정민(kimjm010@icloud.com)
+    @IBOutlet weak var addPhotoBtn: UIBarButtonItem!
+    
     // 게시글에 첨부할 이미지 속성
     /// - Author: 김정민(kimjm010@icloud.com)
     var imageList = [UIImage]()
@@ -65,6 +69,15 @@ class ComposeViewController: RemoveObserverViewController {
     }
     
     
+    @IBAction func addorTakePhoto(_ sender: UIBarButtonItem) {
+            alertToSelectAddOrTakePhoto(title: "", message: "앨범에서 찾을까요? 캡쳐할까요? ") { _ in
+                self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
+            } handler2: { _ in
+                self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
+            }
+    }
+    
+         
     /// 게시글을 저장
     /// 일반 게시판과 카테고리를 선택하는 게시판이 있습니다.
     /// - Author: 김정민(kimjm010@icloud.com)
@@ -108,19 +121,9 @@ class ComposeViewController: RemoveObserverViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "composeCategoryBoardSegue" {
-            let vc = segue.destination as! CategoryBoardViewController
-            vc.sendDataDelegate = self
-        }
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-#if DEBUG
-#endif
         
         /// 커뮤니티 이용규칙 버튼의 테마 설정
         /// - Author: 김정민(kimjm010@icloud.com)
@@ -137,7 +140,7 @@ class ComposeViewController: RemoveObserverViewController {
         
         /// SelectImageViewController로부터 사용자가 선택한 이미지를 게시글 작성 화면에 표시
         /// - Author: 김정민(kimjm010@icloud.com)
-        let token = NotificationCenter.default.addObserver(forName: .imageDidSelect,
+        var token = NotificationCenter.default.addObserver(forName: .imageDidSelect,
                                                            object: nil,
                                                            queue: .main) { [weak self] (noti) in
             if let img = noti.userInfo?["img"] as? [UIImage] {
@@ -145,6 +148,15 @@ class ComposeViewController: RemoveObserverViewController {
                 self?.imageCollectionView.reloadData()
             }
         }
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .newImageCaptured, object: nil, queue: .main, using: { [weak self] (noti) in
+            if let img = noti.userInfo?["img"] as? UIImage {
+                self?.imageList.append(img)
+                self?.imageCollectionView.reloadData()
+            }
+        })
+        
         tokens.append(token)
     }
 }
@@ -304,16 +316,7 @@ extension ComposeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print(#function)
         
-        if collectionView.tag == 101 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectCategoryBoardCollectionViewCell",
-                                                          for: indexPath) as! SelectCategoryBoardCollectionViewCell
-            
-            cell.selectCategoryLabel.text = tempList[indexPath.item]
-            
-            return cell
-        } else if collectionView.tag == 102 {
-            
+        guard collectionView.tag == 101 else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ComposeImageCollectionViewCell",
                                                           for: indexPath) as! ComposeImageCollectionViewCell
             
@@ -322,7 +325,11 @@ extension ComposeViewController: UICollectionViewDataSource {
             return cell
         }
         
-        return UICollectionViewCell()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectCategoryBoardCollectionViewCell",
+                                                      for: indexPath) as! SelectCategoryBoardCollectionViewCell
+        cell.selectCategoryButton.setTitle(tempList[indexPath.item], for: .normal)
+        
+        return cell
     }
 }
 
@@ -414,14 +421,5 @@ extension ComposeViewController: UICollectionViewDelegate {
 #if DEBUG
         print(tempList[indexPath.section], tempList[indexPath.item])
 #endif
-    }
-}
-
-
-
-
-extension ComposeViewController: SendDataDelegate {
-    func sendData(data: [String]) {
-        selectedCategoryList = data
     }
 }

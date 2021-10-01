@@ -9,10 +9,6 @@
 import UIKit
 
 
-protocol SendDataDelegate {
-    func sendData(data: [String])
-}
-
 /// 카테고리를 가진 게시판에대한 클래스
 /// - Author: 남정은
 class CategoryBoardViewController: RemoveObserverViewController {
@@ -40,22 +36,11 @@ class CategoryBoardViewController: RemoveObserverViewController {
     /// - Author: 남정은
     var isSelected = true
     
-    /// 게시판 카테고리 데이터 전달을 위한 속성
-    /// - Author: 김정민(kimjm010@icloud.com)
-    var sendDataDelegate: SendDataDelegate?
-    
     
     /// 검색 버튼을 눌렀을 시에 SearchViewController로 이동
     /// - Author: 남정은
     @IBAction func showSearchViewController(_ sender: Any) {
         performSegue(withIdentifier: "searchSegue", sender: self)
-    }
-    
-    
-    @IBAction func composeCategoryBoard(_ sender: Any) {
-        if let selectedCategoryList = selectedBoard?.categoryNames {
-            sendDataDelegate?.sendData(data: selectedCategoryList)
-        }
     }
     
     

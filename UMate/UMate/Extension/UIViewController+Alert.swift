@@ -53,9 +53,7 @@ extension UIViewController {
     
     
     /// 알림 메소드3
-    ///
     /// 액션시트 입니다.
-    ///
     /// - Parameters:
     ///   - title: 알림 타이틀입니다.
     ///   - message: 알림 메시지입니다.
@@ -72,34 +70,11 @@ extension UIViewController {
     }
     
     
-    /// 알림 메소드4
-    ///
-    /// 게시판 댓글 삭제 알림 메소드 입니다.
-    ///
-    /// - Parameters:
-    ///   - title: 알림 타이틀. 기본값은 nil입니다.
-    ///   - message: 알림 메시지. 기본값은 nil입니다.
-    ///   - completion: 핸들러, 취소버튼은 nil이고, 확인 버튼은 handler로 직접 구현합니다.
-    func alertDelete(title: String? = nil, message: String? = nil, handler: ((UIAlertAction) -> Void)? = nil) {
-        let alertDelete = UIAlertController(title: "알림", message: "댓글을 삭제하시겠습니까?", preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "확인", style: .destructive, handler: handler)
-        alertDelete.addAction(okAction)
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        alertDelete.addAction(cancelAction)
-        
-        present(alertDelete, animated: true, completion: nil)
-    }
-    
-    
     /// 게시판 댓글 신고 알림 메소드입니다.
-    ///
-    /// 액션시트입니다.
-    ///
     /// - Parameters:
     ///   - title: 알림 타이틀. 기본값은 nil입니다.
     ///   - message: 알림 메시지입니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func alertComment(title: String? = nil, message: String = "댓글을 신고하시겠습니까?") {
         let alertCommnet = UIAlertController(title: title, message: message , preferredStyle: .actionSheet)
         
@@ -153,4 +128,30 @@ extension UIViewController {
         
         present(alertCommnet, animated: true, completion: nil)
     }
+    
+    
+    /// 게시글에 이미지 첨부 시 알림 메소드
+    /// 이미지를 앨범에서 찾거나 캡쳐할 수 있습니다.
+    /// - Parameters:
+    ///   - title: 알림의 Title
+    ///   - message: 알림의 Message
+    ///   - handler1: 앨범에서 찾기를 선택한 후 실행할 작업. 기본값은 nil입니다.
+    ///   - handler2: 캡쳐하기를 선택한 후 실행할 작업. 기본값을 nil입니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
+    func alertToSelectAddOrTakePhoto(title: String, message: String, handler1: ((UIAlertAction) -> Void)? = nil, handler2: ((UIAlertAction) -> Void)? = nil) {
+        let alertCommnet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        
+        let addAction = UIAlertAction(title: "앨범에서 찾기", style: .default, handler: handler1)
+        alertCommnet.addAction(addAction)
+        
+        let takeAction = UIAlertAction(title: "캡쳐하기", style: .default, handler: handler2)
+        alertCommnet.addAction(takeAction)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alertCommnet.addAction(cancelAction)
+        
+        present(alertCommnet, animated: true, completion: nil)
+    }
+    
+    
 }
