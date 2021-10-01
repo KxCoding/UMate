@@ -18,7 +18,7 @@ class BoardViewController: CommonViewController {
     var bookmarks: [Int:Bool] = [:]
     
     
-    /// 게시판 즐겨찾기 버튼의 색상 변경 & 즐겨찾기 속성을 변경합니다.
+    /// 게시판 즐겨찾기 버튼의 색상 & 즐겨찾기 속성을 변경합니다.
     /// - Parameter sender: UIButton. 즐겨찾기 핀버튼
     @IBAction func updateBookmark(_ sender: UIButton) {
         sender.tintColor = sender.tintColor == UIColor.init(named: "lightGrayNonSelectedColor") ? UIColor.init(named: "blackSelectedColor") : UIColor.init(named: "lightGrayNonSelectedColor")
@@ -31,7 +31,7 @@ class BoardViewController: CommonViewController {
     }
     
     
-    /// 강의평가 게시판에서 게시판 화면으로 돌아올 때 사용합니다.
+    /// 강의평가 화면에서 게시판목록 화면으로 돌아올 때 사용합니다.
     /// - Parameter unwindSegue: DetailLectureReviewViewController -> BoardViewController
     @IBAction func unwindToBoard(_ unwindSegue: UIStoryboardSegue) {
     }
@@ -65,7 +65,7 @@ class BoardViewController: CommonViewController {
     ///   - segue: 호출된 segue
     ///   - sender: segue가 시작된 객체
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        /// 정보게시판 더미데이터 전달
+        // 정보게시판 더미데이터 전달
         if let vc = segue.destination as? FreeBoardViewController, segue.identifier == "infoSegue" {
             vc.selectedBoard = infoBoard
         }
@@ -150,7 +150,6 @@ extension BoardViewController: UITableViewDataSource {
     ///  게시판 그룹 수를 설정합니다.
     /// - Parameter tableView: 게시판 목록을 나타내는 tableView
     /// - Returns: 나타낼 section 수
-    /// - Author: 남정은
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
@@ -161,18 +160,17 @@ extension BoardViewController: UITableViewDataSource {
     ///   - tableView: 게시판 목록을 나타내는 tableView
     ///   - section: section. 게시판 그룹을 나타냅니다.
     /// - Returns: 섹션안에 나타낼 row수
-    /// - Author: 남정은
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        /// 내가 쓴 글, 댓글 단 글, 남긴 강의 정보
+        // 내가 쓴 글, 댓글 단 글, 남긴 강의 정보
         case 0:
             return 3
             
-        // non expandable board
+        // nonExpandableBoard
         case 1:
             return nonExpandableBoardList.count
             
-        // expandable board
+        // expandableBoard
         case 2,3:
             if expandableBoardList[section - 2].isExpanded {
                 return expandableBoardList[section - 2].boardNames.count
@@ -184,12 +182,11 @@ extension BoardViewController: UITableViewDataSource {
     }
     
     
-    /// 각 게시판에 대한 정보를 셀에 나타냅니다.
+    /// 각 게시판에 대한 정보를 cell에 나타냅니다.
     /// - Parameters:
     ///   - tableView: 게시판 목록을 나타내는 tableView
     ///   - indexPath: 게시판 목록을 나타내는 cell의 indexPath
-    /// - Returns: 구현을 완료한 셀
-    /// - Author: 남정은
+    /// - Returns: 구현을 완료한 cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 내가 남긴 글
         if indexPath.section == 0 {
@@ -199,7 +196,7 @@ extension BoardViewController: UITableViewDataSource {
             return cell
         }
         
-        // nonExxpandableBoard cell을 구성
+        // nonExpandableBoard cell을 구성
         if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
             
@@ -218,7 +215,7 @@ extension BoardViewController: UITableViewDataSource {
 
 
 
-/// 게시판 목록을 표시한 테이블 뷰에대한  동작 처리
+/// 게시판 목록을 표시한 테이블 뷰에 대한  동작 처리
 extension BoardViewController: UITableViewDelegate {
     /// 선택된 셀을 통해 특정 게시판으로 이동합니다.
     /// - Parameters:
