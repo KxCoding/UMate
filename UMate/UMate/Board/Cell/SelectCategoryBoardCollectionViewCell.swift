@@ -7,23 +7,20 @@
 
 import UIKit
 
+
+/// 게시판의 카테고리를 컬레션뷰 셀
+/// - Author: 김정민(kimjm010@icloud.com)
 class SelectCategoryBoardCollectionViewCell: UICollectionViewCell {
     
     /// 게시판 카테고리를 선택할 수 있는 버튼
     /// 버튼의 선택 상테에 따라 버튼의 상태가 달라집니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var selectCategoryButton: UIButton!
     
     override var isSelected: Bool {
-        /// 카테고리 선택시에 언더바 색상 변경
+        // 카테고리 선택 상태에 따라 다른 이미지 및 tintColor 표시
         didSet {
-            if isSelected {
-                selectCategoryButton.imageView?.image = UIImage(systemName: "circle.inset.filled")
-                selectCategoryButton.tintColor = .systemRed
-            } else {
-                selectCategoryButton.imageView?.image = UIImage(systemName: "circle")
-                selectCategoryButton.tintColor = .black
-            }
+            selectCategoryButton.imageView?.image = isSelected ? UIImage(systemName: "circle.inset.filled") : UIImage(systemName: "circle")
+            selectCategoryButton.tintColor = isSelected ? .systemRed : .black
         }
     }
 }

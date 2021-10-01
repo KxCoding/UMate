@@ -16,20 +16,16 @@ import MobileCoreServices
 class SelectImageViewController: RemoveObserverViewController {
     
     /// 게시글 작성 시 이미지 첨부를 위한 아울렛
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var editBtn: UIBarButtonItem!
     
     /// 이미지 fetch를 위한 속성
-    /// - Author: 김정민(kimjm010@icloud.com)
     let imageManager = PHImageManager()
     
     /// 제한된 사진에 접근할 수 있는 권한이 있는지를 확인하는 속성
-    /// - Author: 김정민(kimjm010@icloud.com)
     var hasLimitedPermission = false
     
     /// Fetch한 사진을 담을 속성
-    /// - Author: 김정민(kimjm010@icloud.com)
     var allPhotos: PHFetchResult<PHAsset> = {
         let option = PHFetchOptions()
         
@@ -42,7 +38,6 @@ class SelectImageViewController: RemoveObserverViewController {
     
     /// 이미지 첨부를 위한 ViewController를 닫습니다.
     /// - Parameter sender: SelectImageViewController
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -50,14 +45,12 @@ class SelectImageViewController: RemoveObserverViewController {
     
     /// 제한된 사진에 접근할 수 있는 경우, 제한 된 사진을 편집할 수 있습니다.
     /// - Parameter sender: SelectImageViewController
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func editSelectedImage(_ sender: Any) {
         PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
     }
     
     
     /// 게시글에 첨부할 이미지를 선택합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func selectImage(_ sender: Any) {
         guard let indexPath = imageCollectionView.indexPathsForSelectedItems else { return }
         
@@ -66,9 +59,14 @@ class SelectImageViewController: RemoveObserverViewController {
             let size = CGSize(width: imageCollectionView.frame.width / 4,
                               height: imageCollectionView.frame.width / 4)
             
-            imageManager.requestImage(for: target, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
+            imageManager.requestImage(for: target,
+                                         targetSize: size,
+                                         contentMode: .aspectFill,
+                                         options: nil) { (image, _) in
                 
-                NotificationCenter.default.post(name: .imageDidSelect, object: nil, userInfo: ["img": [image]])
+                NotificationCenter.default.post(name: .imageDidSelect,
+                                                object: nil,
+                                                userInfo: ["img": [image]])
                 
                 self.dismiss(animated: true, completion: nil)
             }
@@ -77,7 +75,6 @@ class SelectImageViewController: RemoveObserverViewController {
     
     
     /// 사진에 접근하기 위한 권한 요청합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
     func requestAuthorization() {
         let status: PHAuthorizationStatus
         
@@ -142,22 +139,24 @@ extension SelectImageViewController: UICollectionViewDataSource {
     ///   - collectionView: collectionView
     ///   - section: 하나의 섹션에 표시할 아이템의 갯수
     /// - Returns: Fetch된 사진의 갯수
-    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return allPhotos.count
     }
     
     
-    /// 각 셀마다 이미지를 표시합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// 각 셀마다 아이템의 사이즈에 맞게 이미지를 표시합니다.
+    /// - Parameters:
+    ///   - collectionView: imageCollectionView
+    ///   - indexPath: image의 indexPath
+    /// - Returns: imageCollectionView의 cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath)
-            as! ImageCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell",
+                                                      for: indexPath) as! ImageCollectionViewCell
+        
         let target = allPhotos.object(at: indexPath.item)
         let size = CGSize(width: collectionView.frame.width / 4, height: collectionView.frame.width / 4)
-        
         imageManager.requestImage(for: target, targetSize: size, contentMode: .aspectFill, options: nil) { image, _ in
             cell.imageView.image = image
         }
@@ -168,7 +167,8 @@ extension SelectImageViewController: UICollectionViewDataSource {
 
 
 
-
+/// 이미지를 표시하는 컬렉션뷰 아이템의 크기를 조절합니다.
+/// - Author: 김정민(kimjm010@icloud.com)
 extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
     
     /// Fetch된 이미지의 사이즈를 설정합니다.
@@ -177,20 +177,24 @@ extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
     ///   - collectionViewLayout: 컬렉션뷰의 레이아웃
     ///   - indexPath: 컬렉션뷰 아이템의 인덱스패스
     /// - Returns: 화면에 4개의 이미지가 표시될 수 있습니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 4, height: collectionView.frame.width / 4)
+        
+        return CGSize(width: collectionView.frame.width / 4,
+                      height: collectionView.frame.width / 4)
     }
 }
 
 
 
 
+/// PhotoLibrary 옵저버 제거합니다.
+/// - Author: 김정민(kimjm010@icloud.com)
 extension SelectImageViewController: PHPhotoLibraryChangeObserver {
     
-    /// PhotoLibrary 옵저버 제거합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// photoLibrary애 변화가 있을 경우 호출됩니다.
+    /// - Parameter changeInstance: PhotoLibrary의 change
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         DispatchQueue.main.async {
             if let changes = changeInstance.changeDetails(for: self.allPhotos) {

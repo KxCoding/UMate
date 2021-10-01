@@ -69,8 +69,7 @@ class CategoryBoardViewController: RemoveObserverViewController {
         print(selectedBoard?.posts, selectedBoard?.categoryNames, selectedBoard?.categoryNumbers, selectedBoard?.boardTitle)
         #endif
         
-        /// 게시글 작성 버튼의 테마 설정
-        /// - Author: 김정민(kimjm010@icloud.com)
+        // 게시글 작성 버튼의 테마 설정
         composeBtn.setButtonTheme()
         
         /// 네비게이션 바에 타이틀 초기화
@@ -137,6 +136,7 @@ class CategoryBoardViewController: RemoveObserverViewController {
 
 
 
+
 /// 카테고리 게시판의 카테고리 목록을 나타내는 컬렉션 뷰의 데이터소스
 /// - Author: 남정은
 extension CategoryBoardViewController: UICollectionViewDataSource {
@@ -177,6 +177,7 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
         return cell
     }
 }
+
 
 
 
@@ -243,6 +244,7 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
 
 
 
+
 /// 카테고리 목록을 나타내는 컬렉션 뷰의 레이아웃 조정
 /// - Author: 남정은
 extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
@@ -296,6 +298,7 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
 
 
 
+
 /// 카테고리 게시판에 대한 테이블 뷰 데이터소스
 /// - Author: 남정은
 extension CategoryBoardViewController: UITableViewDataSource {
@@ -325,13 +328,5 @@ extension CategoryBoardViewController: UITableViewDataSource {
         
         cell.configure(post: post)
         return cell
-    }
-}
-
-
-
-extension CategoryBoardViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        print(#function)
     }
 }

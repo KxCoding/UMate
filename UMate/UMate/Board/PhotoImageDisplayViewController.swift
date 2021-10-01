@@ -13,31 +13,21 @@ import UIKit
 class PhotoImageDisplayViewController: UIViewController {
 
     /// 켭쳐한 사진을 표시할 이미지뷰
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var photoImageView: UIImageView!
     
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet var overlayView: UIView!
     
     /// 카메라 Falash Mode 속성
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var flashModeBtn: UIButton!
     
     /// 카메라 스위치 속성
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var cameraSwitchBtn: UIButton!
     
     /// 캡쳐에 필요한 뷰 컨틀롤러
-    /// - Author: 김정민(kimjm010@icloud.com)
     var customPicker: UIImagePickerController?
-    
-    /// 캡쳐 종료 후 ComposeViewController로 돌아가기위한 속성
-    /// - Author: 김정민(kimjm010@icloud.com)
-    let vc = ComposeViewController()
     
     
     /// Camera FlashMode를 변경합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func changeFlashMode(_ sender: Any) {
         
         guard let picker = customPicker else { return }
@@ -51,7 +41,6 @@ class PhotoImageDisplayViewController: UIViewController {
     
     
     /// CameraMode를 변경합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func switchCamera(_ sender: Any) {
         switch customPicker?.cameraDevice {
         case .rear:
@@ -64,50 +53,49 @@ class PhotoImageDisplayViewController: UIViewController {
     }
     
     
-    /// 캡쳐 취소 메소드
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// 캡쳐를 취소합니다.
+    /// - Parameter sender: 취소 Button
     @IBAction func done(_ sender: Any) {
-        customPicker?.dismiss(animated: true, completion: {
-            self.present(self.vc, animated: true, completion: nil)
-        })
+        customPicker?.dismiss(animated: true, completion: nil)
     }
     
     
-    /// 캡쳐를 합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// 카메라로 촬영합니다.
+    /// - Parameter sender: 촬영 Button
     @IBAction func takePhoto(_ sender: Any) {
         customPicker?.takePicture()
     }
     
     
-    /// 캡쳐를 위한 카메라를 표시합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// 캡쳐를 위한 카메라 화면을 표시합니다.
+    /// - Parameter sender: 다시 찍기 Button
     @IBAction func presentCamera(_ sender: Any) {
         setCamera()
     }
     
     
     /// 캡쳐한 사진을 게시글에 첨부합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// - Parameter sender: 사진 사용 Button
     @IBAction func addCapturedPhoto(_ sender: Any) {
 
         guard let capturedImage = photoImageView.image else { return }
         
-        NotificationCenter.default.post(name: .newImageCaptured, object: nil, userInfo: ["img": capturedImage])
-        dismiss(animated: true) {
-            self.present(self.vc, animated: true, completion: nil)
-        }
+        NotificationCenter.default.post(name: .newImageCaptured,
+                                        object: nil,
+                                        userInfo: ["img": capturedImage])
+        
+        dismiss(animated: true, completion: nil)
     }
     
     
-    /// 캡쳐한 이미지 사용을 취소
+    /// 캡쳐한 이미지 사용을 취소합니다.
+    /// - Parameter sender: Cancel Button
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    /// 초기 카메라를 셋팅하는 메소드입니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// 카메라를 셋팅을 설정합니다.
     func setCamera() {
         guard UIImagePickerController.isCameraDeviceAvailable(.rear) else { return }
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
@@ -141,8 +129,10 @@ class PhotoImageDisplayViewController: UIViewController {
         flashModeBtn.isHidden = !UIImagePickerController.isFlashAvailable(for: .rear)
         cameraSwitchBtn.isHidden = !UIImagePickerController.isCameraDeviceAvailable(.front)
         
-        // 캡쳐한 이미지를 이미지뷰에 표시합니다.
-        NotificationCenter.default.addObserver(forName: .imagehasCaptured, object: nil, queue: .main) { [weak self] noti in
+        // 캡쳐한 이미지를 게시글 작성 뷰컨트롤러의 이미지뷰에 표시합니다.
+        NotificationCenter.default.addObserver(forName: .imagehasCaptured,
+                                               object: nil,
+                                               queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
             if let image = noti.userInfo?["image"] as? UIImage {
@@ -155,18 +145,21 @@ class PhotoImageDisplayViewController: UIViewController {
 
 
 
-///
+/// 캡쳐후의 작업을 지정
+/// - Author: 김정민(kimjm010@icloud.com)
 extension PhotoImageDisplayViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    /// 캡쳐 작업이 끝난경우 호출되는 메소드입니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// 캡쳐 작업이 끝난경우 호출됩니다.
+    /// - Parameter picker: ImagePicker를 관리하는 객체
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
     
     
     /// 이미지를 선택한 경우 이미지뷰에 선택한 이미지를 표시합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// - Parameters:
+    ///   - picker: ImagePicker를 관리하는 객체
+    ///   - info: 촬영한 이미지 및 수정된 이미지
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage {
