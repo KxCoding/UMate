@@ -34,13 +34,33 @@ class CompanyTableViewCell: UITableViewCell {
     /// 북마크 이미지뷰
     @IBOutlet weak var favoriteImage: UIImageView!
     
+    /// 회사 웹사이트 버튼
+    @IBOutlet weak var CompanyWebSite: UIButton!
+    
+    
     /// NSCache의 NSURL키를 이용해서 값을 가져오기위한 속성
     /// 캐시가 시스템 메모리를 너무 많이 사용하지않도록 하기위해서 사용
     let cache = NSCache<NSURL, UIImage>()
     
+    /// 채용정보 데이타 모델을 저장
+    /// 각셀의 웹사이트로 이동 하기 위한 속성입니다.
+    var jobList: JobData.Job?
+    
+    
+    /// 로고 이미지을 클릭하면 해당 웹사이트로 갑니다.
+    /// - Parameter sender: UIButton
+    @IBAction func goToWebSite(_ sender: Any) {
+        guard let urlStr = jobList?.website else { return }
+        if let url = URL(string: urlStr) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    
     /// 셀에 호출할 속성들을 초기화 하는 메소드
     /// 제이슨 데이타를 파싱해서 아울렛 속성에 저장합니다.
     func configureCompany(with model: JobData.Job) {
+        jobList = model
         fieldLabel.text = model.field
         titleLabel.text = model.title
         detailLabel.text = model.detail
@@ -90,25 +110,6 @@ class CompanyTableViewCell: UITableViewCell {
         }
     }
     
-    func fetch(with model: JobData.Job) {
-        if let url = URL(string: model.url) {
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if let error = error {
-                    print(error)
-                }
-                DispatchQueue.global().async {
-                    if let data = data, let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            self.companyImage.image = image
-                        }
-
-                    }
-                }
-               
-            }.resume()
-        }
-    }
-
     
     override func awakeFromNib() {
         super.awakeFromNib()

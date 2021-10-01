@@ -11,8 +11,13 @@ import Foundation
 /// 속성 전부 동일하나 구분지어 사용해야하기 때문에 연관값을 사용
 /// Author: 황신택
 enum HomeViewCellType {
+    /// 홈뷰 컨트롤러의 4개의 게시판
     case main(HomeViewCellData)
+    
+    /// 채용정보탭
     case promotion(HomeViewCellData)
+    
+    /// 공모전탭
     case contest(HomeViewCellData)
 }
 

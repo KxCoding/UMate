@@ -71,13 +71,34 @@
                                                                 <constraint firstAttribute="width" constant="20" id="DUD-VR-6vH"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cWW-Pf-gmx">
-                                                            <rect key="frame" x="314" y="44.5" width="60" height="60"/>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t0X-wF-zOY">
+                                                            <rect key="frame" x="314" y="45" width="60" height="60"/>
+                                                            <subviews>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cWW-Pf-gmx">
+                                                                    <rect key="frame" x="0.0" y="-0.5" width="60" height="60"/>
+                                                                </imageView>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="clk-Zv-Wr3">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <connections>
+                                                                        <action selector="goToWebSite:" destination="nZH-EO-sBM" eventType="touchUpInside" id="M9K-zH-b8I"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="60" id="dog-yp-Z1j"/>
-                                                                <constraint firstAttribute="height" constant="60" id="im2-et-llO"/>
+                                                                <constraint firstItem="clk-Zv-Wr3" firstAttribute="top" secondItem="t0X-wF-zOY" secondAttribute="top" id="4E1-cw-nHN"/>
+                                                                <constraint firstAttribute="width" constant="60" id="BpK-vu-CLN"/>
+                                                                <constraint firstItem="clk-Zv-Wr3" firstAttribute="leading" secondItem="t0X-wF-zOY" secondAttribute="leading" id="Ckc-QF-mUx"/>
+                                                                <constraint firstAttribute="trailing" secondItem="clk-Zv-Wr3" secondAttribute="trailing" id="Vth-9c-AFR"/>
+                                                                <constraint firstAttribute="trailing" secondItem="cWW-Pf-gmx" secondAttribute="trailing" id="g1B-pg-Iug"/>
+                                                                <constraint firstAttribute="bottom" secondItem="cWW-Pf-gmx" secondAttribute="bottom" id="iQl-Qs-rMs"/>
+                                                                <constraint firstAttribute="height" constant="60" id="jcv-E4-yEl"/>
+                                                                <constraint firstItem="cWW-Pf-gmx" firstAttribute="top" secondItem="t0X-wF-zOY" secondAttribute="top" id="nT9-Yk-6x1"/>
+                                                                <constraint firstItem="cWW-Pf-gmx" firstAttribute="leading" secondItem="t0X-wF-zOY" secondAttribute="leading" id="qcx-6P-TnT"/>
+                                                                <constraint firstAttribute="bottom" secondItem="clk-Zv-Wr3" secondAttribute="bottom" id="wOb-6v-Qm6"/>
                                                             </constraints>
-                                                        </imageView>
+                                                        </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IT.SW " textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuR-hS-rMh" customClass="PaddingLabel" customModule="UMate" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="51.5" height="22"/>
                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -149,11 +170,11 @@
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
+                                                        <constraint firstItem="t0X-wF-zOY" firstAttribute="centerY" secondItem="rfi-iB-ksD" secondAttribute="centerY" id="0bJ-xS-WJP"/>
                                                         <constraint firstItem="yuR-hS-rMh" firstAttribute="leading" secondItem="rfi-iB-ksD" secondAttribute="leading" id="Ghl-g6-HGB"/>
-                                                        <constraint firstItem="cWW-Pf-gmx" firstAttribute="centerY" secondItem="rfi-iB-ksD" secondAttribute="centerY" id="S4e-rN-Vhq"/>
                                                         <constraint firstAttribute="trailing" secondItem="avc-xG-lm4" secondAttribute="trailing" id="a88-iC-Bmx"/>
                                                         <constraint firstAttribute="bottom" secondItem="avc-xG-lm4" secondAttribute="bottom" id="d6L-xY-oDs"/>
-                                                        <constraint firstAttribute="trailing" secondItem="cWW-Pf-gmx" secondAttribute="trailing" id="kC3-AC-n1O"/>
+                                                        <constraint firstAttribute="trailing" secondItem="t0X-wF-zOY" secondAttribute="trailing" id="hYE-5i-Xs7"/>
                                                         <constraint firstItem="cFd-GP-duF" firstAttribute="centerY" secondItem="rfi-iB-ksD" secondAttribute="centerY" id="laA-xW-xWp"/>
                                                         <constraint firstItem="dz0-uM-cNs" firstAttribute="leading" secondItem="rfi-iB-ksD" secondAttribute="leading" id="o0p-GI-anN"/>
                                                         <constraint firstItem="cFd-GP-duF" firstAttribute="leading" secondItem="rfi-iB-ksD" secondAttribute="leading" id="tuQ-w5-Cg2"/>
@@ -170,6 +191,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="CompanyWebSite" destination="clk-Zv-Wr3" id="B7o-dk-xb5"/>
                                             <outlet property="careerLabel" destination="ZWY-JY-YhG" id="wxm-6x-Dg7"/>
                                             <outlet property="companyImage" destination="cWW-Pf-gmx" id="w7h-gS-MLx"/>
                                             <outlet property="degreeLabel" destination="Ak9-Qu-F0l" id="ae6-KJ-pPi"/>

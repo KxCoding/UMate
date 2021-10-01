@@ -25,7 +25,8 @@ class EmploymentInfoViewController: UIViewController {
     var isSerching = false
     
     
-    /// 이전화면
+    
+    /// 이전화면으로 돌아 갑니다.
     /// - Parameter sender: UiButton
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
