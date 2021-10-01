@@ -7,6 +7,9 @@
 
 import UIKit
 
+
+/// 공통되는 기능을 포함한 뷰 컨트롤러
+///  - Author: 안상희, 남정은
 class CommonViewController: UIViewController {
     /// go to homeVC
     static func transitionToHome() {

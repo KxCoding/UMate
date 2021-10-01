@@ -10,7 +10,7 @@ import UIKit
 
 /// 강의 정보화면에대한 클래스
 /// - Author: 김정민, 남정은
-class DetailLectureReviewViewController: RemoveObserverViewController {
+class DetailLectureReviewViewController: CommonViewController {
     /// 강의 정보를 나타내는 테이블 뷰
     @IBOutlet weak var lectureInfoTableView: UITableView!
     
