@@ -10,7 +10,9 @@ import UIKit
 
 /// 가게 검색탭과 관련된 뷰컨트롤러 클래스
 /// - Author: 장현우(heoun3089@gmail.com)
+
 class PlaceSearchViewController: CommonViewController {
+
     /// 검색한 결과를 표시할 컬렉션뷰
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var searchCollectionView: UICollectionView!

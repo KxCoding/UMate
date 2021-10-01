@@ -65,11 +65,14 @@ class CategoryBoardViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 게시글 작성 버튼의 테마 설정
-        composeBtn.setButtonTheme()
 
-        // 네비게이션 바에 타이틀 초기화
-        // - Author: 남정은
+        /// 게시글 작성 버튼의 테마 설정
+        /// - Author: 김정민(kimjm010@icloud.com)
+        composeBtn.setButtonTheme()
+        
+        /// 네비게이션 바에 타이틀 초기화
+        /// - Author: 남정은
+
         self.navigationItem.title = selectedBoard?.boardTitle
         
         // 카테코리 별로 filtering되기 전 게시글배열 초기화

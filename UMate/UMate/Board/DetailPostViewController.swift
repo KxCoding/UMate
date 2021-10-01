@@ -10,7 +10,9 @@ import UIKit
 
 /// 게시글 상세화면에대한 클래스
 /// - Author: 남정은, 김정민(kimjm010@icloud.com)
+
 class DetailPostViewController: CommonViewController {
+
     @IBOutlet weak var writeCommentContainerView: UIView!
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var detailPostTableView: UITableView!

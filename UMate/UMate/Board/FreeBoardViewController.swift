@@ -44,7 +44,9 @@ class FreeBoardViewController: CommonViewController {
                 vc.selectedPost = selectedBoard?.posts[indexPath.row]
             }
         }
+
         // 검색 버튼 클릭시 선택된 게시판에 대한 정보 전달
+
         else if segue.identifier == "searchSegue", let vc = segue.destination as? SearchViewController {
             vc.selectedBoard = selectedBoard
         }
@@ -54,8 +56,10 @@ class FreeBoardViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         // 스크랩 게시판에 게시글 작성 버튼을 숨김
         // - Author: 김정민
+
         if selectedBoard?.boardTitle == "스크랩" {
             composeButton.isHidden = true
         }
