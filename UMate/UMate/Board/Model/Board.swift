@@ -9,8 +9,8 @@
 import UIKit
 
 
-/// 게시판에대한 모델
-/// - Author: 남정은
+/// 게시판 모델
+/// - Author: 남정은(dlsl7080@gmail.com)
 class Board {
     /// 게시판 이름
     let boardTitle: String
@@ -35,8 +35,8 @@ class Board {
 
 
 
-/// 게시판 UI에 대한 모델
-/// - Author: 남정은
+/// 게시판 UI모델
+/// - Author: 남정은(dlsl7080@gmail.com)
 struct BoardUI {
     /// 게시판을 묶는 섹션이름(그룹명)
     let sectionName: String?

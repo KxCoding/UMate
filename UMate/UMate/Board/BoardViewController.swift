@@ -8,10 +8,10 @@
 import UIKit
 
 
-/// 게시판 목록에 관한 뷰 컨트롤러
+/// 게시판 목록 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com)
 class BoardViewController: CommonViewController {
-    /// 게시판 목록에 대한 정보를 나타내는 테이블 뷰
+    /// 게시판 목록 테이블 뷰
     @IBOutlet weak var boardListTableView: UITableView!
     
     /// 북마크 속성에 관한 딕셔너리
@@ -31,7 +31,7 @@ class BoardViewController: CommonViewController {
     }
     
     
-    /// 강의평가 화면에서 게시판목록 화면으로 돌아올 때 사용합니다.
+    /// 강의정보 화면에서 게시판목록 화면으로 돌아올 때 사용합니다.
     /// - Parameter unwindSegue: DetailLectureReviewViewController -> BoardViewController
     @IBAction func unwindToBoard(_ unwindSegue: UIStoryboardSegue) {
     }
@@ -87,6 +87,7 @@ class BoardViewController: CommonViewController {
     }
     
     
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -145,21 +146,22 @@ class BoardViewController: CommonViewController {
 
 
 
-/// 게시판 목록을 나타내는 테이블 뷰에대한 데이터소스
+/// 게시판 목록
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension BoardViewController: UITableViewDataSource {
-    ///  게시판 그룹 수를 설정합니다.
-    /// - Parameter tableView: 게시판 목록을 나타내는 tableView
-    /// - Returns: 나타낼 section 수
+    /// 게시판 그룹 수를 리턴합니다.
+    /// - Parameter tableView: 게시판 목록 테이블 뷰
+    /// - Returns: section 수
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
     
     
-    /// 하나의 섹션안에 들어갈 게시판 수를 설정합니다.
+    /// 하나의 그룹 안에 들어갈 게시판의 개수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 게시판 목록을 나타내는 tableView
-    ///   - section: section. 게시판 그룹을 나타냅니다.
-    /// - Returns: 섹션안에 나타낼 row수
+    ///   - tableView: 게시판 목록 테이블 뷰
+    ///   - section: 테이블 뷰의 section을 구분하는 index number
+    /// - Returns: section안에 나타낼 row수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         // 내가 쓴 글, 댓글 단 글, 남긴 강의 정보
@@ -181,14 +183,14 @@ extension BoardViewController: UITableViewDataSource {
         }
     }
     
-    
-    /// 각 게시판에 대한 정보를 cell에 나타냅니다.
+ 
+    /// 각각의 게시판 셀을 구성합니다.
     /// - Parameters:
-    ///   - tableView: 게시판 목록을 나타내는 tableView
-    ///   - indexPath: 게시판 목록을 나타내는 cell의 indexPath
-    /// - Returns: 구현을 완료한 cell
+    ///   - tableView: 게시판 목록 테이블 뷰
+    ///   - indexPath: 게시판 셀의 indexPath
+    /// - Returns: 게시판 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // 내가 남긴 글
+        // 내가 남긴 글, 댓글 단 글 셀을 구성
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
             
@@ -196,7 +198,7 @@ extension BoardViewController: UITableViewDataSource {
             return cell
         }
         
-        // nonExpandableBoard cell을 구성
+        // nonExpandableBoard 셀을 구성
         if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
             
@@ -204,7 +206,7 @@ extension BoardViewController: UITableViewDataSource {
             return cell
         }
         
-        // expandableBoard cell을 구성
+        // expandableBoard 셀을 구성
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpandableBoardTableViewCell", for: indexPath) as! ExpandableBoardTableViewCell
         
         cell.board = self
@@ -215,30 +217,31 @@ extension BoardViewController: UITableViewDataSource {
 
 
 
-/// 게시판 목록을 표시한 테이블 뷰에 대한  동작 처리
+/// 게시판 목록 테이블 뷰 동작 처리
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension BoardViewController: UITableViewDelegate {
-    /// 선택된 셀을 통해 특정 게시판으로 이동합니다.
+    /// 지정된 셀을 선택 시에 '강의 평가 게시판' 혹은 '정보 게시판'으로 이동합니다.
     /// - Parameters:
-    ///   - tableView: 게시판 목록을 나타내는 tableView
-    ///   - indexPath: 게시판 목록을 나타내는 cell의 indexPath
+    ///   - tableView: 게시판 목록 테이블 뷰
+    ///   - indexPath: 게시판 셀의 indexPath
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // IndexPath( row: 5, section: 1 ) 인 cell을 선택시 강의평가 게시판으로 이동
+        // IndexPath( row: 5, section: 1 ) 인 셀을 선택시 강의평가 게시판으로 이동
         if indexPath.section == 1 && indexPath.row == 5 {
             performSegue(withIdentifier: "lectureSegue", sender: self)
         }
-        // IndexPath( row: 0, section: 3 ) 인 cell을 선택시 정보 게시판으로 이동
+        // IndexPath( row: 0, section: 3 ) 인 셀을 선택시 정보 게시판으로 이동
         else if indexPath.section == 3 && indexPath.row == 0 {
             performSegue(withIdentifier: "infoSegue", sender: self)
         }
     }
     
     
-    /// 각 section에 사용할 헤더의 높이를 설정합니다.
+    /// 특정 section에 사용할 header의 높이를 설정합니다.
     /// - Parameters:
-    ///   - tableView: 게시판 목록을 나타내는 tableView
-    ///   - section: section. 게시판 그룹을 나타냅니다.
-    /// - Returns: 헤더의 높이
+    ///   - tableView: 게시판 목록 테이블 뷰
+    ///   - section: 테이블 뷰의 section을 구분하는 index number
+    /// - Returns: header의 높이
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 1:
@@ -251,11 +254,11 @@ extension BoardViewController: UITableViewDelegate {
     }
     
     
-    /// 커스텀 헤더뷰를 원하는 section에 보여줍니다.
+    /// 게시판 그룹의 section header를 설정합니다.
     /// - Parameters:
-    ///   - tableView: 게시판 목록을 나타내는 tableView
-    ///   - section: section. 게시판 그룹을 나타냅니다.
-    /// - Returns: 지정될 섹션위에 나타낼 UILabel, UIImageView, 혹은 커스 텀 뷰
+    ///   - tableView: 게시판 목록 테이블 뷰
+    ///   - section: 테이블 뷰의 section을 구분하는 index number
+    /// - Returns: 게시판 그룹을 묶는 헤더 뷰
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section >= 2 {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! BoardCustomHeaderView

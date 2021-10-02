@@ -8,9 +8,8 @@
 import UIKit
 
 
-/// 게시글 상세화면에대한 클래스
-/// - Author: 남정은, 김정민(kimjm010@icloud.com)
-
+/// 게시글 상세화면 뷰 컨트롤러
+/// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
 class DetailPostViewController: CommonViewController {
 
     @IBOutlet weak var writeCommentContainerView: UIView!
@@ -19,12 +18,10 @@ class DetailPostViewController: CommonViewController {
     @IBOutlet weak var commentPlaceholderLabel: UILabel!
     @IBOutlet weak var commentContainerViewBottomConstraint: NSLayoutConstraint!
     
-    /// 선택된 게시글에대한 속성
-    /// - Author: 남정은
+    /// 선택된 게시글 속성
     var selectedPost: Post?
     
     /// 이미지를 클릭시에 추가되는 옵저버를 저장할 토큰
-    /// - Author: 남정은
     var imageObserver: NSObjectProtocol?
     
     
@@ -88,6 +85,7 @@ class DetailPostViewController: CommonViewController {
     }
     
 
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -143,9 +141,28 @@ class DetailPostViewController: CommonViewController {
             }
         }
         tokens.append(token)
+    }
+    
+    
+    /// 뷰 계층에 모든 뷰들이 추가된 이후 호출됩니다.
+    /// - Parameter animated: 윈도우에 뷰가 추가될 때 애니메이션 여부. 기본값은 true입니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
+        // 이미지를 클릭시에 ExpandImageViewController로 이동
+        // 이미지를 한 번 이상 클릭했을 때 중복되어서 옵저버가 등록되는 것을 방지
+        if imageObserver == nil {
+            imageObserver = NotificationCenter.default.addObserver(forName: .showImageVC,
+                                                                   object: nil,
+                                                                   queue: .main) {[weak self] _ in
+                guard let self = self else { return }
+                self.performSegue(withIdentifier: "imageSegue", sender: nil)
+            }
+        }
         
-        token = NotificationCenter.default.addObserver(forName: .sendAlert, object: nil, queue: .main, using: { _ in
+        // 게시글 수정 및 삭제를 선택하는 메뉴
+        let token = NotificationCenter.default.addObserver(forName: .sendAlert, object: nil, queue: .main, using: { _ in
             let alertMenu = UIAlertController(title: "", message: "메뉴를 선택하세요.", preferredStyle: .actionSheet)
             
             let editAction = UIAlertAction(title: "게시글 수정", style: .default) { _ in
@@ -164,25 +181,6 @@ class DetailPostViewController: CommonViewController {
             self.present(alertMenu, animated: true, completion: nil)
         })
         tokens.append(token)
-    }
-    
-    
-    /// 뷰 계층에 모든 뷰들이 추가된 이후 호출
-    /// - Author: 남정은
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        /// 이미지를 클릭시에 ExpandImageViewController로 이동
-        /// 이미지를 한 번 이상 클릭했을 때 중복되어서 옵저버가 등록되는 것을 방지
-        /// - Author: 남정은
-        if imageObserver == nil {
-            imageObserver = NotificationCenter.default.addObserver(forName: .showImageVC,
-                                                                   object: nil,
-                                                                   queue: .main) {[weak self] _ in
-                guard let self = self else { return }
-                self.performSegue(withIdentifier: "imageSegue", sender: nil)
-            }
-        }
     }
     
     
@@ -224,22 +222,23 @@ class DetailPostViewController: CommonViewController {
 
 
 
-/// 게시글 상세화면에 대한 테이블뷰 데이터소스
-/// - Author: 남정은
+/// 게시글 상세화면
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailPostViewController: UITableViewDataSource {
-    /// 섹션의 개수를 리턴
+    /// 게시글 상세화면에 필요한 section 수를 리턴합니다.
+    /// - Parameter tableView: 게시글 상세화면 테이블 뷰
+    /// - Returns: section의 수
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
     
-    /// 하나의 섹션안에 나타낼 row수를 지정
+    
+    /// 각각의 section 별로 들어갈 셀의 개수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 요청한 정보를 나타낼 객체
-    ///   - section: 테이블 뷰의 섹션
-    /// - Returns: 섹션안에 나타낼 row수
-    /// - Author: 남정은
+    ///   - tableView: 게시글 상세화면 테이블 뷰
+    ///   - section: 게시글 상세화면을 나누는 section
+    /// - Returns: section안에 들어갈 row의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         switch section {
         // 작성자, 제목, 내용
         case 0:
@@ -265,14 +264,12 @@ extension DetailPostViewController: UITableViewDataSource {
     }
     
     
-    /// 셀의 데이터소스를  테이블 뷰의 특정 위치에 추가하기위해 호출
+    /// 게시글 상세화면을 나타내기 위한 셀을 구성합니다.
     /// - Parameters:
-    ///   - tableView: 요청한 정보를 나타낼 객체
-    ///   - indexPath: 테이블 뷰의 row의 위치를 나타내는 인덱스패스
-    /// - Returns: 구현을 완료한 셀
-    /// - Author: 남정은
+    ///   - tableView: 게시글 상세화면 테이블 뷰
+    ///   - indexPath: 게시글 상세화면 셀의 indexPath
+    /// - Returns: 게시글 상세화면 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch indexPath.section {
         // 게시글 내용 표시하는 셀
         case 0:
@@ -320,7 +317,6 @@ extension DetailPostViewController: UITableViewDataSource {
 
 
 extension DetailPostViewController: UITableViewDelegate {
-    
     /// 댓글을 오른쪽으로 Swipe하여 댓글을 신고합니다.
     /// - Parameters:
     ///   - tableView: 댓글을 포함하고 있는 TableView
@@ -402,7 +398,6 @@ extension DetailPostViewController: UITableViewDelegate {
                 return UIMenu(title: "", children: [notiAction, deleteAction])
             })
         }
-        
         return nil
     }
     
@@ -447,9 +442,7 @@ extension DetailPostViewController: UITableViewDelegate {
 
 
 
-
 extension DetailPostViewController: UITextViewDelegate {
-    
     /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
     /// - Parameter textView: commentTextView
     /// - Author: 김정민(kimjm010@icloud.com)

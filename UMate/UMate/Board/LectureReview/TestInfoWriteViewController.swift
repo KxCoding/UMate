@@ -10,17 +10,17 @@ import Loaf
 import UIKit
 
 
-/// 시험정보작성 화면에서 공유하기 버튼을 눌렀을 때 처리되는 동작에대한 노티피케이션
-/// - Author: 남정은
+/// 시험정보 작성 화면에서 '공유하기' 버튼을 눌렀을 때 처리되는 동작에 대한 노티피케이션
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
     static let shareTestInfo = Notification.Name("shareTestInfo")
 }
 
 
-/// 시험작성 공유화면에대한 클래스
-/// - Author: 남정은
+/// 시험정보 작성 화면에 대한 클래스
+/// - Author: 남정은(dlsl7080@gmail.com)
 class TestInfoWriteViewController: CommonViewController {
-    /// 시험작성 공유에대한 테이블 뷰
+    /// 시험작성 공유 화면 테이블 뷰
     @IBOutlet weak var testInfoTableView: UITableView!
     
     /// 테이블 뷰의 바텀 제약
@@ -28,8 +28,16 @@ class TestInfoWriteViewController: CommonViewController {
     
     /// 선택된 강의
     var selectedLecture: LectureInfo?
-  
     
+    
+    /// 강의정보 화면으로 돌아갑니다.
+    /// - Parameter sender: 엑스 버튼
+    @IBAction func showDetailLectureVC(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -102,14 +110,24 @@ class TestInfoWriteViewController: CommonViewController {
 
 
 
-/// 시험작성 공유 테이블 뷰에대한 데이터소스
-/// - Author: 남정은
+/// 시험정보 작성 화면을 나타냄
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension TestInfoWriteViewController: UITableViewDataSource {
+    /// 시험정보 작성 화면 셀의 개수를 리턴합니다.
+    /// - Parameters:
+    ///   - tableView: 시험정보 작성 화면 테이블 뷰
+    ///   - section: 시험정보 작성 화면을 나누는 section
+    /// - Returns: section 안에 포함된 row
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    /// 시험정보공유화면 셀 설정
+    
+    /// 시험정보 작성 화면 셀을 구성합니다.
+    /// - Parameters:
+    ///   - tableView: 시험정보 작성 화면 테이블 뷰
+    ///   - indexPath: 시험정보 작성 화면 셀의 indexPath
+    /// - Returns: 시험정보 작성 화면 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TestInfoWriteTableViewCell", for: indexPath) as! TestInfoWriteTableViewCell
         guard let lecture = selectedLecture else {
@@ -124,12 +142,13 @@ extension TestInfoWriteViewController: UITableViewDataSource {
 }
 
 
-/// 텍스트필드가 firstReponder일 때를 알기위해 사용
-/// - Author: 남정은
+
+/// 텍스트필드가 firstResponder일 때를 알기 위해 사용
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension UIView {
-    /// 현재 firstResponder를 리턴해주는 속성
+    /// 현재 firstResponder를 리턴해 주는 속성
     var firstResponder: UIView? {
-        // 현재 uiview가 firstResponder라면 자신을 리턴
+        // 현재 UIView가 firstResponder라면 자신을 리턴
         guard !isFirstResponder else { return self }
 
         // 아니라면 하위뷰들 중에 firstResponder를 찾아서 리턴

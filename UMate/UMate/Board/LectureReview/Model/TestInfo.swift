@@ -8,8 +8,8 @@
 import Foundation
 
 
-/// 시험정보에대한 모델 클래스
-/// - Author: 남정은
+/// 시험정보 모델 클래스
+/// - Author: 남정은(dlsl7080@gmail.com)
 class TestInfo {
     /// 수강학기
     let semester: String

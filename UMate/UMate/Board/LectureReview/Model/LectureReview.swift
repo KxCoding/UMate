@@ -8,8 +8,8 @@
 import Foundation
 
 
-/// 강의평에대한 모델 클래스
-/// - Author: 남정은
+/// 강의평 모델 클래스
+/// - Author: 남정은(dlsl7080@gmail.com)
 class LectureReview {
     /// 과제 빈도
     enum Assignment: Int {
@@ -99,8 +99,8 @@ class LectureReview {
 
 
 
-/// 강의평가 항목을 스트링을 나타내기위해 사용
-/// - Author: 남정은
+/// 강의평가 항목을 스트링으로 나타내기 위해 사용
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension LectureReview.Assignment: CustomStringConvertible {
     var description: String {
         switch self {
@@ -116,8 +116,8 @@ extension LectureReview.Assignment: CustomStringConvertible {
 
 
 
-/// 강의평가 항목을 스트링을 나타내기위해 사용
-/// - Author: 남정은
+/// 강의평가 항목을 스트링으로 나타내기 위해 사용
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension LectureReview.GroupMeeting: CustomStringConvertible {
     var description: String {
         switch self {
@@ -133,8 +133,8 @@ extension LectureReview.GroupMeeting: CustomStringConvertible {
 
 
 
-/// 강의평가 항목을 스트링을 나타내기위해 사용
-/// - Author: 남정은
+/// 강의평가 항목을 스트링으로 나타내기 위해 사용
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension LectureReview.Evaluation: CustomStringConvertible {
     var description: String {
         switch self {
@@ -152,8 +152,8 @@ extension LectureReview.Evaluation: CustomStringConvertible {
 
 
 
-/// 강의평가 항목을 스트링을 나타내기위해 사용
-/// - Author: 남정은
+/// 강의평가 항목을 스트링으로 나타내기 위해 사용
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension LectureReview.Attendance: CustomStringConvertible {
     var description: String {
         switch self {
@@ -173,8 +173,8 @@ extension LectureReview.Attendance: CustomStringConvertible {
 
 
 
-/// 강의평가 항목을 스트링을 나타내기위해 사용
-/// - Author: 남정은
+/// 강의평가 항목을 스트링으로 나타내기 위해 사용
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension LectureReview.TestNumber: CustomStringConvertible {
     var description: String {
         switch self {
@@ -194,8 +194,8 @@ extension LectureReview.TestNumber: CustomStringConvertible {
 
 
 
-/// 강의평가 항목을 스트링을 나타내기위해 사용
-/// - Author: 남정은
+/// 강의평가 항목을 스트링으로 나타내기 위해 사용
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension LectureReview.Rating: CustomStringConvertible {
     var description: String {
         switch self {
