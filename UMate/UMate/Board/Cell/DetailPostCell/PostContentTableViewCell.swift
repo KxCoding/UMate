@@ -40,7 +40,10 @@ class PostContentTableViewCell: UITableViewCell {
     
     
     // MARK: 공감 버튼
+    /// 하트 이미지 뷰
     @IBOutlet weak var likeImageView: UIImageView!
+    
+    /// 좋아요 버튼
     @IBAction func toggleLikeButton(_ sender: UIButton) {
     
         guard let post = selectedPost else { return }
@@ -62,7 +65,10 @@ class PostContentTableViewCell: UITableViewCell {
     
     
     // MARK: 스크랩 버튼
+    /// 스크랩 이미지 뷰
     @IBOutlet weak var scrapImageView: UIImageView!
+    
+    /// 스크랩 버튼
     @IBAction func toggleScrapButton(_ sender: UIButton) {
        
         guard let post = selectedPost else { return }
@@ -86,11 +92,18 @@ class PostContentTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .postDidScrap, object: nil, userInfo: ["scrappedPost": post])
         }
     }
-   
+    
+    
+    /// 신고 혹은 게시글 수정, 삭제를 액션시트로 나타내기위해 노티피케이션 보냄
+    @IBAction func showMenu(_ sender: Any) {
+        NotificationCenter.default.post(name: .sendAlert, object: nil)
+    }
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        // 사용자 이미지 모서리 깎기
         userImageView.layer.cornerRadius = userImageView.frame.height / 2
     }
     
@@ -98,7 +111,7 @@ class PostContentTableViewCell: UITableViewCell {
     /// PostContent Cell 초기화하는 메소드
     /// - Parameter post: 선택된 post
     func configure(post: Post) {
-        /// 좋아요 버튼
+        // 좋아요 버튼
         if post.isliked {
             likeImageView.image = UIImage(named: "heart2.fill")
             likeImageView.tintColor = UIColor.init(named: "blackSelectedColor")
@@ -107,7 +120,7 @@ class PostContentTableViewCell: UITableViewCell {
             likeImageView.tintColor = UIColor.init(named: "darkGraySubtitleColor")
         }
         
-        /// 스크랩 버튼
+        // 스크랩 버튼
         if post.isScrapped {
             scrapImageView.image = UIImage(named: "bookmark64.fill")
             scrapImageView.tintColor = UIColor.init(named: "blackSelectedColor")
@@ -118,11 +131,19 @@ class PostContentTableViewCell: UITableViewCell {
             scrapImageView.alpha = 0.9
         }
         
+        // 사용자 이름
         userNameLabel.text = post.postWriter
+        
+        // 작성일
         dateLabel.text = post.insertDate.detailPostDate
+        
+        // 게시글 제목
         postTitleLabel.text = post.postTitle
+        
+        // 게시글 내용
         postContentLabel.text = post.postContent
     
+        // 게시글을 셀 클래스에서 사용하기위해 저장
         selectedPost = post 
     }
 }

@@ -39,7 +39,7 @@ class TestInfoTableViewCell: UITableViewCell {
         testStrategyLabel.text = target.testStrategy
         questionType.text = target.questionTypes.map{ $0.trimmingCharacters(in: .whitespaces) }.joined(separator: ",")
         
-        /// 문제예시
+        // 문제예시
         exaplesStackView.removeFullyAllArrangedSubviews()
         for ex in target.examples {
             /// 문제 예시를 나타낼 레이블
@@ -47,7 +47,7 @@ class TestInfoTableViewCell: UITableViewCell {
             exampleLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
             exampleLabel.numberOfLines = 0
             
-            /// 글자길이에 따라 배경색 지정
+            // 글자길이에 따라 배경색 지정
             let mutable = NSMutableAttributedString(string: ex)
             mutable.addAttribute(.backgroundColor, value: UIColor.init(named: "systemGray6BackgroundColor") ?? .lightGray, range: NSRange(ex.startIndex..<ex.endIndex, in: ex))
             exampleLabel.attributedText = mutable
@@ -67,6 +67,7 @@ extension UIStackView {
         removeArrangedSubview(view)
         view.removeFromSuperview()
     }
+    
     
     /// 스택뷰의 하위뷰를 모두 삭제함
     func removeFullyAllArrangedSubviews() {

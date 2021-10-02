@@ -53,11 +53,11 @@ class LectureReviewBoardViewController: UIViewController {
         
             guard values.count == 5 else { continue }
             
-            let lectureTitle = values[0].trimmingCharacters(in: .whitespaces) /// 교과목명
-            let professor = values[1].trimmingCharacters(in: .whitespaces) /// 교수명
-            let openingSemester = values[2].trimmingCharacters(in: .whitespaces) /// 개설학기
-            let textbookName = values[3].trimmingCharacters(in: .whitespaces) /// 교재명
-            let bookLink = values[4].trimmingCharacters(in: .whitespaces) /// 교재링크
+            let lectureTitle = values[0].trimmingCharacters(in: .whitespaces) // 교과목명
+            let professor = values[1].trimmingCharacters(in: .whitespaces) // 교수명
+            let openingSemester = values[2].trimmingCharacters(in: .whitespaces) // 개설학기
+            let textbookName = values[3].trimmingCharacters(in: .whitespaces) // 교재명
+            let bookLink = values[4].trimmingCharacters(in: .whitespaces) // 교재링크
             
             let lectureInfo = LectureInfo(
                 lectureTitle: lectureTitle,
@@ -172,48 +172,30 @@ extension LectureReviewBoardViewController: UISearchBarDelegate {
 /// 강의평 테이블 뷰에 대한 데이터소스
 /// - Author: 남정은
 extension LectureReviewBoardViewController: UITableViewDataSource {
-    /// 내 강의평과 최근 강의평 두 개
-    /// - Author: 남정은
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    
     /// 강의평 테이블 뷰에 나타낼 셀의 개수
     /// - Author: 김정민, 남정은
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case  0:
-            return 0
-        case 1:
-            if isFiltering {
-                return filteredLectureList.count
-            }
-            
-            return lectureList.count
-        default:
-            return 0
+        if isFiltering {
+            return filteredLectureList.count
         }
+        
+        return lectureList.count
     }
     
     /// 각 셀을 초기화
     /// - Author: 김정민, 남정은
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewTableViewCell", for: indexPath) as! LectureReviewTableViewCell
-        if indexPath.section == 1 {
-            
-            let list: LectureInfo
-            
-            if isFiltering {
-                list = filteredLectureList[indexPath.row]
-            } else {
-                list = lectureList[indexPath.row]
-            }
-            
-            cell.configure(lecture: list)
-            
-            return cell
+        
+        let list: LectureInfo
+        
+        if isFiltering {
+            list = filteredLectureList[indexPath.row]
+        } else {
+            list = lectureList[indexPath.row]
         }
+        
+        cell.configure(lecture: list)
         
         return cell
     }
@@ -235,13 +217,7 @@ extension LectureReviewBoardViewController: UITableViewDelegate {
     
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewHeaderTableViewCell") as! LectureReviewHeaderTableViewCell
         
-        if section == 0 {
-            cell.sectionNameLabel.text = "내 강의평"
-        } else {
-            cell.sectionNameLabel.text = "최근 강의평"
-        }
-        
-        return cell.contentView
+        return cell
     }
 }
 

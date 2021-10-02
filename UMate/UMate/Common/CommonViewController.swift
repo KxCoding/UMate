@@ -8,9 +8,9 @@
 import UIKit
 
 
-/// 공통적으로 사용하는 화면 ViewController 클래스
-/// - Author: 안상희, 황신택
-class CommonViewController {
+/// 공통되는 기능을 포함한 뷰 컨트롤러
+///  - Author: 안상희, 남정은, 황신택
+class CommonViewController: UIViewController {
     /// 메인 화면인 홈으로 이동합니다.
     /// - Author: 황신택, 안상희
     static func transitionToHome() {
@@ -22,7 +22,7 @@ class CommonViewController {
          SceneDelegate)?.changeRootViewController(mainTabBarController)
     }
     
-    
+
     /// 암호 입력 화면을 보여줍니다.
     /// - Author: 안상희
     static func showPasswordViewController() {
@@ -44,5 +44,18 @@ class CommonViewController {
         
         (UIApplication.shared.connectedScenes.first?.delegate as?
          SceneDelegate)?.changeRootViewController(emptyViewController)
+    }
+    
+    
+    /// 노티피케이션 제거를 위해 토큰을 담는 배열
+    /// - Author: 남정은
+    var tokens = [NSObjectProtocol]()
+    
+    /// 소멸자에서 옵저버를 제거
+    /// - Author: 남정은
+    deinit {
+        for token in tokens {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
 }

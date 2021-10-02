@@ -39,7 +39,7 @@ extension Date {
     /// 댓글, 대댓글에 표시할 데이트 형식
     /// - Author: 김정민
     var commentDate: String {
-            formatter.dateFormat = "yy.MM.dd HH:mm"
+            formatter.dateFormat = "yy.MM.dd \t HH:mm"
             
             return formatter.string(from: self)
         }

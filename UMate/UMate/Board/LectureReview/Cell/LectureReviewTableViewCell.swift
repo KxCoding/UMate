@@ -28,14 +28,14 @@ class LectureReviewTableViewCell: UITableViewCell {
     /// 셀을 초기화
     /// - Parameter lecture: 선택된 강의
     func configure(lecture: LectureInfo) {
-        /// 최근 강의평이니까 무조건 첫번째
+        // 최근 강의평이니까 무조건 첫번째
         guard let recentReview = lecture.reviews.first else { return }
         
         lectureTitleLabel.text = lecture.lectureTitle + " : " + lecture.professor
         semesterLabel.text = "\(recentReview.semester) 수강자"
         reviewContentLabel.text = recentReview.reviewContent
         
-        /// 종합 리뷰
+        // 종합 리뷰
         let ratingSum = lecture.reviews.reduce(0) { partialResult, review in
             return partialResult + review.rating.rawValue
         }

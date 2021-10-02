@@ -12,11 +12,11 @@ import UIKit
 /// - Author: 남정은
 class Post {
     /// 여기서 all은 카테고리를 선택하지 않을 경우를 나타냄
-    /// 카테고리 게시판은 무조건 글 작성시에 카테고리를 선택하도록 되어있음.
+    /// 카테고리 게시판은 무조건 글 작성시에 카테고리를 선택하도록 되어있음
     /// 카테고리를 나타내는 구조체
     /// - Author: 남정은
     struct Category {
-        /// 홍보게시판에 들어갈 카테고리를 나타내는 열거형
+        /// 홍보게시판에 들어갈 카테고리
         /// - Author: 남정은
         enum Publicity: Int {
             case all = 2000
@@ -25,7 +25,7 @@ class Post {
             case etcetera = 2003
         }
         
-        /// 동아리•학회 게시판에 들어갈 카테고리를 나타내는 열거형
+        /// 동아리•학회 게시판에 들어갈 카테고리
         /// - Author: 남정은
         enum Club: Int {
             case all = 2010
@@ -33,7 +33,7 @@ class Post {
             case union = 2012
         }
         
-        /// 취업•진로 게시판에 들어갈 카테고리를 나타내는 열거형
+        /// 취업•진로 게시판에 들어갈 카테고리
         /// - Author: 남정은
         enum Career: Int {
             case all = 3010

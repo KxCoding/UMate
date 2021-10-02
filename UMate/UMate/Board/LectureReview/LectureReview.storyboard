@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Cia-Vd-MD2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Cia-Vd-MD2">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -675,7 +676,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="163.5" height="30"/>
                                                                     <subviews>
                                                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o9w-fv-c59" customClass="CosmosView" customModule="Cosmos">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="30"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="20"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -1020,7 +1021,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TestInfoWriteTableViewCell" rowHeight="918" id="2dp-de-TFe" customClass="TestInfoWriteTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="918"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="918"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2dp-de-TFe" id="opx-Tx-fcf">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="918"/>
@@ -1681,7 +1682,7 @@
                                             <outlet property="selectTestView" destination="FJH-hi-sJs" id="6gw-q1-rM0"/>
                                             <outlet property="semesterLabel" destination="VRr-PH-zbL" id="Y0O-gI-1PC"/>
                                             <outlet property="subjectiveButton" destination="Itg-ZZ-Bez" id="ihD-eA-4Pu"/>
-                                            <outlet property="testInfoStackView" destination="uAX-OB-zCU" id="yQL-Hc-4He"/>
+                                            <outlet property="testExampleStackView" destination="uAX-OB-zCU" id="8pV-iD-cDs"/>
                                             <outlet property="testLabel" destination="tlr-Jh-XUK" id="67h-94-Qx9"/>
                                             <outlet property="testStrategyTextView" destination="F6w-Jq-ENm" id="jyx-1j-xEq"/>
                                             <outlet property="thirdTextFieldStackView" destination="aii-BN-GQk" id="O8Q-Ro-o1F"/>
@@ -1719,14 +1720,14 @@
             <objects>
                 <tableViewController id="cyn-oB-Egq" customClass="LectureReviewWriteTableViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="gyH-da-1gG">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="1246"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1192"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
                             <tableViewSection id="UVB-ay-pHf">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="HeaderTableViewCell" rowHeight="100" id="axu-xr-0sK" customClass="HeaderTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="100"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="axu-xr-0sK" id="axu-bd-GWZ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
@@ -1772,7 +1773,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReflectedGradeTableViewCell" rowHeight="450.5" id="cpC-Le-fxN" customClass="ReflectedGradeTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="124.5" width="414" height="450.5"/>
+                                        <rect key="frame" x="0.0" y="144.5" width="414" height="450.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cpC-Le-fxN" id="lxt-qp-p9L">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="450.5"/>
@@ -1798,19 +1799,19 @@
                                                     <rect key="frame" x="20" y="71" width="374" height="368.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gnU-Ya-IC9">
-                                                            <rect key="frame" x="0.0" y="0.0" width="112" height="65.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="116" height="65.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="과제" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGW-xu-MuA">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="24.5" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="24.5" height="25.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2BT-Bx-uSv">
-                                                                    <rect key="frame" x="0.0" y="27" width="112" height="38.5"/>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2BT-Bx-uSv">
+                                                                    <rect key="frame" x="0.0" y="35.5" width="116" height="30"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yr7-Pq-mUU" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="32" height="38.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="32" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1822,7 +1823,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1A-kn-Qeu" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="40" y="0.0" width="32" height="38.5"/>
+                                                                            <rect key="frame" x="42" y="0.0" width="32" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1834,7 +1835,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOB-Ey-FOT" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="80" y="0.0" width="32" height="38.5"/>
+                                                                            <rect key="frame" x="84" y="0.0" width="32" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1846,23 +1847,26 @@
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="bma-yG-6Kt"/>
+                                                                    </constraints>
                                                                 </stackView>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ICP-NZ-YLV">
-                                                            <rect key="frame" x="0.0" y="75.5" width="112" height="66"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ICP-NZ-YLV">
+                                                            <rect key="frame" x="0.0" y="75.5" width="116" height="66"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="조모임" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Hg-MU-3A6">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="36.5" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="36.5" height="26"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZB6-Ck-0Yj">
-                                                                    <rect key="frame" x="0.0" y="25" width="112" height="41"/>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZB6-Ck-0Yj">
+                                                                    <rect key="frame" x="0.0" y="36" width="116" height="30"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="201" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cm1-xz-S5y" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="32" height="41"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="32" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1874,7 +1878,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="202" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lha-7S-uIw" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="40" y="0.0" width="32" height="41"/>
+                                                                            <rect key="frame" x="42" y="0.0" width="32" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1886,7 +1890,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="203" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NjA-aY-gcV" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="80" y="0.0" width="32" height="41"/>
+                                                                            <rect key="frame" x="84" y="0.0" width="32" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1898,23 +1902,26 @@
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="6Jq-CZ-mxV"/>
+                                                                    </constraints>
                                                                 </stackView>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0De-aa-vGq">
-                                                            <rect key="frame" x="0.0" y="151.5" width="300" height="65.5"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0De-aa-vGq">
+                                                            <rect key="frame" x="0.0" y="151.5" width="306" height="65.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="학점 비율" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QK8-0l-VLB">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="52.5" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="52.5" height="25.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FBo-VX-FFJ">
-                                                                    <rect key="frame" x="0.0" y="25" width="300" height="40.5"/>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FBo-VX-FFJ">
+                                                                    <rect key="frame" x="0.0" y="35.5" width="306" height="30"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="301" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8P-Qn-OLT" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="69" height="40.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="69" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1926,7 +1933,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="302" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pht-RJ-PXq" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="77" y="0.0" width="69" height="40.5"/>
+                                                                            <rect key="frame" x="79" y="0.0" width="69" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1938,7 +1945,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="303" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUo-oM-gRs" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="154" y="0.0" width="69" height="40.5"/>
+                                                                            <rect key="frame" x="158" y="0.0" width="69" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1950,7 +1957,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="304" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIx-bh-wO8" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="231" y="0.0" width="69" height="40.5"/>
+                                                                            <rect key="frame" x="237" y="0.0" width="69" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1962,23 +1969,26 @@
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="t1k-8M-AAR"/>
+                                                                    </constraints>
                                                                 </stackView>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cAb-Ei-lUn">
-                                                            <rect key="frame" x="0.0" y="227" width="332" height="66"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cAb-Ei-lUn">
+                                                            <rect key="frame" x="0.0" y="227" width="340" height="66"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="출결" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BxC-lK-pvK">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="24.5" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="24.5" height="26"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tks-8h-VCS">
-                                                                    <rect key="frame" x="0.0" y="25" width="332" height="41"/>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tks-8h-VCS">
+                                                                    <rect key="frame" x="0.0" y="36" width="340" height="30"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="401" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNu-eg-EGq" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="60" height="41"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="60" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="혼용">
@@ -1989,7 +1999,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="402" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gdz-cc-2Rd" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="68" y="0.0" width="60" height="41"/>
+                                                                            <rect key="frame" x="70" y="0.0" width="60" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title=" 직접호명 ">
@@ -2000,7 +2010,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="403" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QVG-la-nCG" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="136" y="0.0" width="60" height="41"/>
+                                                                            <rect key="frame" x="140" y="0.0" width="60" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="지정좌석">
@@ -2011,7 +2021,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="404" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OUA-gf-OqI" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="204" y="0.0" width="60" height="41"/>
+                                                                            <rect key="frame" x="210" y="0.0" width="60" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="전자출결">
@@ -2022,7 +2032,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="405" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NL5-50-PP7" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="272" y="0.0" width="60" height="41"/>
+                                                                            <rect key="frame" x="280" y="0.0" width="60" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="반영안함">
@@ -2033,23 +2043,26 @@
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="MYp-Nc-kTU"/>
+                                                                    </constraints>
                                                                 </stackView>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ohb-1v-QmI">
-                                                            <rect key="frame" x="0.0" y="303" width="332" height="65.5"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ohb-1v-QmI">
+                                                            <rect key="frame" x="0.0" y="303" width="340" height="65.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시험횟수" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfh-S5-JfL">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="48.5" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="48.5" height="25.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qIw-ih-rQj">
-                                                                    <rect key="frame" x="0.0" y="25" width="332" height="40.5"/>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qIw-ih-rQj">
+                                                                    <rect key="frame" x="0.0" y="35.5" width="340" height="30"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="501" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJ4-NT-fRF" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="60" height="40.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="60" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title=" 네번이상 ">
@@ -2060,7 +2073,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="502" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QM3-sD-JxL" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="68" y="0.0" width="60" height="40.5"/>
+                                                                            <rect key="frame" x="70" y="0.0" width="60" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="세번">
@@ -2071,7 +2084,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="503" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTs-0v-dUd" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="136" y="0.0" width="60" height="40.5"/>
+                                                                            <rect key="frame" x="140" y="0.0" width="60" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="두번">
@@ -2082,7 +2095,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="504" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QkW-qY-fTf" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="204" y="0.0" width="60" height="40.5"/>
+                                                                            <rect key="frame" x="210" y="0.0" width="60" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="한번">
@@ -2093,7 +2106,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="505" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpE-9G-pRC" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="272" y="0.0" width="60" height="40.5"/>
+                                                                            <rect key="frame" x="280" y="0.0" width="60" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="없음">
@@ -2104,6 +2117,9 @@
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="7dJ-0V-d8X"/>
+                                                                    </constraints>
                                                                 </stackView>
                                                             </subviews>
                                                         </stackView>
@@ -2122,29 +2138,30 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OverviewTableViewCell" rowHeight="468" id="cyH-IX-40i" customClass="OverviewTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="575" width="414" height="468"/>
+                                        <rect key="frame" x="0.0" y="595" width="414" height="468"/>
+
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cyH-IX-40i" id="apa-mY-utC">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="468"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="436"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="SkD-At-N6R">
-                                                    <rect key="frame" x="20" y="79" width="374" height="160"/>
+                                                    <rect key="frame" x="20" y="79" width="374" height="128"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FOf-9F-5UB">
-                                                            <rect key="frame" x="0.0" y="0.0" width="252" height="95"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FOf-9F-5UB">
+                                                            <rect key="frame" x="0.0" y="0.0" width="252" height="55"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="총점" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XCs-bj-Ha5">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="24.5" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="24.5" height="15"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xMC-rf-bka">
-                                                                    <rect key="frame" x="0.0" y="25" width="252" height="70"/>
+                                                                    <rect key="frame" x="0.0" y="25" width="252" height="30"/>
                                                                     <subviews>
                                                                         <button opaque="NO" tag="601" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ub1-vx-wvt" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="44" height="70"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="44" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="   1점   ">
@@ -2155,7 +2172,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="602" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nst-bG-bjz" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="52" y="0.0" width="44" height="70"/>
+                                                                            <rect key="frame" x="52" y="0.0" width="44" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="2점">
@@ -2166,7 +2183,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="603" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lr1-pf-Vca" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="104" y="0.0" width="44" height="70"/>
+                                                                            <rect key="frame" x="104" y="0.0" width="44" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="3점">
@@ -2177,7 +2194,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="604" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gs-Bv-Orb" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="156" y="0.0" width="44" height="70"/>
+                                                                            <rect key="frame" x="156" y="0.0" width="44" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="4점">
@@ -2188,7 +2205,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" tag="605" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o7s-uO-6S9" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="208" y="0.0" width="44" height="70"/>
+                                                                            <rect key="frame" x="208" y="0.0" width="44" height="30"/>
                                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <state key="normal" title="5점">
@@ -2199,63 +2216,78 @@
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="m4A-GX-e17"/>
+                                                                    </constraints>
                                                                 </stackView>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="55" id="fdy-xr-LUc"/>
+                                                            </constraints>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="27A-y3-bq9">
-                                                            <rect key="frame" x="0.0" y="105" width="99.5" height="55"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="27A-y3-bq9">
+                                                            <rect key="frame" x="0.0" y="65" width="374" height="63"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수강학기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-qq-VbA">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="48.5" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="48.5" height="13"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EyJ-bZ-tSa">
-                                                                    <rect key="frame" x="0.0" y="25" width="99.5" height="30"/>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q5F-38-Dtq">
+                                                                    <rect key="frame" x="0.0" y="23" width="374" height="40"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수강학기 선택" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZE-79-nAw">
-                                                                            <rect key="frame" x="5" y="0.0" width="76.5" height="30"/>
-                                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                            <nil key="textColor"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
-                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="nXI-Z2-OIJ">
-                                                                            <rect key="frame" x="86.5" y="0.0" width="8" height="30"/>
-                                                                            <color key="tintColor" systemColor="labelColor"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="width" constant="8" id="seC-Jc-ahF"/>
-                                                                            </constraints>
-                                                                        </imageView>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ms4-XE-dKj" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="99.5" height="30"/>
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="250" translatesAutoresizingMaskIntoConstraints="NO" id="rD1-Ii-oAW">
+                                                                            <rect key="frame" x="10" y="0.0" width="354" height="40"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="수강학기 선택" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRP-uj-jgm">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="84" height="40"/>
+                                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                                    <nil key="textColor"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9pS-U4-d8d">
+                                                                                    <rect key="frame" x="334" y="5" width="20" height="30.5"/>
+                                                                                    <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="width" constant="20" id="zqM-YS-lUM"/>
+                                                                                    </constraints>
+                                                                                </imageView>
+                                                                            </subviews>
+                                                                        </stackView>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mkI-Ee-65Y">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
+                                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <connections>
-                                                                                <action selector="selectSemester:" destination="cyn-oB-Egq" eventType="touchUpInside" id="1P2-cu-YlJ"/>
+                                                                                <action selector="selectSemester:" destination="cyn-oB-Egq" eventType="touchUpInside" id="KGl-hc-3HB"/>
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" name="systemGray6BackgroundColor"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="trailing" secondItem="nXI-Z2-OIJ" secondAttribute="trailing" constant="5" id="023-Jm-vHA"/>
-                                                                        <constraint firstItem="HZE-79-nAw" firstAttribute="top" secondItem="EyJ-bZ-tSa" secondAttribute="top" id="7TI-5i-93x"/>
-                                                                        <constraint firstItem="Ms4-XE-dKj" firstAttribute="top" secondItem="EyJ-bZ-tSa" secondAttribute="top" id="8sX-lV-QCT"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="nXI-Z2-OIJ" secondAttribute="bottom" id="K3N-Su-ln6"/>
-                                                                        <constraint firstItem="HZE-79-nAw" firstAttribute="leading" secondItem="EyJ-bZ-tSa" secondAttribute="leading" constant="5" id="KbJ-Id-H1U"/>
-                                                                        <constraint firstItem="Ms4-XE-dKj" firstAttribute="leading" secondItem="EyJ-bZ-tSa" secondAttribute="leading" id="TB6-6w-OZm"/>
-                                                                        <constraint firstItem="nXI-Z2-OIJ" firstAttribute="top" secondItem="EyJ-bZ-tSa" secondAttribute="top" id="Z0I-r9-f5E"/>
-                                                                        <constraint firstAttribute="height" constant="30" id="cBk-tO-4S9"/>
-                                                                        <constraint firstItem="nXI-Z2-OIJ" firstAttribute="leading" secondItem="HZE-79-nAw" secondAttribute="trailing" constant="5" id="d9Y-75-8xF"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="HZE-79-nAw" secondAttribute="bottom" id="mEO-Wf-aUq"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="Ms4-XE-dKj" secondAttribute="bottom" id="yEu-s5-7V4"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="Ms4-XE-dKj" secondAttribute="trailing" id="z28-c2-2gB"/>
+                                                                        <constraint firstItem="rD1-Ii-oAW" firstAttribute="leading" secondItem="Q5F-38-Dtq" secondAttribute="leading" constant="10" id="4ZV-TU-XfC"/>
+                                                                        <constraint firstItem="mkI-Ee-65Y" firstAttribute="leading" secondItem="Q5F-38-Dtq" secondAttribute="leading" id="KR5-88-6Kw"/>
+                                                                        <constraint firstItem="rD1-Ii-oAW" firstAttribute="top" secondItem="Q5F-38-Dtq" secondAttribute="top" id="OWH-P3-Zo1"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="rD1-Ii-oAW" secondAttribute="bottom" id="UvZ-cV-0ph"/>
+                                                                        <constraint firstItem="mkI-Ee-65Y" firstAttribute="top" secondItem="Q5F-38-Dtq" secondAttribute="top" id="Xhj-ih-TSg"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="mkI-Ee-65Y" secondAttribute="bottom" id="dWW-wP-ytN"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="rD1-Ii-oAW" secondAttribute="trailing" constant="10" id="hxp-nl-ovh"/>
+                                                                        <constraint firstItem="mkI-Ee-65Y" firstAttribute="centerY" secondItem="Q5F-38-Dtq" secondAttribute="centerY" id="lMY-zQ-qcl"/>
+                                                                        <constraint firstAttribute="height" constant="40" id="o1t-x1-jpk"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="mkI-Ee-65Y" secondAttribute="trailing" id="w9x-B3-Xc4"/>
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="Q5F-38-Dtq" secondAttribute="bottom" id="DHu-g2-JEZ"/>
+                                                                <constraint firstItem="Q5F-38-Dtq" firstAttribute="leading" secondItem="27A-y3-bq9" secondAttribute="leading" id="aNc-Zp-d2K"/>
+                                                                <constraint firstAttribute="trailing" secondItem="Q5F-38-Dtq" secondAttribute="trailing" id="pbX-pm-XtI"/>
+                                                            </constraints>
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vWA-Kh-22P">
-                                                    <rect key="frame" x="20" y="247" width="374" height="150"/>
+                                                    <rect key="frame" x="20" y="215" width="374" height="150"/>
                                                     <color key="backgroundColor" name="systemGray6BackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="150" id="PhT-qI-d9F"/>
@@ -2265,7 +2297,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iCX-Ns-xPi">
-                                                    <rect key="frame" x="20" y="417" width="374" height="40"/>
+                                                    <rect key="frame" x="20" y="385" width="374" height="40"/>
                                                     <color key="backgroundColor" name="black"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="RAL-n8-KLp"/>
@@ -2296,7 +2328,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이 강의에 대한 총평을 작성해주세요." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfH-gd-tH8">
-                                                    <rect key="frame" x="20" y="255" width="374" height="17"/>
+                                                    <rect key="frame" x="25" y="223" width="364" height="17"/>
                                                     <color key="tintColor" name="black"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -2307,12 +2339,12 @@
                                                 <constraint firstItem="vWA-Kh-22P" firstAttribute="leading" secondItem="apa-mY-utC" secondAttribute="leadingMargin" id="2HK-x4-Wk8"/>
                                                 <constraint firstItem="iCX-Ns-xPi" firstAttribute="leading" secondItem="apa-mY-utC" secondAttribute="leadingMargin" id="4ZV-oS-7nS"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="SkD-At-N6R" secondAttribute="trailing" id="4mB-k1-6hx"/>
-                                                <constraint firstItem="qfH-gd-tH8" firstAttribute="leading" secondItem="apa-mY-utC" secondAttribute="leadingMargin" id="Aaa-50-Jk8"/>
+                                                <constraint firstItem="qfH-gd-tH8" firstAttribute="leading" secondItem="apa-mY-utC" secondAttribute="leadingMargin" constant="5" id="Aaa-50-Jk8"/>
                                                 <constraint firstItem="1cP-hq-f4i" firstAttribute="top" secondItem="apa-mY-utC" secondAttribute="topMargin" id="FFF-Jb-xv5"/>
                                                 <constraint firstItem="1cP-hq-f4i" firstAttribute="leading" secondItem="apa-mY-utC" secondAttribute="leadingMargin" id="J7b-BS-PZe"/>
                                                 <constraint firstItem="iCX-Ns-xPi" firstAttribute="top" secondItem="vWA-Kh-22P" secondAttribute="bottom" constant="20" id="JEn-64-9OZ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="iCX-Ns-xPi" secondAttribute="bottom" id="JHk-hY-Ewp"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="qfH-gd-tH8" secondAttribute="trailing" id="Kbg-Hu-tyb"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="qfH-gd-tH8" secondAttribute="trailing" constant="5" id="Kbg-Hu-tyb"/>
                                                 <constraint firstItem="qfH-gd-tH8" firstAttribute="top" secondItem="vWA-Kh-22P" secondAttribute="top" constant="8" id="LKa-zv-qLS"/>
                                                 <constraint firstItem="vWA-Kh-22P" firstAttribute="trailing" secondItem="apa-mY-utC" secondAttribute="trailingMargin" id="QLo-6g-aaA"/>
                                                 <constraint firstItem="1cP-hq-f4i" firstAttribute="trailing" secondItem="apa-mY-utC" secondAttribute="trailingMargin" id="YEv-9t-fFc"/>
@@ -2333,7 +2365,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="dN9-ev-ih6"/>
-                    <size key="freeformSize" width="414" height="1300"/>
+                    <size key="freeformSize" width="414" height="1246"/>
                     <connections>
                         <outlet property="directAttendanceBtn" destination="gdz-cc-2Rd" id="b0W-rC-xOc"/>
                         <outlet property="electronincAttendanceBtn" destination="OUA-gf-OqI" id="i0M-Wh-npl"/>
@@ -2358,7 +2390,9 @@
                         <outlet property="reviewSaveButton" destination="iCX-Ns-xPi" id="lNz-ls-Qwd"/>
                         <outlet property="reviewcontentTextView" destination="vWA-Kh-22P" id="7K5-gJ-hdg"/>
                         <outlet property="seatAttendanceBtn" destination="QVG-la-nCG" id="9G2-8z-wg7"/>
-                        <outlet property="semesterLabel" destination="HZE-79-nAw" id="VzA-t1-9Fm"/>
+                        <outlet property="selectSemesterButton" destination="mkI-Ee-65Y" id="fmN-tf-8vE"/>
+                        <outlet property="selectSemesterView" destination="Q5F-38-Dtq" id="6Ad-fU-xGb"/>
+                        <outlet property="semesterLabel" destination="tRP-uj-jgm" id="PAH-DR-LzV"/>
                         <outlet property="threeRatingBtn" destination="Lr1-pf-Vca" id="lYS-qD-Z8k"/>
                         <outlet property="threeTestNumberBtn" destination="QM3-sD-JxL" id="iKH-eu-MdU"/>
                         <outlet property="tightEvaluationBtn" destination="cUo-oM-gRs" id="zyR-fC-hkQ"/>
@@ -2368,7 +2402,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ur-Ur-vFA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4666.666666666667" y="-1867.6339285714284"/>
+            <point key="canvasLocation" x="4740.579710144928" y="-1868.3035714285713"/>
         </scene>
     </scenes>
     <designables>
@@ -2401,9 +2435,6 @@
         </designable>
         <designable name="M4g-WW-0aK">
             <size key="intrinsicContentSize" width="40" height="29"/>
-        </designable>
-        <designable name="Ms4-XE-dKj">
-            <size key="intrinsicContentSize" width="30" height="30"/>
         </designable>
         <designable name="NL5-50-PP7">
             <size key="intrinsicContentSize" width="52" height="30"/>
@@ -2450,6 +2481,9 @@
         <designable name="Yr7-Pq-mUU">
             <size key="intrinsicContentSize" width="32" height="29"/>
         </designable>
+        <designable name="bmn-N1-Mla">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
         <designable name="cOB-Ey-FOT">
             <size key="intrinsicContentSize" width="30" height="29"/>
         </designable>
@@ -2462,6 +2496,12 @@
         <designable name="o7s-uO-6S9">
             <size key="intrinsicContentSize" width="30" height="30"/>
         </designable>
+        <designable name="o9w-fv-c59">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
+        <designable name="oAT-mE-NBH">
+            <size key="intrinsicContentSize" width="90" height="14"/>
+        </designable>
         <designable name="pht-RJ-PXq">
             <size key="intrinsicContentSize" width="69" height="29"/>
         </designable>
@@ -2473,12 +2513,11 @@
         </designable>
     </designables>
     <resources>
-        <image name="chevron.down" catalog="system" width="32" height="32"/>
-        <image name="down-arrow" width="12" height="12"/>
-        <image name="hand.thumbsup" catalog="system" width="32" height="32"/>
-        <image name="hand.thumbsup.fill" catalog="system" width="32" height="32"/>
-        <image name="plus" catalog="system" width="32" height="32"/>
-        <image name="xmark" catalog="system" width="32" height="32"/>
+        <image name="chevron.down" catalog="system" width="128" height="72"/>
+        <image name="hand.thumbsup" catalog="system" width="128" height="128"/>
+        <image name="hand.thumbsup.fill" catalog="system" width="128" height="121"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

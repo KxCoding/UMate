@@ -7,23 +7,15 @@
 
 import UIKit
 import DropDown
+import Loaf
 
 
-/// 새로운 강의평가 등록 시 뷰 컨트롤러에서 처리되는 동작에대한 노티피케이션
-/// - Author: 김정민
-extension Notification.Name {
-    static let newLectureReviewDidInput = Notification.Name(rawValue: "newLectureReviewDidInput")
-}
-
-
-
-
-/// 강의평가 작성 클래스
-/// - Author: 김정민
+/// 강의평가 작성하기 위한 뷰컨트롤러
+/// - Author: 김정민(kimjm010@icloud.com)
 class LectureReviewWriteTableViewController: UITableViewController {
-
-    // MARK: 리뷰를 저장하기 위한 속성
-    /// - Author: 김정민
+    
+    /// 리뷰 저장을 위한 속성
+    /// - Author: 김정민(kimjm010@icloud.com)
     var reviewAssignment: LectureReview.Assignment?
     var reviewGroupMeeting: LectureReview.GroupMeeting?
     var reviewEvaluation: LectureReview.Evaluation?
@@ -31,29 +23,29 @@ class LectureReviewWriteTableViewController: UITableViewController {
     var reviewTestNumber: LectureReview.TestNumber?
     var reviewRating: LectureReview.Rating?
     
-    // MARK: 과제버튼 아울렛
-    /// - Author: 김정민
+    /// 과제버튼 아울렛
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var manyAssignmentBtn: RoundedButton!
     @IBOutlet weak var normalAssignmentBtn: RoundedButton!
     @IBOutlet weak var noneAssignmentBtn: RoundedButton!
     
     
-    /// 과제버튼 클릭에 대한 이벤트를 처리합니다.
+    /// 과제 버튼 클릭에 대한 이벤트를 처리합니다.
     /// - Parameter sender: Assignment 버튼
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func selectAssignment(_ sender: UIButton) {
         manyAssignmentBtn.isSelected = sender.tag == 101
         normalAssignmentBtn.isSelected = sender.tag == 102
         noneAssignmentBtn.isSelected = sender.tag == 103
         
-        /// 총점버튼을 눌렀을 때 버튼의 배경색상 변경
+        // 과제 버튼을 눌렀을 때 버튼의 배경색상을 변경합니다.
+        /// - Author: 김정민(kimjm010@icloud.com)
         [manyAssignmentBtn, normalAssignmentBtn, noneAssignmentBtn].forEach { button in
             guard let button = button else { return }
             
             button.backgroundColor = button.isSelected ? .systemRed : .systemGray5
         }
         
-        /// 해당 버튼에 대한 값을 속성에 저장
         switch sender.tag {
         case 101:
             reviewAssignment = LectureReview.Assignment.many
@@ -66,28 +58,29 @@ class LectureReviewWriteTableViewController: UITableViewController {
         }
     }
     
-    // MARK: 그룹미팅버튼 아울렛
+    /// 그룹미팅버튼 아울렛
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var manyGroupMeetingBtn: RoundedButton!
     @IBOutlet weak var normalGroupMeetingBtn: RoundedButton!
     @IBOutlet weak var noneGroupMeetingBtn: RoundedButton!
     
     
-    /// 조모임버튼 클릭에 대한 이벤트를 처리합니다.
+    /// 그룹미팅 버튼 클릭에 대한 이벤트를 처리합니다.
     /// - Parameter sender: Groupmetting 버튼
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func selectGroupMeeting(_ sender: UIButton) {
         manyGroupMeetingBtn.isSelected = sender.tag == 201
         normalGroupMeetingBtn.isSelected = sender.tag == 202
         noneGroupMeetingBtn.isSelected = sender.tag == 203
         
-        /// 총점버튼을 눌렀을 때 버튼의 배경색상 변경
+        // 그룹미팅 버튼을 눌렀을 때 버튼의 배경색상을 변경합니다.
+        /// - Author: 김정민(kimjm010@icloud.com)
         [manyGroupMeetingBtn, normalGroupMeetingBtn, noneGroupMeetingBtn].forEach { button in
             guard let button = button else { return }
             
             button.backgroundColor = button.isSelected ? .systemRed : .systemGray5
         }
         
-        /// 해당 버튼에 대한 값을 속성에 저장
         switch sender.tag {
         case 201:
             reviewGroupMeeting = LectureReview.GroupMeeting.many
@@ -101,16 +94,17 @@ class LectureReviewWriteTableViewController: UITableViewController {
     }
     
     
-    // MARK: 학점비율버튼 아울렛
+    /// 학점비율버튼 아울렛
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var generousEvaluationBtn: RoundedButton!
     @IBOutlet weak var normalEvaluationBtn: RoundedButton!
     @IBOutlet weak var tightEvaluationBtn: RoundedButton!
     @IBOutlet weak var hellEvaluationBtn: RoundedButton!
     
     
-    /// 학점비율버튼 클릭에 대한 이벤트를 처리합니다.
+    /// 학점비율 버튼 클릭에 대한 이벤트를 처리합니다.
     /// - Parameter sender: Evaluation 버튼
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func selectEvaluation(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         
@@ -119,14 +113,14 @@ class LectureReviewWriteTableViewController: UITableViewController {
         tightEvaluationBtn.isSelected = sender.tag == 303
         hellEvaluationBtn.isSelected = sender.tag == 304
         
-        /// 총점버튼을 눌렀을 때 버튼의 배경색상 변경
+        // 학점비율 버튼을 눌렀을 때 버튼의 배경색상을 변경합니다.
+        /// - Author: 김정민(kimjm010@icloud.com)
         [generousEvaluationBtn, normalEvaluationBtn, tightEvaluationBtn, hellEvaluationBtn].forEach { button in
             guard let button = button else { return }
             
             button.backgroundColor = button.isSelected ? .systemRed : .systemGray5
         }
         
-        /// 해당 버튼에 대한 값을 속성에 저장
         switch sender.tag {
         case 301:
             reviewEvaluation = LectureReview.Evaluation.generous
@@ -142,7 +136,8 @@ class LectureReviewWriteTableViewController: UITableViewController {
     }
     
     
-    // MARK: 출석버튼 아울렛
+    /// 출결버튼 아울렛
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var mixAttendanceBtn: RoundedButton!
     @IBOutlet weak var directAttendanceBtn: RoundedButton!
     @IBOutlet weak var seatAttendanceBtn: RoundedButton!
@@ -152,7 +147,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
     
     /// 출결버튼 클릭에 대한 이벤트를 처리합니다.
     /// - Parameter sender: Attendance 버튼
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func selectAttendance(_ sender: UIButton) {
         mixAttendanceBtn.isSelected = sender.tag == 401
         directAttendanceBtn.isSelected = sender.tag == 402
@@ -160,14 +155,14 @@ class LectureReviewWriteTableViewController: UITableViewController {
         electronincAttendanceBtn.isSelected = sender.tag == 404
         noneAttendanceBtn.isSelected = sender.tag == 405
         
-        /// 총점버튼을 눌렀을 때 버튼의 배경색상 변경
+        // 출결버튼을 눌렀을 때 버튼의 배경색상을 변경합니다.
+        /// - Author: 김정민(kimjm010@icloud.com)
         [mixAttendanceBtn, directAttendanceBtn, seatAttendanceBtn, electronincAttendanceBtn, noneAttendanceBtn].forEach { button in
             guard let button = button else { return }
             
             button.backgroundColor = button.isSelected ? .systemRed : .systemGray5
         }
         
-        /// 해당 버튼에 대한 값을 속성에 저장
         switch sender.tag {
         case 401:
             reviewAttendance = LectureReview.Attendance.mix
@@ -184,7 +179,8 @@ class LectureReviewWriteTableViewController: UITableViewController {
     }
     
     
-    // MARK: 시험횟수버튼 아울렛
+    /// 시험횟수 버튼 아울렛
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var fourTestNumberBtn: RoundedButton!
     @IBOutlet weak var threeTestNumberBtn: RoundedButton!
     @IBOutlet weak var twoTestNumberBtn: RoundedButton!
@@ -192,9 +188,9 @@ class LectureReviewWriteTableViewController: UITableViewController {
     @IBOutlet weak var noneTestNumberBtn: RoundedButton!
     
     
-    /// 시험횟수버튼 클릭에 대한 이벤트를 처리합니다.
+    /// 시험횟수 버튼 클릭에 대한 이벤트를 처리합니다.
     /// - Parameter sender: Testnumber 버튼
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func selectTestNumber(_ sender: UIButton) {
         fourTestNumberBtn.isSelected = sender.tag == 501
         threeTestNumberBtn.isSelected = sender.tag == 502
@@ -202,7 +198,8 @@ class LectureReviewWriteTableViewController: UITableViewController {
         oneTestNumberBtn.isSelected = sender.tag == 504
         noneTestNumberBtn.isSelected = sender.tag == 505
         
-        /// 총점버튼을 눌렀을 때 버튼의 배경색상 변경
+        // 시험 횟수 버튼을 눌렀을 때 버튼의 배경색상을 변경합니다.
+        /// - Author: 김정민(kimjm010@icloud.com)
         [fourTestNumberBtn, threeTestNumberBtn, twoTestNumberBtn, oneTestNumberBtn, noneTestNumberBtn].forEach { button in
             guard let button = button else { return }
             
@@ -226,7 +223,8 @@ class LectureReviewWriteTableViewController: UITableViewController {
         }
     }
     
-    // MARK: 총점버튼 아울렛
+    /// 총점버튼 아울렛
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var oneRatingBtn: RoundedButton!
     @IBOutlet weak var twoRatingBtn: RoundedButton!
     @IBOutlet weak var threeRatingBtn: RoundedButton!
@@ -236,7 +234,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
     
     /// 총점버튼 클릭에 대한 이벤트를 처리합니다.
     /// - Parameter sender: Rating 버튼
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func selectRating(_ sender: UIButton) {
         oneRatingBtn.isSelected = sender.tag == 601
         twoRatingBtn.isSelected = sender.tag == 602
@@ -244,6 +242,8 @@ class LectureReviewWriteTableViewController: UITableViewController {
         fourRatingBtn.isSelected = sender.tag == 604
         fiveRatingBtn.isSelected = sender.tag == 605
         
+        // 총점버튼을 눌렀을 때 버튼의 배경색상을 변경합니다.
+        /// - Author: 김정민(kimjm010@icloud.com)
         [oneRatingBtn, twoRatingBtn, threeRatingBtn, fourRatingBtn, fiveRatingBtn].forEach { button in
             guard let button = button else { return }
             
@@ -266,10 +266,18 @@ class LectureReviewWriteTableViewController: UITableViewController {
             break
         }
     }
+
+    /// 수강학기 선택 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
+    @IBOutlet weak var selectSemesterButton: UIButton!
     
+    /// 수강학기 선택 뷰
+    /// - Author: 김정민(kimjm010@icloud.com)
+    @IBOutlet weak var selectSemesterView: UIView!
     
     /// 수강학기 선택을 위한 메뉴 속성
-    /// - Author: 김정민
+    /// 수강학기는 현재 연도로부터 5년이전까지 선택할 수 있습니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     let menu: DropDown? = {
         let menu = DropDown()
         let now = Date()
@@ -280,7 +288,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
         
         for year in startYear ... currentYear {
             for sem in 1...2 {
-                menu.dataSource.append("\(year)학년 \(sem)학기")
+                menu.dataSource.append("\(year)-\(sem)")
             }
         }
         
@@ -288,13 +296,17 @@ class LectureReviewWriteTableViewController: UITableViewController {
     }()
     
     
-    /// 수강학기 선택합니다.
+    /// 수강학기를 선택합니다.
     /// - Parameter sender: 수강학기 선택 버튼
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func selectSemester(_ sender: UIButton) {
         menu?.show()
         menu?.anchorView = sender
-        menu?.bottomOffset = CGPoint(x: 0, y: sender.frame.size.height)
+        guard let height = menu?.anchorView?.plainView.bounds.height else { return }
+        menu?.bottomOffset = CGPoint(x: 0, y: height)
+        menu?.width = 150
+        menu?.backgroundColor = UIColor.init(named: "systemGray6BackgroundColor")
+        menu?.textColor = .label
         menu?.selectionAction = { [weak self] (index: Int, item: String) in
             guard let _ = self else { return }
             self?.semesterLabel.text = item
@@ -302,24 +314,60 @@ class LectureReviewWriteTableViewController: UITableViewController {
     }
     
     
-    // MARK: 강의평가 작성아울렛
+    /// 강의평가 작성아울렛
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var reviewcontentTextView: UITextView!
     @IBOutlet weak var reviewPlaceholder: UILabel!
     @IBOutlet weak var semesterLabel: UILabel!
     @IBOutlet weak var reviewSaveButton: UIButton!
     
     
-    /// 강의리뷰 저장 메소드
+    /// 강의리뷰 저장 메소드입니다.
     /// - Parameter sender: 강의평가 저장 버튼
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func saveLectureReview(_ sender: Any) {
         
-        guard let reviewContent = reviewcontentTextView.text, reviewContent.count > 0 else {
-            alert(message: "총평을 작성해주세요.")
+        guard let reviewAssignment = reviewAssignment else {
+            Loaf("과제 비율을 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
             return
         }
         
-        let newReview = LectureReview(assignment: reviewAssignment!, groupMeeting: reviewGroupMeeting!, evaluation: reviewEvaluation!, attendance: reviewAttendance!, testNumber: reviewTestNumber!, rating: reviewRating!, semester: semesterLabel.text!, reviewContent: reviewContent)
+        guard let reviewGroupMeeting = reviewGroupMeeting else {
+            Loaf("조모임 비율을 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
+            return
+        }
+
+        guard let reviewEvaluation = reviewEvaluation else {
+            Loaf("학점 비율을 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
+            return
+        }
+        
+        guard let reviewAttendance = reviewAttendance else {
+            Loaf("출결 방식을 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
+            return
+        }
+        
+        guard let reviewTestNumber = reviewTestNumber else {
+            Loaf("시험 횟수를 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
+            return
+        }
+        
+        guard let reviewRating = reviewRating else {
+            Loaf("총점을 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
+            return
+        }
+        
+        guard let semester = menu?.selectedItem else {
+            Loaf("수강학기를 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
+            return
+        }
+        
+        guard let reviewContent = reviewcontentTextView.text, reviewContent.count > 20 else {
+            Loaf("조금 더 자세한 총평을 작성해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
+            return
+        }
+        
+        let newReview = LectureReview(assignment: reviewAssignment, groupMeeting: reviewGroupMeeting, evaluation: reviewEvaluation, attendance: reviewAttendance, testNumber: reviewTestNumber, rating: reviewRating, semester: semester, reviewContent: reviewContent)
         
         NotificationCenter.default.post(name: .newLectureReviewDidInput, object: nil, userInfo: ["review": newReview])
         
@@ -328,7 +376,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
     
     
     /// 강의리뷰 작성화면을 닫습니다.
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -336,20 +384,37 @@ class LectureReviewWriteTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         reviewSaveButton.setToEnabledButtonTheme()
+        selectSemesterView.layer.cornerRadius = 10
+        reviewcontentTextView.layer.cornerRadius = 10
         reviewcontentTextView.delegate = self
     }
 }
 
 
 
-
+/// 강의총평 Placeholder 지정
+///  - Author:  김정민(kimjm010@icloud.com)
 extension LectureReviewWriteTableViewController: UITextViewDelegate {
     
-    /// 리뷰를 작성할 경우 placeholder를 처리합니다.
-    /// - Author: 김정민
-    func textViewDidChange(_ textView: UITextView) {
-        reviewPlaceholder.isHidden = textView.hasText
+    /// 강의 총평을 편집하는 경우 Placeholder를 숨기는 메소드
+    /// - Parameter textField: 깅의총평 textView
+    ///  - Author:  김정민(kimjm010@icloud.com)
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        reviewPlaceholder.isHidden = true
+    }
+    
+    
+    /// 강의 총평 편집 후 글자수가 0보다 작거나 같은 경우 다시 Placeholder를 설정하는 메소드
+    /// - Parameter textField: 강의총평 textView
+    ///  - Author:  김정민(kimjm010@icloud.com)
+    func textViewDidEndEditing(_ textView: UITextView) {
+        guard let text = textView.text, text.count > 0 else {
+            reviewPlaceholder.isHidden = false
+            return
+        }
+        
+        reviewPlaceholder.isHidden = false
     }
 }

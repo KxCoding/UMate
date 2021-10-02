@@ -44,15 +44,15 @@ class ReviewContentTableViewCell: UITableViewCell {
     /// - Parameter sender: 버튼
     /// - Author: 장현우
     @IBAction func recommendationButtonTapped(_ sender: Any) {
-        /// 하이라이트 상태 토글
+        // 하이라이트 상태 토글
         recommendationImageView.isHighlighted = recommendationImageView.isHighlighted == false
         recommendationImageView.isHighlighted = recommendationImageView.isHighlighted == true
         
-        /// 하이라이트 상태에 따라 뷰 틴트 색상과 레이블 색상 변경
+        // 하이라이트 상태에 따라 뷰 틴트 색상과 레이블 색상 변경
         recommendationImageView.tintColor = recommendationImageView.isHighlighted ? .white : .secondaryLabel
         recommendationLabel.textColor = recommendationImageView.isHighlighted ? .white : .secondaryLabel
         
-        /// 하이라이트 상태에 따라 뷰 색상 변경
+        // 하이라이트 상태에 따라 뷰 색상 변경
         recommendationView.backgroundColor = recommendationImageView.isHighlighted ? .systemRed : .systemGray5
     }
     

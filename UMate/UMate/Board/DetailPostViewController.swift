@@ -8,15 +8,11 @@
 import UIKit
 
 
-extension Notification.Name {
-    static let newCommentDidInsert = Notification.Name(rawValue: "newCommentDidInsert")
-}
-
-
-
 /// 게시글 상세화면에대한 클래스
-/// - Author: 남정은, 김정민
-class DetailPostViewController: RemoveObserverViewController {
+/// - Author: 남정은, 김정민(kimjm010@icloud.com)
+
+class DetailPostViewController: CommonViewController {
+
     @IBOutlet weak var writeCommentContainerView: UIView!
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var detailPostTableView: UITableView!
@@ -49,7 +45,7 @@ class DetailPostViewController: RemoveObserverViewController {
     
     /// 댓글 및 대댓글 저장하는 메소드
     /// - Parameter sender: 댓글 저장 버튼
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func saveComment(_ sender: Any) {
         
         guard let content = commentTextView.text, content.count > 0 else {
@@ -83,8 +79,9 @@ class DetailPostViewController: RemoveObserverViewController {
     
     
     /// 댓글을 단 사용자에게 쪽지를 보낼 수 있는 메소드
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func sendNote(_ sender: Any) {
+        // TODO: 서버 구현 후 작업 예정입니다.
         #if DEBUG
         print("쪽지 보내기 성공!")
         #endif
@@ -145,9 +142,28 @@ class DetailPostViewController: RemoveObserverViewController {
                 self?.commentTextView.text = nil
             }
         }
-        
         tokens.append(token)
         
+        
+        token = NotificationCenter.default.addObserver(forName: .sendAlert, object: nil, queue: .main, using: { _ in
+            let alertMenu = UIAlertController(title: "", message: "메뉴를 선택하세요.", preferredStyle: .actionSheet)
+            
+            let editAction = UIAlertAction(title: "게시글 수정", style: .default) { _ in
+                print("수정")
+            }
+            alertMenu.addAction(editAction)
+            
+            let deleteAction = UIAlertAction(title: "게시글 삭제", style: .default) { _ in
+                print("삭제")
+            }
+            alertMenu.addAction(deleteAction)
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            alertMenu.addAction(cancelAction)
+            
+            self.present(alertMenu, animated: true, completion: nil)
+        })
+        tokens.append(token)
     }
     
     
@@ -177,10 +193,11 @@ class DetailPostViewController: RemoveObserverViewController {
     }
     
     
-    /// 댓글을 왼쪽으로 Swipre해서 댓글을 신고하는 메소드
+    /// 댓글을 왼쪽으로 Swipre해서 댓글을 신고하는 메소드입니다.
     /// - Parameter indexPath: 댓글의 IndexPath
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     func alertCommentDelete(_ indexPath: IndexPath) {
+        // TODO: 서버 구현 후 작업 예정입니다.
         #if DEBUG
         print(#function)
         print("댓글을 신고하시겠습니까?")
@@ -224,22 +241,22 @@ extension DetailPostViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
-        /// 작성자, 제목, 내용
+        // 작성자, 제목, 내용
         case 0:
             return 1
             
-        /// 게시글에 첨부된 이미지
+        // 게시글에 첨부된 이미지
         case 1:
             if let post = selectedPost, post.images.count == 0 {
                 return 0
             }
             return 1
             
-        /// 게시글에 포함된 좋아요, 댓글, 스크랩 개수
+        // 게시글에 포함된 좋아요, 댓글, 스크랩 개수
         case 2:
             return 1
             
-        /// 게시글에 포함된 댓글
+        // 게시글에 포함된 댓글
         case 3:
             return sortedCommentList.count
             
@@ -257,7 +274,7 @@ extension DetailPostViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
-        /// 게시글 내용 표시하는 셀
+        // 게시글 내용 표시하는 셀
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostContentTableViewCell", for: indexPath) as! PostContentTableViewCell
             if let post = selectedPost {
@@ -266,7 +283,7 @@ extension DetailPostViewController: UITableViewDataSource {
                 return cell
             }
             
-        /// 이미지 표시하는 셀
+        // 이미지 표시하는 셀
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostImageTableViewCell", for: indexPath) as! PostImageTableViewCell
             if let post = selectedPost {
@@ -275,7 +292,7 @@ extension DetailPostViewController: UITableViewDataSource {
                 return cell
             }
             
-        /// 카운트 라벨 표시하는 셀
+        // 카운트 라벨 표시하는 셀
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CountLabelTableViewCell", for: indexPath) as! CountLabelTableViewCell
             if let post = selectedPost {
@@ -284,7 +301,7 @@ extension DetailPostViewController: UITableViewDataSource {
                 return cell
             }
             
-        /// 댓글 및 대댓글 표시하는 셀
+        // 댓글 및 대댓글 표시하는 셀
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
             
@@ -309,7 +326,7 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath
     /// - Returns: Leading끝에 표시될 SwipeAction
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         if indexPath.section == 3  {
@@ -333,7 +350,7 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath
     /// - Returns: Trailing끝에 표시될 SwipeAction
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         if indexPath.section == 3 {
@@ -365,7 +382,7 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - indexPath: 댓글의 indexPath
     ///   - point: 컨텍스트 메뉴를 표시하기 위한
     /// - Returns: 선택한 indexPath의 포인트
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath,
                    point: CGPoint) -> UIContextMenuConfiguration? {
         
@@ -395,7 +412,7 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - tableView: 디테일포스트 테이블 뷰
     ///   - indexPath: 선택될 셀의 indexPath
     /// - Returns: 선택된 셀의 indexPath
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let target = sortedCommentList[indexPath.row]
         
@@ -411,7 +428,7 @@ extension DetailPostViewController: UITableViewDelegate {
     /// - Parameters:
     ///   - tableView: 디테일포슽트 테이블 뷰
     ///   - indexPath: 선택된 셀의 indexPath
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 3 {
             alertVersion2(title: "알림", message: "대댓글을 작성하시겠습니까? :)") { _ in
@@ -430,13 +447,12 @@ extension DetailPostViewController: UITableViewDelegate {
 
 
 
-// 댓글의 Placeholder 표시 여부를 결정
-/// - Author: 김정민
+
 extension DetailPostViewController: UITextViewDelegate {
     
     /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
     /// - Parameter textView: commentTextView
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textViewDidBeginEditing(_ textView: UITextView) {
         commentPlaceholderLabel.isHidden = true
     }
@@ -444,7 +460,7 @@ extension DetailPostViewController: UITextViewDelegate {
     
     /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시합니다.
     /// - Parameter textView: commentTextView
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textViewDidEndEditing(_ textView: UITextView) {
         guard let comment = commentTextView.text, comment.count > 0 else {
             commentPlaceholderLabel.isHidden = false
