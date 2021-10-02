@@ -14,7 +14,7 @@ import UIKit
 ///
 /// 암호 잠금과 관련된 작업을 수행할 수 있습니다.
 /// - Author: 안상희
-class SetPasswordViewController: RemoveObserverViewController {
+class SetPasswordViewController: CommonViewController {
     /// keyPrefix로 전달된 값을 통해 KeychainSwift 객체를 초기화하기 위한 속성. 생체인증을 위한 키체인입니다.
     let bioKeychain = KeychainSwift(keyPrefix: Keys.bioLockPasswordKey)
     

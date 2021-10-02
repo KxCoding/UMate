@@ -11,7 +11,7 @@ import UIKit
 
 /// 암호 잠금 화면에 공통적으로 사용되는 ViewController 클래스
 /// - Author: 안상희
-class PasswordRootViewController: RemoveObserverViewController {
+class PasswordRootViewController: CommonViewController {
     /// keyPrefix로 전달된 값을 통해 KeychainSwift 객체를 초기화하기 위한 속성
     let keychain = KeychainSwift(keyPrefix: Keys.appLockPasswordKey)
     

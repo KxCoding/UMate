@@ -30,7 +30,7 @@ class FriendSearchViewController: UIViewController {
     
 
     /// 친구를 등록합니다.
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: 친구 추가 버튼
     @IBAction func addFriendsButton(_ sender: Any) {
         alert(title: "알림", message: "친구로 등록되었습니다.")
     }
