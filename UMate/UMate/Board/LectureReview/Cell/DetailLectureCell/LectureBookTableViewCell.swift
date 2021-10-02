@@ -24,14 +24,14 @@ class LectureBookTableViewCell: UITableViewCell {
     /// 셀을 초기화
     /// - Parameter lecture: 선택된 강의
     func configure(lecture: LectureInfo) {
-        /// 등록된 교재가 없을 경우
+        // 등록된 교재가 없을 경우
         if lecture.textbookName.isEmpty {
             bookNameLabel.isHidden = true
             bookLinkTextView.text = "등록된 교재정보가 없습니다."
             bookLinkTextView.isSelectable = false
             explainLabel.isHidden = true
         }
-        /// 등록된 교재가 있을 경우
+        // 등록된 교재가 있을 경우
         else {
             let attributedString = NSMutableAttributedString(string: lecture.textbookName,
                                                             attributes: [.font: UIFont.preferredFont(forTextStyle: .body)])

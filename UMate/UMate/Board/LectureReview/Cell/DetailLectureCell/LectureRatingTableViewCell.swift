@@ -33,7 +33,7 @@ class LectureRatingTableViewCell: UITableViewCell {
     ///   - lecture: 선택된 강의에 대한 정보
     func configure(resultReview: [[Count]], lecture: LectureInfo) {
         
-        /// resultReview는 [Assingment, Groupmeeting, Evaluation, Attendance, TestNumer]에 대해서 각각의 항목중 빈도 수 높은 것이 왼쪽에 오도록 정렬되어 있음.
+        // resultReview는 [Assingment, Groupmeeting, Evaluation, Attendance, TestNumer]에 대해서 각각의 항목중 빈도 수 높은 것이 왼쪽에 오도록 정렬되어 있음.
         assignmentLabel.text = LectureReview.Assignment(rawValue: resultReview[0].first?.key ?? 0)?.description
         groupMeetingLabel.text = LectureReview.GroupMeeting(rawValue: resultReview[1].first?.key ?? 0)?.description
         evaluationLabel.text = LectureReview.Evaluation(rawValue: resultReview[2].first?.key ?? 0)?.description
@@ -47,7 +47,7 @@ class LectureRatingTableViewCell: UITableViewCell {
         let ratingAvg = Double(ratingSum) / Double(lecture.reviews.count)
         ratingView.rating = ratingAvg.rounded()
         
-        /// 별점의 평균값
+        // 별점의 평균값
         ratingLabel.text = String(format: "%.1f", ratingAvg)
     }
 }

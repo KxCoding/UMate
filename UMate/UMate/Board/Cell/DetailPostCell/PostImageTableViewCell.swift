@@ -26,13 +26,12 @@ class PostImageTableViewCell: UITableViewCell {
     }
     
     
-    
     /// 셀을 초기화
     /// - Parameter post: 선택된 게시글
     func configure(post: Post) {
         selectedPost = post
         
-        /// 사진이 없을 때 이미지를 표시하는 collectionView 숨김
+        // 사진이 없을 때 이미지를 표시하는 collectionView 숨김
         postImageCollectionView.isHidden = post.images.isEmpty
     }
 }
@@ -57,7 +56,7 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
             cell.postImageView.image = image
         }
         
-        /// 컬렉션 뷰 셀에서 필요한 데이터 저장
+        // 컬렉션 뷰 셀에서 필요한 데이터 저장
         cell.selectedPost = selectedPost
         cell.index = indexPath.row
         return cell

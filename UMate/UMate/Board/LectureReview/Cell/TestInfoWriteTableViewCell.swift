@@ -17,13 +17,18 @@ extension Notification.Name {
 }
 
 
+
 /// 시험정보작성을 위한 테이블 뷰 셀
 /// - Author: 남정은
 class TestInfoWriteTableViewCell: UITableViewCell {
     // MARK: 응시한 시험
-    /// 수강학기 선택
+    /// 수강학기 선택 뷰
     @IBOutlet weak var selectSemesterView: UIView!
-    @IBOutlet weak var selectTestView: UIView!
+    
+    /// '수강학기'를 나타내는 레이블
+    @IBOutlet weak var semesterLabel: UILabel!
+    
+    /// 수강학기를 선택하는 버튼
     @IBAction func selectSemester(_ sender: Any) {
         semestersView.show()
         semestersView.selectionAction = { [weak self] index, item in
@@ -32,9 +37,13 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     }
     
     
-    /// 시험종류 선택
-    @IBOutlet weak var semesterLabel: UILabel!
+    /// 시험종류 선택 뷰
+    @IBOutlet weak var selectTestView: UIView!
+    
+    /// '시험종류'를 나타내는 레이블
     @IBOutlet weak var testLabel: UILabel!
+    
+    /// 시험종류를 선택하는 버튼
     @IBAction func selectTest(_ sender: Any) {
         testTypesView.show()
         testTypesView.selectionAction = { [weak self] index, item in
@@ -44,7 +53,10 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     
     
     // MARK: 시험 전략
+    /// 시험전략을 작성하는 텍스트 뷰
     @IBOutlet weak var testStrategyTextView: UITextView!
+    
+    /// 시험전략에 대한 간단한 설명을 나타내는 레이블
     @IBOutlet weak var placeholderLabel: UILabel!
     
     
@@ -90,24 +102,27 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     @IBOutlet weak var fifthTextFieldStackView: UIStackView!
     
     
-    /// 입력란 추가 뷰
+    /// '더 입력하기'버튼을 감싸는 뷰
     @IBOutlet weak var addTestInfoButtonView: UIView!
-    @IBOutlet weak var testInfoStackView: UIStackView!
+    
+    /// 문제예시를 입력하는 텍스트필드가 담긴 스택 뷰
+    @IBOutlet weak var testExampleStackView: UIStackView!
     
     
-    /// 입력란 추가 버튼을 누른 횟수
-    var addTestClickednumber = 0
+    /// 문제예시 번호
+    var exampleNumber = 3
     
     /// 입력란 추가
     @IBAction func addTestInfoField(_ sender: Any) {
-        addTestClickednumber += 1
-        
         let textFieldList = [thirdTextFieldStackView, fourthTextFieldStackView, fifthTextFieldStackView]
         
-        textFieldList[addTestClickednumber - 1]?.isHidden = false
-        
-            /// 입력란을 추가할 때 보내는 노티피케이션
-        NotificationCenter.default.post(name: .insertTestInfoInputField, object: nil)
+        if exampleNumber <= 5 {
+            textFieldList[exampleNumber - 3]?.isHidden = false
+            
+            // 입력란을 추가할 때 보내는 노티피케이션
+            NotificationCenter.default.post(name: .insertTestInfoInputField, object: nil)
+        }
+        exampleNumber += 1
     }
     
     
@@ -117,9 +132,10 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// 문제 예시들을 담는 배열
     var examplesOfQuestions = [String]()
     
+    
     @IBAction func shareTestInfo(_ sender: Any) {
         
-        /// 복수선택 할 경우 isSelected가 true인 버튼을 분류해야함.
+        // 복수선택 할 경우 isSelected가 true인 버튼을 분류해야함.
         let buttonList = [multipleChoiceButton,subjectiveButton,trueAndFalseButton,AbbreviatedFormButton,
                       essayTypeButton,oralStatementButton,etceteraButton]
         
@@ -130,29 +146,29 @@ class TestInfoWriteTableViewCell: UITableViewCell {
             return false
         }
         
-        /// 수강학기 미선택시
+        // 수강학기 미선택시
         if semestersView.selectedItem == nil {
             NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":0])
         }
-        /// 시험죵류 미선택시
+        // 시험죵류 미선택시
         else if testTypesView.selectedItem == nil {
             NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":1])
         }
-        /// 시험전략 미작성시
+        // 시험전략 미작성시
         else if testStrategyTextView.text.count < 20 {
             NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":2])
         }
-        /// 문제유형 미선택시
+        // 문제유형 미선택시
         else if selectedButton.count == 0 {
             NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":3])
         }
-        /// 문제예시 미작성시
+        // 문제예시 미작성시
         else if !firstTextField.hasText {
             NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":4])
         }
-        /// 다 입력했을 경우
+        // 다 입력했을 경우
         else {
-            /// 문제 유형
+            // 문제 유형
             let questionTypes = selectedButton.map { button -> String in
                 if let button = button {
                     return button.titleLabel?.text ?? ""
@@ -160,16 +176,16 @@ class TestInfoWriteTableViewCell: UITableViewCell {
                 return ""
             }
             
-            /// 문제 예시
-            testInfoStackView.arrangedSubviews.forEach { view in
+            // 문제 예시
+            testExampleStackView.arrangedSubviews.forEach { view in
                 let textField = view.subviews.last as? UITextField
                 examplesOfQuestions.append(textField?.text ?? "")
             }
             
-            /// 시험정보 인스턴스
+            // 시험정보 인스턴스
             let testInfo = TestInfo(semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypes, examples: examplesOfQuestions)
 
-            /// 테이블 뷰에 시험정보 전달하는 노티피케이션
+            // 테이블 뷰에 시험정보 전달하는 노티피케이션
             NotificationCenter.default.post(name: .shareTestInfo, object: nil, userInfo: ["testInfo":testInfo])
         }
     }
@@ -184,7 +200,6 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// 수강학기와 시험종류에대한 뷰
     let semestersView = DropDown()
     let testTypesView = DropDown()
-    
     
     /// 데이터를 한 번만 추가하기 위한 속성
     var isAppended = false
@@ -206,7 +221,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        /// 수강학기 drop down view 설정
+        // 수강학기 drop down view 설정
         semestersView.anchorView = selectSemesterView
         guard let height = semestersView.anchorView?.plainView.bounds.height else { return }
         semestersView.bottomOffset = CGPoint(x: 0, y: height)
@@ -215,7 +230,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         semestersView.textColor = .label
         
         
-        /// 시험종류 drop down view 설정
+        // 시험종류 drop down view 설정
         testTypesView.anchorView = selectTestView
         guard let height = testTypesView.anchorView?.plainView.bounds.height else { return }
         testTypesView.bottomOffset = CGPoint(x: 0, y: height)
@@ -224,23 +239,24 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         testTypesView.textColor = .label
         
         
-        /// 입력란 추가 버튼 초기화
+        // 입력란 추가 버튼 초기화
         addTestInfoButtonView.layer.cornerRadius = 5
         addTestInfoButtonView.layer.borderWidth = 1
         addTestInfoButtonView.layer.borderColor = UIColor.label.cgColor
         
         
-        /// 뷰의 모서리 깎기
+        // 뷰의 모서리 깎기
         selectSemesterView.layer.cornerRadius = 10
         selectTestView.layer.cornerRadius = 10
         
-        /// 텍스트 뷰 델리게이트 설정
+        
+        // 텍스트 뷰 델리게이트 설정
         testStrategyTextView.delegate = self
         
-        /// 시험전략 설정
+        // 시험전략 설정
         testStrategyTextView.layer.cornerRadius = 10
         
-        /// 시험정보 공유 버튼 초기화
+        // 시험정보 공유 버튼 초기화
         insertTestReviewButton.setButtonTheme()
     }
 }

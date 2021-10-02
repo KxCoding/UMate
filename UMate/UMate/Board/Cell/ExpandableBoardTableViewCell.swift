@@ -20,26 +20,28 @@ class ExpandableBoardTableViewCell: UITableViewCell {
     /// 게시판 북마크 버튼
     @IBOutlet weak var bookmarkButton: UIButton!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        /// 북마크 버튼 설정
+        // 북마크 버튼 설정
         bookmarkButton.tintColor = UIColor.init(named: "lightGrayNonSelectedColor")
         bookmarkButton.alpha = 0.8
     }
+    
     
     /// 게시판 셀을 초기화
     /// - Parameters:
     ///   - boardList: 셀에 나타낼 게시판 정보가 들어갈 배열
     ///   - indexPath: 각 게시판의 인덱스패스
     func configure(boardList: [BoardUI], indexPath: IndexPath) {
-        boardLabel.text = boardList[indexPath.section - 1].boardNames[indexPath.row]
+        boardLabel.text = boardList[indexPath.section - 2].boardNames[indexPath.row]
         
-        /// 인덱스패스로 북마크 버튼의 tag초기화
-        /// 100, 101 ... 200, 201 .... 300, 301
+        // 인덱스패스로 북마크 버튼의 tag초기화
+        // 100, 101 ... 200, 201 .... 300, 301
         bookmarkButton.tag = indexPath.row + 100 * (indexPath.section + 1)
         
-        /// 섹션을 접었다 펼쳤을 시 북마크 속성에 따른 버튼 색 유지
+        // 섹션을 접었다 펼쳤을 시 북마크 속성에 따른 버튼 색 유지
         if board?.bookmarks[bookmarkButton.tag] == true {
             bookmarkButton.tintColor = UIColor.init(named: "blackSelectedColor")
         } else {

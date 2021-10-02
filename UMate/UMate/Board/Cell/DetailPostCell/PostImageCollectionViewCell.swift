@@ -35,14 +35,13 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     
     /// 이미지를 클릭시에 처리할 동작
     @IBAction func postNotification(_ sender: Any) {
-        
-        /// DetailPostViewController에서 performSegue를 실행하도록 함.
+        // DetailPostViewController에서 performSegue를 실행하도록 함.
         NotificationCenter.default.post(name: .showImageVC, object: nil)
         
         guard let selectedPost = selectedPost, let index = index else {
             return
         }
-        /// ExpandImageViewController에서 컬렉션 뷰에 이미지를 설정하도록 함.
+        // ExpandImageViewController에서 컬렉션 뷰에 이미지를 설정하도록 함.
         NotificationCenter.default.post(name: .sendImageView, object: nil,
                                         userInfo: ["post": selectedPost, "index": index])
     }
@@ -51,7 +50,7 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        /// 이미지 그림자 설정
+        // 이미지 그림자 설정
         layer.cornerRadius = postImageView.frame.height * 0.03
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 1, height: 1)

@@ -12,7 +12,8 @@ import Loaf
 
 /// 게시글 작성 클래스
 /// - Author: 김정민(kimjm010@icloud.com)
-class ComposeViewController: RemoveObserverViewController {
+
+class ComposeViewController: CommonViewController {
     
     /// 게시글 작성(제목, 내용, 정보), 사용자의 앨범에 접근을 위한 아울렛
     /// - Author: 김정민(kimjm010@icloud.com)

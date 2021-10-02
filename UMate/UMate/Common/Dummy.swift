@@ -113,7 +113,7 @@ let careerBoard = Board(boardTitle: "취업, 진로",
                         categoryNumbers: Post.Category.Career.allCases.map{ $0.rawValue }, categoryNames: Post.Category.Career.allCases.map{ $0.description })
 
 
-var boardDict: [Int: Board] = [100: scrapBoard, 101: freeBoard, 102: popularPostBoard, 103: graduateBoard, 104: freshmanBoard, 200: publicityBoard, 201: clubBoard, 300: infoBoard, 301: careerBoard]
+var boardDict: [Int: Board] = [200: scrapBoard, 201: freeBoard, 202: popularPostBoard, 203: graduateBoard, 204: freshmanBoard, 300: publicityBoard, 301: clubBoard, 400: infoBoard, 401: careerBoard]
 
 
 //나중에 cellType으로 넣는게 나으려나

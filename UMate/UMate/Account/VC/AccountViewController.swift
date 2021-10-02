@@ -43,7 +43,7 @@ class AccountViewController: UIViewController {
         }
         */
 
-        CommonViewController.shared.transitionToHome()
+        CommonViewController.transitionToHome()
      
     }
     

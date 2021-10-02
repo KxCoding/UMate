@@ -12,7 +12,7 @@ import CoreMIDI
 
 /// 기본 게시판에 관한 클래스
 /// - Author: 김정민, 남정은
-class FreeBoardViewController: RemoveObserverViewController {
+class FreeBoardViewController: CommonViewController {
     /// 선택된 게시판의 게시글 목록을 나타내는 테이블 뷰
     /// - Author: 남정은
     @IBOutlet weak var postListTableView: UITableView!
@@ -39,13 +39,14 @@ class FreeBoardViewController: RemoveObserverViewController {
         
         if let cell = sender as? UITableViewCell,
            let indexPath = postListTableView.indexPath(for: cell) {
-            /// 상세 게시글 화면에 선택된 게시글에 대한 정보 전달
+            // 상세 게시글 화면에 선택된 게시글에 대한 정보 전달
             if let vc = segue.destination as? DetailPostViewController {
                 vc.selectedPost = selectedBoard?.posts[indexPath.row]
             }
         }
-        
-        /// 검색 버튼 클릭시 선택된 게시판에 대한 정보 전달
+
+        // 검색 버튼 클릭시 선택된 게시판에 대한 정보 전달
+
         else if segue.identifier == "searchSegue", let vc = segue.destination as? SearchViewController {
             vc.selectedBoard = selectedBoard
         }
@@ -55,8 +56,10 @@ class FreeBoardViewController: RemoveObserverViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /// 스크랩 게시판에 게시글 작성 버튼을 숨김
-        /// - Author: 김정민(kimjm010@icloud.com)
+
+        // 스크랩 게시판에 게시글 작성 버튼을 숨김
+        // - Author: 김정민
+
         if selectedBoard?.boardTitle == "스크랩" {
             composeButton.isHidden = true
         }
@@ -65,12 +68,12 @@ class FreeBoardViewController: RemoveObserverViewController {
         /// - Author: 김정민(kimjm010@icloud.com)
         composeButton.setButtonTheme()
 
-        /// 네비게이션 바에 타이틀 초기화
-        /// - Author: 남정은
+        // 네비게이션 바에 타이틀 초기화
+        // - Author: 남정은
         self.navigationItem.title = selectedBoard?.boardTitle
         
-        /// 상세 게시글 화면에서 스크랩 버튼 클릭시 스크랩 게시판에 게시글 추가
-        /// - Author: 남정은
+        // 상세 게시글 화면에서 스크랩 버튼 클릭시 스크랩 게시판에 게시글 추가
+        // - Author: 남정은
         var token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main) { noti in
             
             if let scrappedPost = noti.userInfo?["scrappedPost"] as? Post {
@@ -80,15 +83,15 @@ class FreeBoardViewController: RemoveObserverViewController {
         tokens.append(token)
         
         
-        /// 상세 게시글 화면에서 스크랩 버튼 취소시 스크랩 게시판에 게시글 삭제
-        /// - Author: 남정은
+        // 상세 게시글 화면에서 스크랩 버튼 취소시 스크랩 게시판에 게시글 삭제
+        // - Author: 남정은
         token = NotificationCenter.default.addObserver(forName: .postCancelScrap, object: nil, queue: .main) {
             [weak self] noti in
             guard let self = self else { return }
             
             if let unscrappedPost = noti.userInfo?["unscrappedPost"] as? Post {
                 
-                /// 삭제하고 리로드
+                // 삭제하고 리로드
                 if let unscrappedPostIndex = scrapBoard.posts.firstIndex(where: { $0 === unscrappedPost }) {
                     scrapBoard.posts.remove(at: unscrappedPostIndex)
                     
@@ -144,12 +147,11 @@ extension FreeBoardViewController: UITableViewDataSource {
     /// - Returns: 구현을 완료한 셀
     /// - Author: 남정은
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
         
         guard let post = selectedBoard?.posts[indexPath.row] else { return cell }
         
-        /// 게시글 목록에 대한 셀 초기화
+        // 게시글 목록에 대한 셀 초기화
         cell.configure(post: post)
         return cell
     }

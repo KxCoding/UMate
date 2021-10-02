@@ -19,7 +19,7 @@ class CategoryBoardCollectionViewCell: UICollectionViewCell {
     
     
     override var isSelected: Bool {
-        /// 카테고리 선택시에 언더바 색상 변경 
+        // 카테고리 선택시에 언더바 색상 변경
         didSet {
             if isSelected {
                 UIView.animate(withDuration: 0.3) {
@@ -33,7 +33,8 @@ class CategoryBoardCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    /// 컬렉션 뷰 셀 초기화
+    
+    // 컬렉션 뷰 셀 초기화
     func configure(categoryNames: [String], indexPath: IndexPath) {
         categoryName.text = categoryNames[indexPath.row]
     }

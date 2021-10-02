@@ -7,15 +7,12 @@
 
 import UIKit
 
-class CommonViewController {
 
-    static let shared = CommonViewController()
-    
-    private init() { }
-
-    
+/// 공통되는 기능을 포함한 뷰 컨트롤러
+///  - Author: 안상희, 남정은
+class CommonViewController: UIViewController {
     /// go to homeVC
-    func transitionToHome() {
+    static func transitionToHome() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainTabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
 
@@ -23,7 +20,7 @@ class CommonViewController {
     }
     
     
-    func showPasswordViewController() {
+    static func showPasswordViewController() {
         let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let passwordViewController = storyboard.instantiateViewController(withIdentifier: "CommonPasswordSB")
         
@@ -32,10 +29,23 @@ class CommonViewController {
     
     
     
-    func showFaceIdViewController() {
+    static func showFaceIdViewController() {
         let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let emptyViewController = storyboard.instantiateViewController(withIdentifier: "EmptySB")
         
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(emptyViewController)
+    }
+    
+    
+    /// 노티피케이션 제거를 위해 토큰을 담는 배열
+    /// - Author: 남정은
+    var tokens = [NSObjectProtocol]()
+    
+    /// 소멸자에서 옵저버를 제거
+    /// - Author: 남정은
+    deinit {
+        for token in tokens {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
 }

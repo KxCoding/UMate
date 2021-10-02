@@ -19,13 +19,13 @@ class ExpandPostImageCollectionViewCell: UICollectionViewCell {
     
 
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        /// 이미지 확대 제스처
+        
+        // 이미지 확대 제스처
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
         expandImageView.addGestureRecognizer(pinchGesture)
         
-        /// 이미지 크기를 원래대로 되돌리는 제스처
+        // 이미지 크기를 원래대로 되돌리는 제스처
         let tpaGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
         imageContentView.addGestureRecognizer(tpaGesture)
     }
@@ -39,12 +39,13 @@ class ExpandPostImageCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    
     /// 이미지 뷰에 제스처가 인지될 때 호출
     /// - Parameter gestureRecognizer: 제스처를 인식하는 객체
     @objc func handlePinch(_ gestureRecognizer: UIPinchGestureRecognizer) {
         guard gestureRecognizer.view != nil else { return }
         
-        /// 제스처가 인지되고 있을 때 제스처가 등록된 view에서 scale만큼 변형이 생김
+        // 제스처가 인지되고 있을 때 제스처가 등록된 view에서 scale만큼 변형이 생김
         if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
             guard let view = gestureRecognizer.view else { return }
             
