@@ -8,13 +8,15 @@
 import UIKit
 
 
-/// 최근 강의평 목록이 나오는 화면에대한 클래스
-/// - Author: 김정민, 남정은
+/// 최근 강의평 목록이 나오는 화면에 대한 뷰 컨트롤러
+/// - Author: 김정민, 남정은(dlsl7080@gmail.com)
 class LectureReviewBoardViewController: UIViewController {
     /// 강의평을 나타내는 테이블 뷰
     @IBOutlet weak var lectureReviewListTableView: UITableView!
     
-    /// 엑스 버튼을 누르면 모달창이 닫힘
+    
+    /// 엑스 버튼을 누르면 모달창이 닫힙니다.
+    /// - Parameter sender: 엑스 버튼
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -35,8 +37,8 @@ class LectureReviewBoardViewController: UIViewController {
     }
 
     
-    /// 강의 리스트를 파싱함
-    /// - Author: 남정은
+    /// 강의 리스트를 파싱합니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
     func parseList() {
         guard let data = NSDataAsset(name: "lectures2")?.data else {
             return
@@ -117,8 +119,11 @@ class LectureReviewBoardViewController: UIViewController {
     }
 
     
-    /// 강의평을 선택시에 해당하는 강의정보를 보여주기 위한 데이터 전달
-    /// - Author: 남정은
+    /// 강의평을 선택 시에 해당하는 강의정보를 보여주기 위한 데이터를 전달합니다.
+    /// - Parameters:
+    ///   - segue: 호출된 segue
+    ///   - sender: segue가 시작된 객체
+    /// - Author: 남정은(dlsl7080@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? UITableViewCell, let indexPath = lectureReviewListTableView.indexPath(for: cell) {
             
@@ -142,7 +147,6 @@ class LectureReviewBoardViewController: UIViewController {
 
 
 extension LectureReviewBoardViewController: UISearchBarDelegate {
-    
     /// 서치바의 검색어가 변경될 때마다 호출되는 메소드
     /// - Parameters:
     ///   - searchBar: 검색을 위한 search Bar
@@ -169,21 +173,17 @@ extension LectureReviewBoardViewController: UISearchBarDelegate {
 
 
 
-/// 강의평 테이블 뷰에 대한 데이터소스
-/// - Author: 남정은
+/// 강의평을 나타냄
+/// - Author: 김정민, 남정은(dlsl7080@gmail.com)
 extension LectureReviewBoardViewController: UITableViewDataSource {
-    /// 강의평 테이블 뷰에 나타낼 셀의 개수
-    /// - Author: 김정민, 남정은
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
             return filteredLectureList.count
         }
-        
         return lectureList.count
     }
     
-    /// 각 셀을 초기화
-    /// - Author: 김정민, 남정은
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewTableViewCell", for: indexPath) as! LectureReviewTableViewCell
         
@@ -203,21 +203,18 @@ extension LectureReviewBoardViewController: UITableViewDataSource {
 
 
 
-/// 강의평 테이블 뷰에대한 동작 처리
-/// - Author: 남정은
+/// 강의평 tableView header를 설정
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension LectureReviewBoardViewController: UITableViewDelegate {
-    /// 헤더의 높이 설정
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
     }
 
     
-    /// 헤더에 들어갈 뷰 설정
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewHeaderTableViewCell") as! LectureReviewHeaderTableViewCell
         
-        return cell
+        return cell.contentView
     }
 }
 

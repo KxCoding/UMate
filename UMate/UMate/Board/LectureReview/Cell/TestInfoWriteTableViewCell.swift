@@ -9,8 +9,8 @@ import DropDown
 import UIKit
 
 
-/// 시험정보작성 화면에서 문제예시 입력란 추가와 조건 미충족시 보내는 알림창에대한 노티피케이션
-/// - Author: 남정은
+/// 시험정보 작성 화면에서 문제예시 입력란 추가와 조건 미충족 시 보내는 알림창에 대한 노티피케이션
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
     static let insertTestInfoInputField = Notification.Name("insertTestInfoInputField")
     static let sendAlert = Notification.Name("sendAlert")
@@ -19,7 +19,7 @@ extension Notification.Name {
 
 
 /// 시험정보작성을 위한 테이블 뷰 셀
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gmail.com)
 class TestInfoWriteTableViewCell: UITableViewCell {
     // MARK: 응시한 시험
     /// 수강학기 선택 뷰
@@ -28,7 +28,8 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// '수강학기'를 나타내는 레이블
     @IBOutlet weak var semesterLabel: UILabel!
     
-    /// 수강학기를 선택하는 버튼
+    /// 수강학기를 선택합니다.
+    /// - Parameter sender: '수강학기 선택' 버튼
     @IBAction func selectSemester(_ sender: Any) {
         semestersView.show()
         semestersView.selectionAction = { [weak self] index, item in
@@ -43,7 +44,8 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// '시험종류'를 나타내는 레이블
     @IBOutlet weak var testLabel: UILabel!
     
-    /// 시험종류를 선택하는 버튼
+    /// 시험종류를 선택합니다.
+    /// - Parameter sender: '시험종류 선택' 버튼
     @IBAction func selectTest(_ sender: Any) {
         testTypesView.show()
         testTypesView.selectionAction = { [weak self] index, item in
@@ -83,7 +85,8 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     @IBOutlet weak var etceteraButton: RoundedButton!
     
     
-    /// 버튼 중복 선택
+    /// 문제유형을 선택합니다. 복수선택이 가능합니다.
+    /// - Parameter sender: 문제유형 버튼
     @IBAction func selectTypesOfQuestions(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         
@@ -96,7 +99,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     @IBOutlet weak var firstTextField: UITextField!
     
     
-    /// 추가버튼을 누를 시 추가되는 텍스트 필드가 담긴 스택 뷰
+    /// '더 입력하기' 버튼을 누를 시 추가되는 텍스트 필드가 담긴 스택 뷰
     @IBOutlet weak var thirdTextFieldStackView: UIStackView!
     @IBOutlet weak var fourthTextFieldStackView: UIStackView!
     @IBOutlet weak var fifthTextFieldStackView: UIStackView!
@@ -112,7 +115,8 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// 문제예시 번호
     var exampleNumber = 3
     
-    /// 입력란 추가
+    /// 문제예시를 입력하는 textField를 추가합니다.
+    /// - Parameter sender: '더 입력하기' 버튼
     @IBAction func addTestInfoField(_ sender: Any) {
         let textFieldList = [thirdTextFieldStackView, fourthTextFieldStackView, fifthTextFieldStackView]
         
@@ -127,14 +131,16 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     
     
     // MARK: 시험정보 공유
+    /// '공유하기' 버튼
     @IBOutlet weak var insertTestReviewButton: UIButton!
     
     /// 문제 예시들을 담는 배열
     var examplesOfQuestions = [String]()
     
     
+    /// 시험정보를 지정된 강의에 등록합니다.
+    /// - Parameter sender: '공유하기'버튼
     @IBAction func shareTestInfo(_ sender: Any) {
-        
         // 복수선택 할 경우 isSelected가 true인 버튼을 분류해야함.
         let buttonList = [multipleChoiceButton,subjectiveButton,trueAndFalseButton,AbbreviatedFormButton,
                       essayTypeButton,oralStatementButton,etceteraButton]
@@ -197,7 +203,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// 시험 종류를 담는 배열
     let testTypes = ["중간고사","기말고사","1차","2차","3차","4차","기타"]
     
-    /// 수강학기와 시험종류에대한 뷰
+    /// 수강학기와 시험종류에 대한 뷰
     let semestersView = DropDown()
     let testTypesView = DropDown()
     
@@ -205,7 +211,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     var isAppended = false
     
     
-    /// 수강학기에 대한 정보를 받아오고 드롭다운 뷰에 데이터를 저장
+    /// 수강학기에 대한 정보를 받아오고 드롭다운 뷰에 데이터를 저장합니다.
     /// - Parameter openingSemester: 강의가 개설된 학기를 담은 배열
     func receiveSemestersAndAddDropDownData(openingSemester: [String]) {
         semesters = openingSemester
@@ -239,7 +245,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         testTypesView.textColor = .label
         
         
-        // 입력란 추가 버튼 초기화
+        // '더 입력하기' 버튼 초기화
         addTestInfoButtonView.layer.cornerRadius = 5
         addTestInfoButtonView.layer.borderWidth = 1
         addTestInfoButtonView.layer.borderColor = UIColor.label.cgColor
@@ -256,7 +262,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         // 시험전략 설정
         testStrategyTextView.layer.cornerRadius = 10
         
-        // 시험정보 공유 버튼 초기화
+        // '공유하기' 버튼 초기화
         insertTestReviewButton.setToEnabledButtonTheme()
     }
 }
@@ -264,9 +270,9 @@ class TestInfoWriteTableViewCell: UITableViewCell {
 
 
 /// 텍스트 뷰에대한 동작 처리
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension TestInfoWriteTableViewCell: UITextViewDelegate {
-    /// 텍스트 뷰가 편집중이라면 설명 레이블 숨김
+    /// 텍스트 뷰가 편집 중이라면 설명 레이블을 숨깁니다.
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = textView.hasText
     }

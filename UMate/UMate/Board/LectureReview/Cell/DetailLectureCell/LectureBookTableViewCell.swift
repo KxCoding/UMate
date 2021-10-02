@@ -9,7 +9,7 @@ import UIKit
 
 
 /// 교재정보를 나타내는 테이블 뷰 셀
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gamil.com)
 class LectureBookTableViewCell: UITableViewCell {
     /// 안내문에 대한 레이블
     @IBOutlet weak var explainLabel: UILabel!
@@ -21,7 +21,7 @@ class LectureBookTableViewCell: UITableViewCell {
     @IBOutlet weak var bookLinkTextView: UITextView!
     
     
-    /// 셀을 초기화
+    /// 교재정보에 대한 셀을 초기화합니다.
     /// - Parameter lecture: 선택된 강의
     func configure(lecture: LectureInfo) {
         // 등록된 교재가 없을 경우

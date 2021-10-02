@@ -8,17 +8,11 @@
 import UIKit
 
 
-/// 검색화면에대한 클래스
-/// - Author: 남정은
+/// 검색화면에 대한 클래스
+/// - Author: 남정은(dlsl7080@gmail.com)
 class SearchViewController: UIViewController {
     /// 검색된 게시글을 보여줄 테이블 뷰
     @IBOutlet weak var postListTableView: UITableView!
-    
-    /// 테이블 뷰와 네비게이션 바 사이의 여백을 조절하는 뷰
-    var tableViewHeaderView: UIView = {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 5))
-        return headerView
-    }()
     
     /// 서치 바와의 상호작용을 기반으로 검색 결과 화면을 관리하는 뷰 컨트롤러
     let searchController = UISearchController(searchResultsController: nil)
@@ -47,11 +41,11 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        postListTableView.tableHeaderView = tableViewHeaderView
         
+        // 서치바 초기화
         setupSearchBar()
         
-        ///검색 전에는 테이블 뷰 표시 안함
+        //검색 전에는 테이블 뷰 표시 안함
         postListTableView.alpha = 0
     }
     
@@ -70,14 +64,10 @@ class SearchViewController: UIViewController {
 
 
 
-/// 서치 바에대한 동작 처리
+/// 서치 바에 대한 동작 처리
 extension SearchViewController: UISearchBarDelegate {
-    /// search text가 변경될 때마다 호출
-    /// - Parameters:
-    ///   - searchBar: 편집되고 있는 서치바
-    ///   - searchText: search textField의 현재 텍스트
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // 검색 시작시 tableView 표시
+        // 검색 시작 시 tableView 표시
         postListTableView.alpha = 1
         
         guard let posts = selectedBoard?.posts else { return }
@@ -94,18 +84,14 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     
-    /// 검색어 입력이 끝났을 시에 호출
-    /// - Parameter searchBar: 편집되는 서치바
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        /// 검색 텍스트가 있고, 검색 결과가 있다면 검색내용 유지
+        // 검색 텍스트가 있고, 검색 결과가 있다면 검색내용 유지
         if let text = cachedText, !(text.isEmpty || filteredPostList.isEmpty) {
             searchController.searchBar.text = text
         }
     }
     
     
-    /// 검색버튼 혹은 리턴 버튼을 눌렀을 시에 호출
-    /// - Parameter searchBar: 편집되는 서치바
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // 리턴 버튼 눌렀을 시에 검색 종료
         searchController.isActive = false
@@ -114,15 +100,14 @@ extension SearchViewController: UISearchBarDelegate {
 
 
 
-/// 검색 리스트를 나타낼 테이블 뷰에대한 데이터소스
+/// 검색 리스트를 나타냄
 extension SearchViewController: UITableViewDataSource {
-    // 필터링된 게시글 수 리턴
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // 필터링된 게시글 수 리턴
         return filteredPostList.count
     }
     
-    
-    // 필터링된 게시글 목록을 셀에 초기화
+   
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell

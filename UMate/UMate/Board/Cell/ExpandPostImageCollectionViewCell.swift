@@ -8,10 +8,10 @@
 import UIKit
 
 
-/// 이미지 확대화면에대한 컬렉션 셀
-/// - Author: 남정은
+/// 이미지 확대 화면에 대한 컬렉션 뷰 셀
+/// - Author: 남정은(dlsl7080@gmail.com)
 class ExpandPostImageCollectionViewCell: UICollectionViewCell {
-    /// 상세 게시글 화면에서 이미지 클릭시에 보여줄 이미지
+    /// 상세 게시글 화면에서 이미지 클릭 시에 보여줄 이미지
     /// 핀치 제스처 등록할 뷰
     @IBOutlet weak var expandImageView: UIImageView!
     /// 탭 제스처를 등록할 뷰
@@ -31,8 +31,8 @@ class ExpandPostImageCollectionViewCell: UICollectionViewCell {
     }
     
     
-    /// 등록된 옵저버가 감지 될 때마다 실행 될 메소드
-    /// 이미지 크기를 원래대로 돌린다.
+    /// 등록된 옵저버가 감지 될 때마다 실행됩니다.
+    /// 이미지 크기를 원래대로 돌립니다.
     @objc func doubleTapped() {
         UIView.animate(withDuration: 0.3) {
             self.expandImageView.transform = CGAffineTransform.identity
@@ -40,7 +40,7 @@ class ExpandPostImageCollectionViewCell: UICollectionViewCell {
     }
     
     
-    /// 이미지 뷰에 제스처가 인지될 때 호출
+    /// 이미지 뷰에 제스처가 감지될 때 실행됩니다.
     /// - Parameter gestureRecognizer: 제스처를 인식하는 객체
     @objc func handlePinch(_ gestureRecognizer: UIPinchGestureRecognizer) {
         guard gestureRecognizer.view != nil else { return }

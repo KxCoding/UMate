@@ -9,15 +9,13 @@
 import UIKit
 
 
-/// 카테고리를 가진 게시판에대한 클래스
-/// - Author: 남정은
+/// 카테고리를 가진 게시판에 대한 클래스
+/// - Author: 남정은(dlsl7080@gmail.com)
 class CategoryBoardViewController: CommonViewController {
     /// 카테고리 목록을 나타내는 컬렉션 뷰
-    /// - Author: 남정은
     @IBOutlet weak var categoryListCollectionView: UICollectionView!
     
     /// 카테고리에 해당하는 게시글을 보여주는 테이블 뷰
-    /// - Author: 남정은
     @IBOutlet weak var categoryListTableView: UITableView!
     
     /// 게시글 작성 버튼
@@ -25,27 +23,28 @@ class CategoryBoardViewController: CommonViewController {
     @IBOutlet weak var composeBtn: UIButton!
     
     /// 카테고리에 의해 필터링 된 게시글 목록을 담는 배열
-    /// - Author: 남정은
     var filteredPostList: [Post] = []
     
     /// 선택된 게시판
-    /// - Author: 남정은
     var selectedBoard: Board?
     
     /// 처음에 카테고리를 선택하지 않은 경우 '전체'카테고리를 선택된 상태로 보이기위한 속성
-    /// - Author: 남정은
     var isSelected = true
     
     
-    /// 검색 버튼을 눌렀을 시에 SearchViewController로 이동
-    /// - Author: 남정은
+    /// 검색 버튼을 눌렀을 시에 SearchViewController로 이동합니다.
+    /// - Parameter sender: 검색버튼
+    /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func showSearchViewController(_ sender: Any) {
         performSegue(withIdentifier: "searchSegue", sender: self)
     }
     
     
-    /// 게시글을 선택하거나 검색을 할 경우에 데이터 전달
-    /// - Author: 남정은
+    /// 게시글을 선택하거나 검색을 할 경우에 데이터를 전달합니다.
+    /// - Parameters:
+    ///   - segue: 호출된 segue
+    ///   - sender: segue가 시작된 객체
+    /// - Author: 남정은(dlsl7080@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let cell = sender as? UITableViewCell,
@@ -61,25 +60,21 @@ class CategoryBoardViewController: CommonViewController {
         }
     }
     
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        /// 게시글 작성 버튼의 테마 설정
-        /// - Author: 김정민(kimjm010@icloud.com)
+        // 게시글 작성 버튼의 테마 설정
+        // - Author: 김정민(kimjm010@icloud.com)
         composeBtn.setToEnabledButtonTheme()
 
-        /// 네비게이션 바에 타이틀 초기화
-        /// - Author: 남정은
-
+        // 네비게이션 바에 타이틀 초기화
         self.navigationItem.title = selectedBoard?.boardTitle
         
         // 카테코리 별로 filtering되기 전 게시글배열 초기화
         filteredPostList = selectedBoard?.posts ?? []
         
         // 상세 게시글 화면에서 스크랩 버튼 클릭시 스크랩 게시판에 게시글 추가
-        // - Author: 남정은
         var token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main) { noti in
             
             if let scrappedPost = noti.userInfo?["scrappedPost"] as? Post {
@@ -90,7 +85,6 @@ class CategoryBoardViewController: CommonViewController {
         
         
         // 상세 게시글 화면에서 스크랩 버튼 취소시 스크랩 게시판에 게시글 삭제
-        // - Author: 남정은
         token = NotificationCenter.default.addObserver(forName: .postCancelScrap, object: nil, queue: .main) {
             [weak self] noti in
             guard let self = self else { return }
@@ -135,24 +129,14 @@ class CategoryBoardViewController: CommonViewController {
 
 
 
-/// 카테고리 게시판의 카테고리 목록을 나타내는 컬렉션 뷰의 데이터소스
-/// - Author: 남정은
+/// 카테고리 게시판의 카테고리 목록을 나타냄
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension CategoryBoardViewController: UICollectionViewDataSource {
-    /// - Parameters:
-    ///   - collectionView: 카테고리 목록을 나타내는 컬렉션 뷰
-    ///   - section: 해당하는 섹션
-    /// - Returns: 각각의 섹션안에 들어갈 아이템 수
-    /// - Author: 남정은
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedBoard?.categoryNumbers.count ?? 0
     }
     
     
-    /// - Parameters:
-    ///   - collectionView: 카테고리 목록을 나타내는 컬렉션 뷰
-    ///   - indexPath: 해당하는 인덱스
-    /// - Returns: 각각의 인덱스에 들어갈 아이템의 정보를 저장한 셀
-    /// - Author: 남정은
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryBoardCollectionViewCell",
@@ -165,7 +149,7 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
             if isSelected {
                 cell.categoryView.backgroundColor = UIColor.init(named: "blackSelectedColor")
             }
-            // 다른 카테고리 선택시
+            // 다른 카테고리 선택 시
             else {
                 cell.categoryView.backgroundColor = UIColor.init(named: "barColor")
             }
@@ -179,34 +163,20 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
 
 
 /// 카테고리 목록을 나타내는 컬렉션 뷰에 대한  동작 처리
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension CategoryBoardViewController: UICollectionViewDelegate {
-    /// 아이템이 클릭되었을 때 실행할 작업을 수행
-    /// - Parameters:
-    ///   - collectionView: 카테고리 목록을 나타내는 컬렉션 뷰
-    ///   - indexPath: 해당하는 인덱스
-    /// - Returns: 선택이 되길 원하면 true, 아니라면 false를 리턴
-    /// - Author: 남정은
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        // 다른 카테고리 선택시에 row == 0 인 cell리로드하여 선택되지 않은 상태로 보여지게 함
+        // 다른 카테고리 선택시에 row == 0 인 cell을 리로드하여 선택되지 않은 상태로 보여지게 함
         if isSelected {
             isSelected = false
             collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
         }
-        
         return true
     }
     
     
-    /// 아이템이 선택되었을 때 실행할 작업을 수행
-    /// - Parameters:
-    ///   - collectionView: 카테고리 목록을 나타내는 컬렉션 뷰
-    ///   - indexPath: 해당하는 인덱스
-    /// - Author: 남정은
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 선택될 때마다 해당하는 카테고리에 대한 게시물을 보여주어야 하므로 삭제하고 다시 담는다
         filteredPostList.removeAll()
-        
         guard let selectedBoard = selectedBoard else { return }
         
         // 전체 카테고리 이외일 경우 true
@@ -226,11 +196,10 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
     }
     
     
-    /// 게시글들을 카테고리별로 분류하여 배열에 저장
+    /// 게시글들을 카테고리별로 분류하여 배열에 저장합니다.
     /// - Parameters:
     ///   - selectedBoard: 선택된 게시판
-    ///   - indexPath: 선택된 카테고리의 인덱스패스
-    /// - Author: 남정은
+    ///   - indexPath: 선택된 카테고리의 indexPath
     private func filterPostByCategory(in selectedBoard: Board, indexPath: IndexPath) {
         
         filteredPostList = selectedBoard.posts.filter({ post in
@@ -242,16 +211,8 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
 
 
 /// 카테고리 목록을 나타내는 컬렉션 뷰의 레이아웃 조정
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
-    /// 셀의 사이즈를 델리게이트에게 알려줌
-    /// 이 메소드가 cellForRowAt보다 먼저 실행됨.
-    /// - Parameters:
-    ///   - collectionView: 플로우 레이아웃을 나타낼 컬렉션 뷰
-    ///   - collectionViewLayout: 정보를 요청하는 레이아웃 객체
-    ///   - indexPath: 아이템의 인덱스 패스
-    /// - Returns: 지정된 아이템의 사이즈
-    /// - Author: 남정은
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -294,27 +255,14 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
 
 
 
-/// 카테고리 게시판에 대한 테이블 뷰 데이터소스
-/// - Author: 남정은
+/// 카테고리 게시판에 대한 게시글 목록을 나타냄
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension CategoryBoardViewController: UITableViewDataSource {
-    /// 하나의 섹션안에 나타낼 row수를 지정
-    /// - Parameters:
-    ///   - tableView: 요청한 정보를 나타낼 객체
-    ///   - section: 테이블 뷰의 섹션
-    /// - Returns: 섹션안에 나타낼 row수
-    /// - Author: 남정은
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return filteredPostList.count
     }
     
     
-    /// 셀의 데이터소스를  테이블 뷰의 특정 위치에 추가하기위해 호출
-    /// - Parameters:
-    ///   - tableView: 요청한 정보를 나타낼 객체
-    ///   - indexPath: 테이블 뷰의 row의 위치를 나타내는 인덱스패스
-    /// - Returns: 구현을 완료한 셀
-    /// - Author: 남정은
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell",
@@ -322,6 +270,7 @@ extension CategoryBoardViewController: UITableViewDataSource {
         
         let post = filteredPostList[indexPath.row]
         
+        // 게시글 목록에 대한 cell 초기화
         cell.configure(post: post)
         return cell
     }

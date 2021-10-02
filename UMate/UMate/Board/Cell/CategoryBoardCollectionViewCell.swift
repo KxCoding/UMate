@@ -9,12 +9,12 @@ import UIKit
 
 
 /// 카테고리 게시판에서 카테고리 목록을 나타내는 컬렉션 뷰 셀
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gmail.com)
 class CategoryBoardCollectionViewCell: UICollectionViewCell {
-    /// 카테고리명
-    @IBOutlet weak var categoryName: UILabel!
+    /// 카테고리명을 나타내는 레이블
+    @IBOutlet weak var categoryNameLabel: UILabel!
     
-    /// 카테고리 선택여부를 나타내는 언더바
+    /// 카테고리 선택여부를 나타내는 언더바 뷰
     @IBOutlet weak var categoryView: UIView!
     
     
@@ -34,8 +34,11 @@ class CategoryBoardCollectionViewCell: UICollectionViewCell {
     }
     
     
-    // 컬렉션 뷰 셀 초기화
+    /// 카테고리 셀을 초기화합니다.
+    /// - Parameters:
+    ///   - categoryNames: 카테고리 이름을 담은 배열
+    ///   - indexPath: 카테고리 이름을 나타낼 indexPath
     func configure(categoryNames: [String], indexPath: IndexPath) {
-        categoryName.text = categoryNames[indexPath.row]
+        categoryNameLabel.text = categoryNames[indexPath.row]
     }
 }

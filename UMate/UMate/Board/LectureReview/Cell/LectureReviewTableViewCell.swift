@@ -10,7 +10,7 @@ import UIKit
 
 
 /// 강의평 테이블 뷰 셀
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gamil.com)
 class LectureReviewTableViewCell: UITableViewCell {
     /// 교과목명을 나타내는 레이블
     @IBOutlet weak var lectureTitleLabel: UILabel!
@@ -25,7 +25,7 @@ class LectureReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var reviewContentLabel: UILabel!
     
     
-    /// 셀을 초기화
+    /// 강의평 셀을 초기화합니다.
     /// - Parameter lecture: 선택된 강의
     func configure(lecture: LectureInfo) {
         // 최근 강의평이니까 무조건 첫번째

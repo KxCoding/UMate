@@ -41,7 +41,7 @@ class ReviewContentTableViewCell: UITableViewCell {
     
     
     /// 버튼을 누르면 하이라이트 상태가 토글 되고 그에 따라 백그라운드와 뷰 틴트, 레이블 텍스트 색상이 변경됩니다.
-    /// - Parameter sender: 버튼
+    /// - Parameter sender: 추천 버튼
     /// - Author: 장현우
     @IBAction func recommendationButtonTapped(_ sender: Any) {
         // 하이라이트 상태 토글

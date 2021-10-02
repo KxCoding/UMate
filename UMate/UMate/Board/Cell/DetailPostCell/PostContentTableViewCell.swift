@@ -9,7 +9,7 @@ import UIKit
 
 
 /// 스크랩에대한 노티피케이션
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension  Notification.Name {
     static let postDidScrap = Notification.Name("postDidScrap")
     static let postCancelScrap = Notification.Name("postCancelScrap")
@@ -18,7 +18,7 @@ extension  Notification.Name {
 
 
 /// 게시글 작성자, 제목, 내용에 관한 테이블 뷰 셀
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gmail.com)
 class PostContentTableViewCell: UITableViewCell {
     /// 작성자 프로필 이미지를 나타낼 이미지 뷰
     @IBOutlet weak var userImageView: UIImageView!
@@ -94,7 +94,8 @@ class PostContentTableViewCell: UITableViewCell {
     }
     
     
-    /// 신고 혹은 게시글 수정, 삭제를 액션시트로 나타내기위해 노티피케이션 보냄
+    /// 신고 혹은 게시글 수정, 삭제를 actionSheet으로 나타냅니다.
+    /// - Parameter sender: 햄버거 버튼
     @IBAction func showMenu(_ sender: Any) {
         NotificationCenter.default.post(name: .sendAlert, object: nil)
     }
@@ -108,7 +109,7 @@ class PostContentTableViewCell: UITableViewCell {
     }
     
     
-    /// PostContent Cell 초기화하는 메소드
+    /// 작성자, 제목, 내용을 나타내는 셀을 초기화합니다.
     /// - Parameter post: 선택된 post
     func configure(post: Post) {
         // 좋아요 버튼

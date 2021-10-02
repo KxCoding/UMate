@@ -8,11 +8,9 @@
 import UIKit
 
 
-/// 강의 정보화면에대한 클래스
-/// - Author: 김정민, 남정은
-
+/// 강의 정보화면에 대한 뷰 컨트롤러
+/// - Author: 김정민, 남정은(dlsl7080@gmail.com)
 class DetailLectureReviewViewController: CommonViewController {
-
     /// 강의 정보를 나타내는 테이블 뷰
     @IBOutlet weak var lectureInfoTableView: UITableView!
     
@@ -23,8 +21,9 @@ class DetailLectureReviewViewController: CommonViewController {
     var isSelected = true
     
     
-    /// 강의평 쓰기와 시험정보 쓰기 버튼 클릭시 화면 이동
-    /// - Author: 김정민, 남정은
+    /// 강의평 쓰기와 시험정보 쓰기 버튼 클릭 시 화면을 이동합니다.
+    /// - Parameter sender: UIButton. tag == 2는 '새 강의평 쓰기' 버튼, 나머지는 '시험정보 공유' 버튼을 나타냅니다.
+    /// - Author: 김정민, 남정은(dlsl7080@gmail.com)
     @IBAction func perfromSegueToWrite(_ sender: UIButton) {
         if sender.tag == 2 {
             performSegue(withIdentifier: "writeReviewSegue", sender: self)
@@ -33,15 +32,12 @@ class DetailLectureReviewViewController: CommonViewController {
         }
     }
     
-    
-    /// 게시판 목록으로 돌아감
-    /// - Author: 남정은
-    @IBAction func unwindToDetailLectureReview(_ unwindSegue: UIStoryboardSegue) {
-    }
-    
-    
-    /// 시험정보공유 작성화면에 강의에 대한 정보 전달
-    /// - Author: 남정은
+
+    /// 시험정보공유 작성화면에 강의에 대한 정보 전달합니다.
+    /// - Parameters:
+    ///   - segue: 호출된 segue
+    ///   - sender: segue가 시작된 객체
+    /// - Author: 남정은(dlsl7080@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? TestInfoWriteViewController {
             vc.selectedLecture = selectedLecture
@@ -63,6 +59,7 @@ class DetailLectureReviewViewController: CommonViewController {
         }
         tokens.append(token)
         
+        // 새로 작성된 시험정보를 보여줌
         token = NotificationCenter.default.addObserver(forName: .shareTestInfo, object: nil, queue: .main) { noti in
             if let testInfo = noti.userInfo?["testInfo"] as? TestInfo {
                 self.selectedLecture?.testInfoList.insert(testInfo, at: 0)
@@ -79,8 +76,9 @@ class DetailLectureReviewViewController: CommonViewController {
     /// 각 기준에대해서 항목을 빈도수가 높은 순으로 나열한 배열
     var sortedResultReviewList = [[Count]]()
     
-    /// 각 항목의 빈도수를 rawValue로 체크
-    /// - Author: 남정은
+    
+    /// 각 항목의 빈도수를 rawValue로 체크합니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
     private func storeRawValue(lecture: LectureInfo) {
       
         var assignCounter = [Int: Int]() // 과제에 대한 항목 개수 체크
@@ -145,8 +143,8 @@ class DetailLectureReviewViewController: CommonViewController {
 
 
 
-/// 강의정보를 나타내는 테이블 뷰에대한 데이터소스
-/// - Author: 남정은
+/// 강의정보를 나타냄
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailLectureReviewViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 5
@@ -230,10 +228,9 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
 
 
 
-/// 강의정보 테이블 뷰에대한 동작 처리
-/// - Author: 남정은
+/// 강의정보 tableView header를 설정
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailLectureReviewViewController: UITableViewDelegate {
-    /// 섹션의 헤더 높이를 조정
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // section3은 section2에 속함
         if section != 3 {
@@ -243,7 +240,6 @@ extension DetailLectureReviewViewController: UITableViewDelegate {
     }
 
     
-    /// 섹션에 들어갈 헤더뷰를 설정
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DetailLectureHeaderTableViewCell") as! DetailLectureHeaderTableViewCell
         
@@ -285,8 +281,8 @@ extension DetailLectureReviewViewController: UITableViewDelegate {
 
 
 
-/// 강의정보 위에 나타낼 컬렉션 뷰에대한 데이터소스
-/// - Author: 남정은
+/// 강의정보 위에 나타낼 컬렉션 뷰를 나타냄
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailLectureReviewViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
@@ -301,7 +297,7 @@ extension DetailLectureReviewViewController: UICollectionViewDataSource {
             if isSelected {
                 cell.sectionTtileLabel.textColor = UIColor.init(named: "blackSelectedColor")
             }
-            // 다른 카테고리 선택시
+            // 다른 카테고리 선택 시
             else {
                 cell.sectionTtileLabel.textColor = .lightGray
             }
@@ -326,16 +322,15 @@ extension DetailLectureReviewViewController: UICollectionViewDataSource {
 
 
 
-/// 강의 정보 위에 나타낼 컬렉션 뷰에대해 동작 처리
+/// 강의 정보 위에 나타낼 컬렉션 뷰에 대해 동작 처리
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailLectureReviewViewController: UICollectionViewDelegate {
-    /// 처음 셀이 선택된 것처럼 설정
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        // 다른 카테고리 선택시에 row == 0 인 셀리로드
+        // 다른 카테고리 선택 시에 row == 0 인 cell을 리로드하여 선택되지 않은 상태로 보여지게 함
         if isSelected {
             isSelected = false
             collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
         }
-        
         return true
     }
     
@@ -346,15 +341,15 @@ extension DetailLectureReviewViewController: UICollectionViewDelegate {
         case 0:
             lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         
-        // 교재 정보 선택시
+        // 교재 정보 선택 시
         case 1:
             lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
        
-        // 강의평 선택시
+        // 강의평 선택 시
         case 2:
             lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .top, animated: true)
           
-        // 시험 정보 선택시
+        // 시험 정보 선택 시
         case 3:
             lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 3), at: .top, animated: true)
           
