@@ -176,6 +176,11 @@ extension LectureReviewBoardViewController: UISearchBarDelegate {
 /// 강의평을 나타냄
 /// - Author: 김정민, 남정은(dlsl7080@gmail.com)
 extension LectureReviewBoardViewController: UITableViewDataSource {
+    /// section 안에 들어갈 row의 수를 나타냅니다.
+    /// - Parameters:
+    ///   - tableView: 강의평 목록을 나타내는 tableView
+    ///   - section: 강의평 목록을 나누는 section
+    /// - Returns: section 안에 들어갈 row의 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
             return filteredLectureList.count
@@ -184,6 +189,11 @@ extension LectureReviewBoardViewController: UITableViewDataSource {
     }
     
     
+    /// 강의평 목록을 나타내는 셀을 구성합니다.
+    /// - Parameters:
+    ///   - tableView: 강의평 목록을 나타내는 tableView
+    ///   - indexPath: 강의평을 나타내는 셀의 indexPath
+    /// - Returns: 강의평을 나타내는 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewTableViewCell", for: indexPath) as! LectureReviewTableViewCell
         
@@ -206,11 +216,21 @@ extension LectureReviewBoardViewController: UITableViewDataSource {
 /// 강의평 tableView header를 설정
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension LectureReviewBoardViewController: UITableViewDelegate {
+    /// section header의 높이를 나타냅니다.
+    /// - Parameters:
+    ///   - tableView: 강의평을 나타내는 tableView
+    ///   - section: 강의평을 나누는 section
+    /// - Returns: header의 높이
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
     }
 
     
+    /// section header를 구성합니다.
+    /// - Parameters:
+    ///   - tableView: 강의평을 나타내는 tableView
+    ///   - section: 강의평을 나누는 section
+    /// - Returns: header를 나타내는 뷰
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewHeaderTableViewCell") as! LectureReviewHeaderTableViewCell
         

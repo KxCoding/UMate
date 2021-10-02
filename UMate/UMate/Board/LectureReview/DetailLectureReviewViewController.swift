@@ -143,14 +143,22 @@ class DetailLectureReviewViewController: CommonViewController {
 
 
 
-/// 강의정보를 나타냄
+/// 강의 정보를 나타냄
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailLectureReviewViewController: UITableViewDataSource {
+    /// 강의 정보를 나타내기 위한 section 수를 나타냅니다.
+    /// - Parameter tableView: 강의 정보를 나타내는 tableView
+    /// - Returns: section의 수
     func numberOfSections(in tableView: UITableView) -> Int {
         return 5
     }
     
     
+    /// 강의 정보를 나타내기 위한 셀을 구성합니다.
+    /// - Parameters:
+    ///   - tableView: 강의 정보를 나타내는 tableView
+    ///   - section: 강의 정보를 나누는 section
+    /// - Returns: section안에 포함되는 셀의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         // 강의 개요
@@ -179,6 +187,11 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
     }
     
     
+    /// 강의 정보를 나타내는 셀을 구성합니다.
+    /// - Parameters:
+    ///   - tableView: 강의 정보를 나타내는 tableView
+    ///   - indexPath: 강의 정보를 나타내는 셀의 indexPath
+    /// - Returns: 강의 정보를 나타내는 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let selectedLectrue = selectedLecture else { return UITableViewCell() }
         
@@ -231,6 +244,11 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
 /// 강의정보 tableView header를 설정
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailLectureReviewViewController: UITableViewDelegate {
+    /// section header의 높이를 나타냅니다.
+    /// - Parameters:
+    ///   - tableView: 강의 정보를 나타내는 tableView
+    ///   - section: 강의 정보를 나누는 section
+    /// - Returns: header의 높이
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // section3은 section2에 속함
         if section != 3 {
@@ -240,6 +258,11 @@ extension DetailLectureReviewViewController: UITableViewDelegate {
     }
 
     
+    /// section header를 구성합니다.
+    /// - Parameters:
+    ///   - tableView: 강의 정보를 나타내는 tableView
+    ///   - section: 강의 정보를 나누는 section
+    /// - Returns: header를 나타내는 뷰
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DetailLectureHeaderTableViewCell") as! DetailLectureHeaderTableViewCell
         
@@ -281,19 +304,29 @@ extension DetailLectureReviewViewController: UITableViewDelegate {
 
 
 
-/// 강의정보 위에 나타낼 컬렉션 뷰를 나타냄
+/// 강의정보 위에 소제목을 컬렉션 뷰로 나타냄
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailLectureReviewViewController: UICollectionViewDataSource {
+    /// 강의 정보의 소제목의 개수를 나타냅니다.
+    /// - Parameters:
+    ///   - collectionView: 강의 정보의 소제목을 나타내는 collectionView
+    ///   - section: 소제목을 나누는 section
+    /// - Returns: section안에 들어갈 item 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
     
     
+    /// 소제목을 구성하는 셀을 리턴합니다.
+    /// - Parameters:
+    ///   - collectionView: 강의 정보의 소제목을 나타내는 collectionView
+    ///   - indexPath: 강의 정보를 나타내는 셀의 indexPath
+    /// - Returns: 강의 정보를 나타내는 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SectionTitleCollectionViewCell", for: indexPath) as! SectionTitleCollectionViewCell
         
         if indexPath.row == 0 {
-            // 아무것도 선택되지 않았을 시에 row == 0 인 cell 선택된 것처럼 보이도록
+            // 아무것도 선택되지 않았을 시에 row == 0 인 셀이 선택된 것처럼 보이도록
             if isSelected {
                 cell.sectionTtileLabel.textColor = UIColor.init(named: "blackSelectedColor")
             }
@@ -325,8 +358,14 @@ extension DetailLectureReviewViewController: UICollectionViewDataSource {
 /// 강의 정보 위에 나타낼 컬렉션 뷰에 대해 동작 처리
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailLectureReviewViewController: UICollectionViewDelegate {
+    /// collectionView 셀을 클릭 시에 호출됩니다.
+    ///
+    /// 다른 소제목 선택시에 row == 0 인 cell을 리로드하여 선택되지 않은 상태로 보여지게 합니다.
+    /// - Parameters:
+    ///   - collectionView: 소제목을 나타내는 collectionView
+    ///   - indexPath: 소제목을 나타내는 셀의 indexPath
+    /// - Returns: true일 때는 선택이 되며, false일 때는 선택이 되지 않는다.
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        // 다른 카테고리 선택 시에 row == 0 인 cell을 리로드하여 선택되지 않은 상태로 보여지게 함
         if isSelected {
             isSelected = false
             collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
@@ -335,6 +374,12 @@ extension DetailLectureReviewViewController: UICollectionViewDelegate {
     }
     
     
+    /// 소제목을 나타내는 셀을 선택했을 때 동작합니다.
+    ///
+    /// 해당하는 소제목을 보여주도록 강의 정보를 나타내는 tableView를 이동합니다.
+    /// - Parameters:
+    ///   - collectionView: 소제목을 나타내는 collectionView
+    ///   - indexPath: 소제목을 나타내는 셀의 indexPath
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.row {
         // 개요 선택시 개요 부분으로 스크롤 이동

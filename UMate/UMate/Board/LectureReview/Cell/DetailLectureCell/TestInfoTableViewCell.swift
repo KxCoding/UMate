@@ -9,7 +9,7 @@ import UIKit
 
 
 /// 시험정보 공유 테이블 뷰 셀
-/// - Author: 남정은(dlsl7080@gamil.com)
+/// - Author: 남정은(dlsl7080@gmail.com)
 class TestInfoTableViewCell: UITableViewCell {
     // MARK: 시험정보
     ///시험종류를 나타내는 레이블
@@ -61,7 +61,7 @@ class TestInfoTableViewCell: UITableViewCell {
 
 
 /// 스크롤 되면서 cellForRowAt이 다시 호출될 때 스택 뷰에 값이 중복되는 것을 방지하기 위해 스택 뷰에 저장된 값을 삭제하기 위해 사용
-/// - Author: 남정은(dlsl7080@gamil.com)
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension UIStackView {
     /// 파라미터로 받은 뷰의 하위뷰를 제거하고 상위뷰로부터의 연결을 끊음
     /// - Parameter view: view. 뷰의 하위뷰를 삭제합니다.

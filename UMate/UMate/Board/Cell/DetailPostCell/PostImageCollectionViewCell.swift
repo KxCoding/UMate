@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 이미지 클릭시 뷰 컨트롤러에서 처리되는 동작에대한 노티피케이션
+/// 이미지 클릭 시 뷰 컨트롤러에서 처리되는 동작에 대한 노티피케이션
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
     static let showImageVC = Notification.Name(rawValue: "showImageVC")
@@ -17,7 +17,7 @@ extension Notification.Name {
 
 
 
-/// 테이블 뷰 셀안에 포함된 컬렉션 뷰 셀
+/// 테이블 뷰 셀 안에 포함된 컬렉션 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class PostImageCollectionViewCell: UICollectionViewCell {
    /// 게시물 이미지가 표시되는 이미지 뷰
@@ -33,7 +33,7 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     var index: Int?
     
     
-    /// 이미지를 클릭시에 이미지를 확대해서 보여줍니다.
+    /// 이미지를 클릭 시에 이미지를 확대해서 보여줍니다.
     /// - Parameter sender: UIButton. 사진크기의 버튼입니다.
     @IBAction func postNotification(_ sender: UIButton) {
         // DetailPostViewController에서 performSegue를 실행하도록 함

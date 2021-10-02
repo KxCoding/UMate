@@ -10,7 +10,7 @@ import UIKit
 
 
 /// 강의에 대한 총평을 보여주는 테이블 뷰 셀
-/// - Author: 남정은(dlsl7080@gamil.com)
+/// - Author: 남정은(dlsl7080@gmail.com)
 class LectureRatingTableViewCell: UITableViewCell {
     /// 별점을 나타내는 뷰
     @IBOutlet weak var ratingView: CosmosView!

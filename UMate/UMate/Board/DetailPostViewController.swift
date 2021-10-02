@@ -223,13 +223,20 @@ class DetailPostViewController: CommonViewController {
 /// 게시글 상세화면을 나타냄
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailPostViewController: UITableViewDataSource {
+    /// 게시글 상세화면을 나타내기 위해 필요한 section을 나타냅니다.
+    /// - Parameter tableView: 게시글 상세화면을 나타내는 tableView
+    /// - Returns: section의 수
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
     
     
+    /// 각각의 section 별로 들어갈 셀의 개수를 나타냅니다.
+    /// - Parameters:
+    ///   - tableView: 게시글 상세화면을 나타내는 tableView
+    ///   - section: 게시글 상세화면을 나누는 section
+    /// - Returns: section안에 들어갈 row의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         switch section {
         // 작성자, 제목, 내용
         case 0:
@@ -255,8 +262,12 @@ extension DetailPostViewController: UITableViewDataSource {
     }
     
     
+    /// 게시글 상세화면을 나타내기 위한 셀을 구성합니다.
+    /// - Parameters:
+    ///   - tableView: 게시글 상세화면을 나타내는 tableView
+    ///   - indexPath: 게시글 상세화면을 나타내는 셀의 indexPath
+    /// - Returns: 게시글 상세화면을 나타내는 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch indexPath.section {
         // 게시글 내용 표시하는 셀
         case 0:

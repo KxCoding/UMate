@@ -17,7 +17,7 @@ extension Notification.Name {
 }
 
 
-/// 시험작성 공유 화면에 대한 클래스
+/// 시험정보 작성 화면에 대한 클래스
 /// - Author: 남정은(dlsl7080@gmail.com)
 class TestInfoWriteViewController: CommonViewController {
     /// 시험작성 공유에 대한 테이블 뷰
@@ -109,14 +109,24 @@ class TestInfoWriteViewController: CommonViewController {
 
 
 
-/// 시험작성 공유 작성 화면을 나타냄
+/// 시험정보 작성 화면을 나타냄
 /// - Author: 남정은(dlsl7080@gamil.com)
 extension TestInfoWriteViewController: UITableViewDataSource {
+    /// 시험정보 작성 화면을 나타내는 셀의 개수를 리턴합니다.
+    /// - Parameters:
+    ///   - tableView: 시험정보 작성 화면을 나타내는 tableView
+    ///   - section: 시험정보 작성 화면을 나누는 section
+    /// - Returns: section 안에 포함된 row
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     
+    /// 시험정보 작성 화면을 나타내는 셀을 구성합니다.
+    /// - Parameters:
+    ///   - tableView: 시험정보 작성 화면을 나타내는 tableView
+    ///   - indexPath: 시험정보 작성 화면을 나타내는 셀의 indexPath
+    /// - Returns: 시험정보 작성 화면을 나타내는 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TestInfoWriteTableViewCell", for: indexPath) as! TestInfoWriteTableViewCell
         guard let lecture = selectedLecture else {
@@ -132,11 +142,11 @@ extension TestInfoWriteViewController: UITableViewDataSource {
 
 
 /// 텍스트필드가 firstResponder일 때를 알기 위해 사용
-/// - Author: 남정은(dlsl7080@gamil.com)
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension UIView {
     /// 현재 firstResponder를 리턴해 주는 속성
     var firstResponder: UIView? {
-        // 현재 uiview가 firstResponder라면 자신을 리턴
+        // 현재 UIView가 firstResponder라면 자신을 리턴
         guard !isFirstResponder else { return self }
 
         // 아니라면 하위뷰들 중에 firstResponder를 찾아서 리턴

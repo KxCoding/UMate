@@ -43,7 +43,9 @@ class PostContentTableViewCell: UITableViewCell {
     /// 하트 이미지 뷰
     @IBOutlet weak var likeImageView: UIImageView!
     
-    /// 좋아요 버튼
+    
+    /// 하트 버튼을 눌렀을 때 하트 이미지의 색상이 변경됩니다.
+    /// - Parameter sender: 하트 버튼
     @IBAction func toggleLikeButton(_ sender: UIButton) {
     
         guard let post = selectedPost else { return }
@@ -68,7 +70,9 @@ class PostContentTableViewCell: UITableViewCell {
     /// 스크랩 이미지 뷰
     @IBOutlet weak var scrapImageView: UIImageView!
     
-    /// 스크랩 버튼
+    
+    /// 스크랩 버튼을 눌렀을 때 스크랩 이미지 색상이 변경됩니다.
+    /// - Parameter sender: 스크랩 버튼
     @IBAction func toggleScrapButton(_ sender: UIButton) {
        
         guard let post = selectedPost else { return }
@@ -94,7 +98,7 @@ class PostContentTableViewCell: UITableViewCell {
     }
     
     
-    /// 신고 혹은 게시글 수정, 삭제를 actionSheet으로 나타냅니다.
+    /// 신고 혹은 게시글 수정, 삭제를 actionSheet로 나타냅니다.
     /// - Parameter sender: 햄버거 버튼
     @IBAction func showMenu(_ sender: Any) {
         NotificationCenter.default.post(name: .sendAlert, object: nil)

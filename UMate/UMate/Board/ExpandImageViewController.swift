@@ -88,13 +88,23 @@ class ExpandImageViewController: CommonViewController {
 
 
 /// 이미지를 나타냄
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension ExpandImageViewController: UICollectionViewDataSource {
-    /// 이미지의 개수를 나타냄
+    /// 이미지의 개수를 나타냅니다.
+    /// - Parameters:
+    ///   - collectionView: 이미지를 나타내는 collectionView
+    ///   - section: 이미지를 그룹짓는 section
+    /// - Returns: 게시글에 포함되는 이미지 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedPost?.images.count ?? 0
     }
     
     
+    /// 이미지를 collectionView에 표시합니다.
+    /// - Parameters:
+    ///   - collectionView: 이미지를 나타내는 collectionView
+    ///   - indexPath: 이미지를 나타내는 셀의 indexPath
+    /// - Returns: 이미지를 나타내는 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postImageCell", for: indexPath) as! ExpandPostImageCollectionViewCell
         
@@ -107,10 +117,15 @@ extension ExpandImageViewController: UICollectionViewDataSource {
 
 
 
-/// 이미지 컬렉션뷰에 대한  동작 처리
+/// 이미지 컬렉션 뷰에 대한  동작 처리
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension ExpandImageViewController: UICollectionViewDelegate {
+    /// 이미지를 클릭해서 ExpandImageVC가 보여질 때 선택한 이미지를 화면에 표시합니다.
+    /// - Parameters:
+    ///   - collectionView: 이미지를 나타내는 collectionView
+    ///   - cell: 이미지를 나타내는 셀
+    ///   - indexPath: 이미지를 나타내는 셀의 indexPath
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        // 이미지를 클릭해서 ExpandImageView가 나타났을 때 선택한 이미지를 화면에 표시
         if initiatedImage {
             initiatedImage = false // 계속해서 처음에 클릭한 이미지만 표시되는 것을 방지
             collectionView.scrollToItem(at: IndexPath(item: imageIndex ?? 0, section: 0), at: .centeredHorizontally, animated: false)
@@ -120,8 +135,15 @@ extension ExpandImageViewController: UICollectionViewDelegate {
 
 
 
-/// 이미지 컬렉션뷰에 대한 레이아웃
+/// 이미지 컬렉션 뷰에 대한 레이아웃
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension ExpandImageViewController: UICollectionViewDelegateFlowLayout {
+    /// 이미지의 사이즈를 나타냅니다.
+    /// - Parameters:
+    ///   - collectionView: 이미지를 나타내는 collectionView
+    ///   - collectionViewLayout: collectionView의 layout정보
+    ///   - indexPath: 이미지를 나타내는 셀의 indexPath
+    /// - Returns: 이미지 셀의 사이즈
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
         let height = collectionView.frame.height
@@ -133,8 +155,9 @@ extension ExpandImageViewController: UICollectionViewDelegateFlowLayout {
 
 
 /// 컬렉션 뷰의 스크롤 뷰에 대한 동작 처리
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension ExpandImageViewController: UIScrollViewDelegate {
-    /// 스크롤 뷰안에 컨텐트 뷰에서 스크롤 발생 시에 호출
+    /// 스크롤 뷰안에 컨텐트 뷰에서 스크롤 발생 시에 호출됩니다.
     /// - Parameter scrollView: 스크롤이 발생되는 스크롤 뷰 객체
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 스크롤 뷰의 x좌표

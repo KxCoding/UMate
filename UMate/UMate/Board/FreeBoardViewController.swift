@@ -123,11 +123,21 @@ class FreeBoardViewController: CommonViewController {
 /// 기본 게시판에 대한 게시글 목록을 나타냄
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension FreeBoardViewController: UITableViewDataSource {
+    ///  게시글 수를 나타냅니다.
+    /// - Parameters:
+    ///   - tableView: 게시글 목록을 나타내는 tableView
+    ///   - section: 게시글을 나누는 section
+    /// - Returns: 게시글 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return selectedBoard?.posts.count ?? 0
     }
     
     
+    /// 게시글 목록을 나타내는 셀을 설정합니다.
+    /// - Parameters:
+    ///   - tableView: 게시글 목록을 나타내는 tableView
+    ///   - indexPath: 게시글 목록을 나타내는 셀의 indexPath
+    /// - Returns: 게시글 목록을 나타내는 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
         

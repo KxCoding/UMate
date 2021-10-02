@@ -132,11 +132,21 @@ class CategoryBoardViewController: CommonViewController {
 /// 카테고리 게시판의 카테고리 목록을 나타냄
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension CategoryBoardViewController: UICollectionViewDataSource {
+    /// 게시글을 분류하는 카테고리 목록의 개수를 나타냅니다.
+    /// - Parameters:
+    ///   - collectionView: 카테고리 목록을 표시할 collectionView
+    ///   - section: 카테고리를 나누는 section
+    /// - Returns: 카테고리의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedBoard?.categoryNumbers.count ?? 0
     }
     
-    
+
+    /// 카테고리 목록을 나타내는 셀을 설정합니다.
+    /// - Parameters:
+    ///   - collectionView: 카테고리 목록을 표시할 collectionView
+    ///   - indexPath: 카테고리를 표시할 셀의 indexPath
+    /// - Returns: 카테고리 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryBoardCollectionViewCell",
@@ -165,8 +175,14 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
 /// 카테고리 목록을 나타내는 컬렉션 뷰에 대한  동작 처리
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension CategoryBoardViewController: UICollectionViewDelegate {
+    /// collectionView 셀을 클릭 시에 호출됩니다.
+    ///
+    /// 다른 카테고리 선택시에 row == 0 인 cell을 리로드하여 선택되지 않은 상태로 보여지게 합니다.
+    /// - Parameters:
+    ///   - collectionView: 카테고리를 나타내는 collectionView
+    ///   - indexPath: 카테고리를 나타내는 셀의 indexPath
+    /// - Returns: true일 때는 선택이 되며, false일 때는 선택이 되지 않는다.
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        // 다른 카테고리 선택시에 row == 0 인 cell을 리로드하여 선택되지 않은 상태로 보여지게 함
         if isSelected {
             isSelected = false
             collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
@@ -175,6 +191,10 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
     }
     
     
+    /// 카테고리를 선택 했을 경우 게시글을 필터링 합니다.
+    /// - Parameters:
+    ///   - collectionView: 카테고리를 나타내는 collectionView
+    ///   - indexPath: 카테고리를 나타내는 셀의 indexPath
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         filteredPostList.removeAll()
         guard let selectedBoard = selectedBoard else { return }
@@ -213,6 +233,14 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
 /// 카테고리 목록을 나타내는 컬렉션 뷰의 레이아웃 조정
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
+    /// 카테고리 셀의 size를 설정합니다.
+    ///
+    /// 이 메소드가 cellForRowAt보다 먼저 실행됩니다.
+    /// - Parameters:
+    ///   - collectionView: 카테고리를 나타내는 collectionView
+    ///   - collectionViewLayout: collectionView의 layout정보
+    ///   - indexPath: 카테고리를 나타내는 셀의 indexPath
+    /// - Returns: 카테고리 셀의 사이즈
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -258,11 +286,21 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
 /// 카테고리 게시판에 대한 게시글 목록을 나타냄
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension CategoryBoardViewController: UITableViewDataSource {
+    ///  게시글 수를 나타냅니다.
+    /// - Parameters:
+    ///   - tableView: 게시글 목록을 나타내는 tableView
+    ///   - section: 게시글을 나누는 section
+    /// - Returns: 게시글 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredPostList.count
     }
     
     
+    /// 게시글 목록을 나타내는 셀을 설정합니다.
+    /// - Parameters:
+    ///   - tableView: 게시글 목록을 나타내는 tableView
+    ///   - indexPath: 게시글 목록을 나타내는 셀의 indexPath
+    /// - Returns: 게시글 목록을 나타내는 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell",

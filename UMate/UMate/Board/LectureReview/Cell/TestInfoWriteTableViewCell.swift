@@ -18,7 +18,7 @@ extension Notification.Name {
 
 
 
-/// 시험정보작성을 위한 테이블 뷰 셀
+/// 시험정보 작성을 위한 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class TestInfoWriteTableViewCell: UITableViewCell {
     // MARK: 응시한 시험
@@ -55,10 +55,10 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     
     
     // MARK: 시험 전략
-    /// 시험전략을 작성하는 텍스트 뷰
+    /// 시험 전략을 작성하는 텍스트 뷰
     @IBOutlet weak var testStrategyTextView: UITextView!
     
-    /// 시험전략에 대한 간단한 설명을 나타내는 레이블
+    /// 시험 전략에 대한 간단한 설명을 나타내는 레이블
     @IBOutlet weak var placeholderLabel: UILabel!
     
     
@@ -108,14 +108,14 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// '더 입력하기'버튼을 감싸는 뷰
     @IBOutlet weak var addTestInfoButtonView: UIView!
     
-    /// 문제예시를 입력하는 텍스트필드가 담긴 스택 뷰
+    /// 문제 예시를 입력하는 텍스트 필드가 담긴 스택 뷰
     @IBOutlet weak var testExampleStackView: UIStackView!
     
     
-    /// 문제예시 번호
+    /// 문제 예시 번호
     var exampleNumber = 3
     
-    /// 문제예시를 입력하는 textField를 추가합니다.
+    /// 문제 예시를 입력하는 텍스트 필드를 추가합니다.
     /// - Parameter sender: '더 입력하기' 버튼
     @IBAction func addTestInfoField(_ sender: Any) {
         let textFieldList = [thirdTextFieldStackView, fourthTextFieldStackView, fifthTextFieldStackView]
@@ -141,7 +141,6 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// 시험정보를 지정된 강의에 등록합니다.
     /// - Parameter sender: '공유하기'버튼
     @IBAction func shareTestInfo(_ sender: Any) {
-        // 복수선택 할 경우 isSelected가 true인 버튼을 분류해야함.
         let buttonList = [multipleChoiceButton,subjectiveButton,trueAndFalseButton,AbbreviatedFormButton,
                       essayTypeButton,oralStatementButton,etceteraButton]
         
@@ -273,6 +272,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension TestInfoWriteTableViewCell: UITextViewDelegate {
     /// 텍스트 뷰가 편집 중이라면 설명 레이블을 숨깁니다.
+    /// - Parameter textView: 시험 전략을 작성하는 텍스트 뷰
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = textView.hasText
     }

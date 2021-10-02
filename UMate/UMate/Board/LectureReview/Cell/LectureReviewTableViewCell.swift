@@ -10,7 +10,7 @@ import UIKit
 
 
 /// 강의평 테이블 뷰 셀
-/// - Author: 남정은(dlsl7080@gamil.com)
+/// - Author: 남정은(dlsl7080@gmail.com)
 class LectureReviewTableViewCell: UITableViewCell {
     /// 교과목명을 나타내는 레이블
     @IBOutlet weak var lectureTitleLabel: UILabel!
