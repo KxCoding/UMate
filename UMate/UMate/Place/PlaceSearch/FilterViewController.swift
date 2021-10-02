@@ -5,6 +5,7 @@
 //  Created by Hyunwoo Jang on 2021/08/09.
 //
 
+import CoreLocation
 import UIKit
 
 
@@ -34,6 +35,10 @@ class FilterViewController: UIViewController {
     /// 이전 화면에서의 filterList를 받아올 배열
     /// - Author: 장현우(heoun3089@gmail.com)
     var filterList: [Place.PlaceType]?
+    
+    /// 이전 화면에서 위치 정보를 받아오기 위한 속성
+    /// - Author: 장현우(heoun3089@gmail.com)
+    var currentLocation: CLLocation?
     
     
     /// 취소 버튼을 누르면 검색화면으로 돌아갑니다.
@@ -83,7 +88,17 @@ extension FilterViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "AlignmentTableViewCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AlignmentTableViewCell", for: indexPath) as! AlignmentTableViewCell
+            
+            guard let _ = currentLocation else {
+                cell.distanceButton.isEnabled = false
+                cell.distanceButton.layer.opacity = 0.5
+                
+                return cell
+            }
+            cell.distanceButton.backgroundColor = cell.distanceButton.isSelected ? .systemRed : .systemGray5
+            
+            return cell
             
         case 1:
             return tableView.dequeueReusableCell(withIdentifier: "CategoryTableViewCell", for: indexPath)
