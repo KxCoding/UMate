@@ -5,14 +5,13 @@
 //  Created by Hyunwoo Jang on 2021/08/01.
 //
 
+import CoreLocation
 import UIKit
 
 
 /// 가게 검색탭과 관련된 뷰컨트롤러 클래스
 /// - Author: 장현우(heoun3089@gmail.com)
-
 class PlaceSearchViewController: CommonViewController {
-
     /// 검색한 결과를 표시할 컬렉션뷰
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var searchCollectionView: UICollectionView!
@@ -29,6 +28,10 @@ class PlaceSearchViewController: CommonViewController {
     /// 필터 화면에서 이전에 선택한 필터링 항목은 이미 선택되어 있게 하기 위해서 만든 배열입니다.
     /// - Author: 장현우(heoun3089@gmail.com)
     var filterList = [Place.PlaceType]()
+    
+    /// 이전 화면에서 위치 정보를 받아오기 위한 속성
+    /// - Author: 장현우(heoun3089@gmail.com)
+    var currentLocation: CLLocation?
     
     
     /// window에 추가할 DimView
@@ -140,12 +143,13 @@ class PlaceSearchViewController: CommonViewController {
     ///   - sender: 버튼
     /// - Author: 장현우(heoun3089@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        /// window에 dimming View를 추가
+        // window에 dimming View를 추가
         guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
         
         if let vc = segue.destination as? FilterViewController {
             window.addSubview(self.dimView)
             vc.filterList = filterList
+            vc.currentLocation = currentLocation
         }
         
         if let cell = sender as? UICollectionViewCell,

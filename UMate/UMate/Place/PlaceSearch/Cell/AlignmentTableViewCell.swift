@@ -27,10 +27,6 @@ class AlignmentTableViewCell: UITableViewCell {
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var distanceButton: RoundedButton!
     
-    /// 주의사항을 표시할 레이블
-    /// - Author: 장현우(heoun3089@gmail.com)
-    @IBOutlet weak var infoLabel: UILabel!
-    
     
     /// 태그에 따라 각 버튼이 Selected 상태로 변경됩니다.
     /// - Parameter sender: 버튼
@@ -42,7 +38,7 @@ class AlignmentTableViewCell: UITableViewCell {
         distanceButton.isSelected = sender.tag == 103
         
         // Selected 상태에 따라 버튼의 백그라운드 색상 설정
-        [ratingButton, recommendationButton, reviewButton, distanceButton].forEach { button in
+        [ratingButton, recommendationButton, reviewButton].forEach { button in
             guard let button = button else { return }
             
             button.backgroundColor = button.isSelected ? .systemRed : .systemGray5

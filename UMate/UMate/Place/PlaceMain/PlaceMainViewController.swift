@@ -248,8 +248,11 @@ class PlaceMainViewController: UIViewController {
                 vc.place = list[indexPath.item]
             }
         }
+        
+        if let cell = segue.destination as? PlaceSearchViewController {
+            cell.currentLocation = locationManager.location
+        }
     }
-    
 }
 
 
