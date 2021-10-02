@@ -104,7 +104,7 @@ class ComposeViewController: CommonViewController {
         
         /// 커뮤니티 이용규칙 버튼의 테마 설정
         /// - Author: 김정민(kimjm010@icloud.com)
-        commmunityRuleBtn.setButtonTheme()
+        commmunityRuleBtn.setToEnabledButtonTheme()
         
         /// 글쓰기 화면 진입 시 자동으로 키보드를 표시
         /// - Author: 김정민(kimjm010@icloud.com)

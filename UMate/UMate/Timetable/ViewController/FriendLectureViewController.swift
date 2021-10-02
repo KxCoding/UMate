@@ -9,72 +9,36 @@ import Elliotable
 import UIKit
 
 
-/// TimeTable 탭에서 친구 시간표를 볼 수 있는 ViewController 클래스
+/// TimeTable 탭의 친구 시간표 화면 ViewController 클래스
+///
+/// 사용자의 친구 시간표를 볼 수 있습니다.
 /// - Author: 안상희
 class FriendLectureViewController: UIViewController {
-
+    // MARK: - Property
     /// 친구 이름이 저장된 속성
     var friendName: String?
     
     /// 요일 (월, 화, 수, 목, 금) 정보를 담은 배열
-    let weekdays = Lecture.shared.dayString
-    
-    /// 강의 정보를 담은 Dummy Data
-    let courseList: [ElliottEvent] =
-    [ElliottEvent(courseId: "F1234",
-                  courseName: "자료구조",
-                  roomName: "팔308",
-                  professor: "교수님",
-                  courseDay: .monday,
-                  startTime: "09:00",
-                  endTime: "10:15",
-                  textColor: UIColor.white,
-                  backgroundColor: .purple),
-     ElliottEvent(courseId: "F1234",
-                  courseName: "자료구조",
-                  roomName: "팔308",
-                  professor: "교수님",
-                  courseDay: .wednesday,
-                  startTime: "09:00",
-                  endTime: "10:15",
-                  textColor: UIColor.white,
-                  backgroundColor: .purple),
-     ElliottEvent(courseId: "F5678",
-                  courseName: "컴퓨터그래픽스",
-                  roomName: "팔1025",
-                  professor: "교수님",
-                  courseDay: .monday,
-                  startTime: "10:30",
-                  endTime: "11:45",
-                  textColor: UIColor.white,
-                  backgroundColor: .cyan),
-     ElliottEvent(courseId: "F5678",
-                  courseName: "컴퓨터그래픽스",
-                  roomName: "팔1025",
-                  professor: "교수님",
-                  courseDay: .thursday,
-                  startTime: "10:30",
-                  endTime: "11:45",
-                  textColor: UIColor.white,
-                  backgroundColor: .cyan)]
+    let weekdays = LectureManager.shared.dayString
 
     
-    
-    /// 친구 이름을 나타내는 UILabel
+    // MARK: - Outlet
+    /// 친구 이름을 나타내는 라벨
     @IBOutlet weak var friendNameLabel: UILabel!
     
-    /// 시간표를 나타내는 View
+    /// 시간표를 나타내는 뷰
     @IBOutlet weak var timeTableView: Elliotable!
     
     
-    
+    /// ViewController가 메모리에 로드되면 호출됩니다.
+    ///
+    /// View의 초기화 작업을 진행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Delegate 설정
         timeTableView.delegate = self
         timeTableView.dataSource = self
-        
         
         // TimeTableView의 기본 속성 설정
         timeTableView.elliotBackgroundColor = UIColor.white
@@ -101,7 +65,6 @@ class FriendLectureViewController: UIViewController {
         timeTableView.roundCorner = .right
         timeTableView.reloadData()
         
-        
         // 친구 이름 표시
         friendNameLabel.text = friendName
     }
@@ -109,14 +72,13 @@ class FriendLectureViewController: UIViewController {
 
 
 
-
+// MARK: - Extension
 extension FriendLectureViewController: ElliotableDelegate {
     /// 강의 목록을 터치하면 호출됩니다.
     /// - Parameters:
     ///   - elliotable: Elliotable
     ///   - selectedCourse: ElliottEvent
     func elliotable(elliotable: Elliotable, didSelectCourse selectedCourse: ElliottEvent) {
-        
     }
     
     
@@ -125,10 +87,8 @@ extension FriendLectureViewController: ElliotableDelegate {
     ///   - elliotable: Elliotable
     ///   - longSelectedCourse: ElliottEvent
     func elliotable(elliotable: Elliotable, didLongSelectCourse longSelectedCourse: ElliottEvent) {
-        
     }
 }
-
 
 
 
@@ -155,6 +115,6 @@ extension FriendLectureViewController: ElliotableDataSource {
     /// - Parameter elliotable: Elliotable
     /// - Returns: 강의 정보 리스트
     func courseItems(in elliotable: Elliotable) -> [ElliottEvent] {
-        return courseList
+        return friendCourseList
     }
 }

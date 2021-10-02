@@ -385,7 +385,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        reviewSaveButton.setButtonTheme()
+        reviewSaveButton.setToEnabledButtonTheme()
         selectSemesterView.layer.cornerRadius = 10
         reviewcontentTextView.layer.cornerRadius = 10
         reviewcontentTextView.delegate = self

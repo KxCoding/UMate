@@ -63,10 +63,10 @@ class FreeBoardViewController: CommonViewController {
         if selectedBoard?.boardTitle == "스크랩" {
             composeButton.isHidden = true
         }
-        
+
         /// 글쓰기 버튼의 테마 설정
         /// - Author: 김정민(kimjm010@icloud.com)
-        composeButton.setButtonTheme()
+        composeButton.setToEnabledButtonTheme()
 
         // 네비게이션 바에 타이틀 초기화
         // - Author: 남정은

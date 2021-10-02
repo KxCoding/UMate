@@ -98,7 +98,7 @@ class DetailRegisterViewController: UIViewController {
         })
         
         /// 규격해놓은 버튼으로 모양을 만듬.
-        nextButton.setButtonTheme()
+        nextButton.setToEnabledButtonTheme()
        
         /// 이메일 검증 화면에서 검증받은 이메일을 가져옴.
             if let safeEmail = keyChain.get(Keys.userEmailKey) {

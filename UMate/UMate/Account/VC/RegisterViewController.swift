@@ -79,7 +79,7 @@ class RegisterViewController: UIViewController {
         }
         
         /// 규격화된 버튼모양으로 만듬.
-        nextButton.setButtonTheme()
+        nextButton.setToEnabledButtonTheme()
         
         /// 입학년도 텍스트필드를 초기화합니다
         enterenceYearLabel.text = "2021학번"

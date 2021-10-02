@@ -7,14 +7,16 @@
 
 import UIKit
 
-/// 사용자 계정 화면에서 서비스 이용약관, 개인정보 처리방침, 오픈소스 라이선스, 커뮤니티 이용 규칙을 보여주는 ViewController
+
+/// 사용자 계정 설정의 서비스 이용약관, 개인정보 처리방침, 오픈소스 라이선스, 커뮤니티 이용 규칙 메뉴 화면의 ViewController 클래스.
+///
+/// 서비스 이용약관, 개인정보 처리방침, 오픈소스 라이선스, 커뮤니티 이용 규칙 메뉴를 클릭하면 이 화면이 나타납니다.
 /// - Author: 안상희
 class AppInformationTextViewController: UIViewController {
-    
-    /// 선택한 메뉴에 맞는 메뉴 타이틀이 저장된 변수
+    // 선택한 메뉴에 맞는 메뉴 타이틀이 저장된 변수.
     var menu: String?
     
-    /// 데이터가 나타나는 textView
+    /// 데이터가 나타나는 UITextView.
     @IBOutlet weak var textView: UITextView!
     
     
@@ -51,6 +53,9 @@ class AppInformationTextViewController: UIViewController {
     }
     
     
+    /// ViewController가 메모리에 로드되면 호출됩니다.
+    ///
+    /// View의 초기화 작업을 진행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
