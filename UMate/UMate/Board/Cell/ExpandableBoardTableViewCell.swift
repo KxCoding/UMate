@@ -14,10 +14,10 @@ class ExpandableBoardTableViewCell: UITableViewCell {
     // TODO: 서버로 옮긴 후 삭제
     var board: BoardViewController?
     
-    /// 게시판 이름
+    /// 게시판 이름 레이블
     @IBOutlet weak var boardLabel: UILabel!
     
-    /// 게시판 북마크 버튼
+    /// 게시판 북마크  버튼
     @IBOutlet weak var bookmarkButton: UIButton!
     
     

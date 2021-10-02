@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 검색화면을 나타내는 뷰 컨트롤러
+/// 검색화면 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com)
 class SearchViewController: UIViewController {
     /// 검색된 게시글을 보여줄 테이블 뷰
@@ -26,8 +26,11 @@ class SearchViewController: UIViewController {
     /// 검색어에 따라서 필터링한 게시글을 담을 배열
     var filteredPostList: [Post] = []
     
-    
-    /// 검색된 게시물을 클릭했을 때 데이터 전달
+
+    /// 검색된 게시물을 클릭했을 때 데이터를 전달합니다.
+    /// - Parameters:
+    ///   - segue: 호출된 segue
+    ///   - sender: segue가 시작된 객체
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? UITableViewCell,
            let indexPath = postListTableView.indexPath(for: cell) {
@@ -39,6 +42,7 @@ class SearchViewController: UIViewController {
     }
     
     
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -114,7 +118,7 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: UITableViewDataSource {
     /// 검색결과를 통해 필터링 된 게시글 수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 검색결과를 나타내는 tableView
+    ///   - tableView: 검색결과 테이블 뷰
     ///   - section: 게시글을 나누는 section
     /// - Returns: 필터링 된 게시글 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -122,11 +126,11 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     
-    /// 게시글을 나타내는 셀을 구성합니다.
+    /// 게시글 셀을 구성합니다.
     /// - Parameters:
-    ///   - tableView: 검색결과를 나타내는 tableView
-    ///   - indexPath: 게시글을 나타내는 셀의 indexPath
-    /// - Returns: 검색된 게시글을 나타내는 셀
+    ///   - tableView: 검색결과 테이블 뷰
+    ///   - indexPath: 게시글 셀의 indexPath
+    /// - Returns: 검색된 게시글 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell

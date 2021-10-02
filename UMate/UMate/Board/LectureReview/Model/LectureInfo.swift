@@ -8,7 +8,7 @@
 import Foundation
 
 
-/// 강의 정보에 대한 모델 클래스
+/// 강의 정보 모델 클래스
 /// - Author: 남정은(dlsl7080@gmail.com)
 class LectureInfo {
     /// 교과목명

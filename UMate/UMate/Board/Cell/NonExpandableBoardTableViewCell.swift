@@ -8,13 +8,13 @@
 import UIKit
 
 
-/// 펼침기능이 없는 게시판 목록을 나타내는 테이블 뷰 셀
+/// 펼침기능이 없는 게시판 목록 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class NonExpandableBoardTableViewCell: UITableViewCell {
-    /// 게시판 이름
+    /// 게시판 이름 레이블
     @IBOutlet weak var boardLabel: UILabel!
     
-    /// 게시판 이미지 아이콘
+    /// 게시판 아이콘 이미지 뷰
     @IBOutlet weak var boardImageView: UIImageView!
     
     /// 게시판 북마크 버튼

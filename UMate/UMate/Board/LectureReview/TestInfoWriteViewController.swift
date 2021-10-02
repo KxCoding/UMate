@@ -20,7 +20,7 @@ extension Notification.Name {
 /// 시험정보 작성 화면에 대한 클래스
 /// - Author: 남정은(dlsl7080@gmail.com)
 class TestInfoWriteViewController: CommonViewController {
-    /// 시험작성 공유에 대한 테이블 뷰
+    /// 시험작성 공유 화면 테이블 뷰
     @IBOutlet weak var testInfoTableView: UITableView!
     
     /// 테이블 뷰의 바텀 제약
@@ -37,6 +37,7 @@ class TestInfoWriteViewController: CommonViewController {
     }
     
     
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -110,11 +111,11 @@ class TestInfoWriteViewController: CommonViewController {
 
 
 /// 시험정보 작성 화면을 나타냄
-/// - Author: 남정은(dlsl7080@gamil.com)
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension TestInfoWriteViewController: UITableViewDataSource {
-    /// 시험정보 작성 화면을 나타내는 셀의 개수를 리턴합니다.
+    /// 시험정보 작성 화면 셀의 개수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 시험정보 작성 화면을 나타내는 tableView
+    ///   - tableView: 시험정보 작성 화면 테이블 뷰
     ///   - section: 시험정보 작성 화면을 나누는 section
     /// - Returns: section 안에 포함된 row
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -122,11 +123,11 @@ extension TestInfoWriteViewController: UITableViewDataSource {
     }
     
     
-    /// 시험정보 작성 화면을 나타내는 셀을 구성합니다.
+    /// 시험정보 작성 화면 셀을 구성합니다.
     /// - Parameters:
-    ///   - tableView: 시험정보 작성 화면을 나타내는 tableView
-    ///   - indexPath: 시험정보 작성 화면을 나타내는 셀의 indexPath
-    /// - Returns: 시험정보 작성 화면을 나타내는 셀
+    ///   - tableView: 시험정보 작성 화면 테이블 뷰
+    ///   - indexPath: 시험정보 작성 화면 셀의 indexPath
+    /// - Returns: 시험정보 작성 화면 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TestInfoWriteTableViewCell", for: indexPath) as! TestInfoWriteTableViewCell
         guard let lecture = selectedLecture else {
@@ -139,6 +140,7 @@ extension TestInfoWriteViewController: UITableViewDataSource {
         return cell
     }
 }
+
 
 
 /// 텍스트필드가 firstResponder일 때를 알기 위해 사용

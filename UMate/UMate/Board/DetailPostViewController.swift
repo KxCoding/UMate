@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 게시글 상세화면에 대한 뷰 컨트롤러
+/// 게시글 상세화면 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
 class DetailPostViewController: CommonViewController {
 
@@ -18,7 +18,7 @@ class DetailPostViewController: CommonViewController {
     @IBOutlet weak var commentPlaceholderLabel: UILabel!
     @IBOutlet weak var commentContainerViewBottomConstraint: NSLayoutConstraint!
     
-    /// 선택된 게시글에대한 속성
+    /// 선택된 게시글 속성
     var selectedPost: Post?
     
     /// 이미지를 클릭시에 추가되는 옵저버를 저장할 토큰
@@ -85,6 +85,7 @@ class DetailPostViewController: CommonViewController {
     }
     
 
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -143,8 +144,9 @@ class DetailPostViewController: CommonViewController {
     }
     
     
-    /// 뷰 계층에 모든 뷰들이 추가된 이후 호출
-     /// - Author: 남정은(dlsl7080@gmail.com)
+    /// 뷰 계층에 모든 뷰들이 추가된 이후 호출됩니다.
+    /// - Parameter animated: 윈도우에 뷰가 추가될 때 애니메이션 여부. 기본값은 true입니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -220,20 +222,20 @@ class DetailPostViewController: CommonViewController {
 
 
 
-/// 게시글 상세화면을 나타냄
+/// 게시글 상세화면
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailPostViewController: UITableViewDataSource {
-    /// 게시글 상세화면을 나타내기 위해 필요한 section을 나타냅니다.
-    /// - Parameter tableView: 게시글 상세화면을 나타내는 tableView
+    /// 게시글 상세화면에 필요한 section 수를 리턴합니다.
+    /// - Parameter tableView: 게시글 상세화면 테이블 뷰
     /// - Returns: section의 수
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
     
     
-    /// 각각의 section 별로 들어갈 셀의 개수를 나타냅니다.
+    /// 각각의 section 별로 들어갈 셀의 개수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 게시글 상세화면을 나타내는 tableView
+    ///   - tableView: 게시글 상세화면 테이블 뷰
     ///   - section: 게시글 상세화면을 나누는 section
     /// - Returns: section안에 들어갈 row의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -264,9 +266,9 @@ extension DetailPostViewController: UITableViewDataSource {
     
     /// 게시글 상세화면을 나타내기 위한 셀을 구성합니다.
     /// - Parameters:
-    ///   - tableView: 게시글 상세화면을 나타내는 tableView
-    ///   - indexPath: 게시글 상세화면을 나타내는 셀의 indexPath
-    /// - Returns: 게시글 상세화면을 나타내는 셀
+    ///   - tableView: 게시글 상세화면 테이블 뷰
+    ///   - indexPath: 게시글 상세화면 셀의 indexPath
+    /// - Returns: 게시글 상세화면 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         // 게시글 내용 표시하는 셀

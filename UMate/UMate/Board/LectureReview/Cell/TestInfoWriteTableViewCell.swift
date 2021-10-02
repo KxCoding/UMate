@@ -25,7 +25,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// 수강학기 선택 뷰
     @IBOutlet weak var selectSemesterView: UIView!
     
-    /// '수강학기'를 나타내는 레이블
+    /// '수강학기' 레이블
     @IBOutlet weak var semesterLabel: UILabel!
     
     /// 수강학기를 선택합니다.
@@ -41,7 +41,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// 시험종류 선택 뷰
     @IBOutlet weak var selectTestView: UIView!
     
-    /// '시험종류'를 나타내는 레이블
+    /// '시험종류' 레이블
     @IBOutlet weak var testLabel: UILabel!
     
     /// 시험종류를 선택합니다.
@@ -58,7 +58,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// 시험 전략을 작성하는 텍스트 뷰
     @IBOutlet weak var testStrategyTextView: UITextView!
     
-    /// 시험 전략에 대한 간단한 설명을 나타내는 레이블
+    /// 시험 전략에 대한 간단한 설명 레이블
     @IBOutlet weak var placeholderLabel: UILabel!
     
     
@@ -268,7 +268,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
 
 
 
-/// 텍스트 뷰에대한 동작 처리
+/// 텍스트 뷰 동작 처리
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension TestInfoWriteTableViewCell: UITextViewDelegate {
     /// 텍스트 뷰가 편집 중이라면 설명 레이블을 숨깁니다.

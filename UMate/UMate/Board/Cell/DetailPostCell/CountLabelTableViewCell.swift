@@ -11,13 +11,13 @@ import UIKit
 /// 좋아요 수, 댓글 수, 스크랩 수를 나타내는 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class CountLabelTableViewCell: UITableViewCell {
-    /// 좋아요 수를 나타내는 레이블
+    /// 좋아요 수 레이블
     @IBOutlet weak var likeCountLabel: UILabel!
     
-    /// 댓글 수를 나타내는 레이블
+    /// 댓글 수 레이블
     @IBOutlet weak var commentCountLabel: UILabel!
     
-    /// 스크랩 수를 나타내는 레이블
+    /// 스크랩 수 레이블
     @IBOutlet weak var scrapCountLabel: UILabel!
     
 

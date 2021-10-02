@@ -8,7 +8,7 @@
 import Foundation
 
 
-/// 강의평에 대한 모델 클래스
+/// 강의평 모델 클래스
 /// - Author: 남정은(dlsl7080@gmail.com)
 class LectureReview {
     /// 과제 빈도

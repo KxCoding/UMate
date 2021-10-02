@@ -20,13 +20,13 @@ extension  Notification.Name {
 /// 게시글 작성자, 제목, 내용에 관한 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class PostContentTableViewCell: UITableViewCell {
-    /// 작성자 프로필 이미지를 나타낼 이미지 뷰
+    /// 작성자 프로필 이미지 뷰
     @IBOutlet weak var userImageView: UIImageView!
     
-    /// 작성자 이름을 나타낼 레이블
+    /// 작성자 이름 레이블
     @IBOutlet weak var userNameLabel: UILabel!
     
-    /// 작성일을 나타낼 레이블
+    /// 작성일 레이블
     @IBOutlet weak var dateLabel: UILabel!
     
     /// 게시글 제목 레이블

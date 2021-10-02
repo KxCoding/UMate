@@ -9,7 +9,7 @@ import UIKit
 
 
 /// 게시판 목록을 section별로 펼치거나 접는 기능
- /// - Author: 남정은(dlsl7080@gmail.com)
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
     static let expandOrFoldSection = Notification.Name(rawValue: "expandOrFoldSection")
 }
@@ -22,13 +22,13 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
     /// 배경색을 설정하는 뷰
     @IBOutlet weak var backView: UIView!
     
-    /// section이름을 나타내는 레이블
+    /// section이름 레이블
     @IBOutlet weak var titleLabel: UILabel!
     
-    /// 섹션이 접혔을 때 게시판 이름을 나타내는 레이블
+    /// 섹션이 접혔을 때 게시판 이름 레이블
     @IBOutlet weak var summaryLabel: UILabel!
     
-    /// 우측에 넣을 화살표를 나타내는 이미지 뷰
+    /// 우측에 넣을 화살표 이미지 뷰
     @IBOutlet weak var arrowImageView: UIImageView!
     
     /// 게시판 목록 section 버튼

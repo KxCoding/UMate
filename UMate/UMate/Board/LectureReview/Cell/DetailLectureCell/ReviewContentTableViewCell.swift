@@ -12,10 +12,10 @@ import UIKit
 /// 강의에대한 개별 리뷰를 나타내는 테이블 뷰 셀
 /// - Author: 장현우, 김정민
 class ReviewContentTableViewCell: UITableViewCell {
-    /// 별점을 나타내는 뷰
+    /// 별점 뷰
     @IBOutlet weak var ratingView: CosmosView!
     
-    /// 총평을 나타내는 레이블
+    /// 총평 레이블
     @IBOutlet weak var ratingLabel: UILabel!
     
     /// 추천버튼 뷰
@@ -33,10 +33,10 @@ class ReviewContentTableViewCell: UITableViewCell {
     /// 신고 버튼
     @IBOutlet weak var reportButton: UIButton!
     
-    /// 수강학기를 나타내는 레이블
+    /// 수강학기 레이블
     @IBOutlet weak var semesterLabel: UILabel!
     
-    /// 개별 리뷰 내용을 나타내는 레이블
+    /// 개별 리뷰 내용 레이블
     @IBOutlet weak var reviewContentLabel: UILabel!
     
     

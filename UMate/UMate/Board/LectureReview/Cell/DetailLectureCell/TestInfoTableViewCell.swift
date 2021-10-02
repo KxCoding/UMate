@@ -12,16 +12,16 @@ import UIKit
 /// - Author: 남정은(dlsl7080@gmail.com)
 class TestInfoTableViewCell: UITableViewCell {
     // MARK: 시험정보
-    ///시험종류를 나타내는 레이블
+    ///시험종류 레이블
     @IBOutlet weak var kindOfTestLabel: UILabel!
     
-    /// 수강학기를 나타내는 레이블
+    /// 수강학기 레이블
     @IBOutlet weak var semesterLabel: UILabel!
     
-    /// 시험전략을 나타내는 레이블
+    /// 시험전략 레이블
     @IBOutlet weak var testStrategyLabel: UILabel!
     
-    /// 문제유형을 나타내는 레이블
+    /// 문제유형 레이블
     @IBOutlet weak var questionType: UILabel!
     
     /// 문제 예시들을 담는 스택뷰

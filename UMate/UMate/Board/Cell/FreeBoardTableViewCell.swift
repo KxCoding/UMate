@@ -8,28 +8,28 @@
 import UIKit
 
 
-/// 기본 게시판에 게시글 목록을 나타내는 테이블 뷰 셀
+/// 기본 게시판에 게시글 목록 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class FreeBoardTableViewCell: UITableViewCell {
-    /// 게시글 첫번 째 이미지를 나타내는 뷰
+    /// 게시글 첫번 째 이미지 뷰
     @IBOutlet weak var postImageView: UIImageView!
     
-    /// 게시글 제목을 나타내는 레이블
+    /// 게시글 제목 레이블
     @IBOutlet weak var postTitle: UILabel!
     
-    /// 게시글 내용을 나타내는 레이블
+    /// 게시글 내용 레이블
     @IBOutlet weak var postContent: UILabel!
     
-    /// 게시글이 작성된 시간을 나타내는 레이블
+    /// 게시글이 작성된 시간 레이블
     @IBOutlet weak var postTime: UILabel!
     
-    /// 게시글 작성자를 나타내는 레이블
+    /// 게시글 작성자 레이블
     @IBOutlet weak var postWriter: UILabel!
     
-    /// 게시글 좋아요 수를 나타내는 레이블
+    /// 게시글 좋아요 수 레이블
     @IBOutlet weak var likeCount: UILabel!
     
-    /// 게시글 댓글 수를 나타내는 레이블
+    /// 게시글 댓글 수 레이블
     @IBOutlet weak var commentCount: UILabel!
     
     

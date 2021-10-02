@@ -11,7 +11,7 @@ import UIKit
 /// 이미지 확대 화면에 대한 컬렉션 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class ExpandPostImageCollectionViewCell: UICollectionViewCell {
-    /// 상세 게시글 화면에서 이미지 클릭 시에 보여줄 이미지
+    /// 상세 게시글 화면에서 이미지 클릭 시에 보여줄 이미지 뷰
     /// 핀치 제스처 등록할 뷰
     @IBOutlet weak var expandImageView: UIImageView!
     /// 탭 제스처를 등록할 뷰

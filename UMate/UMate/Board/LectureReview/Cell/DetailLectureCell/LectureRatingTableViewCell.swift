@@ -12,33 +12,34 @@ import UIKit
 /// 강의에 대한 총평을 보여주는 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class LectureRatingTableViewCell: UITableViewCell {
-    /// 별점을 나타내는 뷰
+    /// 별점 뷰
     @IBOutlet weak var ratingView: CosmosView!
     
-    /// 별점 점수를 나타내는 레이블
+    /// 별점 점수 레이블
     @IBOutlet weak var ratingLabel: UILabel!
+  
     
     // MARK: 평가 기준
-    /// 과제빈도를 나타내는 레이블
+    /// 과제빈도 레이블
     @IBOutlet weak var assignmentLabel: UILabel!
     
-    /// 조모임 빈도를 나타내는 레이블
+    /// 조모임 빈도 레이블
     @IBOutlet weak var groupMeetingLabel: UILabel!
     
-    /// 평가 기준을 나타내는 레이블
+    /// 평가 기준 레이블
     @IBOutlet weak var evaluationLabel: UILabel!
     
-    /// 출결 방법을 나타내는 레이블
+    /// 출결 방법 레이블
     @IBOutlet weak var attendanceLabel: UILabel!
     
-    /// 시험 횟수를 나타내는 레이블
+    /// 시험 횟수 레이블
     @IBOutlet weak var testNumberLabel: UILabel!
 
     /// Count의 key는 각 항목(Enum의 case)의 rawValue이고 value는 빈도수를 나타냄
     typealias Count = (key: Int, value: Int)
     
     
-    ///  강의의 총평을 나타내는 셀을 초기화 합니다.
+    ///  강의의 총평 셀을 초기화 합니다.
     /// - Parameters:
     ///   - resultReview: 종합 강의평에 대한 정보가 담긴 배열
     ///   - lecture: 선택된 강의에 대한 정보

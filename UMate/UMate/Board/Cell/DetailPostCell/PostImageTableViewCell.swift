@@ -11,7 +11,7 @@ import UIKit
 /// 이미지 컬렉션 뷰가 포함되는 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class PostImageTableViewCell: UITableViewCell {
-    /// 이미지를 나타낼 컬렉션 뷰
+    /// 이미지 컬렉션 뷰
     @IBOutlet weak var postImageCollectionView: UICollectionView!
 
     /// 선택된 게시글
@@ -43,7 +43,7 @@ class PostImageTableViewCell: UITableViewCell {
 extension PostImageTableViewCell: UICollectionViewDataSource {
     /// 게시글에 포함된 이미지 수를 리턴합니다.
     /// - Parameters:
-    ///   - collectionView: 이미지를 나타내는 collectionView
+    ///   - collectionView: 이미지 컬렉션 뷰
     ///   - section: 이미지를 그룹짓는 section
     /// - Returns: 게시글에 포함된 이미지의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -53,9 +53,9 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
     
     /// 셀에 해당하는 이미지를 초기화합니다.
     /// - Parameters:
-    ///   - collectionView: 이미지를 나타내는 collectionView
-    ///   - indexPath: 이미지를 나타내는 셀의 indexPath
-    /// - Returns: 이미지를 나타내는 셀
+    ///   - collectionView: 이미지 컬렉션 뷰
+    ///   - indexPath: 이미지 셀의 indexPath
+    /// - Returns: 이미지 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostImageCollectionViewCell", for: indexPath) as! PostImageCollectionViewCell
         
@@ -75,11 +75,11 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
 /// 이미지 컬렉션 뷰 셀의 레이아웃 조정
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension PostImageTableViewCell: UICollectionViewDelegateFlowLayout {
-    ///  이미지를 나타내는 셀의 사이즈를 나타냅니다.
+    ///  이미지 셀의 사이즈를 리턴합니다.
     /// - Parameters:
-    ///   - collectionView: 이미지를 나타내는 collectionView
-    ///   - collectionViewLayout: collectionView의 layout정보
-    ///   - indexPath: 이미지를 나타내는 셀의 indexPath
+    ///   - collectionView: 이미지 컬렉션 뷰
+    ///   - collectionViewLayout: 컬렉션 뷰의 레이아웃 정보
+    ///   - indexPath: 이미지 셀의 indexPath
     /// - Returns: 이미지 셀의 사이즈
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 

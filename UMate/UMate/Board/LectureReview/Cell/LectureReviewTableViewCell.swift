@@ -12,16 +12,16 @@ import UIKit
 /// 강의평 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class LectureReviewTableViewCell: UITableViewCell {
-    /// 교과목명을 나타내는 레이블
+    /// 교과목명 레이블
     @IBOutlet weak var lectureTitleLabel: UILabel!
     
     /// 강의평의 별점을 보여주는 뷰
     @IBOutlet weak var ratingView: CosmosView!
     
-    /// 수강학기를 나타내는 레이블
+    /// 수강학기 레이블
     @IBOutlet weak var semesterLabel: UILabel!
     
-    /// 리뷰내용을 나타내는 레이블
+    /// 리뷰내용 레이블
     @IBOutlet weak var reviewContentLabel: UILabel!
     
     

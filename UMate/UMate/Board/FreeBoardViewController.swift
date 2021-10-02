@@ -10,10 +10,10 @@ import CoreMedia
 import CoreMIDI
 
 
-/// 기본 게시판에 관한 뷰 컨트롤러
+/// 기본 게시판 뷰 컨트롤러
 /// - Author: 김정민, 남정은(dlsl7080@gmail.com)
 class FreeBoardViewController: CommonViewController {
-    /// 선택된 게시판의 게시글 목록을 나타내는 테이블 뷰
+    /// 선택된 게시판의 게시글 목록 테이블 뷰
     @IBOutlet weak var postListTableView: UITableView!
     
     /// 게시글 작성 버튼
@@ -25,6 +25,7 @@ class FreeBoardViewController: CommonViewController {
     
     
     /// 검색 버튼을 눌렀을 시에 SearchViewController로 이동합니다.
+    /// - Parameter sender: 검색 버튼
     /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func showSearchViewController(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "searchSegue", sender: self)
@@ -52,6 +53,7 @@ class FreeBoardViewController: CommonViewController {
     }
     
     
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -120,12 +122,12 @@ class FreeBoardViewController: CommonViewController {
 
 
 
-/// 기본 게시판에 대한 게시글 목록을 나타냄
+/// 기본 게시판 게시글 목록
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension FreeBoardViewController: UITableViewDataSource {
-    ///  게시글 수를 나타냅니다.
+    ///  게시글 수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 게시글 목록을 나타내는 tableView
+    ///   - tableView: 게시글 목록 테이블 뷰
     ///   - section: 게시글을 나누는 section
     /// - Returns: 게시글 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,17 +135,17 @@ extension FreeBoardViewController: UITableViewDataSource {
     }
     
     
-    /// 게시글 목록을 나타내는 셀을 설정합니다.
+    /// 게시글 목록 셀을 설정합니다.
     /// - Parameters:
-    ///   - tableView: 게시글 목록을 나타내는 tableView
-    ///   - indexPath: 게시글 목록을 나타내는 셀의 indexPath
-    /// - Returns: 게시글 목록을 나타내는 셀
+    ///   - tableView: 게시글 목록 테이블 뷰
+    ///   - indexPath: 게시글 목록 셀의 indexPath
+    /// - Returns: 게시글 목록 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
         
         guard let post = selectedBoard?.posts[indexPath.row] else { return cell }
         
-        // 게시글 목록에 대한 cell 초기화
+        // 게시글 목록 셀 초기화
         cell.configure(post: post)
         return cell
     }

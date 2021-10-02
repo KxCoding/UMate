@@ -8,10 +8,10 @@
 import UIKit
 
 
-/// 최근 강의평 목록이 나오는 화면에 대한 뷰 컨트롤러
+/// 최근 강의평 목록 뷰 컨트롤러
 /// - Author: 김정민, 남정은(dlsl7080@gmail.com)
 class LectureReviewBoardViewController: UIViewController {
-    /// 강의평을 나타내는 테이블 뷰
+    /// 강의평 테이블 뷰
     @IBOutlet weak var lectureReviewListTableView: UITableView!
     
     
@@ -134,6 +134,7 @@ class LectureReviewBoardViewController: UIViewController {
     }
     
     
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -176,9 +177,9 @@ extension LectureReviewBoardViewController: UISearchBarDelegate {
 /// 강의평을 나타냄
 /// - Author: 김정민, 남정은(dlsl7080@gmail.com)
 extension LectureReviewBoardViewController: UITableViewDataSource {
-    /// section 안에 들어갈 row의 수를 나타냅니다.
+    /// section 안에 들어갈 row의 수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 강의평 목록을 나타내는 tableView
+    ///   - tableView: 강의평 목록 테이블 뷰
     ///   - section: 강의평 목록을 나누는 section
     /// - Returns: section 안에 들어갈 row의 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -189,11 +190,11 @@ extension LectureReviewBoardViewController: UITableViewDataSource {
     }
     
     
-    /// 강의평 목록을 나타내는 셀을 구성합니다.
+    /// 강의평 목록 셀을 구성합니다.
     /// - Parameters:
-    ///   - tableView: 강의평 목록을 나타내는 tableView
-    ///   - indexPath: 강의평을 나타내는 셀의 indexPath
-    /// - Returns: 강의평을 나타내는 셀
+    ///   - tableView: 강의평 목록 테이블 뷰
+    ///   - indexPath: 강의평 셀의 indexPath
+    /// - Returns: 강의평 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewTableViewCell", for: indexPath) as! LectureReviewTableViewCell
         
@@ -216,10 +217,10 @@ extension LectureReviewBoardViewController: UITableViewDataSource {
 /// 강의평 tableView header를 설정
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension LectureReviewBoardViewController: UITableViewDelegate {
-    /// section header의 높이를 나타냅니다.
+    /// section header의 높이를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 강의평을 나타내는 tableView
-    ///   - section: 강의평을 나누는 section
+    ///   - tableView: 강의평 목록 테이블 뷰
+    ///   - section: 강의평 목록을 나누는 section
     /// - Returns: header의 높이
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
@@ -228,8 +229,8 @@ extension LectureReviewBoardViewController: UITableViewDelegate {
     
     /// section header를 구성합니다.
     /// - Parameters:
-    ///   - tableView: 강의평을 나타내는 tableView
-    ///   - section: 강의평을 나누는 section
+    ///   - tableView: 강의평 목록 테이블 뷰
+    ///   - section: 강의평 목록을 나누는 section
     /// - Returns: header를 나타내는 뷰
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewHeaderTableViewCell") as! LectureReviewHeaderTableViewCell
