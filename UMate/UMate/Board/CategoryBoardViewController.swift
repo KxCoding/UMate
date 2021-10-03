@@ -65,11 +65,16 @@ class CategoryBoardViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 게시글 작성 버튼의 테마 설정
-        // - Author: 김정민(kimjm010@icloud.com)
-        composeBtn.setToEnabledButtonTheme()
 
-        // 네비게이션 바에 타이틀 초기화
+        #if DEBUG
+        print(selectedBoard?.posts, selectedBoard?.categoryNames, selectedBoard?.categoryNumbers, selectedBoard?.boardTitle)
+        #endif
+        
+        // 게시글 작성 버튼의 테마 설정
+        composeBtn.setButtonTheme()
+        
+        /// 네비게이션 바에 타이틀 초기화
+        /// - Author: 남정은
         self.navigationItem.title = selectedBoard?.boardTitle
         
         // 카테고리 별로 필터링되기 전 게시글 배열 초기화
@@ -130,6 +135,7 @@ class CategoryBoardViewController: CommonViewController {
 
 
 
+
 /// 카테고리 게시판의 카테고리 목록
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension CategoryBoardViewController: UICollectionViewDataSource {
@@ -170,6 +176,7 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
         return cell
     }
 }
+
 
 
 
@@ -231,6 +238,7 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
 
 
 
+
 /// 카테고리 목록 컬렉션 뷰의 레이아웃 조정
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
@@ -281,6 +289,7 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
         return .zero
     }
 }
+
 
 
 

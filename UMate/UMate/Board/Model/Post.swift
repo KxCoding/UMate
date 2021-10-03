@@ -37,6 +37,7 @@ class Post {
             case QNA = 3011
             case review = 3012
         }
+        
     }
     
     /// 게시글에 들어갈 이미지를 담는 배열

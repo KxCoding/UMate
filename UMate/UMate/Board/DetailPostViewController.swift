@@ -210,13 +210,13 @@ class DetailPostViewController: CommonViewController {
     /// - Author: 김정민
     func deleteComment(_ indexPath: IndexPath) {
         
-        alertDelete(title: "알림", message: "댓글을 삭제할까요?") { _ in
+        alertVersion2(title: "알림", message: "댓글을 삭제할까요?", handler: { _ in
             if indexPath.section == 3 {
-                dummyCommentList.remove(at: indexPath.row)
+                self.sortedCommentList.remove(at: indexPath.row)
             }
             
             self.detailPostTableView.reloadData()
-        }
+        }, handler2: nil)
     }
 }
 
@@ -352,11 +352,10 @@ extension DetailPostViewController: UITableViewDelegate {
         if indexPath.section == 3 {
             let removeComment = UIContextualAction(style: .destructive, title: "댓글 삭제") { [weak self] action, v, completion in
                 
-                self?.alertDelete(title: "알림", message: "댓글을 삭제할까요?") { _ in
-                    dummyCommentList.remove(at: indexPath.row)
-                    
+                self?.alertVersion2(title: "알림", message: "댓글을 삭제할까요?", handler: { _ in
+                    self?.sortedCommentList.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .automatic)
-                }
+                }, handler2: nil)
                 
                 completion(true)
             }

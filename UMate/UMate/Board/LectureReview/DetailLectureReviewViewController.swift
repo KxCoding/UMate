@@ -21,6 +21,7 @@ class DetailLectureReviewViewController: CommonViewController {
     var isSelected = true
     
     
+
     /// 강의평 쓰기와 시험정보 쓰기 버튼 클릭 시 화면을 이동합니다.
     /// - Parameter sender: UIButton. tag == 2는 '새 강의평 쓰기' 버튼, 나머지는 '시험정보 공유' 버튼을 나타냅니다.
     /// - Author: 김정민, 남정은(dlsl7080@gmail.com)
