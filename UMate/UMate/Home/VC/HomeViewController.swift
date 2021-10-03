@@ -92,6 +92,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         
         switch type {
         case .main(_):
+            // portrait 모드일 경우에 셀을 4등분으로 만듭니다.
             if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular {
                 let width = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing * 3 + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 4
                 
@@ -102,6 +103,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             
             var height = width * 1.0
             
+            // compact 모드일 경우에 3등분으로 셀을 만듭니다.
             if view.frame.width > view.frame.height {
                 height = width * 0.3
                 width = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing * 2 + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 3

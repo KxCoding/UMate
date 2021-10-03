@@ -13,8 +13,11 @@ class CommonViewController {
     
     private init() { }
 
+    /// 편집이 활성화 된 텍스트 필드
+    /// 텍스트 필드 델리게이트로 해당 속성을 편집 시작과 끝날 때 초기화를 하고. 이 속성으로 키보드가 텍스트 필드를 가릴 때 화면을 올리는 데 사용합니다.
+    var activetedTextField: UITextField? = nil
     
-    /// go to homeVC
+    /// 홈화면으로 가는 메소드입니다.
     func transitionToHome() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainTabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")

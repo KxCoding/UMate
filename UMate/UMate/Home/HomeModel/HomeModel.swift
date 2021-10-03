@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// 셀타입 열거형으로 만들고 연관값 사용
-/// 속성 전부 동일하나 구분지어 사용해야하기 때문에 연관값을 사용
+/// 셀의 카테고리 구분을 위해 열거형으로 구현
+/// 속성 전부 동일하나 구분 지어 사용해야 하기 때문에 연관 값을 사용했습니다.
 /// Author: 황신택
 enum HomeViewCellType {
     /// 홈뷰 컨트롤러의 4개의 게시판
@@ -21,11 +21,16 @@ enum HomeViewCellType {
     case contest(HomeViewCellData)
 }
 
-/// 홈뷰 구성화면 데이타
+/// 홈뷰 데이타 입니다
 /// Author: 황신택
 struct HomeViewCellData {
+    /// 카테고리 타이틀
     let cellTitle: String
+    
+    /// 상세내용
     let detailTitle: String?
+    
+    /// 카테고리 이미지 문자열
     let backgoundImageName: String
 }
 

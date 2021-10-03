@@ -7,15 +7,16 @@
 
 import UIKit
 
-/// 채용정보 뷰를 담당하는 클래스
+/// 채용정보 뷰를 담당하는 클래스 입니다.
 /// Author: 황신택
 class EmploymentInfoViewController: UIViewController {
-    /// 테이블뷰 아울렛
+    /// 테이블뷰
     @IBOutlet weak var listTableView: UITableView!
     
+    /// 채용정보 서치바
     @IBOutlet weak var searchBar: UISearchBar!
     
-    /// Json파싱 데이타
+    /// Json파싱 데이타 리스트
     var jobList = [JobData.Job]()
     
     /// 검색시 나오는 회사 리스트
@@ -25,15 +26,14 @@ class EmploymentInfoViewController: UIViewController {
     var isSerching = false
     
     
-    
     /// 이전화면으로 돌아 갑니다.
-    /// - Parameter sender: UiButton
+    /// - Parameter sender: UIButton에 전달되고 탭할시 이전화면으로 갑니다.
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    /// Json 데이타를 파싱하고 파싱된 데이타를 jobList에 아이디를 오름차순으로 저장합니다.
+    /// Json 데이터를 파싱 하고 파싱 된 데이터를 jobList에 아이디를 오름차순으로 저장합니다.
     func getJobData() {
         DispatchQueue.global().async {
             guard let jobData = DataManager.shared.getObject(of: JobData.self, fromJson: "companies") else { return }
@@ -55,6 +55,7 @@ class EmploymentInfoViewController: UIViewController {
         super.viewDidLoad()
         // 네비게이션 왼쪽 바버튼 다크로드 라이트모드 지원
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
+        
         // 파싱 메소드 호출
         getJobData()
         
@@ -76,7 +77,7 @@ extension EmploymentInfoViewController: UISearchBarDelegate {
     /// 등록된 모든 회사 이름 또는 분야의 이름 접두어 개수와 서치바에 입력된 문자열 접두어를 비교합니다.
     /// - Parameters:
     ///   - searchBar: searchBar
-    ///   - searchText: searchText
+    ///   - searchText: 입력된 텍스트를 필터링하여 테이블뷰를 리로드합니다.
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         DispatchQueue.global().async {
             self.isSerching = true

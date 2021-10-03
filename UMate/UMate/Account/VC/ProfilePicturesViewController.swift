@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// 새로운 노티피케이션 이름 생성
-/// 사진을 탭할시 포스팅에 필요한 노티피케이션 이름
+
+/// 사진을 탭할시 포스팅에 필요한 노티피케이션 이름 입니다.
 extension Notification.Name {
     static let didTapProfilePics = Notification.Name("didTapProfilePics")
 }
@@ -19,8 +19,8 @@ class ProfilePicturesViewController: UIViewController {
     /// UserDefaults에 button의 tag값을 저장할때 사용되는 키
     static let picsKey = "picsKey"
     
-    /// 사진을 선택시 dismiss, 취소 버튼도 동일
-    /// - Parameter sender: Any
+    /// 사진을 선택시 이전화면으로 돌아갑니다.
+    /// - Parameter sender: UIButton에 전달되고 이전화면으로 갑니다.
     @IBAction func cancelProfileView(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
