@@ -65,7 +65,7 @@ class EmailVerifyViewController: UIViewController {
         super.viewDidLoad()
         // 버튼 모양 끝에 살짝 동그랗게
         [sendCodeButton, emailVerificationButton].forEach({
-            $0?.setButtonTheme()
+            $0?.setToEnabledButtonTheme()
         })
         
         // 텍스트필드 뷰 깎기

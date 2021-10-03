@@ -7,24 +7,43 @@
 
 import UIKit
 
-class SchoolAuthTableViewController: UITableViewController {
 
+/// 사용자 계정 설정의 학교 인증 선택 화면 ViewController 클래스
+
+/// 3가지 방법 중 학교 인증 선택 방법을 선택하여 수행합니다.
+/// - Author: 안상희
+class SchoolAuthTableViewController: UITableViewController {
+    /// 합격자 인증 UIView
     @IBOutlet weak var authContainerView1: UIView!
+    
+    /// 재학생 인증 UIView
     @IBOutlet weak var authContainerView2: UIView!
+    
+    /// 졸업생 인증 UIView
     @IBOutlet weak var authContainerView3: UIView!
     
-    @IBAction func authButton1(_ sender: Any) {
-        print("1")
-    }
-    @IBAction func authButton2(_ sender: Any) {
-        print("2")
-    }
-    @IBAction func authButton3(_ sender: Any) {
-        print("3")
+    
+    /// 합격자 인증을 위한 작업을 수행합니다.
+    /// - Parameter sender: 합격자 인증 버튼
+    @IBAction func authButton1(_ sender: UIButton) {
     }
     
     
+    /// 재학생 인증을 위한 작업을 수행합니다.
+    /// - Parameter sender: 재학생 인증 버튼
+    @IBAction func authButton2(_ sender: UIButton) {
+    }
     
+    
+    /// 졸업생 인증을 위한 작업을 수행합니다.
+    /// - Parameter sender: 졸업생 인증 버튼
+    @IBAction func authButton3(_ sender: UIButton) {
+    }
+    
+    
+    /// ViewController가 메모리에 로드되면 호출됩니다.
+    ///
+    /// View의 초기화 작업을 진행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
 

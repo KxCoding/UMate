@@ -9,15 +9,14 @@ import UIKit
 
 
 /// 게시글 모델 클래스
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gmail.com)
 class Post {
-    /// 여기서 all은 카테고리를 선택하지 않을 경우를 나타냄
-    /// 카테고리 게시판은 무조건 글 작성시에 카테고리를 선택하도록 되어있음.
-    /// 카테고리를 나타내는 구조체
-    /// - Author: 남정은
+    /// 카테고리 구조체
+    ///
+    /// 여기서 all은 카테고리를 선택하지 않을 경우를 나타냅니다.
+    /// 카테고리 게시판은 무조건 글 작성 시에 카테고리를 선택하도록 되어있습니다.
     struct Category {
-        /// 홍보게시판에 들어갈 카테고리를 나타내는 열거형
-        /// - Author: 남정은
+        /// 홍보게시판에 들어갈 카테고리
         enum Publicity: Int {
             case all = 2000
             case lectureAndEvent = 2001
@@ -25,16 +24,14 @@ class Post {
             case etcetera = 2003
         }
         
-        /// 동아리•학회 게시판에 들어갈 카테고리를 나타내는 열거형
-        /// - Author: 남정은
+        /// 동아리•학회 게시판에 들어갈 카테고리
         enum Club: Int {
             case all = 2010
             case inside = 2011
             case union = 2012
         }
         
-        /// 취업•진로 게시판에 들어갈 카테고리를 나타내는 열거형
-        /// - Author: 남정은
+        /// 취업•진로 게시판에 들어갈 카테고리
         enum Career: Int {
             case all = 3010
             case QNA = 3011
@@ -43,7 +40,7 @@ class Post {
         
     }
     
-    /// 게시글에 들어갈 이미지들
+    /// 게시글에 들어갈 이미지를 담는 배열
     let images: [UIImage?]
     
     /// 게시글 제목
@@ -93,15 +90,15 @@ class Post {
 
 
 /// 더미데이터를 만들 때 allCases활용
-/// - Author: 남정은
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension Post.Category.Publicity: CaseIterable { }
 extension Post.Category.Club: CaseIterable { }
 extension Post.Category.Career: CaseIterable { }
 
 
 
-/// 카테고리명에 접근하기위해 사용
-/// - Author: 남정은
+/// 카테고리명에 접근하기 위해 사용
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension Post.Category.Publicity: CustomStringConvertible {
     public var description: String {
         switch self {
@@ -119,8 +116,8 @@ extension Post.Category.Publicity: CustomStringConvertible {
 
 
 
-/// 카테고리명에 접근하기위해 사용
-/// - Author: 남정은
+/// 카테고리명에 접근하기 위해 사용
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension Post.Category.Club: CustomStringConvertible {
     public var description: String {
         switch self {
@@ -136,8 +133,8 @@ extension Post.Category.Club: CustomStringConvertible {
 
 
 
-/// 카테고리명에 접근하기위해 사용
-/// - Author: 남정은
+/// 카테고리명에 접근하기 위해 사용
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension Post.Category.Career: CustomStringConvertible {
     public var description: String {
         switch self {

@@ -8,17 +8,11 @@
 import UIKit
 
 
-/// 검색화면에대한 클래스
-/// - Author: 남정은
+/// 검색화면 뷰 컨트롤러
+/// - Author: 남정은(dlsl7080@gmail.com)
 class SearchViewController: UIViewController {
     /// 검색된 게시글을 보여줄 테이블 뷰
     @IBOutlet weak var postListTableView: UITableView!
-    
-    /// 테이블 뷰와 네비게이션 바 사이의 여백을 조절하는 뷰
-    var tableViewHeaderView: UIView = {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 5))
-        return headerView
-    }()
     
     /// 서치 바와의 상호작용을 기반으로 검색 결과 화면을 관리하는 뷰 컨트롤러
     let searchController = UISearchController(searchResultsController: nil)
@@ -32,8 +26,11 @@ class SearchViewController: UIViewController {
     /// 검색어에 따라서 필터링한 게시글을 담을 배열
     var filteredPostList: [Post] = []
     
-    
-    /// 검색된 게시물을 클릭했을 때 데이터 전달
+
+    /// 검색된 게시물을 클릭했을 때 데이터를 전달합니다.
+    /// - Parameters:
+    ///   - segue: 호출된 segue
+    ///   - sender: segue가 시작된 객체
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? UITableViewCell,
            let indexPath = postListTableView.indexPath(for: cell) {
@@ -45,13 +42,14 @@ class SearchViewController: UIViewController {
     }
     
     
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        postListTableView.tableHeaderView = tableViewHeaderView
         
+        // 서치바 초기화
         setupSearchBar()
         
-        ///검색 전에는 tableView 표시 안함
+        //검색 전에는 테이블 뷰 표시 안함
         postListTableView.alpha = 0
     }
     
@@ -70,59 +68,69 @@ class SearchViewController: UIViewController {
 
 
 
-/// 서치 바에대한 동작 처리
+/// 서치 바에 대한 동작 처리
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension SearchViewController: UISearchBarDelegate {
-    /// search text가 변경될 때마다 호출
+    /// 검색내용이 변경될 때마다 호출됩니다.
     /// - Parameters:
-    ///   - searchBar: 편집되고 있는 search bar
+    ///   - searchBar: 편집중인 서치 바
     ///   - searchText: search textField의 현재 text
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        /// 검색 시작시 tableView 표시
+        // 검색 시작 시 tableView 표시
         postListTableView.alpha = 1
         
         guard let posts = selectedBoard?.posts else { return }
         
-        /// 검색 결과에 따라서 필터링 된 게시물을 배열에 저장
+        // 검색 결과에 따라서 필터링 된 게시물을 배열에 저장
         filteredPostList = posts.filter({ post in
             return post.postTitle.lowercased().contains(searchText.lowercased()) ||
                 post.postContent.lowercased().contains(searchText.lowercased())
         })
         
-        /// 검색 텍스트를 저장
+        // 검색 텍스트를 저장
         cachedText = searchText
         postListTableView.reloadData()
     }
     
     
-    /// 검색어 입력이 끝났을 시에 호출
-    /// - Parameter searchBar: 편집되는 search bar
+    /// 검색 내용 편집이 끝났을 시에 호출됩니다.
+    /// - Parameter searchBar: 편집중인 서치 바
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        /// 검색 텍스트가 있고, 검색 결과가 있다면 검색내용 유지
+        // 검색 텍스트가 있고, 검색 결과가 있다면 검색내용 유지
         if let text = cachedText, !(text.isEmpty || filteredPostList.isEmpty) {
             searchController.searchBar.text = text
         }
     }
     
     
-    /// 검색버튼 혹은 return 버튼을 눌렀을 시에 호출
-    /// - Parameter searchBar: The search bar that was tapped.
+    /// 검색버튼 혹은 return 버튼을 눌렀을 시에 호출됩니다.
+    /// - Parameter searchBar: 편집중인 서치 바
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        /// 리턴 버튼 눌렀을 시에 검색 종료
+        // 리턴 버튼 눌렀을 시에 검색 종료
         searchController.isActive = false
     }
 }
 
 
 
-/// 검색 리스트를 나타낼 테이블 뷰에대한 데이터소스
+/// 검색 리스트를 나타냄
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension SearchViewController: UITableViewDataSource {
-    /// 필터링된 개시글 수 리턴
+    /// 검색결과를 통해 필터링 된 게시글 수를 리턴합니다.
+    /// - Parameters:
+    ///   - tableView: 검색결과 테이블 뷰
+    ///   - section: 게시글을 나누는 section
+    /// - Returns: 필터링 된 게시글 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredPostList.count
     }
     
     
-    /// 필터링된 게시글 목록을 셀에 초기화
+    /// 게시글 셀을 구성합니다.
+    /// - Parameters:
+    ///   - tableView: 검색결과 테이블 뷰
+    ///   - indexPath: 게시글 셀의 indexPath
+    /// - Returns: 검색된 게시글 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell

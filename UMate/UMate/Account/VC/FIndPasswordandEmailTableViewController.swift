@@ -103,7 +103,7 @@ class FindPasswordandEmailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         /// 규격화한 버튼 모양으로 만듬.
-        findIdButton.setButtonTheme()
+        findIdButton.setToEnabledButtonTheme()
         /// activatedBar 컬러 초기화 라이트 다크 모드에 따라서
         activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
         /// leftBarButtonItem 컬러 초기화 라이트 다크 모드에 따라서

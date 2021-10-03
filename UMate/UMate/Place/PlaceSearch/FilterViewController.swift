@@ -62,8 +62,6 @@ class FilterViewController: UIViewController {
 
 
 
-/// 필터 화면 테이블뷰의 데이터를 관리하고 셀을 제공하기 위해 채택한 데이터소스 프로토콜
-/// - Author: 장현우(heoun3089@gmail.com)
 extension FilterViewController: UITableViewDataSource {
     /// 데이터 소스 객체에게 지정된 섹션에 있는 행의 수를 물어봅니다.
     /// - Parameters:

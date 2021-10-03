@@ -33,7 +33,7 @@ class ReviewListTableViewCell: UITableViewCell {
     /// - Author: 장현우(heoun3089@gmail.com)
     func configure(with reviewItem: PlaceReviewItem) {
         placeTitleLabel.text = reviewItem.placeName
-        dateLabel.text = reviewItem.date
+        dateLabel.text = reviewItem.date.reviewDate
         contentLabel.text = reviewItem.reviewText
         storeImageView.image = reviewItem.image
     }

@@ -48,7 +48,7 @@ class PlaceInfoViewController: UIViewController {
     /// 리뷰 요약 데이터
     /// - Author: 장현우(heoun3089@gmail.com)
     var review = PlaceReviewItem(reviewText: "분위기 너무 좋아요",
-                                 date: "2021.06.01",
+                                 date: Date(),
                                  image: UIImage(named: "search_00"),
                                  placeName: "오오비",
                                  starPoint: 4.5,
@@ -265,9 +265,12 @@ extension PlaceInfoViewController: UITableViewDataSource {
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "UserReviewTableViewCell", for: indexPath) as! UserReviewTableViewCell
             
-            cell.reviewTextLabel.text = PlaceReviewItem.dummyData[indexPath.row].reviewText
-            cell.dateLabel.text = PlaceReviewItem.dummyData[indexPath.row].date
-            cell.recommendationCountLabel.text = PlaceReviewItem.dummyData[indexPath.row].recommendationCount.description
+            let target = PlaceReviewItem.dummyData[indexPath.row]
+            cell.userPointView.rating = target.starPoint
+            cell.userPointLabel.text = "\(target.starPoint)"
+            cell.reviewTextLabel.text = target.reviewText
+            cell.dateLabel.text = target.date.reviewDate
+            cell.recommendationCountLabel.text = target.recommendationCount.description
             
             return cell
             

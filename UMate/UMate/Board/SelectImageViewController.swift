@@ -13,7 +13,9 @@ import MobileCoreServices
 
 /// 게시글에 첨부할 이미지를 선택하는 뷰컨트롤러
 /// - Author: 김정민(kimjm010@icloud.com)
-class SelectImageViewController: RemoveObserverViewController {
+
+class SelectImageViewController: CommonViewController {
+
     
     /// 게시글 작성 시 이미지 첨부를 위한 아울렛
     @IBOutlet weak var imageCollectionView: UICollectionView!

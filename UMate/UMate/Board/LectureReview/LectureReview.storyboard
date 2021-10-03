@@ -1048,6 +1048,7 @@
                                                                 <imageReference key="image" image="xmark" catalog="system"/>
                                                             </state>
                                                             <connections>
+                                                                <action selector="showDetailLectureVC:" destination="w6B-F2-rcx" eventType="touchUpInside" id="lJV-Tt-h0g"/>
                                                                 <segue destination="eJ4-CT-gfa" kind="unwind" unwindAction="unwindToDetailLectureReview:" id="cHN-Op-oxl"/>
                                                             </connections>
                                                         </button>
@@ -1682,7 +1683,7 @@
                                             <outlet property="selectTestView" destination="FJH-hi-sJs" id="6gw-q1-rM0"/>
                                             <outlet property="semesterLabel" destination="VRr-PH-zbL" id="Y0O-gI-1PC"/>
                                             <outlet property="subjectiveButton" destination="Itg-ZZ-Bez" id="ihD-eA-4Pu"/>
-                                            <outlet property="testInfoStackView" destination="uAX-OB-zCU" id="yQL-Hc-4He"/>
+                                            <outlet property="testExampleStackView" destination="uAX-OB-zCU" id="8pV-iD-cDs"/>
                                             <outlet property="testLabel" destination="tlr-Jh-XUK" id="67h-94-Qx9"/>
                                             <outlet property="testStrategyTextView" destination="F6w-Jq-ENm" id="jyx-1j-xEq"/>
                                             <outlet property="thirdTextFieldStackView" destination="aii-BN-GQk" id="O8Q-Ro-o1F"/>
@@ -2137,15 +2138,15 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OverviewTableViewCell" rowHeight="436" id="cyH-IX-40i" customClass="OverviewTableViewCell" customModule="UMate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="595" width="414" height="436"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OverviewTableViewCell" rowHeight="468" id="cyH-IX-40i" customClass="OverviewTableViewCell" customModule="UMate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="595" width="414" height="468"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cyH-IX-40i" id="apa-mY-utC">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="436"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="468"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="SkD-At-N6R">
-                                                    <rect key="frame" x="20" y="79" width="374" height="128"/>
+                                                    <rect key="frame" x="20" y="79" width="374" height="160"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FOf-9F-5UB">
                                                             <rect key="frame" x="0.0" y="0.0" width="252" height="55"/>
@@ -2225,16 +2226,16 @@
                                                             </constraints>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="27A-y3-bq9">
-                                                            <rect key="frame" x="0.0" y="65" width="374" height="63"/>
+                                                            <rect key="frame" x="0.0" y="65" width="374" height="95"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수강학기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-qq-VbA">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="48.5" height="13"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="48.5" height="45"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q5F-38-Dtq">
-                                                                    <rect key="frame" x="0.0" y="23" width="374" height="40"/>
+                                                                    <rect key="frame" x="0.0" y="55" width="374" height="40"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="250" translatesAutoresizingMaskIntoConstraints="NO" id="rD1-Ii-oAW">
                                                                             <rect key="frame" x="10" y="0.0" width="354" height="40"/>
@@ -2286,7 +2287,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vWA-Kh-22P">
-                                                    <rect key="frame" x="20" y="215" width="374" height="150"/>
+                                                    <rect key="frame" x="20" y="247" width="374" height="150"/>
                                                     <color key="backgroundColor" name="systemGray6BackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="150" id="PhT-qI-d9F"/>
@@ -2296,7 +2297,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iCX-Ns-xPi">
-                                                    <rect key="frame" x="20" y="385" width="374" height="40"/>
+                                                    <rect key="frame" x="20" y="417" width="374" height="40"/>
                                                     <color key="backgroundColor" name="black"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="RAL-n8-KLp"/>
@@ -2327,7 +2328,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이 강의에 대한 총평을 작성해주세요." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfH-gd-tH8">
-                                                    <rect key="frame" x="25" y="223" width="364" height="17"/>
+                                                    <rect key="frame" x="25" y="255" width="364" height="17"/>
                                                     <color key="tintColor" name="black"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>

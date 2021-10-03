@@ -8,8 +8,8 @@
 import UIKit
 
 
-/// 이미지 클릭시 뷰 컨트롤러에서 처리되는 동작에대한 노티피케이션
-/// - Author: 남정은
+/// 이미지 클릭 시 뷰 컨트롤러에서 처리되는 동작에 대한 노티피케이션
+/// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
     static let showImageVC = Notification.Name(rawValue: "showImageVC")
     static let sendImageView = Notification.Name(rawValue: "sendImageView")
@@ -17,8 +17,8 @@ extension Notification.Name {
 
 
 
-/// 테이블 뷰 셀안에 포함된 컬렉션 뷰 셀에대한 클래스
-/// - Author: 남정은
+/// 테이블 뷰 셀 안에 포함된 컬렉션 뷰 셀
+/// - Author: 남정은(dlsl7080@gmail.com)
 class PostImageCollectionViewCell: UICollectionViewCell {
    /// 게시물 이미지가 표시되는 이미지 뷰
     @IBOutlet weak var postImageView: UIImageView!
@@ -33,16 +33,16 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     var index: Int?
     
     
-    /// 이미지를 클릭시에 처리할 동작
-    @IBAction func postNotification(_ sender: Any) {
-        
-        /// DetailPostViewController에서 performSegue를 실행하도록 함.
+    /// 이미지를 클릭 시에 이미지를 확대해서 보여줍니다.
+    /// - Parameter sender: UIButton. 사진크기의 버튼입니다.
+    @IBAction func postNotification(_ sender: UIButton) {
+        // DetailPostViewController에서 performSegue를 실행하도록 함
         NotificationCenter.default.post(name: .showImageVC, object: nil)
         
         guard let selectedPost = selectedPost, let index = index else {
             return
         }
-        /// ExpandImageViewController에서 컬렉션 뷰에 이미지를 설정하도록 함.
+        // ExpandImageViewController에서 컬렉션 뷰에 이미지를 설정하도록 함
         NotificationCenter.default.post(name: .sendImageView, object: nil,
                                         userInfo: ["post": selectedPost, "index": index])
     }
@@ -51,7 +51,7 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        /// 이미지 그림자 설정
+        // 이미지 그림자 설정
         layer.cornerRadius = postImageView.frame.height * 0.03
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 1, height: 1)

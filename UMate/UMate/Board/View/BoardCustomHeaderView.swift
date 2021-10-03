@@ -8,54 +8,59 @@
 import UIKit
 
 
-/// 게시판 목록 화면에 expandable board에 들어갈 헤더
-/// - Author: 남정은
+/// 게시판 목록을 section별로 펼치거나 접는 기능
+/// - Author: 남정은(dlsl7080@gmail.com)
+extension Notification.Name {
+    static let expandOrFoldSection = Notification.Name(rawValue: "expandOrFoldSection")
+}
+
+
+
+/// 게시판 목록 화면에 expandable board에 들어갈 headerView
+/// - Author: 남정은(dlsl7080@gmail.com)
 class BoardCustomHeaderView: UITableViewHeaderFooterView {
-    /// 섹션이름을 나타낼 레이블
-    let title = UILabel()
+    /// 배경색을 설정하는 뷰
+    @IBOutlet weak var backView: UIView!
     
-    /// 섹션이 접혔을 때 게시판 이름을 나타낼 레이블
-    let summary = UILabel()
+    /// section이름 레이블
+    @IBOutlet weak var titleLabel: UILabel!
     
-    /// 우측에 넣을 화살표를 나타낼 이미지 뷰
-    let image = UIImageView()
+    /// 섹션이 접혔을 때 게시판 이름 레이블
+    @IBOutlet weak var summaryLabel: UILabel!
+    
+    /// 우측에 넣을 화살표 이미지 뷰
+    @IBOutlet weak var arrowImageView: UIImageView!
+    
+    /// 게시판 목록 section 버튼
+    @IBOutlet weak var expandOrFoldButton: UIButton!
     
     
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        configureContents()
+    /// 버튼을 눌렀을 때 게시판 목록을 section에 따라서 펼치거나 접습니다.
+    /// - Parameter sender: UIButton. section에서 펼침/접힘 동작을 담당하는 버튼입니다.
+    @IBAction func expandOrFoldSection(_ sender: UIButton) {
+        let section = sender.tag
+        
+        // expandableBoard의 펼침/접힘에 대한 속성 변경
+        expandableBoardList[section - 2].isExpanded = !expandableBoardList[section - 2].isExpanded
+        
+        NotificationCenter.default.post(name: .expandOrFoldSection, object: nil, userInfo: ["section": section])
     }
     
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    func configureContents() {
-        /// 코드로 제약을 조정하기 위한 속성
-        title.translatesAutoresizingMaskIntoConstraints = false
-        summary.translatesAutoresizingMaskIntoConstraints = false
-        image.translatesAutoresizingMaskIntoConstraints = false
+    ///  section header를 초기화합니다.
+    /// - Parameter section: 초기화할 header의 section
+    func configure(section: Int) {
+        expandOrFoldButton.tag = section
         
-        /// 헤더를 만들기 위해 필요한 뷰 추가
-        contentView.addSubview(title)
-        contentView.addSubview(summary)
-        contentView.addSubview(image)
+        titleLabel.text = expandableBoardList[section - 2].sectionName
         
-        /// 제약 설정
-        NSLayoutConstraint.activate([
-            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            title.heightAnchor.constraint(equalToConstant: 30),
-            title.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30),
-            
-            summary.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 10),
-            summary.centerYAnchor.constraint(equalTo: title.centerYAnchor),
-            
-            image.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -38),
-            image.widthAnchor.constraint(equalToConstant: 15),
-            image.heightAnchor.constraint(equalToConstant: 15)
-        ])
+        if expandableBoardList[section - 2].isExpanded {
+            summaryLabel.isHidden = true
+            arrowImageView.image = UIImage(named: "up-arrow")
+        } else {
+            summaryLabel.isHidden = false
+            summaryLabel.text = expandableBoardList[section - 2].boardNames.joined(separator: ",")
+            arrowImageView.image = UIImage(named: "down-arrow")
+        }
     }
 }
