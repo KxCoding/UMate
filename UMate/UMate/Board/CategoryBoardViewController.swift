@@ -71,7 +71,7 @@ class CategoryBoardViewController: CommonViewController {
         #endif
         
         // 게시글 작성 버튼의 테마 설정
-        composeBtn.setButtonTheme()
+        composeBtn.setToEnabledButtonTheme()
         
         /// 네비게이션 바에 타이틀 초기화
         /// - Author: 남정은

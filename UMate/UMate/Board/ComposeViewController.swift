@@ -123,7 +123,7 @@ class ComposeViewController: CommonViewController {
         super.viewDidLoad()
         
         // 커뮤니티 이용규칙 버튼의 테마 설정
-        commmunityRuleBtn.setButtonTheme()
+        commmunityRuleBtn.setToEnabledButtonTheme()
         
         // 글쓰기 화면 진입 시 자동으로 키보드를 표시
         postTitleTextField.becomeFirstResponder()
