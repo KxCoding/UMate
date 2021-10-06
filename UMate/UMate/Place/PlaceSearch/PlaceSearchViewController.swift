@@ -9,33 +9,35 @@ import CoreLocation
 import UIKit
 
 
-/// 가게 검색탭과 관련된 뷰컨트롤러 클래스
+/// 가게 검색 화면
 /// - Author: 장현우(heoun3089@gmail.com)
 class PlaceSearchViewController: CommonViewController {
-    /// 검색한 결과를 표시할 컬렉션뷰
-    /// - Author: 장현우(heoun3089@gmail.com)
+    
+    /// 검색 결과 컬렉션뷰
     @IBOutlet weak var searchCollectionView: UICollectionView!
     
-    /// 필터링된 가게 정보를 담을 배열
-    /// - Author: 장현우(heoun3089@gmail.com)
+    /// 필터링된 가게 정보
     var list = [Place]()
     
-    /// 가게 이미지
-    /// - Author: 장현우(heoun3089@gmail.com)
+    /// 가게 이미지 목록
     var images = [UIImage?]()
     
-    /// 필터링할 항목을 담은 배열
-    /// 필터 화면에서 이전에 선택한 필터링 항목은 이미 선택되어 있게 하기 위해서 만든 배열입니다.
-    /// - Author: 장현우(heoun3089@gmail.com)
+    /// 필터링된 항목
+    ///
+    /// 필터 화면에서 이전에 선택한 필터링 항목은 이미 선택되어 있게 합니다
     var filterList = [Place.PlaceType]()
     
-    /// 이전 화면에서 위치 정보를 받아오기 위한 속성
-    /// - Author: 장현우(heoun3089@gmail.com)
-    var currentLocation: CLLocation?
+    /// 이전 화면에서 사용자 위치 정보를 받아오기 위한 속성
+    var userLocation: CLLocation?
     
+    /// 거리순 필터링 활성화 유무
+    ///
+    /// 활성화가 되어 있다면 필터 화면에서 거리순 버튼이 선택되어 있게 합니다.
+    var distanceFilterOn = false
     
     /// window에 추가할 DimView
-    /// - Author: 장현우(heoun3089@gmail.com)
+    ///
+    /// 새로운 화면 뒤에 깔리는 화면을 어둡게 보이게 하기 위해서 만든 속성입니다.
     lazy var dimView: UIView = {
         let v = UIView()
         v.frame = self.view.bounds
@@ -46,7 +48,7 @@ class PlaceSearchViewController: CommonViewController {
     }()
     
     
-    /// 네비게이션아이템에 searchBar를 추가합니다.
+    /// 네비게이션아이템에 SearchBar를 추가합니다.
     /// - Author: 장현우(heoun3089@gmail.com)
     func addSearchBar() {
         let searchBar = UISearchBar()
@@ -59,7 +61,7 @@ class PlaceSearchViewController: CommonViewController {
     
     /// window에 추가된 DimView를 제거합니다.
     /// - Author: 장현우(heoun3089@gmail.com)
-    func removeViewFromWindow() {
+    func removeDimViewFromWindow() {
         guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
         
         for view in window.subviews as [UIView] where view == dimView {
@@ -70,6 +72,9 @@ class PlaceSearchViewController: CommonViewController {
     
     
     /// 초기화 작업을 실행합니다.
+    ///
+    /// window에 추가된 DimView를 제거합니다.
+    /// 필터 화면에서 가져온 정보를 가지고 필터링합니다.
     /// - Author: 장현우(heoun3089@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,9 +90,8 @@ class PlaceSearchViewController: CommonViewController {
         var token = NotificationCenter.default.addObserver(forName: .filterWillCancelled, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             
-            // DimView 제거
             UIView.animate(withDuration: 0.3) {
-                self.removeViewFromWindow()
+                self.removeDimViewFromWindow()
             }
         }
         
@@ -96,9 +100,8 @@ class PlaceSearchViewController: CommonViewController {
         token = NotificationCenter.default.addObserver(forName: .filterWillApplied, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
-            // DimView 제거
             UIView.animate(withDuration: 0.3) {
-                self.removeViewFromWindow()
+                self.removeDimViewFromWindow()
             }
             
             // 필터 화면에서 보낸 필터링할 열거형 타입 배열을 가져옵니다.
@@ -134,13 +137,37 @@ class PlaceSearchViewController: CommonViewController {
         }
         
         tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .sortByDistanceButtonSeleted, object: nil, queue: .main) { [weak self] noti in
+            guard let self = self else { return }
+            
+            if let list = noti.userInfo?["list"] as? [Place] {
+                self.distanceFilterOn = true
+                self.list = list
+                
+                let indexPaths = (0 ..< self.list.count).map {
+                    IndexPath(item: $0, section: 0)
+                }
+                
+                DispatchQueue.main.async {
+                    self.searchCollectionView.reloadItems(at: indexPaths)
+                }
+            }
+        }
+        
+        tokens.append(token)
     }
     
     
     /// 다음 화면으로 넘어가기 전에 실행할 작업을 추가합니다.
+    ///
+    /// FilterViewController로 이동시: window에 DimView를 추가하고 필터링과 관련된 정보를 보냅니다.
+    /// PlaceInfoViewController로 이동시: 선택된 가게 정보를 보냅니다.
     /// - Parameters:
-    ///   - segue: segue에 관련된 viewController 정보를 가지고 있는 seuge
-    ///   - sender: 버튼
+    ///   - segue: viewController 정보를 가지고 있는 seuge
+    ///   - sender: 필터 버튼, 검색 결과 컬렉션뷰 셀
+    ///   FilterViewController로 이동시 센더는 필터 버튼입니다.
+    ///   PlaceInfoViewController로 이동시 센더는 검색 결과 컬렉션뷰 셀입니다.
     /// - Author: 장현우(heoun3089@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // window에 dimming View를 추가
@@ -149,7 +176,9 @@ class PlaceSearchViewController: CommonViewController {
         if let vc = segue.destination as? FilterViewController {
             window.addSubview(self.dimView)
             vc.filterList = filterList
-            vc.currentLocation = currentLocation
+            vc.placeList = list
+            vc.userLocation = userLocation
+            vc.distanceFilterOn = distanceFilterOn
         }
         
         if let cell = sender as? UICollectionViewCell,
@@ -163,23 +192,25 @@ class PlaceSearchViewController: CommonViewController {
 
 
 
+/// 검색 결과 컬렉션뷰 데이터 관리
 extension PlaceSearchViewController: UICollectionViewDataSource {
-    /// 데이터소스 객체에게 지정된 섹션에 아이템 수를 물어봅니다.
+    
+    /// 섹션의 아이템 수를 리턴합니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
-    ///   - section: 컬렉션뷰 섹션을 식별하는 Index 번호
-    /// - Returns: 섹션 아이템의 수
+    ///   - collectionView: 검색 결과 컬렉션뷰
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션 아이템 수
     /// - Author: 장현우(heoun3089@gmail.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
     
     
-    /// 데이터소스 객체에게 지정된 위치에 해당하는 셀에 데이터를 요청합니다.
+    /// 검색 결과로 셀을 구성합니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - collectionView: 검색 결과 컬렉션뷰
     ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
-    /// - Returns: 설정한 셀
+    /// - Returns: 가게 검색 결과 셀
     /// - Author: 장현우(heoun3089@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceSearchCollectionViewCell", for: indexPath) as! PlaceSearchCollectionViewCell
@@ -194,11 +225,15 @@ extension PlaceSearchViewController: UICollectionViewDataSource {
 
 
 
+/// 셀 사이즈를 지정하기 위해 추가
 extension PlaceSearchViewController: UICollectionViewDelegateFlowLayout {
-    /// 델리게이트에게 지정된 아이템의 셀의 사이즈를 물어봅니다.
+    
+    /// 셀 사이즈를 리턴합니다.
+    ///
+    /// 셀의 너비를 2등분, 높이는 너비의 150%로 지정합니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
-    ///   - collectionViewLayout: 정보를 요청하는 layout 객체
+    ///   - collectionView: 검색 결과 컬렉션뷰
+    ///   - collectionViewLayout: layout 객체
     ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
     /// - Returns: 아이템 사이즈
     /// - Author: 장현우(heoun3089@gmail.com)
@@ -214,23 +249,25 @@ extension PlaceSearchViewController: UICollectionViewDelegateFlowLayout {
     }
     
     
-    /// 델리게이트에게 컬렉션 뷰에 표시할 supplementary view 데이터를 요청합니다.
+    /// 헤더뷰를 구성합니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
-    ///   - kind: supplementary view가 제공하는 종류
+    ///   - collectionView: 검색 결과 컬렉션뷰
+    ///   - kind: 헤더뷰
     ///   - indexPath: 새로운 헤더의 위치를 지정하는 IndexPath
-    /// - Returns: supplementary view 객체
+    /// - Returns: 구성한 검색 화면 헤더뷰 셀
     /// - Author: 장현우(heoun3089@gmail.com)
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SearchHeaderCollectionViewCell", for: indexPath) as! SearchHeaderCollectionViewCell
     }
     
     
-    /// 델리게이트에게 지정된 섹션에 헤더 뷰의 사이즈를 물어봅니다.
+    /// 헤더 뷰의 사이즈를 리턴합니다.
+    ///
+    /// 검색 결과가 없는 경우에는 높이를 0으로 설정하고, 있는 경우에는 높이를 50으로 설정합니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
-    ///   - collectionViewLayout: 정보를 요청하는 레이아웃 객체
-    ///   - section: 컬렉션뷰 섹션을 식별하는 Index 번호
+    ///   - collectionView: 검색 결과 컬렉션뷰
+    ///   - collectionViewLayout: layout 객체
+    ///   - section: 섹션 인덱스
     /// - Returns: 헤더 사이즈
     /// - Author: 장현우(heoun3089@gmail.com)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -244,8 +281,12 @@ extension PlaceSearchViewController: UICollectionViewDelegateFlowLayout {
 
 
 
+/// 검색 버튼을 클릭했을 때 발생하는 이벤트 처리
 extension PlaceSearchViewController: UISearchBarDelegate {
-    /// 델리게이트에게 search 버튼이 클릭되었음을 알립니다.
+    
+    /// 검색 버튼을 클릭한 다음 호출됩니다.
+    ///
+    /// 필터링된 데이터를 장소 이름을 기준으로 오름차순 정렬합니다.
     /// - Parameter searchBar: 서치바
     /// - Author: 장현우(heoun3089@gmail.com)
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -254,6 +295,8 @@ extension PlaceSearchViewController: UISearchBarDelegate {
         
         // 버튼을 누르면 필터 리스트 초기화
         filterList = []
+        
+        distanceFilterOn = false
         
         guard let text = searchBar.text else { return }
         
