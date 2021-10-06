@@ -6,13 +6,16 @@
 //
 
 import UIKit
-
+/// 홈화면
+/// Author: 황신택 (sinadsl1457@gmail.com)
 class MainCollectionViewCell: UICollectionViewCell {
-    
+    /// 카테고리 이름
     @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var favoriteImageVIew: UIImageView!
     
-    /// 메인화면  콜렉션 뷰 둥글게 초기화
+    /// 카테고리 이미지뷰
+    @IBOutlet weak var favoriteImageView: UIImageView!
+    
+    /// 홈화면  콜렉션 셀 바운드를 둥글게 초기화 합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
         clipsToBounds = false
