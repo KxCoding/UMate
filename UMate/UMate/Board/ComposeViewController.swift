@@ -10,50 +10,52 @@ import DropDown
 import Loaf
 
 
-/// 게시글 작성 클래스
+/// 게시글 작성 화면
 /// - Author: 김정민(kimjm010@icloud.com)
-
 class ComposeViewController: CommonViewController {
     
-    /// 게시글 작성(제목, 내용, 정보), 사용자의 앨범에 접근을 위한 아울렛
+    /// 게시글 제못
     @IBOutlet weak var postTitleTextField: UITextField!
+    
+    /// 게시글 내용
     @IBOutlet weak var postContentTextView: UITextView!
+    
+    /// 게시글 제목 placeholder
     @IBOutlet weak var postTitlePlaceholderLabel: UILabel!
-    @IBOutlet weak var commmunityRuleBtn: UIButton!
+    
+    /// 게시글 내용 글자 수 확인
     @IBOutlet weak var contentCountLabel: UILabel!
+    
+    /// 게시글 내용 placeholder
     @IBOutlet weak var contentPlacehoderLabel: UILabel!
     
-    /// 앨범, 카테고리 선택 항목을 위한 악세사리 바
+    /// 앨범 및 이용규칙 버튼을 포함한 툴바
     @IBOutlet var accessoryBar: UIToolbar!
     
-    /// 게시글 작성 시 추가한 사진을 표시할 뷰
+    /// 첨부한 이미지
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
-    /// 게시글 작성 시 유의사항을 나타내는 뷰
-    @IBOutlet weak var infoContainerView: UIStackView!
-    
-    /// 게시글 작성시 카테고리를 표시하는 컬렉션뷰
+    /// 게시글 카테고리
     @IBOutlet weak var categoryListCollectionView: UICollectionView!
     
-    /// 게시글에 첨부할 이미지를 선택
-    @IBOutlet weak var addPhotoBtn: UIBarButtonItem!
-    
-    // 게시글에 첨부할 이미지 속성
+    /// 게시글에 첨부할 이미지 리스트
     var imageList = [UIImage]()
     
     /// 선택된 게시판
     var selectedBoard: Board?
     
-    /// 선택된 카테고리
-    var selectedCategoryList = [String]()
+    /// 게시판 카테고리 이름 리스트
+    var categoryList = [String]()
     
-    /// CollectionView Item의 선택상태를 확인하는 속성
+    /// 게시판 카테고리 rawValue 리스트
+    var categoryListValue = [Int]()
+    
+    /// 선택된 카테고리
+    var selectedCategory: Int?
+    
+    /// 카테고리 선택상태 확인
     var isSelected = true
     
-#if DEBUG
-    /// 게시판 카테고리를 담음 임시 배열
-    var tempList = ["전체", "강연 및 행사", "알바 및 과외", "기타"]
-#endif
     
     /// 게시글 작성을 취소
     /// - Author: 김정민(kimjm010@icloud.com)
@@ -62,17 +64,18 @@ class ComposeViewController: CommonViewController {
     }
     
     
+    /// 이미지 첨부 방식 선택
     /// 게시글에 첨부할 이미지를 가져오는 방법을 지정합니다.
     /// - Parameter sender: Camera UIBarButtonItem
     @IBAction func addorTakePhoto(_ sender: UIBarButtonItem) {
-            alertToSelectAddOrTakePhoto(title: "", message: "앨범에서 찾을까요? 캡쳐할까요? ") { _ in
-                self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
-            } handler2: { _ in
-                self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
-            }
+        alertToSelectAddOrTakePhoto(title: "", message: "앨범에서 찾을까요? 캡쳐할까요? ") { _ in
+            self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
+        } handler2: { _ in
+            self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
+        }
     }
     
-         
+    
     /// 게시글을 저장
     /// 일반 게시판과 카테고리를 선택하는 게시판이 있습니다.
     /// - Author: 김정민(kimjm010@icloud.com)
@@ -87,33 +90,44 @@ class ComposeViewController: CommonViewController {
               }
         
         // 일반 게시판에 추가될 게시글
-        let newPost = Post(images: imageList,
-                           postTitle: title,
-                           postContent: content,
-                           postWriter: "아이디 데이터 넣기",
-                           insertDate: Date(),
-                           likeCount: 3,
-                           commentCount: 2)
+        if categoryList.isEmpty {
         
-        NotificationCenter.default.post(name: .newPostInsert,
-                                        object: nil,
-                                        userInfo: ["newPost" : newPost])
+            let newPost = Post(images: imageList,
+                               postTitle: title,
+                               postContent: content,
+                               postWriter: "아이디 데이터 넣기",
+                               insertDate: Date(),
+                               likeCount: 3,
+                               commentCount: 2)
+            
+            NotificationCenter.default.post(name: .newPostInsert,
+                                            object: nil,
+                                            userInfo: ["newPost" : newPost])
+        }
         
         // 카테고리 게시판에 추가될 게시물
-        let newCategoryPost = Post(images: imageList,
-                                   postTitle: title,
-                                   postContent: content,
-                                   postWriter: "아이디 데이터",
-                                   insertDate: Date(),
-                                   likeCount: 3,
-                                   commentCount: 2,
-                                   scrapCount: 1,
-                                   categoryRawValue: 2003)
-        
-        NotificationCenter.default.post(name: .newCategoryPostInsert,
-                                        object: nil,
-                                        userInfo: ["newPost" : newCategoryPost,
-                                                   "category": newCategoryPost.categoryRawValue ?? 0])
+        else {
+            
+            guard let selectedCategory = selectedCategory else {
+                Loaf("카테고리 항목을 선택해 주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
+                return
+            }
+            
+            let newCategoryPost = Post(images: imageList,
+                                       postTitle: title,
+                                       postContent: content,
+                                       postWriter: "아이디 데이터",
+                                       insertDate: Date(),
+                                       likeCount: 3,
+                                       commentCount: 2,
+                                       scrapCount: 1,
+                                       categoryRawValue: selectedCategory)
+            
+            NotificationCenter.default.post(name: .newCategoryPostInsert,
+                                            object: nil,
+                                            userInfo: ["newPost" : newCategoryPost,
+                                                       "category": selectedCategory])
+        }
         
         dismiss(animated: true, completion: nil)
     }
@@ -122,17 +136,14 @@ class ComposeViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 커뮤니티 이용규칙 버튼의 테마 설정
-        commmunityRuleBtn.setToEnabledButtonTheme()
+        categoryListCollectionView.isHidden = categoryList.isEmpty
         
-        // 글쓰기 화면 진입 시 자동으로 키보드를 표시
         postTitleTextField.becomeFirstResponder()
         
-        // 게시글 작성 시 악세사리 뷰 표시
         postTitleTextField.inputAccessoryView = accessoryBar
         postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
         
-        // SelectImageViewController로부터 사용자가 선택한 이미지를 게시글 작성 화면에 표시
+        // 게시글 화면애 앨범 이미지 표시
         var token = NotificationCenter.default.addObserver(forName: .imageDidSelect,
                                                            object: nil,
                                                            queue: .main) { [weak self] (noti) in
@@ -143,6 +154,7 @@ class ComposeViewController: CommonViewController {
         }
         tokens.append(token)
         
+        // 게시글 화면에 캡쳐 이미지 표시
         token = NotificationCenter.default.addObserver(forName: .newImageCaptured,
                                                        object: nil,
                                                        queue: .main,
@@ -160,10 +172,12 @@ class ComposeViewController: CommonViewController {
 
 
 
-/// 게시글(본문) placeHolder 설정 및 글자수 제한(500자)
+/// 게시글 내용의 동작 방식 처리
+/// 게시글(본문) placeHolder 상태 및 글자수를 관리합니다(500자).
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UITextViewDelegate {
     
+    /// 본문 편집시 placeholder 상태 관리
     /// 본문 편집 시 placeholder를 hidden으로 바꿉니다.
     /// - Parameter textView: postContentTextView
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -171,6 +185,7 @@ extension ComposeViewController: UITextViewDelegate {
     }
     
     
+    /// 본문 편집 후의 placeholder 상태 관리
     /// 본문 편집 후 글자수가 0 보다 작거나 같은 경우에 Placeholder를 다시 표시합니다.
     /// - Parameter textView: postContentTextView
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -183,7 +198,8 @@ extension ComposeViewController: UITextViewDelegate {
     }
     
     
-    /// 게시글 본문이 수정될때마다 본문의 글자수를 셉니다.
+    /// 본문 편집 시 글자 수 확인
+    /// 게시글 본문이 수정될때마다 본문의 글자수를 카운팅 합니다.
     /// - Parameter textView: postContentTextView
     func textViewDidChange(_ textView: UITextView) {
         contentCountLabel.text = "\(postContentTextView.text.count) / 500"
@@ -196,7 +212,8 @@ extension ComposeViewController: UITextViewDelegate {
     }
     
     
-    /// 게시글 본문의 글이 500자가 넘는 경우 작성 불가
+    /// 본문 편집 기능 제한
+    /// 게시글 본문의 글이 500자가 넘는 경우 작성이 불가능합니다.
     /// - Parameters:
     ///   - textView: textView description
     ///   - range: 현재 선택된 텍스트의 범위
@@ -218,17 +235,22 @@ extension ComposeViewController: UITextViewDelegate {
 }
 
 
-/// 제목 Placeholder 지정 및 글자수 제한(50자)
+
+
+/// 게시글 제목의 동작방식 처리
+/// 제목 Placeholder 지정 및 글자수를 제한합니다(50자).
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UITextFieldDelegate {
     
-    /// 제목을 편집하는 경우 Placeholder를 숨깁니다.
+    /// 제목 편집 시 placeholder 상태 관리
+    /// 제목 편집 시 placeholder를 hidden으로 바꿉니다.
     /// - Parameter textField: postTitleTextField
     func textFieldDidBeginEditing(_ textField: UITextField) {
         postTitlePlaceholderLabel.isHidden = true
     }
     
     
+    /// 제목 편집 후 placeholder 상태 관리
     /// 제목 편집 후 글자수가 0보다 작거나 같은 경우 다시 Placeholder를 설정합니다.
     /// - Parameter textField: postTitleTextField
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -242,9 +264,10 @@ extension ComposeViewController: UITextFieldDelegate {
     }
     
     
+    /// 제목 편집 시 Return버튼의 기능 설정
     /// 제목의 Return버튼을 누르면 본문으로 넘어갑니다.
     /// - Parameter textField: postTitleTextField
-    /// - Returns: True인 경우 메소드에 구현한 코드가 실행됨
+    /// - Returns: True인 경우 본문 내용을 편집할 수 있습니다.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == postTitleTextField && postTitleTextField.isFirstResponder {
@@ -255,7 +278,8 @@ extension ComposeViewController: UITextFieldDelegate {
     }
     
     
-    /// 제목의 글자수가 50자 초과인 경우 작성 불가
+    /// 제목 편집기능 제한
+    /// 제목의 글자수가 50자 초과인 경우 작성이 불가능합니다.
     /// - Parameters:
     ///   - textField: 제목 텍스트필드
     ///   - range: 현재 선택된 텍스트의 범위
@@ -278,33 +302,35 @@ extension ComposeViewController: UITextFieldDelegate {
 
 
 
+//// 첨부할 이미지 및 카테고리 데이터 설정
 /// 게시글에 첨부할 이미지 컬렉션뷰
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UICollectionViewDataSource {
     
-    /// 게시글에 첨부할 이미지를 표시
+    /// 이미지 및 카테고리의 갯수
+    /// 게시글에 첨부할 이미지와 게시글의 카테고리 갯수를 표시합니다.
     /// - Parameters:
-    ///   - collectionView: imageCollectionView
-    ///   - section: imageCollectionView의 섹션
-    /// - Returns: 표시할 컬렉션뷰 셀의 갯수
+    ///   - collectionView: imageCollectionView, categoryListCollectionView
+    ///   - section: 섹션별 item의 갯수
+    /// - Returns: 표시할 컬렉션뷰 item의 갯수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(#function)
         
         guard collectionView.tag == 101 else {
             return imageList.count
         }
         
-        return tempList.count
+        return categoryList.count - 1
     }
     
     
-    /// 첨부할 이미지가 없는 경우 컬렉션뷰가 표시되지 않고, 이미지가 있는 경우 해당 이지미를 표시합니다.
+    /// 이미지 및 카테고리 컬렉션 뷰에 표시할 데이터
+    /// 첨부할 이미지가 있는 경우 해당 이지미를 표시합니다.
+    /// 카테고리의 이름을 표시합니다.
     /// - Parameters:
-    ///   - collectionView: imageCollectionView
-    ///   - indexPath: 첨부할 이미지의 indexPath
-    /// - Returns: 이미지 컬렉션뷰 셀
+    ///   - collectionView: imageCollectionView, categoryListCollectionView
+    ///   - indexPath: 첨부할 이미지의 indexPath, 카테고리의 indexPath
+    /// - Returns: 게시글에 선택한 이미지를 표시하는 컬렉션 뷰 셀,  게시판의 카테고리를 컬레션뷰 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print(#function)
         
         guard collectionView.tag == 101 else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ComposeImageCollectionViewCell",
@@ -317,7 +343,8 @@ extension ComposeViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectCategoryBoardCollectionViewCell",
                                                       for: indexPath) as! SelectCategoryBoardCollectionViewCell
-        cell.selectCategoryButton.setTitle(tempList[indexPath.item], for: .normal)
+        
+        cell.configure(with: categoryList, indexPath: indexPath)
         
         return cell
     }
@@ -326,16 +353,18 @@ extension ComposeViewController: UICollectionViewDataSource {
 
 
 
-/// 게시글 작성시 카테고리를 표시하는 컬렉션뷰 아이템의 사이즈를 지정
+/// 이미지, 카테고리 컬렉션뷰셀의 사이즈 설정
+/// 이미지 및 카테고리 아이템의 사이를 설정합니다.
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UICollectionViewDelegateFlowLayout {
     
-    /// 이미지 컬렉션뷰 아이템의 사이즈를 변경합니다.
+    /// 이미지 및 카테고리셀의 사이즈 설정
+    /// 이미지 및 카테고리셀의 사이즈를 상태에 따라 다르게 설정합니다.
     /// - Parameters:
-    ///   - collectionView: imageCollectionView
-    ///   - collectionViewLayout: imageCollectionViewLayout
-    ///   - indexPath: imageCollectionView셀의 indexPath
-    /// - Returns: 첨부할 이미지의 사이즈
+    ///   - collectionView: imageCollectionView, categoryListCollectionView
+    ///   - collectionViewLayout: imageCollectionViewLayout, categoryListCollectionViewLayout
+    ///   - indexPath: imageCollectionView셀과 categoryListCollectionView셀의 indexPath
+    /// - Returns: 이미지 및 카테고리 셀의 사이즈
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -343,38 +372,22 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: 100, height: 100)
         }
         
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
-            return .zero
+        guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
+        
+        let bounds = collectionView.bounds
+        var width = bounds.width - (layout.sectionInset.left + layout.sectionInset.right)
+        
+        switch categoryList.count {
+        case 4:
+            width = (width - (layout.minimumLineSpacing * 2)) / 3
+            return CGSize(width: width, height: 50)
+        case 3:
+            width = (width - (layout.minimumLineSpacing)) / 2
+            return CGSize(width: width, height: 50)
+        default:
+            break
         }
         
-        // 셀의 너비
-        let width: CGFloat
-        
-        // 카테고리 개수
-        //guard let categoryCount = selectedBoard?.categoryNumbers.count else { return .zero }
-        
-        // 셀의 inset을 제외한 너비
-        let withoutInsetWidth = view.frame.width -
-        (flowLayout.minimumInteritemSpacing * CGFloat((tempList.count - 1))
-         + flowLayout.sectionInset.left
-         + flowLayout.sectionInset.right)
-        
-        // 카테고리를 표시하는 셀의 개수가 3일 경우
-        if tempList.count == 3 {
-            width = withoutInsetWidth / 3
-            return CGSize(width: width, height:40)
-        }
-        // 카테고리를 표시하는 셀의 개수가 4일 경우
-        else if tempList.count == 4 {
-            if indexPath.row == 0 || indexPath.row == 3 {
-                width = withoutInsetWidth / 2 * 0.4
-                return CGSize(width: width, height: 40)
-                
-            } else {
-                width = withoutInsetWidth / 2 * 0.6
-                return CGSize(width: width, height: 40)
-            }
-        }
         return .zero
     }
 }
@@ -382,30 +395,33 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
 
 
 
-/// 첨부한 이미지를 삭제
+/// 이미지 및 카테고리의 동작 처리
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView,
-                        shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        if collectionView.tag == 101 {
-            if isSelected {
-                isSelected = false
-                collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
-            }
-        }
-        return true
-    }
-    
-    
+    /// 이미지 및 카테고리를 선택시 동작 처리
     /// 첨부한 이미지를 탭하면 첨부이미지 목록에서 삭제합니다.
+    /// 카테고리를 탭하면 해당 카테고리의 rawValue값을 새로운 변수에 저장합니다.
     /// - Parameters:
-    ///   - collectionView: imageCollectionView
-    ///   - indexPath: 탭한 이미지컬렉션뷰 셀의 indexPath
+    ///   - collectionView: imageCollectionView, categoryListCollectionView
+    ///   - indexPath: 탭한 이미지컬렉션뷰 셀과 categoryListCollectionView셀의 indexPath
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.tag == 102 {
             imageList.remove(at: indexPath.item)
             imageCollectionView.deleteItems(at: [indexPath])
+        }
+        
+        if collectionView.tag == 101 {
+            switch selectedBoard?.boardTitle {
+            case "홍보게시판":
+                selectedCategory = categoryListValue[indexPath.item + 1]
+            case "동아리, 학회":
+                selectedCategory = categoryListValue[indexPath.item + 1]
+            case "취업, 진로":
+                selectedCategory = categoryListValue[indexPath.item + 1]
+            default:
+                break
+            }
         }
     }
 }

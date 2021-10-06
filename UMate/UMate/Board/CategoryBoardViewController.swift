@@ -10,7 +10,7 @@ import UIKit
 
 
 /// 카테고리를 가진 게시판 뷰 컨트롤러
-/// - Author: 남정은(dlsl7080@gmail.com)
+/// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
 class CategoryBoardViewController: CommonViewController {
     /// 카테고리 목록 컬렉션 뷰
     @IBOutlet weak var categoryListCollectionView: UICollectionView!
@@ -19,7 +19,6 @@ class CategoryBoardViewController: CommonViewController {
     @IBOutlet weak var categoryListTableView: UITableView!
     
     /// 게시글 작성 버튼
-    /// - Author: 김정민
     @IBOutlet weak var composeBtn: UIButton!
     
     /// 카테고리에 의해 필터링 된 게시글 목록을 담는 배열
@@ -58,17 +57,23 @@ class CategoryBoardViewController: CommonViewController {
         else if segue.identifier == "searchSegue", let vc = segue.destination as? SearchViewController {
             vc.selectedBoard = selectedBoard
         }
+        
+        else if segue.identifier == "composeCategoryBoardSegue" ,
+                    let vc = segue.destination.children.first as? ComposeViewController {
+            guard let selectedBoard = selectedBoard else {
+                return
+            }
+
+            vc.selectedBoard = selectedBoard
+            vc.categoryList = selectedBoard.categoryNames
+            vc.categoryListValue = selectedBoard.categoryNumbers
+        }
     }
     
    
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
-        #if DEBUG
-        print(selectedBoard?.posts, selectedBoard?.categoryNames, selectedBoard?.categoryNumbers, selectedBoard?.boardTitle)
-        #endif
         
         // 게시글 작성 버튼의 테마 설정
         composeBtn.setToEnabledButtonTheme()
@@ -108,23 +113,22 @@ class CategoryBoardViewController: CommonViewController {
         tokens.append(token)
         
         
-        // TODO: 카테고리에 따라 게시글 추가하는 기능
+        /// 카테고리 게시판에 게시글 추가
         /// - Author: 김정민(kimjm010@icloud.com)
         token = NotificationCenter.default.addObserver(forName: .newCategoryPostInsert, object: nil, queue: .main, using: { [weak self] (noti) in
             if let category = noti.userInfo?["category"] as? Int {
                 if let newPost = noti.userInfo?["newPost"] as? Post {
                     switch category {
-                    case 2000:
+                    case 2000, 2001, 2002, 2003:
                         publicityBoard.posts.insert(newPost, at: 0)
-                    case 2001:
-                        publicityBoard.posts.insert(newPost, at: 0)
-                    case 2002:
-                        publicityBoard.posts.insert(newPost, at: 0)
-                    case 2003:
-                        publicityBoard.posts.insert(newPost, at: 0)
+                    case 2010, 2011, 2012:
+                        clubBoard.posts.insert(newPost, at: 0)
+                    case 3010, 3011, 3012:
+                        careerBoard.posts.insert(newPost, at: 0)
                     default:
                         break
                     }
+                    
                     self?.categoryListTableView.reloadData()
                 }
             }

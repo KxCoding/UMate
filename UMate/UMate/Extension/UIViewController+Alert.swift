@@ -76,10 +76,14 @@ extension UIViewController {
     ///   - message: 알림 메시지입니다.
     /// - Author: 김정민(kimjm010@icloud.com)
     func alertComment(title: String? = nil, message: String = "댓글을 신고하시겠습니까?") {
-        let alertCommnet = UIAlertController(title: title, message: message , preferredStyle: .actionSheet)
+        let alertCommnet = UIAlertController(title: title,
+                                             message: message ,
+                                             preferredStyle: .actionSheet)
         
         let okAction = UIAlertAction(title: "확인", style: .destructive) { (action) in
-            let reasonAlert = UIAlertController(title: "", message: "신고 사유를 선택해주세요.", preferredStyle: .actionSheet)
+            let reasonAlert = UIAlertController(title: "",
+                                                message: "신고 사유를 선택해주세요.",
+                                                preferredStyle: .actionSheet)
             
             let firstAction = UIAlertAction(title: "음란물/불건전한 만남 및 대화", style: .default) { _ in
                 print("댓글 신고가 접수되었습니다.")
@@ -130,7 +134,7 @@ extension UIViewController {
     }
     
     
-    /// 게시글에 이미지 첨부 시 알림 메소드
+    /// 게시글에 이미지 첨부 시 알림 표시
     /// 이미지를 앨범에서 찾거나 캡쳐할 수 있습니다.
     /// - Parameters:
     ///   - title: 알림의 Title
@@ -138,7 +142,10 @@ extension UIViewController {
     ///   - handler1: 앨범에서 찾기를 선택한 후 실행할 작업. 기본값은 nil입니다.
     ///   - handler2: 캡쳐하기를 선택한 후 실행할 작업. 기본값을 nil입니다.
     /// - Author: 김정민(kimjm010@icloud.com)
-    func alertToSelectAddOrTakePhoto(title: String, message: String, handler1: ((UIAlertAction) -> Void)? = nil, handler2: ((UIAlertAction) -> Void)? = nil) {
+    func alertToSelectAddOrTakePhoto(title: String,
+                                     message: String,
+                                     handler1: ((UIAlertAction) -> Void)? = nil,
+                                     handler2: ((UIAlertAction) -> Void)? = nil) {
         let alertCommnet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
         let addAction = UIAlertAction(title: "앨범에서 찾기", style: .default, handler: handler1)
@@ -153,5 +160,24 @@ extension UIViewController {
         present(alertCommnet, animated: true, completion: nil)
     }
     
+    
+    /// 앨범 접근 권한에 따른 알림 표시
+    /// - Parameters:
+    ///   - title: 알림의 title
+    ///   - message: 알림의 message
+    ///   - hanlder1: laterAction 클릭 이후의 동작
+    ///   - handler2: goToSettingAction 이후의 동작
+    /// - Author: 김정민(kimjm010@icloud.com)
+    func alertToAccessPhotoLibrary(title: String, message: String, hanlder1: ((UIAlertAction) -> Void)? = nil, handler2: ((UIAlertAction) -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let laterAction = UIAlertAction(title: "나중에 하기", style: .cancel, handler: hanlder1)
+        alert.addAction(laterAction)
+        
+        let goToSettingAction = UIAlertAction(title: "설정으로 이동", style: .default, handler: handler2)
+        alert.addAction(goToSettingAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
     
 }

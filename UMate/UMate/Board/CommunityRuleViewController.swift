@@ -8,11 +8,11 @@
 import UIKit
 
 
-/// 커뮤니티 이용규칙을 표시하는 뷰컨트롤러
+/// 커뮤니티 이용규칙 화면
 /// - Author: 김정민(kimjm010@icloud.com)
 class CommunityRuleViewController: UIViewController {
 
-    /// 이용규칙 뷰컨트롤러를 닫습니다.
+    /// 이용규칙 화면 닫기
     /// - Parameter sender: 닫기 버튼
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closVC(_ sender: Any) {

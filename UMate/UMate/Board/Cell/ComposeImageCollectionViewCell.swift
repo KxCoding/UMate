@@ -12,11 +12,11 @@ import UIKit
 /// - Author: 김정민(kimjm010@icloud.com)
 class ComposeImageCollectionViewCell: UICollectionViewCell {
     
-    /// 게시글에 추가할 이미지를 표시하는 이미지 뷰
+    /// 게시글에 추가할 이미지
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var composeImageView: UIImageView!
     
-    /// 게시글에 표시한 이미지 뷰를 포함한 컨테이너 뷰
+    /// 이미지뷰를 포함한 컨테이너뷰
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var imageContainerView: UIView!
     
