@@ -7,13 +7,19 @@
 
 import UIKit
 
+/// 공모전/ 대외활동 화면
+/// Author: 황신택(sinadsl1457@gmail.com)
 class ContestCollectionViewCell: UICollectionViewCell {
-    
+    /// 공모전 대외활동 타이틀
     @IBOutlet weak var titleLabel: UILabel!
+    
+    /// 공모전 대외활동 플레이스 홀더
     @IBOutlet weak var detailLabel: UILabel!
+    
+    /// 공모전 대외활동 이미지
     @IBOutlet weak var contestImageView: UIImageView!
     
-    /// 공모전 대외활동 콜렉션뷰 둥글게 초기화
+    /// 공모전 대외활동 콜렉션 셀 바운드를 둥글게 초기화 합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
         clipsToBounds = false

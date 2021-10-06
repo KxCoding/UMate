@@ -9,7 +9,10 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    /// regular expression으로 이메일을 검증하는 메소드
+    
+    /// 문자열을 정규식으로 검증합니다.
+    /// - Parameter email: 사용자 이메일
+    /// - Returns: 정규식에서 검증 되면 true 아니면 false 입니다.
     func isEmailValid(_ email: String) -> Bool {
         if let range = email.range(of: Regex.email, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (email.startIndex, email.endIndex) {
             return true
@@ -19,19 +22,17 @@ extension UIViewController {
     }
 
 
-    /// 레귤러 익스프레션을 사용하여 암호 검증.
+   
+    
+    /// 문자열을 정규식으로 검증합니다.
+    /// - Parameter password: 사용자 패스워드
+    /// - Returns: 정규식에서 검증 되면 true 아니면 false 입니다.
     func isPasswordValid(_ password : String) -> Bool{
         if let range = password.range(of: Regex.password, options: [.regularExpression]), (range.lowerBound, range.upperBound) == (password.startIndex, password.endIndex) {
             return true
         }
         
         return false
-    }
-
-    /// 뷰를 탭할시 키보드 내려감.
-    /// - Parameter sender: UITapGestureRecognizer
-    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
     }
 
 }

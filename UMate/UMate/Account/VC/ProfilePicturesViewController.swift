@@ -7,36 +7,40 @@
 
 import UIKit
 
-/// 새로운 노티피케이션 이름을 만듬.
+/// 사진 이미지를 포스팅할 새로운 이름 생성
 extension Notification.Name {
     static let didTapProfilePics = Notification.Name("didTapProfilePics")
 }
 
+/// 이미지 선택화면
+/// 황신택 (sinadsl1457@gmail.com)
 class ProfilePicturesViewController: UIViewController {
-    
-    /// 오타방지를 유저 인포 ID를 만듬
+    /// 유저 사진 키
+    /// userInfo key로 사용합니다.
     static let picsKey = "picsKey"
     
-    /// 사진을 선택시 dismiss, 취소 버튼도 동일.
+    /// 이전화면으로 갑니다
+    /// 사진을 선택하면 이전 화면으로 갑니다.
+    /// - Parameter sender: cancelButtton
     @IBAction func cancelProfileView(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-    
-}
-
-
-
-extension ProfilePicturesViewController {
-    /// 노티피케이션 포스트를 등록하고, 유저인포 딕셔너리를 이용하여 Assets 이미지 id와 매칭시킴.
+    /// 사진을 선택하면 노티피케이션 포스팅이 되고 사진의 태그값이 인포 키로 전달됩니다.
+    /// - Parameter sender: 사진에 등록된 버튼
     @IBAction func matchTheSelectedPicture(_ sender: UIButton) {
         NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: sender.tag / 100])
         
     }
     
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+    
+    
 }
+
+    

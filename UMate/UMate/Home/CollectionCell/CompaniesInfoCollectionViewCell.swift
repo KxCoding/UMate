@@ -7,13 +7,19 @@
 
 import UIKit
 
-class PromotionCollectionViewCell: UICollectionViewCell {
-
-    @IBOutlet weak var promotionImageView: UIImageView!
-    @IBOutlet weak var promotionLabel: UILabel!
+/// 구인 정보 화면
+/// Author: 황신택(sinadsl1457@gmail.com)
+class CompaniesInfoCollectionViewCell: UICollectionViewCell {
+    /// 구인 카테고리 이미지뷰
+    @IBOutlet weak var companyCategoryImageView: UIImageView!
+    
+    /// 구인 카테고리 레이블
+    @IBOutlet weak var companyCategoryLabel: UILabel!
+    
+    /// 상세내용
     @IBOutlet weak var detailLabel: UILabel!
     
-    /// 채용정보 콜렉션뷰 둥글게 초기화
+    /// 구인정보 콜렉션 셀 바운드를 둥글게 초기화 합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
         clipsToBounds = false
