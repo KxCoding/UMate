@@ -250,7 +250,7 @@ class PlaceMainViewController: UIViewController {
         }
         
         if let cell = segue.destination as? PlaceSearchViewController {
-            cell.currentLocation = locationManager.location
+            cell.userLocation = locationManager.location
         }
     }
 }
