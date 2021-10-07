@@ -14,7 +14,11 @@ import UIKit
 /// - Author: 박혜정(mailmelater11@gmail.com)
 struct Place: Codable {
     
+<<<<<<< HEAD
     /// 상점 종류
+=======
+    /// 가게 종류
+>>>>>>> phj
     ///
     /// 한국어 이름, 이미지 등을 케이스의 원시값으로 제공합니다.
     enum PlaceType: String, CustomStringConvertible {
@@ -73,8 +77,13 @@ struct Place: Codable {
     
     
     
+<<<<<<< HEAD
     /// 상점 Id
     var id: Int
+=======
+    /// 가게 Id
+    var id: Int//= UUID()
+>>>>>>> phj
     
     /// 상점 이름
     var name: String
@@ -94,14 +103,24 @@ struct Place: Codable {
                                       longitude: longitude)
     }
     
+<<<<<<< HEAD
     /// 상점 종류
+=======
+    /// 가게 종류
+>>>>>>> phj
     ///
     /// json 파싱을 위한 속성입니다.
     let type: String
     
+<<<<<<< HEAD
     /// 상점 종류
     ///
     /// 디코딩된 데이터와 매칭되는 Placetype을 제공합니다. 매칭되는 상점 종류가 없을 때는 cafe를 기본값으로 사용합니다.
+=======
+    /// 가게 종류
+    ///
+    /// 디코딩된 데이터와 매칭되는 Placetype을 제공합니다. 매칭되는 가게 종류가 없을 때는 cafe를 기본값으로 사용합니다.
+>>>>>>> phj
     var placeType: PlaceType { return PlaceType(rawValue: type) ?? .cafe }
     
     /// 상점를 표현하는 키워드

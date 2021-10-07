@@ -122,8 +122,12 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
     /// - Parameters:
     ///   - collectionView: 컬렉션 뷰
     ///   - section: 섹션 인덱스
+<<<<<<< HEAD
     /// - Returns: 섹션에 포함되는 아이템의 개수
     /// - Author: 박혜정(mailmelater11@gmail.com)
+=======
+    /// - Returns: 섹션에서 표시할 항목의 수
+>>>>>>> phj
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return types.count 
     }

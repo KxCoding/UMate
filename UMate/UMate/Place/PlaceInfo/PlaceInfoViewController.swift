@@ -192,8 +192,12 @@ extension PlaceInfoViewController: UITableViewDataSource {
     /// - Parameters:
     ///   - tableView: 테이블 뷰
     ///   - section: 섹션 인덱스
+<<<<<<< HEAD
     /// - Returns: 섹션에 포함되는 항목의 개수
     /// - Author: 장현우(heoun3089@gmail.com)
+=======
+    /// - Returns: 섹션에 포함되는 아이템의 개수
+>>>>>>> phj
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 4:

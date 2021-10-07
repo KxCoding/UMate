@@ -66,8 +66,11 @@ class InfoSectionTableViewCell: UITableViewCell {
     // MARK: Actions
     
     /// 인스타그램 url을 엽니다.
+<<<<<<< HEAD
     ///
     /// url의 타입과 url을 담아 notification를 전송하면 이를 수신한 화면 객체에서 앱 내 브라우저 또는 외부 앱을 통해 url을 엽니다.
+=======
+>>>>>>> phj
     /// - Parameter sender: 버튼
     /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func openInInstagram(_ sender: UIButton) {
@@ -79,8 +82,11 @@ class InfoSectionTableViewCell: UITableViewCell {
     
     
     /// 상점 url을 엽니다.
+<<<<<<< HEAD
     ///
     /// url의 타입과 url을 담아 notification를 전송하면 이를 수신한 화면 객체에서 앱 내 브라우저 또는 외부 앱을 통해 url을 엽니다.
+=======
+>>>>>>> phj
     /// - Parameter sender: 버튼
     /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func openInSafari(_ sender: Any) {
