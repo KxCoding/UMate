@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// Place 관련 설정 메뉴 화면
+/// Place 설정 메뉴 화면
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class PlaceSettingTableViewController: UITableViewController {
     

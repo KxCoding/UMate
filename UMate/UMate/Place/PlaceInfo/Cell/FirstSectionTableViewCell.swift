@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 이미지 섹션의 셀
+/// 상점 이미지 목록 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class FirstSectionTableViewCell: UITableViewCell {
     
@@ -84,7 +84,7 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
     /// 지정된 섹션에서 표시할 아이템의 개수를 제공합니다.
     /// - Parameters:
     ///   - collectionView: 컬렉션 뷰
-    ///   - section: 섹션
+    ///   - section: 섹션 인덱스
     /// - Returns: 섹션에 포함되는 아이템의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return target.imageUrls.count
@@ -117,7 +117,7 @@ extension FirstSectionTableViewCell: UICollectionViewDelegateFlowLayout {
     ///   - collectionView: 컬렉션 뷰
     ///   - collectionViewLayout: layout 객체
     ///   - indexPath: 아이템의 indexpath
-    /// - Returns: 셀의 높이와 너비
+    /// - Returns: 셀 사이즈
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
         
@@ -128,9 +128,9 @@ extension FirstSectionTableViewCell: UICollectionViewDelegateFlowLayout {
 
 extension FirstSectionTableViewCell: UICollectionViewDelegate {
     
-    /// collection view이 스크롤되면 UI를 업데이트 합니다.
+    /// collection view가 스크롤되면 UI를 업데이트 합니다.
     ///
-    /// 스크롤에 따른 offset을 계산해서 pager 업데이트합니다.
+    /// 스크롤 offset을 계산해서 pager를 업데이트 합니다.
     /// - Parameter scrollView: 스크롤 이벤트가 발생하는 collection view
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let x = scrollView.contentOffset.x

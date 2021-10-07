@@ -10,11 +10,11 @@ import UIKit
 
 /// 앱 설정 정보
 ///
-/// user default 값에 저장한 설정 정보에 접근하는 속성입니다. 선호 브라우저 등의 사용자의 앱 설정 데이터를 제공합니다.
+/// UserDefaults에 저장한 설정 정보에 접근합니다. 선호 브라우저 등의 사용자 앱 설정 데이터를 제공합니다.
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class Preference {
     
-    /// 선호하는 브라우저를 나타내는 열거형
+    /// 선호하는 브라우저
     enum PreferredBrowser: Int {
         
         /// 저장되지 않음

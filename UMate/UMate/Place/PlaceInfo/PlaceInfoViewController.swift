@@ -181,7 +181,7 @@ class PlaceInfoViewController: UIViewController {
 
 extension PlaceInfoViewController: UITableViewDataSource {
     
-    /// 테이블 뷰에서 표시할 섹션의 개수를 제공합니다.
+    /// 테이블 뷰에서 표시할 섹션의 개수를 리턴합니다.
     /// - Parameter tableView: 테이블 뷰
     /// - Returns: 섹션의 개수
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -195,7 +195,7 @@ extension PlaceInfoViewController: UITableViewDataSource {
     /// 지정된 섹션에서 표시할 셀의 개수를 제공합니다.
     /// - Parameters:
     ///   - tableView: 테이블 뷰
-    ///   - section: 섹션
+    ///   - section: 섹션 인덱스
     /// - Returns: 섹션에 포함되는 아이템의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {

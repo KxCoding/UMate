@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 필터링할 타입을 나타내는 셀
+/// 상점 타입 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class PlaceTypeCollectionViewCell: UICollectionViewCell {
     

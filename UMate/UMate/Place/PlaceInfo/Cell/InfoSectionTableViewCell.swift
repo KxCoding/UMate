@@ -23,7 +23,7 @@ extension Notification.Name {
 
 
 
-/// 기본 요약 정보 섹션 셀
+/// 상점 개요 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class InfoSectionTableViewCell: UITableViewCell {
     
@@ -65,7 +65,7 @@ class InfoSectionTableViewCell: UITableViewCell {
     
     // MARK: Actions
     
-    /// 가게 인스타그램 url을 엽니다.
+    /// 인스타그램 url을 엽니다.
     /// - Parameter sender: 버튼
     @IBAction func openInInstagram(_ sender: UIButton) {
         guard let id = target.instagramId,
@@ -75,7 +75,7 @@ class InfoSectionTableViewCell: UITableViewCell {
     }
     
     
-    /// 관련 url을 엽니다.
+    /// 상점 url을 엽니다.
     /// - Parameter sender: 버튼
     @IBAction func openInSafari(_ sender: Any) {
         guard let urlString = target.url, let url = URL(string: urlString) else { return }

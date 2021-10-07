@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 상세 정보 섹션 셀
+/// 상점 상세 정보 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class DetailTableViewCell: UITableViewCell {
     
@@ -91,7 +91,7 @@ extension DetailTableViewCell: UICollectionViewDataSource {
     /// 지정된 섹션에서 표시할 아이템의 개수를 제공합니다.
     /// - Parameters:
     ///   - collectionView: 컬렉션 뷰
-    ///   - section: 섹션
+    ///   - section: 섹션 인덱스
     /// - Returns: 섹션에 포함되는 아이템의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {

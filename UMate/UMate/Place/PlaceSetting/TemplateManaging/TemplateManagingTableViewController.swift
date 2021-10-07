@@ -129,7 +129,7 @@ class TemplateManagingTableViewController: UITableViewController {
     /// 작성 내용을 저장합니다.
     ///
     /// 저장 전 변경 사항이 있는지 확인하고 글자수 제한 초과 여부를 확인합니다. 저장 후 UI를 업데이트 하고 확인 토스트를 표시합니다.
-    /// - Parameter sender: 버튼
+    /// - Parameter sender: 저장 버튼
     @IBAction func saveNewTemplate(_ sender: UIButton) {
         
         nameTextField.endEditing(false)
@@ -197,7 +197,7 @@ class TemplateManagingTableViewController: UITableViewController {
     
     // MARK: Methods
     
-    /// 첫번째 섹션의 footer title을 설정합니다.
+    /// 첫 번째 섹션의 footer title을 설정합니다.
     /// - Parameter newTitle: 설정할 문자열
     private func updateFooterTitle(with newTitle: String) {
         UIView.setAnimationsEnabled(false)
@@ -255,7 +255,7 @@ class TemplateManagingTableViewController: UITableViewController {
     }
     
     
-    /// 수정 상태에 따라 초기화 버튼, 저장 버튼을 활성화/비활성화 합니다.
+    /// 수정 상태에 따라 초기화 버튼, 저장 버튼의 활성화 상태를 업데이트 합니다.
     func checkIfAnyChangedAndSet() {
         if (nameTextField.text ?? "") == currentEditingTemplate.name &&
             contentTextView.text == currentEditingTemplate.content {
@@ -388,7 +388,7 @@ class TemplateManagingTableViewController: UITableViewController {
     /// 테이블 뷰의 각 섹션에서 표시할 항목의 개수를 제공합니다.
     /// - Parameters:
     ///   - tableView: 테이블 뷰
-    ///   - section: 섹션
+    ///   - section: 섹션 인덱스
     /// - Returns: 섹션에서 표시할 항목의 개수
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {

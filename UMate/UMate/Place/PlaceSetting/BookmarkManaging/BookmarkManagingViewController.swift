@@ -120,7 +120,7 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
     /// 각 섹션에서 표시할 항목의 수를 제공합니다.
     /// - Parameters:
     ///   - collectionView: 컬렉션 뷰
-    ///   - section: 섹션
+    ///   - section: 섹션 인덱스
     /// - Returns: 섹션에서 표시할 항목의 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return types.count 

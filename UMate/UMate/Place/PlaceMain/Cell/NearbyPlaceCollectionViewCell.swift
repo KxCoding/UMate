@@ -20,16 +20,16 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
     /// 인근 지역 레이블
     @IBOutlet weak var districtLabel: UILabel!
     
-    /// 첫번째 키워드 레이블
+    /// 첫 번째 키워드 레이블
     @IBOutlet weak var keywordLabel1: UILabel!
     
-    /// 첫번째 키워드 레이블 컨테이너
+    /// 첫 번째 키워드 레이블 컨테이너
     @IBOutlet weak var keywordContainer1: UIView!
     
-    /// 두번째 키워드 레이블
+    /// 두 번째 키워드 레이블
     @IBOutlet weak var keywordLabel2: UILabel!
     
-    /// 두번째 키워드 레이블 컨테이너
+    /// 두 번째 키워드 레이블 컨테이너
     @IBOutlet weak var keywordContainer2: UIView!
     
     /// 대표 가게 사진을 표시할 이미지 뷰
