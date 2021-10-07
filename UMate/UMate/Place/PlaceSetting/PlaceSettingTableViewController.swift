@@ -8,18 +8,9 @@
 import UIKit
 
 
-/// Place 관련 설정 메뉴 화면 클래스
+/// Place 관련 설정 메뉴 화면
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class PlaceSettingTableViewController: UITableViewController {
-
-    // MARK: View Lifecycle method
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
-    
-    // MARK: Table view data source
     
     /// 테이블 뷰에 표시할 section의 수
     /// - Parameter tableView: 테이블 뷰
@@ -44,6 +35,4 @@ class PlaceSettingTableViewController: UITableViewController {
             return 0
         }
     }
-
-
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 가게 상세 정보를 표시하는 탭의 셀 클래스
+/// 상세 정보 섹션 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class DetailTableViewCell: UITableViewCell {
     
@@ -54,7 +54,7 @@ class DetailTableViewCell: UITableViewCell {
     
     // MARK: Methods
     
-    /// 셀 내부 각 뷰들이 표시하는 content 초기화
+    /// 각 뷰에서 표시하는 데이터를 초기화합니다.
     /// - Parameter content: 표시할 내용을 담은 Place 객체
     func configure(with content: Place, indexPath: IndexPath) {
         target = content
@@ -69,15 +69,13 @@ class DetailTableViewCell: UITableViewCell {
     
     // MARK: Cell Lifecycle Method
     
-    /// 셀 초기화
+    /// 셀이 로드되면 델리게이트를 설정하고 UI를 초기화합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // data source 연결
         districtCollectionView.dataSource = self
         keywordsCollectionView.dataSource = self
         
-        // UI 초기화
         addressView.configureStyle(with: [.smallRoundedRect])
         [addressView, telView].forEach { $0?.configureStyle(with: [.smallRoundedRect]) }
     }
@@ -89,10 +87,14 @@ class DetailTableViewCell: UITableViewCell {
 // MARK: - Collection view delegation
 
 extension DetailTableViewCell: UICollectionViewDataSource {
+    
+    /// 지정된 섹션에서 표시할 아이템의 개수를 제공합니다.
+    /// - Parameters:
+    ///   - collectionView: 컬렉션 뷰
+    ///   - section: 섹션
+    /// - Returns: 섹션에 포함되는 아이템의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         switch collectionView {
-            
         case districtCollectionView:
             return 1
             
@@ -101,11 +103,17 @@ extension DetailTableViewCell: UICollectionViewDataSource {
             
         default:
             return 0
-            
         }
-        
     }
     
+    
+    /// 지정된 컬렉션 뷰, 지정된 indexPath에 표시할 셀을 제공합니다.
+    ///
+    /// 이미지를 다운로드하고 받은 이미지로 이미지 뷰를 업데이트합니다.
+    /// - Parameters:
+    ///   - collectionView: 컬렉션 뷰
+    ///   - indexPath: 아이템의 indexpath
+    /// - Returns: 표시할 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         switch collectionView {

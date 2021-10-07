@@ -8,7 +8,9 @@
 import Foundation
 
 
-/// 요청 URL을 필요한 이미지 유형에 따라 다르게 설정하기 위한 타입
+/// 이미지 타입
+///
+/// 이미지는 타입에 따라서 요청 방식이 달라집니다
 /// - Author: 박혜정(mailmelater11@gmail.com)
 enum PlaceImageDataType {
     /// used on Place

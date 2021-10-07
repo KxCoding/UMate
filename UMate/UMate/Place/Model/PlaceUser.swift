@@ -11,14 +11,12 @@ import UIKit
 
 /// Place 사용자 클래스
 ///
-/// 타입 선언 중복이 우려되어 임시로 선언한 클래스입니다.
+/// 추후 User 클래스에 통합될 예정입니다.
 /// - Author: 박혜정(mailmelater11@gmail.com)
 struct PlaceUser {
     
-    /// 사용자의 소속 대학
-    var university: University? = nil
-    
     /// Place 사용자의 데이터 클래스
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     struct UserData {
         
         /// 사용자가 북마크한 가게 목록 (ID)
@@ -33,7 +31,10 @@ struct PlaceUser {
                                                 ReviewTemplate.temp3]
     }
     
-    /// Place 사용자의 Place Info
+    /// 사용자의 소속 대학
+    var university: University? = nil
+    
+    /// 사용자 데이터
     var userData = UserData()
     
     /// 임시 사용자

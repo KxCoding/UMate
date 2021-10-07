@@ -8,11 +8,15 @@
 import Foundation
 
 
-/// 특정 대학 주변 상가 정보를 포함하는 전송 객체(DTO) 형식
+/// 특정 대학과 주변 가게 정보 DTO
 ///
-/// 파싱 시뮬레이션을 위한 임시 타입입니다. 학교 주변 상가 데이터를 받기 위해서는 대학교 Id로 요청합니다.
+/// 요청시 대학의 id를 전달했을 때 전달된 데이터를 파싱하기 위한 전송용 객체입니다.  시뮬레이션을 위한 임시 타입입니다.
 /// - Author: 박혜정(mailmelater11@gmail.com)
 struct PlaceList: Codable {
+    
+    /// 대학 이름
     var university: String
+    
+    /// 주변 가게들
     var places: [Place]
 }

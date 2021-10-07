@@ -14,17 +14,32 @@ import UIKit
 /// - Author: 박혜정(mailmelater11@gmail.com)
 struct Place: Codable {
     
-    /// 가게 종류 = 열거형으로 제한
+    /// 가게의 종류
+    ///
+    /// 한국어 이름, 이미지 등을 케이스의 원시값으로 제공합니다.
     enum PlaceType: String, CustomStringConvertible {
         
+        /// 카페
         case cafe
+        
+        /// 식당
         case restaurant
+        
+        /// 베이커리
         case bakery
+        
+        /// 스터디카페
         case studyCafe
+        
+        /// 주점
+        ///
+        /// 펍, 바, 전통주점 등의 주점
         case pub
+        
+        /// 디저트 가게
         case dessert
         
-        /// description 속성
+        /// 가게 종류의 한국어 이름
         var description: String {
             switch self {
             case .cafe:
@@ -44,19 +59,21 @@ struct Place: Codable {
         
         /// 타입을 나타내는 아이콘
         var iconImage: UIImage? {
-            return UIImage(named: rawValue) // 영어
+            return UIImage(named: rawValue)
         }
         
         /// 타입을 나타내는 사진
+        ///
+        /// 북마크 관리 화면에서 가게 종류 필터 버튼에 사용됩니다.
         var photoImage: UIImage? {
-            return UIImage(named: "\(rawValue)-img") // 영어
+            return UIImage(named: "\(rawValue)-img")
         }
         
     }
     
     
     
-    /// 가게의 ID
+    /// 가게의 id
     var id: Int//= UUID()
     
     /// 가게 이름
@@ -65,10 +82,10 @@ struct Place: Codable {
     /// 가게가 있는 지역
     var district: String
     
-    /// 가게 좌표 - 위도
+    /// 가게 좌표의 위도
     let latitude: Double
     
-    /// 가게 좌표 - 경도
+    /// 가게 좌표의 경도
     let longitude: Double
     
     /// 가게 좌표
@@ -78,16 +95,26 @@ struct Place: Codable {
     }
     
     /// 가게의 종류
+    ///
+    /// json 파싱을 위한 속성입니다.
     let type: String
+    
+    /// 가게의 종류
+    ///
+    /// 디코딩된 데이터와 매칭되는 Placetype을 제공합니다. 매칭되는 가게 종류가 없을 때는 cafe 케이스를 기본값으로 사용합니다.
     var placeType: PlaceType { return PlaceType(rawValue: type) ?? .cafe }
     
-    /// 가게를 나타내는 키워드 (각 키워드는 공백 포함 8자 이내)
+    /// 가게를 표현하는 키워드
+    ///
+    /// 가게의 특징, 분위기 등을 표현하는 키워드로, 상세 정보 화면의 키워드 컬렉션 뷰에서 사용됩니다.
     var keywords: [String]
     
-    /// 미리보기 이미지(썸네일)의 url
+    /// 미리보기 이미지의 url
     var thumbnailUrl: String
     
-    /// 상세 화면에 표시할 이미지의 url - 이미지가 없으면 빈 배열
+    /// 상세 화면에 표시할 이미지의 url
+    ///
+    /// 이미지가 없으면 빈 배열을 리턴하므로, 항목이 있는지 확인 후 사용해야 합니다.
     var imageUrls: [String]
     
     /// 인스타그램 아이디(optional)
@@ -108,7 +135,7 @@ struct Place: Codable {
                                placeType: placeType)
     }
     
-    /// 더미 데이터 (type property)
+    /// 가게 더미 데이터
     static var dummyData: [Place] = [
         Place(id: 0, name: "데일리루틴",
               district: "숙대입구역 인근",
