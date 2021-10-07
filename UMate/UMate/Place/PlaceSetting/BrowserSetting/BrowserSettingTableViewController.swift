@@ -56,6 +56,7 @@ class BrowserSettingTableViewController: UITableViewController {
     
     /// 인스타그램 열기를 테스트합니다.
     /// - Parameter sender: 선호 브라우저 설정에 따라 open instagram 테스트
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func testInstagramUrl(_ sender: UIButton) {
         guard let url = testInstagramURL else { return }
         openUrl(with: url)
@@ -64,6 +65,7 @@ class BrowserSettingTableViewController: UITableViewController {
     
     /// 웹페이지 열기를 테스트합니다.
     /// - Parameter sender: 선호 브라우저 설정에 따라 open web page 테스트
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func testWebPageUrl(_ sender: UIButton) {
         guard let url = testWebURL else { return }
         openUrl(with: url)
@@ -74,6 +76,7 @@ class BrowserSettingTableViewController: UITableViewController {
     
     /// 선택 사항을 저장하고 UI를 업데이트 합니다.
     /// - Parameter option: 선택한 브라우저 옵션
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     private func selectPreferredBrowser(prefer option: Preference.PreferredBrowser) {
         Preference.preferredBrowser = option
         
@@ -94,6 +97,7 @@ class BrowserSettingTableViewController: UITableViewController {
     // MARK: View Lifecycle Method
     
     /// 뷰가 로드되면 화면을 초기화합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,6 +108,7 @@ class BrowserSettingTableViewController: UITableViewController {
     
     
     /// 뷰가 화면에 표시되기 전에 설정에 맞게 UI를 업데이트 합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -119,6 +124,7 @@ class BrowserSettingTableViewController: UITableViewController {
     /// - Parameters:
     ///   - tableView: 항목을 포함하는 테이블 뷰
     ///   - indexPath: 선택한 항목의 index path
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:

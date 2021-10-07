@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 필터링할 타입을 나타내는 셀
+/// 상점 타입 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class PlaceTypeCollectionViewCell: UICollectionViewCell {
     
@@ -29,21 +29,25 @@ class PlaceTypeCollectionViewCell: UICollectionViewCell {
     
     // MARK: Properties
     
-    /// 셀이 표시할 가게 타입
+    /// 셀이 표시할 상점 타입
+    ///
+    /// 화면에 처음 진입하면 전체 타입의 북마크 데이터를 표시합니다.
     var displayingType: PlaceTypePattern = .all
     
     
     // MARK: Methods
     
-    /// 셀을 데이터를 초기화하는 메소드
-    /// content와 UI를 업데이트하고
-    /// - Parameter type: 장소 타입
-    func configure(type: PlaceTypePattern, isSelected: Bool, collectionView: UICollectionView, indexPath: IndexPath, selectedType: PlaceTypePattern) {
+    /// 각 뷰에서 표시하는 데이터를 초기화하고 선택 상태에 따라 UI를 업데이트합니다.
+    /// - Parameters:
+    ///   - type: 타입
+    ///   - isSelected: 선택 상태
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func configure(type: PlaceTypePattern, isSelected: Bool) {
         
         displayingType = type
         
         if type == .all {
-            #warning("전체를 나타내내는 이미지로 변경해야 합니다")
+            #warning("타입 전체를 나타내는 이미지로 변경해야 합니다")
             typeImageView.image = UIImage(named: "dummy-image-landscape")
             placeTypeLabel.text = "전체"
         } else {
@@ -61,6 +65,7 @@ class PlaceTypeCollectionViewCell: UICollectionViewCell {
     
     
     /// 셀 선택 UI를 업데이트합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func didSelect() {
         dimmingView.alpha = 0.6
         placeTypeLabel.textColor = .systemRed
@@ -68,16 +73,16 @@ class PlaceTypeCollectionViewCell: UICollectionViewCell {
     
     
     /// 선택 상태가 해제되었을 때 UI를 업데이트합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func didDeselect() {
         dimmingView.alpha = 0
         placeTypeLabel.textColor = .label
     }
     
     
-    /// 셀의 상태에 따라 설정을 업데이트 합니다.
-    ///
-    /// 셀 선택 상태에 따라 UI를 업데이트합니다.
+    /// 셀의 선택 상태에 따라 UI를 업데이트 합니다.
     /// - Parameter state: 셀의 상태
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func updateConfiguration(using state: UICellConfigurationState) {
         super.updateConfiguration(using: state)
         
@@ -90,6 +95,7 @@ class PlaceTypeCollectionViewCell: UICollectionViewCell {
     
     
     /// 셀이 재사용 되기 전에 선택 해제 상태의 UI로 업데이트 합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func prepareForReuse() {
         super.prepareForReuse()
         didDeselect()
@@ -98,11 +104,11 @@ class PlaceTypeCollectionViewCell: UICollectionViewCell {
     
     // MARK: Cell Lifecycle method
     
-    /// 셀이 로드되었을 때 UI를 초기화합니다.
+    /// 셀이 로드되면 UI를 초기화합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // 셀 UI 설정
         imageContainerView.configureStyle(with: [.pillShape])
         typeImageView.contentMode = .scaleAspectFill
         dimmingView.backgroundColor = .systemRed

@@ -8,23 +8,25 @@
 import UIKit
 
 
-/// Place 관련 설정 메뉴 화면
+/// Place 설정 메뉴 화면
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class PlaceSettingTableViewController: UITableViewController {
     
-    /// 테이블 뷰에 표시할 section의 수
+    /// 테이블 뷰에서 표시할 섹션의 개수를 리턴합니다.
     /// - Parameter tableView: 테이블 뷰
-    /// - Returns: 표시할 섹션의 수
+    /// - Returns: 섹션의 개수
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-
     
-    /// 각 섹션에 표시할 열의 수
+    
+    /// 지정된 섹션에서 표시할 항목의 개수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 적용할 테이블 뷰
-    ///   - section: 각 섹션
-    /// - Returns: 해당 섹션에 표시할 열의 수
+    ///   - tableView: 테이블 뷰
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션에 포함되는 항목의 개수
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:

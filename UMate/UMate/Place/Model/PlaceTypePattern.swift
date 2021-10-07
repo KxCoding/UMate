@@ -8,7 +8,7 @@
 import Foundation
 
 
-/// 가게 종류 필터 기능을 위한 열거형 (all 포함)
+/// 상점 종류 필터 기능을 위한 열거형 (all 포함)
 /// - Author: 박혜정(mailmelater11@gmail.com)
 enum PlaceTypePattern: String {
     
@@ -26,12 +26,12 @@ enum PlaceTypePattern: String {
     /// 베이커리
     case bakery
     
-    /// 디저트 가게
+    /// 디저트 판매점
     case dessert
     
     /// 주점
     ///
-    /// 펍, 바, 전통주점 등의 주점
+    /// ex) 펍, 바, 전통주점
     case pub
     
     /// 스터디카페

@@ -118,6 +118,7 @@ class TemplateManagingTableViewController: UITableViewController {
     ///
     /// 작성 중이던 내용을 버리고 마지막으로 저장된 텍스트를 불러옵니다.
     /// - Parameter sender: 버튼
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func resetTemplate(_ sender: UIButton) {
         setInputSystem(withNewItemId: currentEditingTemplate.id,
                        checkMsg: "작성 중인 내용은 저장되지 않아요.\n정말 초기화하실 건가요?",
@@ -129,7 +130,8 @@ class TemplateManagingTableViewController: UITableViewController {
     /// 작성 내용을 저장합니다.
     ///
     /// 저장 전 변경 사항이 있는지 확인하고 글자수 제한 초과 여부를 확인합니다. 저장 후 UI를 업데이트 하고 확인 토스트를 표시합니다.
-    /// - Parameter sender: 버튼
+    /// - Parameter sender: 저장 버튼
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func saveNewTemplate(_ sender: UIButton) {
         
         nameTextField.endEditing(false)
@@ -186,6 +188,7 @@ class TemplateManagingTableViewController: UITableViewController {
     /// 템플릿 이름이 바뀌면 UI를 업데이트 합니다.
     /// 템플릿 이름 필드의 텍스트가 변경되면 호출되며, 수정된 텍스트의 상태를 확인한 후 UI를 업데이트합니다.
     /// - Parameter sender: 편집 중인 텍스트 필드
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func titleDidChange(_ sender: UITextField) {
         updateFooterTitle(with: "작성 중...")
         
@@ -197,8 +200,9 @@ class TemplateManagingTableViewController: UITableViewController {
     
     // MARK: Methods
     
-    /// 첫번째 섹션의 footer title을 설정합니다.
+    /// 첫 번째 섹션의 footer title을 설정합니다.
     /// - Parameter newTitle: 설정할 문자열
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     private func updateFooterTitle(with newTitle: String) {
         UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
@@ -217,6 +221,7 @@ class TemplateManagingTableViewController: UITableViewController {
     /// 템플릿 리스트의 데이터를 업데이트 합니다.
     ///
     /// 순서대로 처리하기 위해 배열에 저장하고 시행을 반복합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func updateListContents() {
         let nameLabels = [nameLabel1, nameLabel2, nameLabel3]
         let contentLabels = [contentLabel1, contentLabel2, contentLabel3]
@@ -233,6 +238,7 @@ class TemplateManagingTableViewController: UITableViewController {
     
     /// 카운트 레이블을 업데이트합니다.
     /// - Parameter field: 글자 수 확인 대상
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func updateCount(of field: UITextInput) {
         switch field {
         case let content as UITextView:
@@ -249,13 +255,15 @@ class TemplateManagingTableViewController: UITableViewController {
     
     
     /// 모든 카운트 레이블을 업데이트합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func updateCountOfAllField() {
         updateCount(of: nameTextField)
         updateCount(of: contentTextView)
     }
     
     
-    /// 수정 상태에 따라 초기화 버튼, 저장 버튼을 활성화/비활성화 합니다.
+    /// 수정 상태에 따라 초기화 버튼, 저장 버튼의 활성화 상태를 업데이트 합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func checkIfAnyChangedAndSet() {
         if (nameTextField.text ?? "") == currentEditingTemplate.name &&
             contentTextView.text == currentEditingTemplate.content {
@@ -278,6 +286,7 @@ class TemplateManagingTableViewController: UITableViewController {
     ///   - checkMsg: 경고창에 표시할 확인 메시지
     ///   - newFooter: 리셋 후 새로 표시할 footer title
     ///   - loaf: 리셋 후 표시할 토스트
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func setInputSystem(withNewItemId id: Int, checkMsg: String, newFooter: String, loaf: Loaf) {
         
         nameTextField.endEditing(false)
@@ -325,6 +334,7 @@ class TemplateManagingTableViewController: UITableViewController {
     
     
     /// 키보드 툴바의 Done 버튼이 눌리면 편집을 종료합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     @objc func doneBtnTapped() {
         view.endEditing(true)
     }
@@ -333,6 +343,7 @@ class TemplateManagingTableViewController: UITableViewController {
     /// 키보드 툴바를 설정합니다.
     ///
     /// 저장 버튼과 Done 버튼을 추가합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func setupInputSystems() {
         let toolbar = UIToolbar()
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
@@ -353,6 +364,7 @@ class TemplateManagingTableViewController: UITableViewController {
     // MARK: View Lifecycle Methods
     
     /// 뷰가 로드되었을 때 화면을 초기화합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -374,22 +386,24 @@ class TemplateManagingTableViewController: UITableViewController {
         saveBtn.isEnabled = false
     }
     
+    
     // MARK: Table View Delegate Methods
     
-    
-    /// 테이블 뷰가 표시할 섹션의 개수를 제공합니다.
+    /// 테이블 뷰에서 표시할 섹션의 개수를 리턴합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     /// - Parameter tableView: 테이블 뷰
-    /// - Returns: 표시할 섹션의 수
+    /// - Returns: 섹션의 개수
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
     
-    /// 테이블 뷰의 각 섹션에서 표시할 항목의 개수를 제공합니다.
+    /// 지정된 섹션에서 표시할 항목의 개수를 리턴합니다.
     /// - Parameters:
     ///   - tableView: 테이블 뷰
-    ///   - section: 섹션
-    /// - Returns: 섹션에서 표시할 항목의 개수
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션에 포함되는 항목의 개수
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -406,11 +420,12 @@ class TemplateManagingTableViewController: UITableViewController {
     
     // MARK: Table view delegate
     
-    /// 전달된 indexpath의 셀이 차지하는 높이를 제공합니다.
+    /// 지정된 indexpath의 셀 높이를 제한합니다.
     /// - Parameters:
-    ///   - tableView: 테이블 뷰
-    ///   - indexPath: indexpath
-    /// - Returns: 셀의 높이
+    ///   - tableView: 이 정보를 요청하는 table view
+    ///   - indexPath: 열의 위치를 가리키는 index path
+    /// - Returns: 열의 높이
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
@@ -427,6 +442,7 @@ class TemplateManagingTableViewController: UITableViewController {
     /// - Parameters:
     ///   - tableView: 테이블 뷰
     ///   - indexPath: 선택된 indexpath
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -459,6 +475,7 @@ extension TemplateManagingTableViewController: UITextFieldDelegate {
     /// 이름 필드인 텍스트 필드에서 편집을 종료하고, 내용 편집을 시작합니다.
     /// - Parameter textField: 텍스트 필드
     /// - Returns: return 할지의 여부. 항상 리턴합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         contentTextView.becomeFirstResponder()
         return true
@@ -473,6 +490,7 @@ extension TemplateManagingTableViewController: UITextViewDelegate {
     
     /// 필드의 내용이 변경되면 UI를 업데이트 합니다.
     /// - Parameter textView: 텍스트뷰
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func textViewDidChange(_ textView: UITextView) {
         updateFooterTitle(with: "작성 중...")
         checkIfAnyChangedAndSet()

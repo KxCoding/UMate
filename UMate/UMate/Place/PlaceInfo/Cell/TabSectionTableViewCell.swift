@@ -30,6 +30,7 @@ class TabSectionTableViewCell: UITableViewCell {
     /// 셀이 로드되면 UI를 초기화합니다.
     ///
     /// 하위 탭이 선택되면 선택된 탭에 따라 언더라인의 센터 제약을 바꾸는 옵저버를 추가합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         

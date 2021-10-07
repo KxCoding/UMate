@@ -29,7 +29,7 @@ class PlaceMainViewController: UIViewController {
     /// 검색 버튼 컨테이너
     @IBOutlet weak var searchBtnContainer: UIView!
     
-    /// 주변 가게 컬렉션 뷰
+    /// 주변 상점 컬렉션 뷰
     @IBOutlet weak var nearbyPlaceCollectionView: UICollectionView!
     
     
@@ -55,9 +55,9 @@ class PlaceMainViewController: UIViewController {
     /// 사용자
     var user = PlaceUser.tempUser
     
-    /// 가게 배열
+    /// 상점 배열
     ///
-    /// 가게 데이터는 정렬되지 않은 상태로 저장됩니다. 컬렉션 뷰를 이동함에 따라 동쪽에 있는 가게로 이동하게 하기 위해서는 이 배열의 항목을 경도를 기준으로 정렬해야 합니다.
+    /// 상점 데이터는 정렬되지 않은 상태로 저장됩니다. 컬렉션 뷰를 이동함에 따라 동쪽에 있는 상점으로 이동하게 하기 위해서는 이 배열의 항목을 경도를 기준으로 정렬해야 합니다.
     var list = [Place]()
     
     /// 학교 좌표
@@ -79,6 +79,7 @@ class PlaceMainViewController: UIViewController {
     // MARK: Methods
     
     /// 지도에서 사용할 annotation view 타입을 등록합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     private func registerMapAnnotationViews() {
         mapView.register(MKMarkerAnnotationView.self,
                          forAnnotationViewWithReuseIdentifier: NSStringFromClass(PlaceAnnotation.self))
@@ -88,8 +89,8 @@ class PlaceMainViewController: UIViewController {
     /// 플로팅 컬렉션 뷰를 위한 lauout을 제공합니다.
     ///
     /// 기본적인 레이아웃 정보와 컬렉션 뷰를 움직일 때 마다 실행할 handler를 설정합니다.
-    ///
     /// - Returns: UICollectionViewCompositionalLayout 객체
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     private func configureLayout() -> UICollectionViewLayout {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
@@ -111,14 +112,14 @@ class PlaceMainViewController: UIViewController {
             guard let self = self else { return }
             
             // 선택된 아이템 계산
-            #warning("리터럴을 대체할 데이터가 필요합니다.")
+            #warning("리터럴을 대체할 데이터가 필요합니다")
             let selectedItemIndex = Int((scrollOffset.x + 20.7) / 337)
             let selectedItem = self.list[selectedItemIndex]
             
             // 아이템의 좌표를 지도 중앙에 표시
             self.mapView.setCenter(selectedItem.coordinate, animated: true)
             
-            // 셀을 움직이면 같은 가게를 표시하는 annotation을 검색
+            // 셀을 움직이면 같은 상점을 표시하는 annotation을 검색
             guard let selectedAnnotation = self.mapView.annotations.first(where: { annot in
                 if let annot = annot as? PlaceAnnotation {
                     return annot.placeId == selectedItem.id
@@ -138,6 +139,7 @@ class PlaceMainViewController: UIViewController {
     /// 위치 서비스 사용 가능 여부 및 권한을 확인합니다.
     ///
     /// os 버전, 권한 상태을 확인하고 알맞은 작업을 수행합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     private func checkLocationAuth() {
         if CLLocationManager.locationServicesEnabled() {
             let status: CLAuthorizationStatus
@@ -179,6 +181,7 @@ class PlaceMainViewController: UIViewController {
     // MARK: View Liftcycle Method
     
     /// 뷰가 메모리에 로드되었을 때 데이터나 UI를 초기화합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -187,7 +190,7 @@ class PlaceMainViewController: UIViewController {
         user.university?.places = result.places
         user.university?.name = result.university
         
-        // 북마크 관리 기능을 위해 현재 대학의 전체 가게로 Place의 dummy data를 교체합니다.
+        // 북마크 관리 기능을 위해 현재 대학의 전체 상점으로 Place의 dummy data를 교체합니다.
         Place.dummyData = result.places
         
         list = result.places.sorted(by: { return $0.coordinate.longitude < $1.coordinate.longitude })
@@ -218,6 +221,7 @@ class PlaceMainViewController: UIViewController {
     }
     
     /// 뷰가 화면에 표시되기 직전에 위치 권한을 요청합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -227,10 +231,11 @@ class PlaceMainViewController: UIViewController {
     
     /// segue가 실행되기 전에 다음 화면에 대한 초기화를 수행합니다.
     ///
-    /// 선택한 가게의 인덱스로 가게 상세 정보 화면에 표시할 가게를 초기화합니다.
+    /// 선택한 상점의 인덱스로 상점 상세 정보 화면에 표시할 상점을 초기화합니다.
     /// - Parameters:
-    ///   - segue: 선택한 가게의 상세 정보 화면으로 연결되는 segue
-    ///   - sender: segue를 실행시킨 객체. 가게를 표시하는 컬렉션 뷰 셀입니다.
+    ///   - segue: 선택한 상점의 상세 정보 화면으로 연결되는 segue
+    ///   - sender: segue를 실행시킨 객체. 상점을 표시하는 컬렉션 뷰 셀입니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? NearbyPlaceCollectionViewCell,
            let indexPath = nearbyPlaceCollectionView.indexPath(for: cell) {
@@ -257,6 +262,8 @@ extension PlaceMainViewController: MKMapViewDelegate {
     ///   - mapView: 해당 annotaion이 포함된 map view
     ///   - annotation: view를 필요로 하는 annotation
     /// - Returns: annotation에서 표시할 annotation view, 메소드가 nil을 리턴하면 표준 view를 표시.
+    ///
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         guard !annotation.isKind(of: MKUserLocation.self) else { return nil }
@@ -294,6 +301,8 @@ extension PlaceMainViewController: MKMapViewDelegate {
     ///   - tintColor: marker의 tint color
     ///   - image: marker의 glyph image
     /// - Returns: annotation view
+    ///
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     private func setupPlaceAnnotationView<AnnotationType: PlaceAnnotation>(for annotation: AnnotationType, on mapView: MKMapView, tintColor: UIColor, image: UIImage? = nil) -> MKAnnotationView {
         let identifier = NSStringFromClass(PlaceAnnotation.self)
         let view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier,
@@ -313,11 +322,12 @@ extension PlaceMainViewController: MKMapViewDelegate {
     }
     
     
-    /// callout이 선택되었을 때 가게 정보 페이지를 표시합니다.
+    /// callout이 선택되었을 때 상점 상세 정보 화면를 표시합니다.
     /// - Parameters:
     ///   - mapView: annotation view가 표시된 map view
     ///   - view: callout의 annotation view
     ///   - control: tap 이벤트가 발생한 컨트롤
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         // 작업 수행의 조건을 PlaceAnnotation으로 제한합니다.
@@ -341,21 +351,23 @@ extension PlaceMainViewController: MKMapViewDelegate {
 
 extension PlaceMainViewController: UICollectionViewDataSource {
     
-    /// 지정된 섹션에서 표시할 아이템의 개수를 제공합니다.
+    /// 지정된 섹션에서 표시할 아이템의 개수를 리턴합니다.
     /// - Parameters:
-    ///   - collectionView: 이 정보를 요청하는 collection view
-    ///   - section: 컬렉션 뷰의 특정 섹션을 가리키는 index number
+    ///   - collectionView: 컬렉션 뷰
+    ///   - section: 섹션 인덱스
     /// - Returns: 섹션에 포함되는 아이템의 개수
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
     
     
-    /// 지정된 컬렉션 뷰, 지정된 indexPath에 표시할 셀을 제공합니다.
+    /// 지정된 컬렉션 뷰, 지정된 index path에 표시할 셀을 리턴합니다.
     /// - Parameters:
-    ///   - collectionView: 이 정보를 요청하는 collection view
-    ///   - indexPath: 아이템의 위치를 가리키는 indexpath
-    /// - Returns: 완성된 셀
+    ///   - collectionView: 컬렉션 뷰
+    ///   - indexPath: 아이템의 index path
+    /// - Returns: 표시할 셀
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NearbyPlaceCollectionViewCell", for: indexPath) as! NearbyPlaceCollectionViewCell
         
@@ -371,12 +383,13 @@ extension PlaceMainViewController: UICollectionViewDataSource {
 
 extension PlaceMainViewController: UICollectionViewDelegateFlowLayout {
     
-    /// 지정된 indexPath에 표시할 셀의 크기를 결정합니다.
+    /// 지정된 indexPath에 표시할 셀의 크기를 리턴합니다.
     /// - Parameters:
-    ///   - collectionView: 이 정보를 요청하는 collection view
-    ///   - collectionViewLayout: 이 정보를 요청하는 layout 객체
-    ///   - indexPath: 아이템의 위치를 가리키는 indexpath
-    /// - Returns: 높이와 너비
+    ///   - collectionView: 컬렉션 뷰
+    ///   - collectionViewLayout: layout 객체
+    ///   - indexPath: 아이템의 index path
+    /// - Returns: 셀 사이즈
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -395,6 +408,7 @@ extension PlaceMainViewController: UICollectionViewDelegateFlowLayout {
 extension PlaceMainViewController: CLLocationManagerDelegate {
     
     /// 위치 업데이트를 시작합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func updateLocation() {
         locationManager.startUpdatingLocation()
     }
@@ -404,6 +418,7 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
     ///
     /// 제한 상태에서는 경고창 표시, 허가 상태일 때는 위치 검색을 시작합니다.
     /// - Parameter manager: location manager
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     @available(iOS 14.0, *)
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
@@ -425,6 +440,7 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
     /// - Parameters:
     ///   - manager: location manager
     ///   - status: 변경된 권한 상태
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func locationManager(_ manager: CLLocationManager,
                          didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
@@ -446,6 +462,7 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
     /// - Parameters:
     ///   - manager: location manager
     ///   - error: 실패 이유를 포함하고 있는 에러 객체
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         #if DEBUG
         print("위치 가져오기 실패", error)
@@ -466,6 +483,7 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
     /// - Parameters:
     ///   - manager: location manager
     ///   - locations: 검색된 위치. 가장 최신 데이터가 가장 마지막에 저장되어 있습니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if let currentLocation = locations.last {
@@ -479,12 +497,13 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
     }
     
     
-    /// 위치로 주소를 검색하고 이를 사용해 UI를 업데이트 합니다.
+    /// 리버스 지오코딩으로 좌표에 해당하는 주소를 생성하고, 주소 레이블을 업데이트합니다.
     ///
-    /// 사용하는 단위 주소가 모두 공백일 경우 알맞은 문자열을 적용합니다.
+    /// 사용하는 단위 주소가 모두 공백일 경우 알맞은 문자열을 표시합니다.
     ///
     /// - Parameter location: CLLocation 객체
     /// - Returns: 간단한 문자열 주소. 역 지오코딩 실패시 nil 리턴.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func updateAddress(with location: CLLocation) {
         
         let geocoder = CLGeocoder()

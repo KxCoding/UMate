@@ -9,9 +9,8 @@ import CoreLocation
 import UIKit
 
 
+#warning("User 클래스로 통합해야 합니다")
 /// Place 사용자 클래스
-///
-/// 추후 User 클래스에 통합될 예정입니다.
 /// - Author: 박혜정(mailmelater11@gmail.com)
 struct PlaceUser {
     
@@ -19,7 +18,7 @@ struct PlaceUser {
     /// - Author: 박혜정(mailmelater11@gmail.com)
     struct UserData {
         
-        /// 사용자가 북마크한 가게 목록 (ID)
+        /// 사용자가 북마크한 상점 목록 (ID)
         var bookmarkedPlaces = [Int]()
         
         /// 사용자가 작성한 리뷰 목록
@@ -37,7 +36,7 @@ struct PlaceUser {
     /// 사용자 데이터
     var userData = UserData()
     
-    /// 임시 사용자
+    #warning("임시 데이터입니다")
     static var tempUser: PlaceUser = {
         var user = PlaceUser()
         

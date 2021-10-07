@@ -15,7 +15,7 @@ import Foundation
 /// - Author: 박혜정(mailmelater11@gmail.com)
 struct University {
     
-    /// 대학교 ID
+    /// 대학교 Id
     var id: Int
     
     /// 학교 이름
@@ -32,7 +32,7 @@ struct University {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
-    /// 학교 주변 가게
+    /// 학교 주변 상점
     var places: [Place]
     
     /// 임시 데이터

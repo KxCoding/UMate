@@ -19,7 +19,7 @@ class WordCollectionViewCell: UICollectionViewCell {
     
     // MARK: Properties
     
-    /// 대상 가게
+    /// 대상 상점
     var target: Place!
     
     
@@ -28,6 +28,8 @@ class WordCollectionViewCell: UICollectionViewCell {
     /// 각 뷰에서 표시하는 데이터를 초기화합니다.
     /// - Parameters:
     ///   - content: 표시할 내용을 담은 Place 객체
+    ///   - indexPath: 셀의 index path
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func configure(with content: Place, indexPath: IndexPath) {
         target = content
     }
@@ -36,6 +38,7 @@ class WordCollectionViewCell: UICollectionViewCell {
     // MARK: Cell Lifecycle Method
     
     /// 셀이 로드되면 UI를 초기화합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func awakeFromNib() {
         configureStyle(with: [.smallRoundedRect])
     }
@@ -53,10 +56,10 @@ class DistrictCollectionViewCell: WordCollectionViewCell {
     
     // MARK: Outlets
     
-    /// 레이블 컨테이너
+    /// 인근 지역 레이블 컨테이너
     @IBOutlet weak var districtItemView: UIView!
     
-    /// 레이블
+    /// 인근 지역 레이블
     @IBOutlet weak var districtKeywordLabel: UILabel!
     
     // MARK: Methods
@@ -64,14 +67,13 @@ class DistrictCollectionViewCell: WordCollectionViewCell {
     /// 각 뷰에서 표시할 데이터를 초기화합니다.
     /// - Parameters:
     ///   - content: 표시할 정보를 담은 Place 객체
-    ///   - indexPath: 셀의 indexPath
+    ///   - indexPath: 셀의 index path
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func configure(with content: Place, indexPath: IndexPath) {
         super.configure(with: content, indexPath: indexPath)
         
         // 일단은 district 속성이 단일 문자열만 받아서 한 건만 처리 (tbd)
         districtKeywordLabel.text = target.district
-        
-        
     }
     
 }
@@ -79,16 +81,16 @@ class DistrictCollectionViewCell: WordCollectionViewCell {
 
 // MARK: - 키워드 컬렉션 뷰 셀
 
-/// 가게 키워드 컬렉션 뷰 셀
+/// 상점 키워드 컬렉션 뷰 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class KeywordsCollectionViewCell: WordCollectionViewCell {
     
     // MARK: Outlets
     
-    /// 레이블 컨테이너
+    /// 키워드 레이블 컨테이너
     @IBOutlet weak var keywordItemView: UIView!
     
-    /// 레이블
+    /// 키워드 레이블
     @IBOutlet weak var keywordLabel: UILabel!
     
     // MARK: Methods
@@ -96,7 +98,8 @@ class KeywordsCollectionViewCell: WordCollectionViewCell {
     /// 각 뷰에서 표시할 데이터를 초기화합니다.
     /// - Parameters:
     ///   - content: 표시할 정보를 담은 Place 객체
-    ///   - indexPath: 셀의 indexPath
+    ///   - indexPath: 셀의 index path
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func configure(with content: Place, indexPath: IndexPath) {
         super.configure(with: content, indexPath: indexPath)
         

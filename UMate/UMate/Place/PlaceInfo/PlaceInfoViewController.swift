@@ -16,9 +16,9 @@ extension Notification.Name {
 
 
 
-/// 가게 상세 정보 화면
+/// 상점 상세 정보 화면
 /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
-class PlaceInfoViewController: UIViewController {
+class PlaceInfoViewController: CommonViewController {
     
     // MARK: Nested Types
     
@@ -43,7 +43,7 @@ class PlaceInfoViewController: UIViewController {
     
     // MARK: Properties
     
-    /// 상세 정보를 표시할 가게
+    /// 상세 정보를 표시할 상점
     /// - Author: 박혜정(mailmelater11@gmail.com)
     var place: Place!
     
@@ -67,12 +67,6 @@ class PlaceInfoViewController: UIViewController {
     /// 화면 진입 시 정보 탭이 선택되어 있습니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
     var selectedTap: SubTab = .detail
-    
-    /// 옵저버 토큰
-    ///
-    /// 소멸 시점에 제거할 옵저버 객체를 담는 배열입니다.
-    /// - Author: 박혜정(mailmelater11@gmail.com)
-    var tokens = [NSObjectProtocol]()
     
     
     // MARK: Actions
@@ -106,9 +100,10 @@ class PlaceInfoViewController: UIViewController {
     
     // MARK: View Lifecycle Methods
     
-    #warning("notification 관련 주석 수정")
     /// 뷰가 로드되면 화면을 초기화합니다.
-    /// notification 옵저버를 추가합니다. url 관련 버튼이 눌리면 전달된 url을 열고, ... 합니다.
+    ///
+    /// notification 옵저버를 추가합니다. url 관련 버튼이 눌리면 전달된 url을 열고, 리뷰 작성이 완료되면 테이블 뷰를 다시 로드합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -146,7 +141,7 @@ class PlaceInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationItem.title = "가게 정보"
+        self.navigationItem.title = "상점 정보"
     }
     
     
@@ -181,9 +176,10 @@ class PlaceInfoViewController: UIViewController {
 
 extension PlaceInfoViewController: UITableViewDataSource {
     
-    /// 테이블 뷰에서 표시할 섹션의 개수를 제공합니다.
+    /// 테이블 뷰에서 표시할 섹션의 개수를 리턴합니다.
     /// - Parameter tableView: 테이블 뷰
     /// - Returns: 섹션의 개수
+    /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
     func numberOfSections(in tableView: UITableView) -> Int {
         if selectedTap == .review {
             return 6
@@ -192,11 +188,12 @@ extension PlaceInfoViewController: UITableViewDataSource {
     }
     
     
-    /// 지정된 섹션에서 표시할 셀의 개수를 제공합니다.
+    /// 지정된 섹션에서 표시할 항목의 개수를 리턴합니다.
     /// - Parameters:
     ///   - tableView: 테이블 뷰
-    ///   - section: 섹션
-    /// - Returns: 섹션에 포함되는 아이템의 개수
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션에 포함되는 항목의 개수
+    /// - Author: 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 4:
@@ -214,11 +211,12 @@ extension PlaceInfoViewController: UITableViewDataSource {
     }
     
     
-    /// 지정 indexpath에서 표시할 셀을 제공합니다.
+    /// 지정된 indexpath에서 표시할 셀을 리턴합니다.
     /// - Parameters:
     ///   - tableView: 테이블 뷰
-    ///   - indexPath: 셀의 indexpath
+    ///   - indexPath: 셀의 index path
     /// - Returns: 완성된 셀
+    /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         
@@ -293,7 +291,8 @@ extension PlaceInfoViewController: UITableViewDelegate {
     /// - Parameters:
     ///   - tableView: 이 정보를 요청하는 table view
     ///   - indexPath: 열의 위치를 가리키는 indexpath
-    /// - Returns: 열이 가져야 할 높이 (음수가 아닌 실수)
+    /// - Returns: 열의 높이
+    /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         // 이미지 섹션
@@ -303,6 +302,7 @@ extension PlaceInfoViewController: UITableViewDelegate {
         // 하위 탭 섹션
         case 2:
             return tableView.frame.width / 8
+            
         default:
             return UITableView.automaticDimension
         }

@@ -12,13 +12,13 @@ import Foundation
 /// - Author: 박혜정(mailmelater11@gmail.com)
 struct ReviewTemplate: Codable {
     
-    /// 템플릿의 id
+    /// 템플릿 Id
     let id: Int
     
-    /// 템플릿의 이름
+    /// 템플릿 이름
     let name: String
     
-    /// 템플릿의 내용
+    /// 템플릿 내용
     let content: String
     
     /// 임시 템플릿 1

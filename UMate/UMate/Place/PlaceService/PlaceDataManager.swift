@@ -8,8 +8,7 @@
 import UIKit
 
 
-/// 장소 데이터 관리 객체
-///
+/// Place 데이터 관리 객체
 ///
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class PlaceDataManager {
@@ -30,8 +29,9 @@ class PlaceDataManager {
     ///
     /// 데이터를 가져온 다음 json 데이터를 완료 블록으로 전달합니다.
     /// - Parameters:
-    ///   - url: 장소나 리뷰 데이터를 가져오는 url
+    ///   - url: 상점이나 리뷰 데이터를 가져오는 url
     ///   - completion: 완료 블록. 디코딩 되지 않은 json 데이터가 전달됩니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func fetchData(with url: URL, completion: ((Data) -> ())?) {
         session.dataTask(with: url) { data, response, error in
             
@@ -72,6 +72,7 @@ class PlaceDataManager {
     /// - Parameters:
     ///   - url: URL
     ///   - completion: 요청 이후에 실행할 작업
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func fetchData(with urlString: String, completion: ((Data) -> ())?){
         
         /// URL 생성
@@ -91,6 +92,7 @@ class PlaceDataManager {
     /// 커스텀 디코더
     ///
     /// ISO8601 날짜 문자열을 디코딩하기 위해 사용합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     private let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
@@ -103,6 +105,7 @@ class PlaceDataManager {
     ///   - type: 파싱할 데이터 타입
     ///   - data: json 데이터
     /// - Returns: 디코딩에 성공하면 지정한 타입의 객체를 리턴, 실패하면 nil을 리턴합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func decodeJson<T>(type: T.Type, fromJson data: Data) -> T? where T: Codable {
         guard let result = try? jsonDecoder.decode(type, from: data) else {
             #if DEBUG
@@ -127,6 +130,7 @@ class PlaceDataManager {
     /// url을 기준으로 캐시에 저장합니다.
     /// - Parameter url: 이미지 url
     /// - Returns: 캐시에 저장된 이미지가 있거나 url로 해당 이미지를 가져올 수 있으면 이미지를 리턴하고, 나머지 경우 nil을 합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func getImage(from url: URL) -> UIImage? {
         
         var result: UIImage? = nil
@@ -160,6 +164,7 @@ class PlaceDataManager {
     /// 이미지를 다운로드합니다.
     /// - Parameter urlString: 문자열 이미지 url
     /// - Returns: 캐시에 저장된 이미지가 있거나 url로 해당 이미지를 가져올 수 있으면 이미지를 리턴하고, 실패하면 nil을 리턴합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func getImage(from urlString: String) -> UIImage? {
         
         guard let url = URL(string: urlString) else {
@@ -174,6 +179,7 @@ class PlaceDataManager {
     /// - Parameters:
     ///   - url: url
     ///   - completion: 완료 블록. 다운로드된 이미지가 전달됩니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func fetchImage(with url: URL, completion: ((UIImage) -> ())?) {
         fetchData(with: url) { data in
             guard let image = UIImage(data: data) else {
@@ -201,6 +207,7 @@ class PlaceDataManager {
     /// - Parameters:
     ///   - query: 키워드(쿼리)
     ///   - completion: 완료 블록. 이미지 정보를 담고 있는 객체가 전달됩니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func fetchUnsplashInfo(with query: String, completion: ((UnsplashImagesInfo) -> ())?) {
         
         let count = 1
@@ -247,6 +254,7 @@ class PlaceDataManager {
     /// 파일 경로에서 URL을 생성합니다.
     /// - Parameter string: 확장자가 포함된 파일의 이름
     /// - Returns: 리소스 url
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func generateUrl(forFile string: String) -> URL? {
         
         let arr = string.components(separatedBy: ".")
@@ -271,6 +279,7 @@ class PlaceDataManager {
     ///   - type: 결과 타입
     ///   - fileName: json 파일 이름
     /// - Returns: 파싱된 객체. 파싱에 실패하면 nil을 리턴합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func getObject<T>(of type: T.Type, fromJson fileName: String) -> T? where T: Codable {
         
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
@@ -290,11 +299,12 @@ class PlaceDataManager {
     
     /// Unsplash 이미지를 다운로드한 다음 대상 이미지 뷰를 업데이트 합니다.
     ///
-    /// 이미지 뷰에 기본 placeholder 이미지  > hash blur 이미지 > 최종 이미지가 순서대로 적용됩니다.
+    /// 이미지 뷰에 기본 placeholder 이미지  > blur hash 이미지 > 최종 이미지가 순서대로 적용됩니다.
     /// - Parameters:
     ///   - type: 원하는 이미지의 타입
     ///   - imageView: 사용할 이미지 뷰
     ///   - query: 검색 키워드
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func download(_ type: PlaceImageDataType, andUpdate imageView: UIImageView, with query: String) {
         imageView.image = placeholderImage
         

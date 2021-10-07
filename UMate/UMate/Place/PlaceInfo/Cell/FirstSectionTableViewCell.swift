@@ -8,13 +8,13 @@
 import UIKit
 
 
-/// 이미지 섹션의 셀
+/// 상점 이미지 목록 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class FirstSectionTableViewCell: UITableViewCell {
     
     // MARK: Outlets
     
-    /// 가게 이미지 컬렉션 뷰
+    /// 상점 이미지 컬렉션 뷰
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     /// 컬렉션 뷰 페이저
@@ -26,7 +26,7 @@ class FirstSectionTableViewCell: UITableViewCell {
     /// 데이터 관리 객체
     let manager = PlaceDataManager.shared
     
-    /// 표시하는 가게
+    /// 표시하는 상점
     var target: Place!
     
     /// 더미 이미지 배열
@@ -47,6 +47,7 @@ class FirstSectionTableViewCell: UITableViewCell {
     
     /// 각 뷰에서 표시하는 데이터를 초기화합니다.
     /// - Parameter content: 표시할 정보를 담은 Place 객체
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func configure(with content: Place) {
         target = content
         
@@ -61,6 +62,7 @@ class FirstSectionTableViewCell: UITableViewCell {
     // MARK: Cell Lifecycle Method
     
     /// 셀이 로드되면 델리게이트를 설정하고 UI를 초기화합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -81,23 +83,23 @@ class FirstSectionTableViewCell: UITableViewCell {
 
 extension FirstSectionTableViewCell: UICollectionViewDataSource {
     
-    /// 지정된 섹션에서 표시할 아이템의 개수를 제공합니다.
+    /// 지정된 섹션에서 표시할 아이템의 개수를 리턴합니다.
     /// - Parameters:
     ///   - collectionView: 컬렉션 뷰
-    ///   - section: 섹션
+    ///   - section: 섹션 인덱스
     /// - Returns: 섹션에 포함되는 아이템의 개수
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return target.imageUrls.count
     }
     
     
-    /// 지정된 컬렉션 뷰, 지정된 indexPath에 표시할 셀을 제공합니다.
-    ///
-    /// 이미지를 다운로드하고 받은 이미지로 이미지 뷰를 업데이트합니다.
+    /// 지정된 컬렉션 뷰, 지정된 index path에 표시할 셀을 리턴합니다.
     /// - Parameters:
     ///   - collectionView: 컬렉션 뷰
-    ///   - indexPath: 아이템의 indexpath
+    ///   - indexPath: 아이템의 index path
     /// - Returns: 표시할 셀
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceImageCollectionViewCell", for: indexPath) as! PlaceImageCollectionViewCell
         
@@ -112,12 +114,13 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
 
 extension FirstSectionTableViewCell: UICollectionViewDelegateFlowLayout {
     
-    /// 지정된 indexPath에 표시할 셀의 크기를 결정합니다.
+    /// 지정된 indexPath에 표시할 셀의 크기를 리턴합니다.
     /// - Parameters:
     ///   - collectionView: 컬렉션 뷰
     ///   - collectionViewLayout: layout 객체
-    ///   - indexPath: 아이템의 indexpath
-    /// - Returns: 셀의 높이와 너비
+    ///   - indexPath: 아이템의 index path
+    /// - Returns: 셀 사이즈
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
         
@@ -128,10 +131,11 @@ extension FirstSectionTableViewCell: UICollectionViewDelegateFlowLayout {
 
 extension FirstSectionTableViewCell: UICollectionViewDelegate {
     
-    /// collection view이 스크롤되면 UI를 업데이트 합니다.
+    /// collection view가 스크롤되면 UI를 업데이트 합니다.
     ///
-    /// 스크롤에 따른 offset을 계산해서 pager 업데이트합니다.
+    /// 스크롤 offset을 계산해서 pager를 업데이트 합니다.
     /// - Parameter scrollView: 스크롤 이벤트가 발생하는 collection view
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let x = scrollView.contentOffset.x
         let page = x / scrollView.frame.width
@@ -155,6 +159,7 @@ class PlaceImageCollectionViewCell: UICollectionViewCell {
     // MARK: Cell Lifecycle Method
     
     /// 셀이 로드되면 UI를 초기화합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         
