@@ -9,7 +9,8 @@ import UIKit
 import WebKit
 
 
-/// 학교 홈페이지, 포탈, 도서관 홈페이지, 캠퍼스맵 웹 뷰를 나타내는 화면
+/// 학교 상세 정보 화면
+/// 학교 홈페이지, 포탈, 도서관 홈페이지, 캠퍼스맵을 제공합니다.
 /// Author: 안상희
 class SchoolDetailViewController: UIViewController {
     /// 학교 고유 id

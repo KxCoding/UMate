@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
     }
     
     
-    /// 선택한 셀에 해당하는 화면으로 이동하기 전에 학교 고유 id와 navigationTitle을 전달합니다.
+    /// 학교 상세 정보 화면으로 이동하기 전에 학교 고유 id와 navigationTitle을 전달합니다.
     /// - Parameters:
     ///   - segue: 뷰컨트롤러에 포함된 segue에 대한 정보를 갖는 객체
     ///   - sender: MainCollectionViewCell
