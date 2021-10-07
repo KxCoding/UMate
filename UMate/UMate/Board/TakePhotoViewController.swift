@@ -31,13 +31,13 @@ class previewView: UIView {
 /// - Author: 김정민(kimjm010@icloud.com)
 class TakePhotoViewController: UIViewController {
 
-    /// 카메라의 프리뷰 화면
+    /// 카메라 프리뷰 화면
     @IBOutlet weak var previewView: previewView!
     
     /// Camera FlashMode
     @IBOutlet weak var flashModeBtn: UIButton!
     
-    /// 카메라의 위치
+    /// 카메라 변경 버튼
     /// 전면, 후면이 있습니다.
     @IBOutlet weak var cameraSwitchBtn: UIButton!
     
@@ -59,7 +59,7 @@ class TakePhotoViewController: UIViewController {
     /// 사진 캡쳐 요청에 사용할 기능 및 설정의 사양을 저장
     var currentPhotoSetting: AVCapturePhotoSettings?
     
-    /// 카메라 Flashmode
+    /// Camera FlashMode
     /// 기본값은 Off입니다.
     var flashMode = AVCaptureDevice.FlashMode.off
     
@@ -163,7 +163,6 @@ class TakePhotoViewController: UIViewController {
                     self?.startCaptureSession()
                 }
             } else {
-                // TODO: 경고창 표시할 것. 설정에서 변경할 수 있도록 할 것
                 self?.alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
                     if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -249,10 +248,18 @@ class TakePhotoViewController: UIViewController {
         case .notDetermined:
             requestAuthorization()
         case .restricted:
-            // TODO: 경고창 표시 및 설정에서 변경할 수 있도록 할 것
+            alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
+                if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
             break
         case .denied:
-            // TODO: 경고창 표시 및 설정에서 변경할 수 있도록 할 것
+            alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
+                if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
             break
         case .authorized:
             startCaptureSession()

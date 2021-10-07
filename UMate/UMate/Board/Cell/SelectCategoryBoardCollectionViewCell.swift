@@ -28,7 +28,7 @@ class SelectCategoryBoardCollectionViewCell: UICollectionViewCell {
     }
     
     
-    /// 카테고리셀을 초기화합니다.
+    /// 카테고리 셀을 초기화합니다.
     /// - Parameters:
     ///   - categoryNames: 카테고리 이름을 저장한 배열
     ///   - indexPath: 카테고 이름의 indexPath

@@ -454,7 +454,7 @@ extension DetailPostViewController: UITableViewDelegate {
 /// - Author: 김정민(kimjm010@icloud.com)
 extension DetailPostViewController: UITextViewDelegate {
     
-    /// 댓글 편집 시 placeholder를 설정합니다.
+    /// 댓글 편집시 placeholder를 설정합니다.
     /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
     /// - Parameter textView: commentTextView
     func textViewDidBeginEditing(_ textView: UITextView) {

@@ -97,7 +97,6 @@ class SelectImageViewController: CommonViewController {
                     self?.hasLimitedPermission = selectedStatus == .limited
                     break
                 default:
-                    // TODO: 접근할 수 없음 -> 설정에서 변경하라는 알림창
                     self?.alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
                         if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -107,7 +106,6 @@ class SelectImageViewController: CommonViewController {
                 }
             }
         case .denied:
-            // TODO: 접근할 수 없음 -> 설정에서 변경하라는 알림창
             alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
                 if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -115,7 +113,6 @@ class SelectImageViewController: CommonViewController {
             }
             break
         case .restricted:
-            // TODO: 접근할 수 없음 -> 설정에서 변경하라는 알림창
             alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
                 if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -214,7 +211,7 @@ extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
 /// - Author: 김정민(kimjm010@icloud.com)
 extension SelectImageViewController: PHPhotoLibraryChangeObserver {
     
-    /// photoLibrary애 변화가 있을 경우 호출합니다.
+    /// photoLibrary애 변화가 있을 경우 호출됩니다.
     /// - Parameter changeInstance: 수정사항이 있는 photolibrary 객체
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         DispatchQueue.main.async {

@@ -178,7 +178,7 @@ class ComposeViewController: CommonViewController {
 extension ComposeViewController: UITextViewDelegate {
     
     /// 본문 편집시 placeholder 상태를 관리합니다.
-    /// 본문 편집 시 placeholder를 hidden으로 바꿉니다.
+    /// 본문 편집시 placeholder를 hidden으로 바꿉니다.
     /// - Parameter textView: postContentTextView
     func textViewDidBeginEditing(_ textView: UITextView) {
         contentPlacehoderLabel.isHidden = true
@@ -198,7 +198,7 @@ extension ComposeViewController: UITextViewDelegate {
     }
     
     
-    /// 본문 편집 시 글자 수를 확인합니다.
+    /// 본문 편집시 글자 수를 확인합니다.
     /// 게시글 본문이 수정될때마다 본문의 글자수를 카운팅 합니다.
     /// - Parameter textView: postContentTextView
     func textViewDidChange(_ textView: UITextView) {
@@ -242,8 +242,8 @@ extension ComposeViewController: UITextViewDelegate {
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UITextFieldDelegate {
     
-    /// 제목 편집 시 placeholder 상태를 관리합니다.
-    /// 제목 편집 시 placeholder를 hidden으로 바꿉니다.
+    /// 제목 편집시 placeholder 상태를 관리합니다.
+    /// 제목 편집시 placeholder를 hidden으로 바꿉니다.
     /// - Parameter textField: postTitleTextField
     func textFieldDidBeginEditing(_ textField: UITextField) {
         postTitlePlaceholderLabel.isHidden = true
@@ -264,7 +264,7 @@ extension ComposeViewController: UITextFieldDelegate {
     }
     
     
-    /// 제목 편집 시 Return버튼의 기능을 설정합니다.
+    /// 제목 편집시 Return버튼의 기능을 설정합니다.
     /// 제목의 Return버튼을 누르면 본문으로 넘어갑니다.
     /// - Parameter textField: postTitleTextField
     /// - Returns: True인 경우 본문 내용을 편집할 수 있습니다.
@@ -278,13 +278,13 @@ extension ComposeViewController: UITextFieldDelegate {
     }
     
     
-    /// 제목 편집기능을 제한합니다.
+    /// 제목 편집 기능을 제한합니다.
     /// 제목의 글자수가 50자 초과인 경우 작성이 불가능합니다.
     /// - Parameters:
     ///   - textField: 제목 텍스트필드
     ///   - range: 바꿀 문자의 범위 정보
     ///   - string: 지정된 범위의 대체 문자열
-    /// - Returns: 제목 텍스트필드에 새로운 문자를 추가할 수 있을 경우 True, 추가가 불가능한 경우 False
+    /// - Returns: 제목 텍스트필드에 새로운 문자를 추가할 수 있을 경우 true, 추가가 불가능한 경우 false
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
         
@@ -302,16 +302,16 @@ extension ComposeViewController: UITextFieldDelegate {
 
 
 
-////첨부할 이미지 및 카테고리 데이터 설정
+/// 첨부할 이미지 및 카테고리 데이터 설정
 /// 게시글에 첨부할 이미지 컬렉션뷰
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UICollectionViewDataSource {
     
-    /// 이미지 및 카테고리의 수를 표시합니다.
-    /// 게시글에 첨부할 이미지와 게시글의 카테고리 갯수를 표시합니다.
+    /// 이미지 및 카테고리의 수를 리턴합니다.
+    /// 게시글에 첨부할 이미지와 게시글의 카테고리 수를 리턴합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView, categoryListCollectionView
-    ///   - section: 섹션별 item의 갯수
+    ///   - section: imageCollectionView, categoryListCollectionView의 섹션 인덱스
     /// - Returns: 표시할 컬렉션뷰 item의 갯수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -323,7 +323,7 @@ extension ComposeViewController: UICollectionViewDataSource {
     }
     
     
-    /// 이미지 및 카테고리 목록셀을 설정합니다.
+    /// 이미지 및 카테고리 목록 셀을 구성합니다.
     /// 첨부할 이미지가 있는 경우 해당 이지미를 표시합니다.
     /// 카테고리의 이름을 표시합니다.
     /// - Parameters:

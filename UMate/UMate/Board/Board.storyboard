@@ -556,7 +556,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1Ms-iJ-U5C">
-                                <rect key="frame" x="16" y="213" width="384" height="357.5"/>
+                                <rect key="frame" x="16" y="213" width="384" height="308"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tx6-lQ-lIb">
                                         <rect key="frame" x="0.0" y="0.0" width="384" height="200"/>
@@ -573,8 +573,11 @@
                                         </connections>
                                     </textView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="102" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zmz-Iv-0Xw">
-                                        <rect key="frame" x="0.0" y="208" width="384" height="149.5"/>
+                                        <rect key="frame" x="0.0" y="208" width="384" height="100"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="tlg-wv-pWe"/>
+                                        </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="cae-Pl-6pS">
                                             <size key="itemSize" width="128" height="128"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -583,7 +586,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ComposeImageCollectionViewCell" id="LAY-Uz-8h6" customClass="ComposeImageCollectionViewCell" customModule="UMate" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="11" width="128" height="128"/>
+                                                <rect key="frame" x="0.0" y="-14" width="128" height="128"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lVX-AV-5P9">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -614,10 +617,10 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="2fK-JN-5wQ">
-                                <rect key="frame" x="20" y="578.5" width="376" height="479.5"/>
+                                <rect key="frame" x="20" y="529" width="376" height="529"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AvS-hx-b66">
-                                        <rect key="frame" x="0.0" y="0.0" width="376" height="479.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="376" height="529"/>
                                         <string key="text">Umate는 누구나 기분 좋게 참여할 수 있는 커뮤니티를 만들기 위해 커뮤니티 이용규칙을 제정하여 운영하고 있습니다. 위반 시 게시물이 삭제되고 서비스 이용이 일정 기간 제한 될 수 있습니다.  아래는 이 게시판에 해당하는 핵심 내용에 대한 요약 사항이며, 게시물 작성 전 커뮤니티 이용규칙 전문을 반드시 확인하시기 바랍니다.  ※ 홍보게시판 작성 가능 게시물 - 비영리 목적의 강연 및 행사 - 개인 간 아르바이트 및 과외 소개 - 주변상권 소개 - 학업 목적의 설문조사  ※ 홍보게시판 이용 안내 - 홍보게시판과 동아리 및 학회 게시판 중 어느 한 곳에 글을 작성했을 경우, 두 게시판 모두 3일동안 글을 작성할 수 없습니다. - 글 작성 후 60분이 지나면, 3일간 작성한 글을 수정하거나 삭제할 수 없습니다.</string>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <color key="textColor" name="blackSelectedColor"/>
