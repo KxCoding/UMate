@@ -22,17 +22,19 @@ class PlaceSearchViewController: CommonViewController {
     /// 가게 이미지 목록
     var images = [UIImage?]()
     
-    /// 필터링된 항목
+    /// 필터링 된 항목
     ///
     /// 필터 화면에서 이전에 선택한 필터링 항목은 이미 선택되어 있게 합니다
-    var filterList = [Place.PlaceType]()
+    var filteredList = [Place.PlaceType]()
     
-    /// 이전 화면에서 사용자 위치 정보를 받아오기 위한 속성
+    /// 사용자 위치
+    ///
+    /// 이전 화면에서 전달됩니다.
     var userLocation: CLLocation?
     
-    /// 거리순 필터링 활성화 유무
+    /// 거리 필터 활성화 플래그
     ///
-    /// 활성화가 되어 있다면 필터 화면에서 거리순 버튼이 선택되어 있게 합니다.
+    /// 활성화 되어 있다면 필터 화면에서 거리순 버튼이 선택되어 있게 합니다.
     var distanceFilterOn = false
     
     /// window에 추가할 DimView
@@ -48,7 +50,7 @@ class PlaceSearchViewController: CommonViewController {
     }()
     
     
-    /// 네비게이션아이템에 SearchBar를 추가합니다.
+    /// 네비게이션 아이템에 SearchBar를 추가합니다.
     /// - Author: 장현우(heoun3089@gmail.com)
     func addSearchBar() {
         let searchBar = UISearchBar()
@@ -105,32 +107,32 @@ class PlaceSearchViewController: CommonViewController {
             }
             
             // 필터 화면에서 보낸 필터링할 열거형 타입 배열을 가져옵니다.
-            if let filterList = noti.userInfo?["filterItem"] as? [Place.PlaceType] {
-                self.filterList = filterList
+            if let filteredList = noti.userInfo?["filteredItem"] as? [Place.PlaceType] {
+                self.filteredList = filteredList
                 
-                if !self.filterList.isEmpty {
+                if !self.filteredList.isEmpty {
                     var data = [Place]()
                     
                     // 더미데이터에 속한 각 데이터의 placeType과 filterList의 placeType이 같다면 data배열에 추가합니다.
-                    for filterItem in self.filterList {
+                    for filteredItem in self.filteredList {
                         for item in Place.dummyData {
-                            if item.placeType == filterItem {
+                            if item.placeType == filteredItem {
                                 data.append(item)
                             }
                         }
                     }
                     
-                    var containData = [Place]()
+                    var containedData = [Place]()
                     // 현재 화면에 표시하고 있는 list에서 필터링합니다.
                     for currentItem in self.list {
-                        for filterItem in data {
-                            if currentItem.name == filterItem.name {
-                                containData.append(filterItem)
+                        for filteredItem in data {
+                            if currentItem.name == filteredItem.name {
+                                containedData.append(filteredItem)
                             }
                         }
                     }
                     
-                    self.list = containData
+                    self.list = containedData
                     self.searchCollectionView.reloadData()
                 }
             }
@@ -175,7 +177,7 @@ class PlaceSearchViewController: CommonViewController {
         
         if let vc = segue.destination as? FilterViewController {
             window.addSubview(self.dimView)
-            vc.filterList = filterList
+            vc.filteredList = filteredList
             vc.placeList = list
             vc.userLocation = userLocation
             vc.distanceFilterOn = distanceFilterOn
@@ -249,12 +251,12 @@ extension PlaceSearchViewController: UICollectionViewDelegateFlowLayout {
     }
     
     
-    /// 헤더뷰를 구성합니다.
+    /// 헤더 뷰를 구성합니다.
     /// - Parameters:
     ///   - collectionView: 검색 결과 컬렉션뷰
-    ///   - kind: 헤더뷰
+    ///   - kind: 헤더 뷰
     ///   - indexPath: 새로운 헤더의 위치를 지정하는 IndexPath
-    /// - Returns: 구성한 검색 화면 헤더뷰 셀
+    /// - Returns: 구성한 검색 화면 헤더 뷰 셀
     /// - Author: 장현우(heoun3089@gmail.com)
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SearchHeaderCollectionViewCell", for: indexPath) as! SearchHeaderCollectionViewCell
@@ -294,7 +296,7 @@ extension PlaceSearchViewController: UISearchBarDelegate {
         list = []
         
         // 버튼을 누르면 필터 리스트 초기화
-        filterList = []
+        filteredList = []
         
         distanceFilterOn = false
         
