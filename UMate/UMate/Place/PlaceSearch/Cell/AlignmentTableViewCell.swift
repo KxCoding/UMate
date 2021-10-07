@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 정렬 관련 버튼 표시
+/// 정렬 버튼 셀
 /// - Author: 장현우(heoun3089@gmail.com)
 class AlignmentTableViewCell: UITableViewCell {
     
