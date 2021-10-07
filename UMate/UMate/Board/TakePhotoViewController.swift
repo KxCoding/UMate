@@ -31,13 +31,14 @@ class previewView: UIView {
 /// - Author: 김정민(kimjm010@icloud.com)
 class TakePhotoViewController: UIViewController {
 
-    /// 카메라 화면 표시
+    /// 카메라의 프리뷰 화면
     @IBOutlet weak var previewView: previewView!
     
     /// Camera FlashMode
     @IBOutlet weak var flashModeBtn: UIButton!
     
-    /// Camera Switch
+    /// 카메라의 위치
+    /// 전면, 후면이 있습니다.
     @IBOutlet weak var cameraSwitchBtn: UIButton!
     
     /// 사진촬영 버튼
@@ -46,24 +47,24 @@ class TakePhotoViewController: UIViewController {
     /// 카메라 캡쳐 Activity를 관리하는 객체
     var captureSession = AVCaptureSession()
     
-    /// captureSession에 데이터를 제공 객체
+    /// captureSession에 데이터를 제공하는 객체
     var currentDeviceInput: AVCaptureDeviceInput?
     
-    /// 캡쳐한 이미지를 저장
+    /// 이미지 작업 객체
     var photoOutput = AVCapturePhotoOutput()
     
-    /// 캡쳐한 이미지의 데이터
+    /// 이미지 데이터 객체
     var photoData: Data?
     
     /// 사진 캡쳐 요청에 사용할 기능 및 설정의 사양을 저장
     var currentPhotoSetting: AVCapturePhotoSettings?
     
-    /// FlashMode를 저장
+    /// 카메라 Flashmode
     /// 기본값은 Off입니다.
     var flashMode = AVCaptureDevice.FlashMode.off
     
     
-    /// Camera FlashMode를 변경
+    /// Camera FlashMode를 변경합니다.
     /// - Parameter sender: Camera FlashMode 버튼
     @IBAction func switchFlashMode(_ sender: Any) {
         let current = flashMode.rawValue % 3
@@ -76,7 +77,7 @@ class TakePhotoViewController: UIViewController {
     }
     
     
-    /// 카메라 위치 변경
+    /// 카메라 위치를 변경합니다.
     /// Camera 전면 또는 후면으로 변경합니다.
     /// - Parameter sender: Camera Switch 버튼
     @IBAction func switchCamera(_ sender: Any) {
@@ -123,7 +124,7 @@ class TakePhotoViewController: UIViewController {
     }
     
     
-    /// 사진 촬영
+    /// 사진 촬영을 시작합니다.
     /// - Parameter sender: TakePhoto 버튼
     @IBAction func takePhoto(_ sender: Any) {
         
@@ -145,7 +146,7 @@ class TakePhotoViewController: UIViewController {
     }
     
     
-    /// 촬영 화면 닫기
+    /// 촬영 화면을 닫습니다.
     /// 촬영하는 화면을 닫고 게시글 작성화면으로 이동합니다
     /// - Parameter sender: cancel 버튼
     @IBAction func closeVC(_ sender: Any) {
@@ -154,21 +155,26 @@ class TakePhotoViewController: UIViewController {
     }
     
     
-    /// 카메라에 접근 권한 요청
+    /// 카메라에 접근 권한을 요청합니다.
     func requestAuthorization() {
-        AVCaptureDevice.requestAccess(for: .video) { granted in
+        AVCaptureDevice.requestAccess(for: .video) { [weak self] (granted) in
             if granted {
                 DispatchQueue.main.async {
-                    self.startCaptureSession()
+                    self?.startCaptureSession()
                 }
             } else {
                 // TODO: 경고창 표시할 것. 설정에서 변경할 수 있도록 할 것
+                self?.alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
+                    if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
+                }
             }
         }
     }
     
     
-    /// 디바이스의 카메라를 확인
+    /// 디바이스의 카메라를 확인합니다.
     func detectCameraDevice() -> AVCaptureDevice? {
         if let device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) {
             return device
@@ -182,7 +188,7 @@ class TakePhotoViewController: UIViewController {
     }
     
     
-    /// captureSession의 작업 시작
+    /// captureSession의 작업을 시작합니다.
     func startCaptureSession() {
         
         captureSession.beginConfiguration()
@@ -229,13 +235,13 @@ class TakePhotoViewController: UIViewController {
     }
         
     
-    /// captureSession의 작업 중지
+    /// captureSession의 작업을 중지합니다.
     func stopCaptureSession() {
         captureSession.stopRunning()
     }
     
     
-    /// 카메라에 접근할 수 있는 권한을 확인
+    /// 카메라에 접근할 수 있는 권한을 확인합니다.
     func checkAuthorization() {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         
@@ -243,10 +249,10 @@ class TakePhotoViewController: UIViewController {
         case .notDetermined:
             requestAuthorization()
         case .restricted:
-            // TODO: 경고창 표시할 것. 설정에서 변경할 수 있도록 할
+            // TODO: 경고창 표시 및 설정에서 변경할 수 있도록 할 것
             break
         case .denied:
-            // TODO: 경고창 표시할 것. 설정에서 변경할 수 있도록 할 것
+            // TODO: 경고창 표시 및 설정에서 변경할 수 있도록 할 것
             break
         case .authorized:
             startCaptureSession()
@@ -268,11 +274,11 @@ class TakePhotoViewController: UIViewController {
 
 
 
-/// 캡쳐한 이미지 동작 처리
+/// 캡쳐한 이미지 동작 처리를 설정합니다.
 /// - Author: 김정민(kimjm010@icloud.com)
 extension TakePhotoViewController: AVCapturePhotoCaptureDelegate {
     
-    /// 캡쳐 후의 동작 처리
+    /// 캡쳐 후의 동작을 처리합니다.
     /// 캡쳐한 이미지와 메타데이터를 전달합니다.
     /// - Parameters:
     ///   - output: 캡쳐한 이미지

@@ -134,7 +134,7 @@ extension UIViewController {
     }
     
     
-    /// 게시글에 이미지 첨부 시 알림 표시
+    /// 게시글에 이미지 첨부 시 알림을 표시합니다.
     /// 이미지를 앨범에서 찾거나 캡쳐할 수 있습니다.
     /// - Parameters:
     ///   - title: 알림의 Title
@@ -161,7 +161,7 @@ extension UIViewController {
     }
     
     
-    /// 앨범 접근 권한에 따른 알림 표시
+    /// 앨범 접근 권한에 따른 알림을 표시합니다.
     /// - Parameters:
     ///   - title: 알림의 title
     ///   - message: 알림의 message

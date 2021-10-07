@@ -14,8 +14,8 @@ import MobileCoreServices
 /// 앨범 표시 화면
 /// - Author: 김정민(kimjm010@icloud.com)
 class SelectImageViewController: CommonViewController {
-
-    /// 앨범의 이미지
+    
+    /// 앨범의 이미지 컬렉션뷰
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     /// 편집버튼
@@ -39,14 +39,14 @@ class SelectImageViewController: CommonViewController {
     }()
     
     
-    /// 앨범 화면 닫기
+    /// 앨범 화면을 닫습니다.
     /// - Parameter sender: cancel버튼
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    /// 접근 가능한 사진 편집
+    /// 접근 가능한 사진을 변경합니다.
     /// 제한된 사진에 접근할 수 있는 경우, 제한 된 사진을 편집할 수 있습니다.
     /// - Parameter sender: SelectImageViewController
     @IBAction func editSelectedImage(_ sender: Any) {
@@ -88,24 +88,39 @@ class SelectImageViewController: CommonViewController {
         
         switch status {
         case .notDetermined:
-            PHPhotoLibrary.requestAuthorization(for: .readWrite) { (selectedStatus) in
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] (selectedStatus) in
                 switch selectedStatus {
                 case .authorized, .limited:
                     DispatchQueue.main.async {
-                        self.editBtn.isEnabled = selectedStatus == .limited
+                        self?.editBtn.isEnabled = selectedStatus == .limited
                     }
-                    self.hasLimitedPermission = selectedStatus == .limited
+                    self?.hasLimitedPermission = selectedStatus == .limited
                     break
                 default:
                     // TODO: 접근할 수 없음 -> 설정에서 변경하라는 알림창
+                    self?.alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
+                        if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                    }
                     break
                 }
             }
         case .denied:
             // TODO: 접근할 수 없음 -> 설정에서 변경하라는 알림창
+            alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
+                if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
             break
         case .restricted:
             // TODO: 접근할 수 없음 -> 설정에서 변경하라는 알림창
+            alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
+                if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
             break
         case .limited:
             self.editBtn.isEnabled = true
@@ -199,7 +214,7 @@ extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
 /// - Author: 김정민(kimjm010@icloud.com)
 extension SelectImageViewController: PHPhotoLibraryChangeObserver {
     
-    /// photoLibrary애 변화가 있을 경우 호출
+    /// photoLibrary애 변화가 있을 경우 호출합니다.
     /// - Parameter changeInstance: 수정사항이 있는 photolibrary 객체
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         DispatchQueue.main.async {
