@@ -21,6 +21,47 @@
             </objects>
             <point key="canvasLocation" x="3246" y="-179"/>
         </scene>
+        <!--School Detail View Controller-->
+        <scene sceneID="Ulx-Dz-XSF">
+            <objects>
+                <viewController id="T8D-9I-dSU" customClass="SchoolDetailViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="z7D-P3-PsE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ey6-th-xzP">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="PY4-OP-PHv"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ey6-th-xzP" firstAttribute="top" secondItem="PY4-OP-PHv" secondAttribute="top" id="2zo-It-aOV"/>
+                            <constraint firstItem="PY4-OP-PHv" firstAttribute="trailing" secondItem="ey6-th-xzP" secondAttribute="trailing" id="b6A-uR-Gv5"/>
+                            <constraint firstItem="PY4-OP-PHv" firstAttribute="bottom" secondItem="ey6-th-xzP" secondAttribute="bottom" id="bI2-SJ-tdu"/>
+                            <constraint firstItem="ey6-th-xzP" firstAttribute="leading" secondItem="PY4-OP-PHv" secondAttribute="leading" id="bSl-wJ-n9p"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ngg-yO-86I">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="safari" catalog="system" id="adM-4D-O0U">
+                            <connections>
+                                <action selector="openInSafari:" destination="T8D-9I-dSU" id="Mnd-h8-1re"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="webView" destination="ey6-th-xzP" id="SmJ-6F-cTn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pt9-3n-Ywp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3880" y="59"/>
+        </scene>
         <!--취업정보-->
         <scene sceneID="ILJ-wv-wwS">
             <objects>
@@ -394,6 +435,7 @@
                                         <connections>
                                             <outlet property="favoriteImageVIew" destination="eFK-nG-zwS" id="V1d-4g-Sg4"/>
                                             <outlet property="title" destination="rxf-BL-LlK" id="m3Y-ZY-4qB"/>
+                                            <segue destination="T8D-9I-dSU" kind="show" id="Hng-4T-mjC"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="PromotionCollectionViewCell" id="err-Os-DN0" customClass="PromotionCollectionViewCell" customModule="UMate" customModuleProvider="target">
@@ -675,6 +717,7 @@
         <image name="homekit" catalog="system" width="128" height="106"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="safari" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="team" width="512" height="512"/>
         <namedColor name="blue">
