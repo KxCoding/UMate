@@ -8,27 +8,30 @@
 import UIKit
 import KeychainSwift
 
-/// 키체인 키 정리
+/// 키체인 키
 /// Author: 황신택 (sinadsl1457@gmail.com), 안상희
 struct Keys {
-    /// 인스턴스 생성시 필요한 키
+    /// 인스턴스  키
     static let prefixKey = "prefixKey"
     
-    /// 패스워드 저장시 필요한 키
+    /// 패스워드  키
     static let passwordKey = "passwordKey"
     
-    /// 이메일 저장시 필요한 키
+    /// 이메일  키
     static let userEmailKey = "userEmailKey"
     
-    /// 앱이 시작될시 필요한 키
+    /// 앱 시작 키
     static let hasLaunchedKey = "hasLaunchedKey"
+    
     static let appLockPasswordKey = "appLockPasswordKey"
     static let bioLockPasswordKey = "bioLockPasswordKey"
 }
 
-/// 회원가입화면
+
+
+/// 회원가입 화면
 /// Author: 황신택 (sinadsl1457@gmail.com)
-class DetailRegisterViewController: AccountCommonThingsViewController {
+class DetailRegisterViewController: CommonViewController {
     /// 이메일 필드
     @IBOutlet weak var emailTextField: UITextField!
     
@@ -53,12 +56,13 @@ class DetailRegisterViewController: AccountCommonThingsViewController {
     /// 프로파일 이미지 버튼
     @IBOutlet weak var changeProfilePicButton: UIButton!
     
-    /// 키체인에 저장된 이메일 데이타를 저장
+    /// 검증된 이메일 주소
     var verifiedEmail: String?
     
-     
+    
     /// 회원가입에 필요한 조건들을 검사하고 다음 화면 으로 이동합니다.
     /// - Parameter sender: nextButton
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func checkToRegisterConditions(_ sender: Any) {
         guard let password = passwordTextField.text,
               isPasswordValid(password),
@@ -69,7 +73,7 @@ class DetailRegisterViewController: AccountCommonThingsViewController {
         
         // 암호를 키체인 저장하고 액세스 레벨을 accessibleAfterFirstUnlock로 설정합니다.
         // 앱을 재시작하기 전까지 언락 합니다.
-        if keychain.set(password, forKey: Keys.passwordKey, withAccess: .accessibleAfterFirstUnlock) {
+        if keychainPrefix.set(password, forKey: Keys.passwordKey, withAccess: .accessibleAfterFirstUnlock) {
             #if DEBUG
             print("set Password")
             #endif
@@ -79,7 +83,6 @@ class DetailRegisterViewController: AccountCommonThingsViewController {
             #endif
         }
         
-        // 사용자가 입력한 비밀번호 확인합니다.
         guard let repeatPassword = repeatPasswordTextField.text,
               repeatPassword == password else {
                   alert(title: "알림", message: "비밀번호가 같지 않습니다.")
@@ -94,21 +97,17 @@ class DetailRegisterViewController: AccountCommonThingsViewController {
                   return
               }
         
-        // 유저디폴트에 사용자 이름과 닉네임 저장 합니다.
         UserDefaults.standard.set(name, forKey: "nameKey")
         UserDefaults.standard.set(nickName, forKey: "nickNameKey")
         
-        // 성공시 홈화면으로 갑니다.
-        transitionToHome()
-        
+        CommonViewController.transitionToHome()
     }
     
     
-    
-    
+    /// 초기화 작업을 진행합니다.
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 키보드 옵저버를 등록합니다.
         addkeyboardWillHideObserver()
         addkeyboardWillShowObserver()
         
@@ -118,26 +117,23 @@ class DetailRegisterViewController: AccountCommonThingsViewController {
             
         })
         
-        // 버튼에 공통 스타일을 적용합니다.
         nextButton.setToEnabledButtonTheme()
         
         // 검증받은 이메일을 가져옵니다.
-        if let safeEmail = keychain.get(Keys.userEmailKey) {
+        if let safeEmail = keychainPrefix.get(Keys.userEmailKey) {
             emailTextField.text = safeEmail
         }
         
         
-        // 옵저버를 등록하고 유저인포 키를 통해서 int값을 받아서 이미지로 바인딩합니다.
-        // 바인딩 한 이미지를 UserDefaults에 저장합니다.
+        // 옵저버를 등록하고 유저인포 키를 통해서 인트값을 받아서 이미지로 바인딩합니다.
+        // 바인딩 한 이미지를 유저디폴츠에 저장합니다.
         let token = NotificationCenter.default.addObserver(forName: .didTapProfilePics, object: nil, queue: .main, using: { [weak self] noti  in
             guard let strongSelf = self else { return }
             guard let profileImage = noti.userInfo?[ProfilePicturesViewController.picsKey] as? Int else { return }
             
-            // Int타입으로 에셋에 있는 이미지를 저장하고 바인딩
             guard let image = UIImage(named: "\(profileImage)") else { return }
             strongSelf.profileImageView.image = image
             
-            // pngdata로 바인딩한다음에 유저 디폴츠에 저장
             if let pngData = image.pngData() {
                 UserDefaults.standard.set(pngData, forKey: "profile")
             }
@@ -152,22 +148,15 @@ class DetailRegisterViewController: AccountCommonThingsViewController {
         profileImageView.clipsToBounds = true
         profileImageView.contentMode = .scaleAspectFill
         
-        // 사용자가 뷰를 탭할시 키보드를 내립니다.
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailRegisterViewController.backgroundTap))
         self.view.addGestureRecognizer(tapGestureRecognizer)
         
-        // 텍스트 필드 델리게이트 설정합니다.
-        nameTextField.delegate = self
-        repeatPasswordTextField.delegate = self
-        nickNameTextField.delegate = self
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-        
     }
     
-    /// 뷰를 탭할시 키보드가 내려갑니다.
-    /// UITapGestureRecognizer 의 생성자 액션 파라미터 #selector로 쓰이는 메소드입니다.
-    /// - Parameter sender: 파라미터가 UITapGestureRecognizer 전달
+    /// 뷰를 탭하면 키보드를 내립니다.
+    /// 탭을하면 뷰전체가 영역입니다.
+    /// - Parameter sender: UITapGestureRecognizer
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
@@ -176,28 +165,31 @@ class DetailRegisterViewController: AccountCommonThingsViewController {
 }
 
 extension DetailRegisterViewController: UITextFieldDelegate {
-    /// 텍스트 필드가 편집이 시작될때 호출됩니다
-    /// - Parameter textField: 텍스트 필드 편집시 전달
+    /// 텍스트 필드에서 편집이 시작될 때 호출됩니다
+    /// - Parameter textField: 편집이 시작된 텍스트 필드
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField
+        activatedTextField = textField
     }
     
     
     
-    /// 텍스트 필드가 편집이 끝나면 nil로 초기화 합니다.
-    /// - Parameter textField: 텍스트 필드 편집이 끝날시 전달
+    /// 텍스트 필드에서 편집이 끝나면 호출됩니다.
+    /// - Parameter textField: 편집이 끝난 텍스트 필드
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     func textFieldDidEndEditing(_ textField: UITextField) {
-        activeTextField = nil
+        activatedTextField = nil
     }
     
     
-    /// 사용자가 다른 이메일을 입력하려고 할 때 호출됩니다.
+    /// 내용을 편집할 때마다 반복적으로 호출됩니다.
     /// 입력할 수 있는 문자를 제한합니다.
     /// - Parameters:
     ///   - textField: 이메일 텍스트필드
     ///   - range: 교체될 문자열의 범위
-    ///   - string: 유저가 타이핑하는 동안 대체될 문자
-    /// - Returns: return true이면 새로운 문자가 대체 되고, false면 문자입력불가 합니다.
+    ///   - string: 입력된 문자 또는 문자열
+    /// - Returns: true를 리턴하면 편집된 내용을 반영하고, false를 리턴하면 무시합니다.
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == emailTextField {
             let char = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
@@ -209,11 +201,12 @@ extension DetailRegisterViewController: UITextFieldDelegate {
     
 }
 
-/// 키보드 노티피케이션 확장자
-/// Author: 황신택
+/// 키보드 노티피케이션 익스텐션
+/// Author: 황신택 (sinadsl1457@gmail.com)
 extension DetailRegisterViewController {
     /// keyboardWillShowNotification을 처리하는 옵저버를 등록합니다.
-    /// 키보드가 화면에 표시되기 직전에 키보드 높이만큼 Bottom 여백을 추가해서 UI와 겹치는 문제를 방지합니다.
+    /// 키보드가 화면에 표시되기 직전에 키보드 높이만큼 아래 여백을 추가해서 UI와 겹치는 문제를 방지합니다.
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     func addkeyboardWillShowObserver() {
         let token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return  }
@@ -221,7 +214,7 @@ extension DetailRegisterViewController {
             
             var shouldMoveViewUp = false
             
-            if let activeTextField = strongSelf.activeTextField {
+            if let activeTextField = strongSelf.activatedTextField {
                 let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: strongSelf.view).maxY
                 let topOfKeyboard = strongSelf.view.frame.height - keyboardSize.height
                 
@@ -242,6 +235,7 @@ extension DetailRegisterViewController {
     }
     
     /// keyboardWillHideNotification을 처리하는 옵저버를 등록합니다.
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     func addkeyboardWillHideObserver() {
         let token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] noti in
             guard let strongSelf = self else { return }
