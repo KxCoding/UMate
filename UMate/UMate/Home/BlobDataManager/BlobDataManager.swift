@@ -27,11 +27,11 @@ struct BlobManger {
     /// 파일이 저장되는 컨테이너
     private let container: AZSCloudBlobContainer?
     
-    /// 싱글톤 인스턴스
+    /// 싱글톤 인스턴스를 생성합니다.
     static let shared = BlobManger()
     
     /// 스토리지 계정 초기화
-    /// test 컨테이너에 접근할 수 있도록 초기화 합니다.
+    /// taek 컨테이너에 접근할 수 있도록 초기화 합니다.
     private init() {
         account = try? AZSCloudStorageAccount(fromConnectionString: conStr)
         client = account?.getBlobClient()

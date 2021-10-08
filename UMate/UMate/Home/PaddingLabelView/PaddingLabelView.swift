@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-/// UILabel의 left, right, top, bottom padding값을 커스터마이징 합니다.
-/// (컴파일타임)스토리보드에서 확인하기 위해서 @IBDesignable 설정 합니다.
+/// 레이블의 왼쪽, 오른쪽, 위, 아래 padding 값을 커스터마이징 합니다.
+/// 라이브 렌더링을 지원합니다.
 /// Author: 황신택(sinadsl1457@gmail.com)
 @IBDesignable
 class PaddingLabel: UILabel {
@@ -19,29 +19,28 @@ class PaddingLabel: UILabel {
         didSet { invalidateIntrinsicContentSize() }
     }
     
-    /// textEdgeInsets.left 값을 스토리보드에서 변경할수 있습니다.
-    /// @IBInspectable은 현재 클래스를 레이블 클래스에 채용함으로써 구현한 계산속성으로 스토리보드에서 속성을 변경할수있습니다.
+    /// 왼쪽 여백을 설정합니다.
     @IBInspectable
     var paddingLeft: CGFloat {
         set { textEdgeInsets.left = newValue }
         get { return textEdgeInsets.left }
     }
     
-    /// textEdgeInsets.right 값을 스토리보드에서 변경할수 있습니다.
+    /// 오른쪽 여백을 설정합니다.
     @IBInspectable
     var paddingRight: CGFloat {
         set { textEdgeInsets.right = newValue }
         get { return textEdgeInsets.right }
     }
     
-    /// textEdgeInsets.Top 값을 스토리보드에서 변경할수 있습니다.
+    /// 위쪽 여백을 설정합니다.
     @IBInspectable
     var paddingTop: CGFloat {
         set { textEdgeInsets.top = newValue }
         get { return textEdgeInsets.top }
     }
     
-    /// textEdgeInsets.Bottom 값을 스토리보드에서 변경할수 있습니다.
+    /// 아래쪽 여백을 설정합니다.
     @IBInspectable
     var paddingBottom: CGFloat {
         set { textEdgeInsets.bottom = newValue }
@@ -50,17 +49,19 @@ class PaddingLabel: UILabel {
     
     
     /// 이 메소드는 반드시 오버라이드 해야하며, 레이블의 기본 그리기 동작을 수정하고싶을때 호출합니다.
-    /// - Parameter rect: 텍스트를 수정할 rectangle
+    /// - Parameter rect: 텍스트 출력 영역
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     override func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: textEdgeInsets))
     }
     
     
-    ///  레이블의 bounding rectangle의 커스텀화가 필요하다면 오바라이딩 합니다.
+    ///  레이블의 bounding rectangle을 커스터마이징 할 때 오바라이딩 합니다.
     /// - Parameters:
     ///   - bounds: 레이블의 사각형 바운드
-    ///   - numberOfLines:  레이블에 사용할 최대 줄 수
+    ///   - numberOfLines:  최대 줄 수
     /// - Returns: 계산된 레이블의 직사각형
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
         let insetRect = bounds.inset(by: textEdgeInsets)
         let textRect = super.textRect(forBounds: insetRect, limitedToNumberOfLines: numberOfLines)

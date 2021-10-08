@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-/// Json형식 companies 데이타를 파싱하기위해 Codable을 채용했습니다.
-/// EmploymentController에 데이타 모델로서 사용됩니다.
-/// Author: 황신택
+/// 제이슨 형식 companies 데이타를 파싱하기위해 Codable을 채용했습니다.
+/// EmploymentController에서 모델로 사용합니다.
+/// Author: 황신택 (sinadsl1457@gmail.com)
 struct JobData: Codable {
     struct Job: Codable {
         /// 데이타 아이디

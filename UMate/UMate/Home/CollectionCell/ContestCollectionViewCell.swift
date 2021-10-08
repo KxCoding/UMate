@@ -16,10 +16,12 @@ class ContestCollectionViewCell: UICollectionViewCell {
     /// 공모전 대외활동 플레이스 홀더
     @IBOutlet weak var detailLabel: UILabel!
     
-    /// 공모전 대외활동 이미지
+    /// 공모전 대외활동 이미지뷰
     @IBOutlet weak var contestImageView: UIImageView!
     
+    
     /// 공모전 대외활동 콜렉션 셀 바운드를 둥글게 초기화 합니다.
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         clipsToBounds = false

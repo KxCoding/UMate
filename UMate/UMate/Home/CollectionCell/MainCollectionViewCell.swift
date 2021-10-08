@@ -15,7 +15,9 @@ class MainCollectionViewCell: UICollectionViewCell {
     /// 카테고리 이미지뷰
     @IBOutlet weak var favoriteImageView: UIImageView!
     
-    /// 홈화면  콜렉션 셀 바운드를 둥글게 초기화 합니다.
+    
+    /// 홈화면 콜렉션 셀 바운드를 둥글게 초기화 합니다.
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         clipsToBounds = false
@@ -24,5 +26,4 @@ class MainCollectionViewCell: UICollectionViewCell {
         layer.shadowOffset = CGSize(width: 3, height: 3)
         layer.shadowOpacity = 0.5
     }
-    
 }

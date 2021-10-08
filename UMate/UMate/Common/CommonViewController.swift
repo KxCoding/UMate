@@ -45,11 +45,19 @@ class CommonViewController: UIViewController {
         (UIApplication.shared.connectedScenes.first?.delegate as?
          SceneDelegate)?.changeRootViewController(emptyViewController)
     }
+
     
+    /// 텍스트필드에 편집할 대상을 지정하기 위한 속성
+    var activatedTextField: UITextField? = nil
     
-    /// 노티피케이션 제거를 위해 토큰을 담는 배열
+    /// 옵저버 제거를 위해 토큰을 담는 배열
     /// - Author: 남정은
     var tokens = [NSObjectProtocol]()
+    
+    /// 키체인 계정을 가져오기 위한 인스턴스 속성
+    ///  Author: 황신택
+    let keychainPrefix = KeychainSwift(keyPrefix: Keys.prefixKey)
+    
     
     /// 소멸자에서 옵저버를 제거
     /// - Author: 남정은

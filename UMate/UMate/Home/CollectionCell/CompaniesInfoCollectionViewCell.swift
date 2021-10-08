@@ -19,7 +19,9 @@ class CompaniesInfoCollectionViewCell: UICollectionViewCell {
     /// 상세내용
     @IBOutlet weak var detailLabel: UILabel!
     
+    
     /// 구인정보 콜렉션 셀 바운드를 둥글게 초기화 합니다.
+    /// Author: 황신택 (sinadsl1457@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         clipsToBounds = false
@@ -28,5 +30,4 @@ class CompaniesInfoCollectionViewCell: UICollectionViewCell {
         layer.shadowOffset = CGSize(width: 3, height: 3)
         layer.shadowOpacity = 0.5
     }
-
 }
