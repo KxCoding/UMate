@@ -146,6 +146,7 @@ class BoardViewController: CommonViewController {
 
 
 
+
 /// 게시판 목록
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension BoardViewController: UITableViewDataSource {
@@ -214,6 +215,7 @@ extension BoardViewController: UITableViewDataSource {
         return cell
     }
 }
+
 
 
 

@@ -8,22 +8,23 @@
 import UIKit
 
 
-/// 캡쳐한 사진을 보여주는 클래스
+/// 캡쳐한 사진 표시 화면
 /// - Author: 김정민(kimjm010@icloud.com)
 class PhotoImageDisplayViewController: UIViewController {
 
     /// 켭쳐한 사진을 표시할 이미지뷰
     @IBOutlet weak var photoImageView: UIImageView!
     
+    /// 오버레이 뷰
     @IBOutlet var overlayView: UIView!
     
-    /// 카메라 Falash Mode 속성
+    /// 카메라 Flash Mode
     @IBOutlet weak var flashModeBtn: UIButton!
     
-    /// 카메라 스위치 속성
+    /// 카메라 스위치
     @IBOutlet weak var cameraSwitchBtn: UIButton!
     
-    /// 캡쳐에 필요한 뷰 컨틀롤러
+    /// 캡쳐한 이미지 및 사용자 앨범의 이미지 관리 객체
     var customPicker: UIImagePickerController?
     
     
@@ -67,14 +68,14 @@ class PhotoImageDisplayViewController: UIViewController {
     }
     
     
-    /// 캡쳐를 위한 카메라 화면을 표시합니다.
+    /// 카메라 화면을 표시합니다.
     /// - Parameter sender: 다시 찍기 Button
     @IBAction func presentCamera(_ sender: Any) {
         setCamera()
     }
     
     
-    /// 캡쳐한 사진을 게시글에 첨부합니다.
+    /// 캡쳐한 사진을 첨부합니다.
     /// - Parameter sender: 사진 사용 Button
     @IBAction func addCapturedPhoto(_ sender: Any) {
 
@@ -95,7 +96,7 @@ class PhotoImageDisplayViewController: UIViewController {
     }
     
     
-    /// 카메라를 셋팅을 설정합니다.
+    /// 카메라의 상태를 설정합니다.
     func setCamera() {
         guard UIImagePickerController.isCameraDeviceAvailable(.rear) else { return }
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
@@ -149,18 +150,21 @@ class PhotoImageDisplayViewController: UIViewController {
 /// - Author: 김정민(kimjm010@icloud.com)
 extension PhotoImageDisplayViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    /// 캡쳐 작업이 끝난경우 호출됩니다.
+    /// 캡쳐 작업을 취소합니다.
+    /// 캡쳐 작업이 끝난경우 화면을 닫습니다.
     /// - Parameter picker: ImagePicker를 관리하는 객체
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
     
     
+    /// 이미지 선택 후의 작업을 설정합니다.
     /// 이미지를 선택한 경우 이미지뷰에 선택한 이미지를 표시합니다.
     /// - Parameters:
     ///   - picker: ImagePicker를 관리하는 객체
     ///   - info: 촬영한 이미지 및 수정된 이미지
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage {
             photoImageView.image = image

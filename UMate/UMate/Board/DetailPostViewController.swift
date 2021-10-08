@@ -24,12 +24,17 @@ class DetailPostViewController: CommonViewController {
     /// 이미지를 클릭시에 추가되는 옵저버를 저장할 토큰
     var imageObserver: NSObjectProtocol?
     
-    
-    /// 댓글, 대댓글 작성을 위한 속성
-    /// - Author: 김정민
+    /// 댓글 Id(댓글, 대댓글 포함)
     var commentId: Int?
+    
+    /// 댓글 Id
+    /// 대댓글이 아닌 댓글의 Id입니다.
     var originalCommentId: Int?
+    
+    /// 대댓글 여부 확인
     var isReComment: Bool = false
+    
+    /// 정렬된 댓글 리스트
     var sortedCommentList = dummyCommentList.sorted {
         if $0.originalCommentId == $1.originalCommentId {
             return $0.commentId < $1.commentId
@@ -38,9 +43,7 @@ class DetailPostViewController: CommonViewController {
         return $0.originalCommentId < $1.originalCommentId
     }
     
-    var depth: Int = 0
-    
-    /// 댓글 및 대댓글 저장하는 메소드
+    /// 댓글 및 대댓글을 저장합니다.
     /// - Parameter sender: 댓글 저장 버튼
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func saveComment(_ sender: Any) {
@@ -75,7 +78,7 @@ class DetailPostViewController: CommonViewController {
     }
     
     
-    /// 댓글을 단 사용자에게 쪽지를 보낼 수 있는 메소드
+    /// 댓글을 단 사용자에게 쪽지를 보냅니다.
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func sendNote(_ sender: Any) {
         // TODO: 서버 구현 후 작업 예정입니다.
@@ -122,6 +125,7 @@ class DetailPostViewController: CommonViewController {
         tokens.append(token)
         
         
+        // 댓글 및 대댓글 추가
         token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
                                                        object: nil,
                                                        queue: .main) { [weak self] (noti) in
@@ -191,7 +195,8 @@ class DetailPostViewController: CommonViewController {
     }
     
     
-    /// 댓글을 왼쪽으로 Swipre해서 댓글을 신고하는 메소드입니다.
+    /// 댓글을 신고합니다.
+    /// 댓글을 왼쪽으로 Swipre해서 댓글을 신고합니다.
     /// - Parameter indexPath: 댓글의 IndexPath
     /// - Author: 김정민(kimjm010@icloud.com)
     func alertCommentDelete(_ indexPath: IndexPath) {
@@ -205,6 +210,7 @@ class DetailPostViewController: CommonViewController {
     }
     
     
+    /// 댓글을 삭제합니다.
     /// 댓글을 오른쪽으로 Swipe해서 댓글을 삭제합니다
     /// - Parameter indexPath: 댓글의 IndexPath
     /// - Author: 김정민
@@ -341,6 +347,7 @@ extension DetailPostViewController: UITableViewDelegate {
     }
     
     
+    /// 댓글 삭제
     /// 댓글을 왼쪽으로 Swipe하여 댓글을 삭제합니다.
     /// - Parameters:
     ///   - tableView: 댓글을 포함하고 있는 TableView
@@ -401,6 +408,7 @@ extension DetailPostViewController: UITableViewDelegate {
     }
     
     
+    /// 대댓글 작성 여부를 확인합니다.
     /// 댓글을 선택했을 때, 대댓글 작성 여부를 확인합니다.
     /// - Parameters:
     ///   - tableView: 디테일포스트 테이블 뷰
@@ -418,9 +426,10 @@ extension DetailPostViewController: UITableViewDelegate {
     }
     
     
+    /// 대댓글을 작성합니다.
     /// 댓글을 선택할 때, 대댓글을 작성합니다.
     /// - Parameters:
-    ///   - tableView: 디테일포슽트 테이블 뷰
+    ///   - tableView: 디테일포스트 테이블 뷰
     ///   - indexPath: 선택된 셀의 indexPath
     /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -441,18 +450,21 @@ extension DetailPostViewController: UITableViewDelegate {
 
 
 
+/// 대댓글, 댓글의 동작 처리
+/// - Author: 김정민(kimjm010@icloud.com)
 extension DetailPostViewController: UITextViewDelegate {
+    
+    /// 댓글 편집시 placeholder를 설정합니다.
     /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
     /// - Parameter textView: commentTextView
-    /// - Author: 김정민(kimjm010@icloud.com)
     func textViewDidBeginEditing(_ textView: UITextView) {
         commentPlaceholderLabel.isHidden = true
     }
     
     
+    /// 댓글 편집후의 placeholder를 설정합니다.
     /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시합니다.
     /// - Parameter textView: commentTextView
-    /// - Author: 김정민(kimjm010@icloud.com)
     func textViewDidEndEditing(_ textView: UITextView) {
         guard let comment = commentTextView.text, comment.count > 0 else {
             commentPlaceholderLabel.isHidden = false
