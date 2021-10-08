@@ -39,9 +39,9 @@ struct University {
     ///
     /// 다운로드나 파싱에 실패했을 때 기본값으로 사용합니다.
     static var tempUniversity = University(id: 0,
-                                               name: "숙명여자대학교",
-                                               latitude: 37.545621,
-                                               longitude: 126.96502,
-                                               places: Place.dummyData)
+                                           name: "숙명여자대학교",
+                                           latitude: 37.545621,
+                                           longitude: 126.96502,
+                                           places: Place.dummyData)
     
 }

@@ -101,7 +101,8 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
     /// - Returns: 표시할 셀
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceImageCollectionViewCell", for: indexPath) as! PlaceImageCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceImageCollectionViewCell",
+                                                      for: indexPath) as! PlaceImageCollectionViewCell
         
         manager.download(.detailImage, andUpdate: cell.imageView, with: target.imageUrls[indexPath.row])
         
@@ -118,14 +119,9 @@ extension FirstSectionTableViewCell: UICollectionViewDelegateFlowLayout {
     /// - Parameters:
     ///   - collectionView: 컬렉션 뷰
     ///   - collectionViewLayout: layout 객체
-<<<<<<< HEAD
     ///   - indexPath: 아이템의 index path
     /// - Returns: 셀 사이즈
     /// - Author: 박혜정(mailmelater11@gmail.com)
-=======
-    ///   - indexPath: 아이템의 indexpath
-    /// - Returns: 셀 사이즈
->>>>>>> phj
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
         

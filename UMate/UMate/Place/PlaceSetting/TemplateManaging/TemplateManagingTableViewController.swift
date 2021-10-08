@@ -77,39 +77,51 @@ class TemplateManagingTableViewController: UITableViewController {
     
     /// 글자수 제한 초과 알림 토스트
     lazy var overLimitLoaf = Loaf("제목이나 내용의 글자 수 제한을 확인해주세요",
-                                  state: .warning, location: .top,
+                                  state: .warning,
+                                  location: .top,
                                   presentingDirection: .vertical,
-                                  dismissingDirection: .vertical, sender: self)
+                                  dismissingDirection: .vertical,
+                                  sender: self)
     
     /// 변경 사항 없음 알림 토스트
     lazy var nothingChangedLoaf = Loaf("변경 사항이 없습니다",
-                                       state: .warning, location: .top,
+                                       state: .warning,
+                                       location: .top,
                                        presentingDirection: .vertical,
-                                       dismissingDirection: .vertical, sender: self)
+                                       dismissingDirection: .vertical,
+                                       sender: self)
     
     /// 저장 알림 토스트
     lazy var savedLoaf = Loaf("저장되었습니다",
-                              state: .success, location: .top,
+                              state: .success,
+                              location: .top,
                               presentingDirection: .vertical,
-                              dismissingDirection: .vertical, sender: self)
+                              dismissingDirection: .vertical,
+                              sender: self)
     
     /// 템플릿 로드 알림 토스트
     lazy var loadedLoaf = Loaf("템플릿을 불러왔습니다",
-                               state: .success, location: .top,
+                               state: .success,
+                               location: .top,
                                presentingDirection: .vertical,
-                               dismissingDirection: .vertical, sender: self)
+                               dismissingDirection: .vertical,
+                               sender: self)
     
     /// 템플릿이 초기화되었음을 알리는 토스트
     lazy var resetLoaf = Loaf("초기화되었습니다",
-                              state: .info, location: .top,
+                              state: .info,
+                              location: .top,
                               presentingDirection: .vertical,
-                              dismissingDirection: .vertical, sender: self)
+                              dismissingDirection: .vertical,
+                              sender: self)
     
     /// 편집 중인 템플릿 선택 알림 토스트
     lazy var editingTemplateLoaf = Loaf("현재 편집중인 템플릿입니다",
-                                        state: .warning, location: .top,
+                                        state: .warning,
+                                        location: .top,
                                         presentingDirection: .vertical,
-                                        dismissingDirection: .vertical, sender: self)
+                                        dismissingDirection: .vertical,
+                                        sender: self)
     
     
     // MARK: Actions
@@ -347,11 +359,16 @@ class TemplateManagingTableViewController: UITableViewController {
     func setupInputSystems() {
         let toolbar = UIToolbar()
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                                        target: nil, action: nil)
-        let saveButton = UIBarButtonItem(title: "저장", style: .plain,
-                                         target: self, action: #selector(saveNewTemplate(_:)))
-        let doneButton = UIBarButtonItem(title: "Done", style: .done,
-                                         target: self, action: #selector(doneBtnTapped))
+                                        target: nil,
+                                        action: nil)
+        let saveButton = UIBarButtonItem(title: "저장",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(saveNewTemplate(_:)))
+        let doneButton = UIBarButtonItem(title: "Done",
+                                         style: .done,
+                                         target: self,
+                                         action: #selector(doneBtnTapped))
         
         toolbar.setItems([saveButton, flexSpace, doneButton], animated: true)
         toolbar.sizeToFit()

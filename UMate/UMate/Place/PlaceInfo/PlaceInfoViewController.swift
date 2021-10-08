@@ -81,14 +81,18 @@ class PlaceInfoViewController: CommonViewController {
         case 100:
             selectedTap = .detail
             
-            NotificationCenter.default.post(name: .tapToggleDidRequest, object: nil, userInfo: ["selectedTap": selectedTap])
+            NotificationCenter.default.post(name: .tapToggleDidRequest,
+                                            object: nil,
+                                            userInfo: ["selectedTap": selectedTap])
             
             placeInfoTableView.reloadData()
             
         case 101:
             selectedTap = .review
             
-            NotificationCenter.default.post(name: .tapToggleDidRequest, object: nil, userInfo: ["selectedTap": selectedTap])
+            NotificationCenter.default.post(name: .tapToggleDidRequest,
+                                            object: nil,
+                                            userInfo: ["selectedTap": selectedTap])
             
             placeInfoTableView.reloadData()
             
@@ -110,7 +114,9 @@ class PlaceInfoViewController: CommonViewController {
         placeInfoTableView.dataSource = self
         placeInfoTableView.delegate = self
         
-        var token = NotificationCenter.default.addObserver(forName: .openUrl, object: nil, queue: .main) { [weak self] noti in
+        var token = NotificationCenter.default.addObserver(forName: .openUrl,
+                                                           object: nil,
+                                                           queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
             guard let urlType = noti.userInfo?["type"] as? URLType,
@@ -127,7 +133,9 @@ class PlaceInfoViewController: CommonViewController {
         
         tokens.append(token)
         
-        token = NotificationCenter.default.addObserver(forName: .reviewWillApplied, object: nil, queue: .main) { _ in
+        token = NotificationCenter.default.addObserver(forName: .reviewWillApplied,
+                                                       object: nil,
+                                                       queue: .main) { _ in
             self.placeInfoTableView.reloadData()
         }
         
@@ -192,12 +200,8 @@ extension PlaceInfoViewController: UITableViewDataSource {
     /// - Parameters:
     ///   - tableView: 테이블 뷰
     ///   - section: 섹션 인덱스
-<<<<<<< HEAD
     /// - Returns: 섹션에 포함되는 항목의 개수
     /// - Author: 장현우(heoun3089@gmail.com)
-=======
-    /// - Returns: 섹션에 포함되는 아이템의 개수
->>>>>>> phj
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 4:

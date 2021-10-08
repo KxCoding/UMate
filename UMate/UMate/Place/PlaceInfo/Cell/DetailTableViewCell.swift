@@ -48,7 +48,9 @@ class DetailTableViewCell: UITableViewCell {
         guard let tel = target.tel,
               let url = URL(string: "tel:\(tel)") else { return }
         
-        NotificationCenter.default.post(name: .openUrl, object: nil, userInfo: ["type": URLType.tel, "url": url])
+        NotificationCenter.default.post(name: .openUrl,
+                                        object: nil,
+                                        userInfo: ["type": URLType.tel, "url": url])
         
     }
     
@@ -123,14 +125,16 @@ extension DetailTableViewCell: UICollectionViewDataSource {
         switch collectionView {
             
         case districtCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DistrictCollectionViewCell", for: indexPath) as! DistrictCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DistrictCollectionViewCell",
+                                                          for: indexPath) as! DistrictCollectionViewCell
             
             cell.configure(with: target, indexPath: indexPath)
             
             return cell
             
         case keywordsCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "KeywordsCollectionViewCell", for: indexPath) as! KeywordsCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "KeywordsCollectionViewCell",
+                                                          for: indexPath) as! KeywordsCollectionViewCell
             
             cell.configure(with: target, indexPath: indexPath)
             

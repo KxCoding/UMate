@@ -34,9 +34,7 @@ class PlaceAnnotation: NSObject, MKAnnotation {
     var placeType: Place.PlaceType
     
     
-    init(coordinate: CLLocationCoordinate2D,
-         title: String? = nil, subtitle: String? = nil,
-         placeId: Int, placeType: Place.PlaceType) {
+    init(coordinate: CLLocationCoordinate2D, title: String? = nil, subtitle: String? = nil, placeId: Int, placeType: Place.PlaceType) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle

@@ -96,8 +96,10 @@ class PlaceMainViewController: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 5,
-                                                     bottom: 0, trailing: 5)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 10,
+                                                     leading: 5,
+                                                     bottom: 0,
+                                                     trailing: 5)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
                                                heightDimension: .absolute(120))
@@ -112,7 +114,7 @@ class PlaceMainViewController: UIViewController {
             guard let self = self else { return }
             
             // 선택된 아이템 계산
-            #warning("리터럴을 대체할 데이터가 필요합니다")
+#warning("리터럴을 대체할 데이터가 필요합니다")
             let selectedItemIndex = Int((scrollOffset.x + 20.7) / 337)
             let selectedItem = self.list[selectedItemIndex]
             
@@ -150,9 +152,9 @@ class PlaceMainViewController: UIViewController {
                 status = CLLocationManager.authorizationStatus()
             }
             
-            #if DEBUG
+#if DEBUG
             print(status.description)
-            #endif
+#endif
             
             switch status {
             case .notDetermined:
@@ -185,7 +187,8 @@ class PlaceMainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let result = PlaceDataManager.shared.getObject(of: PlaceList.self, fromJson: "places") else { return }
+        guard let result = PlaceDataManager.shared.getObject(of: PlaceList.self,
+                                                             fromJson: "places") else { return }
         
         user.university?.places = result.places
         user.university?.name = result.university
@@ -283,7 +286,10 @@ extension PlaceMainViewController: MKMapViewDelegate {
         if let annotation = annotation as? PlaceAnnotation {
             let tintColor = UIColor(named: annotation.placeType.rawValue) ?? tempColor
             let glyphImage = tempImage
-            annotationView = setupPlaceAnnotationView(for: annotation, on: mapView, tintColor: tintColor, image: glyphImage)
+            annotationView = setupPlaceAnnotationView(for: annotation,
+                                                         on: mapView,
+                                                         tintColor: tintColor,
+                                                         image: glyphImage)
         }
         
         return annotationView
@@ -464,9 +470,9 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
     ///   - error: 실패 이유를 포함하고 있는 에러 객체
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        #if DEBUG
+#if DEBUG
         print("위치 가져오기 실패", error)
-        #endif
+#endif
         
         manager.stopUpdatingLocation()
         manager.stopUpdatingHeading()

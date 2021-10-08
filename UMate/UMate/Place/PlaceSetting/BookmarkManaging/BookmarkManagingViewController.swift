@@ -78,7 +78,9 @@ class BookmarkManagingViewController: UIViewController {
         bookmarkListTableView.rowHeight = UITableView.automaticDimension
         
         // 북마크 삭제 이벤트를 감시합니다.
-        NotificationCenter.default.addObserver(forName: .updateBookmark, object: nil, queue: .main) { [weak self] noti in
+        NotificationCenter.default.addObserver(forName: .updateBookmark,
+                                               object: nil,
+                                               queue: .main) { [weak self] noti in
             guard let self = self else { return }
             self.bookmarkListTableView.reloadData()
         }
@@ -122,12 +124,8 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
     /// - Parameters:
     ///   - collectionView: 컬렉션 뷰
     ///   - section: 섹션 인덱스
-<<<<<<< HEAD
     /// - Returns: 섹션에 포함되는 아이템의 개수
     /// - Author: 박혜정(mailmelater11@gmail.com)
-=======
-    /// - Returns: 섹션에서 표시할 항목의 수
->>>>>>> phj
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return types.count 
     }
@@ -141,7 +139,8 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceTypeCollectionViewCell", for: indexPath) as! PlaceTypeCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceTypeCollectionViewCell",
+                                                      for: indexPath) as! PlaceTypeCollectionViewCell
         
         let typeForDisplaying = types[indexPath.item]
         cell.configure(type: typeForDisplaying,
@@ -230,7 +229,7 @@ extension BookmarkManagingViewController: UITableViewDataSource {
     /// 테이블 뷰 편집 허용 여부를 결정합니다.
     /// - Parameters:
     ///   - tableView: 편집 여부를 결정할 테이블 뷰
-    ///   - indexPath: 편집 여부를 결정할 셀의 index pat
+    ///   - indexPath: 편집 여부를 결정할 셀의 index path
     /// - Returns: 해당 테이블 뷰 셀의 편집 여부
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

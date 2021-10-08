@@ -10,15 +10,11 @@ import MapKit
 import UIKit
 
 
-/// 상점 정보를 담고 있는 클래스
+/// 상점 정보 클래스
 /// - Author: 박혜정(mailmelater11@gmail.com)
 struct Place: Codable {
     
-<<<<<<< HEAD
     /// 상점 종류
-=======
-    /// 가게 종류
->>>>>>> phj
     ///
     /// 한국어 이름, 이미지 등을 케이스의 원시값으로 제공합니다.
     enum PlaceType: String, CustomStringConvertible {
@@ -77,18 +73,13 @@ struct Place: Codable {
     
     
     
-<<<<<<< HEAD
     /// 상점 Id
     var id: Int
-=======
-    /// 가게 Id
-    var id: Int//= UUID()
->>>>>>> phj
     
     /// 상점 이름
     var name: String
     
-    /// 상점가 있는 지역
+    /// 상점이 있는 지역
     var district: String
     
     /// 위도
@@ -99,31 +90,20 @@ struct Place: Codable {
     
     /// 상점 좌표
     var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude,
-                                      longitude: longitude)
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
-<<<<<<< HEAD
     /// 상점 종류
-=======
-    /// 가게 종류
->>>>>>> phj
     ///
     /// json 파싱을 위한 속성입니다.
     let type: String
     
-<<<<<<< HEAD
     /// 상점 종류
     ///
     /// 디코딩된 데이터와 매칭되는 Placetype을 제공합니다. 매칭되는 상점 종류가 없을 때는 cafe를 기본값으로 사용합니다.
-=======
-    /// 가게 종류
-    ///
-    /// 디코딩된 데이터와 매칭되는 Placetype을 제공합니다. 매칭되는 가게 종류가 없을 때는 cafe를 기본값으로 사용합니다.
->>>>>>> phj
     var placeType: PlaceType { return PlaceType(rawValue: type) ?? .cafe }
     
-    /// 상점를 표현하는 키워드
+    /// 상점을 표현하는 키워드
     ///
     /// 상점의 특징, 분위기 등을 표현하는 키워드로, 상세 정보 화면의 키워드 컬렉션 뷰에서 사용됩니다.
     var keywords: [String]
@@ -158,7 +138,8 @@ struct Place: Codable {
     static var dummyData: [Place] = [
         Place(id: 0, name: "데일리루틴",
               district: "숙대입구역 인근",
-              latitude: 37.544055, longitude: 126.972906,
+              latitude: 37.544055,
+              longitude: 126.972906,
               type: "cafe",
               keywords: ["레트로", "사진 찍기 좋은", "새로 오픈한", "친절", "따뜻한", "커피 맛집", "목재 가구"],
               thumbnailUrl: "cafe",
