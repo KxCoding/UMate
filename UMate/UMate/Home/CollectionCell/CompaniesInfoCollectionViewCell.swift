@@ -8,20 +8,20 @@
 import UIKit
 
 /// 구인 정보 화면
-/// Author: 황신택(sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com)
 class CompaniesInfoCollectionViewCell: UICollectionViewCell {
-    /// 구인 카테고리 이미지뷰
+    /// 구인 카테고리 이미지 뷰
     @IBOutlet weak var companyCategoryImageView: UIImageView!
     
     /// 구인 카테고리 레이블
     @IBOutlet weak var companyCategoryLabel: UILabel!
     
-    /// 상세내용
+    /// 상세 내용
     @IBOutlet weak var detailLabel: UILabel!
     
     
-    /// 구인정보 콜렉션 셀 바운드를 둥글게 초기화 합니다.
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// 구인정보 콜렉션 셀 바운드를 둥글게 초기화합니다.
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         clipsToBounds = false

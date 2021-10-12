@@ -8,16 +8,16 @@
 import UIKit
 
 /// 홈화면
-/// Author: 황신택(sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com)
 class HomeViewController: UIViewController {
     /// 홈 화면 콜렉션뷰
     @IBOutlet weak var listCollectionView: UICollectionView!
     
-    /// 홈 화면 데이타 리스트
+    /// 홈 화면 데이터 리스트
     var list = HomeViewCellData.getHomeDataList()
     
     /// 초기화 작업을 진행합니다.
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,21 +29,21 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDataSource {
     /// 섹션에 아이템을 개수를 지정합니다.
     /// - Parameters:
-    ///   - collectionView: 해당 요청을 보낸 콜렉션뷰
+    ///   - collectionView: 해당 요청을 보낸 콜렉션 뷰
     ///   - section: 섹션의 위치
     /// - Returns: 색션에 표시할 아이템 개수를 리턴합니다.
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
     
     
-    /// 셀에 데이타를 지정합니다.
+    /// 셀에 데이터를 지정합니다.
     /// - Parameters:
-    ///   - collectionView: 관련 요청을 보낸 콜렉션뷰
+    ///   - collectionView: 관련 요청을 보낸 콜렉션 뷰
     ///   - indexPath: 셀의 indexPath
-    /// - Returns: 데이타가 표시된 셀이 리턴됩니다.
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Returns: 홈데이터가 표시된 셀이 리턴됩니다.
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let type = list[indexPath.item]
         
@@ -78,7 +78,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     ///   - collectionViewLayout: 정보를 요청한 레이아웃 객체
     ///   - indexPath: 아이템의 위치를 나타내는 indexPath
     /// - Returns: 지정된 아이템의 넓이 높이를 리턴합니다.
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
         
@@ -99,20 +99,19 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             if view.frame.width > view.frame.height {
                 height = width * 0.3
                 width = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing * 2 + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 3
-                
             }
             
             return CGSize(width: Int(width), height: Int(height))
             
         case .promotion(_):
-            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) * 1.05
+            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) * 1.06
             
             let height = width * 0.3
             
             return CGSize(width: Int(width), height: Int(height))
             
         case .contest(_):
-            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) * 1.05
+            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) * 1.06
             
             let height = width * 0.3
             

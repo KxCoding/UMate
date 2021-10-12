@@ -23,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             keychain.allKeys
             print("second launched")
         }
-        
         return true
     }
     
@@ -44,7 +43,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
+
+/// 앱 시작 시점에 특정 작업을 위한 익스텐션
+/// - Author: 황신택 (sinadsl1457@gmail.com)
 extension UIApplication {
+    /// UserDefaults의 HasLaunched 키가 저장 되어있는지 체크합니다.
+    /// 해당 키가 없다면 앱 시작 시점을 UserDefaults에 저장합니다.
+    /// - Returns: UserDefaults에 HasLaunched키가 존재하면 false이고 키가 존재하면 true입니다.
     class func isFirstLaunch() -> Bool {
         if !UserDefaults.standard.bool(forKey: "HasLaunched") {
             UserDefaults.standard.set(true, forKey: "HasLaunched")
@@ -53,55 +58,4 @@ extension UIApplication {
         }
         return false
     }
-    
 }
-//  0 id
-//  1 가에이름 > 가게이름
-//  2 전화번호 > tel
-//  3 홈페이지 > homepage
-//  4 좌표 > lat
-//  5 좌표 > long
-//.
-//.
-//.
-//.
-//.
-// 00 만든 날짜
-// 00 수정 날짜
-
-
-// 공지사항
-// 0 id  > notice ID = Int
-// 1 title >  title = String
-// 2 content > content = String
-// 3 공개 필드 (boolean)
-// 4 만든 날짜 > insertDate
-// 5 수정 날짜 > updateDate
-
-
-// FAQ
-// 0 id  > notice ID = Int
-// 1 title >  title = String
-// 2 content > content = String
-// 3 공개 필드 > ispublic = bool
-// 4 만든 날짜 > insertDate = date
-// 5 수정 날짜 > updateDate = date
-
-
-// 회원(User, Member)
-
-// id > userid
-// date > joindate
-// update > update
-// lastLoginDate
-// name
-// nickname
-// email
-// password (사용자가 입력한 비밀번호를 그대로 입력하면 안됨..) 모든 비밀번호는 관리자도 모르게 암호화해서 저장해야함.
-// enterenceYear
-// universityName
-// 학교인증 플래그 > universityConfirmed
-// verifyCodeNumber
-// image > selectedProfileImage
-// 인증 플래그 > emailconfiemed
-// termsofconditionTextView 만약에 선택 약관이있다면 필요함

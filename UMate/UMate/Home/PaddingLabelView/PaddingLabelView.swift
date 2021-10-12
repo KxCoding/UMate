@@ -10,7 +10,7 @@ import UIKit
 
 /// 레이블의 왼쪽, 오른쪽, 위, 아래 padding 값을 커스터마이징 합니다.
 /// 라이브 렌더링을 지원합니다.
-/// Author: 황신택(sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com)
 @IBDesignable
 class PaddingLabel: UILabel {
     /// 레이블의 Inset 속성
@@ -48,9 +48,9 @@ class PaddingLabel: UILabel {
     }
     
     
-    /// 이 메소드는 반드시 오버라이드 해야하며, 레이블의 기본 그리기 동작을 수정하고싶을때 호출합니다.
+    /// 이 메소드는 반드시 오버라이드 해야 하며, 레이블의 기본 그리기 동작을 수정하고 싶을 때 호출합니다.
     /// - Parameter rect: 텍스트 출력 영역
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: textEdgeInsets))
     }
@@ -61,7 +61,7 @@ class PaddingLabel: UILabel {
     ///   - bounds: 레이블의 사각형 바운드
     ///   - numberOfLines:  최대 줄 수
     /// - Returns: 계산된 레이블의 직사각형
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
         let insetRect = bounds.inset(by: textEdgeInsets)
         let textRect = super.textRect(forBounds: insetRect, limitedToNumberOfLines: numberOfLines)
@@ -69,5 +69,4 @@ class PaddingLabel: UILabel {
         
         return textRect.inset(by: invertedInsets)
     }
-  
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 /// 채용정보 화면
-/// Author: 황신택(sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com)
 class EmploymentInfoViewController: UIViewController {
     /// 채정정보 테이블 뷰
     @IBOutlet weak var listTableView: UITableView!
@@ -28,13 +28,14 @@ class EmploymentInfoViewController: UIViewController {
     
     /// 이전 화면으로 이동합니다.
     /// - Parameter sender: cancelButton
-    /// Author: 황신택(sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    /// 제이슨 데이타를 파싱하고 파싱된 데이타를 아이디로 정렬해서 오름차순으로 저장합니다.
+    /// 제이슨 데이터를 파싱 하고 파싱 된 데이터를 아이디로 정렬해서 오름차순으로 저장합니다.
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func getJobData() {
         DispatchQueue.global().async {
             guard let jobData = DataManager.shared.getObject(of: JobData.self, fromJson: "companies") else { return }
@@ -43,9 +44,9 @@ class EmploymentInfoViewController: UIViewController {
     }
     
     
-    /// 화면에 진입하면 채용정보 테이블 뷰를 리로드 하여 바로 보야줄 수 있도록 합니다.
+    /// 화면에 진입하면 채용정보 테이블 뷰를 리로드 하여 바로 보여줄 수 있도록 합니다.
     /// - Parameter animated: true이면 애니메이션을 이용해서 뷰를 윈도우에 추가
-    /// Author: 황신택(sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         listTableView.reloadData()
@@ -53,7 +54,7 @@ class EmploymentInfoViewController: UIViewController {
     
     
     /// 초기화 작업을 진행합니다.
-    /// Author: 황신택(sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
@@ -61,12 +62,12 @@ class EmploymentInfoViewController: UIViewController {
         // 파싱 메소드 호출 합니다.
         getJobData()
         
-        // 프리패칭 데이타소스 설정 합니다.
+        // 프리패칭 데이터 소스를 설정합니다.
         listTableView.prefetchDataSource = self
         
         searchBar.delegate = self
         
-        // 서치바의 바운드의 라인을 제거 합니다.
+        // 서치바의 바운드의 라인을 제거합니다.
         searchBar.backgroundImage = UIImage()
     }
 }
@@ -78,7 +79,7 @@ extension EmploymentInfoViewController: UISearchBarDelegate {
     /// - Parameters:
     ///   - searchBar: 편집중인 서치바
     ///   - searchText: 서치바에 포함된 텍스트
-    /// Author: 황신택(sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         DispatchQueue.global().async {
             self.isSerching = true
@@ -99,9 +100,9 @@ extension EmploymentInfoViewController: UITableViewDataSourcePrefetching {
     /// - Parameters:
     ///   - tableView:  프리패칭 요청한 테이블뷰
     ///   - indexPaths: 프리패칭할 아이템의 index 를 지정할수있습니다.
-    /// Author: 황신택(sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        /// 마지막 셀이 디큐되는 시점보다 -5를 해서 미리 데이타를 프리패칭하게 합니다.
+        /// 마지막 셀이 디큐되는 시점보다 -5를 해서 미리 데이터를 프리패칭하게 합니다.
         guard indexPaths.contains(where: { $0.row >= self.jobList.count - 5}) else {
             return
         }
@@ -116,7 +117,7 @@ extension EmploymentInfoViewController: UITableViewDataSource {
     /// 테이블뷰 섹션의 수를 지정합니다.
     /// - Parameter tableView: 해당 정보를 요청한 테이블뷰
     /// - Returns: 섹션의 개수
-    /// Author: 황신택(sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -127,7 +128,7 @@ extension EmploymentInfoViewController: UITableViewDataSource {
     ///   - tableView: 해당 정보를 요청한 테이블뷰
     ///   - section: 섹션의 위치
     /// - Returns: 테이블뷰에 표시할 섹션 수를 리턴합니다.
-    /// Author: 황신택(sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
      if isSerching {
             return searchedList.count
@@ -138,12 +139,12 @@ extension EmploymentInfoViewController: UITableViewDataSource {
     }
     
     
-    /// 검색했을때와 검색을 안했을때의 채용정보가 담긴 셀을 구현합니다.
+    /// 검색했을 때와 검색을 안 했을 때의 채용정보가 담긴 셀을 구현합니다.
     /// - Parameters:
     ///   - tableView: 정보를 요청한 테이블뷰
     ///   - indexPath: 해당하는 셀에 indexPath
-    /// - Returns: 채용정보 데이타가 담긴 셀이 리턴됩니다.
-    /// Author: 황신택(sinadsl1457@gmail.com)
+    /// - Returns: 채용정보 데이터가 담긴 셀이 리턴됩니다.
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CompanyTableViewCell", for: indexPath) as! CompanyTableViewCell
         
@@ -167,7 +168,7 @@ extension EmploymentInfoViewController: UITableViewDelegate {
     ///   - tableView: 해당 정보를 요청한 테이블뷰
     ///   - indexPath: 셀의 위치를 지정할 indexPath
     /// - Returns: 셀의 높이가 리턴됩니다.
-    /// Author: 황신택(sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return 150
     }

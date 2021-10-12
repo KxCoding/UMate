@@ -9,7 +9,7 @@ import UIKit
 import AZSClient
 
 /// 채용정보 셀
-/// Author: 황신택(sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com)
 class CompanyTableViewCell: UITableViewCell {
     /// 직업 레이블
     @IBOutlet weak var fieldLabel: UILabel!
@@ -45,9 +45,9 @@ class CompanyTableViewCell: UITableViewCell {
     var job: JobData.Job?
     
     
-    /// 로고 이미지을 클릭하면 해당 웹사이트로 이동합니다.
+    /// 로고 이미지를 클릭하면 해당 웹사이트로 이동합니다.
     /// - Parameter sender: CompanyWebSiteButton
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func goToWebSite(_ sender: Any) {
         guard let urlStr = job?.website else { return }
         if let url = URL(string: urlStr) {
@@ -57,8 +57,8 @@ class CompanyTableViewCell: UITableViewCell {
     
     
     /// 채용정보 데이터로 셀을 구성합니다.
-    /// - Parameter model:JobData.Job의 데이타를 전달
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Parameter model:JobData.Job
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func configureCompany(with model: JobData.Job) {
         job = model
         fieldLabel.text = model.field
@@ -82,7 +82,7 @@ class CompanyTableViewCell: UITableViewCell {
     /// 캐시에 이미지가 저장되어 있지 않다면, 이미지를 다운로드하고 캐시에 저장합니다. 이미지 url을 캐시 키로 사용합니다.
     /// - Parameter model: JobData.Job의 url을 전달
     /// - completion: 데이터가 없으면 nil을 데이터가 있으면 이미지를 전달 합니다.
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func fetchImage(with url: JobData.Job, completion: @escaping (UIImage?) -> ()) {
         guard let url = URL(string: url.url) else {
             DispatchQueue.main.async {
@@ -112,7 +112,7 @@ class CompanyTableViewCell: UITableViewCell {
         
     
     /// 초기화 작업을 진행합니다.
-    /// Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         [fieldLabel].forEach({
