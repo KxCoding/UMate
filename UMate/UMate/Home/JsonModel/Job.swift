@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-/// 제이슨 형식 companies 데이타를 파싱하기위해 Codable을 채용했습니다.
+/// 제이슨 형식 companies 데이터를 파싱하기위해 Codable을 채용했습니다.
 /// EmploymentController에서 모델로 사용합니다.
-/// Author: 황신택 (sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com)
 struct JobData: Codable {
     struct Job: Codable {
-        /// 데이타 아이디
+        /// 데이터 아이디
         let id: Int
         
         /// 경력
@@ -40,7 +40,6 @@ struct JobData: Codable {
         /// 관련 사이트
         let website: String
     }
-    
     /// 제이슨 배열 형식
     let jobs: [Job]
 }

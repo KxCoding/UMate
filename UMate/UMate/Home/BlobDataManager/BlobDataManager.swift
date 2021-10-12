@@ -10,13 +10,14 @@ import AZSClient
 import UIKit
 
 /// 파일 업로드에서 발생하는 에러
-/// Author: 황신택(sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com)
 enum BlobError: Error {
     /// 알 수 없는 에러가 발생했을 때 전달되는 에러
     case unKnown
 }
 
 /// 파일 업로드/다운로드를 담당하는 싱글톤 매니저
+/// - Author: 황신택 (sinadsl1457@gmail.com)
 struct BlobManger {
     /// 저장소 계정
     private let account: AZSCloudStorageAccount?
