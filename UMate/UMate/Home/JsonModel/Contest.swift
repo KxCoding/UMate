@@ -16,7 +16,7 @@ struct ContestSingleData: Codable {
         let url: String
         let description: String
     }
-    
+    /// 대외활동 데이터를 구성할 때 사용됩니다.
     struct Contests: Codable {
         let field: String
         let description: String
