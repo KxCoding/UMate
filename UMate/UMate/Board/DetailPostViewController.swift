@@ -11,11 +11,22 @@ import UIKit
 /// 게시글 상세화면 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
 class DetailPostViewController: CommonViewController {
-
+    
+    /// 댓글 컨테이버 뷰
     @IBOutlet weak var writeCommentContainerView: UIView!
+    
+    /// 댓글내용
     @IBOutlet weak var commentTextView: UITextView!
+    
+    /// 상세 게시글 테이블 뷰
     @IBOutlet weak var detailPostTableView: UITableView!
+    
+    /// 댓글 placeholder
+    /// 댓글 작성 여부에 따라 placeholder를 표시합니다.
     @IBOutlet weak var commentPlaceholderLabel: UILabel!
+    
+    /// 댓글 컨테이너뷰의 bottom 제약
+    /// keyboard가 댓글 텍스트필드를 가리지않고 댓글을 작성할 수 있습니다.
     @IBOutlet weak var commentContainerViewBottomConstraint: NSLayoutConstraint!
     
     /// 선택된 게시글 속성
@@ -33,6 +44,7 @@ class DetailPostViewController: CommonViewController {
     
     /// 대댓글 여부 확인
     var isReComment: Bool = false
+    
     
     /// 정렬된 댓글 리스트
     var sortedCommentList = dummyCommentList.sorted {
@@ -66,7 +78,8 @@ class DetailPostViewController: CommonViewController {
                                  commentId: commentId ?? 1,
                                  originalCommentId: originalCommentId ?? 1,
                                  isReComment: isReComment,
-                                 postId: "")
+                                 postId: "",
+                                 isliked: false)
         
         
         NotificationCenter.default.post(name: .newCommentDidInsert,
@@ -87,7 +100,7 @@ class DetailPostViewController: CommonViewController {
         #endif
     }
     
-
+    
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,12 +183,16 @@ class DetailPostViewController: CommonViewController {
             let alertMenu = UIAlertController(title: "", message: "메뉴를 선택하세요.", preferredStyle: .actionSheet)
             
             let editAction = UIAlertAction(title: "게시글 수정", style: .default) { _ in
+                #if DEBUG
                 print("수정")
+                #endif
             }
             alertMenu.addAction(editAction)
             
             let deleteAction = UIAlertAction(title: "게시글 삭제", style: .default) { _ in
+                #if DEBUG
                 print("삭제")
+                #endif
             }
             alertMenu.addAction(deleteAction)
             
@@ -224,6 +241,11 @@ class DetailPostViewController: CommonViewController {
             self.detailPostTableView.reloadData()
         }, handler2: nil)
     }
+    
+    
+    func adjustCommentContainerView() {
+        
+    }
 }
 
 
@@ -246,22 +268,22 @@ extension DetailPostViewController: UITableViewDataSource {
     /// - Returns: section안에 들어갈 row의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        // 작성자, 제목, 내용
+            // 작성자, 제목, 내용
         case 0:
             return 1
             
-        // 게시글에 첨부된 이미지
+            // 게시글에 첨부된 이미지
         case 1:
             if let post = selectedPost, post.images.count == 0 {
                 return 0
             }
             return 1
             
-        // 게시글에 포함된 좋아요, 댓글, 스크랩 개수
+            // 게시글에 포함된 좋아요, 댓글, 스크랩 개수
         case 2:
             return 1
             
-        // 게시글에 포함된 댓글
+            // 게시글에 포함된 댓글
         case 3:
             return sortedCommentList.count
             
@@ -277,7 +299,7 @@ extension DetailPostViewController: UITableViewDataSource {
     /// - Returns: 게시글 상세화면 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        // 게시글 내용 표시하는 셀
+            // 게시글 내용 표시하는 셀
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostContentTableViewCell", for: indexPath) as! PostContentTableViewCell
             if let post = selectedPost {
@@ -286,7 +308,7 @@ extension DetailPostViewController: UITableViewDataSource {
                 return cell
             }
             
-        // 이미지 표시하는 셀
+            // 이미지 표시하는 셀
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostImageTableViewCell", for: indexPath) as! PostImageTableViewCell
             if let post = selectedPost {
@@ -295,7 +317,7 @@ extension DetailPostViewController: UITableViewDataSource {
                 return cell
             }
             
-        // 카운트 라벨 표시하는 셀
+            // 카운트 라벨 표시하는 셀
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CountLabelTableViewCell", for: indexPath) as! CountLabelTableViewCell
             if let post = selectedPost {
@@ -304,7 +326,7 @@ extension DetailPostViewController: UITableViewDataSource {
                 return cell
             }
             
-        // 댓글 및 대댓글 표시하는 셀
+            // 댓글 및 대댓글 표시하는 셀
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
             
@@ -391,15 +413,15 @@ extension DetailPostViewController: UITableViewDelegate {
         if indexPath.section == 3 {
             return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
                 let notiAction =
-                    UIAction(title: NSLocalizedString("댓글 신고", comment: "")) { action in
-                        self.alertCommentDelete(indexPath)
-                    }
+                UIAction(title: NSLocalizedString("댓글 신고", comment: "")) { action in
+                    self.alertCommentDelete(indexPath)
+                }
                 
                 let deleteAction =
-                    UIAction(title: NSLocalizedString("댓글 삭제", comment: ""),
-                             attributes: .destructive) { action in
-                        self.deleteComment(indexPath)
-                    }
+                UIAction(title: NSLocalizedString("댓글 삭제", comment: ""),
+                         attributes: .destructive) { action in
+                    self.deleteComment(indexPath)
+                }
                 
                 return UIMenu(title: "", children: [notiAction, deleteAction])
             })
@@ -433,6 +455,7 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - indexPath: 선택된 셀의 indexPath
     /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         if indexPath.section == 3 {
             alertVersion2(title: "알림", message: "대댓글을 작성하시겠습니까? :)") { _ in
                 self.isReComment = true
@@ -447,6 +470,7 @@ extension DetailPostViewController: UITableViewDelegate {
         }
     }
 }
+
 
 
 
@@ -474,6 +498,4 @@ extension DetailPostViewController: UITextViewDelegate {
         commentPlaceholderLabel.isHidden = true
     }
 }
-
-
 

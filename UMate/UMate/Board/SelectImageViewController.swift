@@ -97,27 +97,15 @@ class SelectImageViewController: CommonViewController {
                     self?.hasLimitedPermission = selectedStatus == .limited
                     break
                 default:
-                    self?.alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
-                        if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
-                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        }
-                    }
+                    self?.alertToAccessPhotoLibrary()
                     break
                 }
             }
         case .denied:
-            alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
-                if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
-            }
+            alertToAccessPhotoLibrary()
             break
         case .restricted:
-            alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
-                if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
-            }
+            alertToAccessPhotoLibrary()
             break
         case .limited:
             self.editBtn.isEnabled = true

@@ -12,20 +12,43 @@ import UIKit
 /// - Author: 김정민(kimjm010@icloud.com)
 class CommentTableViewCell: UITableViewCell {
     
-    /// 댓글 및 대댓글 저장을 위한 아울렛
+    /// 프로필 이미지뷰
     @IBOutlet weak var profileImageView: UIImageView!
+    
+    /// 사용자 아이디
     @IBOutlet weak var userIdLabel: UILabel!
+    
+    /// 댓글내용
     @IBOutlet weak var commentLabel: UILabel!
+    
+    /// 댓글의 날짜 및 시각
     @IBOutlet weak var dateTimeLabel: UILabel!
+    
+    /// 좋아요 수
     @IBOutlet weak var heartCountLabel: UILabel!
+    
+    /// 좋아요, 쪽지보내기 버튼을 포함한 컨테이버 뷰
     @IBOutlet weak var btnContainerView: UIView!
+    
+    /// 좋아요 이미지뷰
     @IBOutlet weak var heartImageView: UIImageView!
+    
+    /// 좋아요 버튼의 이미지뷰
     @IBOutlet weak var heartButtonImageView: UIImageView!
+    
+    /// 댓글 컨테이너 뷰
+    /// 댓글, 대댓글에 따라 다른 background 색상을 표시합니다.
     @IBOutlet weak var commentContainerView: UIView!
+    
+    /// 댓글 separator뷰
+    /// 각 댓글을 나누기 위한 뷰입니다.
     @IBOutlet weak var commentSeparationView: UIView!
+    
+    /// 대댓글 컨테이너뷰
+    /// 대댓글을 포함한 컨테이너뷰입니다.
     @IBOutlet weak var reCommentContainerView: UIStackView!
     
-    /// 선택된 댓글을 담을 속성
+    /// 선택된 댓글
     var selectedComment: Comment?
     
     
@@ -37,22 +60,20 @@ class CommentTableViewCell: UITableViewCell {
         guard var comment = selectedComment else { return }
         
         if comment.isliked {
+            comment.isliked = false
             heartImageView.image = UIImage(named: "heart2")
             heartButtonImageView.image = UIImage(named: "heart2")
-            comment.isliked = false
             comment.heartCount -= 1
             heartCountLabel.text = "\(comment.heartCount)"
-            
         } else {
+            comment.isliked = true
             heartImageView.image = UIImage(named: "heart2.fill")
             heartButtonImageView.image = UIImage(named: "heart2.fill")
-            comment.isliked = true
             comment.heartCount += 1
             heartCountLabel.text = "\(comment.heartCount)"
+            
         }
-        
-        
-        // 좋아요 수가 0인경우 하트 이미지를 표시하지 않습니다.
+
         guard comment.heartCount > 0 else {
             heartImageView.isHidden = true
             heartCountLabel.isHidden = true
@@ -78,28 +99,19 @@ class CommentTableViewCell: UITableViewCell {
     /// 게시글에 추가될 Comment셀을 초기화 합니다.
     func configure(with comment: Comment) {
         
-        heartImageView.image = comment.isliked ? UIImage(named: "heart2") : UIImage(named: "heart2.fill")
-        
-        if comment.heartCount == 0 {
-            heartImageView.isHidden = true
-            heartCountLabel.isHidden = true
-        } else {
-            heartImageView.isHidden = false
-            heartCountLabel.isHidden = false
-        }
-        
-        heartImageView.image = comment.isliked ? UIImage(named: "heart2.fill") : UIImage(named: "heart2")
+        heartImageView.isHidden = comment.heartCount == 0
+        heartCountLabel.isHidden = heartImageView.isHidden
         
         reCommentContainerView.isHidden = !(comment.isReComment) ? true : false
+        commentSeparationView.isHidden = !(comment.isReComment) ? false : true
+        commentContainerView.backgroundColor = !(comment.isReComment) ? UIColor.systemBackground : UIColor.systemGray6
+        commentContainerView.layer.cornerRadius = !(comment.isReComment) ? 0 : 10
+        
         profileImageView.image = comment.image
         userIdLabel.text = comment.writer
         commentLabel.text = comment.content
         dateTimeLabel.text = comment.insertDate.commentDate
         heartCountLabel.text = comment.heartCount.description
-        commentSeparationView.isHidden = !(comment.isReComment) ? false : true
-        commentContainerView.backgroundColor = !(comment.isReComment) ? UIColor.systemBackground : UIColor.systemGray6
-        commentContainerView.layer.cornerRadius = !(comment.isReComment) ? 0 : 10
-        
         selectedComment = comment
     }
 }

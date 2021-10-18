@@ -38,6 +38,9 @@ class ComposeViewController: CommonViewController {
     /// 게시글 카테고리 컬렉션 뷰
     @IBOutlet weak var categoryListCollectionView: UICollectionView!
     
+    /// 게시판 이용정보
+    @IBOutlet weak var communityInfoLabel: UILabel!
+    
     /// 게시글에 첨부할 이미지 리스트
     var imageList = [UIImage]()
     
@@ -142,6 +145,12 @@ class ComposeViewController: CommonViewController {
         
         postTitleTextField.inputAccessoryView = accessoryBar
         postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
+        
+        if let communityInfoAssetData = NSDataAsset(name: "communityInfo")?.data,
+           let communityInfoStr = String(data: communityInfoAssetData, encoding: .utf8) {
+            communityInfoLabel.text = communityInfoStr
+        }
+        
         
         // 게시글 화면애 앨범 이미지 표시
         var token = NotificationCenter.default.addObserver(forName: .imageDidSelect,
@@ -406,10 +415,9 @@ extension ComposeViewController: UICollectionViewDelegate {
     ///   - collectionView: imageCollectionView, categoryListCollectionView
     ///   - indexPath: 탭한 이미지컬렉션뷰 셀과 categoryListCollectionView셀의 indexPath
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView.tag == 102 {
-            imageList.remove(at: indexPath.item)
-            imageCollectionView.deleteItems(at: [indexPath])
-        }
+        #if DEBUG
+        print(#function)
+        #endif
         
         if collectionView.tag == 101 {
             switch selectedBoard?.boardTitle {
@@ -422,6 +430,9 @@ extension ComposeViewController: UICollectionViewDelegate {
             default:
                 break
             }
+        } else if collectionView.tag == 102 {
+            imageList.remove(at: indexPath.item)
+            imageCollectionView.deleteItems(at: [indexPath])
         }
     }
 }
