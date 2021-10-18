@@ -88,6 +88,19 @@ extension TimetableViewController: ElliotableDelegate {
     ///   - elliotable: Elliotable
     ///   - longSelectedCourse: ElliottEvent
     func elliotable(elliotable: Elliotable, didLongSelectCourse longSelectedCourse: ElliottEvent) {
+        alertVersion2(title: "경고", message: "강의 정보를 삭제하시겠습니까?") { [weak self] alert in
+            // 선택한 강의 정보를 삭제합니다.
+            for i in 0..<LectureManager.shared.lectureEventList.count {
+                if LectureManager.shared.lectureEventList[i].courseId == longSelectedCourse.courseId {
+                    LectureManager.shared.lectureEventList.remove(at: i)
+                    self?.timeTableView.reloadData()
+                    return
+                }
+            }
+        } handler2: { [weak self] alert in
+            // 알림창을 dismiss 합니다.
+            self?.dismiss(animated: true, completion: nil)
+        }
     }
 }
 
