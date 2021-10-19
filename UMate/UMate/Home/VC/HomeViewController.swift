@@ -16,9 +16,119 @@ class HomeViewController: UIViewController {
     /// 홈화면 설계리스트 메소드
   var list = getToHomeDataList()
     
+    /// 학교 고유 id
+    /// - Author: 안상희
+    var schoolId: Int?
+    
+    /// 학교 홈페이지 URL
+    /// - Author: 안상희
+    var homepageUrl: String?
+    
+    /// 학교 포탈 URL
+    /// - Author: 안상희
+    var portalUrl: String?
+    
+    /// 학교 도서관 URL
+    /// - Author: 안상희
+    var libraryUrl: String?
+    
+    /// 학교 캠퍼스맵 URL
+    /// - Author: 안상희
+    var mapUrl: String?
+    
+    /// 학교 홈페이지 URL이 유효한지 확인
+    /// - Author: 안상희
+    var isHomepageUrlAvailable: Bool = false
+    
+    /// 학교 포탈 URL이 유효한지 확인
+    /// - Author: 안상희
+    var isPortalUrlAvailable: Bool = false
+    
+    /// 학교 도서관 URL이 유효한지 확인
+    /// - Author: 안상희
+    var isLibraryUrlAvailable: Bool = false
+    
+    /// 학교 캠퍼스맵 URL이 유효한지 확인
+    /// - Author: 안상희
+    var isMapUrlAvailable: Bool = false
+    
+    
+    
+    /// Asset의 데이터에서 학교 고유 id에 해당하는 url 주소를 불러옵니다.
+    /// - Parameters:
+    ///   - id: 학교 고유 id
+    /// - Author: 안상희
+    func getPageURL(id: Int)  {
+        guard let data = NSDataAsset(name: "university_info")?.data else { return }
+        
+        guard let source = String(data: data, encoding: .utf8) else { return }
+        
+        let lines = source.components(separatedBy: "###").dropFirst()
+        
+        for line in lines {
+            let values = line.components(separatedBy: ",")
+            guard values.count == 7 else {
+                continue
+            }
+            
+            // 학교 고유 아이디
+            let index = Int(values[0].trimmingCharacters(in: .whitespacesAndNewlines))
+            
+            // 학교 홈페이지 URL
+            let homepage = "https://" + values[2].trimmingCharacters(in: .whitespaces)
+            
+            // 학교 포탈 URL
+            let portal = values[3].trimmingCharacters(in: .whitespaces)
+            
+            // 학교 도서관 URL
+            let library = values[4].trimmingCharacters(in: .whitespaces)
+            
+            // 학교 캠퍼스맵 URL
+            let map = values[5].trimmingCharacters(in: .whitespaces)
+            
+            if index == id {
+                if homepage.count != 0 {
+                    homepageUrl = homepage
+                    isHomepageUrlAvailable = true
+                } else {
+                    isHomepageUrlAvailable = false
+                }
+                
+                if portal.count != 0 {
+                    portalUrl = portal
+                    isPortalUrlAvailable = true
+                    
+                } else {
+                    isPortalUrlAvailable = false
+                }
+                
+                if library.count != 0 {
+                    libraryUrl = library
+                    isLibraryUrlAvailable = true
+                } else {
+                    isLibraryUrlAvailable = false
+                }
+                
+                if map.count != 0 {
+                    mapUrl = map
+                    isMapUrlAvailable = true
+                } else {
+                    isMapUrlAvailable = false
+                }
+            }
+        }
+    }
+    
+    
+    /// 학교 고유 Id에 해당하는 홈페이지 URL을 불러옵니다.
+    /// - Author: 안상희
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        schoolId = 114
+        if let id = schoolId {
+            getPageURL(id: id)
+        }
     }
     
     
@@ -31,20 +141,61 @@ class HomeViewController: UIViewController {
         if let cell = sender as? UICollectionViewCell {
             if let indexPath = listCollectionView.indexPath(for: cell) {
                 if let vc = segue.destination as? SchoolDetailViewController {
-                    vc.schoolId = 114
-                    
                     if indexPath.item == 0 {
                         vc.navigationTitle = "학교 홈페이지"
+                        vc.url = homepageUrl
                     } else if indexPath.item == 1 {
                         vc.navigationTitle = "포탈"
+                        vc.url = portalUrl
                     } else if indexPath.item == 2 {
                         vc.navigationTitle = "도서관"
+                        vc.url = libraryUrl
                     } else {
                         vc.navigationTitle = "캠퍼스맵"
+                        vc.url = mapUrl
                     }
                 }
             }
         }
+    }
+}
+
+
+
+extension HomeViewController: UICollectionViewDelegate {
+    /// 페이지 URL 정보가 없으면 알림창을 띄웁니다.
+    /// - Parameters:
+    ///   - collectionView: 메인화면 콜렉션 뷰
+    ///   - indexPath: 선택된 셀의 indexPath
+    /// - Returns: URL 정보가 없다면 false를, 있다면 true를 리턴합니다.
+    /// - Author: 안상희
+    func collectionView(_ collectionView: UICollectionView,
+                        shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        switch indexPath.item {
+        case 0:
+            if !isHomepageUrlAvailable {
+                alert(message: "페이지 URL 정보가 없습니다.")
+                return false
+            }
+        case 1:
+            if !isPortalUrlAvailable {
+                alert(message: "페이지 URL 정보가 없습니다.")
+                return false
+            }
+        case 2:
+            if !isLibraryUrlAvailable {
+                alert(message: "페이지 URL 정보가 없습니다.")
+                return false
+            }
+        case 3:
+            if !isMapUrlAvailable {
+                alert(message: "페이지 URL 정보가 없습니다.")
+                return false
+            }
+        default:
+            break
+        }
+        return true
     }
 }
 
