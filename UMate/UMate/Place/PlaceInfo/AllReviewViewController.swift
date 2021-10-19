@@ -8,46 +8,42 @@
 import UIKit
 
 
-/// 모든 리뷰를 표시하는 화면과 관련된 뷰컨트롤러 클래스
+/// 모든 리뷰 화면
 /// - Author: 장현우(heoun3089@gmail.com)
 class AllReviewViewController: UIViewController {
-    /// 모든 리뷰를 표시하는 테이블뷰
-    /// - Author: 장현우(heoun3089@gmail.com)
+    
+    /// 모든 리뷰 테이블뷰
     @IBOutlet weak var allReviewTableView: UITableView!
     
+    
     /// 날짜순 정렬 관련 레이블
-    /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var dateAlignmentLabel: UILabel!
     
     /// 날짜순 정렬 관련 화살표 모양 이미지뷰
-    /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var dateAlignmentArrowImageView: UIImageView!
     
     /// 날짜순 정렬 관련 버튼
-    /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var dateAlignmentButton: UIButton!
     
     
     /// 별점순 정렬 관련 레이블
-    /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var pointAlignmentLabel: UILabel!
     
     /// 별점순 정렬 관련 화살표 모양 이미지뷰
-    /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var pointAlignmentArrowImageView: UIImageView!
     
     /// 별점순 정렬 관련 버튼
-    /// - Author: 장현우(heoun3089@gmail.com)
     @IBOutlet weak var pointAlignmentButton: UIButton!
     
     
-    /// 이전 화면에서 가게 이름을 받아올 속성
-    /// - Author: 장현우(heoun3089@gmail.com)
+    /// 상점 이름
+    ///
+    /// 이전 화면에서 전달됩니다.
     var placeName: String?
     
     
     /// 리뷰를 날짜순으로 정렬합니다.
-    /// - Parameter sender: 날짜순으로 정렬하는 버튼
+    /// - Parameter sender: 날짜순 정렬 관련 버튼
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBAction func toggleDateAlignment(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
@@ -76,7 +72,7 @@ class AllReviewViewController: UIViewController {
     
     
     /// 리뷰를 별점순으로 정렬합니다.
-    /// - Parameter sender: 별점순으로 정렬하는 버튼
+    /// - Parameter sender: 별점순 정렬 관련 버튼
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBAction func togglePointAlignment(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
@@ -107,6 +103,8 @@ class AllReviewViewController: UIViewController {
     
     
     /// 초기화 작업을 실행합니다.
+    ///
+    /// 리뷰 데이터를 날짜를 기준으로 내림차순 정렬합니다.
     /// - Author: 장현우(heoun3089@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,23 +132,25 @@ class AllReviewViewController: UIViewController {
 
 
 
+/// 모든 리뷰 테이블뷰 데이터 관리
 extension AllReviewViewController: UITableViewDataSource {
-    /// 데이터 소스 객체에게 지정된 섹션에 있는 행의 수를 물어봅니다.
+    
+    /// 섹션에 표시할 셀 수를 리턴합니다,
     /// - Parameters:
-    ///   - tableView: 이 메소드를 호출하는 테이블뷰
-    ///   - section: 테이블뷰 섹션을 식별하는 Index 번호
-    /// - Returns: 섹션에 있는 행의 수
+    ///   - tableView: 모든 리뷰 테이블뷰
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션 행의 수
     /// - Author: 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return PlaceReviewItem.dummyData.count
     }
     
     
-    /// 데이터소스 객체에게 지정된 위치에 해당하는 셀에 데이터를 요청합니다.
+    /// 리뷰 데이터로 셀을 구성합니다.
     /// - Parameters:
-    ///   - tableView: 이 메소드를 호출하는 테이블뷰
+    ///   - tableView: 모든 리뷰 테이블뷰
     ///   - indexPath: 행의 위치를 나타내는 IndexPath
-    /// - Returns: 설정한 셀
+    /// - Returns: 구성한 셀
     /// - Author: 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserReviewTableViewCell", for: indexPath) as! UserReviewTableViewCell
