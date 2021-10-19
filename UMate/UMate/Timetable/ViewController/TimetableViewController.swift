@@ -13,7 +13,7 @@ import UIKit
 ///
 /// 본인의 시간표를 볼 수 있습니다.
 /// - Author: 안상희
-class TimetableViewController: UIViewController {
+class TimetableViewController: CommonViewController {
     /// 요일 (월, 화, 수, 목, 금) 정보를 담은 배열입니다.
     let weekdays = LectureManager.shared.dayString
     
@@ -69,17 +69,50 @@ class TimetableViewController: UIViewController {
         timeTableView.isFullBorder = true
         timeTableView.roundCorner = .right
         timeTableView.reloadData()
+        
+        
+        let token = NotificationCenter.default.addObserver(forName: .DeleteCourseNotification,
+                                                           object: nil,
+                                                           queue: .main) { [weak self] noti in
+            self?.timeTableView.reloadData()
+        }
+        tokens.append(token)
     }
 }
 
 
 
 extension TimetableViewController: ElliotableDelegate {
-    /// 강의 목록을 터치하면 호출됩니다.
+    /// 강의 목록을 터치하면 상세 강의 정보 화면이 나타납니다.
     /// - Parameters:
     ///   - elliotable: Elliotable
     ///   - selectedCourse: ElliottEvent
     func elliotable(elliotable: Elliotable, didSelectCourse selectedCourse: ElliottEvent) {
+        let storyboard = UIStoryboard.init(name: "Timetable", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "TimetableDimViewSB")
+        
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.alpha = 0.8
+        
+        let courseId = selectedCourse.courseId
+        let courseName = selectedCourse.courseName
+        let courseDay = selectedCourse.courseDay
+        let startTime = selectedCourse.startTime
+        let endTime = selectedCourse.endTime
+        let professor = selectedCourse.professor
+        let roomName = selectedCourse.roomName
+        
+        NotificationCenter.default.post(name: .SendCourseNotification,
+                                        object: nil,
+                                        userInfo: ["CourseId":courseId,
+                                                   "CourseName":courseName,
+                                                   "CourseDay":courseDay,
+                                                   "StartTime":startTime,
+                                                   "EndTime":endTime,
+                                                   "Professor":professor,
+                                                   "RoomName":roomName])
+        
+        self.present(vc, animated: true, completion: nil)
     }
     
     
@@ -88,7 +121,7 @@ extension TimetableViewController: ElliotableDelegate {
     ///   - elliotable: Elliotable
     ///   - longSelectedCourse: ElliottEvent
     func elliotable(elliotable: Elliotable, didLongSelectCourse longSelectedCourse: ElliottEvent) {
-        alertVersion2(title: "경고", message: "강의 정보를 삭제하시겠습니까?") { [weak self] alert in
+        alertVersion2(title: "경고", message: "강의 정보를 삭제하시겠습니까?") { [weak self] _ in
             // 선택한 강의 정보를 삭제합니다.
             for i in 0..<LectureManager.shared.lectureEventList.count {
                 if LectureManager.shared.lectureEventList[i].courseId == longSelectedCourse.courseId {
@@ -97,7 +130,7 @@ extension TimetableViewController: ElliotableDelegate {
                     return
                 }
             }
-        } handler2: { [weak self] alert in
+        } handler2: { [weak self] _ in
             // 알림창을 dismiss 합니다.
             self?.dismiss(animated: true, completion: nil)
         }

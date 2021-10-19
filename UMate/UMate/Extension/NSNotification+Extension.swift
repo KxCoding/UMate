@@ -36,4 +36,14 @@ extension NSNotification.Name {
     /// 캡쳐한 이미지를 게시글에 첨부하기 위한 Notification을 Broadcast 하기 위한 속성
     /// - Author: 김정민(kimjm010@icloud.com)
     static let newImageCaptured = Notification.Name(rawValue: "newImageCaptured")
+    
+    
+    /// 강의 ID를 강의 정보 상세 화면으로 보내기 위한 속성
+    /// - Author: 안상희
+    static let SendCourseNotification = Notification.Name(rawValue: "SendCourse")
+    
+    
+    /// 시간표에서 강의 정보를 삭제하기 위한 속성
+    /// - Author: 안상희
+    static let DeleteCourseNotification = Notification.Name(rawValue: "DeleteCourse")
 }
