@@ -8,8 +8,8 @@
 import UIKit
 
 
-/// 홈 화면
-/// Author: 황신택, 안상희
+/// 홈화면
+/// - Author: 황신택 (sinadsl1457@gmail.com), 안상희
 class HomeViewController: UIViewController {
     /// 홈 화면 콜렉션뷰
     @IBOutlet weak var listCollectionView: UICollectionView!

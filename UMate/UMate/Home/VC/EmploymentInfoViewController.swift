@@ -25,6 +25,9 @@ class EmploymentInfoViewController: UIViewController {
     /// 검색 실행 플래그
     var isSerching = false
 
+    /// 채용정보 데이터 패칭 플래그
+    var isFetching = false
+    
     
     /// 이전 화면으로 이동합니다.
     /// - Parameter sender: cancelButton
@@ -37,8 +40,12 @@ class EmploymentInfoViewController: UIViewController {
     /// 제이슨 데이터를 파싱 하고 파싱 된 데이터를 아이디로 정렬해서 오름차순으로 저장합니다.
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     func getJobData() {
+        guard !isFetching else { return }
+        
+        isFetching = true
+        
         DispatchQueue.global().async {
-            guard let jobData = DataManager.shared.getObject(of: JobData.self, fromJson: "companies") else { return }
+            guard let jobData = PlaceDataManager.shared.getObject(of: JobData.self, fromJson: "companies") else { return }
             self.jobList = jobData.jobs.sorted(by: { $0.id < $1.id })
         }
     }
@@ -62,13 +69,20 @@ class EmploymentInfoViewController: UIViewController {
         // 파싱 메소드 호출 합니다.
         getJobData()
         
-        // 프리패칭 데이터 소스를 설정합니다.
-        listTableView.prefetchDataSource = self
-        
-        searchBar.delegate = self
-        
         // 서치바의 바운드의 라인을 제거합니다.
         searchBar.backgroundImage = UIImage()
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EmploymentInfoViewController.backgroundTap))
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    
+    /// 뷰를 탭하면 키보드를 내립니다.
+    /// 뷰 전체가 탭 영역입니다.
+    /// - Parameter sender: UITapGestureRecognizer
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
 }
 
@@ -97,6 +111,7 @@ extension EmploymentInfoViewController: UISearchBarDelegate {
 
 extension EmploymentInfoViewController: UITableViewDataSourcePrefetching {
     /// 테이블뷰 셀을 프리패칭합니다.
+    /// 데이터 패칭이 안된경우에만 프리패칭을합니다.
     /// - Parameters:
     ///   - tableView:  프리패칭 요청한 테이블뷰
     ///   - indexPaths: 프리패칭할 아이템의 index 를 지정할수있습니다.
@@ -106,23 +121,16 @@ extension EmploymentInfoViewController: UITableViewDataSourcePrefetching {
         guard indexPaths.contains(where: { $0.row >= self.jobList.count - 5}) else {
             return
         }
-
-        getJobData()
+        
+        if !isFetching {
+            getJobData()
+        }
     }
 }
 
 
 
 extension EmploymentInfoViewController: UITableViewDataSource {
-    /// 테이블뷰 섹션의 수를 지정합니다.
-    /// - Parameter tableView: 해당 정보를 요청한 테이블뷰
-    /// - Returns: 섹션의 개수
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    
     ///  섹션에 로우의 개수를 지정합니다.
     /// - Parameters:
     ///   - tableView: 해당 정보를 요청한 테이블뷰
@@ -135,7 +143,6 @@ extension EmploymentInfoViewController: UITableViewDataSource {
         } else {
             return jobList.count
         }
-        
     }
     
     
@@ -155,7 +162,6 @@ extension EmploymentInfoViewController: UITableViewDataSource {
             let model = jobList[indexPath.row]
             cell.configureCompany(with: model)
         }
-        
         return cell
     }
 }
@@ -172,5 +178,4 @@ extension EmploymentInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return 150
     }
-    
 }

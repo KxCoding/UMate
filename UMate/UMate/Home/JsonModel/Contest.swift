@@ -11,26 +11,30 @@ import Foundation
 /// InternationalActivityViewController에서 모델로 사용합니다.
 /// - Author: 황신택 (sinadsl1457@gmail.com)
 struct ContestSingleData: Codable {
-    /// 인기 대외활동 데이터를 구성할 때 사용됩니다.
+    /// 인기 대외활동 데이터
     struct FavoriteContests: Codable {
+        let id: Int
         let url: String
         let description: String
+        let website: String
     }
-    /// 대외활동 데이터를 구성할 때 사용됩니다.
+    
+    
+    
+    /// 대외활동 데이터
     struct Contests: Codable {
+        let id: Int
         let field: String
         let description: String
         let institution: String
         let url: String
+        let website: String
     }
     
-    
     let header: String
-    
-    let favoriteList: [FavoriteContests]
-    let contestList: [Contests]
+    var favoriteList: [FavoriteContests]
+    var contestList: [Contests]
 }
-
 
 
 

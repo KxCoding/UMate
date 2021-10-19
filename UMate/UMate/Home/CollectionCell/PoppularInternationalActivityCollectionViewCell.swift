@@ -12,7 +12,7 @@ import UIKit
 /// - Author: 황신택 (sinadsl1457@gmail.com)
 class PoppularInternationalActivityCollectionViewCell: UICollectionViewCell {
     /// 대외활동 이미지 뷰
-    @IBOutlet weak var contestImageVIew: UIImageView!
+    @IBOutlet weak var contestImageView: UIImageView!
     
     /// 대외활동 내용
     @IBOutlet weak var descLabel: UILabel!
@@ -20,6 +20,7 @@ class PoppularInternationalActivityCollectionViewCell: UICollectionViewCell {
     /// 이미지 캐시
     let cache = NSCache<NSURL, UIImage>()
     
+
     
     /// 대외활동 데이터로 콜렉션 셀을 구성합니다.
     /// - Parameter model: ContestSingleData.FavoriteContests
@@ -27,9 +28,9 @@ class PoppularInternationalActivityCollectionViewCell: UICollectionViewCell {
     func configure(with model: ContestSingleData.FavoriteContests) {
         fetchImage(with: model) { image in
             if let image = image {
-                self.contestImageVIew.image = image
+                self.contestImageView.image = image
             } else {
-                self.contestImageVIew.image = UIImage(named: "placeholder")
+                self.contestImageView.image = UIImage(named: "placeholder")
             }
         }
         descLabel.text = model.description
@@ -74,7 +75,6 @@ class PoppularInternationalActivityCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
     }
-    
 }
 
 
