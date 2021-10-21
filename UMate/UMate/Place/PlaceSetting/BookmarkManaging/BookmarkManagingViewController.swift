@@ -139,8 +139,7 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceTypeCollectionViewCell",
-                                                      for: indexPath) as! PlaceTypeCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SimplePlaceTypeCollectionViewCell", for: indexPath) as! SimplePlaceTypeCollectionViewCell
         
         let typeForDisplaying = types[indexPath.item]
         cell.configure(type: typeForDisplaying,
@@ -171,17 +170,16 @@ extension BookmarkManagingViewController: UICollectionViewDelegate {
 
 extension BookmarkManagingViewController: UICollectionViewDelegateFlowLayout {
     
-    
-    /// 지정된 indexPath에 표시할 셀의 크기를 리턴합니다.
+    /// 지정된 section의 line 간격의 크기를 리턴합니다.
+    ///
+    /// 수평 스크롤에서는 line 간격 셀 간격으로 적용됩니다.
     /// - Parameters:
     ///   - collectionView: 컬렉션 뷰
     ///   - collectionViewLayout: layout 객체
-    ///   - indexPath: 아이템의 index path
-    /// - Returns: 셀 사이즈
-    /// - Author: 박혜정(mailmelater11@gmail.com)
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width / 4.5
-        return CGSize(width: width, height: width * 1.3)
+    ///   - section: 섹션의 인덱스
+    /// - Returns: line 간격의 크기
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
     }
 }
 
