@@ -58,6 +58,8 @@ struct Place: Codable {
         }
         
         /// 타입 아이콘
+        ///
+        /// 북마크 관리 화면과 상세 정보 화면에서 사용됩니다.
         var iconImage: UIImage? {
             return UIImage(named: rawValue)
         }
