@@ -122,8 +122,14 @@ class PlaceDataManager {
     // MARK: - Image
     
     /// 이미지 캐시
-    var imageCache = NSCache<NSURL, UIImage>()
+    ///
+    /// 키로 NSURL 타입 객체를 저장합니다.
+    var nsUrlImageCache = NSCache<NSURL, UIImage>()
     
+    /// 이미지 캐시
+    ///
+    /// 키로 문자열 타입 객체를 저장합니다.
+    var stringImageCache = NSCache<NSString, UIImage>()
     
     /// 이미지를 다운로드 합니다.
     ///
@@ -137,7 +143,7 @@ class PlaceDataManager {
         
         let nsUrl = url as NSURL
         
-        if let image = imageCache.object(forKey: nsUrl) {
+        if let image = nsUrlImageCache.object(forKey: nsUrl) {
             result = image
         } else {
             #if DEBUG
@@ -151,7 +157,7 @@ class PlaceDataManager {
                     return
                 }
                 
-                self.imageCache.setObject(image, forKey: nsUrl)
+                self.nsUrlImageCache.setObject(image, forKey: nsUrl)
                 
                 result = image
             }
@@ -200,7 +206,7 @@ class PlaceDataManager {
     /// Unsplash API 키
     ///
     /// Demo - 50 request / hour
-    let unsplashKey = "RZoyv1JUGLzedP_O6q1OBthZTnne2ME7lwkE_gDZmOI"
+    let unsplashKey = "eNywpJFfd0G8603Gm0qmjiM4Dp5TS8OJ4APXjCq3pfs"
     
     
     /// 키워드로 이미지를 요청합니다.
@@ -299,40 +305,48 @@ class PlaceDataManager {
     
     /// Unsplash 이미지를 다운로드한 다음 대상 이미지 뷰를 업데이트 합니다.
     ///
-    /// 이미지 뷰에 기본 placeholder 이미지  > blur hash 이미지 > 최종 이미지가 순서대로 적용됩니다.
+    /// 이미지 캐시에 전달받은 쿼리로 저장된 이미지가 있다면 해당 이미지로 이미지 뷰를 업데이트 합니다.
+    /// 캐시에 이미지가 저장되어 있지 않다면 다운로드하고, 이미지 뷰에 기본 placeholder 이미지  > blur hash 이미지 > 최종 이미지가 순서대로 적용됩니다.
     /// - Parameters:
     ///   - type: 원하는 이미지의 타입
     ///   - imageView: 사용할 이미지 뷰
     ///   - query: 검색 키워드
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func download(_ type: PlaceImageDataType, andUpdate imageView: UIImageView, with query: String) {
-        imageView.image = placeholderImage
+        let nsQuery = NSString(string: query)
         
-        fetchUnsplashInfo(with: query) { info in
+        if let image = stringImageCache.object(forKey: nsQuery) {
+            imageView.image = image
+        } else {
+            imageView.image = placeholderImage
             
-            let blurImage = UIImage(blurHash: info.blur_hash, size: imageView.frame.size)
-            imageView.image = blurImage
-            
-            var imageUrl: URL? = nil
-            
-            switch type {
-            case .thumbnail:
-                imageUrl = URL(string: info.urls.thumb)
-            case .detailImage:
-                imageUrl = URL(string: info.urls.small)
-            default:
-                break
-            }
-            
-            guard let url = imageUrl else {
-                #if DEBUG
-                print("url -- nil or invalid url")
-                #endif
-                return
-            }
-            
-            self.fetchImage(with: url) { image in
-                imageView.image = image
+            fetchUnsplashInfo(with: query) { info in
+                
+                let blurImage = UIImage(blurHash: info.blur_hash, size: imageView.frame.size)
+                imageView.image = blurImage
+                
+                var imageUrl: URL? = nil
+                
+                switch type {
+                case .thumbnail:
+                    imageUrl = URL(string: info.urls.thumb)
+                case .detailImage:
+                    imageUrl = URL(string: info.urls.small)
+                default:
+                    break
+                }
+                
+                guard let url = imageUrl else {
+                    #if DEBUG
+                    print("url -- nil or invalid url")
+                    #endif
+                    return
+                }
+                
+                self.fetchImage(with: url) { image in
+                    self.stringImageCache.setObject(image, forKey: nsQuery)
+                    imageView.image = image
+                }
             }
         }
     }
