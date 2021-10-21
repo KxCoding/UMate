@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Bookmark Managing View Controller-->
+        <!--Place List View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="BookmarkManagingViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Y6W-OH-hqX" customClass="PlaceListViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -100,7 +100,7 @@
                                 <rect key="frame" x="0.0" y="175" width="414" height="721"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BookmarkListTableViewCell" rowHeight="170" id="J6c-7E-MqX" customClass="BookmarkListTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BookmarkListTableViewCell" rowHeight="170" id="J6c-7E-MqX" customClass="PlaceListTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="170"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="J6c-7E-MqX" id="Ybf-zR-cWM">
@@ -250,13 +250,13 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bookmarkListTableView" destination="F0T-uJ-wvf" id="wXC-mG-IdN"/>
+                        <outlet property="placeListTableView" destination="F0T-uJ-wvf" id="wXC-mG-IdN"/>
                         <outlet property="typeSelectionCollectionView" destination="6p0-cq-iZR" id="CCg-fC-oqU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="44.927536231884062" y="137.94642857142856"/>
+            <point key="canvasLocation" x="291" y="138"/>
         </scene>
         <!--PlaceInfo-->
         <scene sceneID="W0K-71-sku">
@@ -266,12 +266,12 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7d5-Ms-N2P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="664" y="73"/>
+            <point key="canvasLocation" x="909" y="73"/>
         </scene>
-        <!--북마크 관리-->
+        <!--Place List View Controller-->
         <scene sceneID="PUa-f6-wPb">
             <objects>
-                <viewController title="북마크 관리" id="AyX-MS-QRg" customClass="BookmarkManagingViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlaceListWithSimpleCell" id="AyX-MS-QRg" customClass="PlaceListViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dhG-Ip-26Y">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -368,7 +368,7 @@
                                 <rect key="frame" x="0.0" y="106" width="414" height="790"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BookmarkListTableViewCell" rowHeight="170" id="6Al-hN-Y9O" customClass="BookmarkListTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BookmarkListTableViewCell" rowHeight="170" id="6Al-hN-Y9O" customClass="PlaceListTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="170"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Al-hN-Y9O" id="MiU-pq-wFp">
@@ -521,7 +521,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bookmarkListTableView" destination="dLY-vq-xAa" id="0ZE-S1-e1U"/>
+                        <outlet property="placeListTableView" destination="dLY-vq-xAa" id="0ZE-S1-e1U"/>
                         <outlet property="typeSelectionCollectionView" destination="pjk-xa-GQ5" id="3zd-ST-f3O"/>
                     </connections>
                 </viewController>

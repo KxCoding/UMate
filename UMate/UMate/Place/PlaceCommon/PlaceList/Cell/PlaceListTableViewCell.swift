@@ -1,5 +1,5 @@
 //
-//  BookmarkListTableViewCell.swift
+//  PlaceListTableViewCell.swift
 //  UMate
 //
 //  Created by Effie on 2021/08/23.
@@ -10,7 +10,7 @@ import UIKit
 
 /// 북마크된 상점 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
-class BookmarkListTableViewCell: UITableViewCell {
+class PlaceListTableViewCell: UITableViewCell {
     
     // MARK: Outlets
     

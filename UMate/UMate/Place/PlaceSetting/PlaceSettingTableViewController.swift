@@ -37,4 +37,31 @@ class PlaceSettingTableViewController: UITableViewController {
             return 0
         }
     }
+    
+    
+    /// 북마크 관리 메뉴가 선택되면 북마크 관리 화면을 표시합니다.
+    /// 
+    /// 목록 화면 공통 view controller를 사용합니다.
+    /// - Parameters:
+    ///   - tableView: 테이블 뷰
+    ///   - indexPath: 선택된 셀의 index path
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            guard let placeListVC = UIStoryboard(name: "PlaceList", bundle: nil).instantiateViewController(identifier: "PlaceListWithSimpleCell") as? PlaceListViewController else { return }
+            
+            placeListVC.navigationItem.title = "북마크 관리"
+            placeListVC.viewType = .bookmark
+            
+            let places = Place.dummyData
+            placeListVC.entireItems = places.filter { place in
+                return PlaceUser.tempUser.userData.bookmarkedPlaces.contains(place.id)
+            }
+            
+            if let nav = self.navigationController {
+                nav.show(placeListVC, sender: nil)
+            } else {
+                self.present(UINavigationController(rootViewController: placeListVC), animated: true, completion: nil)
+            }
+        }
+    }
 }
