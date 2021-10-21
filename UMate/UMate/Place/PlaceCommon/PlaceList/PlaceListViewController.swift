@@ -1,5 +1,5 @@
 //
-//  ManageBookmarkViewController.swift
+//  PlaceListViewController.swift
 //  UMate
 //
 //  Created by Effie on 2021/08/23.
@@ -9,46 +9,62 @@ import Loaf
 import UIKit
 
 
-/// 북마크 관리 화면
+/// 상점 목록 화면
+///
+/// 상점 목록 보기 화면과 북마크 관리 화면의 공통 view controller 입니다.
 /// - Author: 박혜정(mailmelater11@gmail.com)
-class BookmarkManagingViewController: UIViewController {
+class PlaceListViewController: UIViewController {
+    
+    /// 목록 유형
+    ///
+    /// 리스트가 표시하는 데이터의 유형과 일부 동작을 결정합니다.
+    enum ViewType {
+        
+        /// 전체 상점 목록
+        case all
+        
+        /// 북마크된 상점 목록
+        ///
+        /// 상점이 표시된 테이블 뷰를 편집할 수 있습니다.
+        case bookmark
+    }
+    
+    
     
     // MARK: Outlets
     
-    /// 필터링할 타입을 선택할 수 있는 컬렉션 뷰
+    /// 타입 필터링용 컬렉션 뷰
     @IBOutlet weak var typeSelectionCollectionView: UICollectionView!
     
-    /// 북마크 리스트 테이블 뷰
-    @IBOutlet weak var bookmarkListTableView: UITableView!
+    /// 상점 리스트 테이블 뷰
+    @IBOutlet weak var placeListTableView: UITableView!
     
     
     // MARK: Properties
+    
+    /// 목록 유형
+    ///
+    /// 유형에 따라 리스트가 표시하는 데이터의 유형과 일부 동작이 결정됩니다.
+    var viewType: ViewType = .all
     
     /// 컬렉션 뷰가 표시할 상점 타입
     var types: [PlaceTypePattern] = [.all, .cafe, .restaurant, .bakery, .dessert, .pub, .studyCafe]
     
     /// 현재 선택된 상점 타입
-    var selectedType: PlaceTypePattern = .all
+    var selectedPlaceType: PlaceTypePattern = .all
     
-    /// 북마크된 전체 상점
-    var bookmarkedItems: [Place] {
-        let entirePlaces = Place.dummyData
-        
-        return entirePlaces.filter { place in
-            return PlaceUser.tempUser.userData.bookmarkedPlaces.contains(place.id)
-        }
-    }
+    /// 리스트에 표시할 전체 상점
+    var entireItems: [Place] = []
     
     /// 테이블에 표시할 상점
     ///
     /// 현재 선택된 상점 타입에 따라 적절한 데이터에 접근합니다.
-    var list: [Place] {
-        let entire = bookmarkedItems
-        if selectedType == .all {
-            return entire
+    var listedItems: [Place] {
+        if selectedPlaceType == .all {
+            return entireItems
         } else {
-            guard let selected = selectedType.matchedPlaceType else { return entire }
-            return bookmarkedItems.filter { $0.placeType == selected }
+            guard let selected = selectedPlaceType.matchedPlaceType else { return entireItems }
+            return entireItems.filter { $0.placeType == selected }
         }
     }
     
@@ -72,21 +88,24 @@ class BookmarkManagingViewController: UIViewController {
         typeSelectionCollectionView.dataSource = self
         typeSelectionCollectionView.delegate = self
         
-        bookmarkListTableView.dataSource = self
-        bookmarkListTableView.delegate = self
+        placeListTableView.dataSource = self
+        placeListTableView.delegate = self
         
-        bookmarkListTableView.rowHeight = UITableView.automaticDimension
+        placeListTableView.rowHeight = UITableView.automaticDimension
         
-        // 북마크 삭제 이벤트를 감시합니다.
-        NotificationCenter.default.addObserver(forName: .updateBookmark,
-                                               object: nil,
-                                               queue: .main) { [weak self] noti in
-            guard let self = self else { return }
-            self.bookmarkListTableView.reloadData()
-        }
-        
+        selectedPlaceType = .all
         let first = IndexPath(row: 0, section: 0)
         typeSelectionCollectionView.selectItem(at: first, animated: false, scrollPosition: .left)
+        
+        if viewType == .bookmark {
+            // 북마크 삭제 이벤트를 감시합니다.
+            NotificationCenter.default.addObserver(forName: .updateBookmark,
+                                                   object: nil,
+                                                   queue: .main) { [weak self] noti in
+                guard let self = self else { return }
+                self.placeListTableView.reloadData()
+            }
+        }
     }
     
     
@@ -98,10 +117,10 @@ class BookmarkManagingViewController: UIViewController {
     ///   - sender: segue를 실행시킨 객체. 북마크된 상점을 표시하는 테이블 뷰 셀입니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let cell = sender as? BookmarkListTableViewCell {
+        if let cell = sender as? PlaceListTableViewCell {
             guard let place = Place.dummyData.first(where: { $0.id == cell.target.id }) else {
                 #if DEBUG
-                print("검색 실패, 북마크한 상점 찾을 수 없음")
+                print("검색 실패, 선택한 북마크 상점 찾을 수 없음")
                 #endif
                 return
             }
@@ -118,7 +137,7 @@ class BookmarkManagingViewController: UIViewController {
 
 // MARK: CollectionView Delegation
 
-extension BookmarkManagingViewController: UICollectionViewDataSource {
+extension PlaceListViewController: UICollectionViewDataSource {
     
     /// 지정된 섹션에서 표시할 아이템의 개수를 리턴합니다.
     /// - Parameters:
@@ -127,7 +146,7 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
     /// - Returns: 섹션에 포함되는 아이템의 개수
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return types.count 
+        return types.count
     }
     
     
@@ -143,7 +162,7 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
         
         let typeForDisplaying = types[indexPath.item]
         cell.configure(type: typeForDisplaying,
-                       isSelected: typeForDisplaying == selectedType)
+                       isSelected: typeForDisplaying == selectedPlaceType)
         
         return cell
     }
@@ -151,7 +170,7 @@ extension BookmarkManagingViewController: UICollectionViewDataSource {
 
 
 
-extension BookmarkManagingViewController: UICollectionViewDelegate {
+extension PlaceListViewController: UICollectionViewDelegate {
     
     /// 타입이 선택되었을 때 리스트를 업데이트 합니다.
     /// - Parameters:
@@ -159,16 +178,16 @@ extension BookmarkManagingViewController: UICollectionViewDelegate {
     ///   - indexPath: 아이템의 index path
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedType = types[indexPath.item]
+        selectedPlaceType = types[indexPath.item]
         
-        bookmarkListTableView.reloadData()
+        placeListTableView.reloadData()
     }
     
 }
 
 
 
-extension BookmarkManagingViewController: UICollectionViewDelegateFlowLayout {
+extension PlaceListViewController: UICollectionViewDelegateFlowLayout {
     
     /// 지정된 section의 line 간격의 크기를 리턴합니다.
     ///
@@ -187,7 +206,7 @@ extension BookmarkManagingViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: TableView Delegation
 
-extension BookmarkManagingViewController: UITableViewDataSource {
+extension PlaceListViewController: UITableViewDataSource {
     
     /// 테이블 뷰에서 표시할 섹션의 개수를 리턴합니다.
     /// - Parameter tableView: 테이블 뷰
@@ -205,7 +224,7 @@ extension BookmarkManagingViewController: UITableViewDataSource {
     /// - Returns: 섹션에 포함되는 항목의 개수
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return listedItems.count
     }
     
     
@@ -216,9 +235,9 @@ extension BookmarkManagingViewController: UITableViewDataSource {
     /// - Returns: 완성된 셀
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BookmarkListTableViewCell", for: indexPath) as! BookmarkListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BookmarkListTableViewCell", for: indexPath) as! PlaceListTableViewCell
         
-        cell.configure(with: list[indexPath.item])
+        cell.configure(with: listedItems[indexPath.item])
         return cell
     }
     
@@ -238,20 +257,24 @@ extension BookmarkManagingViewController: UITableViewDataSource {
 
 
 
-extension BookmarkManagingViewController: UITableViewDelegate {
+extension PlaceListViewController: UITableViewDelegate {
     
     /// 우측 contextual action menu를 제공합니다.
+    ///
+    /// 북마크 모드일 때 해당 항목을 사용자의 북마크 목록에서 해제할 수 있습니다.
     /// - Parameters:
     ///   - tableView: 테이블 뷰
     ///   - indexPath: 항목의 indexpath
     /// - Returns: 셀의 우측에 표시되는 contextual menu
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let selectedPlace = list[indexPath.row]
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt  indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard viewType == .bookmark else { return nil }
+        
+        let selectedPlace = listedItems[indexPath.row]
         
         var conf = UISwipeActionsConfiguration(actions: [])
         
-        let deleteBookmarkMenu = UIContextualAction(style: .destructive, title: "북마크\n삭제") { [weak self] action, view, completion in
+        let deleteBookmarkMenu = UIContextualAction(style: .destructive, title: nil) { [weak self] action, view, completion in
             
             guard let self = self else { return }
             
@@ -260,9 +283,9 @@ extension BookmarkManagingViewController: UITableViewDelegate {
                 PlaceUser.tempUser.userData.bookmarkedPlaces.remove(at: index)
             }
             
-            self.bookmarkListTableView.beginUpdates()
-            self.bookmarkListTableView.deleteRows(at: [indexPath], with: .automatic)
-            self.bookmarkListTableView.endUpdates()
+            self.placeListTableView.beginUpdates()
+            self.placeListTableView.deleteRows(at: [indexPath], with: .automatic)
+            self.placeListTableView.endUpdates()
             
             self.bookmarkDeletedLoaf.show(.custom(1.2))
             
