@@ -29,6 +29,9 @@ class PlaceMainViewController: UIViewController {
     /// 검색 버튼 컨테이너
     @IBOutlet weak var searchBtnContainer: UIView!
     
+    /// 목록 보기 버튼 컨테이너
+    @IBOutlet weak var listViewBtnContainer: UIView!
+    
     /// 주변 상점 컬렉션 뷰
     @IBOutlet weak var nearbyPlaceCollectionView: UICollectionView!
     
@@ -57,7 +60,7 @@ class PlaceMainViewController: UIViewController {
     
     /// 상점 배열
     ///
-    /// 상점 데이터는 정렬되지 않은 상태로 저장됩니다. 컬렉션 뷰를 이동함에 따라 동쪽에 있는 상점으로 이동하게 하기 위해서는 이 배열의 항목을 경도를 기준으로 정렬해야 합니다.
+    /// 상점 데이터는 정렬되지 않은 상태로 저장됩니다.
     var list = [Place]()
     
     /// 학교 좌표
@@ -74,6 +77,29 @@ class PlaceMainViewController: UIViewController {
         list.forEach { arr.append($0.annotation) }
         return arr
     }()
+    
+    
+    // MARK: Actions
+    
+    /// 목록 보기 화면을 표시합니다.
+    ///
+    /// 목록 화면 공통 view controller를 사용합니다.
+    /// - Parameter sender: 목록 보기 버튼
+    @IBAction func showListView(_ sender: Any) {
+        guard let placeListVC = UIStoryboard(name: "PlaceList", bundle: nil).instantiateViewController(identifier: "PlaceListWithSimpleCell") as? PlaceListViewController else { return }
+        
+        placeListVC.navigationItem.title = "상점 목록"
+        placeListVC.viewType = .all
+        placeListVC.entireItems = list
+        
+        if let nav = self.navigationController {
+            nav.show(placeListVC, sender: nil)
+        } else {
+            self.present(UINavigationController(rootViewController: placeListVC),
+                         animated: true,
+                         completion: nil)
+        }
+    }
     
     
     // MARK: Methods
@@ -114,7 +140,7 @@ class PlaceMainViewController: UIViewController {
             guard let self = self else { return }
             
             // 선택된 아이템 계산
-#warning("리터럴을 대체할 데이터가 필요합니다")
+            #warning("리터럴을 대체할 데이터가 필요합니다")
             let selectedItemIndex = Int((scrollOffset.x + 20.7) / 337)
             let selectedItem = self.list[selectedItemIndex]
             
@@ -152,9 +178,9 @@ class PlaceMainViewController: UIViewController {
                 status = CLLocationManager.authorizationStatus()
             }
             
-#if DEBUG
+            #if DEBUG
             print(status.description)
-#endif
+            #endif
             
             switch status {
             case .notDetermined:
@@ -180,6 +206,7 @@ class PlaceMainViewController: UIViewController {
     }
     
     
+    
     // MARK: View Liftcycle Method
     
     /// 뷰가 메모리에 로드되었을 때 데이터나 UI를 초기화합니다.
@@ -196,6 +223,7 @@ class PlaceMainViewController: UIViewController {
         // 북마크 관리 기능을 위해 현재 대학의 전체 상점으로 Place의 dummy data를 교체합니다.
         Place.dummyData = result.places
         
+        // 컬렉션 뷰 셀을 넘김에 따라 동쪽에 있는 상점으로 이동하게 하기 위해 배열을 경도 기준으로 정렬합니다.
         list = result.places.sorted(by: { return $0.coordinate.longitude < $1.coordinate.longitude })
         
         mapView.delegate = self
@@ -212,6 +240,7 @@ class PlaceMainViewController: UIViewController {
         
         locationContainer.configureStyle(with: [.pillShape, .lightBorder, .lightShadow])
         searchBtnContainer.configureStyle(with: [.pillShape, .lightBorder, .lightShadow])
+        listViewBtnContainer.configureStyle(with: [.smallRoundedRect, .lightBorder, .lightShadow])
         
         nearbyPlaceCollectionView.dataSource = self
         nearbyPlaceCollectionView.delegate = self
@@ -473,9 +502,9 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
     ///   - error: 실패 이유를 포함하고 있는 에러 객체
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-#if DEBUG
+        #if DEBUG
         print("위치 가져오기 실패", error)
-#endif
+        #endif
         
         manager.stopUpdatingLocation()
         manager.stopUpdatingHeading()
