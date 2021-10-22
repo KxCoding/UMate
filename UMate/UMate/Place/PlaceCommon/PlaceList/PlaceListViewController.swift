@@ -78,9 +78,29 @@ class PlaceListViewController: UIViewController {
     
     
     
+    // MARK: Methods
+    
+    /// 검색 화면으로 이동합니다.
+    /// - Parameter sender: 검색 바 버튼
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    @objc func showSearchVC(_ sender: Any) {
+        guard let searchVC = UIStoryboard(name: "PlaceSearch", bundle: nil).instantiateInitialViewController() as? PlaceSearchViewController else { return }
+        
+        // TODO: 검색 화면 데이터 초기화 (검색 화면 구현 수정 요망)
+        
+        if let navigationController = self.navigationController {
+            navigationController.show(searchVC, sender: sender)
+        } else {
+            self.present(searchVC, animated: true, completion: nil)
+        }
+    }
+    
+    
     // MARK: View Lifecycle method
     
     /// 뷰가 메모리에 로드된 후 화면을 초기화합니다.
+    ///
+    /// viewType에 따라 다른 추가 작업을 수행합니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +117,17 @@ class PlaceListViewController: UIViewController {
         let first = IndexPath(row: 0, section: 0)
         typeSelectionCollectionView.selectItem(at: first, animated: false, scrollPosition: .left)
         
-        if viewType == .bookmark {
+        switch viewType {
+        case .all:
+            // navigation bar에 검색 버튼을 추가합니다.
+            if let _ = self.navigationController {
+                let searchButton = UIBarButtonItem(barButtonSystemItem: .search,
+                                                   target: self,
+                                                   action: #selector(showSearchVC(_:)))
+                
+                navigationItem.rightBarButtonItem = searchButton
+            }
+        case .bookmark:
             // 북마크 삭제 이벤트를 감시합니다.
             NotificationCenter.default.addObserver(forName: .updateBookmark,
                                                    object: nil,
