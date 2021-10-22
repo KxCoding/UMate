@@ -35,9 +35,14 @@ class NonExpandableBoardTableViewCell: UITableViewCell {
     ///   - boardList: 셀에 나타낼 게시판 정보가 들어갈 배열
     ///   - indexPath: 각 게시판의 indexPath
     func configure(indexPath: IndexPath) {
-        let menuList = ["내가 쓴 글", "댓글 단 글", "내 강의평"]
+        let menuList = ["내가 쓴 글", "댓글 단 글"]
         boardLabel.text = menuList[indexPath.row]
-        boardImageView.image = UIImage(systemName: "pencil")
+        if indexPath.row == 0 {
+            boardImageView.image = UIImage(named: "paper")
+        } else {
+            boardImageView.image = UIImage(named: "chat")
+        }
+       
         bookmarkButton.isHidden = true
     }
     
