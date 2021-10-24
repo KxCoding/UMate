@@ -176,7 +176,6 @@ class DetailPostViewController: CommonViewController {
             
             let deleteAction = UIAlertAction(title: "게시글 삭제", style: .default) { _ in
                 self.alertVersion2(title: "알림", message: "정말 삭제하시겠습니까?", handler: { _ in
-            
                     if let navController = self.navigationController {
                         navController.popViewController(animated: true)
                     }
