@@ -351,8 +351,7 @@ extension DetailPostViewController: UITableViewDelegate {
         return nil
     }
     
-    
-    /// 댓글 수정 및 삭제
+ 
     /// 댓글을 왼쪽으로 Swipe하여 댓글을 수정 및 삭제합니다.
     /// - Parameters:
     ///   - tableView: 댓글을 포함하고 있는 TableView
