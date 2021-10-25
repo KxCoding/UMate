@@ -23,7 +23,7 @@ class ComposeViewController: CommonViewController {
     /// 게시글 제목 placeholder
     @IBOutlet weak var postTitlePlaceholderLabel: UILabel!
     
-    /// 게시글 내용의 글자수 확인 레이블
+    /// 게시글 내용의 글자 수 확인 레이블
     @IBOutlet weak var contentCountLabel: UILabel!
     
     /// 게시글 내용 placeholder
@@ -60,18 +60,17 @@ class ComposeViewController: CommonViewController {
     var isSelected = true
     
     
-    /// 게시글 작성을 취소
+    /// 게시글 작성을 취소합니다.
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    /// 이미지 첨부 방식을 선택합니다.
     /// 게시글에 첨부할 이미지를 가져오는 방법을 지정합니다.
     /// - Parameter sender: Camera UIBarButtonItem
     @IBAction func addorTakePhoto(_ sender: UIBarButtonItem) {
-        alertToSelectAddOrTakePhoto(title: "", message: "앨범에서 찾을까요? 캡쳐할까요? ") { _ in
+        alertToSelectAddOrTakePhoto(title: "", message: "앨범에서 이미지를 찾으시겠습니까? 아니면 캡쳐하시겠습니까?") { _ in
             self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
         } handler2: { _ in
             self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
@@ -79,8 +78,7 @@ class ComposeViewController: CommonViewController {
     }
     
     
-    /// 게시글을 저장합니다.
-    /// 일반 게시판과 카테고리를 선택하는 게시판이 있습니다.
+    /// 일반 게시판과 카테고리를 게시판에 게시글을 저장합니다.
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func savePost(_ sender: Any) {
         
@@ -136,6 +134,7 @@ class ComposeViewController: CommonViewController {
     }
     
     
+    /// 뷰가 메모리에 로드되었을 때 데이터 또는 UI를 초기화합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -152,7 +151,7 @@ class ComposeViewController: CommonViewController {
         }
         
         
-        // 게시글 화면애 앨범 이미지 표시
+        // 게시글 화면에 앨범 이미지 표시
         var token = NotificationCenter.default.addObserver(forName: .imageDidSelect,
                                                            object: nil,
                                                            queue: .main) { [weak self] (noti) in
@@ -182,12 +181,12 @@ class ComposeViewController: CommonViewController {
 
 
 /// 게시글 내용의 동작 방식 처리
-/// 게시글(본문) placeHolder 상태 및 글자수를 관리합니다(500자).
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UITextViewDelegate {
     
-    /// 본문 편집시 placeholder 상태를 관리합니다.
-    /// 본문 편집시 placeholder를 hidden으로 바꿉니다.
+    /// 본문 편집 중 placeholder 상태를 관리합니다.
+    ///
+    /// 본문 편집 중 placeholder를 hidden으로 바꿉니다.
     /// - Parameter textView: postContentTextView
     func textViewDidBeginEditing(_ textView: UITextView) {
         contentPlacehoderLabel.isHidden = true
@@ -195,6 +194,7 @@ extension ComposeViewController: UITextViewDelegate {
     
     
     /// 본문 편집 후의 placeholder 상태를 관리합니다.
+    ///
     /// 본문 편집 후 글자수가 0 보다 작거나 같은 경우에 Placeholder를 다시 표시합니다.
     /// - Parameter textView: postContentTextView
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -207,7 +207,8 @@ extension ComposeViewController: UITextViewDelegate {
     }
     
     
-    /// 본문 편집시 글자 수를 확인합니다.
+    /// 본문 편집 중 글자 수를 확인합니다.
+    ///
     /// 게시글 본문이 수정될때마다 본문의 글자수를 카운팅 합니다.
     /// - Parameter textView: postContentTextView
     func textViewDidChange(_ textView: UITextView) {
@@ -222,12 +223,13 @@ extension ComposeViewController: UITextViewDelegate {
     
     
     /// 본문 편집 기능을 제한합니다.
+    ///
     /// 게시글 본문의 글이 500자가 넘는 경우 작성이 불가능합니다.
     /// - Parameters:
     ///   - textView: textView description
     ///   - range: 현재 선택된 텍스트의 범위
     ///   - text: 대체할 텍스트
-    /// - Returns: 수정이 가능한 경우 True, 불가능한 경우 False
+    /// - Returns: 수정이 가능한 경우 true, 불가능한 경우 false
     func textView(_ textView: UITextView,
                   shouldChangeTextIn range: NSRange,
                   replacementText text: String) -> Bool {
@@ -247,12 +249,12 @@ extension ComposeViewController: UITextViewDelegate {
 
 
 /// 게시글 제목의 동작방식 처리
-/// 제목 Placeholder 지정 및 글자수를 제한합니다(50자).
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UITextFieldDelegate {
     
-    /// 제목 편집시 placeholder 상태를 관리합니다.
-    /// 제목 편집시 placeholder를 hidden으로 바꿉니다.
+    /// 제목 편집 중 placeholder 상태를 관리합니다.
+    ///
+    /// 제목 편집 중 placeholder를 hidden으로 바꿉니다.
     /// - Parameter textField: postTitleTextField
     func textFieldDidBeginEditing(_ textField: UITextField) {
         postTitlePlaceholderLabel.isHidden = true
@@ -260,6 +262,7 @@ extension ComposeViewController: UITextFieldDelegate {
     
     
     /// 제목 편집 후 placeholder 상태를 관리합니다.
+    ///
     /// 제목 편집 후 글자수가 0보다 작거나 같은 경우 다시 Placeholder를 설정합니다.
     /// - Parameter textField: postTitleTextField
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -273,10 +276,11 @@ extension ComposeViewController: UITextFieldDelegate {
     }
     
     
-    /// 제목 편집시 Return버튼의 기능을 설정합니다.
+    /// 제목 편집 중 Return버튼의 기능을 설정합니다.
+    ///
     /// 제목의 Return버튼을 누르면 본문으로 넘어갑니다.
     /// - Parameter textField: postTitleTextField
-    /// - Returns: True인 경우 본문 내용을 편집할 수 있습니다.
+    /// - Returns: true인 경우 본문 내용을 편집할 수 있습니다.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == postTitleTextField && postTitleTextField.isFirstResponder {
@@ -288,12 +292,13 @@ extension ComposeViewController: UITextFieldDelegate {
     
     
     /// 제목 편집 기능을 제한합니다.
+    ///
     /// 제목의 글자수가 50자 초과인 경우 작성이 불가능합니다.
     /// - Parameters:
-    ///   - textField: 제목 텍스트필드
-    ///   - range: 바꿀 문자의 범위 정보
+    ///   - textField: postTitleTextField
+    ///   - range: 바꿀 문자의 범위
     ///   - string: 지정된 범위의 대체 문자열
-    /// - Returns: 제목 텍스트필드에 새로운 문자를 추가할 수 있을 경우 true, 추가가 불가능한 경우 false
+    /// - Returns: 제목을 편집할 수 있는 경우 true, 편집이 불가능한 경우 false
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
         
@@ -310,18 +315,16 @@ extension ComposeViewController: UITextFieldDelegate {
 
 
 
-
+ 
 /// 첨부할 이미지 및 카테고리 데이터 설정
-/// 게시글에 첨부할 이미지 컬렉션뷰
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UICollectionViewDataSource {
     
-    /// 이미지 및 카테고리의 수를 리턴합니다.
     /// 게시글에 첨부할 이미지와 게시글의 카테고리 수를 리턴합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView, categoryListCollectionView
     ///   - section: imageCollectionView, categoryListCollectionView의 섹션 인덱스
-    /// - Returns: 표시할 컬렉션뷰 item의 갯수
+    /// - Returns: 표시할 컬렉션뷰 item의 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard collectionView.tag == 101 else {
@@ -332,13 +335,11 @@ extension ComposeViewController: UICollectionViewDataSource {
     }
     
     
-    /// 이미지 및 카테고리 목록 셀을 구성합니다.
-    /// 첨부할 이미지가 있는 경우 해당 이지미를 표시합니다.
-    /// 카테고리의 이름을 표시합니다.
+    /// tag 값에 따라 첨부할 이미지 또는 카테고리 이름을 표시합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView, categoryListCollectionView
     ///   - indexPath: 첨부할 이미지의 indexPath, 카테고리의 indexPath
-    /// - Returns: 게시글에 선택한 이미지를 표시하는 컬렉션 뷰 셀,  카테고리를 표시하는 컬렉션뷰 셀
+    /// - Returns: 게시글에 선택한 이미지를 표시하는 컬렉션 뷰 셀,  카테고리를 표시하는 컬렉션 뷰 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard collectionView.tag == 101 else {
@@ -346,7 +347,6 @@ extension ComposeViewController: UICollectionViewDataSource {
                                                           for: indexPath) as! ComposeImageCollectionViewCell
             
             cell.composeImageView.image = imageList[indexPath.item]
-            
             return cell
         }
         
@@ -354,7 +354,6 @@ extension ComposeViewController: UICollectionViewDataSource {
                                                       for: indexPath) as! SelectCategoryBoardCollectionViewCell
         
         cell.configure(with: categoryList, indexPath: indexPath)
-        
         return cell
     }
 }
@@ -362,13 +361,11 @@ extension ComposeViewController: UICollectionViewDataSource {
 
 
 
-/// 이미지, 카테고리 컬렉션뷰셀의 사이즈 설정
-/// 이미지 및 카테고리 아이템의 사이를 설정합니다.
+/// 이미지, 카테고리 컬렉션뷰 셀의 레이아웃 조정
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UICollectionViewDelegateFlowLayout {
     
     /// 이미지 및 카테고리셀의 사이즈를 설정합니다.
-    /// 이미지 및 카테고리셀의 사이즈를 상태에 따라 다르게 설정합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView, categoryListCollectionView
     ///   - collectionViewLayout: imageCollectionView와 categoryListCollectionView의 Layout 정보
@@ -387,11 +384,11 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
         var width = bounds.width - (layout.sectionInset.left + layout.sectionInset.right)
         
         switch categoryList.count {
-        case 4:
-            width = (width - (layout.minimumLineSpacing * 2)) / 3
-            return CGSize(width: width, height: 50)
         case 3:
             width = (width - (layout.minimumLineSpacing)) / 2
+            return CGSize(width: width, height: 50)
+        case 4:
+            width = (width - (layout.minimumLineSpacing * 2)) / 3
             return CGSize(width: width, height: 50)
         default:
             break
@@ -409,15 +406,13 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
 extension ComposeViewController: UICollectionViewDelegate {
     
     /// 이미지 및 카테고리를 선택시 동작을 처리합니다.
+    ///
     /// 첨부한 이미지를 탭하면 첨부이미지 목록에서 삭제합니다.
-    /// 카테고리를 탭하면 해당 카테고리의 rawValue값을 새로운 변수에 저장합니다.
+    /// 카테고리를 탭하면 해당 카테고리의 rawValue 값을 새로운 변수에 저장합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView, categoryListCollectionView
-    ///   - indexPath: 탭한 이미지컬렉션뷰 셀과 categoryListCollectionView셀의 indexPath
+    ///   - indexPath: 탭한 imageCollectionView 셀과 categoryListCollectionView 셀의 indexPath
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        #if DEBUG
-        print(#function)
-        #endif
         
         if collectionView.tag == 101 {
             switch selectedBoard?.boardTitle {

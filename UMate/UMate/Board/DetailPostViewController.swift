@@ -91,7 +91,7 @@ class DetailPostViewController: CommonViewController {
     }
     
     
-    /// 댓글을 단 사용자에게 쪽지를 보냅니다.
+    /// 댓글을 단 사용자에게 쪽지를 전송합니다.
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func sendNote(_ sender: Any) {
         // TODO: 서버 구현 후 작업 예정입니다.
@@ -212,8 +212,7 @@ class DetailPostViewController: CommonViewController {
     }
     
     
-    /// 댓글을 신고합니다.
-    /// 댓글을 왼쪽으로 Swipre해서 댓글을 신고합니다.
+    /// 댓글을 오른쪽으로 Swipe해서 신고합니다.
     /// - Parameter indexPath: 댓글의 IndexPath
     /// - Author: 김정민(kimjm010@icloud.com)
     func alertCommentDelete(_ indexPath: IndexPath) {
@@ -227,10 +226,9 @@ class DetailPostViewController: CommonViewController {
     }
     
     
-    /// 댓글을 삭제합니다.
-    /// 댓글을 오른쪽으로 Swipe해서 댓글을 삭제합니다
+    /// 댓글을 왼쪽으로 Swipe해서 삭제합니다
     /// - Parameter indexPath: 댓글의 IndexPath
-    /// - Author: 김정민
+    /// - Author: 김정민(kimjm010@icloud.com)
     func deleteComment(_ indexPath: IndexPath) {
         
         alertVersion2(title: "알림", message: "댓글을 삭제할까요?", handler: { _ in
@@ -253,6 +251,7 @@ class DetailPostViewController: CommonViewController {
 /// 게시글 상세화면
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension DetailPostViewController: UITableViewDataSource {
+    
     /// 게시글 상세화면에 필요한 section 수를 리턴합니다.
     /// - Parameter tableView: 게시글 상세화면 테이블 뷰
     /// - Returns: section의 수
@@ -345,7 +344,8 @@ extension DetailPostViewController: UITableViewDataSource {
 
 
 extension DetailPostViewController: UITableViewDelegate {
-    /// 댓글을 오른쪽으로 Swipe하여 댓글을 신고합니다.
+    
+    /// 댓글을 오른쪽으로 Swipe하여 신고합니다.
     /// - Parameters:
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath
@@ -369,8 +369,7 @@ extension DetailPostViewController: UITableViewDelegate {
     }
     
     
-    /// 댓글 삭제
-    /// 댓글을 왼쪽으로 Swipe하여 댓글을 삭제합니다.
+    /// 댓글을 왼쪽으로 Swipe하여 삭제합니다.
     /// - Parameters:
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath

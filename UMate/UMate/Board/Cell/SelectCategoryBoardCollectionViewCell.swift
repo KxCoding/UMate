@@ -8,14 +8,14 @@
 import UIKit
 
 
-/// 카테고리를 표시하는 컬렉션뷰 셀
+/// 카테고리 컬렉션뷰 셀
 /// - Author: 김정민(kimjm010@icloud.com)
 class SelectCategoryBoardCollectionViewCell: UICollectionViewCell {
     
     /// 카테고리 이미지뷰
     @IBOutlet weak var categoryImageView: UIImageView!
     
-    /// 게시판 카테고리별 이름
+    /// 카테고리 이름 레이블
     @IBOutlet weak var categoryLabel: UILabel!
     
     /// 카테고리 상태 확인
@@ -31,7 +31,7 @@ class SelectCategoryBoardCollectionViewCell: UICollectionViewCell {
     /// 카테고리 셀을 초기화합니다.
     /// - Parameters:
     ///   - categoryNames: 카테고리 이름을 저장한 배열
-    ///   - indexPath: 카테고 이름의 indexPath
+    ///   - indexPath: 카테고리 이름의 indexPath
     func configure(with categoryNames: [String], indexPath: IndexPath) {
         categoryLabel.text = categoryNames[indexPath.item + 1]
     }

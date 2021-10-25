@@ -18,7 +18,7 @@ class previewView: UIView {
         return AVCaptureVideoPreviewLayer.self
     }
     
-    /// Capture한 이미지 표시
+    /// 미리보기 레이어
     var videoPreviewLayer: AVCaptureVideoPreviewLayer {
         return layer as! AVCaptureVideoPreviewLayer
     }
@@ -38,7 +38,6 @@ class TakePhotoViewController: UIViewController {
     @IBOutlet weak var flashModeBtn: UIButton!
     
     /// 카메라 변경 버튼
-    /// 전면, 후면이 있습니다.
     @IBOutlet weak var cameraSwitchBtn: UIButton!
     
     /// 사진촬영 버튼
@@ -60,7 +59,6 @@ class TakePhotoViewController: UIViewController {
     var currentPhotoSetting: AVCapturePhotoSettings?
     
     /// Camera FlashMode
-    /// 기본값은 Off입니다.
     var flashMode = AVCaptureDevice.FlashMode.off
     
     
@@ -146,16 +144,15 @@ class TakePhotoViewController: UIViewController {
     }
     
     
-    /// 촬영 화면을 닫습니다.
     /// 촬영하는 화면을 닫고 게시글 작성화면으로 이동합니다
-    /// - Parameter sender: cancel 버튼
+    /// - Parameter sender: Cancel 버튼
     @IBAction func closeVC(_ sender: Any) {
         stopCaptureSession()
         dismiss(animated: true, completion: nil)
     }
     
     
-    /// 카메라에 접근 권한을 요청합니다.
+    /// 카메라 접근 권한을 요청합니다.
     func requestAuthorization() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] (granted) in
             if granted {
@@ -183,7 +180,7 @@ class TakePhotoViewController: UIViewController {
     }
     
     
-    /// captureSession의 작업을 시작합니다.
+    /// 캡쳐 작업을 시작합니다.
     func startCaptureSession() {
         
         captureSession.beginConfiguration()
@@ -256,7 +253,8 @@ class TakePhotoViewController: UIViewController {
         }
     }
     
-        
+
+    /// 뷰가 메모리에 로드되었을 때 데이터 또는 UI를 초기화합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -269,12 +267,11 @@ class TakePhotoViewController: UIViewController {
 
 
 
-/// 캡쳐한 이미지 동작 처리를 설정합니다.
+/// 캡쳐한 이미지 동작 처리
 /// - Author: 김정민(kimjm010@icloud.com)
 extension TakePhotoViewController: AVCapturePhotoCaptureDelegate {
     
-    /// 캡쳐 후의 동작을 처리합니다.
-    /// 캡쳐한 이미지와 메타데이터를 전달합니다.
+    /// 캡쳐 후 이미지와 메타데이터를 전달합니다.
     /// - Parameters:
     ///   - output: 캡쳐한 이미지
     ///   - photo: 캡쳐한 이미지의 데이터

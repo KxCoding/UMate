@@ -12,7 +12,7 @@ import UIKit
 /// - Author: 김정민(kimjm010@icloud.com)
 class PhotoImageDisplayViewController: UIViewController {
 
-    /// 켭쳐한 사진을 표시할 이미지뷰
+    /// 캡쳐한 사진을 표시할 이미지뷰
     @IBOutlet weak var photoImageView: UIImageView!
     
     /// 오버레이 뷰
@@ -21,7 +21,7 @@ class PhotoImageDisplayViewController: UIViewController {
     /// 카메라 Flash Mode
     @IBOutlet weak var flashModeBtn: UIButton!
     
-    /// 카메라 스위치
+    /// 카메라 교체 버튼
     @IBOutlet weak var cameraSwitchBtn: UIButton!
     
     /// 캡쳐한 이미지 및 사용자 앨범의 이미지 관리 객체
@@ -68,7 +68,7 @@ class PhotoImageDisplayViewController: UIViewController {
     }
     
     
-    /// 카메라 화면을 표시합니다.
+    /// 재촬영을 위해 카메라 화면을 표시합니다.
     /// - Parameter sender: 다시 찍기 Button
     @IBAction func presentCamera(_ sender: Any) {
         setCamera()
@@ -118,6 +118,7 @@ class PhotoImageDisplayViewController: UIViewController {
     }
     
     
+    /// 뷰가 메모리에 로드되었을 때 데이터 또는 UI를 초기화합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -150,7 +151,6 @@ class PhotoImageDisplayViewController: UIViewController {
 /// - Author: 김정민(kimjm010@icloud.com)
 extension PhotoImageDisplayViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    /// 캡쳐 작업을 취소합니다.
     /// 캡쳐 작업이 끝난경우 화면을 닫습니다.
     /// - Parameter picker: ImagePicker를 관리하는 객체
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -158,7 +158,6 @@ extension PhotoImageDisplayViewController: UIImagePickerControllerDelegate, UINa
     }
     
     
-    /// 이미지 선택 후의 작업을 설정합니다.
     /// 이미지를 선택한 경우 이미지뷰에 선택한 이미지를 표시합니다.
     /// - Parameters:
     ///   - picker: ImagePicker를 관리하는 객체

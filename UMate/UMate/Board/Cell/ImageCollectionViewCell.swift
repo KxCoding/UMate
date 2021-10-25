@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 사진첩에 있는 이미지를 표시하는 컬렉션뷰 셀
+/// 사진첩에 있는 이미지를 표시하는 컬렉션 뷰 셀
 /// - Author: 김정민(kimjm010@icloud.com)
 class ImageCollectionViewCell: UICollectionViewCell {
     
