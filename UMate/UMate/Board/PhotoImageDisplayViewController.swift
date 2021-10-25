@@ -118,7 +118,7 @@ class PhotoImageDisplayViewController: UIViewController {
     }
     
     
-    /// 뷰가 메모리에 로드되었을 때 데이터 또는 UI를 초기화합니다.
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -159,6 +159,7 @@ extension PhotoImageDisplayViewController: UIImagePickerControllerDelegate, UINa
     
     
     /// 이미지 선택 후의 작업을 설정합니다.
+    /// 
     /// 이미지를 선택한 경우 이미지뷰에 선택한 이미지를 표시합니다.
     /// - Parameters:
     ///   - picker: ImagePicker를 관리하는 객체

@@ -61,7 +61,6 @@ class ComposeViewController: CommonViewController {
     
     
     /// 게시글 작성을 취소합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -71,7 +70,7 @@ class ComposeViewController: CommonViewController {
     /// 게시글에 첨부할 이미지를 가져오는 방법을 지정합니다.
     /// - Parameter sender: Camera UIBarButtonItem
     @IBAction func addorTakePhoto(_ sender: UIBarButtonItem) {
-        alertToSelectAddOrTakePhoto(title: "", message: "앨범에서 이미지를 찾으시겠습니까? 아니면 캡쳐하시겠습니까?") { _ in
+        alertToSelectAddOrTakePhoto(title: "", message: "이미지 첨부 방식을 선택해 주세요.") { _ in
             self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
         } handler2: { _ in
             self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
@@ -80,7 +79,6 @@ class ComposeViewController: CommonViewController {
     
     
     /// 일반 게시판과 카테고리를 게시판에 게시글을 저장합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func savePost(_ sender: Any) {
         
         guard let title = postTitleTextField.text, title.count > 0,
@@ -135,7 +133,7 @@ class ComposeViewController: CommonViewController {
     }
     
     
-    /// 뷰가 메모리에 로드되었을 때 데이터 또는 UI를 초기화합니다.
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -12,7 +12,7 @@ import UIKit
 /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
 class DetailPostViewController: CommonViewController {
     
-    /// 댓글 컨테이버 뷰
+    /// 댓글 컨테이너 뷰
     @IBOutlet weak var writeCommentContainerView: UIView!
     
     /// 댓글내용
@@ -25,7 +25,7 @@ class DetailPostViewController: CommonViewController {
     /// 댓글 작성 여부에 따라 placeholder를 표시합니다.
     @IBOutlet weak var commentPlaceholderLabel: UILabel!
     
-    /// 댓글 컨테이너뷰의 bottom 제약
+    /// 댓글 컨테이뷰의 bottom 제약
     /// keyboard가 댓글 텍스트필드를 가리지않고 댓글을 작성할 수 있습니다.
     @IBOutlet weak var commentContainerViewBottomConstraint: NSLayoutConstraint!
     
@@ -137,7 +137,7 @@ class DetailPostViewController: CommonViewController {
         tokens.append(token)
         
         
-        // 댓글 및 대댓글 추가
+        // 댓글 및 대댓글을 추가합니다.
         token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
                                                        object: nil,
                                                        queue: .main) { [weak self] (noti) in
@@ -342,6 +342,9 @@ extension DetailPostViewController: UITableViewDataSource {
 
 
 
+
+/// 상세 게시글 테이블 뷰의 동작 처리
+/// - Author: 김정민(kimjm010@icloud.com)
 extension DetailPostViewController: UITableViewDelegate {
     
     /// 댓글을 오른쪽으로 Swipe하여 신고합니다.
@@ -349,7 +352,6 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath
     /// - Returns: Leading끝에 표시될 SwipeAction
-    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         if indexPath.section == 3  {
@@ -373,7 +375,6 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath
     /// - Returns: Trailing끝에 표시될 SwipeAction
-    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         if indexPath.section == 3 {
@@ -404,7 +405,6 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - indexPath: 댓글의 indexPath
     ///   - point: 컨텍스트 메뉴를 표시하기 위한
     /// - Returns: 선택한 indexPath의 포인트
-    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath,
                    point: CGPoint) -> UIContextMenuConfiguration? {
         
@@ -428,13 +428,11 @@ extension DetailPostViewController: UITableViewDelegate {
     }
     
     
-    /// 대댓글 작성 여부를 확인합니다.
     /// 댓글을 선택했을 때, 대댓글 작성 여부를 확인합니다.
     /// - Parameters:
     ///   - tableView: 디테일포스트 테이블 뷰
     ///   - indexPath: 선택될 셀의 indexPath
     /// - Returns: 선택된 셀의 indexPath
-    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let target = sortedCommentList[indexPath.row]
         
@@ -446,12 +444,10 @@ extension DetailPostViewController: UITableViewDelegate {
     }
     
     
-    /// 대댓글을 작성합니다.
     /// 댓글을 선택할 때, 대댓글을 작성합니다.
     /// - Parameters:
     ///   - tableView: 디테일포스트 테이블 뷰
     ///   - indexPath: 선택된 셀의 indexPath
-    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 3 {

@@ -76,7 +76,6 @@ class TakePhotoViewController: UIViewController {
     
     
     /// 카메라 위치를 변경합니다.
-    /// Camera 전면 또는 후면으로 변경합니다.
     /// - Parameter sender: Camera Switch 버튼
     @IBAction func switchCamera(_ sender: Any) {
         
@@ -144,8 +143,7 @@ class TakePhotoViewController: UIViewController {
     }
     
     
-    /// 촬영 화면을 닫습니다.
-    /// 촬영하는 화면을 닫고 게시글 작성화면으로 이동합니다
+    /// 촬영하는 화면을 닫고 게시글 작성화면으로 이동합니다.
     /// - Parameter sender: Cancel 버튼
     @IBAction func closeVC(_ sender: Any) {
         stopCaptureSession()
@@ -255,7 +253,7 @@ class TakePhotoViewController: UIViewController {
     }
     
 
-    /// 뷰가 메모리에 로드되었을 때 데이터 또는 UI를 초기화합니다.
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         

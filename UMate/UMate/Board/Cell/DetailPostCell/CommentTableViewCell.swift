@@ -85,6 +85,7 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     
+    /// 셀이 로드되면 UI를 초기화합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
         

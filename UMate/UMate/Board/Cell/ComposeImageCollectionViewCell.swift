@@ -13,14 +13,13 @@ import UIKit
 class ComposeImageCollectionViewCell: UICollectionViewCell {
     
     /// 게시글에 추가할 이미지뷰
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var composeImageView: UIImageView!
     
     /// 이미지 컨테이너 뷰
-    /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var imageContainerView: UIView!
     
     
+    /// 셀이 로드되면 UI를 초기화합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
         

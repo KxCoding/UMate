@@ -23,13 +23,13 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     
     /// overlayView의 alpha값을 조절합니다.
-    /// 이미지 뷰의 선택 여부에 따라 OverlayView의 alpha값을 변경합니다.
     private func showOverlayView() {
         let alpha: CGFloat = isSelected ? 0.5 : 0.0
         overlayView.alpha = alpha
     }
     
     
+    /// 셀의 선택 상태 및 alpha값을 리셋합니다.
     override func prepareForReuse() {
         super.prepareForReuse()
         isSelected = false
@@ -37,6 +37,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     }
     
     
+    /// 이미지 뷰 셀의 선택 상태 확인
     override var isSelected: Bool {
         didSet {
             showOverlayView()

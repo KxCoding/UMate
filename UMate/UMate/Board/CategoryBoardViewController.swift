@@ -112,7 +112,6 @@ class CategoryBoardViewController: CommonViewController {
         
         
         // 카테고리 게시판에 게시글 추가
-        // - Author: 김정민(kimjm010@icloud.com)
         token = NotificationCenter.default.addObserver(forName: .newCategoryPostInsert, object: nil, queue: .main, using: { [weak self] (noti) in
             if let category = noti.userInfo?["category"] as? Int {
                 if let newPost = noti.userInfo?["newPost"] as? Post {

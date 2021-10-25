@@ -57,6 +57,7 @@ extension UIViewController {
     /// - Parameters:
     ///   - title: 알림 타이틀입니다.
     ///   - message: 알림 메시지입니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func alertComment(title: String, message: String) {
         let alertCommnet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         

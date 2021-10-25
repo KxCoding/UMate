@@ -116,7 +116,7 @@ class SelectImageViewController: CommonViewController {
     }
     
     
-    /// 뷰가 메모리에 로드되었을 때 데이터 또는 UI를 초기화합니다.
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -19,6 +19,7 @@ class SelectCategoryBoardCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var categoryLabel: UILabel!
     
     /// 카테고리 상태 확인
+    /// 
     /// 선택 상태에 따라 다른 이미지를 표시합니다.
     override var isSelected: Bool {
         // 카테고리 선택 상태에 따라 다른 이미지 및 tintColor 표시
