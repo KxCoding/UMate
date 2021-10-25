@@ -9,6 +9,8 @@ import UIKit
 
 
 /// 필터 버튼 셀
+///
+/// 필터 버튼은 상점 목록 필터 화면으로 이동하는 버튼입니다.
 /// - Author: 장현우(heoun3089@gmail.com)
 class SearchHeaderCollectionViewCell: UICollectionViewCell {
     

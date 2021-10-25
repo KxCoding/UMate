@@ -220,7 +220,12 @@ class StoreTypeTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        [cafeImageContainerView, restaurantImageContainerView, bakeryImageContainerView, studyCafeImageContainerView, pubImageContainerView, desertImageContainerView].forEach { view in
+        [cafeImageContainerView,
+         restaurantImageContainerView,
+         bakeryImageContainerView,
+         studyCafeImageContainerView,
+         pubImageContainerView,
+         desertImageContainerView].forEach { view in
             view?.backgroundColor = .white
             view?.configureStyle(with: [.bigRoundedRect])
             view?.layer.borderWidth = 1

@@ -9,11 +9,11 @@ import Loaf
 import UIKit
 
 
-/// 내가 쓴 리뷰 화면
+/// 리뷰 관리 화면
 /// - Author: 장현우(heoun3089@gmail.com)
 class ReviewManagingViewController: UIViewController {
     
-    /// 내가 쓴 리뷰 테이블뷰
+    /// 리뷰 목록 테이블뷰
     @IBOutlet weak var reviewManagingTableView: UITableView!
     
     /// 경고창
@@ -26,7 +26,7 @@ class ReviewManagingViewController: UIViewController {
     ///
     /// 선택된 상점 정보를 보냅니다.
     /// - Parameters:
-    ///   - segue: viewController 정보를 가지고 있는 seuge
+    ///   - segue: viewController 정보를 가지고 있는 segue
     ///   - sender: 내가 쓴 리뷰 셀
     /// - Author: 장현우(heoun3089@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,7 +47,7 @@ extension ReviewManagingViewController: UITableViewDataSource {
     
     /// 섹션에 표시할 셀 수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 내가 쓴 리뷰 테이블뷰
+    ///   - tableView: 리뷰 목록 테이블뷰
     ///   - section: 섹션 인덱스
     /// - Returns: 섹션 행의 수
     /// - Author: 장현우(heoun3089@gmail.com)
@@ -58,7 +58,7 @@ extension ReviewManagingViewController: UITableViewDataSource {
     
     /// 섹션의 따라 셀을 구성합니다.
     /// - Parameters:
-    ///   - tableView: 내가 쓴 리뷰 테이블뷰
+    ///   - tableView: 리뷰 목록 테이블뷰
     ///   - indexPath: 행의 위치를 나타내는 IndexPath
     /// - Returns: 구성한 셀
     /// - Author: 장현우(heoun3089@gmail.com)
@@ -79,7 +79,7 @@ extension ReviewManagingViewController: UITableViewDelegate {
     
     /// 오른쪽 스와이프 액션을 추가합니다.
     /// - Parameters:
-    ///   - tableView: 내가 쓴 리뷰 테이블뷰
+    ///   - tableView: 리뷰 목록 테이블뷰
     ///   - indexPath: 행의 위치를 나타내는 IndexPath
     /// - Returns: 스와이프 액션 Configuration
     /// - Author: 장현우(heoun3089@gmail.com)

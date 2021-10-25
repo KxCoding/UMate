@@ -8,31 +8,31 @@
 import UIKit
 
 
-/// 모든 리뷰 화면
+/// 리뷰 목록 화면
 /// - Author: 장현우(heoun3089@gmail.com)
 class AllReviewViewController: UIViewController {
     
-    /// 모든 리뷰 테이블뷰
+    /// 리뷰 목록 테이블뷰
     @IBOutlet weak var allReviewTableView: UITableView!
     
     
-    /// 날짜순 정렬 관련 레이블
+    /// 날짜순 정렬 레이블
     @IBOutlet weak var dateAlignmentLabel: UILabel!
     
-    /// 날짜순 정렬 관련 화살표 모양 이미지뷰
+    /// 날짜순 정렬 화살표 이미지뷰
     @IBOutlet weak var dateAlignmentArrowImageView: UIImageView!
     
-    /// 날짜순 정렬 관련 버튼
+    /// 날짜순 정렬 버튼
     @IBOutlet weak var dateAlignmentButton: UIButton!
     
     
-    /// 별점순 정렬 관련 레이블
+    /// 별점순 정렬 레이블
     @IBOutlet weak var pointAlignmentLabel: UILabel!
     
-    /// 별점순 정렬 관련 화살표 모양 이미지뷰
+    /// 별점순 정렬 화살표 이미지뷰
     @IBOutlet weak var pointAlignmentArrowImageView: UIImageView!
     
-    /// 별점순 정렬 관련 버튼
+    /// 별점순 정렬 버튼
     @IBOutlet weak var pointAlignmentButton: UIButton!
     
     
@@ -43,7 +43,7 @@ class AllReviewViewController: UIViewController {
     
     
     /// 리뷰를 날짜순으로 정렬합니다.
-    /// - Parameter sender: 날짜순 정렬 관련 버튼
+    /// - Parameter sender: 날짜순 정렬 버튼
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBAction func toggleDateAlignment(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
@@ -72,7 +72,7 @@ class AllReviewViewController: UIViewController {
     
     
     /// 리뷰를 별점순으로 정렬합니다.
-    /// - Parameter sender: 별점순 정렬 관련 버튼
+    /// - Parameter sender: 별점순 정렬 버튼
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBAction func togglePointAlignment(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
@@ -135,9 +135,9 @@ class AllReviewViewController: UIViewController {
 /// 모든 리뷰 테이블뷰 데이터 관리
 extension AllReviewViewController: UITableViewDataSource {
     
-    /// 섹션에 표시할 셀 수를 리턴합니다,
+    /// 섹션에 표시할 셀 수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 모든 리뷰 테이블뷰
+    ///   - tableView: 리뷰 목록 테이블뷰
     ///   - section: 섹션 인덱스
     /// - Returns: 섹션 행의 수
     /// - Author: 장현우(heoun3089@gmail.com)
@@ -148,7 +148,7 @@ extension AllReviewViewController: UITableViewDataSource {
     
     /// 리뷰 데이터로 셀을 구성합니다.
     /// - Parameters:
-    ///   - tableView: 모든 리뷰 테이블뷰
+    ///   - tableView: 리뷰 목록 테이블뷰
     ///   - indexPath: 행의 위치를 나타내는 IndexPath
     /// - Returns: 구성한 셀
     /// - Author: 장현우(heoun3089@gmail.com)

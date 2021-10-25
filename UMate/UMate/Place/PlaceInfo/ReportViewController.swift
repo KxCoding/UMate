@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 신고 화면
+/// 리뷰 신고 화면
 /// - Author: 장현우(heoun3089@gmail.com)
 class ReportViewController: UIViewController {
     
