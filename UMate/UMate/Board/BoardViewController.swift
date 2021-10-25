@@ -165,9 +165,9 @@ extension BoardViewController: UITableViewDataSource {
     /// - Returns: section안에 나타낼 row수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        // 내가 쓴 글, 댓글 단 글, 남긴 강의 정보
+        // 내가 쓴 글, 댓글 단 글
         case 0:
-            return 3
+            return 2
             
         // nonExpandableBoard
         case 1:
