@@ -11,7 +11,7 @@ import UIKit
 
 /// 시간표 상세 정보 화면
 /// - Author: 안상희
-class TimetableDimViewController: CommonViewController {
+class TimetableDetailViewController: CommonViewController {
     /// 강의 Id
     var id: String?
     
@@ -22,24 +22,24 @@ class TimetableDimViewController: CommonViewController {
     @IBOutlet weak var mainView: UIView!
     
     /// 강의 ID Label
-    @IBOutlet weak var courseId: UILabel!
+    @IBOutlet weak var courseIdLabel: UILabel!
     
     /// 강의 이름 Label
-    @IBOutlet weak var courseName: UILabel!
+    @IBOutlet weak var courseNameLabel: UILabel!
     
     /// 교수님 성함 Label
-    @IBOutlet weak var professorName: UILabel!
+    @IBOutlet weak var professorNameLabel: UILabel!
     
     /// 강의 시간 및 요일 Label
-    @IBOutlet weak var courseTime: UILabel!
+    @IBOutlet weak var courseTimeLabel: UILabel!
     
-    /// 강의실 UILabel
-    @IBOutlet weak var courseRoom: UILabel!
+    /// 강의실 Label
+    @IBOutlet weak var courseRoomLabel: UILabel!
     
     /// 강의 정보 수정 버튼
     @IBOutlet weak var modifyButton: UIButton!
     
-    /// 강의평 보러 가기 버튼
+    /// 강의평 확인 버튼
     @IBOutlet weak var reviewButton: UIButton!
     
     /// 강의 삭제 버튼
@@ -62,9 +62,8 @@ class TimetableDimViewController: CommonViewController {
     @IBAction func deleteLecture(_ sender: UIButton) {
         // 선택한 강의 정보를 삭제합니다.
         alertVersion2(title: "경고", message: "정말 삭제하시겠습니까?") { [weak self] _ in
-            // 선택한 강의 정보를 삭제합니다.
             for i in 0..<LectureManager.shared.lectureEventList.count {
-                guard let courseId = self?.courseId.text else { return }
+                guard let courseId = self?.courseIdLabel.text else { return }
                 if LectureManager.shared.lectureEventList[i].courseId == courseId {
                     LectureManager.shared.lectureEventList.remove(at: i)
                     
@@ -139,10 +138,10 @@ class TimetableDimViewController: CommonViewController {
                 return
             }
             
-            self?.courseId.text = id
-            self?.courseName.text = name
-            self?.courseRoom.text = roomName
-            self?.professorName.text = professor
+            self?.courseIdLabel.text = id
+            self?.courseNameLabel.text = name
+            self?.courseRoomLabel.text = roomName
+            self?.professorNameLabel.text = professor
         }
         tokens.append(token)
     }

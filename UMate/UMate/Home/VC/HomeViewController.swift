@@ -36,25 +36,25 @@ class HomeViewController: UIViewController {
     /// - Author: 안상희
     var mapUrl: String?
     
-    /// 학교 홈페이지 URL이 유효한지 확인
+    /// 학교 홈페이지 URL 가용성 플래그
     /// - Author: 안상희
     var isHomepageUrlAvailable: Bool = false
     
-    /// 학교 포탈 URL이 유효한지 확인
+    /// 학교 포탈 URL 가용성 플래그
     /// - Author: 안상희
     var isPortalUrlAvailable: Bool = false
     
-    /// 학교 도서관 URL이 유효한지 확인
+    /// 학교 도서관 URL 가용성 플래그
     /// - Author: 안상희
     var isLibraryUrlAvailable: Bool = false
     
-    /// 학교 캠퍼스맵 URL이 유효한지 확인
+    /// 학교 캠퍼스맵 URL 가용성 플래그
     /// - Author: 안상희
     var isMapUrlAvailable: Bool = false
     
     
     
-    /// Asset의 데이터에서 학교 고유 id에 해당하는 url 주소를 불러옵니다.
+    /// Asset에서 학교 고유 id에 해당하는 url 주소를 불러옵니다.
     /// - Parameters:
     ///   - id: 학교 고유 id
     /// - Author: 안상희
@@ -120,7 +120,7 @@ class HomeViewController: UIViewController {
     }
     
     
-    /// 학교 고유 Id에 해당하는 홈페이지 URL을 불러옵니다.
+    /// 학교 고유 id에 해당하는 홈페이지 URL을 불러옵니다.
     /// - Author: 안상희
     override func viewDidLoad() {
         super.viewDidLoad()

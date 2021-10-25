@@ -1303,10 +1303,10 @@
             </objects>
             <point key="canvasLocation" x="3751" y="-375"/>
         </scene>
-        <!--Timetable Dim View Controller-->
+        <!--Timetable Detail View Controller-->
         <scene sceneID="MCw-1Q-w7j">
             <objects>
-                <viewController storyboardIdentifier="TimetableDimViewSB" id="8Uj-Co-Neb" customClass="TimetableDimViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TimetableDimViewSB" id="8Uj-Co-Neb" customClass="TimetableDetailViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZT4-0a-EXX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1421,15 +1421,15 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="courseId" destination="8FL-Md-qbi" id="jQc-Vd-yrC"/>
-                        <outlet property="courseName" destination="dA3-79-i3r" id="wNT-oB-VR6"/>
-                        <outlet property="courseRoom" destination="Ldd-Za-aHu" id="G2d-0Z-J0x"/>
-                        <outlet property="courseTime" destination="iSI-Tn-qpy" id="AV8-5e-um3"/>
+                        <outlet property="courseIdLabel" destination="8FL-Md-qbi" id="vlt-I2-xbt"/>
+                        <outlet property="courseNameLabel" destination="dA3-79-i3r" id="ABs-yT-U6F"/>
+                        <outlet property="courseRoomLabel" destination="Ldd-Za-aHu" id="NGD-Uk-mod"/>
+                        <outlet property="courseTimeLabel" destination="iSI-Tn-qpy" id="EBO-6J-e6o"/>
                         <outlet property="deleteButton" destination="9sU-oo-FOq" id="Op0-vD-5HJ"/>
                         <outlet property="dimView" destination="OSb-tN-ns0" id="1Q2-bB-f0K"/>
                         <outlet property="mainView" destination="4O9-9a-CJS" id="AEn-Rc-iq8"/>
                         <outlet property="modifyButton" destination="hHG-Oc-A4D" id="uBy-HH-QAK"/>
-                        <outlet property="professorName" destination="Zwe-tB-riQ" id="0Jl-B8-RPb"/>
+                        <outlet property="professorNameLabel" destination="Zwe-tB-riQ" id="YeH-Di-AbP"/>
                         <outlet property="reviewButton" destination="2Vo-76-QCD" id="PFZ-R7-mpn"/>
                     </connections>
                 </viewController>
