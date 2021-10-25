@@ -7,6 +7,9 @@
 
 import UIKit
 
+
+/// 홈 화면
+/// Author: 황신택, 안상희
 class HomeViewController: UIViewController {
     @IBOutlet weak var listCollectionView: UICollectionView!
     
@@ -16,10 +19,35 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        
     }
     
+    
+    /// 학교 상세 정보 화면으로 이동하기 전에 학교 고유 id와 navigationTitle을 전달합니다.
+    /// - Parameters:
+    ///   - segue: 뷰컨트롤러에 포함된 segue에 대한 정보를 갖는 객체
+    ///   - sender: MainCollectionViewCell
+    /// - Author: 안상희
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let cell = sender as? UICollectionViewCell {
+            if let indexPath = listCollectionView.indexPath(for: cell) {
+                if let vc = segue.destination as? SchoolDetailViewController {
+                    vc.schoolId = 114
+                    
+                    if indexPath.item == 0 {
+                        vc.navigationTitle = "학교 홈페이지"
+                    } else if indexPath.item == 1 {
+                        vc.navigationTitle = "포탈"
+                    } else if indexPath.item == 2 {
+                        vc.navigationTitle = "도서관"
+                    } else {
+                        vc.navigationTitle = "캠퍼스맵"
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 
 extension HomeViewController: UICollectionViewDataSource {
@@ -60,9 +88,6 @@ extension HomeViewController: UICollectionViewDataSource {
     
 }
 
-extension HomeViewController: UICollectionViewDelegate {
-    
-}
 
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {

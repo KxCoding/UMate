@@ -8,35 +8,35 @@
 import UIKit
 
 
-/// 북마크된 가게가 리스팅 되는 테이블 뷰 셀 클래스
+/// 북마크된 상점 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class BookmarkListTableViewCell: UITableViewCell {
     
     // MARK: Outlets
     
-    /// 가게 이름을 표시하는 레이블
+    /// 상점 이름 레이블
     @IBOutlet weak var placeNameLabel: UILabel!
     
-    /// 인근 지역을 표시하는 레이블
+    /// 인근 지역 레이블
     @IBOutlet weak var districtLabel: UILabel!
     
-    /// 첫번째 키워드 레이블
+    /// 첫 번째 키워드 레이블
     @IBOutlet weak var keywordLabel1: UILabel!
     
-    /// 첫번째 키워드를 감싸는 컨테이너
+    /// 첫 번째 키워드 컨테이너
     @IBOutlet weak var keywordContainer1: UIView!
     
-    /// 두번째 키워드 레이블
+    /// 두 번째 키워드 레이블
     @IBOutlet weak var keywordLabel2: UILabel!
     
-    /// 두번째 키워드를 감싸는 컨테이너
+    /// 두 번째 키워드 컨테이너
     @IBOutlet weak var keywordContainer2: UIView!
     
-    /// 가게 이미지 뷰
+    /// 상점 이미지 뷰
     @IBOutlet weak var placeImageView: UIImageView!
     
     /// data manager 객체
-    let manager = DataManager.shared
+    let manager = PlaceDataManager.shared
     
     /// 셀에서 표시하는 place 객체
     var target: Place!
@@ -44,8 +44,9 @@ class BookmarkListTableViewCell: UITableViewCell {
     
     // MARK: Methods
     
-    /// 각 뷰들이 표시하는 content 초기화
-    /// - Parameter content: 뷰에 표시할 내용을 담은 Place 객체
+    /// 각 뷰에서 표시하는 데이터를 초기화합니다.
+    /// - Parameter content: 표시할 정보를 담은 Place 객체
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func configure(with content: Place) {
         target = content
         
@@ -66,7 +67,8 @@ class BookmarkListTableViewCell: UITableViewCell {
     
     // MARK: Cell Lifecycle method
     
-    /// 셀 내부 UI 초기화
+    /// 셀이 로드되면 UI를 초기화합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         

@@ -12,7 +12,7 @@ import MapKit
 
 // MARK: Annotation Classes
 
-/// 가게를 표시할 커스텀  annotation
+/// 상점 annotation
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class PlaceAnnotation: NSObject, MKAnnotation {
     
@@ -25,16 +25,16 @@ class PlaceAnnotation: NSObject, MKAnnotation {
     /// 부제목
     var subtitle: String?
     
-    /// 표시하고 있는 가게를 식별할 수 있는 id
+    /// 표시하고 있는 상점을 식별할 수 있는 Id
+    ///
+    /// annotation view를 탭했을 때 상세 정보 화면에 표시할 상점을 검색하기 위해 사용됩니다.
     var placeId: Int
     
-    /// 표시하는 가게의 형식
+    /// 표시하는 상점의 형식
     var placeType: Place.PlaceType
     
     
-    init(coordinate: CLLocationCoordinate2D,
-         title: String? = nil, subtitle: String? = nil,
-         placeId: Int, placeType: Place.PlaceType) {
+    init(coordinate: CLLocationCoordinate2D, title: String? = nil, subtitle: String? = nil, placeId: Int, placeType: Place.PlaceType) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle

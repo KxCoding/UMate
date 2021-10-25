@@ -45,7 +45,6 @@ class DetailPostViewController: CommonViewController {
     /// 대댓글 여부 확인
     var isReComment: Bool = false
     
-    
     /// 정렬된 댓글 리스트
     var sortedCommentList = dummyCommentList.sorted {
         if $0.originalCommentId == $1.originalCommentId {

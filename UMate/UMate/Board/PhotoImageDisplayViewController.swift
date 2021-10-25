@@ -158,6 +158,7 @@ extension PhotoImageDisplayViewController: UIImagePickerControllerDelegate, UINa
     }
     
     
+    /// 이미지 선택 후의 작업을 설정합니다.
     /// 이미지를 선택한 경우 이미지뷰에 선택한 이미지를 표시합니다.
     /// - Parameters:
     ///   - picker: ImagePicker를 관리하는 객체

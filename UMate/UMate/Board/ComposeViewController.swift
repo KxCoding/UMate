@@ -67,6 +67,7 @@ class ComposeViewController: CommonViewController {
     }
     
     
+    /// 이미지 첨부 방식을 선택합니다.
     /// 게시글에 첨부할 이미지를 가져오는 방법을 지정합니다.
     /// - Parameter sender: Camera UIBarButtonItem
     @IBAction func addorTakePhoto(_ sender: UIBarButtonItem) {
@@ -428,6 +429,19 @@ extension ComposeViewController: UICollectionViewDelegate {
         } else if collectionView.tag == 102 {
             imageList.remove(at: indexPath.item)
             imageCollectionView.deleteItems(at: [indexPath])
+        }
+        
+        if collectionView.tag == 101 {
+            switch selectedBoard?.boardTitle {
+            case "홍보게시판":
+                selectedCategory = categoryListValue[indexPath.item + 1]
+            case "동아리, 학회":
+                selectedCategory = categoryListValue[indexPath.item + 1]
+            case "취업, 진로":
+                selectedCategory = categoryListValue[indexPath.item + 1]
+            default:
+                break
+            }
         }
     }
 }

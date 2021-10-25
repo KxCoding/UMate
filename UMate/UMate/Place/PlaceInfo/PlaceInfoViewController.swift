@@ -8,25 +8,27 @@
 import UIKit
 
 
-/// Notification Name Extension
 extension Notification.Name {
-    /// 하위 탭을 선택할 때 post할 notification
+    /// 하위 탭을 선택할 때 전송할 notification
     /// - Author: 박혜정(mailmelater11@gmail.com)
     static let tapToggleDidRequest = Notification.Name(rawValue: "tapToggleDidRequest")
 }
 
 
 
-/// 가게 상세 정보 화면 VC 클래스
+/// 상점 상세 정보 화면
 /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
-class PlaceInfoViewController: UIViewController {
+class PlaceInfoViewController: CommonViewController {
     
     // MARK: Nested Types
     
-    /// 상세 페이지 하위 탭
+    /// 하위 탭
     /// - Author: 박혜정(mailmelater11@gmail.com)
     enum SubTab {
+        /// 정보 탭
         case detail
+        
+        /// 리뷰 탭
         case review
     }
     
@@ -41,7 +43,7 @@ class PlaceInfoViewController: UIViewController {
     
     // MARK: Properties
     
-    /// 상세 정보를 표시할 가게
+    /// 상세 정보를 표시할 상점
     /// - Author: 박혜정(mailmelater11@gmail.com)
     var place: Place!
     
@@ -66,35 +68,31 @@ class PlaceInfoViewController: UIViewController {
     /// - Author: 박혜정(mailmelater11@gmail.com)
     var selectedTap: SubTab = .detail
     
-    /// 소멸 시점에 제거할 옵저버 객체를 담는 배열
-    var tokens = [NSObjectProtocol]()
-    
     
     // MARK: Actions
     
-    /// 선택된 탭에 알맞은 내용으로 contents를 업데이트 합니다.
+    /// 탭을 선택하면 알맞은 내용으로 notification을 전송하고 UI를 업데이트 합니다.
+    ///
+    /// notification에 선택된 탭을 함께 담아 전송합니다.
     /// - Parameter sender: 탭 버튼
     /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func selectTap(_ sender: UIButton) {
         switch sender.tag {
-        
-        // 정보 탭 선택
         case 100:
-            // 선택된 탭 저장
             selectedTap = .detail
             
-            // 선택된 탭에 대한 정보를 함께 전달
-            NotificationCenter.default.post(name: .tapToggleDidRequest, object: nil, userInfo: ["selectedTap": selectedTap])
+            NotificationCenter.default.post(name: .tapToggleDidRequest,
+                                            object: nil,
+                                            userInfo: ["selectedTap": selectedTap])
             
-            
-            // 테이블 뷰 리로드 -> 테이블 뷰가 알맞은 셀 표시
             placeInfoTableView.reloadData()
             
-        // 리뷰 탭 선택
         case 101:
             selectedTap = .review
             
-            NotificationCenter.default.post(name: .tapToggleDidRequest, object: nil, userInfo: ["selectedTap": selectedTap])
+            NotificationCenter.default.post(name: .tapToggleDidRequest,
+                                            object: nil,
+                                            userInfo: ["selectedTap": selectedTap])
             
             placeInfoTableView.reloadData()
             
@@ -106,22 +104,24 @@ class PlaceInfoViewController: UIViewController {
     
     // MARK: View Lifecycle Methods
     
+    /// 뷰가 로드되면 화면을 초기화합니다.
+    ///
+    /// notification 옵저버를 추가합니다. url 관련 버튼이 눌리면 전달된 url을 열고, 리뷰 작성이 완료되면 테이블 뷰를 다시 로드합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // delegation
         placeInfoTableView.dataSource = self
         placeInfoTableView.delegate = self
         
-        // add notification observer
-        var token = NotificationCenter.default.addObserver(forName: .openUrl, object: nil, queue: .main) { [weak self] noti in
+        var token = NotificationCenter.default.addObserver(forName: .openUrl,
+                                                           object: nil,
+                                                           queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
-            // 함께 전송 된 url 타입과 url을 바인딩
             guard let urlType = noti.userInfo?["type"] as? URLType,
                   let url = noti.userInfo?["url"] as? URL else { return }
             
-            //  타입에 따라 적절한 방식으로 url 열기
             switch urlType {
             case .web:
                 self.openUrl(with: url)
@@ -133,7 +133,9 @@ class PlaceInfoViewController: UIViewController {
         
         tokens.append(token)
         
-        token = NotificationCenter.default.addObserver(forName: .reviewWillApplied, object: nil, queue: .main) { _ in
+        token = NotificationCenter.default.addObserver(forName: .reviewWillApplied,
+                                                       object: nil,
+                                                       queue: .main) { _ in
             self.placeInfoTableView.reloadData()
         }
         
@@ -147,7 +149,7 @@ class PlaceInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationItem.title = "가게 정보"
+        self.navigationItem.title = "상점 정보"
     }
     
     
@@ -182,9 +184,10 @@ class PlaceInfoViewController: UIViewController {
 
 extension PlaceInfoViewController: UITableViewDataSource {
     
-    /// table view에서 표시할 section의 개수를 제공합니다.
-    /// - Parameter tableView: 이 정보를 요청하는 table view
+    /// 테이블 뷰에서 표시할 섹션의 개수를 리턴합니다.
+    /// - Parameter tableView: 테이블 뷰
     /// - Returns: 섹션의 개수
+    /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
     func numberOfSections(in tableView: UITableView) -> Int {
         if selectedTap == .review {
             return 6
@@ -193,11 +196,12 @@ extension PlaceInfoViewController: UITableViewDataSource {
     }
     
     
-    /// 지정된 table view의 지정된 section에서 표시할 셀의 개수를 제공합니다.
+    /// 지정된 섹션에서 표시할 항목의 개수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 이 정보를 요청하는 table view
-    ///   - section: 테이블 뷰의 특정 섹션을 가리키는 index number
-    /// - Returns: 섹션에 포함되는 아이템의 개수
+    ///   - tableView: 테이블 뷰
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션에 포함되는 항목의 개수
+    /// - Author: 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 4:
@@ -215,11 +219,12 @@ extension PlaceInfoViewController: UITableViewDataSource {
     }
     
     
-    /// 지정된 table view의 지정 indexpath에서 표시할 셀을 제공합니다.
+    /// 지정된 indexpath에서 표시할 셀을 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 이 정보를 요청하는 table view
-    ///   - indexPath: 열의 위치를 가리키는 indexpath
+    ///   - tableView: 테이블 뷰
+    ///   - indexPath: 셀의 index path
     /// - Returns: 완성된 셀
+    /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         
@@ -273,7 +278,8 @@ extension PlaceInfoViewController: UITableViewDataSource {
             cell.recommendationCountLabel.text = target.recommendationCount.description
             
             return cell
-            
+        
+        // 선택된 하위 탭에 따라 - 리뷰 더보기
         case 5:
             return tableView.dequeueReusableCell(withIdentifier: "AllReviewTableViewCell", for: indexPath)
             
@@ -293,7 +299,8 @@ extension PlaceInfoViewController: UITableViewDelegate {
     /// - Parameters:
     ///   - tableView: 이 정보를 요청하는 table view
     ///   - indexPath: 열의 위치를 가리키는 indexpath
-    /// - Returns: 열이 가져야 할 높이 (음수가 아닌 실수)
+    /// - Returns: 열의 높이
+    /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         // 이미지 섹션
@@ -303,6 +310,7 @@ extension PlaceInfoViewController: UITableViewDelegate {
         // 하위 탭 섹션
         case 2:
             return tableView.frame.width / 8
+            
         default:
             return UITableView.automaticDimension
         }

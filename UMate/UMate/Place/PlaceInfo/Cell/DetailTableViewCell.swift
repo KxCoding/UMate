@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 가게 상세 정보를 표시하는 탭의 셀 클래스
+/// 상점 상세 정보 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class DetailTableViewCell: UITableViewCell {
     
@@ -35,27 +35,30 @@ class DetailTableViewCell: UITableViewCell {
     
     // MARK: Properties
     
-    /// 정보를 표시할 가게
+    /// 정보를 표시할 상점
     var target: Place!
     
     
     // MARK: Actions
     
-    /// 전화번호 레이블 부근을 탭하면 os 전화 기능 실행
-    /// - Parameter sender: 탭한 버튼
+    /// 전화번호 부근을 탭하면 os 전화 기능 실행합니다.
+    /// - Parameter sender: 전화번호 레이블 위에 위치한 버튼
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func call(_ sender: Any) {
         guard let tel = target.tel,
               let url = URL(string: "tel:\(tel)") else { return }
         
-        // notification 전송
-        NotificationCenter.default.post(name: .openUrl, object: nil, userInfo: ["type": URLType.tel, "url": url])
+        NotificationCenter.default.post(name: .openUrl,
+                                        object: nil,
+                                        userInfo: ["type": URLType.tel, "url": url])
         
     }
     
     // MARK: Methods
     
-    /// 셀 내부 각 뷰들이 표시하는 content 초기화
+    /// 각 뷰에서 표시하는 데이터를 초기화합니다.
     /// - Parameter content: 표시할 내용을 담은 Place 객체
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func configure(with content: Place, indexPath: IndexPath) {
         target = content
         
@@ -69,15 +72,14 @@ class DetailTableViewCell: UITableViewCell {
     
     // MARK: Cell Lifecycle Method
     
-    /// 셀 초기화
+    /// 셀이 로드되면 델리게이트를 설정하고 UI를 초기화합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // data source 연결
         districtCollectionView.dataSource = self
         keywordsCollectionView.dataSource = self
         
-        // UI 초기화
         addressView.configureStyle(with: [.smallRoundedRect])
         [addressView, telView].forEach { $0?.configureStyle(with: [.smallRoundedRect]) }
     }
@@ -89,10 +91,15 @@ class DetailTableViewCell: UITableViewCell {
 // MARK: - Collection view delegation
 
 extension DetailTableViewCell: UICollectionViewDataSource {
+    
+    /// 지정된 섹션에서 표시할 아이템의 개수를 리턴합니다.
+    /// - Parameters:
+    ///   - collectionView: 컬렉션 뷰
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션에 포함되는 아이템의 개수
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         switch collectionView {
-            
         case districtCollectionView:
             return 1
             
@@ -101,24 +108,33 @@ extension DetailTableViewCell: UICollectionViewDataSource {
             
         default:
             return 0
-            
         }
-        
     }
     
+    
+    /// 지정된 컬렉션 뷰, 지정된 index path에 표시할 셀을 리턴합니다.
+    ///
+    /// 이미지를 다운로드하고 받은 이미지로 이미지 뷰를 업데이트합니다.
+    /// - Parameters:
+    ///   - collectionView: 컬렉션 뷰
+    ///   - indexPath: 아이템의 index path
+    /// - Returns: 표시할 셀
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         switch collectionView {
             
         case districtCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DistrictCollectionViewCell", for: indexPath) as! DistrictCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DistrictCollectionViewCell",
+                                                          for: indexPath) as! DistrictCollectionViewCell
             
             cell.configure(with: target, indexPath: indexPath)
             
             return cell
             
         case keywordsCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "KeywordsCollectionViewCell", for: indexPath) as! KeywordsCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "KeywordsCollectionViewCell",
+                                                          for: indexPath) as! KeywordsCollectionViewCell
             
             cell.configure(with: target, indexPath: indexPath)
             

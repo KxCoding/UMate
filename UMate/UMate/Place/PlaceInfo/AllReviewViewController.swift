@@ -62,11 +62,11 @@ class AllReviewViewController: UIViewController {
             dateAlignmentArrowImageView.isHidden = false
             dateAlignmentLabel.textColor = UIColor(named: "blackSelectedColor")
             dateAlignmentArrowImageView.tintColor = .systemBlue
-            dateAlignmentArrowImageView.image = UIImage(systemName: "arrow.up")
+            dateAlignmentArrowImageView.image = UIImage(systemName: "arrow.down")
             
             PlaceReviewItem.dummyData.sort { $0.date > $1.date }
         } else {
-            dateAlignmentArrowImageView.image = UIImage(systemName: "arrow.down")
+            dateAlignmentArrowImageView.image = UIImage(systemName: "arrow.up")
             
             PlaceReviewItem.dummyData.sort { $0.date < $1.date }
         }
@@ -92,12 +92,12 @@ class AllReviewViewController: UIViewController {
             pointAlignmentArrowImageView.isHidden = false
             pointAlignmentLabel.textColor = UIColor(named: "blackSelectedColor")
             pointAlignmentArrowImageView.tintColor = .systemBlue
-            pointAlignmentArrowImageView.image = UIImage(systemName: "arrow.up")
+            pointAlignmentArrowImageView.image = UIImage(systemName: "arrow.down")
             
             PlaceReviewItem.dummyData.sort { $0.starPoint > $1.starPoint }
         } else {
             pointAlignmentLabel.text = "별점낮은순"
-            pointAlignmentArrowImageView.image = UIImage(systemName: "arrow.down")
+            pointAlignmentArrowImageView.image = UIImage(systemName: "arrow.up")
             
             PlaceReviewItem.dummyData.sort { $0.starPoint < $1.starPoint }
         }
@@ -111,7 +111,10 @@ class AllReviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dateAlignmentArrowImageView.isHidden = true
+        PlaceReviewItem.dummyData.sort { $0.date > $1.date }
+        dateAlignmentLabel.textColor = UIColor(named: "blackSelectedColor")
+        dateAlignmentArrowImageView.tintColor = .systemBlue
+        
         pointAlignmentArrowImageView.isHidden = true
     }
     

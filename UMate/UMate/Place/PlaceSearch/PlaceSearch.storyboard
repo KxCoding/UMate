@@ -69,17 +69,11 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="93W-rw-C3O">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* 거리순은 위치가 켜져있을 때만 가능" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfg-vr-yOO">
-                                                            <rect key="frame" x="230" y="132" width="164" height="10"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                                            <color key="textColor" systemColor="systemRedColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="iKN-Z0-6gh">
-                                                            <rect key="frame" x="25" y="80" width="364" height="30"/>
+                                                            <rect key="frame" x="25" y="80" width="364" height="27"/>
                                                             <subviews>
                                                                 <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k3x-UH-b6Z" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="83.5" height="30"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="83.5" height="27"/>
                                                                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -98,7 +92,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C8W-oz-K5a" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                    <rect key="frame" x="93.5" y="0.0" width="83.5" height="30"/>
+                                                                    <rect key="frame" x="93.5" y="0.0" width="83.5" height="27"/>
                                                                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -117,7 +111,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zTY-AK-Kz9" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                    <rect key="frame" x="187" y="0.0" width="83.5" height="30"/>
+                                                                    <rect key="frame" x="187" y="0.0" width="83.5" height="27"/>
                                                                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -136,7 +130,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gv7-5s-RRF" customClass="RoundedButton" customModule="UMate" customModuleProvider="target">
-                                                                    <rect key="frame" x="280.5" y="0.0" width="83.5" height="30"/>
+                                                                    <rect key="frame" x="280.5" y="0.0" width="83.5" height="27"/>
                                                                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -151,7 +145,8 @@
                                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </state>
                                                                     <connections>
-                                                                        <action selector="alignmentSelectLineButtonTapped:" destination="VgU-OG-aYF" eventType="touchUpInside" id="aXn-B2-8NH"/>
+                                                                        <action selector="alignmentSelectLineButtonTapped:" destination="VgU-OG-aYF" eventType="touchUpInside" id="WtM-Yb-fiM"/>
+                                                                        <action selector="sortByDistance:" destination="Qa9-YR-0vx" eventType="touchUpInside" id="CMw-K1-G2i"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
@@ -176,14 +171,12 @@
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
-                                                        <constraint firstItem="Pfg-vr-yOO" firstAttribute="top" secondItem="iKN-Z0-6gh" secondAttribute="bottom" constant="22" id="52l-Pp-KdA"/>
                                                         <constraint firstItem="G0F-8S-F1t" firstAttribute="top" secondItem="93W-rw-C3O" secondAttribute="top" id="7OK-3c-MsJ"/>
+                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="iKN-Z0-6gh" secondAttribute="bottom" constant="43" id="8YM-J0-eA4"/>
                                                         <constraint firstItem="iKN-Z0-6gh" firstAttribute="leading" secondItem="93W-rw-C3O" secondAttribute="leading" constant="25" id="Ffl-GK-YaV"/>
-                                                        <constraint firstAttribute="trailing" secondItem="Pfg-vr-yOO" secondAttribute="trailing" constant="20" id="SLr-Xf-htP"/>
                                                         <constraint firstAttribute="trailing" secondItem="iKN-Z0-6gh" secondAttribute="trailing" constant="25" id="Vtu-Zq-HUi"/>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="130" id="Vwq-Le-Fef"/>
                                                         <constraint firstItem="iKN-Z0-6gh" firstAttribute="top" secondItem="G0F-8S-F1t" secondAttribute="bottom" id="Z78-L1-WNh"/>
-                                                        <constraint firstAttribute="bottom" secondItem="Pfg-vr-yOO" secondAttribute="bottom" constant="8" id="kER-8j-aQJ"/>
                                                         <constraint firstAttribute="trailing" secondItem="G0F-8S-F1t" secondAttribute="trailing" id="lK6-7D-xP1"/>
                                                         <constraint firstItem="G0F-8S-F1t" firstAttribute="leading" secondItem="93W-rw-C3O" secondAttribute="leading" id="nZi-bQ-jDi"/>
                                                     </constraints>
@@ -199,7 +192,6 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <connections>
                                             <outlet property="distanceButton" destination="gv7-5s-RRF" id="Uoz-oM-DU2"/>
-                                            <outlet property="infoLabel" destination="Pfg-vr-yOO" id="aoi-Af-fLS"/>
                                             <outlet property="ratingButton" destination="k3x-UH-b6Z" id="DKK-Fr-ZbR"/>
                                             <outlet property="recommendationButton" destination="C8W-oz-K5a" id="vE5-jN-egL"/>
                                             <outlet property="reviewButton" destination="zTY-AK-Kz9" id="pa5-yc-aBo"/>
@@ -1018,9 +1010,6 @@
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

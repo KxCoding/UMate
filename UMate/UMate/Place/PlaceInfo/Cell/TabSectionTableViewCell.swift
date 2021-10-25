@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 하위 탭이 표시되는 섹션 셀 클래스
+/// 하위 탭 섹션 셀
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class TabSectionTableViewCell: UITableViewCell {
     
@@ -18,37 +18,36 @@ class TabSectionTableViewCell: UITableViewCell {
     /// 리뷰 탭 버튼
     @IBOutlet weak var reviewButton: UIButton!
     
-    /// 선택 상태에 따라 언더바 위치를 결정할 center 제약 - 정보 탭
+    /// 언더라인의 정보 탭 쪽 가운데 정렬 제약
     @IBOutlet weak var centerXToDetailConstraint: NSLayoutConstraint!
     
-    /// 선택 상태에 따라 언더바 위치를 결정할 center 제약 - 리뷰 탭
+    /// 언더라인의 리뷰 탭 쪽 가운데 정렬 제약
     @IBOutlet weak var centerXToReviewConstraint: NSLayoutConstraint!
     
     
     // MARK: Cell Lifecycle Method
     
+    /// 셀이 로드되면 UI를 초기화합니다.
+    ///
+    /// 하위 탭이 선택되면 선택된 탭에 따라 언더라인의 센터 제약을 바꾸는 옵저버를 추가합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // 탭 버튼의 tag 값 초기화
         detailButton.tag = 100
         reviewButton.tag = 101
         
-        
-        // 탭 버튼을 누르면 center 제약을 바꾸는 방식으로 뷰 위치를 바꿉니다.
         NotificationCenter.default.addObserver(forName: .tapToggleDidRequest, object: nil, queue: .main) { [weak self] noti in
             
             guard let selectedTap = noti.userInfo?["selectedTap"] as? PlaceInfoViewController.SubTab else { return }
             
-            // 전달된 탭에 따라 막대의 위치를 제약으로  변경
             switch selectedTap {
             case .detail:
                 self?.centerXToDetailConstraint.priority = UILayoutPriority(1000)
             case .review:
                 self?.centerXToDetailConstraint.priority = UILayoutPriority(998)
             }
-            
         }
-        
     }
+    
 }

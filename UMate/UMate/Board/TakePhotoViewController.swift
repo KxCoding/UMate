@@ -144,6 +144,7 @@ class TakePhotoViewController: UIViewController {
     }
     
     
+    /// 촬영 화면을 닫습니다.
     /// 촬영하는 화면을 닫고 게시글 작성화면으로 이동합니다
     /// - Parameter sender: Cancel 버튼
     @IBAction func closeVC(_ sender: Any) {
