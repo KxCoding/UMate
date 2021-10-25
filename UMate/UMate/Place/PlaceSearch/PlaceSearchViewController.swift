@@ -9,22 +9,22 @@ import CoreLocation
 import UIKit
 
 
-/// 가게 검색 화면
+/// 상점 검색 화면
 /// - Author: 장현우(heoun3089@gmail.com)
 class PlaceSearchViewController: CommonViewController {
     
     /// 검색 결과 컬렉션뷰
     @IBOutlet weak var searchCollectionView: UICollectionView!
     
-    /// 필터링된 가게 정보
+    /// 필터링된 상점 정보
     var list = [Place]()
     
-    /// 가게 이미지 목록
+    /// 상점 이미지 목록
     var images = [UIImage?]()
     
     /// 필터링 된 항목
     ///
-    /// 필터 화면에서 이전에 선택한 필터링 항목은 이미 선택되어 있게 합니다
+    /// 필터 화면에서 이전에 선택한 필터링 항목은 이미 선택되어 있게 합니다.
     var filteredList = [Place.PlaceType]()
     
     /// 사용자 위치
@@ -164,7 +164,7 @@ class PlaceSearchViewController: CommonViewController {
     /// 다음 화면으로 넘어가기 전에 실행할 작업을 추가합니다.
     ///
     /// FilterViewController로 이동시: window에 DimView를 추가하고 필터링과 관련된 정보를 보냅니다.
-    /// PlaceInfoViewController로 이동시: 선택된 가게 정보를 보냅니다.
+    /// PlaceInfoViewController로 이동시: 선택된 상점 정보를 보냅니다.
     /// - Parameters:
     ///   - segue: viewController 정보를 가지고 있는 seuge
     ///   - sender: 필터 버튼, 검색 결과 컬렉션뷰 셀
@@ -212,7 +212,7 @@ extension PlaceSearchViewController: UICollectionViewDataSource {
     /// - Parameters:
     ///   - collectionView: 검색 결과 컬렉션뷰
     ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
-    /// - Returns: 가게 검색 결과 셀
+    /// - Returns: 상점 검색 결과 셀
     /// - Author: 장현우(heoun3089@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceSearchCollectionViewCell", for: indexPath) as! PlaceSearchCollectionViewCell

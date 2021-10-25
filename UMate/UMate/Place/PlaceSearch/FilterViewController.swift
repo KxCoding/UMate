@@ -11,12 +11,15 @@ import UIKit
 
 extension Notification.Name {
     /// 필터 화면에서 취소 버튼이 눌렸을 때 보낼 노티피케이션
+    /// - Author: 장현우(heoun3089@gmail.com)
     static let filterWillCancelled = Notification.Name(rawValue: "filterWillCancelled")
     
     /// 필터 화면에서 적용 버튼을 눌렀을 때 보낼 노티피케이션
+    /// - Author: 장현우(heoun3089@gmail.com)
     static let filterWillApplied = Notification.Name(rawValue: "filterWillApplied")
     
     /// 거리순 정렬 버튼이 눌렸을 때 보낼 노티피케이션
+    /// - Author: 장현우(heoun3089@gmail.com)
     static let sortByDistanceButtonSeleted = Notification.Name(rawValue: "sortByDistanceButtonSeleted")
 }
 
@@ -29,9 +32,9 @@ class FilterViewController: UIViewController {
     /// 필터 화면 테이블뷰
     @IBOutlet weak var filterTableView: UITableView!
     
-    /// 가게 종류 배열
+    /// 상점 종류 배열
     ///
-    /// 셀에 저장되어 있는 가게 종류 타입을 저장하기 위한 배열입니다.
+    /// 셀에 저장되어 있는 상점 종류 타입을 저장합니다.
     var list = [Place.PlaceType]()
     
     /// 필터링 된 항목
@@ -39,7 +42,7 @@ class FilterViewController: UIViewController {
     /// 이전 화면에서 전달됩니다.
     var filteredList: [Place.PlaceType]?
     
-    /// 가게 목록
+    /// 상점 목록
     ///
     /// 이전 화면에서 전달됩니다.
     var placeList = [Place]()
@@ -55,7 +58,7 @@ class FilterViewController: UIViewController {
     var distanceFilterOn: Bool?
     
     
-    /// 취소 버튼을 누르면 검색 화면으로 돌아갑니다.
+    /// 검색 화면으로 돌아갑니다.
     /// - Parameter sender: 취소 버튼
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBAction func cancel(_ sender: Any) {
@@ -67,7 +70,7 @@ class FilterViewController: UIViewController {
     
     /// 거리순으로 정렬합니다.
     ///
-    /// 가게 목록을 거리를 기준으로 오름차순 정렬합니다.
+    /// 상점 목록을 거리를 기준으로 오름차순 정렬합니다.
     /// - Parameter sender: 거리순 정렬 버튼
     @IBAction func sortByDistance(_ sender: Any) {
         guard let userLocation = userLocation else {
@@ -117,9 +120,9 @@ extension FilterViewController: UITableViewDataSource {
     
     /// 섹션에 따라 셀을 구성합니다.
     ///
-    /// 첫번째 섹션에는 정렬 관련 버튼을 표시하는 셀을 구성합니다.
-    /// 두번째 섹션에는 카테고리 관련 버튼을 표시하는 셀을 구성합니다.
-    /// 세번째 섹션에는 가게종류 관련 버튼을 표시하는 셀을 구성합니다.
+    /// 첫 번째 섹션에는 정렬 버튼을 표시하는 셀을 구성합니다.
+    /// 두 번째 섹션에는 카테고리 버튼을 표시하는 셀을 구성합니다.
+    /// 세 번째 섹션에는 상점 종류 버튼을 표시하는 셀을 구성합니다.
     /// - Parameters:
     ///   - tableView: 필터 화면 테이블뷰
     ///   - indexPath: 행의 위치를 나타내는 IndexPath

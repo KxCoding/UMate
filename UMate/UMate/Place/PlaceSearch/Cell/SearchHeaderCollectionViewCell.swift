@@ -8,19 +8,23 @@
 import UIKit
 
 
-/// 필터 버튼을 넣을 컬렉션뷰셀 클래스
+/// 필터 버튼 셀
+///
+/// 필터 버튼은 상점 목록 필터 화면으로 이동하는 버튼입니다.
 /// - Author: 장현우(heoun3089@gmail.com)
 class SearchHeaderCollectionViewCell: UICollectionViewCell {
-    /// 필터 버튼을 감싸고 있는 뷰
-    /// - Author: 장현우(heoun3089@gmail.com)
-    @IBOutlet weak var filterView: UIView!
+    
+    /// 필터 버튼 컨테이너 뷰
+    @IBOutlet weak var filterButtonContainerView: UIView!
     
     
     /// 초기화 작업을 실행합니다.
+    ///
+    /// 필터 버튼 컨테이너 뷰의 UI를 설정합니다.
     /// - Author: 장현우(heoun3089@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        filterView.configureStyle(with: [.pillShape])
+        filterButtonContainerView.configureStyle(with: [.pillShape])
     }
 }
