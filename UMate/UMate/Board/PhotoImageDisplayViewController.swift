@@ -29,6 +29,8 @@ class PhotoImageDisplayViewController: UIViewController {
     
     
     /// Camera FlashMode를 변경합니다.
+    /// - Parameter sender: FlashMode 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func changeFlashMode(_ sender: Any) {
         
         guard let picker = customPicker else { return }
@@ -42,6 +44,7 @@ class PhotoImageDisplayViewController: UIViewController {
     
     
     /// CameraMode를 변경합니다.
+    /// - Parameter sender: 카메라 교체 버튼
     @IBAction func switchCamera(_ sender: Any) {
         switch customPicker?.cameraDevice {
         case .rear:
@@ -56,6 +59,7 @@ class PhotoImageDisplayViewController: UIViewController {
     
     /// 캡쳐를 취소합니다.
     /// - Parameter sender: 취소 Button
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func done(_ sender: Any) {
         customPicker?.dismiss(animated: true, completion: nil)
     }
@@ -63,6 +67,7 @@ class PhotoImageDisplayViewController: UIViewController {
     
     /// 카메라로 촬영합니다.
     /// - Parameter sender: 촬영 Button
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func takePhoto(_ sender: Any) {
         customPicker?.takePicture()
     }
@@ -70,6 +75,7 @@ class PhotoImageDisplayViewController: UIViewController {
     
     /// 재촬영을 위해 카메라 화면을 표시합니다.
     /// - Parameter sender: 다시 찍기 Button
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func presentCamera(_ sender: Any) {
         setCamera()
     }
@@ -77,6 +83,7 @@ class PhotoImageDisplayViewController: UIViewController {
     
     /// 캡쳐한 사진을 첨부합니다.
     /// - Parameter sender: 사진 사용 Button
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func addCapturedPhoto(_ sender: Any) {
 
         guard let capturedImage = photoImageView.image else { return }
@@ -91,12 +98,14 @@ class PhotoImageDisplayViewController: UIViewController {
     
     /// 캡쳐한 이미지 사용을 취소합니다.
     /// - Parameter sender: Cancel Button
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
     /// 카메라의 상태를 설정합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func setCamera() {
         guard UIImagePickerController.isCameraDeviceAvailable(.rear) else { return }
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
@@ -119,6 +128,7 @@ class PhotoImageDisplayViewController: UIViewController {
     
     
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -153,6 +163,7 @@ extension PhotoImageDisplayViewController: UIImagePickerControllerDelegate, UINa
     
     /// 캡쳐 작업이 끝난경우 화면을 닫습니다.
     /// - Parameter picker: ImagePicker를 관리하는 객체
+    /// - Author: 김정민(kimjm010@icloud.com)
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
@@ -164,6 +175,7 @@ extension PhotoImageDisplayViewController: UIImagePickerControllerDelegate, UINa
     /// - Parameters:
     ///   - picker: ImagePicker를 관리하는 객체
     ///   - info: 촬영한 이미지 및 수정된 이미지
+    /// - Author: 김정민(kimjm010@icloud.com)
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         

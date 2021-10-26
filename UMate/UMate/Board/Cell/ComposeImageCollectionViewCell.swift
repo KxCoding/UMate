@@ -20,6 +20,7 @@ class ComposeImageCollectionViewCell: UICollectionViewCell {
     
     
     /// 셀이 로드되면 UI를 초기화합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         

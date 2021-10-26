@@ -55,6 +55,7 @@ class CommentTableViewCell: UITableViewCell {
     /// 좋아요 버튼 클릭시 처리할 동작입니다.
     /// 좋아요 버튼을 클릭할 때 좋아요 갯수와 이미지 뷰의 상태가 바뀝니다.
     /// - Parameter sender: 좋아요 Button
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func toggleLike(_ sender: Any) {
         
         guard var comment = selectedComment else { return }
@@ -86,6 +87,7 @@ class CommentTableViewCell: UITableViewCell {
     
     
     /// 셀이 로드되면 UI를 초기화합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -98,6 +100,7 @@ class CommentTableViewCell: UITableViewCell {
     
     
     /// 게시글에 추가될 Comment셀을 초기화 합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func configure(with comment: Comment) {
         
         heartImageView.isHidden = comment.heartCount == 0

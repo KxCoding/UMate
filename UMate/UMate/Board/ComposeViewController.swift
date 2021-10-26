@@ -61,6 +61,7 @@ class ComposeViewController: CommonViewController {
     
     
     /// 게시글 작성을 취소합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -69,6 +70,7 @@ class ComposeViewController: CommonViewController {
     /// 이미지 첨부 방식을 선택합니다.
     /// 게시글에 첨부할 이미지를 가져오는 방법을 지정합니다.
     /// - Parameter sender: Camera UIBarButtonItem
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func addorTakePhoto(_ sender: UIBarButtonItem) {
         alertToSelectAddOrTakePhoto(title: "", message: "이미지 첨부 방식을 선택해 주세요.") { _ in
             self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
@@ -79,6 +81,8 @@ class ComposeViewController: CommonViewController {
     
     
     /// 일반 게시판과 카테고리를 게시판에 게시글을 저장합니다.
+    /// - Parameter sender: Save 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func savePost(_ sender: Any) {
         
         guard let title = postTitleTextField.text, title.count > 0,
@@ -134,6 +138,7 @@ class ComposeViewController: CommonViewController {
     
     
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -187,6 +192,7 @@ extension ComposeViewController: UITextViewDelegate {
     ///
     /// 본문 편집 중 placeholder를 hidden으로 바꿉니다.
     /// - Parameter textView: postContentTextView
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textViewDidBeginEditing(_ textView: UITextView) {
         contentPlacehoderLabel.isHidden = true
     }
@@ -196,6 +202,7 @@ extension ComposeViewController: UITextViewDelegate {
     ///
     /// 본문 편집 후 글자수가 0 보다 작거나 같은 경우에 Placeholder를 다시 표시합니다.
     /// - Parameter textView: postContentTextView
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textViewDidEndEditing(_ textView: UITextView) {
         guard let content = postContentTextView.text, content.count > 0 else {
             contentPlacehoderLabel.isHidden = false
@@ -210,6 +217,7 @@ extension ComposeViewController: UITextViewDelegate {
     ///
     /// 게시글 본문이 수정될때마다 본문의 글자수를 카운팅 합니다.
     /// - Parameter textView: postContentTextView
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textViewDidChange(_ textView: UITextView) {
         contentCountLabel.text = "\(postContentTextView.text.count) / 500"
         
@@ -229,6 +237,7 @@ extension ComposeViewController: UITextViewDelegate {
     ///   - range: 현재 선택된 텍스트의 범위
     ///   - text: 대체할 텍스트
     /// - Returns: 수정이 가능한 경우 true, 불가능한 경우 false
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textView(_ textView: UITextView,
                   shouldChangeTextIn range: NSRange,
                   replacementText text: String) -> Bool {
@@ -255,6 +264,7 @@ extension ComposeViewController: UITextFieldDelegate {
     ///
     /// 제목 편집 중 placeholder를 hidden으로 바꿉니다.
     /// - Parameter textField: postTitleTextField
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textFieldDidBeginEditing(_ textField: UITextField) {
         postTitlePlaceholderLabel.isHidden = true
     }
@@ -264,6 +274,7 @@ extension ComposeViewController: UITextFieldDelegate {
     ///
     /// 제목 편집 후 글자수가 0보다 작거나 같은 경우 다시 Placeholder를 설정합니다.
     /// - Parameter textField: postTitleTextField
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         guard let title = postTitleTextField.text, title.count > 0 else {
@@ -280,6 +291,7 @@ extension ComposeViewController: UITextFieldDelegate {
     /// 제목의 Return버튼을 누르면 본문으로 넘어갑니다.
     /// - Parameter textField: postTitleTextField
     /// - Returns: true인 경우 본문 내용을 편집할 수 있습니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == postTitleTextField && postTitleTextField.isFirstResponder {
@@ -298,6 +310,7 @@ extension ComposeViewController: UITextFieldDelegate {
     ///   - range: 바꿀 문자의 범위
     ///   - string: 지정된 범위의 대체 문자열
     /// - Returns: 제목을 편집할 수 있는 경우 true, 편집이 불가능한 경우 false
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
         
@@ -324,6 +337,7 @@ extension ComposeViewController: UICollectionViewDataSource {
     ///   - collectionView: imageCollectionView, categoryListCollectionView
     ///   - section: imageCollectionView, categoryListCollectionView의 섹션 인덱스
     /// - Returns: 표시할 컬렉션뷰 item의 수
+    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard collectionView.tag == 101 else {
@@ -339,6 +353,7 @@ extension ComposeViewController: UICollectionViewDataSource {
     ///   - collectionView: imageCollectionView, categoryListCollectionView
     ///   - indexPath: 첨부할 이미지의 indexPath, 카테고리의 indexPath
     /// - Returns: 게시글에 선택한 이미지를 표시하는 컬렉션 뷰 셀,  카테고리를 표시하는 컬렉션 뷰 셀
+    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard collectionView.tag == 101 else {
@@ -370,6 +385,7 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
     ///   - collectionViewLayout: imageCollectionView와 categoryListCollectionView의 Layout 정보
     ///   - indexPath: imageCollectionView, categoryListCollectionView Item의 indexPath
     /// - Returns: 이미지 및 카테고리 셀의 사이즈
+    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -411,6 +427,7 @@ extension ComposeViewController: UICollectionViewDelegate {
     /// - Parameters:
     ///   - collectionView: imageCollectionView, categoryListCollectionView
     ///   - indexPath: 탭한 imageCollectionView 셀과 categoryListCollectionView 셀의 indexPath
+    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if collectionView.tag == 101 {

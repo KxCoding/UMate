@@ -88,6 +88,7 @@ class BoardViewController: CommonViewController {
             }
         }
         
+        // 게시판의 indexPath 전달
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
             if let vc = segue.destination as? FreeBoardViewController {
                 vc.index = indexPath

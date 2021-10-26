@@ -33,6 +33,7 @@ class SelectCategoryBoardCollectionViewCell: UICollectionViewCell {
     /// - Parameters:
     ///   - categoryNames: 카테고리 이름을 저장한 배열
     ///   - indexPath: 카테고리 이름의 indexPath
+    /// - Author: 김정민(kimjm010@icloud.com)
     func configure(with categoryNames: [String], indexPath: IndexPath) {
         categoryLabel.text = categoryNames[indexPath.item + 1]
     }

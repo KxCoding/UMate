@@ -63,7 +63,8 @@ class TakePhotoViewController: UIViewController {
     
     
     /// Camera FlashMode를 변경합니다.
-    /// - Parameter sender: Camera FlashMode 버튼
+    /// - Parameter sender: FlashMode 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func switchFlashMode(_ sender: Any) {
         let current = flashMode.rawValue % 3
         
@@ -77,6 +78,7 @@ class TakePhotoViewController: UIViewController {
     
     /// 카메라 위치를 변경합니다.
     /// - Parameter sender: Camera Switch 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func switchCamera(_ sender: Any) {
         
         guard let currentDeviceInput = currentDeviceInput else {
@@ -123,6 +125,7 @@ class TakePhotoViewController: UIViewController {
     
     /// 사진 촬영을 시작합니다.
     /// - Parameter sender: TakePhoto 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func takePhoto(_ sender: Any) {
         
         // 캡쳐한 이미지의 설정을 저장하는 속성
@@ -145,6 +148,7 @@ class TakePhotoViewController: UIViewController {
     
     /// 촬영하는 화면을 닫고 게시글 작성화면으로 이동합니다.
     /// - Parameter sender: Cancel 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closeVC(_ sender: Any) {
         stopCaptureSession()
         dismiss(animated: true, completion: nil)
@@ -166,6 +170,7 @@ class TakePhotoViewController: UIViewController {
     
     
     /// 디바이스의 카메라를 확인합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func detectCameraDevice() -> AVCaptureDevice? {
         if let device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) {
             return device
@@ -180,6 +185,7 @@ class TakePhotoViewController: UIViewController {
     
     
     /// 캡쳐 작업을 시작합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func startCaptureSession() {
         
         captureSession.beginConfiguration()
@@ -227,12 +233,14 @@ class TakePhotoViewController: UIViewController {
         
     
     /// captureSession의 작업을 중지합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func stopCaptureSession() {
         captureSession.stopRunning()
     }
     
     
     /// 카메라에 접근할 수 있는 권한을 확인합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func checkAuthorization() {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         
@@ -254,6 +262,7 @@ class TakePhotoViewController: UIViewController {
     
 
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -275,6 +284,7 @@ extension TakePhotoViewController: AVCapturePhotoCaptureDelegate {
     ///   - output: 캡쳐한 이미지
     ///   - photo: 캡쳐한 이미지의 데이터
     ///   - error: 발생할 수 있는 error
+    /// - Author: 김정민(kimjm010@icloud.com)
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         
         guard let photoData = photo.fileDataRepresentation() else { return }

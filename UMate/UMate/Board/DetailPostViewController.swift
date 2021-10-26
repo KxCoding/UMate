@@ -352,6 +352,7 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath
     /// - Returns: Leading끝에 표시될 SwipeAction
+    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         if indexPath.section == 3  {
@@ -375,6 +376,7 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - tableView: 댓글을 포함하고 있는 TableView
     ///   - indexPath: 댓글의 indexPath
     /// - Returns: Trailing끝에 표시될 SwipeAction
+    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         if indexPath.section == 3 {
@@ -405,6 +407,7 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - indexPath: 댓글의 indexPath
     ///   - point: 컨텍스트 메뉴를 표시하기 위한
     /// - Returns: 선택한 indexPath의 포인트
+    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath,
                    point: CGPoint) -> UIContextMenuConfiguration? {
         
@@ -433,6 +436,7 @@ extension DetailPostViewController: UITableViewDelegate {
     ///   - tableView: 디테일포스트 테이블 뷰
     ///   - indexPath: 선택될 셀의 indexPath
     /// - Returns: 선택된 셀의 indexPath
+    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let target = sortedCommentList[indexPath.row]
         
@@ -448,6 +452,7 @@ extension DetailPostViewController: UITableViewDelegate {
     /// - Parameters:
     ///   - tableView: 디테일포스트 테이블 뷰
     ///   - indexPath: 선택된 셀의 indexPath
+    /// - Author: 김정민(kimjm010@icloud.com)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 3 {
@@ -475,6 +480,7 @@ extension DetailPostViewController: UITextViewDelegate {
     /// 댓글 편집시 placeholder를 설정합니다.
     /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
     /// - Parameter textView: commentTextView
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textViewDidBeginEditing(_ textView: UITextView) {
         commentPlaceholderLabel.isHidden = true
     }
@@ -483,6 +489,7 @@ extension DetailPostViewController: UITextViewDelegate {
     /// 댓글 편집후의 placeholder를 설정합니다.
     /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시합니다.
     /// - Parameter textView: commentTextView
+    /// - Author: 김정민(kimjm010@icloud.com)
     func textViewDidEndEditing(_ textView: UITextView) {
         guard let comment = commentTextView.text, comment.count > 0 else {
             commentPlaceholderLabel.isHidden = false

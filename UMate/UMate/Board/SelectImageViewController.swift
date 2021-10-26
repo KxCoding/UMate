@@ -41,6 +41,7 @@ class SelectImageViewController: CommonViewController {
     
     /// 앨범 화면을 닫습니다.
     /// - Parameter sender: Cancel 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -48,6 +49,7 @@ class SelectImageViewController: CommonViewController {
     
     /// 접근 가능한 사진을 변경합니다.
     /// - Parameter sender: SelectImageViewController
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func editSelectedImage(_ sender: Any) {
         PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
     }
@@ -55,6 +57,7 @@ class SelectImageViewController: CommonViewController {
     
     /// 게시글에 첨부할 이미지를 선택합니다.
     /// - Parameter sender: select 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func selectImage(_ sender: Any) {
         guard let indexPath = imageCollectionView.indexPathsForSelectedItems else { return }
         
@@ -79,6 +82,7 @@ class SelectImageViewController: CommonViewController {
     
     
     /// 사진에 접근하기 위한 권한 요청합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func requestAuthorization() {
         let status: PHAuthorizationStatus
         
@@ -117,6 +121,7 @@ class SelectImageViewController: CommonViewController {
     
     
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -145,6 +150,7 @@ extension SelectImageViewController: UICollectionViewDataSource {
     ///   - collectionView: imageCollectionView
     ///   - section: 하나의 섹션에 표시할 아이템의 수
     /// - Returns: Fetch된 사진의 수
+    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return allPhotos.count
     }
@@ -155,6 +161,7 @@ extension SelectImageViewController: UICollectionViewDataSource {
     ///   - collectionView: imageCollectionView
     ///   - indexPath: image의 indexPath
     /// - Returns: imageCollectionView의 cell
+    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell",
@@ -183,6 +190,7 @@ extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
     ///   - collectionViewLayout: 컬렉션뷰의 레이아웃
     ///   - indexPath: 컬렉션뷰 아이템의 인덱스패스
     /// - Returns: 화면에 4개의 이미지가 표시될 수 있습니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -201,6 +209,7 @@ extension SelectImageViewController: PHPhotoLibraryChangeObserver {
     
     /// photoLibrary애 변화가 있을 경우 호출됩니다.
     /// - Parameter changeInstance: 변경 사항을 나타내는 객체
+    /// - Author: 김정민(kimjm010@icloud.com)
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         DispatchQueue.main.async {
             if let changes = changeInstance.changeDetails(for: self.allPhotos) {
