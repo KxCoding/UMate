@@ -47,16 +47,78 @@ class CommonViewController: UIViewController {
     }
 
     
-    /// 텍스트필드에 편집할 대상을 지정하기 위한 속성
+    /// 편집이 활성화 된 텍스트 필드
+    /// - Author: 황신택
     var activatedTextField: UITextField? = nil
     
     /// 옵저버 제거를 위해 토큰을 담는 배열
     /// - Author: 남정은
     var tokens = [NSObjectProtocol]()
     
-    /// 키체인 계정을 가져오기 위한 인스턴스 속성
-    ///  Author: 황신택
+    /// 키체인 인스턴스
+    /// - Author: 황신택
     let keychainPrefix = KeychainSwift(keyPrefix: Keys.prefixKey)
+    
+    /// 인기 대외활동 데이터 목록
+    /// - Author: 황신택
+    var contestDataList = [ContestSingleData.PopularContests]()
+    
+    /// 대외활동 데이터 목록
+    /// - Author: 황신택
+    var contestDetailDataList = [ContestSingleData.Contests]()
+    
+    /// 검색된 대외활동 목록
+    /// - Author: 황신택
+    var searchedContestDataList = [ContestSingleData.Contests]()
+    
+    /// 채용 데이터 목록
+    /// - Author: 황신택
+    var jobList = [JobData.Job]()
+    
+    /// 검색된 채용 데이터 목록
+    /// - Author: 황신택
+    var searchedList = [JobData.Job]()
+
+    /// 검색 진행 플래그
+    /// - Author: 황신택
+    var isSearching = false
+    
+    /// 대외활동 데이터 패칭 플래그
+    /// - Author: 황신택
+    var isFetching = false
+    
+    
+    /// 제이슨 데이터를 파싱 하고 파싱 된 데이터를 아이디로 정렬해서 오름차순으로 저장합니다.
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    func getContestData() {
+        guard !isFetching else { return }
+        isFetching = true
+        
+        DispatchQueue.global().async {
+            guard let contestData = PlaceDataManager.shared.getObject(of: ContestSingleData.self, fromJson: "contests") else { return }
+            
+            self.contestDataList = contestData.favoriteList
+            self.contestDetailDataList = contestData.contestList.sorted(by: { $0.id < $1.id})
+        }
+    }
+    
+    
+    /// 제이슨 데이터를 파싱 하고 파싱 된 데이터를 아이디로 정렬해서 오름차순으로 저장합니다.
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    func getJobData() {
+        guard !isFetching else { return }
+        
+        isFetching = true
+        
+        DispatchQueue.global().async {
+            defer {
+                self.isFetching = false
+            }
+            
+            guard let jobData = PlaceDataManager.shared.getObject(of: JobData.self, fromJson: "companies") else { return }
+            self.jobList = jobData.jobs.sorted(by: { $0.id < $1.id })
+        }
+    }
     
     
     /// 소멸자에서 옵저버를 제거
@@ -66,7 +128,6 @@ class CommonViewController: UIViewController {
             NotificationCenter.default.removeObserver(token)
         }
     }
-    
 }
 
 

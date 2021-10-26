@@ -1,22 +1,22 @@
 //
-//  PromotionCollectionViewCell.swift
-//  PromotionCollectionViewCell
+//  JobInfoCollectionViewCell.swift
+//  JobInfoCollectionViewCell
 //
 //  Created by 황신택 on 2021/09/13.
 //
 
 import UIKit
 
-/// 구인 정보 화면
+/// 홈 화면 구인정보 탭을 나타내는 콜렉션 뷰 셀
 /// - Author: 황신택 (sinadsl1457@gmail.com)
-class CompaniesInfoCollectionViewCell: UICollectionViewCell {
+class JobInfoCollectionViewCell: UICollectionViewCell {
     /// 구인 카테고리 이미지 뷰
-    @IBOutlet weak var companyCategoryImageView: UIImageView!
+    @IBOutlet weak var jobCategoryImageView: UIImageView!
     
     /// 구인 카테고리 레이블
-    @IBOutlet weak var companyCategoryLabel: UILabel!
+    @IBOutlet weak var jobCategoryLabel: UILabel!
     
-    /// 상세 내용
+    /// 상세 내용 레이블
     @IBOutlet weak var detailLabel: UILabel!
     
     

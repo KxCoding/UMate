@@ -5,13 +5,13 @@
 //  Created by 황신택 on 2021/07/28.
 //
 
-import UIKit
 import BEMCheckBox
+import UIKit
 
 /// 이용약관 화면
 /// - Author: 황신택 (sinadsl1457@gmail.com)
 class TermsOfConditionsTableViewController: UITableViewController {
-    ///CheckBox 1 ... 6
+    /// CheckBox 1 ... 6
     @IBOutlet weak var checkbox1: BEMCheckBox!
     @IBOutlet weak var checkBox2: BEMCheckBox!
     @IBOutlet weak var checkBox3: BEMCheckBox!
@@ -22,7 +22,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
     /// 최소 연령 레이블
     @IBOutlet weak var minimumAgeLabel: UILabel!
     
-    /// 다음 화면  버튼
+    /// 다음 화면 버튼
     @IBOutlet weak var verifyEmailButton: UIButton!
     
     /// 서비스 이용 약관
@@ -37,7 +37,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
     /// 광고수신 약관
     @IBOutlet weak var advertisementTextView: UITextView!
     
-    /// 체크박스 아웃렛을 저장하기 위한 배열
+    /// 체크박스 아웃렛 배열
     var list = [BEMCheckBox]()
     
     
@@ -61,7 +61,6 @@ class TermsOfConditionsTableViewController: UITableViewController {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 체크박스의 각종 속성들을 클로저로 초기화합니다.
         checkbox1.delegate = self
         [checkbox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6].forEach({
             $0?.animationDuration = 0.3

@@ -5,7 +5,6 @@
 //  Created by 황신택 on 2021/10/05.
 //
 
-import Foundation
 import UIKit
 
 /// 레이블의 왼쪽, 오른쪽, 위, 아래 padding 값을 커스터마이징 합니다.
@@ -58,9 +57,9 @@ class PaddingLabel: UILabel {
     
     ///  레이블의 bounding rectangle을 커스터마이징 할 때 오바라이딩 합니다.
     /// - Parameters:
-    ///   - bounds: 레이블의 사각형 바운드
-    ///   - numberOfLines:  최대 줄 수
-    /// - Returns: 계산된 레이블의 직사각형
+    ///   - bounds: 레이블 영역
+    ///   - numberOfLines: 최대 줄 수
+    /// - Returns: 계산된 텍스트 영역
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
         let insetRect = bounds.inset(by: textEdgeInsets)

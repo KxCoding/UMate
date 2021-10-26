@@ -5,8 +5,9 @@
 //  Created by 황신택 on 2021/07/24.
 //
 
-import UIKit
 import DropDown
+import UIKit
+
 
 /// 학번과 학교 이름 선택 화면
 /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -60,7 +61,7 @@ class UniversityInfoViewController: CommonViewController {
     /// - Parameter sender: makeEnterenceOfYearDataButton
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func makeEnterenceOfYearData(_ sender: UIButton) {
-        // 높이가 적절하다면 드롭다운 합니다.
+        // 높이가 적절하다면 드롭다운 방식으로 메뉴를 표시합니다.
         menu?.show()
         // 사용자가 셀을 선택시 enterenceYearLabel에 선택한 셀의 item을 표시합니다.
         menu?.selectionAction = { [weak self] index, item in
@@ -100,8 +101,6 @@ class UniversityInfoViewController: CommonViewController {
         
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
-        // 메뉴의 anchorView를 아웃렛 enterenceYearView로 저장합니다.
-        // 메뉴의 여러 속성을 초기화합니다.
         menu?.anchorView = enterenceYearContainerView
         guard let height = menu?.anchorView?.plainView.bounds.height else { return }
         menu?.bottomOffset = CGPoint(x: 0, y: height)

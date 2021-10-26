@@ -49,10 +49,10 @@ class FindPasswordAndEmailTableViewController: UITableViewController {
     
 
     /// 아이디 레이블을 탭 하면 막대의 위치를 아이디 레이블로 이동시킵니다.
-    /// - Parameter sender: 아이디 버튼에 전달
+    /// - Parameter sender: 아이디 버튼
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func didTapId(_ sender: Any) {
-        // priority의 값을 high, low로 토글하면서 좌우 애니매이션 효과를 줍니다.
+        // priority의 값을 high, low로 토글하면서 좌우 애니메이션 효과를 줍니다.
         idLabelCenterX.priority = .defaultHigh
         passwordLabelCenterX.priority = .defaultLow
     
@@ -80,7 +80,7 @@ class FindPasswordAndEmailTableViewController: UITableViewController {
     
     
     /// 비밀번호 레이블을 탭 하면 막대의 위치를 비밀번호 레이블로 이동시킵니다.
-    /// - Parameter sender: 패스워드 버튼에 전달
+    /// - Parameter sender: 패스워드 버튼
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func didTapPassword(_ sender: Any) {
         passwordLabelCenterX.priority = .defaultHigh

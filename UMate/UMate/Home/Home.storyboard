@@ -94,7 +94,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CompanyTableViewCell" rowHeight="172" id="nZH-EO-sBM" customClass="CompanyTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CompanyTableViewCell" rowHeight="172" id="nZH-EO-sBM" customClass="EmploymentInfoTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="88.5" width="414" height="172"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nZH-EO-sBM" id="sTg-IC-7J0">
@@ -234,15 +234,15 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="CompanyWebSite" destination="Ohu-7a-avn" id="bli-YV-YDZ"/>
+                                            <outlet property="CompanyWebSiteButton" destination="Ohu-7a-avn" id="bli-YV-YDZ"/>
+                                            <outlet property="bookmarkImageView" destination="avc-xG-lm4" id="Ga8-p1-2h9"/>
                                             <outlet property="careerLabel" destination="R8s-68-pJN" id="idK-Ed-UaT"/>
-                                            <outlet property="companyImage" destination="cWW-Pf-gmx" id="w7h-gS-MLx"/>
+                                            <outlet property="companyImageView" destination="cWW-Pf-gmx" id="w7h-gS-MLx"/>
+                                            <outlet property="companyNameLabel" destination="5Fn-Tb-e1L" id="nXq-4Q-qM7"/>
                                             <outlet property="degreeLabel" destination="WaL-2W-T7Q" id="oRF-C4-HcG"/>
                                             <outlet property="detailLabel" destination="vWG-np-kO5" id="9Lr-if-yEz"/>
-                                            <outlet property="favoriteImage" destination="avc-xG-lm4" id="Ga8-p1-2h9"/>
-                                            <outlet property="fieldLabel" destination="yuR-hS-rMh" id="MWg-jf-RIw"/>
+                                            <outlet property="jobFieldLabel" destination="yuR-hS-rMh" id="MWg-jf-RIw"/>
                                             <outlet property="regionLabel" destination="L90-KO-dJs" id="XvP-EX-TbM"/>
-                                            <outlet property="titleLabel" destination="5Fn-Tb-e1L" id="nXq-4Q-qM7"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -282,7 +282,7 @@
         <!--대외활동/공모전-->
         <scene sceneID="9m8-c6-luZ">
             <objects>
-                <viewController id="3aU-KP-xkg" customClass="InternationalActivityViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3aU-KP-xkg" customClass="ContestsViewController" customModule="UMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1ew-Nt-LQo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -305,7 +305,7 @@
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PoppularInternationalActivityTableViewCell" rowHeight="282" id="Gao-UR-w42" customClass="PoppularInternationalActivityTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PopularContestsTableViewCell" rowHeight="282" id="Gao-UR-w42" customClass="PopularContestsTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="88.5" width="414" height="282"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gao-UR-w42" id="c89-TP-jWQ">
@@ -322,7 +322,7 @@
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PoppularInternationalActivityCollectionViewCell" id="Ob7-NO-0Hl" customClass="PoppularInternationalActivityCollectionViewCell" customModule="UMate" customModuleProvider="target">
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PopularContestsCollectionViewCell" id="Ob7-NO-0Hl" customClass="PopularContestsCollectionViewCell" customModule="UMate" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="13" width="370" height="234"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="XwO-pV-aEd">
@@ -410,7 +410,7 @@
                                             <outlet property="listCollectionView" destination="VF3-Fx-8XU" id="p7d-6f-f1Q"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="InternationalActivityTableViewCell" rowHeight="234" id="zHy-G6-pf2" customClass="InternationalActivityTableViewCell" customModule="UMate" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ContestsTableViewCell" rowHeight="234" id="zHy-G6-pf2" customClass="ContestsTableViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="370.5" width="414" height="234"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zHy-G6-pf2" id="EIB-3D-FT9">
@@ -504,10 +504,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="contestImageView" destination="wdC-xE-tKh" id="Syk-tA-p1X"/>
-                                            <outlet property="descLabel" destination="cQ0-T3-2PR" id="1n0-ti-pQR"/>
-                                            <outlet property="fieldLabel" destination="5uy-jQ-tLg" id="9qR-wf-GAQ"/>
-                                            <outlet property="institutionLabel" destination="4Ab-3K-kPC" id="Awg-YQ-SFB"/>
+                                            <outlet property="contestDescLabel" destination="cQ0-T3-2PR" id="3ba-ee-TAi"/>
+                                            <outlet property="contestFieldLabel" destination="5uy-jQ-tLg" id="T6r-IV-cnR"/>
+                                            <outlet property="contestImageView" destination="wdC-xE-tKh" id="7Ov-IF-Il0"/>
+                                            <outlet property="institutionLabel" destination="4Ab-3K-kPC" id="OPg-rl-6bC"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -636,12 +636,12 @@
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                                         <size key="customSize" width="360" height="305"/>
                                         <connections>
-                                            <outlet property="favoriteImageView" destination="eFK-nG-zwS" id="V1d-4g-Sg4"/>
-                                            <outlet property="title" destination="rxf-BL-LlK" id="m3Y-ZY-4qB"/>
+                                            <outlet property="categoryImageView" destination="eFK-nG-zwS" id="V1d-4g-Sg4"/>
+                                            <outlet property="categoryLabel" destination="rxf-BL-LlK" id="m3Y-ZY-4qB"/>
                                             <segue destination="T8D-9I-dSU" kind="show" id="Hng-4T-mjC"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="PromotionCollectionViewCell" id="err-Os-DN0" customClass="CompaniesInfoCollectionViewCell" customModule="UMate" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="PromotionCollectionViewCell" id="err-Os-DN0" customClass="JobInfoCollectionViewCell" customModule="UMate" customModuleProvider="target">
                                         <rect key="frame" x="22" y="325" width="370" height="96"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Tw6-1I-nz9">
@@ -705,9 +705,9 @@
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                                         <size key="customSize" width="370" height="96"/>
                                         <connections>
-                                            <outlet property="companyCategoryImageView" destination="jn7-LA-Xyy" id="dnA-5B-xa6"/>
-                                            <outlet property="companyCategoryLabel" destination="Yhp-5j-QhL" id="U0f-uj-LuE"/>
                                             <outlet property="detailLabel" destination="Pzn-m6-Rh7" id="DRj-We-C8s"/>
+                                            <outlet property="jobCategoryImageView" destination="jn7-LA-Xyy" id="dnA-5B-xa6"/>
+                                            <outlet property="jobCategoryLabel" destination="Yhp-5j-QhL" id="U0f-uj-LuE"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ContestCollectionViewCell" id="IXN-mT-E2j" customClass="ContestCollectionViewCell" customModule="UMate" customModuleProvider="target">

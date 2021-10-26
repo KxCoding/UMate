@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 /// 제이슨 형식 companies 데이터를 파싱하기위해 Codable을 채용했습니다.
 /// EmploymentController에서 모델로 사용합니다.

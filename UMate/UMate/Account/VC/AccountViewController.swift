@@ -73,7 +73,7 @@ class AccountViewController: CommonViewController {
     
     /// 뷰를 탭하면 키보드를 내립니다.
     /// 뷰 전체가 탭 영역입니다.
-    /// - Parameter sender: UITapGestureRecognizer
+    /// - Parameter sender: UITapGestureRecognizer생성자의 action
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)

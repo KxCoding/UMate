@@ -7,13 +7,13 @@
 
 import UIKit
 
-/// 대외활동 화면
+/// 홈 화면 대외활동 / 공모전 탭을 표시할 콜렉션 뷰 셀
 /// - Author: 황신택 (sinadsl1457@gmail.com)
 class ContestCollectionViewCell: UICollectionViewCell {
-    /// 공모전 대외활동 타이틀
+    /// 공모전 대외활동 타이틀 레이블
     @IBOutlet weak var titleLabel: UILabel!
     
-    /// 공모전 대외활동 플레이스 홀더
+    /// 공모전 대외활동 플레이스 홀더 레이블
     @IBOutlet weak var detailLabel: UILabel!
     
     /// 공모전 대외활동 이미지 뷰

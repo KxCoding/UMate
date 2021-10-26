@@ -44,10 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 
-/// 앱 시작 시점에 특정 작업을 위한 익스텐션
+/// 앱 시작 시점에 처리할 작업을 위한 익스텐션
 /// - Author: 황신택 (sinadsl1457@gmail.com)
 extension UIApplication {
-    /// UserDefaults의 HasLaunched 키가 저장 되어있는지 체크합니다.
+    /// UserDefaults의 HasLaunched 키가 저장되어 있는지 체크합니다.
     /// 해당 키가 없다면 앱 시작 시점을 UserDefaults에 저장합니다.
     /// - Returns: UserDefaults에 HasLaunched키가 존재하면 false이고 키가 존재하면 true입니다.
     class func isFirstLaunch() -> Bool {

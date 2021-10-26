@@ -8,11 +8,11 @@
 import Foundation
 
 /// contests 제이슨 형식 데이터를 파싱하기 위해 Codable을 채용했습니다.
-/// InternationalActivityViewController에서 모델로 사용합니다.
+/// ContestsViewController에서 모델로 사용합니다.
 /// - Author: 황신택 (sinadsl1457@gmail.com)
 struct ContestSingleData: Codable {
     /// 인기 대외활동 데이터
-    struct FavoriteContests: Codable {
+    struct PopularContests: Codable {
         let id: Int
         let url: String
         let description: String
@@ -32,7 +32,7 @@ struct ContestSingleData: Codable {
     }
     
     let header: String
-    var favoriteList: [FavoriteContests]
+    var favoriteList: [PopularContests]
     var contestList: [Contests]
 }
 

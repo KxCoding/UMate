@@ -45,7 +45,7 @@ class EmailVerificationViewController: CommonViewController {
     }
     
     
-    /// 입력한 코드가 맞는지 검사합니다.
+    /// 입력한 코드를 확인합니다.
     /// - Parameter sender: emailVerificationButton
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func checkToVerifiedCode(_ sender: Any) {
@@ -56,8 +56,7 @@ class EmailVerificationViewController: CommonViewController {
     }
     
 
-    /// 다음 화면으로 전환되기 전에 호출됩니다.
-    /// 다음 화면으로 입력된 이메일 주소를 전달합니다.
+    /// 다음 화면으로 전환되기 전에 호출되어  초기화 작업을 수행합니다.
     /// - Parameters:
     ///   - segue: 실행된 segue
     ///   - sender: segue를 실행한 객체
@@ -94,7 +93,7 @@ class EmailVerificationViewController: CommonViewController {
     
     /// 뷰를 탭하면 키보드를 내립니다.
     /// 뷰 전체가 탭 영역입니다.
-    /// - Parameter sender: UITapGestureRecognizer
+    /// - Parameter sender: UITapGestureRecognizer생성자의 action 
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
@@ -122,7 +121,7 @@ extension EmailVerificationViewController: UITextFieldDelegate {
     }
     
     
-    /// 텍스트 필드에서 편집이 시작될 때 호출됩니다
+    /// 텍스트 필드에서 편집이 시작될 때 호출됩니다.
     /// - Parameter textField: 편집이 시작된 텍스트 필드
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     func textFieldDidBeginEditing(_ textField: UITextField) {

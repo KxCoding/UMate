@@ -12,9 +12,11 @@ import UIKit
 /// - Author: 황신택 (sinadsl1457@gmail.com), 안상희
 class HomeViewController: UIViewController {
     /// 홈 화면 콜렉션뷰
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBOutlet weak var listCollectionView: UICollectionView!
     
     /// 홈 화면 데이터 리스트
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     var list = HomeViewCellData.getHomeDataList()
     
     /// 학교 고유 id
@@ -122,7 +124,7 @@ class HomeViewController: UIViewController {
     
     
     /// 학교 고유 id에 해당하는 홈페이지 URL을 불러옵니다.
-    /// - Author: 안상희
+    /// - Author: 안상희, 황신택
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -130,6 +132,17 @@ class HomeViewController: UIViewController {
         if let id = schoolId {
             getPageURL(id: id)
         }
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.backgroundTap))
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    
+    /// 뷰를 탭하면 키보드를 내립니다.
+    /// 뷰 전체가 탭 영역입니다.
+    /// - Parameter sender: UITapGestureRecognizer생성자의 action 
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
     
@@ -203,11 +216,11 @@ extension HomeViewController: UICollectionViewDelegate {
 
 
 extension HomeViewController: UICollectionViewDataSource {
-    /// 섹션에 아이템을 개수를 지정합니다.
+    /// 섹션에 표시할 셀 수를 리턴합니다.
     /// - Parameters:
     ///   - collectionView: 해당 요청을 보낸 콜렉션 뷰
-    ///   - section: 섹션의 위치
-    /// - Returns: 색션에 표시할 아이템 개수를 리턴합니다.
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션에 표시할 셀 수
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
@@ -218,7 +231,7 @@ extension HomeViewController: UICollectionViewDataSource {
     /// - Parameters:
     ///   - collectionView: 관련 요청을 보낸 콜렉션 뷰
     ///   - indexPath: 셀의 indexPath
-    /// - Returns: 홈데이터가 표시된 셀이 리턴됩니다.
+    /// - Returns: 홈데이터 셀
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let type = list[indexPath.item]
@@ -226,14 +239,14 @@ extension HomeViewController: UICollectionViewDataSource {
         switch type {
         case .main(let model):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCollectionViewCell", for: indexPath) as! MainCollectionViewCell
-            cell.title.text = model.cellTitle
-            cell.favoriteImageView.image = UIImage(named: model.backgoundImageName)
+            cell.categoryLabel.text = model.cellTitle
+            cell.categoryImageView.image = UIImage(named: model.backgoundImageName)
             return cell
         case .promotion(let model):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PromotionCollectionViewCell", for: indexPath) as! CompaniesInfoCollectionViewCell
-            cell.companyCategoryLabel.text = model.cellTitle
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PromotionCollectionViewCell", for: indexPath) as! JobInfoCollectionViewCell
+            cell.jobCategoryLabel.text = model.cellTitle
             cell.detailLabel.text = model.detailTitle
-            cell.companyCategoryImageView.image = UIImage(named: model.backgoundImageName)
+            cell.jobCategoryImageView.image = UIImage(named: model.backgoundImageName)
             return cell
         case .contest(let model):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ContestCollectionViewCell", for: indexPath) as! ContestCollectionViewCell
@@ -253,7 +266,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     ///   - collectionView: 레이아웃을 표시하는 콜렉션 뷰
     ///   - collectionViewLayout: 정보를 요청한 레이아웃 객체
     ///   - indexPath: 아이템의 위치를 나타내는 indexPath
-    /// - Returns: 지정된 아이템의 넓이 높이를 리턴합니다.
+    /// - Returns: 셀 사이즈
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }

@@ -17,7 +17,7 @@ extension Notification.Name {
 /// - Author: 황신택 (sinadsl1457@gmail.com)
 class ProfilePicturesViewController: UIViewController {
     /// 유저 사진 키
-    /// 유저 인포 키 로 사용합니다.
+    /// 유저 인포 키로 사용합니다.
     static let picsKey = "picsKey"
     
     
@@ -30,15 +30,14 @@ class ProfilePicturesViewController: UIViewController {
     
     
     /// 사진을 선택하면 노티피케이션을 포스팅 합니다. 사진의 태그값을 userInfo에 담아서 전달합니다.
-    /// - Parameter sender: 컨테이너 뷰 안에 있는 버튼
+    /// - Parameter sender: 컨테이너 뷰안에 있는 버튼
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func matchTheSelectedPicture(_ sender: UIButton) {
         NotificationCenter.default.post(name: .didTapProfilePics, object: nil, userInfo: [ProfilePicturesViewController.picsKey: sender.tag / 100])
-        
     }
     
 
-    /// 초기화 작업을 진행합니다
+    /// 초기화 작업을 진행합니다.
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()

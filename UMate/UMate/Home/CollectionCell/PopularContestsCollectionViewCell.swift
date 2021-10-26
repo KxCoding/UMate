@@ -1,5 +1,5 @@
 //
-//  InternationalActivityCollectionViewCell.swift
+//  PopularContestsCollectionViewCell.swift
 //  UMate
 //
 //  Created by 황신택 on 2021/10/08.
@@ -7,10 +7,9 @@
 
 import UIKit
 
-/// 인기 대외활동
-/// Horizontal Scroll 기능을 위해 테이블 뷰 셀 안에 구현했습니다.
+/// 인기 대외활동 / 공모전을 표시할 콜렉션 뷰 셀
 /// - Author: 황신택 (sinadsl1457@gmail.com)
-class PoppularInternationalActivityCollectionViewCell: UICollectionViewCell {
+class PopularContestsCollectionViewCell: UICollectionViewCell {
     /// 대외활동 이미지 뷰
     @IBOutlet weak var contestImageView: UIImageView!
     
@@ -21,11 +20,10 @@ class PoppularInternationalActivityCollectionViewCell: UICollectionViewCell {
     let cache = NSCache<NSURL, UIImage>()
     
 
-    
     /// 대외활동 데이터로 콜렉션 셀을 구성합니다.
-    /// - Parameter model: ContestSingleData.FavoriteContests
+    /// - Parameter model: 공모전 및 대외활동 데이터
     /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func configure(with model: ContestSingleData.FavoriteContests) {
+    func configure(with model: ContestSingleData.PopularContests) {
         fetchImage(with: model) { image in
             if let image = image {
                 self.contestImageView.image = image
@@ -39,10 +37,10 @@ class PoppularInternationalActivityCollectionViewCell: UICollectionViewCell {
     
     /// 이미지를 다운로드합니다.
     /// 캐시에 이미지가 저장되어 있지 않다면, 이미지를 다운로드하고 캐시에 저장합니다. 이미지 url을 캐시 키로 사용합니다.
-    /// - Parameter model: JobData.Job의 url을 전달
+    /// - Parameter model: JobData.Job의 url
     /// - completion: 데이터가 없으면 nil을 데이터가 있으면 이미지를 전달합니다.
     /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func fetchImage(with url: ContestSingleData.FavoriteContests, completion: @escaping (UIImage?) -> ()) {
+    func fetchImage(with url: ContestSingleData.PopularContests, completion: @escaping (UIImage?) -> ()) {
         guard let url = URL(string: url.url) else {
             DispatchQueue.main.async {
                 completion(nil)

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-/// 이메일/ 비밀번호 정규식 검증 익스텐션
+/// 이메일 / 비밀번호 정규식 검증 익스텐션
 /// - Author: 황신택 (sinadsl1457@gmail.com)
 extension UIViewController {
     /// 이메일 주소의 형식을 검증합니다.
