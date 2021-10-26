@@ -8,24 +8,22 @@
 import UIKit
 
 
-/// 신고 화면과 관련된 뷰컨트롤러 클래스
+/// 리뷰 신고 화면
 /// - Author: 장현우(heoun3089@gmail.com)
 class ReportViewController: UIViewController {
-    /// 신고 내용을 작성하는 텍스트뷰
-    /// - Author: 장현우(heoun3089@gmail.com)
+    
+    /// 신고 내용 텍스트뷰
     @IBOutlet weak var reportTextView: UITextView!
     
-    /// 텍스트뷰에서 사용할 플레이스홀더 레이블
-    /// - Author: 장현우(heoun3089@gmail.com)
+    /// 텍스트뷰 플레이스홀더 레이블
     @IBOutlet weak var reportPlaceholderLabel: UILabel!
     
-    /// 보내기 버튼을 감싸고 있는 뷰
-    /// - Author: 장현우(heoun3089@gmail.com)
+    /// 보내기 버튼 컨테이너 뷰
     @IBOutlet weak var sendContainerView: UIView!
     
     
-    /// 보내기 버튼을 누르면 이전 화면으로 이동합니다.
-    /// - Parameter sender: 버튼
+    /// 이전 화면으로 이동합니다.
+    /// - Parameter sender: 보내기 버튼
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBAction func sendButtonTapped(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -33,6 +31,9 @@ class ReportViewController: UIViewController {
     
     
     /// 초기화 작업을 실행합니다.
+    ///
+    /// 네비게이션 타이틀을 리뷰 신고로 설정합니다.
+    /// 신고 내용 텍스트뷰와 보내기 버튼 컨테이너 뷰의 UI를 설정합니다.
     /// - Author: 장현우(heoun3089@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,23 +41,27 @@ class ReportViewController: UIViewController {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationItem.title = "리뷰 신고"
         
+        reportTextView.layer.cornerRadius = 10
+        reportTextView.becomeFirstResponder()
+        reportTextView.delegate = self
+        
         sendContainerView.backgroundColor = UIColor(named: "black")
         sendContainerView.tintColor = .white
         sendContainerView.frame.size.height = 40
         sendContainerView.layer.cornerRadius = 10
         sendContainerView.layer.masksToBounds = true
-        
-        reportTextView.layer.cornerRadius = 10
-        reportTextView.becomeFirstResponder()
-        reportTextView.delegate = self
     }
 }
 
 
 
+/// 텍스트를 작성했을 때 발생하는 이벤트 처리
 extension ReportViewController: UITextViewDelegate {
-    /// 사용자가 텍스트뷰에서 텍스트 또는 속성을 변경할 때 델리게이트에게 알립니다.
-    /// - Parameter textView: 이 메소드를 호출하는 텍스트뷰
+    
+    /// 텍스트를 작성하면 호출됩니다.
+    ///
+    /// 작성한 텍스트가 있는 경우 플레이스 홀더로 사용한 레이블을 숨깁니다.
+    /// - Parameter textView: 신고 내용 텍스트뷰
     /// - Author: 장현우(heoun3089@gmail.com)
     func textViewDidChange(_ textView: UITextView) {
         reportPlaceholderLabel.isHidden = textView.hasText

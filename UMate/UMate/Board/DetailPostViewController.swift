@@ -189,9 +189,11 @@ class DetailPostViewController: CommonViewController {
             alertMenu.addAction(editAction)
             
             let deleteAction = UIAlertAction(title: "게시글 삭제", style: .default) { _ in
-                #if DEBUG
-                print("삭제")
-                #endif
+                self.alertVersion2(title: "알림", message: "정말 삭제하시겠습니까?", handler: { _ in
+                    if let navController = self.navigationController {
+                        navController.popViewController(animated: true)
+                    }
+                }, handler2: nil)
             }
             alertMenu.addAction(deleteAction)
             
@@ -392,7 +394,21 @@ extension DetailPostViewController: UITableViewDelegate {
             
             removeComment.backgroundColor = .darkGray
             
-            let conf = UISwipeActionsConfiguration(actions: [removeComment])
+            let editComment = UIContextualAction(style: .destructive, title: "댓글 수정") { [weak self] action, v, completion in
+                guard let self = self else { return }
+                
+                self.alertVersion2(title: "알림", message: "댓글을 수정할까요?", handler: { _ in
+                    let content = self.sortedCommentList[indexPath.row].content
+                    self.commentTextView.text = content
+                    self.commentTextView.becomeFirstResponder()
+                }, handler2: nil)
+                
+                completion(true)
+            }
+            
+            editComment.backgroundColor = .darkGray
+            
+            let conf = UISwipeActionsConfiguration(actions: [removeComment, editComment])
             conf.performsFirstActionWithFullSwipe = true
             return conf
         }
