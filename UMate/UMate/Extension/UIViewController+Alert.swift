@@ -57,6 +57,7 @@ extension UIViewController {
     /// - Parameters:
     ///   - title: 알림 타이틀입니다.
     ///   - message: 알림 메시지입니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func alertComment(title: String, message: String) {
         let alertCommnet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
@@ -70,7 +71,7 @@ extension UIViewController {
     }
     
     
-    /// 게시판 댓글 신고 알림 메소드입니다.
+    /// 게시판 댓글 신고 알림입니다.
     /// - Parameters:
     ///   - title: 알림 타이틀. 기본값은 nil입니다.
     ///   - message: 알림 메시지입니다.
@@ -90,7 +91,7 @@ extension UIViewController {
             }
             reasonAlert.addAction(firstAction)
             
-            let secondAction = UIAlertAction(title: "낙씨/놀람/도배", style: .default) { _ in
+            let secondAction = UIAlertAction(title: "낚시/놀람/도배", style: .default) { _ in
                 print("댓글 신고가 접수되었습니다.")
             }
             reasonAlert.addAction(secondAction)
@@ -161,20 +162,25 @@ extension UIViewController {
     }
     
     
+
     /// 앨범 접근 권한에 따른 알림을 표시합니다.
     /// - Parameters:
     ///   - title: 알림의 title
     ///   - message: 알림의 message
     ///   - hanlder1: laterAction 클릭 이후의 동작
-    ///   - handler2: goToSettingAction 이후의 동작
     /// - Author: 김정민(kimjm010@icloud.com)
-    func alertToAccessPhotoLibrary(title: String, message: String, hanlder1: ((UIAlertAction) -> Void)? = nil, handler2: ((UIAlertAction) -> Void)? = nil) {
+    func alertToAccessPhotoLibrary(title: String = "사진 액세스 허용", message: String = "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영상에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let laterAction = UIAlertAction(title: "나중에 하기", style: .cancel, handler: hanlder1)
         alert.addAction(laterAction)
         
-        let goToSettingAction = UIAlertAction(title: "설정으로 이동", style: .default, handler: handler2)
+        let goToSettingAction = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString),
+               UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
         alert.addAction(goToSettingAction)
         
         present(alert, animated: true, completion: nil)

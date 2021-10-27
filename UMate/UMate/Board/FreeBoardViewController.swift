@@ -11,17 +11,20 @@ import CoreMIDI
 
 
 /// 기본 게시판 뷰 컨트롤러
-/// - Author: 김정민, 남정은(dlsl7080@gmail.com)
+/// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 class FreeBoardViewController: CommonViewController {
     /// 선택된 게시판의 게시글 목록 테이블 뷰
     @IBOutlet weak var postListTableView: UITableView!
     
     /// 게시글 작성 버튼
-    /// - Author: 김정민
     @IBOutlet weak var composeButton: UIButton!
     
     /// 선택된 게시판
     var selectedBoard: Board?
+    
+    /// 게시판 indexPath
+    /// indexPath를 통해 게시글 작성할 수 있는 버튼을 조절합니다.
+    var index: IndexPath?
     
     
     /// 검색 버튼을 눌렀을 시에 SearchViewController로 이동합니다.
@@ -56,15 +59,10 @@ class FreeBoardViewController: CommonViewController {
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        composeButton.isHidden = selectedBoard?.boardTitle == "스크랩"
+        composeButton.isHidden = index?.section == 0
 
-        // 스크랩 게시판에 게시글 작성 버튼을 숨김
-        // - Author: 김정민
-        if selectedBoard?.boardTitle == "스크랩" {
-            composeButton.isHidden = true
-        }
-
-        // 글쓰기 버튼의 테마 설정
-        // - Author: 김정민(kimjm010@icloud.com)
         composeButton.setToEnabledButtonTheme()
 
         // 네비게이션 바에 타이틀 초기화
@@ -97,10 +95,9 @@ class FreeBoardViewController: CommonViewController {
         }
         tokens.append(token)
         
-        
+        // 일반 게시판에 게시글 추가
         token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main, using: { [weak self] (noti) in
             if let newPost = noti.userInfo?["newPost"] as? Post {
-                // 각 게시판에만 게시글이 추가될 수 있게 게시판 이름에 따라 분기하여 게시글을 저장
                 switch self?.selectedBoard?.boardTitle {
                 case "자유 게시판":
                     freeBoard.posts.insert(newPost, at: 0)

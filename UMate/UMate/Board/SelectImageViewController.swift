@@ -22,7 +22,7 @@ class SelectImageViewController: CommonViewController {
     /// 제한된 사진을 변경할 수 있습니다.
     @IBOutlet weak var editBtn: UIBarButtonItem!
     
-    /// 이미지 fetch 객체
+    /// 이미지 관리 객체
     let imageManager = PHImageManager()
     
     /// 제한된 접근권한 확인
@@ -40,15 +40,16 @@ class SelectImageViewController: CommonViewController {
     
     
     /// 앨범 화면을 닫습니다.
-    /// - Parameter sender: cancel버튼
+    /// - Parameter sender: Cancel 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     
     /// 접근 가능한 사진을 변경합니다.
-    /// 제한된 사진에 접근할 수 있는 경우, 제한 된 사진을 편집할 수 있습니다.
     /// - Parameter sender: SelectImageViewController
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func editSelectedImage(_ sender: Any) {
         PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
     }
@@ -56,6 +57,7 @@ class SelectImageViewController: CommonViewController {
     
     /// 게시글에 첨부할 이미지를 선택합니다.
     /// - Parameter sender: select 버튼
+    /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func selectImage(_ sender: Any) {
         guard let indexPath = imageCollectionView.indexPathsForSelectedItems else { return }
         
@@ -80,6 +82,7 @@ class SelectImageViewController: CommonViewController {
     
     
     /// 사진에 접근하기 위한 권한 요청합니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func requestAuthorization() {
         let status: PHAuthorizationStatus
         
@@ -97,27 +100,15 @@ class SelectImageViewController: CommonViewController {
                     self?.hasLimitedPermission = selectedStatus == .limited
                     break
                 default:
-                    self?.alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
-                        if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
-                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        }
-                    }
+                    self?.alertToAccessPhotoLibrary()
                     break
                 }
             }
         case .denied:
-            alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
-                if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
-            }
+            alertToAccessPhotoLibrary()
             break
         case .restricted:
-            alertToAccessPhotoLibrary(title: "사진 액세스 허용", message: "카메라 롤에서 콘텐츠를 공유하고 사진 및 동영성에 관한 다른 기능을 사용할 수 있게 됩니다. 설정으로 이동하여 '사진'을 누르세요 :)", hanlder1: nil) { _ in
-                if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
-            }
+            alertToAccessPhotoLibrary()
             break
         case .limited:
             self.editBtn.isEnabled = true
@@ -129,6 +120,8 @@ class SelectImageViewController: CommonViewController {
     }
     
     
+    /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -152,21 +145,23 @@ class SelectImageViewController: CommonViewController {
 /// - Author: 김정민(kimjm010@icloud.com)
 extension SelectImageViewController: UICollectionViewDataSource {
     
-    /// 접근 가능한 이미지 갯수를 리턴합니다.
+    /// 접근 가능한 이미지 수를 리턴합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView
-    ///   - section: 하나의 섹션에 표시할 아이템의 갯수
-    /// - Returns: Fetch된 사진의 갯수
+    ///   - section: 하나의 섹션에 표시할 아이템의 수
+    /// - Returns: Fetch된 사진의 수
+    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return allPhotos.count
     }
     
     
-    /// 이미지를 표시합니다.
+    /// 이미지 표시를 위한 셀을 구성합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView
     ///   - indexPath: image의 indexPath
     /// - Returns: imageCollectionView의 cell
+    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell",
@@ -185,16 +180,17 @@ extension SelectImageViewController: UICollectionViewDataSource {
 
 
 
-/// 컬렉션뷰셀의 사이즈 설정
+/// 이미지 컬렉션 뷰 셀의 레이아웃 조정
 /// - Author: 김정민(kimjm010@icloud.com)
 extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
     
-    /// 컬렉션뷰 셀의 사이즈를 설정합니다.
+    /// 이미지 셀의 사이즈를 설정합니다.
     /// - Parameters:
-    ///   - collectionView: 이미지컬렉션뷰
+    ///   - collectionView: imageCollectionView
     ///   - collectionViewLayout: 컬렉션뷰의 레이아웃
     ///   - indexPath: 컬렉션뷰 아이템의 인덱스패스
     /// - Returns: 화면에 4개의 이미지가 표시될 수 있습니다.
+    /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -212,7 +208,8 @@ extension SelectImageViewController: UICollectionViewDelegateFlowLayout {
 extension SelectImageViewController: PHPhotoLibraryChangeObserver {
     
     /// photoLibrary애 변화가 있을 경우 호출됩니다.
-    /// - Parameter changeInstance: 수정사항이 있는 photolibrary 객체
+    /// - Parameter changeInstance: 변경 사항을 나타내는 객체
+    /// - Author: 김정민(kimjm010@icloud.com)
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         DispatchQueue.main.async {
             if let changes = changeInstance.changeDetails(for: self.allPhotos) {

@@ -130,12 +130,12 @@ var expandableBoardList = [BoardUI(sectionName: "홍보", isExpanded: true ,boar
 
 /// 댓글, 대댓글 더미 데이터
 var dummyCommentList: [Comment] = [
-    Comment(image: UIImage(named: "3"), writer: "익명1", content: "댓글1", insertDate: Date(timeIntervalSinceNow: -2000), heartCount: 0, commentId: 1, originalCommentId: 1, isReComment: false, postId: ""),
-    Comment(image: UIImage(named: "3"), writer: "익명2", content: "댓글2", insertDate: Date(timeIntervalSinceNow: -1700), heartCount: 1, commentId: 2, originalCommentId: 2, isReComment: false, postId: ""),
-    Comment(image: UIImage(named: "3"), writer: "익명3", content: "댓글3", insertDate: Date(timeIntervalSinceNow: -1500), heartCount: 2, commentId: 3, originalCommentId: 3, isReComment: false, postId: ""),
-    Comment(image: UIImage(named: "3"), writer: "익명4", content: "댓글4", insertDate: Date(timeIntervalSinceNow: -1200), heartCount: 3, commentId: 4, originalCommentId: 4, isReComment: false, postId: ""),
-    Comment(image: UIImage(named: "3"), writer: "익명5", content: "댓글5", insertDate: Date(timeIntervalSinceNow: -1000), heartCount: 4, commentId: 5, originalCommentId: 5, isReComment: false, postId: ""),
-    Comment(image: UIImage(named: "3"), writer: "익명6", content: "대댓글1", insertDate: Date(timeIntervalSinceNow: -800), heartCount: 5, commentId: 6, originalCommentId: 1, isReComment: true, postId: "")
+    Comment(image: UIImage(named: "3"), writer: "익명1", content: "댓글1", insertDate: Date(timeIntervalSinceNow: -2000), heartCount: 0, commentId: 1, originalCommentId: 1, isReComment: false, postId: "", isliked: false),
+    Comment(image: UIImage(named: "3"), writer: "익명2", content: "댓글2", insertDate: Date(timeIntervalSinceNow: -1700), heartCount: 1, commentId: 2, originalCommentId: 2, isReComment: false, postId: "", isliked: false),
+    Comment(image: UIImage(named: "3"), writer: "익명3", content: "댓글3", insertDate: Date(timeIntervalSinceNow: -1500), heartCount: 2, commentId: 3, originalCommentId: 3, isReComment: false, postId: "", isliked: false),
+    Comment(image: UIImage(named: "3"), writer: "익명4", content: "댓글4", insertDate: Date(timeIntervalSinceNow: -1200), heartCount: 3, commentId: 4, originalCommentId: 4, isReComment: false, postId: "", isliked: false),
+    Comment(image: UIImage(named: "3"), writer: "익명5", content: "댓글5", insertDate: Date(timeIntervalSinceNow: -1000), heartCount: 4, commentId: 5, originalCommentId: 5, isReComment: false, postId: "", isliked: false),
+    Comment(image: UIImage(named: "3"), writer: "익명6", content: "대댓글1", insertDate: Date(timeIntervalSinceNow: -800), heartCount: 5, commentId: 6, originalCommentId: 1, isReComment: true, postId: "", isliked: false)
 ]
 
 

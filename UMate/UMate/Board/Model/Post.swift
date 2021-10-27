@@ -175,7 +175,7 @@ struct Comment {
     var originalCommentId: Int
     var isReComment: Bool
     var postId: String
-    var isliked = false
+    var isliked: Bool
 }
 
 

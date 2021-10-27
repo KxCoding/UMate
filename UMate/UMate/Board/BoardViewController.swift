@@ -17,6 +17,9 @@ class BoardViewController: CommonViewController {
     /// 북마크 속성에 관한 딕셔너리
     var bookmarks: [Int:Bool] = [:]
     
+    /// 선택된 게시판의 indexPath
+    var index: IndexPath?
+    
     
     /// 게시판 즐겨찾기 버튼의 색상 & 즐겨찾기 속성을 변경합니다.
     /// - Parameter sender: UIButton. 즐겨찾기 핀버튼
@@ -82,6 +85,13 @@ class BoardViewController: CommonViewController {
                         vc.selectedBoard = element.value
                     }
                 }
+            }
+        }
+        
+        // 게시판의 indexPath 전달
+        if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
+            if let vc = segue.destination as? FreeBoardViewController {
+                vc.index = indexPath
             }
         }
     }
