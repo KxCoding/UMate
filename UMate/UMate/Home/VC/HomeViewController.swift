@@ -8,13 +8,16 @@
 import UIKit
 
 
-/// 홈 화면
-/// Author: 황신택, 안상희
+/// 홈화면
+/// - Author: 황신택 (sinadsl1457@gmail.com), 안상희
 class HomeViewController: UIViewController {
+    /// 홈 화면 콜렉션뷰
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBOutlet weak var listCollectionView: UICollectionView!
     
-    /// 홈화면 설계리스트 메소드
-  var list = getToHomeDataList()
+    /// 홈 화면 데이터 리스트
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    var list = HomeViewCellData.getHomeDataList()
     
     /// 학교 고유 id
     /// - Author: 안상희
@@ -121,7 +124,7 @@ class HomeViewController: UIViewController {
     
     
     /// 학교 고유 id에 해당하는 홈페이지 URL을 불러옵니다.
-    /// - Author: 안상희
+    /// - Author: 안상희, 황신택
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -129,6 +132,17 @@ class HomeViewController: UIViewController {
         if let id = schoolId {
             getPageURL(id: id)
         }
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.backgroundTap))
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    
+    /// 뷰를 탭하면 키보드를 내립니다.
+    /// 뷰 전체가 탭 영역입니다.
+    /// - Parameter sender: UITapGestureRecognizer생성자의 action 
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
     
@@ -202,46 +216,58 @@ extension HomeViewController: UICollectionViewDelegate {
 
 
 extension HomeViewController: UICollectionViewDataSource {
+    /// 섹션에 표시할 셀 수를 리턴합니다.
+    /// - Parameters:
+    ///   - collectionView: 해당 요청을 보낸 콜렉션 뷰
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션에 표시할 셀 수
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
     
+    
+    /// 셀에 데이터를 지정합니다.
+    /// - Parameters:
+    ///   - collectionView: 관련 요청을 보낸 콜렉션 뷰
+    ///   - indexPath: 셀의 indexPath
+    /// - Returns: 홈데이터 셀
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let type = list[indexPath.item]
         
         switch type {
         case .main(let model):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCollectionViewCell", for: indexPath) as! MainCollectionViewCell
-            cell.title.text = model.cellTitle
-            cell.favoriteImageVIew.image = UIImage(named: model.backgoundImageName)
+            cell.categoryLabel.text = model.cellTitle
+            cell.categoryImageView.image = UIImage(named: model.backgoundImageName)
             return cell
-            
-            
         case .promotion(let model):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PromotionCollectionViewCell", for: indexPath) as! PromotionCollectionViewCell
-            
-            cell.promotionLabel.text = model.cellTitle
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PromotionCollectionViewCell", for: indexPath) as! JobInfoCollectionViewCell
+            cell.jobCategoryLabel.text = model.cellTitle
             cell.detailLabel.text = model.detailTitle
-            cell.promotionImageView.image = UIImage(named: model.backgoundImageName)
-            
+            cell.jobCategoryImageView.image = UIImage(named: model.backgoundImageName)
             return cell
         case .contest(let model):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ContestCollectionViewCell", for: indexPath) as! ContestCollectionViewCell
-            
             cell.titleLabel.text = model.cellTitle
             cell.detailLabel.text = model.detailTitle
             cell.contestImageView.image = UIImage(named: model.backgoundImageName)
-            
             return cell
         }
-        
     }
-    
 }
 
 
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    /// 델리게이트에게 지정된 아이템의 셀의 사이즈를 물어봅니다.
+    /// - Parameters:
+    ///   - collectionView: 레이아웃을 표시하는 콜렉션 뷰
+    ///   - collectionViewLayout: 정보를 요청한 레이아웃 객체
+    ///   - indexPath: 아이템의 위치를 나타내는 indexPath
+    /// - Returns: 셀 사이즈
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
         
@@ -262,25 +288,23 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             if view.frame.width > view.frame.height {
                 height = width * 0.3
                 width = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing * 2 + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 3
-                
             }
             
             return CGSize(width: Int(width), height: Int(height))
             
         case .promotion(_):
-            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right))
+            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) * 1.06
             
             let height = width * 0.3
             
             return CGSize(width: Int(width), height: Int(height))
             
         case .contest(_):
-            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right))
+            let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) * 1.06
             
             let height = width * 0.3
             
             return CGSize(width: Int(width), height: Int(height))
         }
-        
     }
 }
