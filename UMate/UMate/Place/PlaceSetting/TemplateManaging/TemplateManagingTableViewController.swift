@@ -458,7 +458,7 @@ class TemplateManagingTableViewController: UITableViewController {
     /// 현재 편집 중인 템플릿을 선택하면 경고 토스트를 표시하고, 그렇지 않으면 템플릿을 불러옵니다.
     /// - Parameters:
     ///   - tableView: 테이블 뷰
-    ///   - indexPath: 선택된 indexpath
+    ///   - indexPath: 선택된 index path
     /// - Author: 박혜정(mailmelater11@gmail.com)
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

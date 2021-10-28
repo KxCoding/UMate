@@ -9,6 +9,8 @@ import UIKit
 
 
 /// 상점 타입 셀
+///
+/// 상점 타입을 나타내는 사진과 타입 이름으로 구성되어 있습니다.
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class PlaceTypeCollectionViewCell: UICollectionViewCell {
     
