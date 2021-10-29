@@ -124,7 +124,7 @@ class HomeViewController: UIViewController {
     
     
     /// 학교 고유 id에 해당하는 홈페이지 URL을 불러옵니다.
-    /// - Author: 안상희, 황신택
+    /// - Author: 안상희
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -132,17 +132,6 @@ class HomeViewController: UIViewController {
         if let id = schoolId {
             getPageURL(id: id)
         }
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.backgroundTap))
-        self.view.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    
-    /// 뷰를 탭하면 키보드를 내립니다.
-    /// 뷰 전체가 탭 영역입니다.
-    /// - Parameter sender: UITapGestureRecognizer생성자의 action 
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
     }
     
     
