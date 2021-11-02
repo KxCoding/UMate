@@ -11,7 +11,7 @@ import Loaf
 
 
 /// 게시글 작성 화면
-/// - Author: 김정민(kimjm010@icloud.com)
+/// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 class ComposeViewController: CommonViewController {
     
     /// 게시글 제목
@@ -41,17 +41,17 @@ class ComposeViewController: CommonViewController {
     /// 게시판 이용정보
     @IBOutlet weak var communityInfoLabel: UILabel!
     
-    /// 게시글에 첨부할 이미지 리스트
-    var imageList = [UIImage]()
-    
     /// 선택된 게시판
-    var selectedBoard: Board?
+    var selectedBoard: BoardDtoResponseData.BoardDto?
     
     /// 게시판 카테고리 이름 리스트
-    var categoryList = [String]()
+    var categoryList = [BoardDtoResponseData.BoardDto.Category]()
     
-    /// 게시판 카테고리 rawValue 리스트
-    var categoryListValue = [Int]()
+    /// 컬렉션 뷰에 표시될 이미지
+    var sampleImages = [UIImage]()
+    
+    /// 서버에 올라갈 이미지
+    var boardImages = [UIImage]()
     
     /// 선택된 카테고리
     var selectedCategory: Int?
@@ -82,7 +82,7 @@ class ComposeViewController: CommonViewController {
     
     /// 일반 게시판과 카테고리를 게시판에 게시글을 저장합니다.
     /// - Parameter sender: Save 버튼
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
     @IBAction func savePost(_ sender: Any) {
         
         guard let title = postTitleTextField.text, title.count > 0,
@@ -93,54 +93,108 @@ class ComposeViewController: CommonViewController {
                   return
               }
         
-        // 일반 게시판에 추가될 게시글
-        if categoryList.isEmpty {
+        let dateStr = postDateFormatter.string(from: Date())
         
-            let newPost = Post(images: imageList,
-                               postTitle: title,
-                               postContent: content,
-                               postWriter: "아이디 데이터 넣기",
-                               insertDate: Date(),
-                               likeCount: 3,
-                               commentCount: 2)
-            
-            NotificationCenter.default.post(name: .newPostInsert,
-                                            object: nil,
-                                            userInfo: ["newPost" : newPost])
+        var newPost: PostPostData?
+        var urlStringList = [String]()
+        let group = DispatchGroup()
+        
+        
+        if self.boardImages.count > 0 {
+            self.boardImages.forEach { image in
+                group.enter()
+                BlobManager.shared.upload(image: image) { success, id in
+                    if success {
+                        let imageUrlStr = "https://boardimage1018.blob.core.windows.net/images/\(id.lowercased())"
+                        urlStringList.append(imageUrlStr)
+                        group.leave()
+                    }
+                }
+            }
         }
         
-        // 카테고리 게시판에 추가될 게시물
-        else {
-            
-            guard let selectedCategory = selectedCategory else {
-                Loaf("카테고리 항목을 선택해 주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
-                return
+        // 일반 게시판에 추가될 게시글
+        group.notify(queue: .main) {
+            if self.categoryList.isEmpty {
+                newPost = PostPostData(postId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: 0, urlStrings: urlStringList, createdAt:dateStr)
+            } else {
+                guard let selectedCategory = self.selectedCategory else {
+                    Loaf("카테고리 항목을 선택해 주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
+                    return
+                }
+                
+                newPost = PostPostData(postId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:dateStr)
             }
+            let body = try? self.encoder.encode(newPost)
             
-            let newCategoryPost = Post(images: imageList,
-                                       postTitle: title,
-                                       postContent: content,
-                                       postWriter: "아이디 데이터",
-                                       insertDate: Date(),
-                                       likeCount: 3,
-                                       commentCount: 2,
-                                       scrapCount: 1,
-                                       categoryRawValue: selectedCategory)
+            guard let url = URL(string: "https://localhost:51547/api/boardPost") else { return }
             
-            NotificationCenter.default.post(name: .newCategoryPostInsert,
-                                            object: nil,
-                                            userInfo: ["newPost" : newCategoryPost,
-                                                       "category": selectedCategory])
+            self.sendSavingPostRequest(url: url, httpMethod: "POST", httpBody: body)
         }
         
         dismiss(animated: true, completion: nil)
     }
     
     
+    /// 게시글을 저장합니다.
+    /// - Parameters:
+    ///   - url: 요청할 url
+    ///   - httpMethod: api 메소드
+    ///   - httpBody: 게시글 데이터
+    ///   - Author: 남정은(dlsl7080@gmail.com)
+    private func sendSavingPostRequest(url: URL, httpMethod: String, httpBody: Data?) {
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod
+        request.httpBody = httpBody
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let data = try decoder.decode(SavePostResponseData.self, from: data)
+                
+                switch data.resultCode {
+                case ResultCode.ok.rawValue:
+                    let newPost = PostListDtoResponseData.PostDto(postId: data.post.postId, title: data.post.title, content: data.post.content, createdAt: data.post.createdAt, userName: data.post.userId, likeCnt: 0, commentCnt: 0, scrapCnt: 0, categoryNumber: data.post.categoryNumber)
+                    
+                    NotificationCenter.default.post(name: .newPostInsert, object: nil, userInfo: ["newPost" : newPost])
+                    #if DEBUG
+                    print("추가 성공")
+                    #endif
+                    self.dismiss(animated: true)
+                case ResultCode.fail.rawValue:
+                    #if DEBUG
+                    print("이미 존재함")
+                    #endif
+                default:
+                    break
+                }
+            } catch {
+                print(error)
+            }
+        }).resume()
+    }
+    
+    
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(categoryList)
         
         categoryListCollectionView.isHidden = categoryList.isEmpty
         
@@ -160,7 +214,7 @@ class ComposeViewController: CommonViewController {
                                                            object: nil,
                                                            queue: .main) { [weak self] (noti) in
             if let img = noti.userInfo?["img"] as? [UIImage] {
-                self?.imageList.append(contentsOf: img)
+                self?.sampleImages.append(contentsOf: img)
                 self?.imageCollectionView.reloadData()
             }
         }
@@ -172,15 +226,26 @@ class ComposeViewController: CommonViewController {
                                                        queue: .main,
                                                        using: { [weak self] (noti) in
             if let img = noti.userInfo?["img"] as? UIImage {
-                self?.imageList.append(img)
+                self?.sampleImages.append(img)
                 self?.imageCollectionView.reloadData()
             }
         })
+        tokens.append(token)
         
+        // 서버에 올릴 이미지 저장
+        // - Author: 남정은(dlsl7080@gmail.com)
+        token = NotificationCenter.default.addObserver(forName: .requestPostImage, object: nil, queue: .main, using: { noti in
+            if let image = noti.userInfo?["image"] as? UIImage {
+                self.boardImages.append(image)
+            }
+            
+            if let image = noti.userInfo?["img"] as? UIImage {
+                self.boardImages.append(image)
+            }
+        })
         tokens.append(token)
     }
 }
-
 
 
 
@@ -255,7 +320,6 @@ extension ComposeViewController: UITextViewDelegate {
 
 
 
-
 /// 게시글 제목의 동작방식 처리
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UITextFieldDelegate {
@@ -327,7 +391,6 @@ extension ComposeViewController: UITextFieldDelegate {
 
 
 
- 
 /// 첨부할 이미지 및 카테고리 데이터 설정
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UICollectionViewDataSource {
@@ -341,10 +404,10 @@ extension ComposeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard collectionView.tag == 101 else {
-            return imageList.count
+            return sampleImages.count
         }
         
-        return categoryList.count - 1
+        return categoryList.count
     }
     
     
@@ -360,7 +423,7 @@ extension ComposeViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ComposeImageCollectionViewCell",
                                                           for: indexPath) as! ComposeImageCollectionViewCell
             
-            cell.composeImageView.image = imageList[indexPath.item]
+            cell.composeImageView.image = sampleImages[indexPath.item]
             return cell
         }
         
@@ -371,7 +434,6 @@ extension ComposeViewController: UICollectionViewDataSource {
         return cell
     }
 }
-
 
 
 
@@ -399,10 +461,10 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
         var width = bounds.width - (layout.sectionInset.left + layout.sectionInset.right)
         
         switch categoryList.count {
-        case 3:
+        case 2:
             width = (width - (layout.minimumLineSpacing)) / 2
             return CGSize(width: width, height: 50)
-        case 4:
+        case 3:
             width = (width - (layout.minimumLineSpacing * 2)) / 3
             return CGSize(width: width, height: 50)
         default:
@@ -412,7 +474,6 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
         return .zero
     }
 }
-
 
 
 
@@ -427,33 +488,21 @@ extension ComposeViewController: UICollectionViewDelegate {
     /// - Parameters:
     ///   - collectionView: imageCollectionView, categoryListCollectionView
     ///   - indexPath: 탭한 imageCollectionView 셀과 categoryListCollectionView 셀의 indexPath
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if collectionView.tag == 101 {
-            switch selectedBoard?.boardTitle {
-            case "홍보게시판":
-                selectedCategory = categoryListValue[indexPath.item + 1]
-            case "동아리, 학회":
-                selectedCategory = categoryListValue[indexPath.item + 1]
-            case "취업, 진로":
-                selectedCategory = categoryListValue[indexPath.item + 1]
-            default:
-                break
-            }
-        } else if collectionView.tag == 102 {
-            imageList.remove(at: indexPath.item)
+        if collectionView.tag == 102 {
+            sampleImages.remove(at: indexPath.item)
             imageCollectionView.deleteItems(at: [indexPath])
         }
         
         if collectionView.tag == 101 {
-            switch selectedBoard?.boardTitle {
-            case "홍보게시판":
-                selectedCategory = categoryListValue[indexPath.item + 1]
-            case "동아리, 학회":
-                selectedCategory = categoryListValue[indexPath.item + 1]
-            case "취업, 진로":
-                selectedCategory = categoryListValue[indexPath.item + 1]
+            switch selectedBoard?.boardId {
+            case 9:
+                selectedCategory = categoryList[indexPath.item].categoryId
+            case 10:
+                selectedCategory = categoryList[indexPath.item].categoryId
+            case 12:
+                selectedCategory = categoryList[indexPath.item].categoryId
             default:
                 break
             }

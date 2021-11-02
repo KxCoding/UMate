@@ -40,8 +40,7 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
     @IBAction func expandOrFoldSection(_ sender: UIButton) {
         let section = sender.tag
         
-        // expandableBoard의 펼침/접힘에 대한 속성 변경
-        expandableBoardList[section - 2].isExpanded = !expandableBoardList[section - 2].isExpanded
+        expandableArray[section] = !expandableArray[section]
         
         NotificationCenter.default.post(name: .expandOrFoldSection, object: nil, userInfo: ["section": section])
     }
@@ -49,17 +48,24 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
     
     ///  section header를 초기화합니다.
     /// - Parameter section: 초기화할 header의 section
-    func configure(section: Int) {
+    func configure(section: Int, boardList: [BoardDtoResponseData.BoardDto]) {
         expandOrFoldButton.tag = section
         
-        titleLabel.text = expandableBoardList[section - 2].sectionName
+        switch section {
+        case 2:
+            titleLabel.text = "홍보"
+        case 3:
+            titleLabel.text = "정보"
+        default:
+            break
+        }
         
-        if expandableBoardList[section - 2].isExpanded {
+        if expandableArray[section] {
             summaryLabel.isHidden = true
             arrowImageView.image = UIImage(named: "up-arrow")
         } else {
             summaryLabel.isHidden = false
-            summaryLabel.text = expandableBoardList[section - 2].boardNames.joined(separator: ",")
+            summaryLabel.text = boardList.filter{ $0.section == section }.map{ $0.name }.joined(separator: ",")
             arrowImageView.image = UIImage(named: "down-arrow")
         }
     }

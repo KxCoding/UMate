@@ -20,9 +20,16 @@ class BoardViewController: CommonViewController {
     /// 선택된 게시판의 indexPath
     var index: IndexPath?
     
+    /// 게시판 목록
+    var boardList = [BoardDtoResponseData.BoardDto]()
+    
+    /// 스크랩 게시물 목록
+    var scrapPostList = [PostListDtoResponseData.PostDto]()
+    
     
     /// 게시판 즐겨찾기 버튼의 색상 & 즐겨찾기 속성을 변경합니다.
     /// - Parameter sender: UIButton. 즐겨찾기 핀버튼
+    /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func updateBookmark(_ sender: UIButton) {
         sender.tintColor = sender.tintColor == UIColor.init(named: "lightGrayNonSelectedColor") ? UIColor.init(named: "blackSelectedColor") : UIColor.init(named: "lightGrayNonSelectedColor")
         
@@ -34,8 +41,83 @@ class BoardViewController: CommonViewController {
     }
     
     
+    /// 게시판 정보를 불러옵니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    private func fetchBoardList() {
+        DispatchQueue.global().async {
+            guard let url = URL(string: "https://localhost:51547/api/board") else { return }
+            
+            self.session.dataTask(with: url) { data, resposne, error in
+    
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                guard let response = resposne as? HTTPURLResponse, response.statusCode == 200 else {
+                    return
+                }
+                
+                guard let data = data else {
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let res = try decoder.decode(BoardDtoResponseData.self, from: data)
+                    
+                    if res.resultCode == ResultCode.ok.rawValue {
+                        self.boardList = res.list
+                        
+                        DispatchQueue.main.async {
+                            self.boardListTableView.reloadData()
+                        }
+                    }
+                } catch {
+                    print(error)
+                }
+            }.resume()
+        }
+    }
+    
+    
+    /// 사용자가 스크랩한 게시글 목록을 불러옵니다.
+    /// - Parameter userId: 사용자 Id
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    private func fetchScrapPostList(userId: String) {
+        guard let url = URL(string:"https://localhost:51547/api/scrapPost/?userId=\(userId)") else { return }
+        
+        session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let data = try decoder.decode(PostListDtoResponseData.self, from: data)
+           
+                if data.resultCode == ResultCode.ok.rawValue {
+                    self.scrapPostList = data.list
+                }
+            } catch {
+                print(error)
+            }
+        }.resume()
+    }
+    
+    
     /// 강의정보 화면에서 게시판목록 화면으로 돌아올 때 사용합니다.
     /// - Parameter unwindSegue: DetailLectureReviewViewController -> BoardViewController
+    /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func unwindToBoard(_ unwindSegue: UIStoryboardSegue) {
     }
     
@@ -45,15 +127,11 @@ class BoardViewController: CommonViewController {
     ///   - identifier: segue의 식별자
     ///   - sender: segue가 시작된 객체
     /// - Returns: segue를 실행하길 원한다면 true, 아니라면 false
+    /// - Author: 남정은(dlsl7080@gmail.com)
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
-            // 강의 평가 게시판은 performSegue를 이용
-            if let _ = sender as? NonExpandableBoardTableViewCell, indexPath == IndexPath(row: 5, section: 1) {
-                return false
-            }
-            
-            // 정보게시판은 performSegue를 이용
-            if let _ = sender as? ExpandableBoardTableViewCell, indexPath == IndexPath(row: 0, section: 3){
+            // 강의 평가 게시판과 정보 게시판은 performSegue를 이용
+            if indexPath == IndexPath(row: 5, section: 1) || indexPath == IndexPath(row: 0, section: 3) {
                 return false
             }
         }
@@ -68,30 +146,21 @@ class BoardViewController: CommonViewController {
     ///   - segue: 호출된 segue
     ///   - sender: segue가 시작된 객체
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // 정보게시판 더미데이터 전달
-        if let vc = segue.destination as? FreeBoardViewController, segue.identifier == "infoSegue" {
-            vc.selectedBoard = infoBoard
+        if segue.identifier == "infoSegue", let vc = segue.destination as? FreeBoardViewController {
+            vc.selectedBoard = boardList.first(where: { $0.boardId == 11 })
         }
         
-        // 나머지 게시판 더미데이터 전달
-        if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
-            let boardKey = (indexPath.section + 1) * 100 + (indexPath.row)
+        if let cell = sender as? UITableViewCell,
+           let indexPath = boardListTableView.indexPath(for: cell),
+           let firstBoardinSection = boardList.first(where: { $0.section == indexPath.section }) {
             
-            boardDict.forEach { element in
-                if element.key == boardKey {
-                    if let vc = segue.destination as? FreeBoardViewController {
-                        vc.selectedBoard = element.value
-                    } else if let vc = segue.destination as? CategoryBoardViewController {
-                        vc.selectedBoard = element.value
-                    }
-                }
-            }
-        }
-        
-        // 게시판의 indexPath 전달
-        if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
+            let selectedBoard = boardList.first(where: { $0.boardId == indexPath.row + firstBoardinSection.boardId })
+            
             if let vc = segue.destination as? FreeBoardViewController {
-                vc.index = indexPath
+                vc.selectedBoard = selectedBoard
+            }
+            else if let vc = segue.destination as? CategoryBoardViewController {
+                vc.selectedBoard = selectedBoard
             }
         }
     }
@@ -100,6 +169,8 @@ class BoardViewController: CommonViewController {
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchBoardList()
         
         // 커스텀 테이블 뷰 헤더 등록
         let headerNib = UINib(nibName: "BoardCustomHeader", bundle: nil)
@@ -112,14 +183,16 @@ class BoardViewController: CommonViewController {
                 
                 var indexPathArr = [IndexPath]()
                 
+                let expandableBoardList = self.boardList.filter{ $0.section == section }
+                
                 // expandableBoard의 각 게시판에 대한 indexPath를 배열로 추가
-                for row in expandableBoardList[section - 2].boardNames.indices {
+                for row in expandableBoardList.indices {
                     let indexPath = IndexPath(row: row, section: section)
                     indexPathArr.append(indexPath)
                 }
                 
                 // isExpanded가 true라면 펼친 상태
-                if expandableBoardList[section - 2].isExpanded {
+                if expandableArray[section] {
                     self.boardListTableView.insertRows(at: indexPathArr, with: .fade)
                     if section == 3 {
                         DispatchQueue.main.async {
@@ -138,22 +211,11 @@ class BoardViewController: CommonViewController {
         }
         tokens.append(token)
         
-        // nonExpandableBoard에대한 북마크 속성 초기화
-        for row in 0..<nonExpandableBoardList.count {
-            bookmarks[row + 200] = false
-        }
-        
-        // expandableBoard에대한 북마크 속성 초기화
-        var sectionNum = 3
-        for section in expandableBoardList {
-            for row in 0..<section.boardNames.count {
-                bookmarks[sectionNum * 100 + row] = false
-            }
-            sectionNum += 1
+        for board in boardList {
+            bookmarks[board.section * 100 + board.boardId] = false
         }
     }
 }
-
 
 
 
@@ -174,24 +236,12 @@ extension BoardViewController: UITableViewDataSource {
     ///   - section: 테이블 뷰의 section을 구분하는 index number
     /// - Returns: section안에 나타낼 row수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        // 내가 쓴 글, 댓글 단 글
-        case 0:
-            return 2
-            
-        // nonExpandableBoard
-        case 1:
-            return nonExpandableBoardList.count
-            
-        // expandableBoard
-        case 2,3:
-            if expandableBoardList[section - 2].isExpanded {
-                return expandableBoardList[section - 2].boardNames.count
-            }
-            return 0
-            
-        default: return 0
+        let sectionBoardList = boardList.filter({ $0.section == section})
+        
+        if section >= 2 {
+            return expandableArray[section]  ? sectionBoardList.count : 0
         }
+        return sectionBoardList.count
     }
     
  
@@ -201,31 +251,24 @@ extension BoardViewController: UITableViewDataSource {
     ///   - indexPath: 게시판 셀의 indexPath
     /// - Returns: 게시판 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // 내가 남긴 글, 댓글 단 글 셀을 구성
-        if indexPath.section == 0 {
+        // 해당하는 섹션에 대한 게시판이 담긴 배열
+        let filteredBoardList = boardList.filter{ $0.section == indexPath.section }
+        
+        // nonExxpandableBoard cell을 구성
+        if indexPath.section < 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
             
-            cell.configure(indexPath: indexPath)
+            cell.configure(boardList: filteredBoardList, indexPath: indexPath, bookmarks: bookmarks)
             return cell
         }
         
-        // nonExpandableBoard 셀을 구성
-        if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
-            
-            cell.configure(boardList: nonExpandableBoardList, indexPath: indexPath)
-            return cell
-        }
-        
-        // expandableBoard 셀을 구성
+        // expandableBoard cell을 구성
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpandableBoardTableViewCell", for: indexPath) as! ExpandableBoardTableViewCell
         
-        cell.board = self
-        cell.configure(boardList: expandableBoardList, indexPath: indexPath)
+        cell.configure(boardList: filteredBoardList, indexPath: indexPath, bookmarks: bookmarks)
         return cell
     }
 }
-
 
 
 
@@ -276,7 +319,7 @@ extension BoardViewController: UITableViewDelegate {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! BoardCustomHeaderView
             
             headerView.backView.backgroundColor = .systemBackground
-            headerView.configure(section: section)
+            headerView.configure(section: section, boardList: boardList)
             return headerView
         }
         let header = UIView()

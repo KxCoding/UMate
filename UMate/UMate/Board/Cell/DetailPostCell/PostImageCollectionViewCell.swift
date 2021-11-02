@@ -27,7 +27,7 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageContentView: UIView!
     
     /// 선택된 게시글
-    var selectedPost: Post?
+    var selectedPost: PostDtoResponseData.Post?
     
     /// 선택된 이미지의 인덱스
     var index: Int?
@@ -39,12 +39,10 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         // DetailPostViewController에서 performSegue를 실행하도록 함
         NotificationCenter.default.post(name: .showImageVC, object: nil)
         
-        guard let selectedPost = selectedPost, let index = index else {
-            return
-        }
+        guard let index = index else { return }
         // ExpandImageViewController에서 컬렉션 뷰에 이미지를 설정하도록 함
         NotificationCenter.default.post(name: .sendImageView, object: nil,
-                                        userInfo: ["post": selectedPost, "index": index])
+                                        userInfo: ["index": index])
     }
     
     

@@ -21,7 +21,10 @@ class ExpandImageViewController: CommonViewController {
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     /// 선택된 게시글에 대한 정보
-    var selectedPost: Post?
+    var postImageList = [ImageListResponseData.PostImage]()
+    
+    /// 이미지 개수
+    var imageCount: Int?
     
     /// 선택된 이미지의 index row
     var imageIndex: Int?
@@ -60,24 +63,18 @@ class ExpandImageViewController: CommonViewController {
                                                        queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
-            // 이미지정보가 들어있는 게시글
-            guard let post = noti.userInfo?["post"] as? Post else { return }
-            
             // 선택된 이미지의 index row
             guard let index = noti.userInfo?["index"] as? Int else { return }
             
-            self.selectedPost = post
             self.imageIndex = index
             
-            let images = post.images
-            
             // 현재 화면에 나타나는 이미지의 순번
-            self.imageCountLabel.text = "\(index + 1) / \(images.count)"
+            self.imageCountLabel.text = "\(index + 1) / \(self.imageCount ?? 0)"
             
             // 이미지가 하나일 경우에는 pageControl 숨김
-            if images.count > 1 {
+            if self.imageCount ?? 0 > 1 {
                 self.imagePageControl.currentPage = index
-                self.imagePageControl.numberOfPages = images.count
+                self.imagePageControl.numberOfPages = self.imageCount ?? 0
             } else {
                 self.imagePageControl.isHidden = true
             }
@@ -94,10 +91,10 @@ extension ExpandImageViewController: UICollectionViewDataSource {
     /// 이미지의 개수를 리턴합니다.
     /// - Parameters:
     ///   - collectionView: 이미지 컬렉션 뷰
-    ///   - section: 이미지를 그룹짓는 section
+    ///   - section: 이미지를 그룹짓는 section index
     /// - Returns: 게시글에 포함되는 이미지 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectedPost?.images.count ?? 0
+        return imageCount ?? 0
     }
     
     
@@ -109,9 +106,18 @@ extension ExpandImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postImageCell", for: indexPath) as! ExpandPostImageCollectionViewCell
         
-        guard let images = selectedPost?.images else { return cell }
+        DispatchQueue.global().async {
+            if let url = URL(string: self.postImageList[indexPath.item].urlString),
+               let data = try? Data(contentsOf: url) {
+                
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        cell.expandImageView.image = image
+                    }
+                }
+            }
+        }
         
-        cell.expandImageView.image = images[indexPath.row]
         return cell
     }
 }
@@ -167,10 +173,8 @@ extension ExpandImageViewController: UIScrollViewDelegate {
         // 이미지의 순서에 알맞게 페이지 저장
         let page = Int( x / scrollView.frame.width)
         
-        guard let images = selectedPost?.images else { return }
-        
         // 페이지에 따라서 이미지 번호를 바꿔줌
-        imageCountLabel.text = "\(page + 1) / \(images.count)"
+        imageCountLabel.text = "\(page + 1) / \(imageCount ?? 0)"
         
         // 페이지에 따라서 페이저의 현재 페이지를 바꿔줌
         imagePageControl.currentPage = page

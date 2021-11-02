@@ -11,129 +11,40 @@ import UIKit
 
 /// 카테고리를 가진 게시판 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-class CategoryBoardViewController: CommonViewController {
+class CategoryBoardViewController: FreeBoardViewController {
     /// 카테고리 목록 컬렉션 뷰
     @IBOutlet weak var categoryListCollectionView: UICollectionView!
     
-    /// 카테고리에 해당하는 게시글을 보여주는 테이블 뷰
-    @IBOutlet weak var categoryListTableView: UITableView!
-    
-    /// 게시글 작성 버튼
-    @IBOutlet weak var composeBtn: UIButton!
-    
-    /// 카테고리에 의해 필터링 된 게시글 목록을 담는 배열
-    var filteredPostList: [Post] = []
-    
-    /// 선택된 게시판
-    var selectedBoard: Board?
+    /// 카테고리에 의해 필터링 된 게시글 목록
+    var filteredPostList = [PostListDtoResponseData.PostDto]()
     
     /// 처음에 카테고리를 선택하지 않은 경우 '전체'카테고리를 선택된 상태로 보이기 위한 속성
     var isSelected = true
     
-    
-    /// 검색 버튼을 눌렀을 시에 SearchViewController로 이동합니다.
-    /// - Parameter sender: 검색버튼
-    /// - Author: 남정은(dlsl7080@gmail.com)
-    @IBAction func showSearchViewController(_ sender: Any) {
-        performSegue(withIdentifier: "searchSegue", sender: self)
-    }
-    
-    
-    /// 게시글을 선택하거나 검색을 할 경우에 데이터를 전달합니다.
-    /// - Parameters:
-    ///   - segue: 호출된 segue
-    ///   - sender: segue가 시작된 객체
-    /// - Author: 남정은(dlsl7080@gmail.com)
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if let cell = sender as? UITableViewCell,
-           let indexPath = categoryListTableView.indexPath(for: cell) {
-            // 상세 게시글 화면에 선택된 post에 대한 정보 전달
-            if let vc = segue.destination as? DetailPostViewController {
-                vc.selectedPost = selectedBoard?.posts[indexPath.row]
-            }
-        }
-        // 검색 버튼 클릭시 선택된 board에 대한 정보 전달
-        else if segue.identifier == "searchSegue", let vc = segue.destination as? SearchViewController {
-            vc.selectedBoard = selectedBoard
-        }
-        // 글 쓰기 버튼 클릭시 선택된 board 및 카테고리 정보 전달
-        else if segue.identifier == "composeCategoryBoardSegue", let vc = segue.destination.children.first as? ComposeViewController {
-            
-            guard let selectedBoard = selectedBoard else { return }
-            
-            vc.selectedBoard = selectedBoard
-            vc.categoryList = selectedBoard.categoryNames
-            vc.categoryListValue = selectedBoard.categoryNumbers
-        }
-    }
+    /// 카테고리를 선택한 경우 true
+    var isFiltering = false
     
     
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 게시글 작성 버튼의 테마 설정
-        composeBtn.setToEnabledButtonTheme()
-        
-        /// 네비게이션 바에 타이틀 초기화
-        /// - Author: 남정은
-        self.navigationItem.title = selectedBoard?.boardTitle
-        
-        // 카테고리 별로 필터링되기 전 게시글 배열 초기화
-        filteredPostList = selectedBoard?.posts ?? []
-        
-        // 상세 게시글 화면에서 스크랩 버튼 클릭시 스크랩 게시판에 게시글 추가
-        var token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main) { noti in
-            
-            if let scrappedPost = noti.userInfo?["scrappedPost"] as? Post {
-                scrapBoard.posts.insert(scrappedPost, at: 0)
-            }
-        }
-        tokens.append(token)
-        
-        
-        // 상세 게시글 화면에서 스크랩 버튼 취소시 스크랩 게시판에 게시글 삭제
-        token = NotificationCenter.default.addObserver(forName: .postCancelScrap, object: nil, queue: .main) {
-            [weak self] noti in
-            guard let self = self else { return }
-            
-            if let unscrappedPost = noti.userInfo?["unscrappedPost"] as? Post {
-                
-                // 삭제하고 리로드
-                if let unscrappedPostIndex = scrapBoard.posts.firstIndex(where: { $0 === unscrappedPost }) {
-                    scrapBoard.posts.remove(at: unscrappedPostIndex)
-                    
-                    self.categoryListTableView.reloadData()
-                }
-            }
-        }
-        tokens.append(token)
-        
-        
+       
         // 카테고리 게시판에 게시글 추가
-        token = NotificationCenter.default.addObserver(forName: .newCategoryPostInsert, object: nil, queue: .main, using: { [weak self] (noti) in
-            if let category = noti.userInfo?["category"] as? Int {
-                if let newPost = noti.userInfo?["newPost"] as? Post {
-                    switch category {
-                    case 2000, 2001, 2002, 2003:
-                        publicityBoard.posts.insert(newPost, at: 0)
-                    case 2010, 2011, 2012:
-                        clubBoard.posts.insert(newPost, at: 0)
-                    case 3010, 3011, 3012:
-                        careerBoard.posts.insert(newPost, at: 0)
-                    default:
-                        break
-                    }
+        let token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) { [weak self] noti in
+            guard let self = self else { return }
+            if let post = noti.userInfo?["newPost"] as? PostListDtoResponseData.PostDto,
+               let board = self.selectedBoard {
+                if !board.categories.isEmpty {
+                    self.filteredPostList.insert(post, at: 0)
+                    self.postList.insert(post, at: 0)
                     
-                    self?.categoryListTableView.reloadData()
+                    self.postListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
             }
-        })
+        }
         tokens.append(token)
     }
 }
-
 
 
 
@@ -143,10 +54,13 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
     /// 게시글을 분류하는 카테고리 목록의 개수를 리턴합니다.
     /// - Parameters:
     ///   - collectionView: 카테고리 목록 컬렉션 뷰
-    ///   - section: 카테고리를 나누는 section
+    ///   - section: 카테고리를 나누는 section index
     /// - Returns: 카테고리의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectedBoard?.categoryNumbers.count ?? 0
+        if let count = selectedBoard?.categories.count {
+            return count + 1
+        }
+        return 0
     }
     
     
@@ -160,7 +74,7 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryBoardCollectionViewCell",
                                                       for: indexPath) as! CategoryBoardCollectionViewCell
         
-        guard let categoryNames = selectedBoard?.categoryNames else { return cell }
+        guard let categories = selectedBoard?.categories else { return cell }
         
         if indexPath.row == 0 {
             // 아무것도 선택되지 않았을 시에 row == 0인 셀이 선택된 것처럼 보이도록
@@ -173,11 +87,10 @@ extension CategoryBoardViewController: UICollectionViewDataSource {
             }
         }
         
-        cell.configure(categoryNames: categoryNames, indexPath: indexPath)
+        cell.configure(categories: categories, indexPath: indexPath)
         return cell
     }
 }
-
 
 
 
@@ -208,20 +121,17 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
         filteredPostList.removeAll()
         guard let selectedBoard = selectedBoard else { return }
         
-        // 전체 카테고리 이외일 경우 true
-        var isFiltering: Bool {
-            return indexPath.row != 0
-        }
+        isFiltering = indexPath.row != 0
         
         if isFiltering {
             // 선택한 카테고리에 해당하는 게시물만 표시
-            filterPostByCategory(in: selectedBoard, indexPath: indexPath)
+            filterPostByCategory(in: postList, categories: selectedBoard.categories, indexPath: indexPath)
         } else {
             // 모든 게시물 표시
-            filteredPostList = selectedBoard.posts
+            filteredPostList = postList
         }
         
-        categoryListTableView.reloadData()
+        postListTableView.reloadData()
     }
     
     
@@ -229,14 +139,13 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
     /// - Parameters:
     ///   - selectedBoard: 선택된 게시판
     ///   - indexPath: 선택된 카테고리의 indexPath
-    private func filterPostByCategory(in selectedBoard: Board, indexPath: IndexPath) {
+    private func filterPostByCategory(in postList: [PostListDtoResponseData.PostDto], categories: [BoardDtoResponseData.BoardDto.Category], indexPath: IndexPath) {
         
-        filteredPostList = selectedBoard.posts.filter({ post in
-            return post.categoryRawValue == selectedBoard.categoryNumbers[indexPath.row]
+        filteredPostList = postList.filter({ post in
+            return post.categoryNumber == categories[indexPath.row - 1].categoryId
         })
     }
 }
-
 
 
 
@@ -263,7 +172,7 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
         let width:CGFloat
         
         // 카테고리 개수
-        guard let categoryCount = selectedBoard?.categoryNumbers.count else { return .zero }
+        guard let categoryCount = selectedBoard?.categories.count else { return .zero }
         
         // 셀의 inset을 제외한 너비
         let withoutInsetWidth = view.frame.width -
@@ -272,12 +181,12 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
          + flowLayout.sectionInset.right)
         
         // 셀의 개수가 3일 경우
-        if categoryCount == 3 {
+        if categoryCount + 1 == 3 {
             width = withoutInsetWidth / 3
             return CGSize(width: width, height: 50)
         }
         // 셀의 개수가 4일 경우
-        else if categoryCount == 4 {
+        else if categoryCount + 1 == 4 {
             if indexPath.row == 0 || indexPath.row == 3 {
                 width = withoutInsetWidth / 2 * 0.4
                 return CGSize(width: width, height: 50)
@@ -293,17 +202,19 @@ extension CategoryBoardViewController: UICollectionViewDelegateFlowLayout {
 
 
 
-
 /// 카테고리 게시판 게시글 목록
 /// - Author: 남정은(dlsl7080@gmail.com)
-extension CategoryBoardViewController: UITableViewDataSource {
+extension CategoryBoardViewController {
     ///  게시글 수를 리턴합니다.
     /// - Parameters:
     ///   - tableView: 게시글 목록  테이블 뷰
-    ///   - section: 게시글을 나누는 section
+    ///   - section: 게시글을 나누는 section index
     /// - Returns: 게시글 개수
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredPostList.count
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+            return filteredPostList.count
+        }
+        return postList.count
     }
     
     
@@ -312,15 +223,19 @@ extension CategoryBoardViewController: UITableViewDataSource {
     ///   - tableView: 게시글 목록  테이블 뷰
     ///   - indexPath: 게시글 목록 셀의 indexPath
     /// - Returns: 게시글 목록 셀
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell",
                                                  for: indexPath) as! FreeBoardTableViewCell
         
-        let post = filteredPostList[indexPath.row]
+        if isFiltering {
+            let post = filteredPostList[indexPath.row]
+            cell.configure(post: post)
+        } else {
+            let post = postList[indexPath.row]
+            cell.configure(post: post)
+        }
         
-        // 게시글 목록 샐 초기화
-        cell.configure(post: post)
         return cell
     }
 }

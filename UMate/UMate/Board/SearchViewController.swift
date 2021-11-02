@@ -20,11 +20,11 @@ class SearchViewController: UIViewController {
     /// 검색 문자열을 일시적으로 저장할 속성
     var cachedText: String?
     
-    /// 선택된 게시판
-    var selectedBoard: Board?
+    /// 선택된 게시판 게시글
+    var postList: [PostListDtoResponseData.PostDto]?
     
-    /// 검색어에 따라서 필터링한 게시글을 담을 배열
-    var filteredPostList: [Post] = []
+    /// 검색어에 따라서 필터링한 게시글
+    var filteredPostList = [PostListDtoResponseData.PostDto]()
     
 
     /// 검색된 게시물을 클릭했을 때 데이터를 전달합니다.
@@ -36,7 +36,7 @@ class SearchViewController: UIViewController {
            let indexPath = postListTableView.indexPath(for: cell) {
             
             if let vc = segue.destination as? DetailPostViewController {
-                vc.selectedPost = filteredPostList[indexPath.row]
+                vc.selectedPostId = filteredPostList[indexPath.row].postId
             }
         }
     }
@@ -79,12 +79,12 @@ extension SearchViewController: UISearchBarDelegate {
         // 검색 시작 시 tableView 표시
         postListTableView.alpha = 1
         
-        guard let posts = selectedBoard?.posts else { return }
+        guard let posts = postList else { return }
         
         // 검색 결과에 따라서 필터링 된 게시물을 배열에 저장
         filteredPostList = posts.filter({ post in
-            return post.postTitle.lowercased().contains(searchText.lowercased()) ||
-                post.postContent.lowercased().contains(searchText.lowercased())
+            return post.title.lowercased().contains(searchText.lowercased()) ||
+            post.content.lowercased().contains(searchText.lowercased())
         })
         
         // 검색 텍스트를 저장
@@ -119,7 +119,7 @@ extension SearchViewController: UITableViewDataSource {
     /// 검색결과를 통해 필터링 된 게시글 수를 리턴합니다.
     /// - Parameters:
     ///   - tableView: 검색결과 테이블 뷰
-    ///   - section: 게시글을 나누는 section
+    ///   - section: 게시글을 나누는 section index
     /// - Returns: 필터링 된 게시글 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredPostList.count

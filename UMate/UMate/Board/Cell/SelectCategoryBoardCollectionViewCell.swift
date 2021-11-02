@@ -18,6 +18,7 @@ class SelectCategoryBoardCollectionViewCell: UICollectionViewCell {
     /// 카테고리 이름 레이블
     @IBOutlet weak var categoryLabel: UILabel!
     
+    
     /// 카테고리 상태 확인
     /// 
     /// 선택 상태에 따라 다른 이미지를 표시합니다.
@@ -34,7 +35,7 @@ class SelectCategoryBoardCollectionViewCell: UICollectionViewCell {
     ///   - categoryNames: 카테고리 이름을 저장한 배열
     ///   - indexPath: 카테고리 이름의 indexPath
     /// - Author: 김정민(kimjm010@icloud.com)
-    func configure(with categoryNames: [String], indexPath: IndexPath) {
-        categoryLabel.text = categoryNames[indexPath.item + 1]
+    func configure(with categoryNames: [BoardDtoResponseData.BoardDto.Category], indexPath: IndexPath) {
+        categoryLabel.text = categoryNames[indexPath.item].name
     }
 }
