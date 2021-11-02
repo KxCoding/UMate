@@ -97,7 +97,7 @@ class DetailPostViewController: CommonViewController {
         
         
         let dateStr = postDateFormatter.string(from: Date())
-        
+        #warning("사용자 수정")
         let newComment = CommentPostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: selectedPostId, content: content, originalCommentId: originalCommentId ?? 0, isReComment: isReComment, createdAt: dateStr)
         
         let body = try? encoder.encode(newComment)
@@ -290,7 +290,7 @@ class DetailPostViewController: CommonViewController {
                         DispatchQueue.main.async {
                             self.detailPostTableView.reloadData()
                         }
-                        
+                        #warning("사용자 수정")
                         self.fetchLikeComment(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8")
                     }
                 } catch {
@@ -398,7 +398,7 @@ class DetailPostViewController: CommonViewController {
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        #warning("사용자 수정")
         fetchPostDetail(id: selectedPostId, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8")
         fetchComments(postId: selectedPostId)
         
@@ -614,7 +614,7 @@ extension DetailPostViewController: UITableViewDataSource {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostImageTableViewCell", for: indexPath) as! PostImageTableViewCell
            
-            cell.configure(postImageList: postImageList, indexPath: indexPath)
+            cell.configure(postImageList: postImageList)
             return cell
             
         // 댓글 및 대댓글 표시하는 셀
@@ -623,7 +623,7 @@ extension DetailPostViewController: UITableViewDataSource {
             
             let comment = sortedCommentList[indexPath.row]
             
-            let isLiked = likeCommentList.contains{ $0.commentId == comment.commentId }
+            let isLiked = likeCommentList.contains { $0.commentId == comment.commentId }
             cell.configure(comment: comment, isLiked: isLiked)
             
             return cell

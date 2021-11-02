@@ -29,9 +29,8 @@ class PostImageTableViewCell: UITableViewCell {
     /// PostImage cell을 초기화합니다.
     /// - Parameters:
     ///   - postImageList: 이미지 정보
-    ///   - indexPath: indexPath
     ///   - Author: 남정은(dlsl7080@gmail.com)
-    func configure(postImageList: [ImageListResponseData.PostImage], indexPath: IndexPath) {
+    func configure(postImageList: [ImageListResponseData.PostImage]) {
         postImageCollectionView.isHidden = postImageList.isEmpty
 
         self.postImageList = postImageList
@@ -62,13 +61,10 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostImageCollectionViewCell", for: indexPath) as! PostImageCollectionViewCell
         
         DispatchQueue.global().async {
-            if let url = URL(string: self.postImageList[indexPath.item].urlString),
-               let data = try? Data(contentsOf: url) {
-
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        cell.postImageView.image = image
-                    }
+            if let image = BoardDataManager.shared.getImage(urlString: self.postImageList[indexPath.item].urlString) {
+                
+                DispatchQueue.main.async {
+                    cell.postImageView.image = image
                 }
             }
         }

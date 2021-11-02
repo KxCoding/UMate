@@ -112,6 +112,7 @@ class FreeBoardViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
    
+        #warning("사용자 수정")
         fetchPostList(boardId: selectedBoard?.boardId ?? 1, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8")
         
         if let boardId = selectedBoard?.boardId, boardId <= 4 {
@@ -134,9 +135,7 @@ class FreeBoardViewController: CommonViewController {
             }
         }
         tokens.append(token)
-        
-        
-       
+
         
         // 일반 게시판에 게시글 추가
         token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) { [weak self] noti in
