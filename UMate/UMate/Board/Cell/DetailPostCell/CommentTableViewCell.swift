@@ -10,24 +10,7 @@ import UIKit
 
 /// 댓글 및 대댓글을 표시하는 테이블뷰 셀
 /// - Author: 김정민(kimjm010@icloud.com),  남정은(dlsl7080@gamil.com)
-class CommentTableViewCell: UITableViewCell {
-    /// 데이터 엔코더
-    let encoder = JSONEncoder()
-    
-    /// 날짜 파싱 포매터
-    let postDateFormatter: ISO8601DateFormatter = {
-       let f = ISO8601DateFormatter()
-        f.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
-        return f
-    }()
-    
-    /// 서버 요청 API
-    lazy var session: URLSession = {
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config, delegate: self, delegateQueue: .main)
-        return session
-    }()
-    
+class CommentTableViewCell: BoardCommonTableViewCell {
     /// 프로필 이미지뷰
     @IBOutlet weak var profileImageView: UIImageView!
     
@@ -85,68 +68,7 @@ class CommentTableViewCell: UITableViewCell {
             heartCountLabel.text = "\(comment.likeCnt + 1)"
             heartImageView.isHidden = false
             heartCountLabel.isHidden = false
-            
-            guard let url = URL(string: "https://localhost:51547/api/likeComment") else { return }
-            
-            let dateStr = postDateFormatter.string(from: Date())
-            
-            let likeCommentData = LikeCommentPostData(likeCommentId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", commentId: comment.commentId, createdAt: dateStr)
-            
-            let body = try? encoder.encode(likeCommentData)
-            
-            sendLikeCommentRequest(url: url, httpMethod: "POST", httpBody: body)
         }
-    }
-    
-    
-    /// 댓글 좋아요를 추가합니다.
-    /// - Parameters:
-    /// - Parameters:
-    ///   - url: 요청할 url
-    ///   - httpMethod: api 메소드
-    ///   - httpBody: 댓글 좋아요 데이터
-    /// - Author: 남정은(dlsl7080@gamil.com)
-    private func sendLikeCommentRequest(url: URL, httpMethod: String, httpBody: Data?) {
-        var request = URLRequest(url: url)
-        request.httpMethod = httpMethod
-        request.httpBody = httpBody
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        
-        session.dataTask(with: request, completionHandler: { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let data = try decoder.decode(SaveLikeCommentResponseData.self, from: data)
-                
-                switch data.resultCode {
-                case ResultCode.ok.rawValue:
-                    #if DEBUG
-                    print("추가 성공")
-                    #endif
-                case ResultCode.fail.rawValue:
-                    #if DEBUG
-                    print("이미 존재함")
-                    #endif
-                default:
-                    break
-                }
-            } catch {
-                print(error)
-            }
-        }).resume()
     }
     
     
@@ -197,12 +119,4 @@ class CommentTableViewCell: UITableViewCell {
 
 
 
-/// local에서 인증서 문제가 발생할 때 사용
-///  - Author: 남정은(dlsl7080@gmail.com)
-extension CommentTableViewCell: URLSessionDelegate {
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        let trust = challenge.protectionSpace.serverTrust!
-        
-        completionHandler(.useCredential, URLCredential(trust: trust))
-    }
-}
+

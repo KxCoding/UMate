@@ -116,13 +116,14 @@ class ComposeViewController: CommonViewController {
         // 일반 게시판에 추가될 게시글
         group.notify(queue: .main) {
             if self.categoryList.isEmpty {
+                #warning("사용자 수정")
                 newPost = PostPostData(postId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: 0, urlStrings: urlStringList, createdAt:dateStr)
             } else {
                 guard let selectedCategory = self.selectedCategory else {
                     Loaf("카테고리 항목을 선택해 주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
                     return
                 }
-                
+                #warning("사용자 수정")
                 newPost = PostPostData(postId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:dateStr)
             }
             let body = try? self.encoder.encode(newPost)
@@ -194,7 +195,6 @@ class ComposeViewController: CommonViewController {
     /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(categoryList)
         
         categoryListCollectionView.isHidden = categoryList.isEmpty
         
@@ -220,6 +220,7 @@ class ComposeViewController: CommonViewController {
         }
         tokens.append(token)
         
+        
         // 게시글 화면에 캡쳐 이미지 표시
         token = NotificationCenter.default.addObserver(forName: .newImageCaptured,
                                                        object: nil,
@@ -231,6 +232,7 @@ class ComposeViewController: CommonViewController {
             }
         })
         tokens.append(token)
+        
         
         // 서버에 올릴 이미지 저장
         // - Author: 남정은(dlsl7080@gmail.com)
@@ -430,7 +432,8 @@ extension ComposeViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectCategoryBoardCollectionViewCell",
                                                       for: indexPath) as! SelectCategoryBoardCollectionViewCell
         
-        cell.configure(with: categoryList, indexPath: indexPath)
+        let categoryName = categoryList[indexPath.item].name
+        cell.configure(with: categoryName)
         return cell
     }
 }

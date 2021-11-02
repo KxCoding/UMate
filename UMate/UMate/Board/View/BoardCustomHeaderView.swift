@@ -65,7 +65,7 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
             arrowImageView.image = UIImage(named: "up-arrow")
         } else {
             summaryLabel.isHidden = false
-            summaryLabel.text = boardList.filter{ $0.section == section }.map{ $0.name }.joined(separator: ",")
+            summaryLabel.text = boardList.filter { $0.section == section }.map { $0.name }.joined(separator: ",")
             arrowImageView.image = UIImage(named: "down-arrow")
         }
     }

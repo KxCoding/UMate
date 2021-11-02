@@ -183,7 +183,7 @@ class BoardViewController: CommonViewController {
                 
                 var indexPathArr = [IndexPath]()
                 
-                let expandableBoardList = self.boardList.filter{ $0.section == section }
+                let expandableBoardList = self.boardList.filter { $0.section == section }
                 
                 // expandableBoard의 각 게시판에 대한 indexPath를 배열로 추가
                 for row in expandableBoardList.indices {
@@ -252,7 +252,7 @@ extension BoardViewController: UITableViewDataSource {
     /// - Returns: 게시판 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 해당하는 섹션에 대한 게시판이 담긴 배열
-        let filteredBoardList = boardList.filter{ $0.section == indexPath.section }
+        let filteredBoardList = boardList.filter { $0.section == indexPath.section }
         
         // nonExxpandableBoard cell을 구성
         if indexPath.section < 2 {

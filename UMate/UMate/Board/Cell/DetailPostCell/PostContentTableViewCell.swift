@@ -20,24 +20,7 @@ extension  Notification.Name {
 
 /// 게시글 작성자, 제목, 내용에 관한 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
-class PostContentTableViewCell: UITableViewCell {
-    /// 데이터 엔코더
-    let encoder = JSONEncoder()
-    
-    /// 날짜 파싱 포매터
-    let postDateFormatter: ISO8601DateFormatter = {
-       let f = ISO8601DateFormatter()
-        f.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
-        return f
-    }()
-    
-    /// 서버 요청 API
-    lazy var session: URLSession = {
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config, delegate: self, delegateQueue: .main)
-        return session
-    }()
-    
+class PostContentTableViewCell: BoardCommonTableViewCell {
     /// 작성자 프로필 이미지 뷰
     @IBOutlet weak var userImageView: UIImageView!
     
@@ -84,6 +67,7 @@ class PostContentTableViewCell: UITableViewCell {
         guard let url = URL(string: "https://localhost:51547/api/likePost") else { return }
         
         let dateStr = postDateFormatter.string(from: Date())
+        #warning("사용자 수정")
         let likePostdata = LikePostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: post.postId, createdAt: dateStr)
         
         let body = try? encoder.encode(likePostdata)
@@ -124,6 +108,7 @@ class PostContentTableViewCell: UITableViewCell {
             guard let url = URL(string: "https://localhost:51547/api/scrapPost") else { return }
             
             let dateStr = postDateFormatter.string(from: Date())
+            #warning("사용자 수정")
             let scrapPostData = ScrapPostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: post.postId, createdAt: dateStr)
             let body = try? encoder.encode(scrapPostData)
             
@@ -288,12 +273,3 @@ class PostContentTableViewCell: UITableViewCell {
 
 
 
-/// local에서 인증서 문제가 발생할 때 사용
-///  - Author: 남정은(dlsl7080@gmail.com)
-extension PostContentTableViewCell: URLSessionDelegate {
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        let trust = challenge.protectionSpace.serverTrust!
-        
-        completionHandler(.useCredential, URLCredential(trust: trust))
-    }
-}
