@@ -36,9 +36,14 @@ class CategoryBoardCollectionViewCell: UICollectionViewCell {
     
     /// 카테고리 셀을 초기화합니다.
     /// - Parameters:
-    ///   - categoryNames: 카테고리 이름을 담은 배열
+    ///   - categories: 카테고리 정보를 담은 배열
     ///   - indexPath: 카테고리 이름을 나타낼 indexPath
-    func configure(categoryNames: [String], indexPath: IndexPath) {
-        categoryNameLabel.text = categoryNames[indexPath.row]
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    func configure(categories: [BoardDtoResponseData.BoardDto.Category], indexPath: IndexPath) {
+        if indexPath.item == 0 {
+            categoryNameLabel.text = "전체"
+        } else {
+            categoryNameLabel.text = categories[indexPath.row - 1].name
+        }
     }
 }

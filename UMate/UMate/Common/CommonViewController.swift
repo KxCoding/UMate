@@ -9,8 +9,28 @@ import UIKit
 import KeychainSwift
 
 /// 공통되는 기능을 포함한 뷰 컨트롤러
-///  - Author: 안상희, 남정은, 황신택
+///  - Author: 안상희, 남정은(dlsl7080@gmail.com), 황신택
 class CommonViewController: UIViewController {
+    /// 데이터 엔코더
+    ///  - Author: 남정은(dlsl7080@gmail.com)
+    let encoder = JSONEncoder()
+    
+    /// 날짜 파싱 포매터
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    let postDateFormatter: ISO8601DateFormatter = {
+       let f = ISO8601DateFormatter()
+        f.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
+        return f
+    }()
+    
+    /// 서버 요청 API
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    lazy var session: URLSession = {
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config, delegate: self, delegateQueue: .main)
+        return session
+    }()
+    
     /// 메인 화면인 홈으로 이동합니다.
     /// - Author: 황신택, 안상희
     static func transitionToHome() {
@@ -52,7 +72,7 @@ class CommonViewController: UIViewController {
     var activatedTextField: UITextField? = nil
     
     /// 옵저버 제거를 위해 토큰을 담는 배열
-    /// - Author: 남정은
+    /// - Author: 남정은(dlsl7080@gmail.com)
     var tokens = [NSObjectProtocol]()
     
     /// 키체인 인스턴스
@@ -122,13 +142,26 @@ class CommonViewController: UIViewController {
     
     
     /// 소멸자에서 옵저버를 제거
-    /// - Author: 남정은
+    /// - Author: 남정은(dlsl7080@gmail.com)
     deinit {
         for token in tokens {
             NotificationCenter.default.removeObserver(token)
         }
     }
 }
+
+
+
+/// local에서 인증서 문제가 발생할 때 사용
+///  - Author: 남정은(dlsl7080@gmail.com)
+extension CommonViewController: URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let trust = challenge.protectionSpace.serverTrust!
+        
+        completionHandler(.useCredential, URLCredential(trust: trust))
+    }
+}
+
 
 
 

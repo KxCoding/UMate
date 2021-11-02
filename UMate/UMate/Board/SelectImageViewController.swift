@@ -11,8 +11,16 @@ import PhotosUI
 import MobileCoreServices
 
 
+/// 서버에 이미지 저장
+/// - Author: 남정은(dlsl7080@gmail.com)
+extension Notification.Name {
+    static let requestPostImage = Notification.Name(rawValue: "requestPostImage")
+}
+
+
+
 /// 앨범 표시 화면
-/// - Author: 김정민(kimjm010@icloud.com)
+/// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 class SelectImageViewController: CommonViewController {
     
     /// 앨범의 이미지 컬렉션뷰
@@ -24,6 +32,14 @@ class SelectImageViewController: CommonViewController {
     
     /// 이미지 관리 객체
     let imageManager = PHImageManager()
+    
+    /// 이미지 옵션
+    /// - Author: 남정은(dlsl7080@gamil.com)
+    lazy var imageOption: PHImageRequestOptions = {
+        let option = PHImageRequestOptions()
+        option.deliveryMode = PHImageRequestOptionsDeliveryMode.fastFormat
+        return option
+    }()
     
     /// 제한된 접근권한 확인
     var hasLimitedPermission = false
@@ -57,23 +73,19 @@ class SelectImageViewController: CommonViewController {
     
     /// 게시글에 첨부할 이미지를 선택합니다.
     /// - Parameter sender: select 버튼
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gamil.com)
     @IBAction func selectImage(_ sender: Any) {
         guard let indexPath = imageCollectionView.indexPathsForSelectedItems else { return }
         
         for index in indexPath {
             let target = allPhotos.object(at: index.item)
-            let size = CGSize(width: imageCollectionView.frame.width / 4,
-                              height: imageCollectionView.frame.width / 4)
             
-            imageManager.requestImage(for: target,
-                                         targetSize: size,
-                                         contentMode: .aspectFill,
-                                         options: nil) { (image, _) in
-                
-                NotificationCenter.default.post(name: .imageDidSelect,
-                                                object: nil,
-                                                userInfo: ["img": [image]])
+            imageManager.requestImage(for: target,targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: nil) { (image, _) in
+                if let image = image {
+                    NotificationCenter.default.post(name: .imageDidSelect, object: nil, userInfo: ["img": [image]])
+                    
+                    NotificationCenter.default.post(name: .requestPostImage, object: nil, userInfo: ["image": image])
+                }
                 
                 self.dismiss(animated: true, completion: nil)
             }

@@ -109,7 +109,9 @@
 		DF42108A26E7D1E400C6E9F5 /* TestInfoWriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF42108926E7D1E400C6E9F5 /* TestInfoWriteTableViewCell.swift */; };
 		DF454E2526C2DAED0031F92C /* UIViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF454E2426C2DAED0031F92C /* UIViewController+View.swift */; };
 		DF454E2726C2E1450031F92C /* ExpandImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF454E2626C2E1450031F92C /* ExpandImageViewController.swift */; };
-		DFB9FE9826BDE330005D38D3 /* CountLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB9FE9726BDE330005D38D3 /* CountLabelTableViewCell.swift */; };
+		DF943C712730227D00F2F1FE /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943C702730227D00F2F1FE /* Response.swift */; };
+		DF943C732730228400F2F1FE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943C722730228400F2F1FE /* Request.swift */; };
+		DF943C81273038FE00F2F1FE /* BlobManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943C80273038FE00F2F1FE /* BlobManager.swift */; };
 		DFE1DA192707485C005BE7D1 /* BoardCustomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFE1DA182707485C005BE7D1 /* BoardCustomHeader.xib */; };
 		DFE3DD5E26CFC474002F98D9 /* LectureReview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFE3DD5D26CFC474002F98D9 /* LectureReview.storyboard */; };
 		DFE3DD6326CFC5C7002F98D9 /* DetailLectureReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD6226CFC5C7002F98D9 /* DetailLectureReviewViewController.swift */; };
@@ -126,8 +128,6 @@
 		DFEF018026A756290015829B /* Date+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF017F26A756290015829B /* Date+Formatter.swift */; };
 		DFEF018226A756880015829B /* FreeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018126A756880015829B /* FreeBoardViewController.swift */; };
 		DFEF018426A756AF0015829B /* LectureReviewBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */; };
-		DFEF018626A756C80015829B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018526A756C80015829B /* Post.swift */; };
-		DFEF018826A756D90015829B /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018726A756D90015829B /* Board.swift */; };
 		DFEF018A26A7571A0015829B /* FreeBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018926A7571A0015829B /* FreeBoardTableViewCell.swift */; };
 		F401BE1526D6AD32000C7898 /* PlaceTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401BE1426D6AD32000C7898 /* PlaceTypeCollectionViewCell.swift */; };
 		F401BE1826D90E54000C7898 /* WordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401BE1726D90E54000C7898 /* WordCollectionViewCell.swift */; };
@@ -305,7 +305,9 @@
 		DF454E2426C2DAED0031F92C /* UIViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+View.swift"; sourceTree = "<group>"; };
 		DF454E2626C2E1450031F92C /* ExpandImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandImageViewController.swift; sourceTree = "<group>"; };
 		DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
-		DFB9FE9726BDE330005D38D3 /* CountLabelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountLabelTableViewCell.swift; sourceTree = "<group>"; };
+		DF943C702730227D00F2F1FE /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		DF943C722730228400F2F1FE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		DF943C80273038FE00F2F1FE /* BlobManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlobManager.swift; sourceTree = "<group>"; };
 		DFE1DA182707485C005BE7D1 /* BoardCustomHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardCustomHeader.xib; sourceTree = "<group>"; };
 		DFE3DD5D26CFC474002F98D9 /* LectureReview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LectureReview.storyboard; sourceTree = "<group>"; };
 		DFE3DD6226CFC5C7002F98D9 /* DetailLectureReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailLectureReviewViewController.swift; sourceTree = "<group>"; };
@@ -322,8 +324,6 @@
 		DFEF017F26A756290015829B /* Date+Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatter.swift"; sourceTree = "<group>"; };
 		DFEF018126A756880015829B /* FreeBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeBoardViewController.swift; sourceTree = "<group>"; };
 		DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LectureReviewBoardViewController.swift; path = UMate/Board/LectureReviewBoardViewController.swift; sourceTree = SOURCE_ROOT; };
-		DFEF018526A756C80015829B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
-		DFEF018726A756D90015829B /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DFEF018926A7571A0015829B /* FreeBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeBoardTableViewCell.swift; sourceTree = "<group>"; };
 		F401BE1426D6AD32000C7898 /* PlaceTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		F401BE1726D90E54000C7898 /* WordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -565,6 +565,9 @@
 		5C92DD20269B4E670094A93C /* Board */ = {
 			isa = PBXGroup;
 			children = (
+				DF46AEAA26A1C70A00435D94 /* Cell */,
+				DF25EF4A26AFDD0100949AAB /* View */,
+				DF943C782730237800F2F1FE /* Service */,
 				5C92DD27269B4E890094A93C /* Board.storyboard */,
 				5C92DD31269B4ED20094A93C /* BoardViewController.swift */,
 				DFEF018126A756880015829B /* FreeBoardViewController.swift */,
@@ -577,9 +580,6 @@
 				DF25EF3E26AFD4F300949AAB /* DetailPostViewController.swift */,
 				DF454E2626C2E1450031F92C /* ExpandImageViewController.swift */,
 				DF40510626C05335009FCA17 /* SearchViewController.swift */,
-				DF46AEAA26A1C70A00435D94 /* Cell */,
-				DF25EF4A26AFDD0100949AAB /* View */,
-				DF3EA85926A3FF4500424E7E /* Model */,
 				DFE3DD5F26CFC4BD002F98D9 /* LectureReview */,
 			);
 			path = Board;
@@ -743,7 +743,6 @@
 				DF25EF4126AFD54C00949AAB /* PostContentTableViewCell.swift */,
 				DF25EF4326AFD59300949AAB /* PostImageTableViewCell.swift */,
 				DF25EF4526AFD5EE00949AAB /* PostImageCollectionViewCell.swift */,
-				DFB9FE9726BDE330005D38D3 /* CountLabelTableViewCell.swift */,
 				F560368626B9EE5C0093DDC7 /* CommentTableViewCell.swift */,
 			);
 			path = DetailPostCell;
@@ -756,15 +755,6 @@
 				DF25EF4B26AFDD1F00949AAB /* BoardCustomHeaderView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		DF3EA85926A3FF4500424E7E /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				DFEF018526A756C80015829B /* Post.swift */,
-				DFEF018726A756D90015829B /* Board.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		DF46AEAA26A1C70A00435D94 /* Cell */ = {
@@ -783,16 +773,34 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		DF943C782730237800F2F1FE /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				DF943C792730239D00F2F1FE /* Model */,
+				DF943C80273038FE00F2F1FE /* BlobManager.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		DF943C792730239D00F2F1FE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DF943C702730227D00F2F1FE /* Response.swift */,
+				DF943C722730228400F2F1FE /* Request.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		DFE3DD5F26CFC4BD002F98D9 /* LectureReview */ = {
 			isa = PBXGroup;
 			children = (
+				DFE3DD6426CFC60A002F98D9 /* Cell */,
+				DFE3DD7826CFC730002F98D9 /* Model */,
 				DFE3DD5D26CFC474002F98D9 /* LectureReview.storyboard */,
 				DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */,
 				DFE3DD6226CFC5C7002F98D9 /* DetailLectureReviewViewController.swift */,
 				F5E00E6926E6461100E4068C /* LectureReviewWriteTableViewController.swift */,
 				DF42108726E7B00800C6E9F5 /* TestInfoWriteViewController.swift */,
-				DFE3DD6426CFC60A002F98D9 /* Cell */,
-				DFE3DD7826CFC730002F98D9 /* Model */,
 			);
 			path = LectureReview;
 			sourceTree = "<group>";
@@ -1114,7 +1122,7 @@
 				F44389DE26D2E61400B9A193 /* PlaceSetting.storyboard in Resources */,
 				F4ABE8D226D38BDE00F54B3B /* PlaceList.storyboard in Resources */,
 				6D8805D72710526F0067C67C /* contests.json in Resources */,
-				F4ABE8D226D38BDE00F54B3B /* BookmarkManaging.storyboard in Resources */,
+				F4ABE8D226D38BDE00F54B3B /* PlaceList.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1189,7 +1197,6 @@
 				2C715DA026C043FE00B0B22B /* FilterViewController.swift in Sources */,
 				6D9E0CEB26ABC7B300ABB37F /* UniversityInfoViewController.swift in Sources */,
 				DFEF018226A756880015829B /* FreeBoardViewController.swift in Sources */,
-				DFEF018826A756D90015829B /* Board.swift in Sources */,
 				6D9D5DCD27168D9700E7DABF /* ContestsTableViewCell.swift in Sources */,
 				F5C319CF270589C600BBA1CA /* TakePhotoViewController.swift in Sources */,
 				6D3EC62926B10B6C00907A68 /* TermsOfConditionsTableViewController.swift in Sources */,
@@ -1280,6 +1287,7 @@
 				5C733FE526B0839D00C1AF21 /* FriendLectureViewController.swift in Sources */,
 				DF27D74D26B937240046D7BF /* CategoryBoardCollectionViewCell.swift in Sources */,
 				F401BE1F26DC8806000C7898 /* University.swift in Sources */,
+				DF943C712730227D00F2F1FE /* Response.swift in Sources */,
 				F5FBBAE526C2762A006FE53E /* ImageCollectionViewCell.swift in Sources */,
 				F4ABE8D426D38C1400F54B3B /* PlaceListViewController.swift in Sources */,
 				F596F9AF2704989500864076 /* SelectCategoryBoardCollectionViewCell.swift in Sources */,
@@ -1287,9 +1295,7 @@
 				6D83C9FB26F06FC500E27932 /* EmploymentInfoTableViewCell.swift in Sources */,
 				F4CBE55726E21EFE00A2BE77 /* TemplateManagingTableViewController.swift in Sources */,
 				DFE3DD7126CFC6EE002F98D9 /* LectureBookTableViewCell.swift in Sources */,
-				DFEF018626A756C80015829B /* Post.swift in Sources */,
 				DFE3DD6B26CFC6A6002F98D9 /* SectionTitleCollectionViewCell.swift in Sources */,
-				DFB9FE9826BDE330005D38D3 /* CountLabelTableViewCell.swift in Sources */,
 				F4ABE8DB26D3B5BF00F54B3B /* PlaceListTableViewCell.swift in Sources */,
 				F48843AE26ABE512005DB8A3 /* TabSectionTableViewCell.swift in Sources */,
 				F4D5F8DA26F0B6D30019C0B0 /* ReviewTemplate.swift in Sources */,
@@ -1297,6 +1303,7 @@
 				5C733FE326B07D7C00C1AF21 /* FriendsListViewController.swift in Sources */,
 				F50F9B5426B0F932007ABEF6 /* CommunityRuleViewController.swift in Sources */,
 				DF454E2526C2DAED0031F92C /* UIViewController+View.swift in Sources */,
+				DF943C81273038FE00F2F1FE /* BlobManager.swift in Sources */,
 				5C2141B126BF0A1500F93A84 /* ChooseEmailPasswordViewController.swift in Sources */,
 				DFE3DD6826CFC640002F98D9 /* LectureReviewTableViewCell.swift in Sources */,
 				DF25EF4226AFD54C00949AAB /* PostContentTableViewCell.swift in Sources */,
@@ -1311,6 +1318,7 @@
 				DFEF018026A756290015829B /* Date+Formatter.swift in Sources */,
 				F47EEDDD26EA30A30036E8F7 /* BlurHashEncode.swift in Sources */,
 				5CCD820E270E337300A21CB9 /* SchoolDetailViewController.swift in Sources */,
+				DF943C732730228400F2F1FE /* Request.swift in Sources */,
 				2C3D34C026B6A3650036DF0A /* PlaceSearchViewController.swift in Sources */,
 				F44389EA26D2F52400B9A193 /* BrowserSettingTableViewController.swift in Sources */,
 				DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */,

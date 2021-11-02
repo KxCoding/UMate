@@ -9,7 +9,7 @@ import UIKit
 
 
 /// 캡쳐한 사진 표시 화면
-/// - Author: 김정민(kimjm010@icloud.com)
+/// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gamil.com)
 class PhotoImageDisplayViewController: UIViewController {
 
     /// 캡쳐한 사진을 표시할 이미지뷰
@@ -83,7 +83,7 @@ class PhotoImageDisplayViewController: UIViewController {
     
     /// 캡쳐한 사진을 첨부합니다.
     /// - Parameter sender: 사진 사용 Button
-    /// - Author: 김정민(kimjm010@icloud.com)
+    /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gamil.com)
     @IBAction func addCapturedPhoto(_ sender: Any) {
 
         guard let capturedImage = photoImageView.image else { return }
@@ -91,6 +91,8 @@ class PhotoImageDisplayViewController: UIViewController {
         NotificationCenter.default.post(name: .newImageCaptured,
                                         object: nil,
                                         userInfo: ["img": capturedImage])
+        
+        NotificationCenter.default.post(name: .requestPostImage, object: nil, userInfo: ["img": capturedImage])
         
         dismiss(animated: true, completion: nil)
     }

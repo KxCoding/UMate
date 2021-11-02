@@ -11,52 +11,38 @@ import UIKit
 /// 기본 게시판에 게시글 목록 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
 class FreeBoardTableViewCell: UITableViewCell {
-    /// 게시글 첫번 째 이미지 뷰
-    @IBOutlet weak var postImageView: UIImageView!
-    
     /// 게시글 제목 레이블
-    @IBOutlet weak var postTitle: UILabel!
+    @IBOutlet weak var postTitleLabel: UILabel!
     
     /// 게시글 내용 레이블
-    @IBOutlet weak var postContent: UILabel!
+    @IBOutlet weak var postContentLabel: UILabel!
     
     /// 게시글이 작성된 시간 레이블
-    @IBOutlet weak var postTime: UILabel!
+    @IBOutlet weak var postTimeLabel: UILabel!
     
     /// 게시글 작성자 레이블
-    @IBOutlet weak var postWriter: UILabel!
+    @IBOutlet weak var postWriterLabel: UILabel!
     
     /// 게시글 좋아요 수 레이블
-    @IBOutlet weak var likeCount: UILabel!
+    @IBOutlet weak var likeCountLabel: UILabel!
     
     /// 게시글 댓글 수 레이블
-    @IBOutlet weak var commentCount: UILabel!
+    @IBOutlet weak var commentCountLabel: UILabel!
     
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        // 이미지의 모서리 깎기
-        postImageView.layer.cornerRadius = postImageView.frame.height * 0.05
-    }
+    /// 게시글 스크랩 레이블
+    @IBOutlet weak var scrapCountLabel: UILabel!
     
     
     /// 게시글 목록 셀을 초기화합니다.
     /// - Parameter post: 각 셀에 해당하는 게시글
-    func configure(post: Post) {
-        // 이미지가 없을 시 표시하지 않음
-        postImageView.isHidden = post.images.first == nil ? true : false
+    func configure(post: PostListDtoResponseData.PostDto) {
         
-        // 포스트에 올린 이미지가 있을 경우 첫번 째 이미지만 게시글 목록에서 표시
-        if post.images.count > 0 {
-            postImageView.image = post.images[0]
-        }
-        
-        postTitle.text = post.postTitle
-        postContent.text = post.postContent
-        postTime.text = post.insertDate.relativeDate
-        postWriter.text = post.postWriter
-        likeCount.text = "\(post.likeCount)"
-        commentCount.text = "\(post.commentCount)"
+        postTitleLabel.text = post.title
+        postContentLabel.text = post.content
+        postTimeLabel.text = post.createdAt
+        postWriterLabel.text = post.userName
+        likeCountLabel.text = "\(post.likeCnt)"
+        commentCountLabel.text = "\(post.commentCnt)"
+        scrapCountLabel.text = "\(post.scrapCnt)"
     }
 }

@@ -14,8 +14,8 @@ class PostImageTableViewCell: UITableViewCell {
     /// 이미지 컬렉션 뷰
     @IBOutlet weak var postImageCollectionView: UICollectionView!
 
-    /// 선택된 게시글
-    var selectedPost: Post?
+    /// 이미지 리스트
+    var postImageList = [ImageListResponseData.PostImage]()
     
     
     override func awakeFromNib() {
@@ -25,14 +25,16 @@ class PostImageTableViewCell: UITableViewCell {
         postImageCollectionView.delegate = self
     }
     
-    
+  
     /// PostImage cell을 초기화합니다.
-    /// - Parameter post: 선택된 게시글
-    func configure(post: Post) {
-        selectedPost = post
-        
-        // 사진이 없을 때 이미지를 표시하는 collectionView 숨김
-        postImageCollectionView.isHidden = post.images.isEmpty
+    /// - Parameters:
+    ///   - postImageList: 이미지 정보
+    ///   - indexPath: indexPath
+    ///   - Author: 남정은(dlsl7080@gmail.com)
+    func configure(postImageList: [ImageListResponseData.PostImage], indexPath: IndexPath) {
+        postImageCollectionView.isHidden = postImageList.isEmpty
+
+        self.postImageList = postImageList
     }
 }
 
@@ -47,7 +49,7 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
     ///   - section: 이미지를 그룹짓는 section
     /// - Returns: 게시글에 포함된 이미지의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectedPost?.images.count ?? 0
+        return postImageList.count
     }
     
     
@@ -59,13 +61,20 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostImageCollectionViewCell", for: indexPath) as! PostImageCollectionViewCell
         
-        if let image = selectedPost?.images[indexPath.item] {
-            cell.postImageView.image = image
+        DispatchQueue.global().async {
+            if let url = URL(string: self.postImageList[indexPath.item].urlString),
+               let data = try? Data(contentsOf: url) {
+
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        cell.postImageView.image = image
+                    }
+                }
+            }
         }
         
         // 컬렉션 뷰 셀에서 필요한 데이터 저장
-        cell.selectedPost = selectedPost
-        cell.index = indexPath.row
+        cell.index = indexPath.item
         return cell
     }
 }
