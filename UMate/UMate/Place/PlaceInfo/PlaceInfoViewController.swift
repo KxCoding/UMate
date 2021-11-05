@@ -140,6 +140,8 @@ class PlaceInfoViewController: CommonViewController {
         }
         
         tokens.append(token)
+        
+        setTapBarAppearanceAsDefault()
     }
     
     

@@ -136,6 +136,8 @@ class PlaceListViewController: UIViewController {
                 self.placeListTableView.reloadData()
             }
         }
+        
+        setTapBarAppearanceAsDefault()
     }
     
     

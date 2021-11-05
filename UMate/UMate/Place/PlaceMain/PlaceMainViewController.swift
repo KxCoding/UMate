@@ -250,6 +250,7 @@ class PlaceMainViewController: UIViewController {
         nearbyPlaceCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         nearbyPlaceCollectionView.collectionViewLayout = configureLayout()
         
+        setTapBarAppearanceAsDefault()
     }
     
     /// 뷰가 화면에 표시되기 직전에 위치 권한을 요청합니다.

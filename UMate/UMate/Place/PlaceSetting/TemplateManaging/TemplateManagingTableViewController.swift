@@ -401,6 +401,8 @@ class TemplateManagingTableViewController: UITableViewController {
         
         resetTemplateBtn.isEnabled = false
         saveBtn.isEnabled = false
+        
+        setTapBarAppearanceAsDefault()
     }
     
     
