@@ -25,7 +25,7 @@ extension UIViewController {
     
     /// url을 엽니다.
     ///
-    /// user default에 저장된 방식으로 url을 엽니다.
+    /// user default에 저장된 선호 방식으로 url을 엽니다.
     /// - Parameter urlString: 열 url
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func openUrl(with url: URL) {
@@ -39,7 +39,7 @@ extension UIViewController {
         }
     }
     
-    /// 사용자가 오픈 방식을 선택한 후, 선택된 방식으로 url을 엽니다.
+    /// 사용자가 선택한 방식으로 url을 엽니다.
     ///
     /// 선택한 방식은 user defaults에 저장됩니다.
     /// - Parameter url: 오픈할 url

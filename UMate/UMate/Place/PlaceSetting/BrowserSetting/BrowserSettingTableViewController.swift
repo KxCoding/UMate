@@ -104,6 +104,8 @@ class BrowserSettingTableViewController: UITableViewController {
         [openInstagramBtn, openWebPageBtn].forEach { button in
             button?.configureStyle(with: [.smallRoundedRect])
         }
+        
+        setTapBarAppearanceAsDefault()
     }
     
     

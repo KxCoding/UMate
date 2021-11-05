@@ -140,6 +140,8 @@ class PlaceInfoViewController: CommonViewController {
         }
         
         tokens.append(token)
+        
+        setTapBarAppearanceAsDefault()
     }
     
     
@@ -298,7 +300,7 @@ extension PlaceInfoViewController: UITableViewDelegate {
     /// 지정된 indexpath의 셀 높이를 제한합니다.
     /// - Parameters:
     ///   - tableView: 이 정보를 요청하는 table view
-    ///   - indexPath: 열의 위치를 가리키는 indexpath
+    ///   - indexPath: 열의 위치를 가리키는 index path
     /// - Returns: 열의 높이
     /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

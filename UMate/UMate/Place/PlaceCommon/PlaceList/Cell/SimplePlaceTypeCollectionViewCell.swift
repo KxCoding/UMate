@@ -7,6 +7,11 @@
 
 import UIKit
 
+
+/// 심플한 디자인의 상점 타입 셀
+///
+/// 상점 타입을 나타내는 심벌과 타입 이름으로 구성되어 있습니다.
+/// - Author: 박혜정(mailmelater11@gmail.com)
 class SimplePlaceTypeCollectionViewCell: UICollectionViewCell {
     
     // MARK: Outlets

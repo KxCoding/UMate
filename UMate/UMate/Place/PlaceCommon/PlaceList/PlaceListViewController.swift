@@ -136,6 +136,8 @@ class PlaceListViewController: UIViewController {
                 self.placeListTableView.reloadData()
             }
         }
+        
+        setTapBarAppearanceAsDefault()
     }
     
     
@@ -294,7 +296,7 @@ extension PlaceListViewController: UITableViewDelegate {
     /// 북마크 모드일 때 해당 항목을 사용자의 북마크 목록에서 해제할 수 있습니다.
     /// - Parameters:
     ///   - tableView: 테이블 뷰
-    ///   - indexPath: 항목의 indexpath
+    ///   - indexPath: 항목의 index path
     /// - Returns: 셀의 우측에 표시되는 contextual menu
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt  indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -336,7 +338,7 @@ extension PlaceListViewController: UITableViewDelegate {
     /// 항목이 선택되면 선택 상태를 즉시 해제합니다.
     /// - Parameters:
     ///   - tableView: 테이블 뷰
-    ///   - indexPath: 선택된 항목의 indexPath
+    ///   - indexPath: 선택된 항목의 index path
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

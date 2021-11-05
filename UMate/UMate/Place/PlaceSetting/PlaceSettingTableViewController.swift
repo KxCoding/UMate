@@ -12,6 +12,12 @@ import UIKit
 /// - Author: 박혜정(mailmelater11@gmail.com)
 class PlaceSettingTableViewController: UITableViewController {
     
+    /// 뷰가 메모리에 로드되었을 때 데이터나 UI를 초기화합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    override func viewDidLoad() {
+        setTapBarAppearanceAsDefault()
+    }
+    
     /// 테이블 뷰에서 표시할 섹션의 개수를 리턴합니다.
     /// - Parameter tableView: 테이블 뷰
     /// - Returns: 섹션의 개수
