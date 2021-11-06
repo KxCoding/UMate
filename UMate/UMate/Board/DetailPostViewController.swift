@@ -9,6 +9,14 @@ import UIKit
 import Loaf
 
 
+/// 게시글 삭제
+/// - Author: 남정은(dlsl7080@gmail.com)
+extension Notification.Name {
+    static let deletePost = Notification.Name("deletePost")
+}
+
+
+
 /// 게시글 상세화면 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
 class DetailPostViewController: CommonViewController {
@@ -192,13 +200,17 @@ class DetailPostViewController: CommonViewController {
 
                 do {
                     let decoder = JSONDecoder()
-                    let res = try decoder.decode(PostDtoResponseData.self, from: data)
+                    var res = try decoder.decode(PostDtoResponseData.self, from: data)
                     
                     if res.resultCode == ResultCode.ok.rawValue {
+                        guard let date = BoardDataManager.shared.decodingFormatter.date(from: res.post.createdAt) else { return }
+                        let dateStr = date.detailPostDate
+                        res.post.createdAt = dateStr
                         self.post = res.post
                         self.isLiked = res.isLiked
                         self.isScrapped = res.isScrapped
                         self.scrapPostId = res.scrapPostId
+                        
                     }
                     self.fetchImages(postId: self.selectedPostId)
                 } catch {
@@ -346,12 +358,56 @@ class DetailPostViewController: CommonViewController {
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func deleteComment(commentId: Int) {
    
-        guard let url = URL(string: "https://localhost:51547/api/comment/\(commentId)") else { return }
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/comment/\(commentId)") else { return }
     
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
         
-        self.session.dataTask(with: request) { data, response, error in
+        BoardDataManager.shared.session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                print(response)
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let res = try decoder.decode(CommonResponse.self, from: data)
+                
+                if res.resultCode == ResultCode.ok.rawValue {
+                    #if DEBUG
+                    print("삭제 성공")
+                    #endif
+                } else {
+                    #if DEBUG
+                    print("삭제 실패")
+                    #endif
+                }
+            } catch {
+                print(error)
+            }
+        }.resume()
+    }
+    
+    
+    /// 게시글을 삭제합니다.
+    /// - Parameter postId: 게시글 Id
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    private func deletePost(postId: Int) {
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/boardpost/\(postId)") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        BoardDataManager.shared.session.dataTask(with: request) { data, response, error in
             if let error = error {
                 print(error)
                 return
@@ -373,6 +429,7 @@ class DetailPostViewController: CommonViewController {
                     #if DEBUG
                     print("삭제 성공")
                     #endif
+                    NotificationCenter.default.post(name: .deletePost, object: nil, userInfo: ["postId": postId])
                 } else {
                     #if DEBUG
                     print("삭제 실패")
@@ -486,6 +543,7 @@ class DetailPostViewController: CommonViewController {
             let deleteAction = UIAlertAction(title: "게시글 삭제", style: .default) { _ in
                 self.alertVersion2(title: "알림", message: "정말 삭제하시겠습니까?", handler: { _ in
                     
+                    self.deletePost(postId: self.selectedPostId)
                     
                     if let navController = self.navigationController {
                         navController.popViewController(animated: true)
@@ -621,8 +679,11 @@ extension DetailPostViewController: UITableViewDataSource {
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
             
-            let comment = sortedCommentList[indexPath.row]
-            
+            var comment = sortedCommentList[indexPath.row]
+            if let date = BoardDataManager.shared.decodingFormatter.date(from: comment.createdAt) {
+                let dateStr = date.commentDate
+                comment.createdAt = dateStr
+            }
             let isLiked = likeCommentList.contains { $0.commentId == comment.commentId }
             cell.configure(comment: comment, isLiked: isLiked)
             
@@ -675,10 +736,15 @@ extension DetailPostViewController: UITableViewDelegate {
         
         if indexPath.section == 2 {
             let removeComment = UIContextualAction(style: .destructive, title: "댓글 삭제") { [weak self] action, v, completion in
-                
-                self?.alertVersion2(title: "알림", message: "댓글을 삭제할까요?", handler: { _ in
-                    self?.sortedCommentList.remove(at: indexPath.row)
+                guard let self = self else { return }
+                self.alertVersion2(title: "알림", message: "댓글을 삭제할까요?", handler: { _ in
+                    
+                    let id = self.sortedCommentList[indexPath.row].commentId
+                    self.deleteComment(commentId: id)
+                    
+                    self.sortedCommentList.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .automatic)
+                    
                 }, handler2: nil)
                 
                 completion(true)
@@ -715,7 +781,11 @@ extension DetailPostViewController: UITableViewDelegate {
                 let deleteAction =
                 UIAction(title: NSLocalizedString("댓글 삭제", comment: ""),
                          attributes: .destructive) { action in
-                    self.deleteComment(indexPath)
+                    let id = self.sortedCommentList[indexPath.row].commentId
+                    self.deleteComment(commentId: id)
+                    
+                    self.sortedCommentList.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
                 }
                 
                 return UIMenu(title: "", children: [notiAction, deleteAction])

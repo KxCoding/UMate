@@ -26,6 +26,17 @@ class BoardDataManager {
         return f
     }()
     
+    /// 서버 날짜를 Date로 변환할 때 사용
+    let decodingFormatter: DateFormatter = {
+       let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        f.calendar = Calendar(identifier: .iso8601)
+        f.timeZone = TimeZone(secondsFromGMT: 0)
+        f.locale = Locale(identifier: "en_US_POSIX")
+        
+        return f
+    }()
+    
     /// 서버 요청 API
     let session = URLSession.shared
     
