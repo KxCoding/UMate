@@ -56,7 +56,6 @@ class ExpandImageViewController: CommonViewController {
         imagePageControl.configureStyle(with: [.pillShape])
         imagePageControl.backgroundColor = .black.withAlphaComponent(0.1)
         
-        
         // 선택된 이미지에 대한 정보를 초기화
         let token = NotificationCenter.default.addObserver(forName: .sendImageView,
                                                        object: nil,

@@ -16,6 +16,19 @@ class BoardDataManager {
     static let shared = BoardDataManager()
     private init() { }
     
+    /// 데이터 엔코더
+    let encoder = JSONEncoder()
+    
+    /// 날짜 파싱 포매터
+    let postDateFormatter: ISO8601DateFormatter = {
+       let f = ISO8601DateFormatter()
+        f.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
+        return f
+    }()
+    
+    /// 서버 요청 API
+    let session = URLSession.shared
+    
     
     /// URL을 Data로 변환하여 이미지를 얻습니다.
     /// - Parameter urlString: url주소 문자
@@ -31,3 +44,5 @@ class BoardDataManager {
         return nil
     }
 }
+
+

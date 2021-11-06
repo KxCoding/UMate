@@ -20,7 +20,7 @@ extension  Notification.Name {
 
 /// 게시글 작성자, 제목, 내용에 관한 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
-class PostContentTableViewCell: BoardCommonTableViewCell {
+class PostContentTableViewCell: UITableViewCell {
     /// 작성자 프로필 이미지 뷰
     @IBOutlet weak var userImageView: UIImageView!
     
@@ -64,13 +64,13 @@ class PostContentTableViewCell: BoardCommonTableViewCell {
         likeImageView.image = UIImage(named: "heart2.fill")
         likeImageView.tintColor = UIColor.init(named: "blackSelectedColor")
         
-        guard let url = URL(string: "https://localhost:51547/api/likePost") else { return }
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/likePost") else { return }
         
-        let dateStr = postDateFormatter.string(from: Date())
+        let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
         #warning("사용자 수정")
         let likePostdata = LikePostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: post.postId, createdAt: dateStr)
         
-        let body = try? encoder.encode(likePostdata)
+        let body = try? BoardDataManager.shared.encoder.encode(likePostdata)
         
         sendScrapOrLikePostRequest(url: url, httpMethod: "POST", httpBody: body)
         isLiked = true
@@ -105,12 +105,12 @@ class PostContentTableViewCell: BoardCommonTableViewCell {
             scrapImageView.tintColor = UIColor.init(named: "blackSelectedColor")
             scrapImageView.alpha = 1
             
-            guard let url = URL(string: "https://localhost:51547/api/scrapPost") else { return }
+            guard let url = URL(string: "https://board1104.azurewebsites.net/api/scrapPost") else { return }
             
-            let dateStr = postDateFormatter.string(from: Date())
+            let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
             #warning("사용자 수정")
             let scrapPostData = ScrapPostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: post.postId, createdAt: dateStr)
-            let body = try? encoder.encode(scrapPostData)
+            let body = try? BoardDataManager.shared.encoder.encode(scrapPostData)
             
             sendScrapOrLikePostRequest(url: url, httpMethod: "POST", httpBody: body)
         }
@@ -138,7 +138,7 @@ class PostContentTableViewCell: BoardCommonTableViewCell {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         
-        session.dataTask(with: request, completionHandler: { data, response, error in
+        BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
                 print(error)
                 return
@@ -158,7 +158,10 @@ class PostContentTableViewCell: BoardCommonTableViewCell {
             
                 switch res.resultCode {
                 case ResultCode.ok.rawValue:
-                    self.scrapButton.tag = res.scrapPost?.scrapPostId ?? 0
+                    DispatchQueue.main.async {
+                        self.scrapButton.tag = res.scrapPost?.scrapPostId ?? 0
+                    }
+                    
                     #if DEBUG
                     print("추가 성공")
                     #endif
@@ -180,12 +183,12 @@ class PostContentTableViewCell: BoardCommonTableViewCell {
     /// - Parameter scrapPostId: 스크랩 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func deleteScrapPost(scrapPostId: Int) {
-        guard let url = URL(string: "https://localhost:51547/api/scrapPost/\(scrapPostId)") else { return }
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/scrapPost/\(scrapPostId)") else { return }
         
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
         
-        self.session.dataTask(with: request) { data, response, error in
+        BoardDataManager.shared.session.dataTask(with: request) { data, response, error in
             if let error = error {
                 print(error)
                 return

@@ -93,18 +93,18 @@ class ComposeViewController: CommonViewController {
                   return
               }
         
-        let dateStr = postDateFormatter.string(from: Date())
+        let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
         
         var newPost: PostPostData?
         var urlStringList = [String]()
         let group = DispatchGroup()
-        
         
         if self.boardImages.count > 0 {
             self.boardImages.forEach { image in
                 group.enter()
                 BlobManager.shared.upload(image: image) { success, id in
                     if success {
+                        #warning("블롭주소 수정")
                         let imageUrlStr = "https://boardimage1018.blob.core.windows.net/images/\(id.lowercased())"
                         urlStringList.append(imageUrlStr)
                         group.leave()
@@ -126,14 +126,12 @@ class ComposeViewController: CommonViewController {
                 #warning("사용자 수정")
                 newPost = PostPostData(postId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:dateStr)
             }
-            let body = try? self.encoder.encode(newPost)
+            let body = try? BoardDataManager.shared.encoder.encode(newPost)
             
-            guard let url = URL(string: "https://localhost:51547/api/boardPost") else { return }
+            guard let url = URL(string: "https://board1104.azurewebsites.net/api/boardPost") else { return }
             
             self.sendSavingPostRequest(url: url, httpMethod: "POST", httpBody: body)
         }
-        
-        dismiss(animated: true, completion: nil)
     }
     
     
@@ -150,7 +148,7 @@ class ComposeViewController: CommonViewController {
         request.httpBody = httpBody
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        session.dataTask(with: request, completionHandler: { data, response, error in
+        BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
                 print(error)
                 return
@@ -176,7 +174,9 @@ class ComposeViewController: CommonViewController {
                     #if DEBUG
                     print("추가 성공")
                     #endif
-                    self.dismiss(animated: true)
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true)
+                    }
                 case ResultCode.fail.rawValue:
                     #if DEBUG
                     print("이미 존재함")
@@ -208,7 +208,6 @@ class ComposeViewController: CommonViewController {
             communityInfoLabel.text = communityInfoStr
         }
         
-        
         // 게시글 화면에 앨범 이미지 표시
         var token = NotificationCenter.default.addObserver(forName: .imageDidSelect,
                                                            object: nil,
@@ -219,7 +218,6 @@ class ComposeViewController: CommonViewController {
             }
         }
         tokens.append(token)
-        
         
         // 게시글 화면에 캡쳐 이미지 표시
         token = NotificationCenter.default.addObserver(forName: .newImageCaptured,
@@ -232,7 +230,6 @@ class ComposeViewController: CommonViewController {
             }
         })
         tokens.append(token)
-        
         
         // 서버에 올릴 이미지 저장
         // - Author: 남정은(dlsl7080@gmail.com)
