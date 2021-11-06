@@ -153,11 +153,15 @@ class FreeBoardViewController: CommonViewController {
         token = NotificationCenter.default.addObserver(forName: .deletePost, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if let postId = noti.userInfo?["postId"] as? Int,
-               let index = self.postList.firstIndex(where: { $0.postId == postId }) {
-                self.postList.remove(at: index)
-                self.postListTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+               let index = self.postList.firstIndex(where: { $0.postId == postId }),
+               let board = self.selectedBoard {
+                if board.categories.isEmpty {
+                    self.postList.remove(at: index)
+                    self.postListTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                }
             }
         })
+        tokens.append(token)
     }
 }
 

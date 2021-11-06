@@ -30,7 +30,7 @@ class CategoryBoardViewController: FreeBoardViewController {
         super.viewDidLoad()
        
         // 카테고리 게시판에 게시글 추가
-        let token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) { [weak self] noti in
+        var token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             if let post = noti.userInfo?["newPost"] as? PostListDtoResponseData.PostDto,
                let board = self.selectedBoard {
@@ -42,6 +42,23 @@ class CategoryBoardViewController: FreeBoardViewController {
                 }
             }
         }
+        tokens.append(token)
+        
+        // 게시글 삭제
+        token = NotificationCenter.default.addObserver(forName: .deletePost, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if let postId = noti.userInfo?["postId"] as? Int,
+               let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                if self.isFiltering {
+                    self.filteredPostList.remove(at: index)
+                    self.postList.remove(at: index)
+                    self.postListTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                } else {
+                    self.postList.remove(at: index)
+                    self.postListTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                }
+            }
+        })
         tokens.append(token)
     }
 }
@@ -213,8 +230,10 @@ extension CategoryBoardViewController {
     /// - Returns: 게시글 개수
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
+            print("isFiltering")
             return filteredPostList.count
         }
+        print("whole")
         return postList.count
     }
     
