@@ -45,9 +45,9 @@ class BoardViewController: CommonViewController {
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchBoardList() {
         DispatchQueue.global().async {
-            guard let url = URL(string: "https://localhost:51547/api/board") else { return }
+            guard let url = URL(string: "https://board1104.azurewebsites.net/api/board") else { return }
             
-            self.session.dataTask(with: url) { data, resposne, error in
+            BoardDataManager.shared.session.dataTask(with: url) { data, resposne, error in
     
                 if let error = error {
                     print(error)
@@ -85,9 +85,9 @@ class BoardViewController: CommonViewController {
     /// - Parameter userId: 사용자 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchScrapPostList(userId: String) {
-        guard let url = URL(string:"https://localhost:51547/api/scrapPost/?userId=\(userId)") else { return }
+        guard let url = URL(string:"https://board1104.azurewebsites.net/api/scrapPost/?userId=\(userId)") else { return }
         
-        session.dataTask(with: url) { data, response, error in
+        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
             if let error = error {
                 print(error)
                 return
@@ -145,6 +145,7 @@ class BoardViewController: CommonViewController {
     /// - Parameters:
     ///   - segue: 호출된 segue
     ///   - sender: segue가 시작된 객체
+    ///   - Author: 남정은(dlsl7080@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "infoSegue", let vc = segue.destination as? FreeBoardViewController {
             vc.selectedBoard = boardList.first(where: { $0.boardId == 11 })
@@ -239,7 +240,7 @@ extension BoardViewController: UITableViewDataSource {
         let sectionBoardList = boardList.filter({ $0.section == section})
         
         if section >= 2 {
-            return expandableArray[section]  ? sectionBoardList.count : 0
+            return expandableArray[section] ? sectionBoardList.count : 0
         }
         return sectionBoardList.count
     }
@@ -251,10 +252,8 @@ extension BoardViewController: UITableViewDataSource {
     ///   - indexPath: 게시판 셀의 indexPath
     /// - Returns: 게시판 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // 해당하는 섹션에 대한 게시판이 담긴 배열
         let filteredBoardList = boardList.filter { $0.section == indexPath.section }
         
-        // nonExxpandableBoard cell을 구성
         if indexPath.section < 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
             
@@ -262,7 +261,6 @@ extension BoardViewController: UITableViewDataSource {
             return cell
         }
         
-        // expandableBoard cell을 구성
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpandableBoardTableViewCell", for: indexPath) as! ExpandableBoardTableViewCell
         
         cell.configure(boardList: filteredBoardList, indexPath: indexPath, bookmarks: bookmarks)
@@ -281,11 +279,11 @@ extension BoardViewController: UITableViewDelegate {
     ///   - indexPath: 게시판 셀의 indexPath
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // IndexPath( row: 5, section: 1 ) 인 셀을 선택시 강의평가 게시판으로 이동
+        // 강의평가 게시판으로 이동
         if indexPath.section == 1 && indexPath.row == 5 {
             performSegue(withIdentifier: "lectureSegue", sender: self)
         }
-        // IndexPath( row: 0, section: 3 ) 인 셀을 선택시 정보 게시판으로 이동
+        // 정보 게시판으로 이동
         else if indexPath.section == 3 && indexPath.row == 0 {
             performSegue(withIdentifier: "infoSegue", sender: self)
         }

@@ -18,7 +18,7 @@ let constr = "DefaultEndpointsProtocol=https;AccountName=boardimage1018;AccountK
 /// 블랍 메니저
 ///
 /// 이미지 데이터를 관리합니다.
-///  - Author: 남정은(dlsl7080@gamil.com)
+///  - Author: 남정은(dlsl7080@gmail.com)
 struct BlobManager {
     
     static let shared = BlobManager()
@@ -31,7 +31,7 @@ struct BlobManager {
     
     
     /// 이미지 업로드를 위한 설정을 초기화 합니다.
-    ///  - Author: 남정은(dlsl7080@gamil.com)
+    ///  - Author: 남정은(dlsl7080@gmail.com)
     private init() {
         account = try? AZSCloudStorageAccount(fromConnectionString: constr)
         client = account?.getBlobClient()
@@ -47,7 +47,7 @@ struct BlobManager {
     /// - Parameters:
     ///   - image: 업로드할 이미지
     ///   - completion: 이미지 업로드 이후 실행할 작업
-    ///  - Author: 남정은(dlsl7080@gamil.com)
+    ///  - Author: 남정은(dlsl7080@gmail.com)
     func upload(image: UIImage, completion: @escaping (Bool, String) -> ()) {
         guard let data = image.pngData() else { return }
         let id = UUID().uuidString + ".png"

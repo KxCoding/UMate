@@ -9,8 +9,8 @@ import UIKit
 
 
 /// 댓글 및 대댓글을 표시하는 테이블뷰 셀
-/// - Author: 김정민(kimjm010@icloud.com),  남정은(dlsl7080@gamil.com)
-class CommentTableViewCell: BoardCommonTableViewCell {
+/// - Author: 김정민(kimjm010@icloud.com),  남정은(dlsl7080@gmail.com)
+class CommentTableViewCell: UITableViewCell {
     /// 프로필 이미지뷰
     @IBOutlet weak var profileImageView: UIImageView!
     

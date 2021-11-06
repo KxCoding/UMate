@@ -44,9 +44,9 @@ class FreeBoardViewController: CommonViewController {
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchPostList(boardId: Int, userId: String) {
         DispatchQueue.global().async {
-            guard let url = URL(string: "https://localhost:51547/api/boardPost?boardId=\(boardId)&userId=\(userId)") else { return }
+            guard let url = URL(string: "https://board1104.azurewebsites.net/api/boardPost?boardId=\(boardId)&userId=\(userId)") else { return }
             
-            self.session.dataTask(with: url) { data, response, error in
+            BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
                 
                 if let error = error {
                     print(error)
@@ -135,7 +135,6 @@ class FreeBoardViewController: CommonViewController {
             }
         }
         tokens.append(token)
-
         
         // 일반 게시판에 게시글 추가
         token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) { [weak self] noti in

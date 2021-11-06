@@ -96,13 +96,13 @@ class DetailPostViewController: CommonViewController {
         }
         
         
-        let dateStr = postDateFormatter.string(from: Date())
+        let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
         #warning("사용자 수정")
         let newComment = CommentPostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: selectedPostId, content: content, originalCommentId: originalCommentId ?? 0, isReComment: isReComment, createdAt: dateStr)
         
-        let body = try? encoder.encode(newComment)
+        let body = try? BoardDataManager.shared.encoder.encode(newComment)
         
-        guard let url = URL(string: "https://localhost:51547/api/comment") else { return }
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/comment") else { return }
         
         sendSavingCommentRequest(url: url, httpMethod: "POST", httpBody: body)
         
@@ -134,7 +134,7 @@ class DetailPostViewController: CommonViewController {
         request.httpBody = httpBody
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        session.dataTask(with: request, completionHandler: { data, response, error in
+        BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
                 print(error)
                 return
@@ -153,7 +153,7 @@ class DetailPostViewController: CommonViewController {
                 let data = try decoder.decode(SaveCommentResponseData.self, from: data)
             
                 if data.resultCode == ResultCode.ok.rawValue {
-                    self.commentTextView.text = nil
+                    
                     let newComment = CommentListResponseData.Comment(commentId: data.comment.commentId, userId: data.comment.userId, postId: data.comment.postId, content: data.comment.content, likeCnt: data.comment.likeCnt, originalCommentId: data.comment.originalCommentId, isReComment: data.comment.isReComment, createdAt: data.comment.createdAt, updatedAt: data.comment.updatedAt)
                     
                     NotificationCenter.default.post(name: .newCommentDidInsert, object: nil, userInfo: ["comment": newComment])
@@ -173,9 +173,9 @@ class DetailPostViewController: CommonViewController {
     private func fetchPostDetail(id: Int, userId: String) {
         DispatchQueue.global().async {
             
-            guard let url = URL(string: "https://localhost:51547/api/boardpost/\(id)?userId=\(userId)") else { return }
+            guard let url = URL(string: "https://board1104.azurewebsites.net/api/boardpost/\(id)?userId=\(userId)") else { return }
             
-            self.session.dataTask(with: url) { [self] data, response, error in
+            BoardDataManager.shared.session.dataTask(with: url) { [self] data, response, error in
                 
                 if let error = error {
                     print(error)
@@ -215,9 +215,9 @@ class DetailPostViewController: CommonViewController {
     private func fetchImages(postId: Int) {
         DispatchQueue.global().async {
             
-            guard let url = URL(string: "https://localhost:51547/api/image/?postId=\(postId)") else { return }
+            guard let url = URL(string: "https://board1104.azurewebsites.net/api/image/?postId=\(postId)") else { return }
 
-            self.session.dataTask(with: url) { data, response, error in
+            BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
                 if let error = error {
                     print(error)
                     return
@@ -256,9 +256,9 @@ class DetailPostViewController: CommonViewController {
     private func fetchComments(postId: Int) {
         DispatchQueue.global().async {
         
-            guard let url = URL(string: "https://localhost:51547/api/comment?postId=\(postId)") else { return }
+            guard let url = URL(string: "https://board1104.azurewebsites.net/api/comment?postId=\(postId)") else { return }
      
-            self.session.dataTask(with: url) { data, response, error in
+            BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
                 if let error = error {
                     print(error)
                     return
@@ -306,9 +306,9 @@ class DetailPostViewController: CommonViewController {
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchLikeComment(userId: String) {
         
-        guard let url = URL(string: "https://localhost:51547/api/likeComment/?userId=\(userId)") else { return }
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/likeComment/?userId=\(userId)") else { return }
   
-        session.dataTask(with: url) { data, response, error in
+        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
            
             
             if let error = error {
@@ -364,7 +364,7 @@ class DetailPostViewController: CommonViewController {
             guard let data = data else {
                 return
             }
-            
+
             do {
                 let decoder = JSONDecoder()
                 let res = try decoder.decode(CommonResponse.self, from: data)
@@ -423,7 +423,6 @@ class DetailPostViewController: CommonViewController {
         })
         tokens.append(token)
         
-        
         token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main, using: { [weak self] (noti) in
             guard let strongSelf = self else { return }
             
@@ -435,7 +434,6 @@ class DetailPostViewController: CommonViewController {
             strongSelf.detailPostTableView.scrollIndicatorInsets = inset
         })
         tokens.append(token)
-        
         
         // 댓글 및 대댓글을 추가합니다.
         token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
@@ -481,12 +479,14 @@ class DetailPostViewController: CommonViewController {
             }
         }
         
-        // 게시글 수정 및 삭제를 선택하는 메뉴
+        // 게시글 삭제
         let token = NotificationCenter.default.addObserver(forName: .sendAlert, object: nil, queue: .main, using: { _ in
             let alertMenu = UIAlertController(title: "", message: "메뉴를 선택하세요.", preferredStyle: .actionSheet)
             
             let deleteAction = UIAlertAction(title: "게시글 삭제", style: .default) { _ in
                 self.alertVersion2(title: "알림", message: "정말 삭제하시겠습니까?", handler: { _ in
+                    
+                    
                     if let navController = self.navigationController {
                         navController.popViewController(animated: true)
                     }
@@ -509,7 +509,7 @@ class DetailPostViewController: CommonViewController {
             })
         }
     }
-    
+   
     
     deinit {
         if let token = imageObserver {
@@ -526,10 +526,10 @@ class DetailPostViewController: CommonViewController {
     /// - Author: 김정민(kimjm010@icloud.com)
     func alertCommentDelete(_ indexPath: IndexPath) {
         // TODO: 서버 구현 후 작업 예정입니다.
-#if DEBUG
+        #if DEBUG
         print(#function)
         print("댓글을 신고하시겠습니까?")
-#endif
+        #endif
         
         self.alertComment()
     }
