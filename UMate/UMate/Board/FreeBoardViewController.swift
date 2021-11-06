@@ -148,6 +148,16 @@ class FreeBoardViewController: CommonViewController {
             }
         }
         tokens.append(token)
+        
+        // 게시글 삭제
+        token = NotificationCenter.default.addObserver(forName: .deletePost, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if let postId = noti.userInfo?["postId"] as? Int,
+               let index = self.postList.firstIndex(where: { $0.postId == postId }) {
+                self.postList.remove(at: index)
+                self.postListTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            }
+        })
     }
 }
 
@@ -174,10 +184,15 @@ extension FreeBoardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
         
-        let post = postList[indexPath.row]
+        var post = postList[indexPath.row]
         
         // 게시글 목록 셀 초기화
-        cell.configure(post: post)
+        if let date = BoardDataManager.shared.decodingFormatter.date(from: post.createdAt) {
+            let dateStr = date.relativeDate
+            post.createdAt = dateStr
+            cell.configure(post: post)
+        }
+        
         return cell
     }
 }

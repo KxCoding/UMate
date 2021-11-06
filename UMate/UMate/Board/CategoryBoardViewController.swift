@@ -139,6 +139,7 @@ extension CategoryBoardViewController: UICollectionViewDelegate {
     /// - Parameters:
     ///   - selectedBoard: 선택된 게시판
     ///   - indexPath: 선택된 카테고리의 indexPath
+    ///   - Author: 남정은(dlsl7080@gmail.com)
     private func filterPostByCategory(in postList: [PostListDtoResponseData.PostDto], categories: [BoardDtoResponseData.BoardDto.Category], indexPath: IndexPath) {
         
         filteredPostList = postList.filter({ post in
@@ -229,11 +230,20 @@ extension CategoryBoardViewController {
                                                  for: indexPath) as! FreeBoardTableViewCell
         
         if isFiltering {
-            let post = filteredPostList[indexPath.row]
-            cell.configure(post: post)
+            var post = filteredPostList[indexPath.row]
+            if let date = BoardDataManager.shared.decodingFormatter.date(from: post.createdAt) {
+                let dateStr = date.relativeDate
+                post.createdAt = dateStr
+                cell.configure(post: post)
+            }
+            
         } else {
-            let post = postList[indexPath.row]
-            cell.configure(post: post)
+            var post = postList[indexPath.row]
+            if let date = BoardDataManager.shared.decodingFormatter.date(from: post.createdAt) {
+                let dateStr = date.relativeDate
+                post.createdAt = dateStr
+                cell.configure(post: post)
+            }
         }
         
         return cell
