@@ -64,7 +64,7 @@ struct PostListDtoResponseData: Codable {
         let postId: Int
         let title: String
         let content: String
-        let createdAt: String
+        var createdAt: String
         let userName: String
         let likeCnt: Int
         let commentCnt: Int
@@ -92,10 +92,10 @@ struct PostDtoResponseData: Codable {
         let commentCnt: Int
         let scrapCnt: Int
         let categoryNumber: Int
-        let createdAt: String
+        var createdAt: String
     }
     
-    let post: Post
+    var post: Post
     let isLiked: Bool
     let isScrapped: Bool
     let scrapPostId: Int
@@ -118,7 +118,7 @@ struct CommentListResponseData: Codable {
         var likeCnt: Int
         let originalCommentId: Int
         let isReComment: Bool
-        let createdAt: String
+        var createdAt: String
         let updatedAt: String
     }
     
