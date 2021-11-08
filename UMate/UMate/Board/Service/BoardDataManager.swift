@@ -39,20 +39,87 @@ class BoardDataManager {
     
     /// 서버 요청 API
     let session = URLSession.shared
+ 
+    /// 캐시 생성
+    let cache = NSCache<NSURL,UIImage>()
     
     
-    /// URL을 Data로 변환하여 이미지를 얻습니다.
-    /// - Parameter urlString: url주소 문자
-    /// - Returns: 이미지
-    /// - Author: 남정은(dlsl7080@gmail.com)
-    func getImage(urlString: String) -> UIImage? {
-        if let url = URL(string: urlString),
-           let data = try? Data(contentsOf: url),
-           let image = UIImage(data: data) {
-            
-            return image
+    /// 캐시에서 이미지를 불러오거나 이미지를 새로 다운로드 합니다.
+    /// - Parameters:
+    ///   - urlString: 이미지를 다운할 urlString
+    ///   - completion: 완료블록
+    ///   - Author: 남정은(dlsl7080@gmail.com)
+    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> ()) {
+        guard let url = NSURL(string: urlString) else {
+            DispatchQueue.main.async {
+                completion(nil)
+            }
+            return
         }
-        return nil
+        if let image = cache.object(forKey: url) { //url이 만들어졌다면 캐시에서 그에 해당하는 이미지를 가져옴.
+            DispatchQueue.main.async {
+                completion(image) //성공하면 메인쓰레드에 image를 전달함.
+            }
+        // 캐시에 이미지가 없다면 새로 다운로드
+        } else {
+            DispatchQueue.global().async {
+                guard let data = try? Data(contentsOf: url as URL) else {
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
+                    return
+                }
+                
+                guard let image = UIImage(data: data) else {
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
+                    return
+                }
+                self.cache.setObject(image, forKey: url)
+                
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            }
+        }
+    }
+    
+    
+    /// UIImage 사이즈를 조절합니다.
+    /// - Parameters:
+    ///   - image: 이미지
+    ///   - targetSize: 원하는 사이즈
+    /// - Returns: 사이즈가 바뀐 이미지
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width// 원하는 사이즈와 원래사이즈의 배율 계산
+        let heightRatio = targetSize.height / size.height
+        
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // 비트맵을 기반으로 이미지 생성
+        UIGraphicsBeginImageContextWithOptions(newSize, true, 1.0)
+        
+        // 지정한 사이즈에 이미지 그리기
+        image.draw(in: rect)
+        
+        // 이미지 생성 완료
+        guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
+        
+        // 컨텍스트를 삭제
+        UIGraphicsEndImageContext()
+        
+        return newImage
     }
 }
 

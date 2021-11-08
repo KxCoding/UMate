@@ -43,39 +43,37 @@ class FreeBoardViewController: CommonViewController {
     ///   - userId: 사용자 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchPostList(boardId: Int, userId: String) {
-        DispatchQueue.global().async {
-            guard let url = URL(string: "https://board1104.azurewebsites.net/api/boardPost?boardId=\(boardId)&userId=\(userId)") else { return }
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/boardPost?boardId=\(boardId)&userId=\(userId)") else { return }
+        
+        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
             
-            BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let res = try decoder.decode(PostListDtoResponseData.self, from: data)
                 
-                if let error = error {
-                    print(error)
-                    return
-                }
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    return
-                }
-                
-                guard let data = data else {
-                    return
-                }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    let res = try decoder.decode(PostListDtoResponseData.self, from: data)
+                if res.resultCode == ResultCode.ok.rawValue {
+                    self.postList = res.list
                     
-                    if res.resultCode == ResultCode.ok.rawValue {
-                        self.postList = res.list
-                        
-                        DispatchQueue.main.async {
-                            self.postListTableView.reloadData()
-                        }
+                    DispatchQueue.main.async {
+                        self.postListTableView.reloadData()
                     }
-                } catch {
-                    print(error)
                 }
-            }.resume()
-        }
+            } catch {
+                print(error)
+            }
+        }.resume()
     }
     
    
