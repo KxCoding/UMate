@@ -25,6 +25,26 @@ class CategoryBoardViewController: FreeBoardViewController {
     var isFiltering = false
     
     
+    /// 게시글을 필터링 중일 경우 필터링된 결과를 전달합니다.
+    /// - Parameters:
+    ///   - segue: 호출된 segue
+    ///   - sender: segue가 시작된 객체
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if isFiltering {
+            if let cell = sender as? UITableViewCell,
+               let indexPath = postListTableView.indexPath(for: cell) {
+                // 상세 게시글 화면에 선택된 게시글에 대한 정보 전달
+                if let vc = segue.destination as? DetailPostViewController {
+                    vc.selectedPostId = filteredPostList[indexPath.row].postId
+                }
+            }
+        }
+    }
+    
+    
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -230,10 +250,8 @@ extension CategoryBoardViewController {
     /// - Returns: 게시글 개수
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
-            print("isFiltering")
             return filteredPostList.count
         }
-        print("whole")
         return postList.count
     }
     

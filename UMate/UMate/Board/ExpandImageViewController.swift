@@ -105,14 +105,13 @@ extension ExpandImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postImageCell", for: indexPath) as! ExpandPostImageCollectionViewCell
         
-        DispatchQueue.global().async {
-            if let image = BoardDataManager.shared.getImage(urlString: self.postImageList[indexPath.item].urlString) {
-                
+        BoardDataManager.shared.downloadImage(from: self.postImageList[indexPath.row].urlString, completion: { img in
+            if let image = img {
                 DispatchQueue.main.async {
                     cell.expandImageView.image = image
                 }
             }
-        }
+        })
         
         return cell
     }

@@ -24,7 +24,7 @@ struct PostPostData: Codable {
 
 
 /// 댓글을 서버에 저장할 때 사용
-/// - Author: 남정은(dlsl7080@gmail.com)
+/// - Author: 김정민(kimjm010@icloud.com)
 struct CommentPostData: Codable {
     let userId: String
     let postId: Int
@@ -57,10 +57,11 @@ struct LikePostData: Codable {
 
 
 /// 댓글 좋아요를 서버에 저장할 때 사용
-/// - Author: 남정은(dlsl7080@gmail.com)
+/// - Author: 김정민(kimjm010@icloud.com)
 struct LikeCommentPostData: Codable {
     let likeCommentId: Int
     let userId: String
     let commentId: Int
     let createdAt: String
 }
+

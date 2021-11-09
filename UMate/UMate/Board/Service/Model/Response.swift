@@ -18,6 +18,10 @@ enum ResultCode: Int {
     case boardExists = 1000;
     case categoryExists = 1001;
     case postExists = 1002;
+    
+    case professorExists = 2000;
+    case lectureInfoExists = 2001;
+    case lectureReviewExists = 2002;
 }
 
 
@@ -186,7 +190,7 @@ struct SavePostResponseData: Codable {
 
 
 /// 댓글 저장 응답데이터
-/// - Author: 남정은(dlsl7080@gmail.com)
+/// - Author: 김정민(kimjm010@icloud.com)
 struct SaveCommentResponseData: Codable {
     struct Comment: Codable {
         let commentId: Int
@@ -208,7 +212,7 @@ struct SaveCommentResponseData: Codable {
 
 
 /// 댓글 좋아요 저장 응답데이터
-/// - Author: 남정은(dlsl7080@gmail.com)
+/// - Author: 김정민(kimjm010@icloud.com)
 struct SaveLikeCommentResponseData: Codable {
     struct LikeComment: Codable {
         let likeCommentId: Int
