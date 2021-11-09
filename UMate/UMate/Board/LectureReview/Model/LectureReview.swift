@@ -13,42 +13,42 @@ import Foundation
 class LectureReview {
     /// 과제 빈도
     enum Assignment: Int {
-        case many
-        case normal
-        case none
+        case many = 1
+        case normal = 2
+        case none = 3
     }
     
     /// 조모임 빈도
     enum GroupMeeting: Int {
-        case many
-        case normal
-        case none
+        case many = 1
+        case normal = 2
+        case none = 3
     }
     
     /// 평가 기준
     enum Evaluation: Int {
-        case generous
-        case normal
-        case tight
-        case hell
+        case generous = 1
+        case normal = 2
+        case tight = 3
+        case hell = 4
     }
     
     /// 출결 방법
     enum Attendance: Int {
-        case mix
-        case direct
-        case seat
-        case electronic
-        case none
+        case mix = 1
+        case direct = 2
+        case seat = 3
+        case electronic = 4
+        case none = 5
     }
     
     /// 시험 횟수
     enum TestNumber: Int {
-        case four
-        case three
-        case two
-        case one
-        case none
+        case four = 1
+        case three = 2
+        case two = 3
+        case one = 4
+        case none = 5
     }
     
     /// 총평 점수
@@ -139,7 +139,7 @@ extension LectureReview.Evaluation: CustomStringConvertible {
     var description: String {
         switch self {
         case .generous:
-            return "후함"
+            return "학점느님"
         case .normal:
             return "비율채워줌"
         case .tight:

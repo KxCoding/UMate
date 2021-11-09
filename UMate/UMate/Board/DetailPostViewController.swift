@@ -523,7 +523,7 @@ class DetailPostViewController: CommonViewController {
         }
         
         // 게시글 삭제
-        let token = NotificationCenter.default.addObserver(forName: .sendAlert, object: nil, queue: .main, using: { _ in
+        let token = NotificationCenter.default.addObserver(forName: .alertDidsend, object: nil, queue: .main, using: { _ in
             let alertMenu = UIAlertController(title: "", message: "메뉴를 선택하세요.", preferredStyle: .actionSheet)
             
             let deleteAction = UIAlertAction(title: "게시글 삭제", style: .default) { _ in

@@ -19,8 +19,9 @@ class LectureSummaryTableViewCell: UITableViewCell {
     
     /// 강의 정보를 간단히 나타내는 셀을 초기화합니다.
     /// - Parameter lecture: 선택된 강의
-    func configure(lecture: LectureInfo){
-        professorNameLabel.text = lecture.professor.replacingOccurrences(of: "/", with: ",")
-        openingSemesterLabel.text = lecture.openingSemester.replacingOccurrences(of: "/", with: ",")
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    func configure(lecture: LectureInfoDetailResponse.LectrueInfo, professor: String){
+        professorNameLabel.text = professor
+        openingSemesterLabel.text = lecture.semesters.replacingOccurrences(of: "/", with: ",")
     }
 }

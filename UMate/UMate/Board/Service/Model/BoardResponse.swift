@@ -22,6 +22,7 @@ enum ResultCode: Int {
     case professorExists = 2000;
     case lectureInfoExists = 2001;
     case lectureReviewExists = 2002;
+    case testInfoExists = 2003;
 }
 
 
