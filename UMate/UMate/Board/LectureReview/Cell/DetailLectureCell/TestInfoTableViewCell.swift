@@ -32,25 +32,24 @@ class TestInfoTableViewCell: UITableViewCell {
     /// - Parameters:
     ///   - lecture: 선택된 강의
     ///   - indexPath: 시험정보를 나타내는 셀의 indexPath
-    func configure(lecture: LectureInfo, indexPath: IndexPath) {
-        let target = lecture.testInfoList[indexPath.row]
-        
-        kindOfTestLabel.text = target.testType
-        semesterLabel.text = target.semester + " 수강자"
-        testStrategyLabel.text = target.testStrategy
-        questionType.text = target.questionTypes.map{ $0.trimmingCharacters(in: .whitespaces) }.joined(separator: ",")
+    ///   - Author: 남정은(dlsl7080@gmail.com)
+    func configure(testInfo: TestInfoListResponse.TestInfo) {
+        kindOfTestLabel.text = testInfo.testType
+        semesterLabel.text = testInfo.semester + " 수강자"
+        testStrategyLabel.text = testInfo.testStrategy
+        questionType.text = testInfo.questionTypes
         
         // 문제예시
         exaplesStackView.removeFullyAllArrangedSubviews()
-        for ex in target.examples {
+        for ex in testInfo.examples {
             // 문제 예시를 나타내는 레이블
             let exampleLabel = UILabel()
             exampleLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
             exampleLabel.numberOfLines = 0
             
             // 글자길이에 따라 배경색 지정
-            let mutable = NSMutableAttributedString(string: ex)
-            mutable.addAttribute(.backgroundColor, value: UIColor.init(named: "systemGray6BackgroundColor") ?? .lightGray, range: NSRange(ex.startIndex..<ex.endIndex, in: ex))
+            let mutable = NSMutableAttributedString(string: ex.content)
+            mutable.addAttribute(.backgroundColor, value: UIColor.init(named: "systemGray6BackgroundColor") ?? .lightGray, range: NSRange(ex.content.startIndex..<ex.content.endIndex, in: ex.content))
             exampleLabel.attributedText = mutable
             
             exaplesStackView.addArrangedSubview(exampleLabel)
