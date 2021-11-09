@@ -121,7 +121,7 @@ class PostContentTableViewCell: UITableViewCell {
     /// - Parameter sender: 햄버거 버튼
     /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func showMenu(_ sender: Any) {
-        NotificationCenter.default.post(name: .sendAlert, object: nil)
+        NotificationCenter.default.post(name: .alertDidsend, object: nil)
     }
     
     
