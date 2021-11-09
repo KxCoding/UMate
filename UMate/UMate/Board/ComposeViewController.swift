@@ -255,6 +255,62 @@ class ComposeViewController: CommonViewController {
             })
             .disposed(by: rx.disposeBag)
         
+        // 이미지 첨부 방식을 선택합니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        selectImageAttachmentTypeBtn.rx.tap
+            .flatMap { _ in self.alertToSelectImageAttachWay(title: "알림", message: "이미지 첨부 방식을 선택하세요 :)") }
+            .subscribe(onNext: { [unowned self] (actionType) in
+                switch actionType {
+                case .find:
+                    self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
+                case .take:
+                    self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
+                default:
+                    break
+                }
+            })
+            .disposed(by: rx.disposeBag)
+        
+        // 키보드 노티피케이션을 처리하는 옵저버블입니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        Observable.merge(willShow, willHide)
+            .bind(to: postContentTextView.rx.keyboardHeight)
+            .disposed(by: rx.disposeBag)
+        
+        // 게시글 제목의 placeholder상태를 관리합니다.
+        //
+        // 게시글 제목이 입력된 경우 placeholder 레이블을 숨깁니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        postTitleTextField.rx.text.orEmpty.asDriver()
+            .map { $0.count > 0 }
+            .drive(postTitlePlaceholderLabel.rx.isHidden)
+            .disposed(by: rx.disposeBag)
+        
+        // 게시글 내용의 placeholder상태를 관리합니다.
+        //
+        // 게시글 내용이 입력된 경우 placeholder 레이블을 숨깁니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        postContentTextView.rx.text.orEmpty.asDriver()
+            .map { $0.count > 0 }
+            .drive(contentPlacehoderLabel.rx.isHidden)
+            .disposed(by: rx.disposeBag)
+    }
+}
+
+
+
+/// 게시글 내용의 동작 방식 처리
+/// - Author: 김정민(kimjm010@icloud.com)
+extension ComposeViewController: UITextViewDelegate {
+    
+    /// 본문 편집 중 글자 수를 확인합니다.
+    ///
+    /// 게시글 본문이 수정될때마다 본문의 글자수를 카운팅 합니다.
+    /// - Parameter textView: postContentTextView
+    /// - Author: 김정민(kimjm010@icloud.com)
+    func textViewDidChange(_ textView: UITextView) {
+        contentCountLabel.text = "\(postContentTextView.text.count) / 500"
+        
         // 일반 게시판과 카테고리 게시판에 게시글을 저장합니다.
         // - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
         savePostButton.rx.tap
@@ -493,3 +549,4 @@ extension ComposeViewController: UICollectionViewDelegate {
         }
     }
 }
+

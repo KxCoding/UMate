@@ -23,11 +23,6 @@ extension Notification.Name {
 
 
 
-enum SelectActionType {
-    case delete
-}
-
-
 
 /// 게시글 상세화면 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
@@ -104,6 +99,17 @@ class DetailPostViewController: CommonViewController {
     var scrapPostId = 0
     
     var selectedCommentIndex: IndexPath?
+    
+    /// keyboard의 높이를 방출하는 옵저버블
+    let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification,
+                                                              object: nil)
+        .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue }
+        .map { $0.cgRectValue.height }
+    
+    /// keybaordr의 높이를 0으로 방출하는 옵저버블
+    let willHide = NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification,
+                                                              object: nil)
+            .map { _ in CGFloat(0)}
     
     /// keyboard의 높이를 방출하는 옵저버블
     let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification,
@@ -355,6 +361,25 @@ class DetailPostViewController: CommonViewController {
             }
         }
         tokens.append(token)
+        
+        
+        // 댓글의 placeholder상태를 관리합니다.
+        //
+        // 게시글 내용이 입력된 경우 placeholder 레이블을 숨깁니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        commentTextView.rx.text.orEmpty
+            .map { $0.count > 0 }
+            .bind(to: commentPlaceholderLabel.rx.isHidden)
+            .disposed(by: rx.disposeBag)
+        
+    }
+    
+    
+    /// 뷰 계층에 모든 뷰들이 추가된 이후 호출됩니다.
+    /// - Parameter animated: 윈도우에 뷰가 추가될 때 애니메이션 여부. 기본값은 true입니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         // 게시글 삭제
         token = NotificationCenter.default.addObserver(forName: .alertDidSend, object: nil, queue: .main, using: { _ in
@@ -687,3 +712,33 @@ extension DetailPostViewController: UITableViewDelegate {
         }
     }
 }
+
+
+
+/// 대댓글, 댓글의 동작 처리
+/// - Author: 김정민(kimjm010@icloud.com)
+extension DetailPostViewController: UITextViewDelegate {
+    
+    /// 댓글 편집시 placeholder를 설정합니다.
+    /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
+    /// - Parameter textView: commentTextView
+    /// - Author: 김정민(kimjm010@icloud.com)
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        commentPlaceholderLabel.isHidden = true
+    }
+    
+    
+    /// 댓글 편집후의 placeholder를 설정합니다.
+    /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시합니다.
+    /// - Parameter textView: commentTextView
+    /// - Author: 김정민(kimjm010@icloud.com)
+    func textViewDidEndEditing(_ textView: UITextView) {
+        guard let comment = commentTextView.text, comment.count > 0 else {
+            commentPlaceholderLabel.isHidden = false
+            return
+        }
+        
+        commentPlaceholderLabel.isHidden = true
+    }
+}
+

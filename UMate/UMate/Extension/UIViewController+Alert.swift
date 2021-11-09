@@ -193,6 +193,7 @@ extension UIViewController {
     }
     
     
+    
     /// 앨범 접근 권한에 따른 알림을 표시합니다.
     /// - Parameters:
     ///   - title: 알림의 title
