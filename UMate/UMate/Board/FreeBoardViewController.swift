@@ -119,6 +119,8 @@ class FreeBoardViewController: CommonViewController {
             composeButton.isHidden = true
         }
 
+        postListTableView.contentInset.bottom = composeButton.frame.height * 2
+        
         composeButton.setToEnabledButtonTheme()
 
         // 네비게이션 바에 타이틀 초기화

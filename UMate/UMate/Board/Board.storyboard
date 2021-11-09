@@ -667,7 +667,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7T4-7L-4gj">
-                                <rect key="frame" x="20" y="213" width="380" height="17"/>
+                                <rect key="frame" x="20" y="221" width="380" height="17"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" systemColor="systemGray3Color"/>
                                 <nil key="highlightedColor"/>
@@ -681,7 +681,7 @@
                             <constraint firstItem="1Ms-iJ-U5C" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="16" id="5XV-4u-1Oe"/>
                             <constraint firstItem="2fK-JN-5wQ" firstAttribute="top" secondItem="1Ms-iJ-U5C" secondAttribute="bottom" constant="8" symbolic="YES" id="813-ME-6y5"/>
                             <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="1Ms-iJ-U5C" secondAttribute="trailing" constant="16" id="8eq-m6-snb"/>
-                            <constraint firstItem="7T4-7L-4gj" firstAttribute="top" secondItem="Tx6-lQ-lIb" secondAttribute="top" id="E7G-dj-1cq"/>
+                            <constraint firstItem="7T4-7L-4gj" firstAttribute="top" secondItem="Tx6-lQ-lIb" secondAttribute="top" constant="8" id="E7G-dj-1cq"/>
                             <constraint firstItem="1Ms-iJ-U5C" firstAttribute="top" secondItem="udG-3F-xAh" secondAttribute="bottom" constant="8" symbolic="YES" id="ERF-2N-kWY"/>
                             <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="udG-3F-xAh" secondAttribute="trailing" constant="16" id="UOG-zm-zaG"/>
                             <constraint firstItem="ZPW-pR-x51" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="XI4-ds-YhO"/>
@@ -719,6 +719,7 @@
                         <outlet property="postContentTextView" destination="Tx6-lQ-lIb" id="bXk-gZ-1Wp"/>
                         <outlet property="postTitlePlaceholderLabel" destination="ZPW-pR-x51" id="PMn-m8-urD"/>
                         <outlet property="postTitleTextField" destination="9Xr-iL-GRb" id="hi1-LW-Rys"/>
+                        <outlet property="selectImageAttachmentTypeBtn" destination="KbV-ie-OZm" id="YX1-2N-gF0"/>
                         <segue destination="8Aq-w4-ong" kind="presentation" identifier="addPhotoSegue" modalPresentationStyle="fullScreen" id="XaX-ap-kgE"/>
                         <segue destination="A9m-FK-a3O" kind="presentation" identifier="takePhotoSegue" modalPresentationStyle="fullScreen" id="8Cy-BU-0SP"/>
                     </connections>
@@ -730,9 +731,6 @@
                     <items>
                         <barButtonItem image="camera" catalog="system" id="KbV-ie-OZm">
                             <color key="tintColor" systemColor="labelColor"/>
-                            <connections>
-                                <action selector="addorTakePhoto:" destination="jcD-Qk-L5Q" id="a3h-GV-vgV"/>
-                            </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="jDT-zS-iIn"/>
                         <barButtonItem title="이용규칙" id="oki-Nw-ext">
@@ -1882,7 +1880,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="댓글을 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESu-Ey-lQz">
-                                                <rect key="frame" x="8" y="14" width="105" height="17"/>
+                                                <rect key="frame" x="8" y="10" width="105" height="17"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" systemColor="systemGray3Color"/>
                                                 <nil key="highlightedColor"/>
@@ -1895,9 +1893,9 @@
                                             <constraint firstItem="Vad-e9-vVl" firstAttribute="leading" secondItem="snp-oI-yzT" secondAttribute="leading" constant="8" id="B6O-ae-nz3"/>
                                             <constraint firstAttribute="trailing" secondItem="CBb-z3-Myp" secondAttribute="trailing" constant="8" id="N51-JX-U38"/>
                                             <constraint firstItem="Vad-e9-vVl" firstAttribute="top" secondItem="snp-oI-yzT" secondAttribute="top" id="Tdf-m4-bWh"/>
-                                            <constraint firstItem="ESu-Ey-lQz" firstAttribute="centerY" secondItem="Vad-e9-vVl" secondAttribute="centerY" id="Ufn-qQ-56U"/>
+                                            <constraint firstItem="ESu-Ey-lQz" firstAttribute="leading" secondItem="snp-oI-yzT" secondAttribute="leading" constant="8" id="gU9-Po-DtB"/>
                                             <constraint firstItem="CBb-z3-Myp" firstAttribute="leading" secondItem="Vad-e9-vVl" secondAttribute="trailing" constant="8" symbolic="YES" id="jc3-U5-kzn"/>
-                                            <constraint firstItem="ESu-Ey-lQz" firstAttribute="leading" secondItem="Vad-e9-vVl" secondAttribute="leading" id="lgc-yk-Pe5"/>
+                                            <constraint firstItem="ESu-Ey-lQz" firstAttribute="top" secondItem="snp-oI-yzT" secondAttribute="top" constant="10" id="jfN-Od-SEv"/>
                                             <constraint firstAttribute="trailing" secondItem="Vcj-xi-Uhd" secondAttribute="trailing" id="rHB-Yi-uqz"/>
                                             <constraint firstAttribute="bottom" secondItem="Vcj-xi-Uhd" secondAttribute="bottom" id="v26-DT-oQH"/>
                                             <constraint firstAttribute="height" constant="45" id="xGz-og-m7D"/>
@@ -1916,9 +1914,9 @@
                         <viewLayoutGuide key="safeArea" id="ZhD-co-4ix"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="ida-10-9qy" secondAttribute="bottom" constant="152" id="0wE-wC-usM"/>
                             <constraint firstItem="ZhD-co-4ix" firstAttribute="bottom" secondItem="Vyh-jv-qsC" secondAttribute="bottom" id="7q6-Ka-TLC"/>
                             <constraint firstItem="ida-10-9qy" firstAttribute="leading" secondItem="ZhD-co-4ix" secondAttribute="leading" id="A5b-sl-4az"/>
+                            <constraint firstItem="Vyh-jv-qsC" firstAttribute="top" secondItem="ida-10-9qy" secondAttribute="bottom" constant="8" symbolic="YES" id="S2M-T9-ZpG"/>
                             <constraint firstItem="Vyh-jv-qsC" firstAttribute="trailing" secondItem="ZhD-co-4ix" secondAttribute="trailing" id="cSH-ZD-Wrw"/>
                             <constraint firstItem="ida-10-9qy" firstAttribute="trailing" secondItem="ZhD-co-4ix" secondAttribute="trailing" id="cYw-3i-U30"/>
                             <constraint firstItem="ida-10-9qy" firstAttribute="top" secondItem="xsq-uc-HSB" secondAttribute="top" id="fni-Lz-8VK"/>

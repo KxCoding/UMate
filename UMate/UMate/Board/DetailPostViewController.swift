@@ -7,6 +7,9 @@
 
 import UIKit
 import Loaf
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 
 /// 게시글 삭제
@@ -14,6 +17,7 @@ import Loaf
 extension Notification.Name {
     static let deletePost = Notification.Name("deletePost")
 }
+
 
 
 
@@ -84,6 +88,17 @@ class DetailPostViewController: CommonViewController {
     
     /// 댓글 좋아요 리스트
     var likeCommentList = [LikeCommentListResponse.LikeComment]()
+    
+    /// keyboard의 높이를 방출하는 옵저버블
+    let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification,
+                                                              object: nil)
+        .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue }
+        .map { $0.cgRectValue.height }
+    
+    /// keybaordr의 높이를 0으로 방출하는 옵저버블
+    let willHide = NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification,
+                                                              object: nil)
+            .map { _ in CGFloat(0)}
     
     
     /// 댓글 및 대댓글을 저장합니다.
@@ -453,6 +468,7 @@ class DetailPostViewController: CommonViewController {
     
     
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
+    /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
     override func viewDidLoad() {
         super.viewDidLoad()
         #warning("사용자 수정")
@@ -463,37 +479,16 @@ class DetailPostViewController: CommonViewController {
         
         writeCommentContainerView.layer.cornerRadius = 14
         
-        var token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main,using: { [weak self]  noti in
-            guard let strongSelf = self else { return }
-            
-            if let frame = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-                let height = frame.height - 70
-                let tableViewHeight = frame.height
-                
-                strongSelf.commentContainerViewBottomConstraint.constant = height
-                
-                var inset = strongSelf.detailPostTableView.contentInset
-                inset.bottom = tableViewHeight
-                strongSelf.detailPostTableView.contentInset = inset
-                strongSelf.detailPostTableView.scrollIndicatorInsets = inset
-            }
-        })
-        tokens.append(token)
+        // 키보드 노티피케이션을 처리하는 옵저버블입니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        Observable.merge(willShow, willHide)
+            .bind(to: commentContainerViewBottomConstraint.rx.constant)
+            .disposed(by: rx.disposeBag)
         
-        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main, using: { [weak self] (noti) in
-            guard let strongSelf = self else { return }
-            
-            strongSelf.commentContainerViewBottomConstraint.constant = 8
-            
-            var inset = strongSelf.detailPostTableView.contentInset
-            inset.bottom = 8
-            strongSelf.detailPostTableView.contentInset = inset
-            strongSelf.detailPostTableView.scrollIndicatorInsets = inset
-        })
-        tokens.append(token)
         
         // 댓글 및 대댓글을 추가합니다.
-        token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
+        // - Author: 김정민(kimjm010@icloud.com)
+        let token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
                                                        object: nil,
                                                        queue: .main) { [weak self] (noti) in
             if let newComment = noti.userInfo?["comment"] as? CommentListResponseData.Comment {
@@ -516,6 +511,17 @@ class DetailPostViewController: CommonViewController {
             }
         }
         tokens.append(token)
+        
+        
+        // 댓글의 placeholder상태를 관리합니다.
+        //
+        // 게시글 내용이 입력된 경우 placeholder 레이블을 숨깁니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        commentTextView.rx.text.orEmpty
+            .map { $0.count > 0 }
+            .bind(to: commentPlaceholderLabel.rx.isHidden)
+            .disposed(by: rx.disposeBag)
+        
     }
     
     
@@ -843,26 +849,26 @@ extension DetailPostViewController: UITableViewDelegate {
 /// - Author: 김정민(kimjm010@icloud.com)
 extension DetailPostViewController: UITextViewDelegate {
     
-    /// 댓글 편집시 placeholder를 설정합니다.
-    /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
-    /// - Parameter textView: commentTextView
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        commentPlaceholderLabel.isHidden = true
-    }
-    
-    
-    /// 댓글 편집후의 placeholder를 설정합니다.
-    /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시합니다.
-    /// - Parameter textView: commentTextView
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func textViewDidEndEditing(_ textView: UITextView) {
-        guard let comment = commentTextView.text, comment.count > 0 else {
-            commentPlaceholderLabel.isHidden = false
-            return
-        }
-        
-        commentPlaceholderLabel.isHidden = true
-    }
+//    /// 댓글 편집시 placeholder를 설정합니다.
+//    /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
+//    /// - Parameter textView: commentTextView
+//    /// - Author: 김정민(kimjm010@icloud.com)
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//        commentPlaceholderLabel.isHidden = true
+//    }
+//    
+//    
+//    /// 댓글 편집후의 placeholder를 설정합니다.
+//    /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시합니다.
+//    /// - Parameter textView: commentTextView
+//    /// - Author: 김정민(kimjm010@icloud.com)
+//    func textViewDidEndEditing(_ textView: UITextView) {
+//        guard let comment = commentTextView.text, comment.count > 0 else {
+//            commentPlaceholderLabel.isHidden = false
+//            return
+//        }
+//        
+//        commentPlaceholderLabel.isHidden = true
+//    }
 }
 
