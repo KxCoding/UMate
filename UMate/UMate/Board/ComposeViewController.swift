@@ -8,6 +8,20 @@
 import UIKit
 import DropDown
 import Loaf
+import RxSwift
+import RxCocoa
+import NSObject_Rx
+
+
+/// 이미지 첨부 방식
+/// - Author: 김정민(kimjm010@icloud.com)
+enum SelectImageAttachActionType {
+    case find
+    case take
+    case close
+}
+
+
 
 
 /// 게시글 작성 화면
@@ -41,6 +55,9 @@ class ComposeViewController: CommonViewController {
     /// 게시판 이용정보
     @IBOutlet weak var communityInfoLabel: UILabel!
     
+    /// 이미지 첨부 버튼
+    @IBOutlet weak var selectImageAttachmentTypeBtn: UIBarButtonItem!
+    
     /// 선택된 게시판
     var selectedBoard: BoardDtoResponseData.BoardDto?
     
@@ -59,6 +76,17 @@ class ComposeViewController: CommonViewController {
     /// 카테고리 선택상태 확인
     var isSelected = true
     
+    /// keyboard의 높이를 방출하는 옵저버블
+    let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification,
+                                                              object: nil)
+        .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue }
+        .map { $0.cgRectValue.height }
+    
+    /// keybaordr의 높이를 0으로 방출하는 옵저버블
+    let willHide = NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification,
+                                                              object: nil)
+            .map { _ in CGFloat(0)}
+    
     
     /// 게시글 작성을 취소합니다.
     /// - Author: 김정민(kimjm010@icloud.com)
@@ -72,11 +100,11 @@ class ComposeViewController: CommonViewController {
     /// - Parameter sender: Camera UIBarButtonItem
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func addorTakePhoto(_ sender: UIBarButtonItem) {
-        alertToSelectAddOrTakePhoto(title: "", message: "이미지 첨부 방식을 선택해 주세요.") { _ in
-            self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
-        } handler2: { _ in
-            self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
-        }
+//        alertToSelectAddOrTakePhoto(title: "", message: "이미지 첨부 방식을 선택해 주세요.") { _ in
+//            self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
+//        } handler2: { _ in
+//            self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
+//        }
     }
     
     
@@ -203,12 +231,16 @@ class ComposeViewController: CommonViewController {
         postTitleTextField.inputAccessoryView = accessoryBar
         postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
         
+        
+        // Asset에 추가한 커뮤니티 정보 txt 파일을 문자열 데이터로 가져옵니다.
+        // - Author: 김정민(kimjm010@icloud.com)
         if let communityInfoAssetData = NSDataAsset(name: "communityInfo")?.data,
            let communityInfoStr = String(data: communityInfoAssetData, encoding: .utf8) {
             communityInfoLabel.text = communityInfoStr
         }
         
         // 게시글 화면에 앨범 이미지 표시
+        // - Author: 김정민(kimjm010@icloud.com)
         var token = NotificationCenter.default.addObserver(forName: .imageDidSelect,
                                                            object: nil,
                                                            queue: .main) { [weak self] (noti) in
@@ -220,6 +252,7 @@ class ComposeViewController: CommonViewController {
         tokens.append(token)
         
         // 게시글 화면에 캡쳐 이미지 표시
+        // - Author: 김정민(kimjm010@icloud.com)
         token = NotificationCenter.default.addObserver(forName: .newImageCaptured,
                                                        object: nil,
                                                        queue: .main,
@@ -243,6 +276,46 @@ class ComposeViewController: CommonViewController {
             }
         })
         tokens.append(token)
+        
+        // 이미지 첨부 방식을 선택합니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        selectImageAttachmentTypeBtn.rx.tap
+            .flatMap { _ in self.alertToSelectImageAttachWay(title: "알림", message: "이미지 첨부 방식을 선택하세요 :)") }
+            .subscribe(onNext: { [unowned self] (actionType) in
+                switch actionType {
+                case .find:
+                    self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
+                case .take:
+                    self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
+                default:
+                    break
+                }
+            })
+            .disposed(by: rx.disposeBag)
+        
+        // 키보드 노티피케이션을 처리하는 옵저버블입니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        Observable.merge(willShow, willHide)
+            .bind(to: postContentTextView.rx.keyboardHeight)
+            .disposed(by: rx.disposeBag)
+        
+        // 게시글 제목의 placeholder상태를 관리합니다.
+        //
+        // 게시글 제목이 입력된 경우 placeholder 레이블을 숨깁니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        postTitleTextField.rx.text.orEmpty.asDriver()
+            .map { $0.count > 0 }
+            .drive(postTitlePlaceholderLabel.rx.isHidden)
+            .disposed(by: rx.disposeBag)
+        
+        // 게시글 내용의 placeholder상태를 관리합니다.
+        //
+        // 게시글 내용이 입력된 경우 placeholder 레이블을 숨깁니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        postContentTextView.rx.text.orEmpty.asDriver()
+            .map { $0.count > 0 }
+            .drive(contentPlacehoderLabel.rx.isHidden)
+            .disposed(by: rx.disposeBag)
     }
 }
 
@@ -251,31 +324,6 @@ class ComposeViewController: CommonViewController {
 /// 게시글 내용의 동작 방식 처리
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UITextViewDelegate {
-    
-    /// 본문 편집 중 placeholder 상태를 관리합니다.
-    ///
-    /// 본문 편집 중 placeholder를 hidden으로 바꿉니다.
-    /// - Parameter textView: postContentTextView
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        contentPlacehoderLabel.isHidden = true
-    }
-    
-    
-    /// 본문 편집 후의 placeholder 상태를 관리합니다.
-    ///
-    /// 본문 편집 후 글자수가 0 보다 작거나 같은 경우에 Placeholder를 다시 표시합니다.
-    /// - Parameter textView: postContentTextView
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func textViewDidEndEditing(_ textView: UITextView) {
-        guard let content = postContentTextView.text, content.count > 0 else {
-            contentPlacehoderLabel.isHidden = false
-            return
-        }
-        
-        contentPlacehoderLabel.isHidden = true
-    }
-    
     
     /// 본문 편집 중 글자 수를 확인합니다.
     ///
@@ -322,32 +370,6 @@ extension ComposeViewController: UITextViewDelegate {
 /// 게시글 제목의 동작방식 처리
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UITextFieldDelegate {
-    
-    /// 제목 편집 중 placeholder 상태를 관리합니다.
-    ///
-    /// 제목 편집 중 placeholder를 hidden으로 바꿉니다.
-    /// - Parameter textField: postTitleTextField
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        postTitlePlaceholderLabel.isHidden = true
-    }
-    
-    
-    /// 제목 편집 후 placeholder 상태를 관리합니다.
-    ///
-    /// 제목 편집 후 글자수가 0보다 작거나 같은 경우 다시 Placeholder를 설정합니다.
-    /// - Parameter textField: postTitleTextField
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        guard let title = postTitleTextField.text, title.count > 0 else {
-            postTitlePlaceholderLabel.isHidden = false
-            return
-        }
-        
-        postTitlePlaceholderLabel.isHidden = true
-    }
-    
     
     /// 제목 편집 중 Return버튼의 기능을 설정합니다.
     ///
@@ -477,6 +499,7 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
 
 
 
+
 /// 이미지 및 카테고리의 동작 처리
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UICollectionViewDelegate {
@@ -509,3 +532,4 @@ extension ComposeViewController: UICollectionViewDelegate {
         }
     }
 }
+

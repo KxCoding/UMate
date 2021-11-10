@@ -29,6 +29,7 @@ class CommunityRuleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Asset에 추가한 커뮤니티 이용규칙 txt 파일을 문자열 데이터로 가져옵니다.
         if let communityRuleAssetData = NSDataAsset(name: "communityRule")?.data,
            let communityRuleStr = String(data: communityRuleAssetData, encoding: .utf8) {
             communityRuleTextView.text = communityRuleStr

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+
 
 extension UIViewController {
     
@@ -154,35 +156,44 @@ extension UIViewController {
         present(alertCommnet, animated: true, completion: nil)
     }
     
-    
-    /// 게시글에 이미지 첨부 시 알림을 표시합니다.
-    /// 이미지를 앨범에서 찾거나 캡쳐할 수 있습니다.
+
+    /// 이미지 첨부 방법을 선택하는 알림입니다.
     /// - Parameters:
     ///   - title: 알림의 Title
     ///   - message: 알림의 Message
-    ///   - handler1: 앨범에서 찾기를 선택한 후 실행할 작업. 기본값은 nil입니다.
-    ///   - handler2: 캡쳐하기를 선택한 후 실행할 작업. 기본값을 nil입니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func alertToSelectAddOrTakePhoto(title: String,
-                                     message: String,
-                                     handler1: ((UIAlertAction) -> Void)? = nil,
-                                     handler2: ((UIAlertAction) -> Void)? = nil) {
-        let alertCommnet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-        
-        let addAction = UIAlertAction(title: "앨범에서 찾기", style: .default, handler: handler1)
-        alertCommnet.addAction(addAction)
-        
-        let takeAction = UIAlertAction(title: "캡쳐하기", style: .default, handler: handler2)
-        alertCommnet.addAction(takeAction)
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        alertCommnet.addAction(cancelAction)
-        
-        present(alertCommnet, animated: true, completion: nil)
+    /// - Returns: SelectImageAttachActionType을 방출하는 옵저버블
+    func alertToSelectImageAttachWay(title: String, message: String) -> Observable<SelectImageAttachActionType> {
+        return Observable.create { [unowned self] observer in
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+            
+            let findAction = UIAlertAction(title: "앨범에서 찾기", style: .default) { _ in
+                observer.onNext(.find)
+                observer.onCompleted()
+            }
+            alert.addAction(findAction)
+            
+            let takePhotoAction = UIAlertAction(title: "캡쳐하기", style: .default) { _ in
+                observer.onNext(.take)
+                observer.onCompleted()
+            }
+            alert.addAction(takePhotoAction)
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel) { _ in
+                observer.onNext(.close)
+                observer.onCompleted()
+            }
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
+            
+            return Disposables.create {
+                alert.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     
-
+    
     /// 앨범 접근 권한에 따른 알림을 표시합니다.
     /// - Parameters:
     ///   - title: 알림의 title
