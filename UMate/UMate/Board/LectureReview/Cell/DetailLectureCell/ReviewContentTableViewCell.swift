@@ -64,10 +64,8 @@ class ReviewContentTableViewCell: UITableViewCell {
     }
     
     
-    /// 셀을 초기화
-    /// - Parameters:
-    ///   - lecture: 강의 정보
-    ///   - indexPath: 개별 리뷰 셀의 인덱스패스
+    /// 개별 강의평을 나타냅니다.
+    /// - Parameter review: 개별 강의평
     /// - Author: 김정민
     func configure(review: LectureReviewListResponse.LectureReview) {
         reviewContentLabel.text = review.content

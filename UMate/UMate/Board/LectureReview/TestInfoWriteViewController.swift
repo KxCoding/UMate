@@ -13,7 +13,7 @@ import UIKit
 /// 시험정보 작성 화면에서 '공유하기' 버튼을 눌렀을 때 처리되는 동작에 대한 노티피케이션
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
-    static let TestInfoDidShare = Notification.Name("TestInfoDidShare")
+    static let testInfoDidShare = Notification.Name("testInfoDidShare")
 }
 
 
@@ -67,7 +67,7 @@ class TestInfoWriteViewController: CommonViewController {
        
         
         // 알림창 노티피케이션
-        token = NotificationCenter.default.addObserver(forName: .alertDidsend, object: nil, queue: .main) { [weak self] noti in
+        token = NotificationCenter.default.addObserver(forName: .alertDidSend, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
             if let alertKey = noti.userInfo?["alertKey"] as? Int {
@@ -100,7 +100,7 @@ class TestInfoWriteViewController: CommonViewController {
         
         
         // 시험정보 공유 버튼 클릭시 화면 dismiss
-        token = NotificationCenter.default.addObserver(forName: .TestInfoDidShare, object: nil, queue: .main) { [weak self] _ in
+        token = NotificationCenter.default.addObserver(forName: .testInfoDidShare, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             self.dismiss(animated: true, completion: nil)
         }
@@ -118,7 +118,7 @@ class TestInfoWriteViewController: CommonViewController {
         let token = NotificationCenter.default.addObserver(forName: .warningAlertDidSend, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             self.alertVersion3(title: "시험 정보를 공유하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { _ in
-                if let newTestInfo = noti.userInfo?["testInfo"] as? SaveTestInfoData {
+                if let newTestInfo = noti.userInfo?["testInfo"] as? TestInfoPostData {
            
                     guard let url = URL(string: "https://board1104.azurewebsites.net/api/testInfo") else { return }
            
@@ -179,7 +179,7 @@ class TestInfoWriteViewController: CommonViewController {
                     
                     let newTestInfo = TestInfoListResponse.TestInfo(testInfoId: data.testInfo.testInfoId, userId: data.testInfo.userId, lectureInfoId: data.testInfo.lectureInfoId, semester: data.testInfo.semester, testType: data.testInfo.testType, testStrategy: data.testInfo.testStrategy, questionTypes: data.testInfo.questionTypes, examples: exampleList, createdAt: data.testInfo.createdAt)
                     
-                    NotificationCenter.default.post(name: .TestInfoDidShare, object: nil, userInfo: ["testInfo": newTestInfo])
+                    NotificationCenter.default.post(name: .testInfoDidShare, object: nil, userInfo: ["testInfo": newTestInfo])
                    
                 case ResultCode.testInfoExists.rawValue:
                     #if DEBUG

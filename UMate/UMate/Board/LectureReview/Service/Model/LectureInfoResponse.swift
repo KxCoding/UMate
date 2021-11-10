@@ -35,7 +35,7 @@ struct LectureInfoListResponseData: Codable {
     }
     
     let totalCount: Int
-    let list: [LectureInfoListResponseData.LectureInfo]
+    let list: [LectureInfo]
     let resultCode: Int
     let message: String?
 }

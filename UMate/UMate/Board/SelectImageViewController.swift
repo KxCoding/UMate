@@ -34,7 +34,7 @@ class SelectImageViewController: CommonViewController {
     let imageManager = PHImageManager()
     
     /// 이미지 옵션
-    /// - Author: 남정은(dlsl7080@gamil.com)
+    /// - Author: 남정은(dlsl7080@gmail.com)
     lazy var imageOption: PHImageRequestOptions = {
         let option = PHImageRequestOptions()
         option.deliveryMode = PHImageRequestOptionsDeliveryMode.fastFormat
