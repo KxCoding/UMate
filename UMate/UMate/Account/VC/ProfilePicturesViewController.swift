@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
+import NSObject_Rx
 
 /// 사진 이미지를 포스팅할 새로운 이름을 생성
 /// - Author: 황신택 (sinadsl1457@gmail.com)
