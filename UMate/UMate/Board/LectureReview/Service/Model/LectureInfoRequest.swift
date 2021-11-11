@@ -10,7 +10,7 @@ import Foundation
 
 /// 강의평 서버에 저장할 때 사용
 /// - Author: 남정은(dlsl7080@gmail.com)
-struct SaveLectureReviewData: Codable {
+struct LectureReviewPostData: Codable {
     /// 강의평 Id
     let lectureReviewId: Int
     
@@ -51,7 +51,7 @@ struct SaveLectureReviewData: Codable {
 
 /// 시험정보 서버에 저장할 때 사용
 /// - Author: 남정은(dlsl7080@gmail.com)
-struct SaveTestInfoData: Codable {
+struct TestInfoPostData: Codable {
     /// 시험정보 Id
     let testInfoId: Int
     

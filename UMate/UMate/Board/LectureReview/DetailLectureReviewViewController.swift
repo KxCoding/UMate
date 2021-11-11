@@ -231,7 +231,7 @@ class DetailLectureReviewViewController: CommonViewController {
     }
     
 
-    /// 시험정보공유 작성화면에 강의에 대한 정보 전달합니다.
+    /// 시험정보공유 작성화면에 강의에 대한 정보를 전달합니다.
     /// - Parameters:
     ///   - segue: 호출된 segue
     ///   - sender: segue가 시작된 객체
@@ -281,7 +281,7 @@ class DetailLectureReviewViewController: CommonViewController {
         tokens.append(token)
         
         // 시험 정보 추가
-        token = NotificationCenter.default.addObserver(forName: .TestInfoDidShare, object: nil, queue: .main) { noti in
+        token = NotificationCenter.default.addObserver(forName: .testInfoDidShare, object: nil, queue: .main) { noti in
             if let testInfo = noti.userInfo?["testInfo"] as? TestInfoListResponse.TestInfo {
                 self.testInfoList.append(testInfo)
                 
@@ -579,7 +579,7 @@ extension DetailLectureReviewViewController: UICollectionViewDelegate {
           
         // 시험 정보 선택 시
         case 3:
-            lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 3), at: .top, animated: true)
+            lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 4), at: .top, animated: true)
           
         default:
             break

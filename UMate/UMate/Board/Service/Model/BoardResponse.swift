@@ -71,9 +71,9 @@ struct PostListDtoResponseData: Codable {
         let content: String
         var createdAt: String
         let userName: String
-        let likeCnt: Int
-        let commentCnt: Int
-        let scrapCnt: Int
+        var likeCnt: Int
+        var commentCnt: Int
+        var scrapCnt: Int
         let categoryNumber: Int
     }
     

@@ -12,12 +12,13 @@ import RxCocoa
 import NSObject_Rx
 
 
-/// 게시글 삭제
+/// 게시글 삭제, 댓글 카운트 레이블 업데이트
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
-    static let deletePost = Notification.Name("deletePost")
+    static let postDidDelete = Notification.Name("postDidDelete")
+    static let commentDidDelete = Notification.Name("commentDidDelete")
+    static let commentDidInsert = Notification.Name("commentDidInsert")
 }
-
 
 
 
@@ -127,6 +128,7 @@ class DetailPostViewController: CommonViewController {
         guard let url = URL(string: "https://board1104.azurewebsites.net/api/comment") else { return }
         
         sendSavingCommentRequest(url: url, httpMethod: "POST", httpBody: body)
+        NotificationCenter.default.post(name: .commentDidInsert, object: nil, userInfo: ["postId": post?.postId ?? 0])
         
         isReComment = false
         
@@ -149,7 +151,7 @@ class DetailPostViewController: CommonViewController {
     ///   - url: 요청할 url
     ///   - httpMethod: api 메소드
     ///   - httpBody: 댓글 데이터
-    ///   - Author: 남정은(dlsl7080@gmail.com)
+    ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
     private func sendSavingCommentRequest(url: URL, httpMethod: String, httpBody: Data?) {
         var request = URLRequest(url: url)
         request.httpMethod = httpMethod
@@ -272,7 +274,7 @@ class DetailPostViewController: CommonViewController {
     
     /// 게시글의 댓글목록을 불러옵니다.
     /// - Parameter postId: 게시글 Id
-    /// - Author: 남정은(dlsl7080@gmail.com)
+    /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
     private func fetchComments(postId: Int) {
         guard let url = URL(string: "https://board1104.azurewebsites.net/api/comment?postId=\(postId)") else { return }
         
@@ -430,7 +432,7 @@ class DetailPostViewController: CommonViewController {
                     #if DEBUG
                     print("삭제 성공")
                     #endif
-                    NotificationCenter.default.post(name: .deletePost, object: nil, userInfo: ["postId": postId])
+                    NotificationCenter.default.post(name: .postDidDelete, object: nil, userInfo: ["postId": postId])
                 } else {
                     #if DEBUG
                     print("삭제 실패")
@@ -529,7 +531,7 @@ class DetailPostViewController: CommonViewController {
         }
         
         // 게시글 삭제
-        let token = NotificationCenter.default.addObserver(forName: .alertDidsend, object: nil, queue: .main, using: { _ in
+        let token = NotificationCenter.default.addObserver(forName: .alertDidSend, object: nil, queue: .main, using: { _ in
             let alertMenu = UIAlertController(title: "", message: "메뉴를 선택하세요.", preferredStyle: .actionSheet)
             
             let deleteAction = UIAlertAction(title: "게시글 삭제", style: .default) { _ in
@@ -677,7 +679,8 @@ extension DetailPostViewController: UITableViewDataSource {
                 comment.createdAt = dateStr
             }
             let isLiked = likeCommentList.contains { $0.commentId == comment.commentId }
-            cell.configure(comment: comment, isLiked: isLiked)
+            let likedComment = likeCommentList.first { $0.commentId == comment.commentId }
+            cell.configure(comment: comment, isLiked: isLiked, likedComment: likedComment)
             
             return cell
             
@@ -733,6 +736,7 @@ extension DetailPostViewController: UITableViewDelegate {
                     
                     let id = self.sortedCommentList[indexPath.row].commentId
                     self.deleteComment(commentId: id)
+                    NotificationCenter.default.post(name: .commentDidDelete, object: nil, userInfo: ["postId": self.post?.postId ?? 0])
                     
                     self.sortedCommentList.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -775,6 +779,7 @@ extension DetailPostViewController: UITableViewDelegate {
                          attributes: .destructive) { action in
                     let id = self.sortedCommentList[indexPath.row].commentId
                     self.deleteComment(commentId: id)
+                    NotificationCenter.default.post(name: .commentDidDelete, object: nil, userInfo: ["postId": self.post?.postId ?? 0])
                     
                     self.sortedCommentList.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .automatic)

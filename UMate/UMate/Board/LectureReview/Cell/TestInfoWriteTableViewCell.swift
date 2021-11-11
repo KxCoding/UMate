@@ -13,7 +13,7 @@ import UIKit
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
     static let testInfoInputFieldDidInsert = Notification.Name("insertTestInfoInputField")
-    static let alertDidsend = Notification.Name("sendAlert")
+    static let alertDidSend = Notification.Name("alertDidSend")
     static let warningAlertDidSend = Notification.Name("warningAlert")
 }
 
@@ -160,23 +160,23 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         
         // 수강학기 미선택시
         if semestersView.selectedItem == nil {
-            NotificationCenter.default.post(name: .alertDidsend, object: nil, userInfo: ["alertKey":0])
+            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":0])
         }
         // 시험죵류 미선택시
         else if testTypesView.selectedItem == nil {
-            NotificationCenter.default.post(name: .alertDidsend, object: nil, userInfo: ["alertKey":1])
+            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":1])
         }
         // 시험전략 미작성시
         else if testStrategyTextView.text.count < 20 {
-            NotificationCenter.default.post(name: .alertDidsend, object: nil, userInfo: ["alertKey":2])
+            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":2])
         }
         // 문제유형 미선택시
         else if selectedButton.count == 0 {
-            NotificationCenter.default.post(name: .alertDidsend, object: nil, userInfo: ["alertKey":3])
+            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":3])
         }
         // 문제예시 미작성시
         else if firstTextField.text?.count ?? 0 < 5 {
-            NotificationCenter.default.post(name: .alertDidsend, object: nil, userInfo: ["alertKey":4])
+            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":4])
         }
         // 다 입력했을 경우
         else {
@@ -199,7 +199,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
             let questionTypesStr = questionTypes.map{ $0.trimmingCharacters(in: .whitespaces)}.joined(separator: ",")
             #warning("사용자 수정6c1c72d6-fa9b-4af6-8730-bb98fded0ad8")
-            let newTestInfo = SaveTestInfoData(testInfoId: 0, userId: "22", lectureInfoId: lectureInfoId, semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypesStr, examples: examplesOfQuestions, createdAt: dateStr)
+            let newTestInfo = TestInfoPostData(testInfoId: 0, userId: "22", lectureInfoId: lectureInfoId, semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypesStr, examples: examplesOfQuestions, createdAt: dateStr)
             
             NotificationCenter.default.post(name: .warningAlertDidSend, object: nil, userInfo: ["testInfo": newTestInfo])
         }

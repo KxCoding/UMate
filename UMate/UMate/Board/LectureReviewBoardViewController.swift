@@ -119,9 +119,9 @@ class LectureReviewBoardViewController: CommonViewController {
     }
     
     
-    func filterContentForSearchText(_ searchText: String) { filteredLectureList = lectureList.filter { (list: LectureInfoListResponseData.LectureInfo) -> Bool in
-            return list.professor.lowercased().contains(searchText.lowercased()) || list.title.lowercased().contains(searchText.lowercased())
-        }
+    func filterContentForSearchText(_ searchText: String) {
+        filteredLectureList = lectureList.filter { $0.professor.lowercased().contains(searchText.lowercased())
+                                                    || $0.title.lowercased().contains(searchText.lowercased()) }
         
         lectureReviewListTableView.reloadData()
     }

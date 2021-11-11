@@ -30,8 +30,7 @@ class TestInfoTableViewCell: UITableViewCell {
     
     /// 시험정보 셀을 초기화 합니다.
     /// - Parameters:
-    ///   - lecture: 선택된 강의
-    ///   - indexPath: 시험정보를 나타내는 셀의 indexPath
+    ///   - testInfo: 시험정보
     ///   - Author: 남정은(dlsl7080@gmail.com)
     func configure(testInfo: TestInfoListResponse.TestInfo) {
         kindOfTestLabel.text = testInfo.testType

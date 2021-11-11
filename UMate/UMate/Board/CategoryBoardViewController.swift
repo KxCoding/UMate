@@ -65,19 +65,82 @@ class CategoryBoardViewController: FreeBoardViewController {
         tokens.append(token)
         
         // 게시글 삭제
-        token = NotificationCenter.default.addObserver(forName: .deletePost, object: nil, queue: .main, using: { [weak self] noti in
+        token = NotificationCenter.default.addObserver(forName: .postDidDelete, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if let postId = noti.userInfo?["postId"] as? Int,
-               let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+               let filterdIndex = self.filteredPostList.firstIndex(where: { $0.postId == postId }),
+               let originalIndex = self.postList.firstIndex(where: { $0.postId == postId}) {
                 if self.isFiltering {
-                    self.filteredPostList.remove(at: index)
-                    self.postList.remove(at: index)
-                    self.postListTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                    self.filteredPostList.remove(at: filterdIndex)
+                    self.postList.remove(at: originalIndex)
+                    self.postListTableView.deleteRows(at: [IndexPath(row: filterdIndex, section: 0)], with: .automatic)
                 } else {
-                    self.postList.remove(at: index)
-                    self.postListTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                    self.postList.remove(at: originalIndex)
+                    self.postListTableView.deleteRows(at: [IndexPath(row: originalIndex, section: 0)], with: .automatic)
                 }
             }
+        })
+        tokens.append(token)
+        
+        // 카운트 레이블 업데이트
+        token = NotificationCenter.default.addObserver(forName: .postDidLike, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if self.isFiltering {
+                if let postId = noti.userInfo?["postId"] as? Int,
+                   let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                    self.filteredPostList[index].likeCnt += 1
+                    self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+        })
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if self.isFiltering {
+                if let postId = noti.userInfo?["postId"] as? Int,
+                   let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                    self.filteredPostList[index].scrapCnt += 1
+                    self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+        })
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .postCancelScrap, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if self.isFiltering {
+                if let postId = noti.userInfo?["postId"] as? Int,
+                   let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                    self.filteredPostList[index].scrapCnt -= 1
+                    self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+        })
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .commentDidInsert, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if self.isFiltering {
+                if let postId = noti.userInfo?["postId"] as? Int,
+                   let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                    self.filteredPostList[index].commentCnt += 1
+                    self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+        })
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .commentDidDelete, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if self.isFiltering {
+                if let postId = noti.userInfo?["postId"] as? Int,
+                   let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                    self.filteredPostList[index].commentCnt -= 1
+                    self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+           
         })
         tokens.append(token)
     }

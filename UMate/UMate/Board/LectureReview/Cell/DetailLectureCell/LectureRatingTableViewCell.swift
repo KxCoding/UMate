@@ -39,10 +39,10 @@ class LectureRatingTableViewCell: UITableViewCell {
     typealias Count = (key: Int, value: Int)
     
     
-    ///  강의의 총평 셀을 초기화 합니다.
+    /// 강의의 총평 셀을 초기화 합니다.
     /// - Parameters:
     ///   - resultReview: 종합 강의평에 대한 정보가 담긴 배열
-    ///   - lecture: 선택된 강의에 대한 정보
+    ///   - ratingAvg: 강의평점 평균
     ///   - Author: 남정은(dlsl7080@gmail.com)
     func configure(resultReview: [Int], ratingAvg: Double) {
         assignmentLabel.text = LectureReview.Assignment(rawValue: resultReview[0])?.description
