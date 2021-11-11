@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 /// 대외활동 / 공모전 데이터를 구성하는 셀
 /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -44,13 +47,14 @@ class ContestsTableViewCell: CommonTableViewCell {
         contestFieldLabel.text = model.field
         contestDescLabel.text = model.description
         institutionLabel.text = model.institution
-        fetchImage(with: model.url) { image in
-            if let image = image {
-                self.contestImageView.image = image
-            } else {
-                self.contestImageView.image = UIImage(named: "placeholder")
-            }
-        }
+        
+        Observable.just(model.url)
+            .subscribe(on: backgroundScheduler)
+            .compactMap { URL(string: $0) }
+            .compactMap { try? Data(contentsOf: $0) }
+            .compactMap { UIImage(data: $0) }
+            .bind(to: contestImageView.rx.image)
+            .disposed(by: rx.disposeBag)
     }
     
     
