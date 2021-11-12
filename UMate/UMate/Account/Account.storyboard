@@ -131,6 +131,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4E0-rL-GTE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="r5B-OO-RsL"/>
             </objects>
             <point key="canvasLocation" x="1947.826086956522" y="61.607142857142854"/>
         </scene>
@@ -401,9 +402,6 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <connections>
-                                                    <action selector="makeEnterenceOfYearData:" destination="dJp-Wr-kbc" eventType="touchUpInside" id="ONl-li-wUt"/>
-                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NFM-2i-lOv">
                                                 <rect key="frame" x="10" y="0.0" width="334" height="40"/>
@@ -540,7 +538,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="dismissZone" destination="xv3-q8-V6A" id="M11-Ns-trE"/>
+                        <outlet property="UniversityYearButton" destination="XqV-B4-a5a" id="rBz-vV-KET"/>
+                        <outlet property="dismissView" destination="xv3-q8-V6A" id="M11-Ns-trE"/>
                         <outlet property="enterenceYearContainerView" destination="Ikf-og-rac" id="AtC-Il-72L"/>
                         <outlet property="enterenceYearLabel" destination="NFM-2i-lOv" id="IFU-Ho-s6o"/>
                         <outlet property="nextButton" destination="iNg-hN-98w" id="BW7-qK-UEs"/>
@@ -564,7 +563,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <outlet property="delegate" destination="Djf-jZ-fpe" id="Nhb-v2-gzE"/>
+                                    <outlet property="delegate" destination="Djf-jZ-fpe" id="5Cr-fn-Cyj"/>
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XVe-BG-te9">
@@ -581,8 +580,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="Djf-jZ-fpe" id="6Zo-Bv-WHF"/>
-                                    <outlet property="delegate" destination="Djf-jZ-fpe" id="YtZ-RT-sNz"/>
+                                    <outlet property="dataSource" destination="Djf-jZ-fpe" id="lhE-a4-t8A"/>
+                                    <outlet property="delegate" destination="Djf-jZ-fpe" id="uWf-ux-Lsl"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -948,7 +947,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="checkToAllcheckboxes:" destination="Arp-vK-a9Y" eventType="touchUpInside" id="KT3-aq-egf"/>
+                                                        <action selector="checkToAllcheckboxes:" destination="Arp-vK-a9Y" eventType="touchUpInside" id="N1y-09-L99"/>
                                                         <segue destination="8tn-kC-Qjq" kind="show" id="F2Y-Va-DWl"/>
                                                     </connections>
                                                 </button>
@@ -1051,18 +1050,18 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="코드를 입력하세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LSP-OI-08O">
-                                        <rect key="frame" x="0.0" y="294" width="374" height="34"/>
+                                        <rect key="frame" x="0.0" y="241" width="374" height="34"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="코드6자리를 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xs4-lV-I12">
-                                        <rect key="frame" x="0.0" y="248" width="129" height="16"/>
+                                        <rect key="frame" x="0.0" y="195" width="129" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="imu-e2-sUR">
-                                        <rect key="frame" x="0.0" y="353" width="374" height="40"/>
+                                        <rect key="frame" x="0.0" y="300" width="374" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="vWF-63-kAF"/>
@@ -1089,7 +1088,7 @@
                                     <constraint firstItem="l0B-XM-hgH" firstAttribute="leading" secondItem="jYQ-nX-k0v" secondAttribute="leading" id="eQw-Wi-rdd"/>
                                     <constraint firstAttribute="trailing" secondItem="imu-e2-sUR" secondAttribute="trailing" id="hFA-ZC-ocf"/>
                                     <constraint firstItem="1u4-de-Alf" firstAttribute="leading" secondItem="jYQ-nX-k0v" secondAttribute="leading" id="hsZ-j1-JJ6"/>
-                                    <constraint firstItem="Xs4-lV-I12" firstAttribute="top" secondItem="l0B-XM-hgH" secondAttribute="bottom" constant="103" id="jQ6-v7-ois"/>
+                                    <constraint firstItem="Xs4-lV-I12" firstAttribute="top" secondItem="l0B-XM-hgH" secondAttribute="bottom" constant="50" id="jQ6-v7-ois"/>
                                     <constraint firstItem="imu-e2-sUR" firstAttribute="leading" secondItem="jYQ-nX-k0v" secondAttribute="leading" id="oG0-V3-uom"/>
                                     <constraint firstItem="KIi-9I-VNU" firstAttribute="top" secondItem="jYQ-nX-k0v" secondAttribute="top" id="oZs-Ci-f1P"/>
                                     <constraint firstItem="imu-e2-sUR" firstAttribute="top" secondItem="LSP-OI-08O" secondAttribute="bottom" constant="25" id="u5V-nB-0PS"/>
@@ -1119,6 +1118,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgk-wx-CR8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="PQx-TX-nqY"/>
             </objects>
             <point key="canvasLocation" x="5486" y="677"/>
         </scene>
@@ -1268,6 +1268,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uwe-93-yKn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="TbI-gO-osy"/>
             </objects>
             <point key="canvasLocation" x="6387" y="676"/>
         </scene>
@@ -1594,6 +1595,9 @@
                     <navigationItem key="navigationItem" title="사진 업로드" id="Iyq-cn-Ffq">
                         <barButtonItem key="leftBarButtonItem" image="xmark" catalog="system" id="5Lf-S1-YC7">
                             <color key="tintColor" systemColor="labelColor"/>
+                            <connections>
+                                <action selector="dismissProfileView:" destination="QBK-Vl-uLp" id="kki-P7-pUP"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>

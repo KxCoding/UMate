@@ -7,6 +7,10 @@
 
 import DropDown
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
+import RxDataSources
 
 
 /// 학번과 학교 이름 선택 화면
@@ -25,10 +29,14 @@ class UniversityInfoViewController: CommonViewController {
     @IBOutlet weak var enterenceYearLabel: UILabel!
     
     /// 키보드가 내려가는 뷰
-    @IBOutlet weak var dismissZone: UIView!
+    @IBOutlet weak var dismissView: UIView!
     
     /// 학교 이름 레이블
     @IBOutlet weak var universityNameField: UILabel!
+    
+    /// 학번 드롭다운 버튼
+    @IBOutlet weak var UniversityYearButton: UIButton!
+    
     
     /// 학교 이름 저장
     /// 노티피케이션 포스팅으로 전달된 학교이름을 저장합니다.
@@ -56,21 +64,6 @@ class UniversityInfoViewController: CommonViewController {
     }
     
     
-    /// 버튼을 탭하면 선택 메뉴를 표시합니다.
-    /// 선택된 항목을 UserDefaults에 저장합니다.
-    /// - Parameter sender: makeEnterenceOfYearDataButton
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    @IBAction func makeEnterenceOfYearData(_ sender: UIButton) {
-        // 높이가 적절하다면 드롭다운 방식으로 메뉴를 표시합니다.
-        menu?.show()
-        // 사용자가 셀을 선택시 enterenceYearLabel에 선택한 셀의 item을 표시합니다.
-        menu?.selectionAction = { [weak self] index, item in
-            self?.enterenceYearLabel.text = item
-            UserDefaults.standard.set(item, forKey: "enterenceYearKey")
-        }
-    }
-    
-    
     /// 입학 연도와 학교 이름이 입력되어있는지 확인합니다.
     /// 조건에 맞는 경우 다음 화면으로 이동합니다.
     /// - Parameter sender: checkToConditionsButton
@@ -90,6 +83,20 @@ class UniversityInfoViewController: CommonViewController {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 학번 버튼을 탭하면 학번이 드롭다운 됩니다.
+        // 학번을 레이블에 표기하고 UserDefaults에 저장합니다.
+        UniversityYearButton.rx.tap
+            .map { self.menu ?? DropDown() }
+            .subscribe(onNext: {
+                $0.show()
+                $0.selectionAction = { [weak self] index, item in
+                    self?.enterenceYearLabel.text = item
+                    UserDefaults.standard.set(item, forKey: "enterenceYearKey")
+                }
+            })
+            .disposed(by: rx.disposeBag)
+        
+        
         [enterenceYearContainerView, universityContainerView].forEach {
             $0?.layer.cornerRadius = 10
             $0?.clipsToBounds = true
@@ -106,28 +113,21 @@ class UniversityInfoViewController: CommonViewController {
         menu?.bottomOffset = CGPoint(x: 0, y: height)
         menu?.width = 150
         menu?.backgroundColor = UIColor.dynamicColor(light: .white, dark: .darkGray)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-        dismissZone.addGestureRecognizer(tap)
-        
-        
+       
+     
         // userInfo에서 학교 이름을 받은 뒤 UserDefaults에 저장합니다.
-        let token = NotificationCenter.default.addObserver(forName: .didTapSendUniversityName, object: nil, queue: .main, using: { [weak self] noti in
-            guard let strongSelf = self else { return }
-            guard let universityName = noti.userInfo?[SearchListUniversityViewController.universityNameTransitionKey] as? String else { return }
-            
-            strongSelf.universityNameField.text = universityName
-            strongSelf.universityNameText = universityName
-            UserDefaults.standard.set(universityName, forKey: "universityNameKey")
-        })
-        tokens.append(token)
+        NotificationCenter.default.rx.notification(.didTapSendUniversityName)
+            .compactMap { $0.userInfo?[SearchListUniversityViewController.universityNameTransitionKey] as? String }
+            .subscribe(onNext: { [unowned self] in
+                self.universityNameText = $0
+                self.universityNameField.text = $0
+                UserDefaults.standard.set($0, forKey: "universityNameKey")
+            })
+            .disposed(by: rx.disposeBag)
+     
+        makeChangeNavigationItemColor()
     }
     
-    
-    /// 뷰를 탭하면 키보드를 내립니다.
-    /// 입학 연도가 탭 영역입니다.
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    @objc func dismissKeyboard() {
-        dismissZone.endEditing(true)
-    }
 }
+
+

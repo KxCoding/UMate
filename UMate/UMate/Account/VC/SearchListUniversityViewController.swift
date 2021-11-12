@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 /// 학교 이름을 포스팅 할 새로운 이름 생성
 /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -33,7 +36,6 @@ class SearchListUniversityViewController: UIViewController {
     
     /// 학교 이름 UserInfo 키
     static let universityNameTransitionKey = "universityNameTransitionKey"
-    
     
     /// 이전 화면으로 이동합니다.
     /// - Parameter sender: cancelButton
@@ -63,10 +65,8 @@ class SearchListUniversityViewController: UIViewController {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
-        listTableView.delegate = self
-        listTableView.dataSource = self
         listTableView.isHidden = true
-    
+        
         navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         navigationItem.rightBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
         
@@ -74,15 +74,16 @@ class SearchListUniversityViewController: UIViewController {
         // 파일의 내용을 Data 형식으로 읽어온 후 String 형식으로 변환하는 코드입니다.
         guard let universityNameData = NSDataAsset(name: "UniversityName")?.data else { return }
         guard let universityNameStr = String(data: universityNameData, encoding: .utf8) else { return }
-
+        
         // trimmingCharacters로 해결안되는 txt 파일의 불필요한 공백을 제거합니다.
         let removeSpace = universityNameStr.replacingOccurrences(of: " ", with: "")
         
         // 쉼표 기준으로 문자를 배열로 만듭니다.
-        universityNames = removeSpace.components(separatedBy: ",")
-
-        for str in universityNames {
+        let names = removeSpace.components(separatedBy: ",")
+        
+        for str in names {
             let value = str.trimmingCharacters(in: .whitespaces)
+            
             universityNames.append(value)
         }
     }
@@ -103,8 +104,8 @@ extension SearchListUniversityViewController: UITableViewDataSource {
         }
         return universityNames.count
     }
-    
-    
+
+
     /// 검색 결과 셀을 구성합니다. 검색 상태에 따라서 셀에 출력하는 내용이 달라집니다.
     /// - Parameters:
     ///   - tableView: 검색 결과 테이블뷰
@@ -152,8 +153,8 @@ extension SearchListUniversityViewController: UISearchBarDelegate {
     /// Author: 황신택 (sinadsl1457@gmail.com)
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         isSearching = true
-        searchedUniversity = universityNames.filter{ $0.prefix(searchText.count) == searchText }
         
+        searchedUniversity = universityNames.filter{ $0.prefix(searchText.count) == searchText }
         listTableView.reloadData()
     }
     

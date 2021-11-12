@@ -6,11 +6,13 @@
 //
 
 import UIKit
-
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 /// 홈화면
 /// - Author: 황신택 (sinadsl1457@gmail.com), 안상희
-class HomeViewController: UIViewController {
+class HomeViewController: CommonViewController {
     /// 홈 화면 콜렉션뷰
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBOutlet weak var listCollectionView: UICollectionView!
@@ -124,7 +126,7 @@ class HomeViewController: UIViewController {
     
     
     /// 학교 고유 id에 해당하는 홈페이지 URL을 불러옵니다.
-    /// - Author: 안상희
+    /// - Author: 안상희, 황신택
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -132,6 +134,8 @@ class HomeViewController: UIViewController {
         if let id = schoolId {
             getPageURL(id: id)
         }
+        
+        didTapMakeLowerKeyboard()
     }
     
     

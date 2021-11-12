@@ -166,7 +166,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IT.SW" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuR-hS-rMh" customClass="PaddingLabel" customModule="UMate" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="39" height="18"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="53" height="24"/>
                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                             <color key="textColor" systemColor="systemGrayColor"/>
@@ -463,7 +463,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마케터" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5uy-jQ-tLg" customClass="PaddingLabel" customModule="UMate" customModuleProvider="target">
-                                                            <rect key="frame" x="10" y="0.0" width="39" height="18"/>
+                                                            <rect key="frame" x="10" y="0.0" width="49" height="24"/>
                                                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" systemColor="systemGrayColor"/>
@@ -843,10 +843,13 @@
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="wXz-1M-Hzu">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="wXz-1M-Hzu">
                                         <rect key="frame" x="347" y="8" width="19" height="23"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24.5" id="ICw-8y-tGG"/>
+                                            <constraint firstAttribute="width" constant="19" id="SUl-By-ueC"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -854,7 +857,9 @@
                                     <constraint firstAttribute="bottom" secondItem="ejL-V5-h7L" secondAttribute="bottom" id="VV9-sB-twI"/>
                                     <constraint firstAttribute="height" constant="40" id="YrP-x6-rNe"/>
                                     <constraint firstItem="ejL-V5-h7L" firstAttribute="top" secondItem="BeF-zz-IsB" secondAttribute="top" id="fP7-af-dnf"/>
+                                    <constraint firstAttribute="trailing" secondItem="wXz-1M-Hzu" secondAttribute="trailing" constant="8" id="k4o-4b-lKL"/>
                                     <constraint firstAttribute="trailing" secondItem="ejL-V5-h7L" secondAttribute="trailing" id="lk8-7h-glU"/>
+                                    <constraint firstAttribute="bottom" secondItem="wXz-1M-Hzu" secondAttribute="bottom" constant="8" id="mVH-ZP-wYo"/>
                                     <constraint firstItem="ejL-V5-h7L" firstAttribute="leading" secondItem="BeF-zz-IsB" secondAttribute="leading" id="wFr-DP-k0z"/>
                                 </constraints>
                             </view>
@@ -946,10 +951,10 @@
     </scenes>
     <designables>
         <designable name="5uy-jQ-tLg">
-            <size key="intrinsicContentSize" width="39" height="18"/>
+            <size key="intrinsicContentSize" width="49" height="24"/>
         </designable>
         <designable name="yuR-hS-rMh">
-            <size key="intrinsicContentSize" width="39" height="18"/>
+            <size key="intrinsicContentSize" width="53" height="24"/>
         </designable>
     </designables>
     <resources>
