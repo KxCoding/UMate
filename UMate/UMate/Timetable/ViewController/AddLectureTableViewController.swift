@@ -181,6 +181,8 @@ class AddLectureTableViewController: UITableViewController {
     /// 선택된 요일 값을 저장하고 View의 상태를 변경합니다.
     /// - Parameter sender: 선택된 버튼
     @IBAction func selectDay(_ sender: UIButton) {
+        initializeWeekday()
+        
         switch sender.tag {
         case 101:
             if mondayContainerView.backgroundColor == .clear {
@@ -397,6 +399,25 @@ class AddLectureTableViewController: UITableViewController {
          lightGreenButton, greenButton, skyblueButton, blueButton,
          lightPurpleButton, purpleButton, darkGrayButton].forEach {
             $0?.setImage(nil, for: .normal)
+        }
+    }
+    
+    
+    /// 선택된 요일의 상태를 초기화합니다.
+    func initializeWeekday() {
+        // 요일 선택 View를 초기화합니다.
+        [mondayContainerView, tuesdayContainerView, wednesdayContainerView,
+         thursdayContainerView, fridayContainerView].forEach {
+            $0?.layer.cornerRadius = ($0?.frame.width)! / 2
+            $0?.backgroundColor = .clear
+        }
+        
+        [mondayLabel, tuesdayLabel, wednesdayLabel, thursdayLabel, fridayLabel].forEach {
+            $0?.textColor = UIColor.black
+        }
+        
+        for i in 0..<weekdayList.count {
+            weekdayList[i] = false
         }
     }
     

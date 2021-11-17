@@ -82,3 +82,15 @@ struct UserTimeTable {
         let friendId: String
     }
 }
+
+
+
+struct TimeTableInfo {
+    let courseId: String
+    let courseName: String
+    let courseDay: Int
+    let startTime: String
+    let endTime: String
+    let professor: String
+    let roomName: String
+}
