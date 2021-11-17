@@ -103,17 +103,14 @@ extension TimetableViewController: ElliotableDelegate {
         
         print("courseDay ", courseDay)
         
-        let timetable = TimeTableInfo(courseId: courseId, courseName: courseName, courseDay: courseDay, startTime: startTime, endTime: endTime, professor: professor, roomName: roomName)
-        
-//        NotificationCenter.default.post(name: .SendCourseNotification,
-//                                        object: nil,
-//                                        userInfo: ["CourseId":courseId,
-//                                                   "CourseName":courseName,
-//                                                   "CourseDay":courseDay,
-//                                                   "StartTime":startTime,
-//                                                   "EndTime":endTime,
-//                                                   "Professor":professor,
-//                                                   "RoomName":roomName])
+        let timetable = TimeTableInfo(courseId: courseId,
+                                      courseName: courseName,
+                                      courseDay: courseDay,
+                                      startTime: startTime,
+                                      endTime: endTime,
+                                      professor: professor,
+                                      roomName: roomName)
+
         NotificationCenter.default.post(name: .SendCourseNotification,
                                         object: nil,
                                         userInfo: ["Timetable": timetable])
