@@ -91,28 +91,35 @@ extension TimetableViewController: ElliotableDelegate {
         let storyboard = UIStoryboard.init(name: "Timetable", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TimetableDimViewSB")
         
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.view.alpha = 0.8
+        vc.view.backgroundColor = .clear
         
         let courseId = selectedCourse.courseId
         let courseName = selectedCourse.courseName
-        let courseDay = selectedCourse.courseDay
+        let courseDay = selectedCourse.courseDay.rawValue
         let startTime = selectedCourse.startTime
         let endTime = selectedCourse.endTime
         let professor = selectedCourse.professor
         let roomName = selectedCourse.roomName
         
+        print("courseDay ", courseDay)
+        
+        let timetable = TimeTableInfo(courseId: courseId, courseName: courseName, courseDay: courseDay, startTime: startTime, endTime: endTime, professor: professor, roomName: roomName)
+        
+//        NotificationCenter.default.post(name: .SendCourseNotification,
+//                                        object: nil,
+//                                        userInfo: ["CourseId":courseId,
+//                                                   "CourseName":courseName,
+//                                                   "CourseDay":courseDay,
+//                                                   "StartTime":startTime,
+//                                                   "EndTime":endTime,
+//                                                   "Professor":professor,
+//                                                   "RoomName":roomName])
         NotificationCenter.default.post(name: .SendCourseNotification,
                                         object: nil,
-                                        userInfo: ["CourseId":courseId,
-                                                   "CourseName":courseName,
-                                                   "CourseDay":courseDay,
-                                                   "StartTime":startTime,
-                                                   "EndTime":endTime,
-                                                   "Professor":professor,
-                                                   "RoomName":roomName])
+                                        userInfo: ["Timetable": timetable])
         
-        self.present(vc, animated: true, completion: nil)
+        self.view.window?.rootViewController?.addChild(vc)
+        self.view.window?.addSubview(vc.view) // 탭바까지 커버
     }
     
     
