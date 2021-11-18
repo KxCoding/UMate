@@ -19,72 +19,16 @@ class LectureManager { // 서버에서이벤트받아와서 그걸 elliotevent �
     /// 시간표를 담을 리스트
     var lectureEventList = [ElliottEvent]()
     
+    /// 시간표 고유 Id를 담는 리스트
+    var timetableId = [Int]()
+    
     /// 시간표에 나타나는 요일 정보
     let dayString: [String] = ["월", "화", "수", "목", "금"]
 }
 
 
 
-/// 사용자의  모든 시간표 정보를 가지고 있습니다.
-/// - Author: 안상희
-struct UserTimeTable {
-    /// 사용자의 고유 아이디
-    let userId: String
-    
-    /// 시간표 정보를 담은 리스트
-    let timetableInfo: [TimeTableInfo]
-    
-    
-    /// 시간표 정보를 담은 구조체
-    struct TimeTableInfo {
-        /// 과목 Id
-        let courseId: String
-        
-        /// 과목 이름
-        let courseName: String
-        
-        /// 강의실 정보
-        let roomName: String
-        
-        /// 교수님 정보
-        let professor: String
-        
-        /// 요일 정보를 담은 리스트
-        let courseDays: [CourseDayList]
-        
-        
-        /// 요일 정보 구조체
-        struct CourseDayList {
-            let courseDayS: String
-        }
-        
-        
-        /// 강의 시작 시간
-        let startTime: String
-        
-        /// 강의 마침 시간
-        let endTime: String
-        
-        /// 시간표에 등록할 글자 색상
-        let textColor: String
-        
-        /// 시간표에 등록할 배경 색상
-        let backgroundColor: String
-    }
-    
-    /// 친구 목록을 담은 리스트
-    let friendsList: [Friends]
-    
-    
-    /// 친구 Id를 담은 구조체
-    struct Friends {
-        /// 친구 Id
-        let friendId: String
-    }
-}
-
-
-
+/// 시간표 상세 화면으로 보내는 시간표 정보 구조체
 struct TimeTableInfo {
     let courseId: String
     let courseName: String
@@ -94,3 +38,8 @@ struct TimeTableInfo {
     let professor: String
     let roomName: String
 }
+
+
+
+/// 사용자 임시 토큰
+let userTempToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiNDZjMWY1ZDgtMjEwYy00ODc1LTliYTktZDlmNTFjY2Y0NTYwIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI0NmMxZjVkOC0yMTBjLTQ4NzUtOWJhOS1kOWY1MWNjZjQ1NjAiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhYWFhQGFhYWEuYWFhYSIsImV4cCI6MTYzNzc1MDMxMSwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTU0MTUiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1NTQxNSJ9.ttof793n0pDhIWldypIuSvNZUHdS9hYiu3we0ZCgJag"

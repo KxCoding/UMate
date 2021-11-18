@@ -17,8 +17,135 @@ class TimetableViewController: CommonViewController {
     /// 요일 (월, 화, 수, 목, 금) 정보를 담은 배열입니다.
     let weekdays = LectureManager.shared.dayString
     
+    lazy var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
+        return session
+    }()
+    
+    
     /// 시간표를 나타내는 View
     @IBOutlet weak var timeTableView: Elliotable!
+    
+    
+    /// 사용자의 시간표 정보를 가져옵니다.
+    private func getTimetableList() {
+        guard let url = URL(string: "https://localhost:25139/timetable") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "content-type")
+        request.addValue("Bearer \(userTempToken)", forHTTPHeaderField: "Authorization")
+        
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                print((response as? HTTPURLResponse)?.statusCode)
+                return
+            }
+
+            guard let data = data else {
+                return
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(TimetableListResponse.self, from: data)
+                
+                switch result.code {
+                case ResultCode.ok.rawValue:
+                    print(result.message)
+
+                    DispatchQueue.main.async {
+                        for i in 0..<result.list.count {
+                            var courseDayValue: Int = 0
+                            switch result.list[i].courseDay {
+                            case "월":
+                                courseDayValue = 1
+                            case "화":
+                                courseDayValue = 2
+                            case "수":
+                                courseDayValue = 3
+                            case "목":
+                                courseDayValue = 4
+                            default:
+                                courseDayValue = 5
+                            }
+                            
+                            let elliotEvent = ElliottEvent(courseId: result.list[i].courseId,
+                                                           courseName: result.list[i].courseName,
+                                                           roomName: result.list[i].roomName,
+                                                           professor: result.list[i].professorName,
+                                                           courseDay: ElliotDay(rawValue: courseDayValue)!,
+                                                           startTime: result.list[i].startTime,
+                                                           endTime: result.list[i].endTime,
+                                                           textColor: UIColor(named: "\(result.list[i].textColor)"),
+                                                           backgroundColor: UIColor(named: "\(result.list[i].backgroundColor)") ?? .black)
+                            
+                            LectureManager.shared.lectureEventList.append(elliotEvent)
+                            LectureManager.shared.timetableId.append(result.list[i].timetableId)
+                            self.timeTableView.reloadData()
+                        }
+                    }
+                default:
+                    print(result.message)
+                }
+               
+            } catch {
+                print(error)
+            }
+        }.resume()
+    }
+    
+    
+    
+    /// 시간표 정보를 삭제합니다.
+    /// - Parameter timetableId: Timetable 고유 Id
+    private func deleteTimetable(timetableId: Int) {
+        guard let url = URL(string: "https://localhost:25139/timetable/\(timetableId)") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.addValue("application/json", forHTTPHeaderField: "content-type")
+        request.addValue("Bearer \(userTempToken)", forHTTPHeaderField: "Authorization")
+        
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                print((response as? HTTPURLResponse)?.statusCode)
+                return
+            }
+
+            guard let data = data else {
+                return
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(TimetableDeleteResponse.self, from: data)
+                
+                switch result.code {
+                case ResultCode.ok.rawValue:
+                    #ifDEBUG
+                    print(result.message)
+                default:
+                    print(result.message)
+                }
+               
+            } catch {
+                print(error)
+            }
+        }.resume()
+    }
+    
     
     
     /// 친구 이름을 클릭하면 화면이 넘어가기 전에 호출됩니다.
@@ -70,6 +197,7 @@ class TimetableViewController: CommonViewController {
         timeTableView.roundCorner = .right
         timeTableView.reloadData()
         
+        getTimetableList()
         
         let token = NotificationCenter.default.addObserver(forName: .DeleteCourseNotification,
                                                            object: nil,
@@ -130,6 +258,13 @@ extension TimetableViewController: ElliotableDelegate {
             for i in 0..<LectureManager.shared.lectureEventList.count {
                 if LectureManager.shared.lectureEventList[i].courseId == longSelectedCourse.courseId {
                     LectureManager.shared.lectureEventList.remove(at: i)
+                    
+                    var timetableId = LectureManager.shared.timetableId[i]
+                    
+                    self?.deleteTimetable(timetableId: timetableId)
+                    
+                    LectureManager.shared.timetableId.remove(at: i)
+                    
                     self?.timeTableView.reloadData()
                     return
                 }
@@ -175,10 +310,22 @@ extension TimetableViewController: ElliotableDataSource {
 extension TimetableViewController: SendTimeTableDataDelegate {
     /// 시간표 데이터를 전달합니다.
     /// - Parameter data: 시간표 정보를 담은 리스트 [ElliottEvent]
-    func sendData(data: [ElliottEvent]) {
+    func sendData(data: [ElliottEvent], timetableId: Int) {
         for i in 0...data.count - 1 {
             LectureManager.shared.lectureEventList.append(data[i])
+            LectureManager.shared.timetableId.append(timetableId)
         }
         timeTableView.reloadData()
     }
 }
+
+
+
+extension TimetableViewController: URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let trust = challenge.protectionSpace.serverTrust!
+        
+        completionHandler(.useCredential, URLCredential(trust: trust))
+    }
+}
+
