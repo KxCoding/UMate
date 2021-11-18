@@ -22,6 +22,10 @@
 		2C7854AA26DFE0340079F6F4 /* ReviewListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7854A926DFE0340079F6F4 /* ReviewListTableViewCell.swift */; };
 		400F1BADFE2D2421EE7CBBC5 /* Pods_UMate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A44BACD78B532E8BD2C03246 /* Pods_UMate.framework */; };
 		5C0A7D4B271EEF3D00009BEB /* TimetableDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0A7D4A271EEF3D00009BEB /* TimetableDetailViewController.swift */; };
+		5C0C79582745B849002E331A /* TimetableListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C79572745B849002E331A /* TimetableListResponse.swift */; };
+		5C0C795A2745D450002E331A /* TimetableSingleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C79592745D450002E331A /* TimetableSingleResponse.swift */; };
+		5C0C795C2745D460002E331A /* TimetablePostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C795B2745D460002E331A /* TimetablePostData.swift */; };
+		5C0C795E2745E365002E331A /* TimetableDeleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C795D2745E364002E331A /* TimetableDeleteResponse.swift */; };
 		5C0D977726A768A600F396B7 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D977626A768A600F396B7 /* UIViewController+Alert.swift */; };
 		5C1A18A926DFF35A00BB2891 /* PasswordRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A18A826DFF35A00BB2891 /* PasswordRootViewController.swift */; };
 		5C2141AF26BF059F00F93A84 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2141AE26BF059F00F93A84 /* UIButton+Extension.swift */; };
@@ -218,6 +222,10 @@
 		2C7854A626DFD0530079F6F4 /* ReviewManagingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewManagingViewController.swift; sourceTree = "<group>"; };
 		2C7854A926DFE0340079F6F4 /* ReviewListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListTableViewCell.swift; sourceTree = "<group>"; };
 		5C0A7D4A271EEF3D00009BEB /* TimetableDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDetailViewController.swift; sourceTree = "<group>"; };
+		5C0C79572745B849002E331A /* TimetableListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableListResponse.swift; sourceTree = "<group>"; };
+		5C0C79592745D450002E331A /* TimetableSingleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSingleResponse.swift; sourceTree = "<group>"; };
+		5C0C795B2745D460002E331A /* TimetablePostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetablePostData.swift; sourceTree = "<group>"; };
+		5C0C795D2745E364002E331A /* TimetableDeleteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDeleteResponse.swift; sourceTree = "<group>"; };
 		5C0D977626A768A600F396B7 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		5C1A18A826DFF35A00BB2891 /* PasswordRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRootViewController.swift; sourceTree = "<group>"; };
 		5C2141AE26BF059F00F93A84 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
@@ -505,6 +513,10 @@
 			isa = PBXGroup;
 			children = (
 				5C733FDE26B0659A00C1AF21 /* UserTimeTable.swift */,
+				5C0C79572745B849002E331A /* TimetableListResponse.swift */,
+				5C0C79592745D450002E331A /* TimetableSingleResponse.swift */,
+				5C0C795B2745D460002E331A /* TimetablePostData.swift */,
+				5C0C795D2745E364002E331A /* TimetableDeleteResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1234,6 +1246,7 @@
 				F560368726B9EE5C0093DDC7 /* CommentTableViewCell.swift in Sources */,
 				2C715DAC26C072C100B0B22B /* StoreTypeTableViewCell.swift in Sources */,
 				F5E00E6A26E6461100E4068C /* LectureReviewWriteTableViewController.swift in Sources */,
+				5C0C79582745B849002E331A /* TimetableListResponse.swift in Sources */,
 				5CAFD3AD26A74B9D0002D0EC /* AddLectureTableViewController.swift in Sources */,
 				5C0D977726A768A600F396B7 /* UIViewController+Alert.swift in Sources */,
 				DF943CC32731519500F2F1FE /* BoardDataManager.swift in Sources */,
@@ -1257,7 +1270,9 @@
 				DF25EF4626AFD5EE00949AAB /* PostImageCollectionViewCell.swift in Sources */,
 				F401BE1D26DAC356000C7898 /* PlaceDataManager.swift in Sources */,
 				DF40510726C05335009FCA17 /* SearchViewController.swift in Sources */,
+				5C0C795E2745E365002E331A /* TimetableDeleteResponse.swift in Sources */,
 				F4FC9DE7271F47DC00193A77 /* SimplePlaceTypeCollectionViewCell.swift in Sources */,
+				5C0C795A2745D450002E331A /* TimetableSingleResponse.swift in Sources */,
 				F5541B29273AD2D300E7926A /* Reactive+Extension.swift in Sources */,
 				F48843AD26ABE512005DB8A3 /* UserReviewTableViewCell.swift in Sources */,
 				5C7E4C4F26BD6FD4009DF776 /* Dummy.swift in Sources */,
@@ -1323,6 +1338,7 @@
 				F4D5F8DA26F0B6D30019C0B0 /* ReviewTemplate.swift in Sources */,
 				5C1A18A926DFF35A00BB2891 /* PasswordRootViewController.swift in Sources */,
 				5C733FE326B07D7C00C1AF21 /* FriendsListViewController.swift in Sources */,
+				5C0C795C2745D460002E331A /* TimetablePostData.swift in Sources */,
 				F50F9B5426B0F932007ABEF6 /* CommunityRuleViewController.swift in Sources */,
 				DF454E2526C2DAED0031F92C /* UIViewController+View.swift in Sources */,
 				DF943C81273038FE00F2F1FE /* BlobManager.swift in Sources */,

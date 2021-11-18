@@ -15,6 +15,12 @@ class TimetableDetailViewController: CommonViewController {
     /// 강의 Id
     var id: String?
     
+    lazy var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
+        return session
+    }()
+    
     /// Dim View
     @IBOutlet weak var dimView: UIView!
     
@@ -51,6 +57,12 @@ class TimetableDetailViewController: CommonViewController {
                 if LectureManager.shared.lectureEventList[i].courseId == courseId {
                     LectureManager.shared.lectureEventList.remove(at: i)
                     
+                    let timetableId = LectureManager.shared.timetableId[i]
+                    
+                    self?.deleteTimetable(timetableId: timetableId)
+                    
+                    LectureManager.shared.timetableId.remove(at: i)
+                    
                     NotificationCenter.default.post(name: .DeleteCourseNotification,
                                                                 object: nil,
                                                                 userInfo: ["CourseId":courseId])
@@ -72,6 +84,51 @@ class TimetableDetailViewController: CommonViewController {
         self.view.removeFromSuperview()
         self.removeFromParent()
     }
+    
+    
+    /// 시간표 정보를 삭제합니다.
+    /// - Parameter timetableId: Timetable 고유 Id
+    private func deleteTimetable(timetableId: Int) {
+        guard let url = URL(string: "https://localhost:25139/timetable/\(timetableId)") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.addValue("application/json", forHTTPHeaderField: "content-type")
+        request.addValue("Bearer \(userTempToken)", forHTTPHeaderField: "Authorization")
+        
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                print((response as? HTTPURLResponse)?.statusCode)
+                return
+            }
+
+            guard let data = data else {
+                return
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(TimetableDeleteResponse.self, from: data)
+                
+                switch result.code {
+                case ResultCode.ok.rawValue:
+                    print(result.message)
+                default:
+                    print(result.message)
+                }
+               
+            } catch {
+                print(error)
+            }
+        }.resume()
+    }
+    
+    
     
     
     /// ViewController가 메모리에 로드되면 호출됩니다.
@@ -124,3 +181,13 @@ class TimetableDetailViewController: CommonViewController {
         tokens.append(token)
     }
 }
+
+
+extension TimetableDetailViewController: URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let trust = challenge.protectionSpace.serverTrust!
+        
+        completionHandler(.useCredential, URLCredential(trust: trust))
+    }
+}
+
