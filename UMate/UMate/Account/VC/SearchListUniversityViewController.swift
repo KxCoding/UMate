@@ -18,7 +18,7 @@ extension Notification.Name {
 
 /// 학교 이름 검색 화면
 /// - Author: 황신택 (sinadsl1457@gmail.com)
-class SearchListUniversityViewController: UIViewController {
+class SearchListUniversityViewController: CommonViewController {
     /// 학교 이름 검색 화면 서치바
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -26,13 +26,7 @@ class SearchListUniversityViewController: UIViewController {
     @IBOutlet weak var listTableView: UITableView!
     
     /// 학교 이름 배열
-    var universityNames = [String]()
-    
-    /// 검색된 학교 이름 배열
-    var searchedUniversity = [String]()
-    
-    /// 검색 진행 플래그
-    var isSearching = false
+    var universityNameList = [UniversityName]()
     
     /// 학교 이름 UserInfo 키
     static let universityNameTransitionKey = "universityNameTransitionKey"
@@ -81,84 +75,50 @@ class SearchListUniversityViewController: UIViewController {
         // 쉼표 기준으로 문자를 배열로 만듭니다.
         let names = removeSpace.components(separatedBy: ",")
         
-        for str in names {
-            let value = str.trimmingCharacters(in: .whitespaces)
+        names.forEach {
+            let name = UniversityName(name: $0)
+            universityNameList.append(name)
+        }
+        
+        // 서치바 검색 유무에 따라 테이블 뷰에 표시되는 학교 목록이 달라집니다.
+        searchBar.rx.text.orEmpty
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .map { [unowned self] query -> [UniversityName] in
+                if isSearching {
+                    let res = self.universityNameList.filter { $0.name.hasPrefix(query) }
+                    return res
+                } else {
+                    return universityNameList
+                }
+            }
+            .do(onNext: { _ in
+                self.isSearching = true
+                self.listTableView.reloadData()
+            })
+            .bind(to: listTableView.rx.items(cellIdentifier: "cell")) { row, name, cell in
+                cell.textLabel?.text = name.name
+            }
+            .disposed(by: rx.disposeBag)
+        
+        // 데이터 모델의 value와 index의 짝을 맞춰서 방출합니다.
+        Observable.zip(listTableView.rx.modelSelected(UniversityName.self), listTableView.rx.itemSelected)
+            .bind { [unowned self] university, indexPath in
+                self.listTableView.deselectRow(at: indexPath, animated: true)
+                self.searchBar.text = university.name
+            }
+            .disposed(by: rx.disposeBag)
+        
+        searchBar.rx.setDelegate(self)
+            .disposed(by: rx.disposeBag)
+        
+    }
             
-            universityNames.append(value)
-        }
-    }
 }
-
-
-
-extension SearchListUniversityViewController: UITableViewDataSource {
-    /// 검색시 나오는 결과값에 따라 셀의 개수를 다르게 표현합니다.
-    /// - Parameters:
-    ///   - tableView: 검색 결과 테이블뷰
-    ///   - section: 섹션 Index
-    /// - Returns: 섹션에 표시할 셀 수를 리턴합니다.
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isSearching {
-            return searchedUniversity.count
-        }
-        return universityNames.count
-    }
-
-
-    /// 검색 결과 셀을 구성합니다. 검색 상태에 따라서 셀에 출력하는 내용이 달라집니다.
-    /// - Parameters:
-    ///   - tableView: 검색 결과 테이블뷰
-    ///   - indexPath: 셀의 indexPath
-    /// - Returns: 검색 중일 경우에는 검색된 학교 이름의 셀이 리턴됩니다. 아닌 경우는 전체 학교 리스트가 리턴됩니다.
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.selectionStyle = .none
-        if isSearching {
-            cell.textLabel?.text = searchedUniversity[indexPath.row]
-        } else {
-            cell.textLabel?.text = universityNames[indexPath.row]
-        }
-        return cell
-    }
-}
-
-
-
-extension SearchListUniversityViewController: UITableViewDelegate {
-    /// 검색 중인 경우에는 셀을 탭 하면 검색된 학교 이름이 서치바 텍스트에 저장됩니다.
-    /// 아니라면 전체 학교 이름 중 하나가 텍스트에 저장됩니다.
-    /// - Parameters:
-    ///   - tableView: 검색 결과 테이블뷰
-    ///   - indexPath: 셀의 indexPath
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isSearching {
-            searchBar.text = searchedUniversity[indexPath.row]
-        } else {
-            searchBar.text = universityNames[indexPath.row]
-        }
-    }
-}
-
 
 
 
 extension SearchListUniversityViewController: UISearchBarDelegate {
-    /// 등록된 모든 대학교 이름 접두어 개수와 서치바에 입력된 문자열 접두어를 비교합니다.
-    /// - Parameters:
-    ///   - searchBar: 서치바
-    ///   - searchText: 서치바 텍스트 필드 안에 있는 현재 텍스트
-    /// Author: 황신택 (sinadsl1457@gmail.com)
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        isSearching = true
-        
-        searchedUniversity = universityNames.filter{ $0.prefix(searchText.count) == searchText }
-        listTableView.reloadData()
-    }
-    
-    
     /// 서치바를 탭하면 테이블 뷰가 보이도록 구현합니다.
     /// - Parameter searchBar: 서치바를 탭하면 전달
     /// - Author: 황신택 (sinadsl1457@gmail.com)

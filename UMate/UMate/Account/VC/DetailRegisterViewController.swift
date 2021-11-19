@@ -134,7 +134,6 @@ class DetailRegisterViewController: CommonViewController {
             .compactMap { UIImage(named: "\($0)") }
             .subscribe(onNext: { [unowned self] image in
                 self.profileImageView.image = image
-                
                 if let pngData = image.pngData() {
                     UserDefaults.standard.set(pngData, forKey: "profile")
                 }

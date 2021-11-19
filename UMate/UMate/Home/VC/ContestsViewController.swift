@@ -19,7 +19,6 @@ class ContestsViewController: CommonViewController {
     /// 대외활동 서치바
     @IBOutlet weak var contestSearchBar: UISearchBar!
     
-    
     /// 이전 화면으로 이동합니다.
     /// - Parameter sender: cancelButton
     /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -74,8 +73,8 @@ extension ContestsViewController: UITableViewDataSource {
             return contestDetailDataList.count
         }
     }
-    
-    
+
+
     /// 인기 대외활동과 대외활동 데이터가 담긴 셀을 구성합니다.
     /// - Parameters:
     ///   - tableView: 정보를 요청한 테이블뷰
@@ -86,11 +85,11 @@ extension ContestsViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PopularContestsTableViewCell", for: indexPath) as! PopularContestsTableViewCell
             cell.configure(with: contestDataList)
-            
+
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ContestsTableViewCell", for: indexPath) as! ContestsTableViewCell
-            
+
             if isSearching {
                 let model = searchedContestDataList[indexPath.row]
                 cell.configure(with: model)
@@ -101,8 +100,8 @@ extension ContestsViewController: UITableViewDataSource {
             return cell
         }
     }
-    
-    
+
+
     /// 인기 대외활동 헤더뷰를 리턴합니다
     /// - Parameters:
     ///   - tableView: 뷰를 요청한 테이블뷰
@@ -111,7 +110,7 @@ extension ContestsViewController: UITableViewDataSource {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as! ContestHeaderView
-        
+
         header.titleLabel.text = "인기 대외활동"
         return header
     }
@@ -147,7 +146,7 @@ extension ContestsViewController: UISearchBarDelegate {
         DispatchQueue.global().async {
             self.isSearching = true
             self.searchedContestDataList = self.contestDetailDataList.filter({
-                $0.description.prefix(searchText.count) == searchText || $0.website.prefix(searchText.count) == searchText
+                $0.description.hasPrefix(searchText) || $0.field.hasPrefix(searchText)
             })
             DispatchQueue.main.async {
                 self.listTableView.reloadData()

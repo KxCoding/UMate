@@ -80,9 +80,6 @@
                                         <searchBar contentMode="redraw" placeholder="어떤 기업을 찾고있나요?" translatesAutoresizingMaskIntoConstraints="NO" id="ZMI-Mk-zVA">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <textInputTraits key="textInputTraits"/>
-                                            <connections>
-                                                <outlet property="delegate" destination="hS2-c5-XLN" id="ESu-sr-D4f"/>
-                                            </connections>
                                         </searchBar>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -107,13 +104,13 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cFd-GP-duF">
                                                             <rect key="frame" x="0.0" y="56" width="284" height="38.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(주)엔씨소프트" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Fn-Tb-e1L">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="(주)엔씨소프트" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Fn-Tb-e1L">
                                                                     <rect key="frame" x="0.0" y="0.0" width="284" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사내 정보시스템 back-end 개발자 모집" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWG-np-kO5">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="사내 정보시스템 back-end 개발자 모집" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWG-np-kO5">
                                                                     <rect key="frame" x="0.0" y="20.5" width="284" height="18"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                                     <nil key="textColor"/>
@@ -247,8 +244,6 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="hS2-c5-XLN" id="55M-3F-pbu"/>
-                                    <outlet property="delegate" destination="hS2-c5-XLN" id="AfU-sV-hwF"/>
                                     <outlet property="prefetchDataSource" destination="hS2-c5-XLN" id="t9g-37-WOk"/>
                                 </connections>
                             </tableView>
@@ -298,7 +293,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
-                                                <outlet property="delegate" destination="3aU-KP-xkg" id="TxV-sx-2iD"/>
+                                                <outlet property="delegate" destination="3aU-KP-xkg" id="Qqe-sT-acT"/>
                                             </connections>
                                         </searchBar>
                                     </subviews>
@@ -394,8 +389,8 @@
                                                         </collectionViewCell>
                                                     </cells>
                                                     <connections>
-                                                        <outlet property="dataSource" destination="Gao-UR-w42" id="WcS-Uv-ceb"/>
-                                                        <outlet property="delegate" destination="Gao-UR-w42" id="Igj-1W-t0J"/>
+                                                        <outlet property="dataSource" destination="Gao-UR-w42" id="O7v-1S-Wfc"/>
+                                                        <outlet property="delegate" destination="Gao-UR-w42" id="8AQ-HZ-7iq"/>
                                                     </connections>
                                                 </collectionView>
                                             </subviews>
@@ -512,9 +507,9 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="3aU-KP-xkg" id="Fqv-Lg-gbB"/>
-                                    <outlet property="delegate" destination="3aU-KP-xkg" id="BSJ-Aw-opV"/>
-                                    <outlet property="prefetchDataSource" destination="3aU-KP-xkg" id="BLv-ti-Ahw"/>
+                                    <outlet property="dataSource" destination="3aU-KP-xkg" id="Eiw-ZQ-lFZ"/>
+                                    <outlet property="delegate" destination="3aU-KP-xkg" id="biJ-Jj-aHp"/>
+                                    <outlet property="prefetchDataSource" destination="3aU-KP-xkg" id="mWs-gY-SfH"/>
                                 </connections>
                             </tableView>
                         </subviews>
