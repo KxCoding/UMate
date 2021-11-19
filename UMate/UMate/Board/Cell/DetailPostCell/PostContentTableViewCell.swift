@@ -21,6 +21,53 @@ extension  Notification.Name {
 }
 
 
+/// 게시물 '공감' 및 '스크랩' 정보 서비스
+enum ScrapInfoService {
+    case saveScrapInfo(ScrapPostData)
+    case saveLikeInfo(LikePostData)
+}
+
+
+
+extension ScrapInfoService: TargetType {
+    
+    /// 기본 URL
+    var baseURL: URL {
+        return URL(string: "https://board1104.azurewebsites.net")!
+    }
+    
+    /// 기본 URL제외한 경로
+    var path: String {
+        switch self {
+        case .saveScrapInfo:
+            return "/api/scrapPost"
+        case .saveLikeInfo:
+            return "/likePost"
+        }
+    }
+    
+    /// HTTP요청 메소드
+    var method: Moya.Method {
+        return .post
+    }
+    
+    /// HTTP 작업
+    var task: Task {
+        switch self {
+        case .saveScrapInfo(let scrapPostData):
+            return .requestJSONEncodable(scrapPostData)
+        case .saveLikeInfo(let likePostData):
+            return .requestJSONEncodable(likePostData)
+        }
+    }
+    
+    /// HTTP 헤더
+    var headers: [String : String]? {
+        return ["Content-Type": "application/json"]
+    }
+}
+
+
 
 /// 게시글 작성자, 제목, 내용에 관한 테이블 뷰 셀
 /// - Author: 남정은(dlsl7080@gmail.com)
@@ -42,6 +89,11 @@ class PostContentTableViewCell: UITableViewCell {
     
     /// 네트워크 통신 관리 객체
     let provider = PostService.shared.provider
+    /// 네트워크 통신 관리 객체
+    let provider = MoyaProvider<ScrapInfoService>()
+    
+    /// 선택된 게시글
+    var selectedPost: PostDtoResponseData.Post?
     
     /// 선택된 게시글 Id
     var postId = -1

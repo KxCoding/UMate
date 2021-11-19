@@ -22,6 +22,7 @@ extension Notification.Name {
 
 
 
+
 /// 앨범 표시 화면
 /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 class SelectImageViewController: CommonViewController {
@@ -142,6 +143,8 @@ class SelectImageViewController: CommonViewController {
     /// - Author: 김정민(kimjm010@icloud.com)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(allPhotos.count)
         
         requestAuthorization()
         imageCollectionView.allowsSelection = true

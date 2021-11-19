@@ -23,6 +23,51 @@ extension Notification.Name {
 
 
 
+enum SelectActionType {
+    case delete
+}
+
+
+
+/// 댓글 저장 서비스
+enum CommentSaveService {
+    case saveComment(CommentPostData)
+}
+
+
+
+extension CommentSaveService: TargetType {
+    
+    /// 기본 URL
+    var baseURL: URL {
+        return URL(string: "https://board1104.azurewebsites.net")!
+    }
+    
+    /// 기본 URL 제외한 경로
+    var path: String {
+        return "/api/comment"
+    }
+    
+    /// HTTP 요청 메소드
+    var method: Moya.Method {
+        return .post
+    }
+    
+    /// HTTP 작업
+    var task: Task {
+        switch self {
+        case .saveComment(let commentPostData):
+            return .requestJSONEncodable(commentPostData)
+        }
+    }
+    
+    /// HTTP 헤더
+    var headers: [String : String]? {
+        return ["Content-Type": "application/json"]
+    }
+}
+
+
 
 /// 게시글 상세화면 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
@@ -99,17 +144,6 @@ class DetailPostViewController: CommonViewController {
     var scrapPostId = 0
     
     var selectedCommentIndex: IndexPath?
-    
-    /// keyboard의 높이를 방출하는 옵저버블
-    let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification,
-                                                              object: nil)
-        .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue }
-        .map { $0.cgRectValue.height }
-    
-    /// keybaordr의 높이를 0으로 방출하는 옵저버블
-    let willHide = NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification,
-                                                              object: nil)
-            .map { _ in CGFloat(0)}
     
     /// keyboard의 높이를 방출하는 옵저버블
     let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification,
@@ -712,33 +746,3 @@ extension DetailPostViewController: UITableViewDelegate {
         }
     }
 }
-
-
-
-/// 대댓글, 댓글의 동작 처리
-/// - Author: 김정민(kimjm010@icloud.com)
-extension DetailPostViewController: UITextViewDelegate {
-    
-    /// 댓글 편집시 placeholder를 설정합니다.
-    /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
-    /// - Parameter textView: commentTextView
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        commentPlaceholderLabel.isHidden = true
-    }
-    
-    
-    /// 댓글 편집후의 placeholder를 설정합니다.
-    /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시합니다.
-    /// - Parameter textView: commentTextView
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func textViewDidEndEditing(_ textView: UITextView) {
-        guard let comment = commentTextView.text, comment.count > 0 else {
-            commentPlaceholderLabel.isHidden = false
-            return
-        }
-        
-        commentPlaceholderLabel.isHidden = true
-    }
-}
-
