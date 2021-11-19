@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.4.4)
   - AZSClient (0.2.6)
   - BEMCheckBox (1.4.1)
   - Cosmos (23.0.0)
@@ -6,6 +7,11 @@ PODS:
   - Elliotable (1.2.5)
   - KeychainSwift (19.0.0)
   - Loaf (0.5.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (15.0.0):
+    - Moya/Core
+    - RxSwift (~> 6.0)
   - "NSObject+Rx (5.2.2)":
     - RxSwift (~> 6.2)
   - RxCocoa (6.2.0):
@@ -23,18 +29,21 @@ DEPENDENCIES:
   - Elliotable
   - KeychainSwift (~> 19.0)
   - Loaf (from `https://github.com/hyeffie/Loaf.git`)
+  - Moya/RxSwift
   - "NSObject+Rx"
   - RxCocoa
   - RxSwift
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - AZSClient
     - BEMCheckBox
     - Cosmos
     - DropDown
     - Elliotable
     - KeychainSwift
+    - Moya
     - "NSObject+Rx"
     - RxCocoa
     - RxRelay
@@ -50,6 +59,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hyeffie/Loaf.git
 
 SPEC CHECKSUMS:
+  Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
   AZSClient: efd576cabf56f97e38cb1b614739f4b0c1906392
   BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
@@ -57,11 +67,12 @@ SPEC CHECKSUMS:
   Elliotable: e669fa7a974658c4e0ee4be4b335f6a561f1b2cb
   KeychainSwift: a06190cf933ad46b1e0abc3d77d29c06331715c7
   Loaf: 643c1b9004853804d0d520751b2222863f432568
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   "NSObject+Rx": 61cf1f7306a73dcef8b36649198af0813ec18dfd
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
 
-PODFILE CHECKSUM: 53e0afb491b3c0030b4c7cabf727b1cd80e6586b
+PODFILE CHECKSUM: 48fa893853611682f5116a1aa2b283234c325dd1
 
 COCOAPODS: 1.11.2

@@ -10,6 +10,7 @@ import Loaf
 import RxSwift
 import RxCocoa
 import NSObject_Rx
+import Moya
 
 
 /// 게시글 삭제
@@ -18,6 +19,51 @@ extension Notification.Name {
     static let deletePost = Notification.Name("deletePost")
 }
 
+
+
+enum SelectActionType {
+    case delete
+}
+
+
+
+/// 댓글 저장 서비스
+enum CommentSaveService {
+    case saveComment(CommentPostData)
+}
+
+
+
+extension CommentSaveService: TargetType {
+    
+    /// 기본 URL
+    var baseURL: URL {
+        return URL(string: "https://board1104.azurewebsites.net")!
+    }
+    
+    /// 기본 URL 제외한 경로
+    var path: String {
+        return "/api/comment"
+    }
+    
+    /// HTTP 요청 메소드
+    var method: Moya.Method {
+        return .post
+    }
+    
+    /// HTTP 작업
+    var task: Task {
+        switch self {
+        case .saveComment(let commentPostData):
+            return .requestJSONEncodable(commentPostData)
+        }
+    }
+    
+    /// HTTP 헤더
+    var headers: [String : String]? {
+        return ["Content-Type": "application/json"]
+    }
+}
 
 
 
@@ -42,40 +88,11 @@ class DetailPostViewController: CommonViewController {
     /// keyboard가 댓글 텍스트필드를 가리지않고 댓글을 작성할 수 있습니다.
     @IBOutlet weak var commentContainerViewBottomConstraint: NSLayoutConstraint!
     
-    /// 선택된 게시글Id
-    var selectedPostId: Int = -1
+    /// 메뉴 버튼
+    @IBOutlet weak var showMenuButton: UIButton!
     
-    /// 게시글 정보
-    var post: PostDtoResponseData.Post?
-    
-    /// 게시글 좋아요 여부
-    var isLiked = false
-    
-    /// 게시글 스크랩 여부
-    var isScrapped = false
-    
-    /// 사용자 스크랩Id
-    var scrapPostId = 0
-    
-    /// 이미지 버튼 옵저버 저장
-    var imageObserver: NSObjectProtocol?
-    
-    /// 좋아요 버튼 옵저버 저장
-    var alertToken: NSObjectProtocol?
-    
-    /// 서버에 저장된 댓글의 마지막 Id
-    /// - Author: 남정은(dlsl7080@gmail.com)
-    var lastCommentId = 0
-    
-    /// 댓글 Id(댓글, 대댓글 포함)
-    var commentId: Int?
-    
-    /// 댓글 Id
-    /// 대댓글이 아닌 댓글의 Id입니다.
-    var originalCommentId: Int?
-    
-    /// 대댓글 여부 확인
-    var isReComment: Bool = false
+    /// 네트워크 요청 관리 객체
+    let provider = MoyaProvider<CommentSaveService>()
     
     /// 댓글 리스트
     var commentList = [CommentListResponseData.Comment]()
@@ -88,6 +105,43 @@ class DetailPostViewController: CommonViewController {
     
     /// 댓글 좋아요 리스트
     var likeCommentList = [LikeCommentListResponse.LikeComment]()
+
+    /// 게시글 정보
+    var post: PostDtoResponseData.Post?
+    
+    /// 이미지 버튼 옵저버 저장
+    var imageObserver: NSObjectProtocol?
+    
+    /// 좋아요 버튼 옵저버 저장
+    var alertToken: NSObjectProtocol?
+    
+    /// 선택된 게시글Id
+    var selectedPostId: Int = -1
+    
+    /// 댓글 Id
+    /// 대댓글이 아닌 댓글의 Id입니다.
+    var originalCommentId: Int?
+    
+    /// 댓글 Id(댓글, 대댓글 포함)
+    var commentId: Int?
+    
+    /// 서버에 저장된 댓글의 마지막 Id
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    var lastCommentId = 0
+    
+    /// 게시글 좋아요 여부
+    var isLiked = false
+    
+    /// 게시글 스크랩 여부
+    var isScrapped = false
+    
+    /// 대댓글 여부 확인
+    var isReComment: Bool = false
+    
+    /// 사용자 스크랩Id
+    var scrapPostId = 0
+    
+    var selectedCommentIndex: IndexPath?
     
     /// keyboard의 높이를 방출하는 옵저버블
     let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification,
@@ -123,11 +177,7 @@ class DetailPostViewController: CommonViewController {
         #warning("사용자 수정")
         let newComment = CommentPostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: selectedPostId, content: content, originalCommentId: originalCommentId ?? 0, isReComment: isReComment, createdAt: dateStr)
         
-        let body = try? BoardDataManager.shared.encoder.encode(newComment)
-        
-        guard let url = URL(string: "https://board1104.azurewebsites.net/api/comment") else { return }
-        
-        sendSavingCommentRequest(url: url, httpMethod: "POST", httpBody: body)
+        sendCommentDataToServer(commentPostData: newComment)
         
         isReComment = false
         
@@ -135,56 +185,26 @@ class DetailPostViewController: CommonViewController {
     }
     
     
-    /// 댓글을 단 사용자에게 쪽지를 전송합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
-    @IBAction func sendNote(_ sender: Any) {
-        // TODO: 서버 구현 후 작업 예정입니다.
-        #if DEBUG
-        print("쪽지 보내기 성공!")
-        #endif
-    }
-    
-    
-    /// 댓글을 저장합니다.
-    /// - Parameters:
-    ///   - url: 요청할 url
-    ///   - httpMethod: api 메소드
-    ///   - httpBody: 댓글 데이터
-    ///   - Author: 남정은(dlsl7080@gmail.com)
-    private func sendSavingCommentRequest(url: URL, httpMethod: String, httpBody: Data?) {
-        var request = URLRequest(url: url)
-        request.httpMethod = httpMethod
-        request.httpBody = httpBody
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let data = try decoder.decode(SaveCommentResponseData.self, from: data)
-            
-                if data.resultCode == ResultCode.ok.rawValue {
-                    
-                    let newComment = CommentListResponseData.Comment(commentId: data.comment.commentId, userId: data.comment.userId, postId: data.comment.postId, content: data.comment.content, likeCnt: data.comment.likeCnt, originalCommentId: data.comment.originalCommentId, isReComment: data.comment.isReComment, createdAt: data.comment.createdAt, updatedAt: data.comment.updatedAt)
-                    
-                    NotificationCenter.default.post(name: .newCommentDidInsert, object: nil, userInfo: ["comment": newComment])
+    /// 댓글을 서버에 저장합니다.
+    /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
+    func sendCommentDataToServer(commentPostData: CommentPostData) {
+        provider.rx.request(.saveComment(commentPostData))
+            .filterSuccessfulStatusCodes()
+            .map(SaveCommentResponseData.self)
+            .subscribe { (result) in
+                switch result {
+                case .success(let response):
+                    if response.resultCode == ResultCode.ok.rawValue {
+                        
+                        let newComment = CommentListResponseData.Comment(commentId: response.comment.commentId, userId: response.comment.userId, postId: response.comment.postId, content: response.comment.content, likeCnt: response.comment.likeCnt, originalCommentId: response.comment.originalCommentId, isReComment: response.comment.isReComment, createdAt: response.comment.createdAt, updatedAt: response.comment.updatedAt)
+                        
+                        NotificationCenter.default.post(name: .newCommentDidInsert, object: nil, userInfo: ["comment": newComment])
+                    }
+                default:
+                    break
                 }
-            } catch {
-                print(error)
             }
-        }).resume()
+            .disposed(by: rx.disposeBag)
     }
     
     
@@ -485,7 +505,6 @@ class DetailPostViewController: CommonViewController {
             .bind(to: commentContainerViewBottomConstraint.rx.constant)
             .disposed(by: rx.disposeBag)
         
-        
         // 댓글 및 대댓글을 추가합니다.
         // - Author: 김정민(kimjm010@icloud.com)
         let token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
@@ -588,7 +607,7 @@ class DetailPostViewController: CommonViewController {
     /// 댓글을 오른쪽으로 Swipe해서 신고합니다.
     /// - Parameter indexPath: 댓글의 IndexPath
     /// - Author: 김정민(kimjm010@icloud.com)
-    func alertCommentDelete(_ indexPath: IndexPath) {
+    func reportCommentDelete(_ indexPath: IndexPath) {
         // TODO: 서버 구현 후 작업 예정입니다.
         #if DEBUG
         print(#function)
@@ -781,7 +800,7 @@ extension DetailPostViewController: UITableViewDelegate {
             return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
                 let notiAction =
                 UIAction(title: NSLocalizedString("댓글 신고", comment: "")) { action in
-                    self.alertCommentDelete(indexPath)
+                    self.reportCommentDelete(indexPath)
                 }
                 
                 let deleteAction =
@@ -842,33 +861,3 @@ extension DetailPostViewController: UITableViewDelegate {
         }
     }
 }
-
-
-
-/// 대댓글, 댓글의 동작 처리
-/// - Author: 김정민(kimjm010@icloud.com)
-extension DetailPostViewController: UITextViewDelegate {
-    
-//    /// 댓글 편집시 placeholder를 설정합니다.
-//    /// 댓글을 작성하려고할 때 Placeholder를 숨깁니다.
-//    /// - Parameter textView: commentTextView
-//    /// - Author: 김정민(kimjm010@icloud.com)
-//    func textViewDidBeginEditing(_ textView: UITextView) {
-//        commentPlaceholderLabel.isHidden = true
-//    }
-//    
-//    
-//    /// 댓글 편집후의 placeholder를 설정합니다.
-//    /// 댓글 작성 완료했는데, 댓글이 없는 경우 다시 댓글 Placeholder를 표시합니다.
-//    /// - Parameter textView: commentTextView
-//    /// - Author: 김정민(kimjm010@icloud.com)
-//    func textViewDidEndEditing(_ textView: UITextView) {
-//        guard let comment = commentTextView.text, comment.count > 0 else {
-//            commentPlaceholderLabel.isHidden = false
-//            return
-//        }
-//        
-//        commentPlaceholderLabel.isHidden = true
-//    }
-}
-

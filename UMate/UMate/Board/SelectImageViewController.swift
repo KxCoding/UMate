@@ -9,6 +9,9 @@ import UIKit
 import Photos
 import PhotosUI
 import MobileCoreServices
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 
 /// 서버에 이미지 저장
@@ -16,6 +19,7 @@ import MobileCoreServices
 extension Notification.Name {
     static let requestPostImage = Notification.Name(rawValue: "requestPostImage")
 }
+
 
 
 
@@ -30,11 +34,14 @@ class SelectImageViewController: CommonViewController {
     /// 제한된 사진을 변경할 수 있습니다.
     @IBOutlet weak var editBtn: UIBarButtonItem!
     
+    /// 이미지 선택 버튼
+    @IBOutlet weak var imageSelectButton: UIBarButtonItem!
+    
     /// 이미지 관리 객체
     let imageManager = PHImageManager()
     
     /// 이미지 옵션
-    /// - Author: 남정은(dlsl7080@gamil.com)
+    /// - Author: 남정은(dlsl7080@gamil.comw)
     lazy var imageOption: PHImageRequestOptions = {
         let option = PHImageRequestOptions()
         option.deliveryMode = PHImageRequestOptionsDeliveryMode.fastFormat
@@ -137,13 +144,14 @@ class SelectImageViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(allPhotos.count)
+        
         requestAuthorization()
         imageCollectionView.allowsSelection = true
         imageCollectionView.allowsMultipleSelection = true
         
         PHPhotoLibrary.shared().register(self)
     }
-    
     
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
@@ -231,3 +239,4 @@ extension SelectImageViewController: PHPhotoLibraryChangeObserver {
         }
     }
 }
+

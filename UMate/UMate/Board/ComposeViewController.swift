@@ -11,6 +11,7 @@ import Loaf
 import RxSwift
 import RxCocoa
 import NSObject_Rx
+import Moya
 
 
 /// 이미지 첨부 방식
@@ -19,6 +20,46 @@ enum SelectImageAttachActionType {
     case find
     case take
     case close
+}
+
+
+
+/// 게시물 저장 서비스
+enum PostSaveService {
+    case uploadPost(PostPostData)
+}
+
+
+
+extension PostSaveService: TargetType {
+    
+    /// 기본 URL
+    var baseURL: URL {
+        URL(string: "https://board1104.azurewebsites.net")!
+    }
+    
+    /// 기본 URL 제외한 경로
+    var path: String {
+        return "/api/boardPost"
+    }
+    
+    /// HTTP 요청 메소드
+    var method: Moya.Method {
+        return .post
+    }
+    
+    /// HTTP 작업
+    var task: Task {
+        switch self {
+        case .uploadPost(let postPostData):
+            return .requestJSONEncodable(postPostData)
+        }
+    }
+    
+    /// HTTP 헤더
+    var headers: [String : String]? {
+        return ["Content-Type": "application/json"]
+    }
 }
 
 
@@ -58,11 +99,20 @@ class ComposeViewController: CommonViewController {
     /// 이미지 첨부 버튼
     @IBOutlet weak var selectImageAttachmentTypeBtn: UIBarButtonItem!
     
+    /// 화면 닫기 버튼
+    @IBOutlet weak var closeVc: UIBarButtonItem!
+    
+    // 게시글을 저장합니다.
+    @IBOutlet weak var savePostButton: UIBarButtonItem!
+    
     /// 선택된 게시판
     var selectedBoard: BoardDtoResponseData.BoardDto?
     
     /// 게시판 카테고리 이름 리스트
     var categoryList = [BoardDtoResponseData.BoardDto.Category]()
+    
+    /// 네트워크 통신 관리 객체
+    let provider = MoyaProvider<PostSaveService>()
     
     /// 컬렉션 뷰에 표시될 이미지
     var sampleImages = [UIImage]()
@@ -85,34 +135,20 @@ class ComposeViewController: CommonViewController {
     /// keybaordr의 높이를 0으로 방출하는 옵저버블
     let willHide = NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification,
                                                               object: nil)
-            .map { _ in CGFloat(0)}
+        .map { _ in CGFloat(0)}
+    
+    /// 캡쳐한 이미지를 방출하는 옵저버블
+    let sendCapturedImage = NotificationCenter.default.rx.notification(.newImageCaptured, object: nil)
+        .compactMap { $0.userInfo?["img"] as? UIImage }
+    
+    /// 선택한 이미지 배열을 방출하는 옵저버블
+    let sendSelectedImage = NotificationCenter.default.rx.notification(.imageDidSelect, object: nil)
+        .compactMap { $0.userInfo?["img"] as? [UIImage] }
     
     
-    /// 게시글 작성을 취소합니다.
-    /// - Author: 김정민(kimjm010@icloud.com)
-    @IBAction func closeVC(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    
-    /// 이미지 첨부 방식을 선택합니다.
-    /// 게시글에 첨부할 이미지를 가져오는 방법을 지정합니다.
-    /// - Parameter sender: Camera UIBarButtonItem
-    /// - Author: 김정민(kimjm010@icloud.com)
-    @IBAction func addorTakePhoto(_ sender: UIBarButtonItem) {
-//        alertToSelectAddOrTakePhoto(title: "", message: "이미지 첨부 방식을 선택해 주세요.") { _ in
-//            self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
-//        } handler2: { _ in
-//            self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
-//        }
-    }
-    
-    
-    /// 일반 게시판과 카테고리를 게시판에 게시글을 저장합니다.
-    /// - Parameter sender: Save 버튼
+    /// 게시글을 저장합니다.
     /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
-    @IBAction func savePost(_ sender: Any) {
-        
+    func savePost() {
         guard let title = postTitleTextField.text, title.count > 0,
               let content = postContentTextView.text, content.count > 0 else {
                   Loaf("제목과 내용을 입력해주세요 :)",
@@ -154,68 +190,49 @@ class ComposeViewController: CommonViewController {
                 #warning("사용자 수정")
                 newPost = PostPostData(postId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:dateStr)
             }
-            let body = try? BoardDataManager.shared.encoder.encode(newPost)
             
-            guard let url = URL(string: "https://board1104.azurewebsites.net/api/boardPost") else { return }
-            
-            self.sendSavingPostRequest(url: url, httpMethod: "POST", httpBody: body)
+            self.sendDataToServer(postData: newPost)
         }
     }
     
     
-    /// 게시글을 저장합니다.
-    /// - Parameters:
-    ///   - url: 요청할 url
-    ///   - httpMethod: api 메소드
-    ///   - httpBody: 게시글 데이터
-    ///   - Author: 남정은(dlsl7080@gmail.com)
-    private func sendSavingPostRequest(url: URL, httpMethod: String, httpBody: Data?) {
+    /// 게시글을 서버에 저장합니다.
+    /// - Parameter postData: 게시글 정보 객체
+    ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
+    func sendDataToServer(postData: PostPostData?) {
+        guard let postData = postData else { return }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = httpMethod
-        request.httpBody = httpBody
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let data = try decoder.decode(SavePostResponseData.self, from: data)
-                
-                switch data.resultCode {
-                case ResultCode.ok.rawValue:
-                    let newPost = PostListDtoResponseData.PostDto(postId: data.post.postId, title: data.post.title, content: data.post.content, createdAt: data.post.createdAt, userName: data.post.userId, likeCnt: 0, commentCnt: 0, scrapCnt: 0, categoryNumber: data.post.categoryNumber)
-                    
-                    NotificationCenter.default.post(name: .newPostInsert, object: nil, userInfo: ["newPost" : newPost])
-                    #if DEBUG
-                    print("추가 성공")
-                    #endif
-                    DispatchQueue.main.async {
-                        self.dismiss(animated: true)
+        provider.rx.request(.uploadPost(postData))
+            .filterSuccessfulStatusCodes()
+            .map(SavePostResponseData.self)
+            .subscribe { (result) in
+                switch result {
+                case .success(let response):
+                    switch response.resultCode {
+                    case ResultCode.ok.rawValue:
+                        let newPost = PostListDtoResponseData.PostDto(postId: response.post.postId, title: response.post.title, content: response.post.content, createdAt: response.post.createdAt, userName: response.post.userId, likeCnt: 0, commentCnt: 0, scrapCnt: 0, categoryNumber: response.post.categoryNumber)
+                        
+                        NotificationCenter.default.post(name: .newPostInsert, object: nil, userInfo: ["newPost": newPost])
+                        
+                        #if DEBUG
+                        print("추가 성공!")
+                        #endif
+                        
+                        DispatchQueue.main.async {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    case ResultCode.fail.rawValue:
+                        #if DEBUG
+                        print("이미 존재함")
+                        #endif
+                    default:
+                        break
                     }
-                case ResultCode.fail.rawValue:
-                    #if DEBUG
-                    print("이미 존재함")
-                    #endif
-                default:
-                    break
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            } catch {
-                print(error)
             }
-        }).resume()
+            .disposed(by: rx.disposeBag)
     }
     
     
@@ -241,32 +258,25 @@ class ComposeViewController: CommonViewController {
         
         // 게시글 화면에 앨범 이미지 표시
         // - Author: 김정민(kimjm010@icloud.com)
-        var token = NotificationCenter.default.addObserver(forName: .imageDidSelect,
-                                                           object: nil,
-                                                           queue: .main) { [weak self] (noti) in
-            if let img = noti.userInfo?["img"] as? [UIImage] {
-                self?.sampleImages.append(contentsOf: img)
-                self?.imageCollectionView.reloadData()
-            }
-        }
-        tokens.append(token)
+        sendSelectedImage
+            .subscribe(onNext: { [unowned self] in
+                self.sampleImages.append(contentsOf: $0)
+                self.imageCollectionView.reloadData()
+            })
+            .disposed(by: rx.disposeBag)
         
         // 게시글 화면에 캡쳐 이미지 표시
         // - Author: 김정민(kimjm010@icloud.com)
-        token = NotificationCenter.default.addObserver(forName: .newImageCaptured,
-                                                       object: nil,
-                                                       queue: .main,
-                                                       using: { [weak self] (noti) in
-            if let img = noti.userInfo?["img"] as? UIImage {
-                self?.sampleImages.append(img)
-                self?.imageCollectionView.reloadData()
-            }
-        })
-        tokens.append(token)
+        sendCapturedImage
+            .subscribe(onNext: { [unowned self] in
+                self.sampleImages.append($0)
+                self.imageCollectionView.reloadData()
+            })
+            .disposed(by: rx.disposeBag)
         
         // 서버에 올릴 이미지 저장
         // - Author: 남정은(dlsl7080@gmail.com)
-        token = NotificationCenter.default.addObserver(forName: .requestPostImage, object: nil, queue: .main, using: { noti in
+        let token = NotificationCenter.default.addObserver(forName: .requestPostImage, object: nil, queue: .main, using: { noti in
             if let image = noti.userInfo?["image"] as? UIImage {
                 self.boardImages.append(image)
             }
@@ -293,6 +303,24 @@ class ComposeViewController: CommonViewController {
             })
             .disposed(by: rx.disposeBag)
         
+        // 일반 게시판과 카테고리 게시판에 게시글을 저장합니다.
+        // - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
+        savePostButton.rx.tap
+            .subscribe(onNext: {
+                self.savePost()
+            })
+            .disposed(by: rx.disposeBag)
+        
+        
+        // 글쓰기 화면을 닫습니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        closeVc.rx.tap
+            .subscribe(onNext: {
+                self.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: rx.disposeBag)
+        
+        
         // 키보드 노티피케이션을 처리하는 옵저버블입니다.
         // - Author: 김정민(kimjm010@icloud.com)
         Observable.merge(willShow, willHide)
@@ -316,54 +344,34 @@ class ComposeViewController: CommonViewController {
             .map { $0.count > 0 }
             .drive(contentPlacehoderLabel.rx.isHidden)
             .disposed(by: rx.disposeBag)
+        
+        // 제목의 글자 수를 방출하는 옵저버블
+        let postTitleObservable = postTitleTextField.rx.text.orEmpty.asDriver().map { $0.count }
+        
+        // 제목 편집 중 글자 수를 확인합니다.
+        //
+        // 제목이 수정될때마다 본문의 글자수를 카운팅 합니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        postTitleObservable
+            .map { "\($0) / 50"}
+            .drive(contentCountLabel.rx.text)
+            .disposed(by: rx.disposeBag)
+        
+        // countLabel의 글자 색을 변경합니다.
+        //
+        // 글자수에 따라 countLable에 서로 다른 textColor를 바인딩합니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        postTitleObservable
+            .map { $0 >= 50 }
+            .map {  $0 ? UIColor.systemRed : UIColor.lightGray}
+            .drive(contentCountLabel.rx.textColor)
+            .disposed(by: rx.disposeBag)
+        
+        imageCollectionView.rx.setDelegate(self)
+            .disposed(by: rx.disposeBag)
     }
 }
 
-
-
-/// 게시글 내용의 동작 방식 처리
-/// - Author: 김정민(kimjm010@icloud.com)
-extension ComposeViewController: UITextViewDelegate {
-    
-    /// 본문 편집 중 글자 수를 확인합니다.
-    ///
-    /// 게시글 본문이 수정될때마다 본문의 글자수를 카운팅 합니다.
-    /// - Parameter textView: postContentTextView
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func textViewDidChange(_ textView: UITextView) {
-        contentCountLabel.text = "\(postContentTextView.text.count) / 500"
-        
-        if postContentTextView.text.count >= 500 {
-            contentCountLabel.textColor = UIColor.systemRed
-        } else {
-            contentCountLabel.textColor = .lightGray
-        }
-    }
-    
-    
-    /// 본문 편집 기능을 제한합니다.
-    ///
-    /// 게시글 본문의 글이 500자가 넘는 경우 작성이 불가능합니다.
-    /// - Parameters:
-    ///   - textView: textView description
-    ///   - range: 현재 선택된 텍스트의 범위
-    ///   - text: 대체할 텍스트
-    /// - Returns: 수정이 가능한 경우 true, 불가능한 경우 false
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func textView(_ textView: UITextView,
-                  shouldChangeTextIn range: NSRange,
-                  replacementText text: String) -> Bool {
-        
-        let currentContentText = NSString(string: textView.text ?? "")
-        let finalContentText = currentContentText.replacingCharacters(in: range, with: " ")
-        
-        if finalContentText.count > 500 {
-            return false
-        }
-        
-        return true
-    }
-}
 
 
 
@@ -409,6 +417,7 @@ extension ComposeViewController: UITextFieldDelegate {
         return true
     }
 }
+
 
 
 
@@ -532,4 +541,3 @@ extension ComposeViewController: UICollectionViewDelegate {
         }
     }
 }
-
