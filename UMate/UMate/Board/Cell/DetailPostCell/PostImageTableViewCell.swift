@@ -60,14 +60,15 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostImageCollectionViewCell", for: indexPath) as! PostImageCollectionViewCell
         
-        DispatchQueue.global().async {
-            if let image = BoardDataManager.shared.getImage(urlString: self.postImageList[indexPath.item].urlString) {
-                
+        BoardDataManager.shared.downloadImage(from: self.postImageList[indexPath.row].urlString, completion: { img in
+            if let img = img {
+                let image = BoardDataManager.shared.resizeImage(image: img, targetSize: CGSize(width: 180, height: 180))
                 DispatchQueue.main.async {
                     cell.postImageView.image = image
                 }
             }
-        }
+        })
+        
         
         // 컬렉션 뷰 셀에서 필요한 데이터 저장
         cell.index = indexPath.item

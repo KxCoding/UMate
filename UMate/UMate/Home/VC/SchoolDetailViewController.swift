@@ -37,7 +37,6 @@ class SchoolDetailViewController: UIViewController {
     
     
     /// ViewController가 메모리에 로드되면 호출됩니다.
-    ///
     /// 웹 페이지 URL을 받아서 웹 뷰에 로드합니다.
     override func viewDidLoad() {
         super.viewDidLoad()

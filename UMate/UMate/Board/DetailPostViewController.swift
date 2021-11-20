@@ -12,10 +12,12 @@ import RxCocoa
 import NSObject_Rx
 
 
-/// 게시글 삭제
+/// 게시글 삭제, 댓글 카운트 레이블 업데이트
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
-    static let deletePost = Notification.Name("deletePost")
+    static let postDidDelete = Notification.Name("postDidDelete")
+    static let commentDidDelete = Notification.Name("commentDidDelete")
+    static let commentDidInsert = Notification.Name("commentDidInsert")
 }
 
 
@@ -118,7 +120,6 @@ class DetailPostViewController: CommonViewController {
             originalCommentId = commentId
         }
         
-        
         let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
         #warning("사용자 수정")
         let newComment = CommentPostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: selectedPostId, content: content, originalCommentId: originalCommentId ?? 0, isReComment: isReComment, createdAt: dateStr)
@@ -128,6 +129,7 @@ class DetailPostViewController: CommonViewController {
         guard let url = URL(string: "https://board1104.azurewebsites.net/api/comment") else { return }
         
         sendSavingCommentRequest(url: url, httpMethod: "POST", httpBody: body)
+        NotificationCenter.default.post(name: .commentDidInsert, object: nil, userInfo: ["postId": post?.postId ?? 0])
         
         isReComment = false
         
@@ -150,7 +152,7 @@ class DetailPostViewController: CommonViewController {
     ///   - url: 요청할 url
     ///   - httpMethod: api 메소드
     ///   - httpBody: 댓글 데이터
-    ///   - Author: 남정은(dlsl7080@gmail.com)
+    ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
     private func sendSavingCommentRequest(url: URL, httpMethod: String, httpBody: Data?) {
         var request = URLRequest(url: url)
         request.httpMethod = httpMethod
@@ -194,45 +196,42 @@ class DetailPostViewController: CommonViewController {
     ///   - userId: 사용자 Id
     ///   - Author: 남정은(dlsl7080@gmail.com)
     private func fetchPostDetail(id: Int, userId: String) {
-        DispatchQueue.global().async {
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/boardpost/\(id)?userId=\(userId)") else { return }
+        
+        BoardDataManager.shared.session.dataTask(with: url) { [self] data, response, error in
             
-            guard let url = URL(string: "https://board1104.azurewebsites.net/api/boardpost/\(id)?userId=\(userId)") else { return }
+            if let error = error {
+                print(error)
+                return
+            }
             
-            BoardDataManager.shared.session.dataTask(with: url) { [self] data, response, error in
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                var res = try decoder.decode(PostDtoResponseData.self, from: data)
                 
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    return
-                }
-                
-                guard let data = data else {
-                    return
-                }
-
-                do {
-                    let decoder = JSONDecoder()
-                    var res = try decoder.decode(PostDtoResponseData.self, from: data)
+                if res.resultCode == ResultCode.ok.rawValue {
+                    guard let date = BoardDataManager.shared.decodingFormatter.date(from: res.post.createdAt) else { return }
+                    let dateStr = date.detailPostDate
+                    res.post.createdAt = dateStr
+                    self.post = res.post
+                    self.isLiked = res.isLiked
+                    self.isScrapped = res.isScrapped
+                    self.scrapPostId = res.scrapPostId
                     
-                    if res.resultCode == ResultCode.ok.rawValue {
-                        guard let date = BoardDataManager.shared.decodingFormatter.date(from: res.post.createdAt) else { return }
-                        let dateStr = date.detailPostDate
-                        res.post.createdAt = dateStr
-                        self.post = res.post
-                        self.isLiked = res.isLiked
-                        self.isScrapped = res.isScrapped
-                        self.scrapPostId = res.scrapPostId
-                        
-                    }
-                    self.fetchImages(postId: self.selectedPostId)
-                } catch {
-                    print(error)
                 }
-            }.resume()
-        }
+                self.fetchImages(postId: self.selectedPostId)
+            } catch {
+                print(error)
+            }
+        }.resume()
     }
     
     
@@ -240,91 +239,85 @@ class DetailPostViewController: CommonViewController {
     /// - Parameter postId: 게시글 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchImages(postId: Int) {
-        DispatchQueue.global().async {
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/image/?postId=\(postId)") else { return }
+        
+        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
             
-            guard let url = URL(string: "https://board1104.azurewebsites.net/api/image/?postId=\(postId)") else { return }
-
-            BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
-                if let error = error {
-                    print(error)
-                    return
-                }
-
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    return
-                }
-
-                guard let data = data else {
-                    return
-                }
-
-                do {
-                    let decoder = JSONDecoder()
-                    let res = try decoder.decode(ImageListResponseData.self, from: data)
-                     
-                    if res.resultCode == ResultCode.ok.rawValue {
-                        self.postImageList = res.list
-                        DispatchQueue.main.async {
-                            self.detailPostTableView.reloadSections(IndexSet(0...1), with: .none)
-                            self.detailPostTableView.isHidden = false
-                        }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let res = try decoder.decode(ImageListResponseData.self, from: data)
+                
+                if res.resultCode == ResultCode.ok.rawValue {
+                    self.postImageList = res.list
+                    DispatchQueue.main.async {
+                        self.detailPostTableView.reloadSections(IndexSet(0...1), with: .none)
+                        self.detailPostTableView.isHidden = false
                     }
-                } catch {
-                    print(error)
                 }
-            }.resume()
-        }
+            } catch {
+                print(error)
+            }
+        }.resume()
     }
     
     
     /// 게시글의 댓글목록을 불러옵니다.
     /// - Parameter postId: 게시글 Id
-    /// - Author: 남정은(dlsl7080@gmail.com)
+    /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
     private func fetchComments(postId: Int) {
-        DispatchQueue.global().async {
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/comment?postId=\(postId)") else { return }
         
-            guard let url = URL(string: "https://board1104.azurewebsites.net/api/comment?postId=\(postId)") else { return }
-     
-            BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
-                if let error = error {
-                    print(error)
-                    return
-                }
+        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let data = try decoder.decode(CommentListResponseData.self, from: data)
                 
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    return
-                }
-                
-                guard let data = data else {
-                    return
-                }
-
-                do {
-                    let decoder = JSONDecoder()
-                    let data = try decoder.decode(CommentListResponseData.self, from: data)
-                    
-                    if data.resultCode == ResultCode.ok.rawValue {
-                        self.commentList = data.list
-                        self.sortedCommentList = self.commentList.sorted {
-                           if $0.originalCommentId == $1.originalCommentId {
-                               return $0.commentId < $1.commentId
-                           }
-                           
-                           return $0.originalCommentId < $1.originalCommentId
-                       }
-                        self.lastCommentId = data.lastId
-              
-                        DispatchQueue.main.async {
-                            self.detailPostTableView.reloadData()
+                if data.resultCode == ResultCode.ok.rawValue {
+                    self.commentList = data.list
+                    self.sortedCommentList = self.commentList.sorted {
+                        if $0.originalCommentId == $1.originalCommentId {
+                            return $0.commentId < $1.commentId
                         }
-                        #warning("사용자 수정")
-                        self.fetchLikeComment(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8")
+                        
+                        return $0.originalCommentId < $1.originalCommentId
                     }
-                } catch {
-                    print(error)
+                    self.lastCommentId = data.lastId
+                    
+                    DispatchQueue.main.async {
+                        self.detailPostTableView.reloadData()
+                    }
+                    #warning("사용자 수정")
+                    self.fetchLikeComment(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8")
                 }
-            }.resume()
-        }
+            } catch {
+                print(error)
+            }
+        }.resume()
     }
     
     
@@ -332,12 +325,9 @@ class DetailPostViewController: CommonViewController {
     /// - Parameter userId: 사용자 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchLikeComment(userId: String) {
-        
         guard let url = URL(string: "https://board1104.azurewebsites.net/api/likeComment/?userId=\(userId)") else { return }
   
         BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
-           
-            
             if let error = error {
                 print(error)
                 return
@@ -372,7 +362,6 @@ class DetailPostViewController: CommonViewController {
     /// - Parameter commentId: 댓글 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func deleteComment(commentId: Int) {
-   
         guard let url = URL(string: "https://board1104.azurewebsites.net/api/comment/\(commentId)") else { return }
     
         var request = URLRequest(url: url)
@@ -444,7 +433,7 @@ class DetailPostViewController: CommonViewController {
                     #if DEBUG
                     print("삭제 성공")
                     #endif
-                    NotificationCenter.default.post(name: .deletePost, object: nil, userInfo: ["postId": postId])
+                    NotificationCenter.default.post(name: .postDidDelete, object: nil, userInfo: ["postId": postId])
                 } else {
                     #if DEBUG
                     print("삭제 실패")
@@ -543,7 +532,7 @@ class DetailPostViewController: CommonViewController {
         }
         
         // 게시글 삭제
-        let token = NotificationCenter.default.addObserver(forName: .sendAlert, object: nil, queue: .main, using: { _ in
+        let token = NotificationCenter.default.addObserver(forName: .alertDidSend, object: nil, queue: .main, using: { _ in
             let alertMenu = UIAlertController(title: "", message: "메뉴를 선택하세요.", preferredStyle: .actionSheet)
             
             let deleteAction = UIAlertAction(title: "게시글 삭제", style: .default) { _ in
@@ -691,7 +680,8 @@ extension DetailPostViewController: UITableViewDataSource {
                 comment.createdAt = dateStr
             }
             let isLiked = likeCommentList.contains { $0.commentId == comment.commentId }
-            cell.configure(comment: comment, isLiked: isLiked)
+            let likedComment = likeCommentList.first { $0.commentId == comment.commentId }
+            cell.configure(comment: comment, isLiked: isLiked, likedComment: likedComment)
             
             return cell
             
@@ -747,6 +737,7 @@ extension DetailPostViewController: UITableViewDelegate {
                     
                     let id = self.sortedCommentList[indexPath.row].commentId
                     self.deleteComment(commentId: id)
+                    NotificationCenter.default.post(name: .commentDidDelete, object: nil, userInfo: ["postId": self.post?.postId ?? 0])
                     
                     self.sortedCommentList.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -789,6 +780,7 @@ extension DetailPostViewController: UITableViewDelegate {
                          attributes: .destructive) { action in
                     let id = self.sortedCommentList[indexPath.row].commentId
                     self.deleteComment(commentId: id)
+                    NotificationCenter.default.post(name: .commentDidDelete, object: nil, userInfo: ["postId": self.post?.postId ?? 0])
                     
                     self.sortedCommentList.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .automatic)

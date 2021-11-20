@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 /// 채용정보 화면
 /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -24,7 +27,7 @@ class EmploymentInfoViewController: CommonViewController {
         dismiss(animated: true, completion: nil)
     }
     
-
+    
     /// 화면에 진입하면 채용정보 테이블 뷰를 리로드 하여 바로 보여줄 수 있도록 합니다.
     /// - Parameter animated: true이면 애니메이션을 이용해서 뷰를 윈도우에 추가
     /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -38,7 +41,12 @@ class EmploymentInfoViewController: CommonViewController {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
+        overrideUserInterfaceStyle = .light
+        
+        // 다크모드 라이트모드 상관없이 항상 타이틀 색상을 darkGray로 지정합니다.
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.dynamicColor(light: .darkGray, dark: .darkGray)]
+        
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .darkGray)
         
         // 파싱 메소드 호출 합니다.
         getJobData()
@@ -46,18 +54,9 @@ class EmploymentInfoViewController: CommonViewController {
         // 서치바의 바운드의 라인을 제거합니다.
         searchBar.backgroundImage = UIImage()
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EmploymentInfoViewController.backgroundTap))
-        self.view.addGestureRecognizer(tapGestureRecognizer)
+        didTapMakeLowerKeyboard()
     }
     
-    
-    /// 뷰를 탭하면 키보드를 내립니다.
-    /// 뷰 전체가 탭 영역입니다.
-    /// - Parameter sender: UITapGestureRecognizer생성자의 action
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
-    }
 }
 
 

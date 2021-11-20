@@ -8,10 +8,12 @@
 import UIKit
 
 
-/// 스크랩에대한 노티피케이션
+/// 스크랩과 '좋아요'에대한 노티피케이션
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension  Notification.Name {
     static let postDidScrap = Notification.Name("postDidScrap")
+    static let postDidLike = Notification.Name("postDidLike")
+
     static let postCancelScrap = Notification.Name("postCancelScrap")
     static let postAlreadyLiked = Notification.Name("postAlreadyLiked")
 }
@@ -74,6 +76,7 @@ class PostContentTableViewCell: UITableViewCell {
         
         sendScrapOrLikePostRequest(url: url, httpMethod: "POST", httpBody: body)
         isLiked = true
+        NotificationCenter.default.post(name: .postDidLike, object: nil, userInfo: ["postId": post.postId])
     }
     
     
@@ -113,6 +116,7 @@ class PostContentTableViewCell: UITableViewCell {
             let body = try? BoardDataManager.shared.encoder.encode(scrapPostData)
             
             sendScrapOrLikePostRequest(url: url, httpMethod: "POST", httpBody: body)
+            NotificationCenter.default.post(name: .postDidScrap, object: nil, userInfo: ["postId": post.postId])
         }
     }
     
@@ -121,7 +125,7 @@ class PostContentTableViewCell: UITableViewCell {
     /// - Parameter sender: 햄버거 버튼
     /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func showMenu(_ sender: Any) {
-        NotificationCenter.default.post(name: .sendAlert, object: nil)
+        NotificationCenter.default.post(name: .alertDidSend, object: nil)
     }
     
     
@@ -136,7 +140,6 @@ class PostContentTableViewCell: UITableViewCell {
         request.httpMethod = httpMethod
         request.httpBody = httpBody
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
         
         BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {

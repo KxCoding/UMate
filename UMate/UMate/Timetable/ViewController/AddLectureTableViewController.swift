@@ -6,7 +6,10 @@
 //
 
 import Elliotable
-import UIKit
+//import Moya
+//import NSObject_Rx
+//import RxSwift
+//import UIKit
 
 
 /// TimeTable 탭의 메인 화면 ViewController 클래스
@@ -14,6 +17,12 @@ import UIKit
 /// 사용자가 직접 강의 정보를 입력하여 강의를 추가할 수 있는 화면입니다.
 /// - Author: 안상희
 class AddLectureTableViewController: UITableViewController {
+    lazy var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
+        return session
+    }()
+
     // MARK: - Property
     /// 시간표 Delegate
     var timeTableDelegate: SendTimeTableDataDelegate?
@@ -175,12 +184,17 @@ class AddLectureTableViewController: UITableViewController {
     @IBOutlet weak var darkGrayButton: UIButton!
     
     
+    
+    
+    
     // MARK: - Action
     /// 요일 정보를 선택합니다.
     ///
     /// 선택된 요일 값을 저장하고 View의 상태를 변경합니다.
     /// - Parameter sender: 선택된 버튼
     @IBAction func selectDay(_ sender: UIButton) {
+        initializeWeekday()
+        
         switch sender.tag {
         case 101:
             if mondayContainerView.backgroundColor == .clear {
@@ -297,6 +311,8 @@ class AddLectureTableViewController: UITableViewController {
             return
         }
         
+        var courseDay: String = ""
+        
         // 시간표 강의 정보를 저장하는 리스트
         var lectureList: [ElliottEvent] = []
         
@@ -325,28 +341,42 @@ class AddLectureTableViewController: UITableViewController {
                                                    backgroundColor: backgroundColor)
                     
                     lectureList.append(lectureInfo)
+                    
+                    switch i + 1 {
+                    case 1:
+                        courseDay = "월"
+                    case 2:
+                        courseDay = "화"
+                    case 3:
+                        courseDay = "수"
+                    case 4:
+                        courseDay = "목"
+                    default:
+                        courseDay = "금"
+                    }
                 }
             }
             
+            
             // 이미 강의 정보가 저장되어있을 경우 시간표 중복이므로 경고 메시지를 표시합니다.
             if !LectureManager.shared.lectureEventList.isEmpty {
-                for i in 0...LectureManager.shared.lectureEventList.count - 1 {
-                    for j in 0...lectureList.count - 1 {
+                for i in 0..<LectureManager.shared.lectureEventList.count {
+                    for j in 0..<lectureList.count {
                         if lectureList[j].courseDay == LectureManager.shared.lectureEventList[i].courseDay {
                             if LectureManager.shared.lectureEventList[i].startTime == lectureList[j].startTime ||
                                 LectureManager.shared.lectureEventList[i].endTime == lectureList[j].endTime {
                                 alert(title: "경고", message: "강의 시간이 겹칩니다.")
                                 return
                             }
-                            
+
                             if lectureList[j].startTime >= LectureManager.shared.lectureEventList[i].startTime &&
                                 lectureList[j].endTime <= LectureManager.shared.lectureEventList[i].endTime {
                                 alert(title: "경고", message: "강의 시간이 겹칩니다.")
                                 return
                             }
-                            
+
                             if lectureList[j].startTime > LectureManager.shared.lectureEventList[i].startTime &&
-                                lectureList[j].startTime < LectureManager.shared.lectureEventList[j].endTime  {
+                                lectureList[j].startTime < LectureManager.shared.lectureEventList[i].endTime  {
                                 alert(title: "경고", message: "강의 시간이 겹칩니다.")
                                 return
                             }
@@ -355,8 +385,66 @@ class AddLectureTableViewController: UITableViewController {
                 }
             }
             
-            // 시간표 데이터를 전달합니다.
-            timeTableDelegate?.sendData(data: lectureList)
+            
+            guard let url = URL(string: "https://localhost:25139/timetable") else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "content-type")
+            
+            request.addValue("Bearer \(userTempToken)", forHTTPHeaderField: "Authorization")
+            
+            
+            let timetablePostData = TimetablePostData(courseId: courseId,
+                                                      courseName: courseName,
+                                                      roomName: roomName,
+                                                      professorName: professor,
+                                                      courseDay: courseDay,
+                                                      startTime: startTime,
+                                                      endTime: endTime,
+                                                      backgroundColor: colorString,
+                                                      textColor: textColorString)
+            
+            do {
+                let encoder = JSONEncoder()
+                request.httpBody = try encoder.encode(timetablePostData)
+            } catch {
+                print(error)
+            }
+            
+            self.session.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    #if DEBUG
+                    print(error)
+                    #endif
+                    return
+                }
+                
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    print((response as? HTTPURLResponse)?.statusCode)
+                    return
+                }
+                
+                guard let data = data else { return }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let result = try decoder.decode(TimetablePostResponse.self, from: data)
+                    
+                    switch result.code {
+                    case ResultCode.ok.rawValue:
+                        #if DEBUG
+                        print(result.message)
+                        #endif
+                        self.timeTableDelegate?.sendData(data: lectureList, timetableId: result.timetableId)
+                    default:
+                        print(result.message)
+                    }
+                } catch {
+                    print(error)
+                }
+            }.resume()
+            
             
             // 강의 정보가 저장되면 알림을 띄웁니다.
             alert(title: "알림", message: "저장되었습니다.") { action in
@@ -397,6 +485,25 @@ class AddLectureTableViewController: UITableViewController {
          lightGreenButton, greenButton, skyblueButton, blueButton,
          lightPurpleButton, purpleButton, darkGrayButton].forEach {
             $0?.setImage(nil, for: .normal)
+        }
+    }
+    
+    
+    /// 선택된 요일의 상태를 초기화합니다.
+    func initializeWeekday() {
+        // 요일 선택 View를 초기화합니다.
+        [mondayContainerView, tuesdayContainerView, wednesdayContainerView,
+         thursdayContainerView, fridayContainerView].forEach {
+            $0?.layer.cornerRadius = ($0?.frame.width)! / 2
+            $0?.backgroundColor = .clear
+        }
+        
+        [mondayLabel, tuesdayLabel, wednesdayLabel, thursdayLabel, fridayLabel].forEach {
+            $0?.textColor = UIColor.black
+        }
+        
+        for i in 0..<weekdayList.count {
+            weekdayList[i] = false
         }
     }
     
@@ -531,9 +638,20 @@ extension AddLectureTableViewController: UITextFieldDelegate {
 
 
 
+extension AddLectureTableViewController: URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let trust = challenge.protectionSpace.serverTrust!
+        
+        completionHandler(.useCredential, URLCredential(trust: trust))
+    }
+}
+
+
+
+
 // MARK: - Protocol
 /// 추가한 시간표 데이터를 TimeTableViewController로 전달하는 프로토콜입니다.
 protocol SendTimeTableDataDelegate {
     /// 시간표 데이터를 전달합니다.
-    func sendData(data: [ElliottEvent])
+    func sendData(data: [ElliottEvent], timetableId: Int)
 }

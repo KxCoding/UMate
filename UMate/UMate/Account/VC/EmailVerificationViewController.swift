@@ -7,6 +7,9 @@
 
 import UIKit
 import KeychainSwift
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 /// 이메일 인증 화면
 /// Author: 황신택 (sinadsl1457@gmail.com)
@@ -23,6 +26,8 @@ class EmailVerificationViewController: CommonViewController {
     /// 보안코드 입력 필드
     @IBOutlet weak var codeTextField: UITextField!
     
+    /// 이메일 화면 탭 제스쳐
+    //    @IBOutlet var tapGesture: UITapGestureRecognizer!
     
     /// 이메일 검증을 위한 보안코드를 요청합니다.
     /// - Parameter sender: sendCodeButton
@@ -55,7 +60,7 @@ class EmailVerificationViewController: CommonViewController {
         }
     }
     
-
+    
     /// 다음 화면으로 전환되기 전에 호출되어  초기화 작업을 수행합니다.
     /// - Parameters:
     ///   - segue: 실행된 segue
@@ -81,106 +86,68 @@ class EmailVerificationViewController: CommonViewController {
             $0?.clipsToBounds = true
         }
         
-        addKeyboardWillHideObserver()
-        addKeyboardWillShowObserver()
         
-        codeTextField.delegate = self
+        // keyboardNotification을 처리하는 옵저버를 등록합니다.
+        // 키보드가 화면에 표시되기 직전에 키보드 높이만큼 아래 여백을 추가해서 UI와 겹치는 문제를 방지합니다.
+        let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification)
+            .map { ($0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0 }
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EmailVerificationViewController.backgroundTap))
-        self.view.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    
-    /// 뷰를 탭하면 키보드를 내립니다.
-    /// 뷰 전체가 탭 영역입니다.
-    /// - Parameter sender: UITapGestureRecognizer생성자의 action 
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
-    }
-}
-
-
-
-extension EmailVerificationViewController: UITextFieldDelegate {
-    /// 내용을 편집할 때마다 반복적으로 호출됩니다.
-    /// 숫자를 제외한 나머지 문자를 제한합니다.
-    /// - Parameters:
-    ///   - textField: 이메일 텍스트필드
-    ///   - range: 교체될 문자열의 범위
-    ///   - string: 입력된 문자 또는 문자열
-    /// - Returns: true를 리턴하면 편집된 내용을 반영하고, false를 리턴하면 무시합니다.
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let codeField = codeTextField.text else { return false }
-        let finalStr = NSString(string: codeField).replacingCharacters(in: range, with: string)
-        let chartSet = CharacterSet(charactersIn: "0123456789").inverted
+        let willHide =
+        NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification)
+            .map { _ in CGFloat(0) }
         
-        guard let _ = finalStr.rangeOfCharacter(from: chartSet) else { return true }
-        return false
-    }
-    
-    
-    /// 텍스트 필드에서 편집이 시작될 때 호출됩니다.
-    /// - Parameter textField: 편집이 시작된 텍스트 필드
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activatedTextField = textField
-    }
-    
-    
-    /// 텍스트 필드에서 편집이 끝나면 호출됩니다.
-    /// - Parameter textField: 편집이 끝난 텍스트 필드
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        activatedTextField = nil
-    }
-}
-
-
-
-/// 키보드 노티피케이션 익스텐션
-/// - Author: 황신택 (sinadsl1457@gmail.com)
-extension EmailVerificationViewController {
-    /// keyboardWillShowNotification을 처리하는 옵저버를 등록합니다.
-    /// 키보드가 화면에 표시되기 직전에 키보드 높이만큼 아래 여백을 추가해서 UI와 겹치는 문제를 방지합니다.
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func addKeyboardWillShowObserver() {
-        let token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] noti in
-            guard let strongSelf = self else { return  }
-            guard let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-                return
-            }
-            
-            var shouldMoveViewUp = false
-            
-            if let activeTextField = strongSelf.activatedTextField {
-                let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: strongSelf.view).maxY
-                let topOfKeyboard = strongSelf.view.frame.height - keyboardSize.height
+        Observable.merge(willShow, willHide)
+            .subscribe(onNext: { [unowned self] height in
+                var shouldMoveViewUp = false
                 
-                if bottomOfTextField > topOfKeyboard {
-                    shouldMoveViewUp = true
+                if let activeTextField = self.activatedTextField {
+                    let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY
+                    let topOfKeyboard = self.view.frame.height - height
+                    
+                    if bottomOfTextField > topOfKeyboard {
+                        shouldMoveViewUp = true
+                    }
                 }
-            }
-            
-            if shouldMoveViewUp {
-                UIView.animate(withDuration: 0.3) {
-                    strongSelf.view.frame.origin.y = 15 - keyboardSize.height
+                
+                if shouldMoveViewUp {
+                    UIView.animate(withDuration: 0.3) {
+                        self.view.frame.origin.y = 0 - height
+                    }
                 }
-            }
-        }
-        tokens.append(token)
+            })
+            .disposed(by: rx.disposeBag)
+        
+        didTapMakeLowerKeyboard()
+        
+        makeChangeNavigationItemColor()
+       
+        codeTextField.rx.text.orEmpty
+            .map(digitsOnly(_:))
+            .subscribe(onNext: setPreservingCursor(on: codeTextField))
+            .disposed(by: rx.disposeBag)
     }
     
     
-    /// keyboardWillHideNotification을 처리하는 옵저버를 등록합니다.
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func addKeyboardWillHideObserver() {
-        let token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] noti in
-            guard let strongSelf = self else { return }
-            strongSelf.view.frame.origin.y = 0
-        }
-        tokens.append(token)
+    /// 숫자를 제외한 모든 문자들을 공백없이 하나의 문자로 만들어서 리턴합니다.
+    /// - Parameter text: 텍스트 필드에 입력된 문자
+    /// - Returns: 숫제를 제외한 문자들을 문자로 리턴합니다.
+    func digitsOnly(_ text: String) -> String {
+        return text.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
     }
+    
+    
+    /// 숫자를 제외한 다른 문자가 온다면 텍스트필드의 커서를 다른위치로 이동시켜 입력을 방지합니다.
+    /// - Parameter textField: 전달된 텍스트 필드
+    /// - Returns: 클로저로 텍스필드의 selectedTextRange의 위치를 커스텀화하여 리턴합니다.
+    func setPreservingCursor(on textField: UITextField) -> (_ newText: String) -> Void {
+        return { newText in
+            let cursorPosition = textField.offset(from: textField.beginningOfDocument, to: textField.selectedTextRange!.start) + newText.count - (textField.text?.count ?? 0)
+            textField.text = newText
+            print(cursorPosition)
+            if let newPosition = textField.position(from: textField.beginningOfDocument, offset: cursorPosition) {
+                textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
+            }
+        }
+    }
+   
 }
-

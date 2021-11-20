@@ -35,6 +35,9 @@ class CommentTableViewCell: UITableViewCell {
     /// 좋아요 버튼의 이미지뷰
     @IBOutlet weak var heartButtonImageView: UIImageView!
     
+    /// 좋아요 버튼
+    @IBOutlet weak var heartButton: UIButton!
+    
     /// 댓글 컨테이너 뷰
     /// 댓글, 대댓글에 따라 다른 background 색상을 표시합니다.
     @IBOutlet weak var commentContainerView: UIView!
@@ -66,11 +69,57 @@ class CommentTableViewCell: UITableViewCell {
             heartImageView.image = UIImage(named: "heart2.fill")
             heartButtonImageView.image = UIImage(named: "heart2.fill")
             heartCountLabel.text = "\(comment.likeCnt + 1)"
+            selectedComment?.likeCnt += 1
+            
             heartImageView.isHidden = false
             heartCountLabel.isHidden = false
+            
+            guard let url = URL(string: "https://board1104.azurewebsites.net/api/likeComment") else { return }
+            
+            let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
+            #warning("사용자 수정")
+            let likeCommentData = LikeCommentPostData(likeCommentId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", commentId: comment.commentId, createdAt: dateStr)
+            
+            let body = try? BoardDataManager.shared.encoder.encode(likeCommentData)
+            
+            BoardDataManager.shared.sendLikeCommentRequest(url: url, httpMethod: "POST", httpBody: body) { success, data in
+                if success {
+                    self.isLiked = true
+                    guard let likeComment = data.likeComment else { return }
+                    
+                    DispatchQueue.main.async {
+                        self.heartButton.tag = likeComment.likeCommentId
+                    }
+                } else {
+                    #if DEBUG
+                    print("댓글 좋아요 추가 실패")
+                    #endif
+                }
+            }
+        } else {
+            heartImageView.image = UIImage(named: "heart2")
+            heartButtonImageView.image = UIImage(named: "heart2")
+            
+            if comment.likeCnt == 1 {
+                heartCountLabel.isHidden = true
+                heartImageView.isHidden = true
+            }
+            
+            heartCountLabel.text = "\(comment.likeCnt - 1)"
+            selectedComment?.likeCnt -= 1
+            
+            BoardDataManager.shared.deleteLikeComment(likeCommentId: heartButton.tag) { success in
+                if success {
+                    self.isLiked = false
+                } else {
+                    #if DEBUG
+                    print("댓글 좋아요 삭제 실패")
+                    #endif
+                }
+            }
         }
     }
-    
+  
     
     /// 셀이 로드되면 UI를 초기화합니다.
     /// - Author: 김정민(kimjm010@icloud.com)
@@ -90,7 +139,8 @@ class CommentTableViewCell: UITableViewCell {
     ///   - comment: 댓글 정보
     ///   - isLiked: 사용자의 댓글 좋아요 여부
     ///   - Author: 김정민(kimjm010@icloud.com)
-    func configure(comment: CommentListResponseData.Comment, isLiked: Bool) {
+    func configure(comment: CommentListResponseData.Comment, isLiked: Bool, likedComment: LikeCommentListResponse.LikeComment?) {
+        heartButton.tag = likedComment?.likeCommentId ?? 0
         
         heartImageView.isHidden = comment.likeCnt == 0
         heartCountLabel.isHidden = heartImageView.isHidden
@@ -105,7 +155,7 @@ class CommentTableViewCell: UITableViewCell {
         commentContainerView.backgroundColor = !(comment.isReComment) ? UIColor.systemBackground : UIColor.systemGray6
         commentContainerView.layer.cornerRadius = !(comment.isReComment) ? 0 : 10
         
-        // 로그인 기능 추가후 프로필이미지 설정
+        #warning("로그인 기능 추가후 프로필이미지 설정")
         //profileImageView.image = comment.image
         userIdLabel.text = comment.userId
         commentLabel.text = comment.content

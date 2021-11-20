@@ -44,40 +44,38 @@ class BoardViewController: CommonViewController {
     /// 게시판 정보를 불러옵니다.
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchBoardList() {
-        DispatchQueue.global().async {
-            guard let url = URL(string: "https://board1104.azurewebsites.net/api/board") else { return }
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/board") else { return }
+        
+        BoardDataManager.shared.session.dataTask(with: url) { data, resposne, error in
             
-            BoardDataManager.shared.session.dataTask(with: url) { data, resposne, error in
-    
-                if let error = error {
-                    print(error)
-                    return
-                }
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = resposne as? HTTPURLResponse, response.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let res = try decoder.decode(BoardDtoResponseData.self, from: data)
                 
-                guard let response = resposne as? HTTPURLResponse, response.statusCode == 200 else {
-                    return
-                }
-                
-                guard let data = data else {
-                    return
-                }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    let res = try decoder.decode(BoardDtoResponseData.self, from: data)
+                if res.resultCode == ResultCode.ok.rawValue {
+                    self.boardList = res.list
                     
-                    if res.resultCode == ResultCode.ok.rawValue {
-                        self.boardList = res.list
-                        
-                        DispatchQueue.main.async {
-                            self.boardListTableView.reloadData()
-                        }
+                    DispatchQueue.main.async {
+                        self.boardListTableView.reloadData()
                     }
-                } catch {
-                    print(error)
                 }
-            }.resume()
-        }
+            } catch {
+                print(error)
+            }
+        }.resume()
     }
     
     

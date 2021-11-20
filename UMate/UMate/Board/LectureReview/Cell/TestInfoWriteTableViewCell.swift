@@ -12,8 +12,9 @@ import UIKit
 /// 시험정보 작성 화면에서 문제예시 입력란 추가와 조건 미충족 시 보내는 알림창에 대한 노티피케이션
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
-    static let insertTestInfoInputField = Notification.Name("insertTestInfoInputField")
-    static let sendAlert = Notification.Name("sendAlert")
+    static let testInfoInputFieldDidInsert = Notification.Name("insertTestInfoInputField")
+    static let alertDidSend = Notification.Name("alertDidSend")
+    static let warningAlertDidSend = Notification.Name("warningAlert")
 }
 
 
@@ -30,6 +31,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     
     /// 수강학기를 선택합니다.
     /// - Parameter sender: '수강학기 선택' 버튼
+    /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func selectSemester(_ sender: Any) {
         semestersView.show()
         semestersView.selectionAction = { [weak self] index, item in
@@ -46,6 +48,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     
     /// 시험종류를 선택합니다.
     /// - Parameter sender: '시험종류 선택' 버튼
+    /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func selectTest(_ sender: Any) {
         testTypesView.show()
         testTypesView.selectionAction = { [weak self] index, item in
@@ -87,6 +90,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     
     /// 문제유형을 선택합니다. 복수선택이 가능합니다.
     /// - Parameter sender: 문제유형 버튼
+    /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func selectTypesOfQuestions(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         
@@ -117,6 +121,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     
     /// 문제 예시를 입력하는 텍스트 필드를 추가합니다.
     /// - Parameter sender: '더 입력하기' 버튼
+    /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func addTestInfoField(_ sender: Any) {
         let textFieldList = [thirdTextFieldStackView, fourthTextFieldStackView, fifthTextFieldStackView]
         
@@ -124,7 +129,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
             textFieldList[exampleNumber - 3]?.isHidden = false
             
             // 입력란을 추가할 때 보내는 노티피케이션
-            NotificationCenter.default.post(name: .insertTestInfoInputField, object: nil)
+            NotificationCenter.default.post(name: .testInfoInputFieldDidInsert, object: nil)
         }
         exampleNumber += 1
     }
@@ -140,7 +145,9 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     
     /// 시험정보를 지정된 강의에 등록합니다.
     /// - Parameter sender: '공유하기'버튼
+    /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func shareTestInfo(_ sender: Any) {
+        
         let buttonList = [multipleChoiceButton,subjectiveButton,trueAndFalseButton,AbbreviatedFormButton,
                       essayTypeButton,oralStatementButton,etceteraButton]
         
@@ -153,30 +160,30 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         
         // 수강학기 미선택시
         if semestersView.selectedItem == nil {
-            NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":0])
+            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":0])
         }
         // 시험죵류 미선택시
         else if testTypesView.selectedItem == nil {
-            NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":1])
+            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":1])
         }
         // 시험전략 미작성시
         else if testStrategyTextView.text.count < 20 {
-            NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":2])
+            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":2])
         }
         // 문제유형 미선택시
         else if selectedButton.count == 0 {
-            NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":3])
+            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":3])
         }
         // 문제예시 미작성시
-        else if !firstTextField.hasText {
-            NotificationCenter.default.post(name: .sendAlert, object: nil, userInfo: ["alertKey":4])
+        else if firstTextField.text?.count ?? 0 < 5 {
+            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":4])
         }
         // 다 입력했을 경우
         else {
             // 문제 유형
             let questionTypes = selectedButton.map { button -> String in
                 if let button = button {
-                    return button.titleLabel?.text ?? ""
+                    return button.titleLabel?.text?.trimmingCharacters(in: .whitespaces) ?? ""
                 }
                 return ""
             }
@@ -184,14 +191,17 @@ class TestInfoWriteTableViewCell: UITableViewCell {
             // 문제 예시
             testExampleStackView.arrangedSubviews.forEach { view in
                 let textField = view.subviews.last as? UITextField
-                examplesOfQuestions.append(textField?.text ?? "")
+                if let content = textField?.text?.trimmingCharacters(in: .whitespaces), !content.isEmpty {
+                    examplesOfQuestions.append(content)
+                }
             }
             
-            // 시험정보 인스턴스
-            let testInfo = TestInfo(semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypes, examples: examplesOfQuestions)
-
-            // 테이블 뷰에 시험정보 전달하는 노티피케이션
-            NotificationCenter.default.post(name: .shareTestInfo, object: nil, userInfo: ["testInfo":testInfo])
+            let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
+            let questionTypesStr = questionTypes.map{ $0.trimmingCharacters(in: .whitespaces)}.joined(separator: ",")
+            #warning("사용자 수정6c1c72d6-fa9b-4af6-8730-bb98fded0ad8")
+            let newTestInfo = TestInfoPostData(testInfoId: 0, userId: "22", lectureInfoId: lectureInfoId, semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypesStr, examples: examplesOfQuestions, createdAt: dateStr)
+            
+            NotificationCenter.default.post(name: .warningAlertDidSend, object: nil, userInfo: ["testInfo": newTestInfo])
         }
     }
     
@@ -209,11 +219,16 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// 데이터를 한 번만 추가하기 위한 속성
     var isAppended = false
     
+    /// 강의 정보 Id
+    var lectureInfoId = 0
     
-    /// 수강학기에 대한 정보를 받아오고 드롭다운 뷰에 데이터를 저장합니다.
+    
+    /// 강의에 대한 정보를 받아오고 드롭다운 뷰에 데이터를 저장합니다.
     /// - Parameter openingSemester: 강의가 개설된 학기를 담은 배열
-    func receiveSemestersAndAddDropDownData(openingSemester: [String]) {
-        semesters = openingSemester
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    func receiveSemestersAndAddDropDownData(semesters: [String], lectureInfoId: Int) {
+        self.semesters = semesters
+        self.lectureInfoId = lectureInfoId
         
         if !isAppended {
             isAppended = true

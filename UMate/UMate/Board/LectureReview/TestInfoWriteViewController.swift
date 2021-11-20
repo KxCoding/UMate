@@ -13,7 +13,7 @@ import UIKit
 /// 시험정보 작성 화면에서 '공유하기' 버튼을 눌렀을 때 처리되는 동작에 대한 노티피케이션
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
-    static let shareTestInfo = Notification.Name("shareTestInfo")
+    static let testInfoDidShare = Notification.Name("testInfoDidShare")
 }
 
 
@@ -27,7 +27,7 @@ class TestInfoWriteViewController: CommonViewController {
     @IBOutlet weak var tableViewbottomConstraint: NSLayoutConstraint!
     
     /// 선택된 강의
-    var selectedLecture: LectureInfo?
+    var lectureInfo: LectureInfoDetailResponse.LectrueInfo?
     
     
     /// 강의정보 화면으로 돌아갑니다.
@@ -67,7 +67,7 @@ class TestInfoWriteViewController: CommonViewController {
        
         
         // 알림창 노티피케이션
-        token = NotificationCenter.default.addObserver(forName: .sendAlert, object: nil, queue: .main) { [weak self] noti in
+        token = NotificationCenter.default.addObserver(forName: .alertDidSend, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
             if let alertKey = noti.userInfo?["alertKey"] as? Int {
@@ -81,7 +81,7 @@ class TestInfoWriteViewController: CommonViewController {
                 case 3:
                     Loaf("문제 유형을 선택해주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show()
                 case 4:
-                    Loaf("문제 예시를 적어주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show()
+                    Loaf("문제 예시를 더 세부적으로 적어주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show()
                 default:
                     break
                 }
@@ -91,7 +91,7 @@ class TestInfoWriteViewController: CommonViewController {
 
         
         // 입력란 추가시 테이블 뷰 리로드
-        token = NotificationCenter.default.addObserver(forName: .insertTestInfoInputField, object: nil, queue: .main) { [weak self] noti in
+        token = NotificationCenter.default.addObserver(forName: .testInfoInputFieldDidInsert, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
             self.testInfoTableView.reloadData()
@@ -100,11 +100,98 @@ class TestInfoWriteViewController: CommonViewController {
         
         
         // 시험정보 공유 버튼 클릭시 화면 dismiss
-        token = NotificationCenter.default.addObserver(forName: .shareTestInfo, object: nil, queue: .main) { [weak self] _ in
+        token = NotificationCenter.default.addObserver(forName: .testInfoDidShare, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             self.dismiss(animated: true, completion: nil)
         }
         tokens.append(token)
+    }
+    
+    
+    /// 뷰 계층에 모든 뷰들이 추가된 이후 호출됩니다.
+    /// - Parameter animated: 윈도우에 뷰가 추가될 때 애니메이션 여부. 기본값은 true입니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+ 
+        // 작성 경고문
+        let token = NotificationCenter.default.addObserver(forName: .warningAlertDidSend, object: nil, queue: .main) { [weak self] noti in
+            guard let self = self else { return }
+            self.alertVersion3(title: "시험 정보를 공유하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { _ in
+                if let newTestInfo = noti.userInfo?["testInfo"] as? TestInfoPostData {
+           
+                    guard let url = URL(string: "https://board1104.azurewebsites.net/api/testInfo") else { return }
+           
+                    let body = try? BoardDataManager.shared.encoder.encode(newTestInfo)
+                    
+                    self.sendSavingTestInfoRequest(url: url, httpMethod: "POST", httpBody: body)
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+        tokens.append(token)
+    }
+    
+    
+    /// 작성한 시험 정보를 서버에 저장합니다.
+    /// - Parameters:
+    ///   - url: 요청할 url
+    ///   - httpMethod: api 메소드
+    ///   - httpBody: 시험 정보 데이터
+    ///   - Auhtor: 남정은(dlsl7080@gmail.com)
+    func sendSavingTestInfoRequest(url: URL, httpMethod: String, httpBody: Data?) {
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod
+        request.httpBody = httpBody
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                print(response)
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let data = try decoder.decode(SaveTestInfoResponseData.self, from: data)
+            
+                switch data.resultCode {
+                case ResultCode.ok.rawValue:
+                    #if DEBUG
+                    print("추가 성공")
+                    #endif
+                    
+                    var exampleList = [TestInfoListResponse.TestInfo.Example]()
+                    data.examples.forEach {
+                        let newExample = TestInfoListResponse.TestInfo.Example(exampleId: $0.exampleId, testInfoId: $0.testInfoId, content: $0.content)
+                        exampleList.append(newExample)
+                    }
+                    
+                    let newTestInfo = TestInfoListResponse.TestInfo(testInfoId: data.testInfo.testInfoId, userId: data.testInfo.userId, lectureInfoId: data.testInfo.lectureInfoId, semester: data.testInfo.semester, testType: data.testInfo.testType, testStrategy: data.testInfo.testStrategy, questionTypes: data.testInfo.questionTypes, examples: exampleList, createdAt: data.testInfo.createdAt)
+                    
+                    NotificationCenter.default.post(name: .testInfoDidShare, object: nil, userInfo: ["testInfo": newTestInfo])
+                   
+                case ResultCode.testInfoExists.rawValue:
+                    #if DEBUG
+                    print("이미 존재함")
+                    #endif
+                default:
+                    break
+                }
+            } catch {
+                print(error)
+            }
+        }).resume()
     }
 }
 
@@ -130,13 +217,13 @@ extension TestInfoWriteViewController: UITableViewDataSource {
     /// - Returns: 시험정보 작성 화면 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TestInfoWriteTableViewCell", for: indexPath) as! TestInfoWriteTableViewCell
-        guard let lecture = selectedLecture else {
+        guard let lecture = lectureInfo else {
             return cell
         }
         
         // 개설학기를 담는 배열
-        let semesters = lecture.openingSemester.components(separatedBy: "/")
-        cell.receiveSemestersAndAddDropDownData(openingSemester: semesters)
+        let semesters = lecture.semesters.components(separatedBy: "/")
+        cell.receiveSemestersAndAddDropDownData(semesters: semesters, lectureInfoId: lecture.lectureInfoId)
         return cell
     }
 }

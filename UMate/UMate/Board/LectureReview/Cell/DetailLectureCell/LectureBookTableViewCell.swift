@@ -23,9 +23,10 @@ class LectureBookTableViewCell: UITableViewCell {
     
     /// 교재 정보 셀을 초기화합니다.
     /// - Parameter lecture: 선택된 강의
-    func configure(lecture: LectureInfo) {
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    func configure(lecture: LectureInfoDetailResponse.LectrueInfo) {
         // 등록된 교재가 없을 경우
-        if lecture.textbookName.isEmpty {
+        if lecture.bookName.isEmpty {
             bookNameLabel.isHidden = true
             bookLinkTextView.text = "등록된 교재정보가 없습니다."
             bookLinkTextView.isSelectable = false
@@ -33,7 +34,7 @@ class LectureBookTableViewCell: UITableViewCell {
         }
         // 등록된 교재가 있을 경우
         else {
-            let attributedString = NSMutableAttributedString(string: lecture.textbookName,
+            let attributedString = NSMutableAttributedString(string: lecture.bookName,
                                                             attributes: [.font: UIFont.preferredFont(forTextStyle: .body)])
             if let encoded = lecture.bookLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
                let url = URL(string: encoded)

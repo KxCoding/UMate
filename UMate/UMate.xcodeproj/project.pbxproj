@@ -22,6 +22,10 @@
 		2C7854AA26DFE0340079F6F4 /* ReviewListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7854A926DFE0340079F6F4 /* ReviewListTableViewCell.swift */; };
 		400F1BADFE2D2421EE7CBBC5 /* Pods_UMate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A44BACD78B532E8BD2C03246 /* Pods_UMate.framework */; };
 		5C0A7D4B271EEF3D00009BEB /* TimetableDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0A7D4A271EEF3D00009BEB /* TimetableDetailViewController.swift */; };
+		5C0C79582745B849002E331A /* TimetableListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C79572745B849002E331A /* TimetableListResponse.swift */; };
+		5C0C795A2745D450002E331A /* TimetableSingleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C79592745D450002E331A /* TimetableSingleResponse.swift */; };
+		5C0C795C2745D460002E331A /* TimetablePostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C795B2745D460002E331A /* TimetablePostData.swift */; };
+		5C0C795E2745E365002E331A /* TimetableDeleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C795D2745E364002E331A /* TimetableDeleteResponse.swift */; };
 		5C0D977726A768A600F396B7 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D977626A768A600F396B7 /* UIViewController+Alert.swift */; };
 		5C1A18A926DFF35A00BB2891 /* PasswordRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A18A826DFF35A00BB2891 /* PasswordRootViewController.swift */; };
 		5C2141AF26BF059F00F93A84 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2141AE26BF059F00F93A84 /* UIButton+Extension.swift */; };
@@ -101,32 +105,32 @@
 		DF27D74D26B937240046D7BF /* CategoryBoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF27D74C26B937240046D7BF /* CategoryBoardCollectionViewCell.swift */; };
 		DF2F6B0226C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2F6B0126C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift */; };
 		DF3381E826F257E200001478 /* LectureReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3381E726F257E200001478 /* LectureReview.swift */; };
-		DF3381EA26F257EF00001478 /* TestInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3381E926F257EF00001478 /* TestInfo.swift */; };
 		DF36281526A93207007AC5D2 /* ExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */; };
 		DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */; };
 		DF40510726C05335009FCA17 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF40510626C05335009FCA17 /* SearchViewController.swift */; };
+		DF415C6A2732E74C00016126 /* LectureInfoCustomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF415C692732E74C00016126 /* LectureInfoCustomHeader.xib */; };
+		DF415C6C2732E87D00016126 /* LectureInfoCustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF415C6B2732E87D00016126 /* LectureInfoCustomHeaderView.swift */; };
 		DF42108826E7B00800C6E9F5 /* TestInfoWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF42108726E7B00800C6E9F5 /* TestInfoWriteViewController.swift */; };
 		DF42108A26E7D1E400C6E9F5 /* TestInfoWriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF42108926E7D1E400C6E9F5 /* TestInfoWriteTableViewCell.swift */; };
 		DF454E2526C2DAED0031F92C /* UIViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF454E2426C2DAED0031F92C /* UIViewController+View.swift */; };
 		DF454E2726C2E1450031F92C /* ExpandImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF454E2626C2E1450031F92C /* ExpandImageViewController.swift */; };
-		DF943C712730227D00F2F1FE /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943C702730227D00F2F1FE /* Response.swift */; };
-		DF943C732730228400F2F1FE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943C722730228400F2F1FE /* Request.swift */; };
+		DF943C712730227D00F2F1FE /* BoardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943C702730227D00F2F1FE /* BoardResponse.swift */; };
+		DF943C732730228400F2F1FE /* BoardRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943C722730228400F2F1FE /* BoardRequest.swift */; };
 		DF943C81273038FE00F2F1FE /* BlobManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943C80273038FE00F2F1FE /* BlobManager.swift */; };
 		DF943CC32731519500F2F1FE /* BoardDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943CC22731519500F2F1FE /* BoardDataManager.swift */; };
-		DF943CC52731551B00F2F1FE /* BoardCommonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943CC42731551B00F2F1FE /* BoardCommonTableViewCell.swift */; };
+		DF943CC82731C05300F2F1FE /* LectureInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943CC72731C05300F2F1FE /* LectureInfoResponse.swift */; };
+		DF943CCA2731C05C00F2F1FE /* LectureInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943CC92731C05C00F2F1FE /* LectureInfoRequest.swift */; };
 		DFE1DA192707485C005BE7D1 /* BoardCustomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFE1DA182707485C005BE7D1 /* BoardCustomHeader.xib */; };
 		DFE3DD5E26CFC474002F98D9 /* LectureReview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFE3DD5D26CFC474002F98D9 /* LectureReview.storyboard */; };
 		DFE3DD6326CFC5C7002F98D9 /* DetailLectureReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD6226CFC5C7002F98D9 /* DetailLectureReviewViewController.swift */; };
 		DFE3DD6626CFC624002F98D9 /* LectureReviewHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD6526CFC624002F98D9 /* LectureReviewHeaderTableViewCell.swift */; };
 		DFE3DD6826CFC640002F98D9 /* LectureReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD6726CFC640002F98D9 /* LectureReviewTableViewCell.swift */; };
 		DFE3DD6B26CFC6A6002F98D9 /* SectionTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD6A26CFC6A6002F98D9 /* SectionTitleCollectionViewCell.swift */; };
-		DFE3DD6D26CFC6C0002F98D9 /* DetailLectureHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD6C26CFC6C0002F98D9 /* DetailLectureHeaderTableViewCell.swift */; };
 		DFE3DD6F26CFC6D8002F98D9 /* LectureSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD6E26CFC6D8002F98D9 /* LectureSummaryTableViewCell.swift */; };
 		DFE3DD7126CFC6EE002F98D9 /* LectureBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD7026CFC6EE002F98D9 /* LectureBookTableViewCell.swift */; };
 		DFE3DD7326CFC700002F98D9 /* LectureRatingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD7226CFC700002F98D9 /* LectureRatingTableViewCell.swift */; };
 		DFE3DD7526CFC715002F98D9 /* ReviewContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD7426CFC715002F98D9 /* ReviewContentTableViewCell.swift */; };
 		DFE3DD7726CFC728002F98D9 /* TestInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD7626CFC728002F98D9 /* TestInfoTableViewCell.swift */; };
-		DFE3DD7A26CFC790002F98D9 /* LectureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE3DD7926CFC790002F98D9 /* LectureInfo.swift */; };
 		DFEF018026A756290015829B /* Date+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF017F26A756290015829B /* Date+Formatter.swift */; };
 		DFEF018226A756880015829B /* FreeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018126A756880015829B /* FreeBoardViewController.swift */; };
 		DFEF018426A756AF0015829B /* LectureReviewBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */; };
@@ -218,6 +222,10 @@
 		2C7854A626DFD0530079F6F4 /* ReviewManagingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewManagingViewController.swift; sourceTree = "<group>"; };
 		2C7854A926DFE0340079F6F4 /* ReviewListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListTableViewCell.swift; sourceTree = "<group>"; };
 		5C0A7D4A271EEF3D00009BEB /* TimetableDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDetailViewController.swift; sourceTree = "<group>"; };
+		5C0C79572745B849002E331A /* TimetableListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableListResponse.swift; sourceTree = "<group>"; };
+		5C0C79592745D450002E331A /* TimetableSingleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSingleResponse.swift; sourceTree = "<group>"; };
+		5C0C795B2745D460002E331A /* TimetablePostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetablePostData.swift; sourceTree = "<group>"; };
+		5C0C795D2745E364002E331A /* TimetableDeleteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDeleteResponse.swift; sourceTree = "<group>"; };
 		5C0D977626A768A600F396B7 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		5C1A18A826DFF35A00BB2891 /* PasswordRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRootViewController.swift; sourceTree = "<group>"; };
 		5C2141AE26BF059F00F93A84 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
@@ -301,32 +309,32 @@
 		DF27D74C26B937240046D7BF /* CategoryBoardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBoardCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF2F6B0126C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandPostImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF3381E726F257E200001478 /* LectureReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReview.swift; sourceTree = "<group>"; };
-		DF3381E926F257EF00001478 /* TestInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInfo.swift; sourceTree = "<group>"; };
 		DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
 		DF40510626C05335009FCA17 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		DF415C692732E74C00016126 /* LectureInfoCustomHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LectureInfoCustomHeader.xib; sourceTree = "<group>"; };
+		DF415C6B2732E87D00016126 /* LectureInfoCustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureInfoCustomHeaderView.swift; sourceTree = "<group>"; };
 		DF42108726E7B00800C6E9F5 /* TestInfoWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInfoWriteViewController.swift; sourceTree = "<group>"; };
 		DF42108926E7D1E400C6E9F5 /* TestInfoWriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInfoWriteTableViewCell.swift; sourceTree = "<group>"; };
 		DF454E2426C2DAED0031F92C /* UIViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+View.swift"; sourceTree = "<group>"; };
 		DF454E2626C2E1450031F92C /* ExpandImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandImageViewController.swift; sourceTree = "<group>"; };
 		DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
-		DF943C702730227D00F2F1FE /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		DF943C722730228400F2F1FE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		DF943C702730227D00F2F1FE /* BoardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardResponse.swift; sourceTree = "<group>"; };
+		DF943C722730228400F2F1FE /* BoardRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardRequest.swift; sourceTree = "<group>"; };
 		DF943C80273038FE00F2F1FE /* BlobManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlobManager.swift; sourceTree = "<group>"; };
 		DF943CC22731519500F2F1FE /* BoardDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDataManager.swift; sourceTree = "<group>"; };
-		DF943CC42731551B00F2F1FE /* BoardCommonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCommonTableViewCell.swift; sourceTree = "<group>"; };
+		DF943CC72731C05300F2F1FE /* LectureInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureInfoResponse.swift; sourceTree = "<group>"; };
+		DF943CC92731C05C00F2F1FE /* LectureInfoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureInfoRequest.swift; sourceTree = "<group>"; };
 		DFE1DA182707485C005BE7D1 /* BoardCustomHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardCustomHeader.xib; sourceTree = "<group>"; };
 		DFE3DD5D26CFC474002F98D9 /* LectureReview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LectureReview.storyboard; sourceTree = "<group>"; };
 		DFE3DD6226CFC5C7002F98D9 /* DetailLectureReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailLectureReviewViewController.swift; sourceTree = "<group>"; };
 		DFE3DD6526CFC624002F98D9 /* LectureReviewHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReviewHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		DFE3DD6726CFC640002F98D9 /* LectureReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReviewTableViewCell.swift; sourceTree = "<group>"; };
 		DFE3DD6A26CFC6A6002F98D9 /* SectionTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTitleCollectionViewCell.swift; sourceTree = "<group>"; };
-		DFE3DD6C26CFC6C0002F98D9 /* DetailLectureHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailLectureHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		DFE3DD6E26CFC6D8002F98D9 /* LectureSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureSummaryTableViewCell.swift; sourceTree = "<group>"; };
 		DFE3DD7026CFC6EE002F98D9 /* LectureBookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureBookTableViewCell.swift; sourceTree = "<group>"; };
 		DFE3DD7226CFC700002F98D9 /* LectureRatingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureRatingTableViewCell.swift; sourceTree = "<group>"; };
 		DFE3DD7426CFC715002F98D9 /* ReviewContentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewContentTableViewCell.swift; sourceTree = "<group>"; };
 		DFE3DD7626CFC728002F98D9 /* TestInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInfoTableViewCell.swift; sourceTree = "<group>"; };
-		DFE3DD7926CFC790002F98D9 /* LectureInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureInfo.swift; sourceTree = "<group>"; };
 		DFEF017F26A756290015829B /* Date+Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatter.swift"; sourceTree = "<group>"; };
 		DFEF018126A756880015829B /* FreeBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeBoardViewController.swift; sourceTree = "<group>"; };
 		DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LectureReviewBoardViewController.swift; path = UMate/Board/LectureReviewBoardViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -505,6 +513,10 @@
 			isa = PBXGroup;
 			children = (
 				5C733FDE26B0659A00C1AF21 /* UserTimeTable.swift */,
+				5C0C79572745B849002E331A /* TimetableListResponse.swift */,
+				5C0C79592745D450002E331A /* TimetableSingleResponse.swift */,
+				5C0C795B2745D460002E331A /* TimetablePostData.swift */,
+				5C0C795D2745E364002E331A /* TimetableDeleteResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -614,7 +626,6 @@
 			isa = PBXGroup;
 			children = (
 				6D80AE0B26F41B65003D41C8 /* Extension */,
-				6D64F77F26ADC996005BAC82 /* Cell */,
 				6D9E0CEC26ABC7C600ABB37F /* VC */,
 				6D8019BE26A525470042A288 /* dummy */,
 				5C92DD39269BF8450094A93C /* Account.storyboard */,
@@ -642,13 +653,6 @@
 				5CCD820D270E337300A21CB9 /* SchoolDetailViewController.swift */,
 			);
 			path = VC;
-			sourceTree = "<group>";
-		};
-		6D64F77F26ADC996005BAC82 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Cell;
 			sourceTree = "<group>";
 		};
 		6D8019BE26A525470042A288 /* dummy */ = {
@@ -767,6 +771,24 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		DF415C672732E68800016126 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DF943CC92731C05C00F2F1FE /* LectureInfoRequest.swift */,
+				DF943CC72731C05300F2F1FE /* LectureInfoResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DF415C682732E6CB00016126 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DF415C692732E74C00016126 /* LectureInfoCustomHeader.xib */,
+				DF415C6B2732E87D00016126 /* LectureInfoCustomHeaderView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DF46AEAA26A1C70A00435D94 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -779,7 +801,6 @@
 				F5FBBAE826C27667006FE53E /* ComposeImageCollectionViewCell.swift */,
 				F596F9AE2704989500864076 /* SelectCategoryBoardCollectionViewCell.swift */,
 				DF25EF4026AFD51B00949AAB /* DetailPostCell */,
-				DF943CC42731551B00F2F1FE /* BoardCommonTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -797,17 +818,27 @@
 		DF943C792730239D00F2F1FE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DF943C702730227D00F2F1FE /* Response.swift */,
-				DF943C722730228400F2F1FE /* Request.swift */,
+				DF943C702730227D00F2F1FE /* BoardResponse.swift */,
+				DF943C722730228400F2F1FE /* BoardRequest.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		DF943CC62731C04300F2F1FE /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				DF415C672732E68800016126 /* Model */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		DFE3DD5F26CFC4BD002F98D9 /* LectureReview */ = {
 			isa = PBXGroup;
 			children = (
 				DFE3DD6426CFC60A002F98D9 /* Cell */,
+				DF415C682732E6CB00016126 /* View */,
 				DFE3DD7826CFC730002F98D9 /* Model */,
+				DF943CC62731C04300F2F1FE /* Service */,
 				DFE3DD5D26CFC474002F98D9 /* LectureReview.storyboard */,
 				DFEF018326A756AF0015829B /* LectureReviewBoardViewController.swift */,
 				DFE3DD6226CFC5C7002F98D9 /* DetailLectureReviewViewController.swift */,
@@ -823,7 +854,6 @@
 				DFE3DD6526CFC624002F98D9 /* LectureReviewHeaderTableViewCell.swift */,
 				DFE3DD6726CFC640002F98D9 /* LectureReviewTableViewCell.swift */,
 				DFE3DD6926CFC671002F98D9 /* DetailLectureCell */,
-				F5E00E6B26E6464700E4068C /* LectureReviewWriteCell */,
 				DF42108926E7D1E400C6E9F5 /* TestInfoWriteTableViewCell.swift */,
 			);
 			path = Cell;
@@ -833,7 +863,6 @@
 			isa = PBXGroup;
 			children = (
 				DFE3DD6A26CFC6A6002F98D9 /* SectionTitleCollectionViewCell.swift */,
-				DFE3DD6C26CFC6C0002F98D9 /* DetailLectureHeaderTableViewCell.swift */,
 				DFE3DD6E26CFC6D8002F98D9 /* LectureSummaryTableViewCell.swift */,
 				DFE3DD7026CFC6EE002F98D9 /* LectureBookTableViewCell.swift */,
 				DFE3DD7226CFC700002F98D9 /* LectureRatingTableViewCell.swift */,
@@ -846,9 +875,7 @@
 		DFE3DD7826CFC730002F98D9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DFE3DD7926CFC790002F98D9 /* LectureInfo.swift */,
 				DF3381E726F257E200001478 /* LectureReview.swift */,
-				DF3381E926F257EF00001478 /* TestInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1044,13 +1071,6 @@
 			path = PlaceList;
 			sourceTree = "<group>";
 		};
-		F5E00E6B26E6464700E4068C /* LectureReviewWriteCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = LectureReviewWriteCell;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1128,6 +1148,7 @@
 				6D42480526AAB8C300E1E138 /* Setting.storyboard in Resources */,
 				5C92DD2A269B4E8E0094A93C /* Timetable.storyboard in Resources */,
 				2C3D34C226B6A3770036DF0A /* PlaceSearch.storyboard in Resources */,
+				DF415C6A2732E74C00016126 /* LectureInfoCustomHeader.xib in Resources */,
 				5C92DD3A269BF8450094A93C /* Account.storyboard in Resources */,
 				5C92DD11269B4DEF0094A93C /* Main.storyboard in Resources */,
 				F401BE4426DD1787000C7898 /* places.json in Resources */,
@@ -1212,7 +1233,6 @@
 				6D9D5DCD27168D9700E7DABF /* ContestsTableViewCell.swift in Sources */,
 				F5C319CF270589C600BBA1CA /* TakePhotoViewController.swift in Sources */,
 				6D3EC62926B10B6C00907A68 /* TermsOfConditionsTableViewController.swift in Sources */,
-				DF3381EA26F257EF00001478 /* TestInfo.swift in Sources */,
 				DF42108826E7B00800C6E9F5 /* TestInfoWriteViewController.swift in Sources */,
 				6DA8043C2727B88300D4EECE /* CommonTableViewCell.swift in Sources */,
 				5C5A69A026E1046C00470E45 /* AppInformationTextViewController.swift in Sources */,
@@ -1226,8 +1246,8 @@
 				F560368726B9EE5C0093DDC7 /* CommentTableViewCell.swift in Sources */,
 				2C715DAC26C072C100B0B22B /* StoreTypeTableViewCell.swift in Sources */,
 				F5E00E6A26E6461100E4068C /* LectureReviewWriteTableViewController.swift in Sources */,
+				5C0C79582745B849002E331A /* TimetableListResponse.swift in Sources */,
 				5CAFD3AD26A74B9D0002D0EC /* AddLectureTableViewController.swift in Sources */,
-				DFE3DD7A26CFC790002F98D9 /* LectureInfo.swift in Sources */,
 				5C0D977726A768A600F396B7 /* UIViewController+Alert.swift in Sources */,
 				DF943CC32731519500F2F1FE /* BoardDataManager.swift in Sources */,
 				DFE3DD6626CFC624002F98D9 /* LectureReviewHeaderTableViewCell.swift in Sources */,
@@ -1250,7 +1270,9 @@
 				DF25EF4626AFD5EE00949AAB /* PostImageCollectionViewCell.swift in Sources */,
 				F401BE1D26DAC356000C7898 /* PlaceDataManager.swift in Sources */,
 				DF40510726C05335009FCA17 /* SearchViewController.swift in Sources */,
+				5C0C795E2745E365002E331A /* TimetableDeleteResponse.swift in Sources */,
 				F4FC9DE7271F47DC00193A77 /* SimplePlaceTypeCollectionViewCell.swift in Sources */,
+				5C0C795A2745D450002E331A /* TimetableSingleResponse.swift in Sources */,
 				F5541B29273AD2D300E7926A /* Reactive+Extension.swift in Sources */,
 				F48843AD26ABE512005DB8A3 /* UserReviewTableViewCell.swift in Sources */,
 				5C7E4C4F26BD6FD4009DF776 /* Dummy.swift in Sources */,
@@ -1265,10 +1287,10 @@
 				6D80AE0D26F41B83003D41C8 /* RegularExpression.swift in Sources */,
 				5CD1F63A26B9A7FB00441831 /* PasswordChangeViewController.swift in Sources */,
 				6D9E3AAF26B26B300038614D /* EmailVerificationViewController.swift in Sources */,
-				DF943CC52731551B00F2F1FE /* BoardCommonTableViewCell.swift in Sources */,
 				5C92DD0A269B4DEF0094A93C /* AppDelegate.swift in Sources */,
 				5CB9104926B2C875001E24DC /* FriendSearchViewController.swift in Sources */,
 				2C715DA626C0514400B0B22B /* SearchHeaderCollectionViewCell.swift in Sources */,
+				DF943CCA2731C05C00F2F1FE /* LectureInfoRequest.swift in Sources */,
 				6D4E7FA92711877A00F3BB5C /* ContestHeaderView.swift in Sources */,
 				2C715DAA26C0695E00B0B22B /* CategoryTableViewCell.swift in Sources */,
 				F48843AF26ABE512005DB8A3 /* FirstSectionTableViewCell.swift in Sources */,
@@ -1286,7 +1308,6 @@
 				DF25EF4426AFD59300949AAB /* PostImageTableViewCell.swift in Sources */,
 				F48843A326ABE512005DB8A3 /* Review.swift in Sources */,
 				2C7854AA26DFE0340079F6F4 /* ReviewListTableViewCell.swift in Sources */,
-				DFE3DD6D26CFC6C0002F98D9 /* DetailLectureHeaderTableViewCell.swift in Sources */,
 				F48843B026ABE512005DB8A3 /* ReviewWriteTableViewController.swift in Sources */,
 				5C733FDF26B0659A00C1AF21 /* UserTimeTable.swift in Sources */,
 				5C92DD3C269BF84F0094A93C /* AccountViewController.swift in Sources */,
@@ -1297,12 +1318,13 @@
 				6D889C0A270BF4BD0027B65C /* PaddingLabelView.swift in Sources */,
 				F4D5F8D626F0B65C0019C0B0 /* PlaceList.swift in Sources */,
 				2C7854A726DFD0530079F6F4 /* ReviewManagingViewController.swift in Sources */,
+				DF415C6C2732E87D00016126 /* LectureInfoCustomHeaderView.swift in Sources */,
 				6DA8990426B91CE900F81AD9 /* DetailRegisterViewController.swift in Sources */,
 				6DFEBAF726EC8587002CE476 /* MainCollectionViewCell.swift in Sources */,
 				5C733FE526B0839D00C1AF21 /* FriendLectureViewController.swift in Sources */,
 				DF27D74D26B937240046D7BF /* CategoryBoardCollectionViewCell.swift in Sources */,
 				F401BE1F26DC8806000C7898 /* University.swift in Sources */,
-				DF943C712730227D00F2F1FE /* Response.swift in Sources */,
+				DF943C712730227D00F2F1FE /* BoardResponse.swift in Sources */,
 				F5FBBAE526C2762A006FE53E /* ImageCollectionViewCell.swift in Sources */,
 				F4ABE8D426D38C1400F54B3B /* PlaceListViewController.swift in Sources */,
 				F596F9AF2704989500864076 /* SelectCategoryBoardCollectionViewCell.swift in Sources */,
@@ -1316,6 +1338,7 @@
 				F4D5F8DA26F0B6D30019C0B0 /* ReviewTemplate.swift in Sources */,
 				5C1A18A926DFF35A00BB2891 /* PasswordRootViewController.swift in Sources */,
 				5C733FE326B07D7C00C1AF21 /* FriendsListViewController.swift in Sources */,
+				5C0C795C2745D460002E331A /* TimetablePostData.swift in Sources */,
 				F50F9B5426B0F932007ABEF6 /* CommunityRuleViewController.swift in Sources */,
 				DF454E2526C2DAED0031F92C /* UIViewController+View.swift in Sources */,
 				DF943C81273038FE00F2F1FE /* BlobManager.swift in Sources */,
@@ -1328,13 +1351,14 @@
 				F50F9B5226B0F6CF007ABEF6 /* ComposeViewController.swift in Sources */,
 				6DA41EE026C0C98200BC249B /* FindPasswordAndEmailTableViewController.swift in Sources */,
 				DF2F6B0226C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift in Sources */,
+				DF943CC82731C05300F2F1FE /* LectureInfoResponse.swift in Sources */,
 				DFE3DD7326CFC700002F98D9 /* LectureRatingTableViewCell.swift in Sources */,
 				F48843B126ABE512005DB8A3 /* RoundedButton.swift in Sources */,
 				5C0A7D4B271EEF3D00009BEB /* TimetableDetailViewController.swift in Sources */,
 				DFEF018026A756290015829B /* Date+Formatter.swift in Sources */,
 				F47EEDDD26EA30A30036E8F7 /* BlurHashEncode.swift in Sources */,
 				5CCD820E270E337300A21CB9 /* SchoolDetailViewController.swift in Sources */,
-				DF943C732730228400F2F1FE /* Request.swift in Sources */,
+				DF943C732730228400F2F1FE /* BoardRequest.swift in Sources */,
 				2C3D34C026B6A3650036DF0A /* PlaceSearchViewController.swift in Sources */,
 				F44389EA26D2F52400B9A193 /* BrowserSettingTableViewController.swift in Sources */,
 				DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */,
