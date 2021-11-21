@@ -10,7 +10,7 @@ import UIKit
 
 /// 최근 강의평 목록 뷰 컨트롤러
 /// - Author: 김정민, 남정은(dlsl7080@gmail.com)
-class LectureReviewBoardViewController: UIViewController {
+class LectureReviewBoardViewController: CommonViewController {
     /// 강의평 테이블 뷰
     @IBOutlet weak var lectureReviewListTableView: UITableView!
     
@@ -22,87 +22,106 @@ class LectureReviewBoardViewController: UIViewController {
     }
     
    
+    /// 서치 바와의 상호작용을 기반으로 검색 결과 화면을 관리하는 뷰 컨트롤러
     let searchController = UISearchController(searchResultsController: nil)
+    
+    /// 검색 문자열을 일시적으로 저장할 속성
     var cachedText: String?
     
-    var lectureList = [LectureInfo]()
-    var filteredLectureList = [LectureInfo]()
+    /// 강의 리스트
+    var lectureList = [LectureInfoListResponseData.LectureInfo]()
     
+    /// 검색결과 강의 리스트
+    var filteredLectureList = [LectureInfoListResponseData.LectureInfo]()
+    
+    /// 서치바 글자 유무 확인
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
+    /// 검색중인지 확인
     var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
     }
-
     
-    /// 강의 리스트를 파싱합니다.
-    /// - Author: 남정은(dlsl7080@gmail.com)
-    func parseList() {
-        guard let data = NSDataAsset(name: "lectures2")?.data else {
-            return
-        }
+    /// 강의목록 페이지
+    var lecturePage = 1
+    
+    /// 강의목록 불러오는 양
+    let lecturePageSize = 12
+    
+    /// 강의정보 불러오는 중
+    var lectureIsFetching = false
+    
+    /// 추가로 불러온 정보
+    var hasMoreLecture = true
+    
+    
+    /// 최근 강의평 목록을 불러옵니다.
+    ///  - Author: 남정은(dlsl7080@gmail.com)
+    private func fetchRecentReview() {
+        guard !lectureIsFetching && hasMoreLecture else { return }
         
-        guard let str = String(data: data, encoding: .utf8) else {
-            return
-        }
+        lectureIsFetching = true
         
-        let lines: [String] = str.components(separatedBy: "\n")
+        guard let url = URL(string: "https://board1104.azurewebsites.net/api/lectureInfo?page=\(lecturePage)&pageSize=\(lecturePageSize)") else { return }
         
-        for line in lines.dropFirst() {
-            let values: [String] = line.components(separatedBy: ",")
-        
-            guard values.count == 5 else { continue }
+        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
+            defer {
+                self.lectureIsFetching = false
+            }
             
-            let lectureTitle = values[0].trimmingCharacters(in: .whitespaces) // 교과목명
-            let professor = values[1].trimmingCharacters(in: .whitespaces) // 교수명
-            let openingSemester = values[2].trimmingCharacters(in: .whitespaces) // 개설학기
-            let textbookName = values[3].trimmingCharacters(in: .whitespaces) // 교재명
-            let bookLink = values[4].trimmingCharacters(in: .whitespaces) // 교재링크
+            if let error = error {
+                print(error)
+                return
+            }
             
-            let lectureInfo = LectureInfo(
-                lectureTitle: lectureTitle,
-                professor: professor,
-                openingSemester: openingSemester,
-                textbookName: textbookName,
-                bookLink: bookLink,
-                reviews: [LectureReview(assignment: .normal,
-                                        groupMeeting: .many,
-                                        evaluation: .generous,
-                                        attendance: .seat,
-                                        testNumber: .two,
-                                        rating: .four,
-                                        semester: "2019-2",
-                                        reviewContent: "괜찮아요"),
-                          LectureReview(assignment: .normal,
-                                        groupMeeting: .many,
-                                        evaluation: .generous,
-                                        attendance: .seat,
-                                        testNumber: .two,
-                                        rating: .four,
-                                        semester: "2019-2",
-                                        reviewContent: "강력 추천"),
-                          LectureReview(assignment: .many,
-                                        groupMeeting: .none,
-                                        evaluation: .normal,
-                                        attendance: .direct,
-                                        testNumber: .none,
-                                        rating: .three,
-                                        semester: "2019-2",
-                                        reviewContent: "별로에요")
-                ])
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                return
+            }
             
-            lectureList.append(lectureInfo)
-        }
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let data = try decoder.decode(LectureInfoListResponseData.self, from: data)
+                
+                if data.resultCode == ResultCode.ok.rawValue {
+                    if !data.list.isEmpty {
+                        let reloadRequired = self.lecturePage == 1
+                        
+                        self.lecturePage += 1
+                        self.hasMoreLecture = data.totalCount > self.lectureList.count + data.list.count
+                        
+                        let indexPaths = (self.lectureList.count ..< (self.lectureList.count + data.list.count))
+                            .map { IndexPath(row: $0, section: 0) }
+                        
+                        self.lectureList.append(contentsOf: data.list)
+                        
+                        DispatchQueue.main.async {
+                            if reloadRequired {
+                                self.lectureReviewListTableView.reloadData()
+                                self.lectureReviewListTableView.isHidden = false
+                            } else {
+                                self.lectureReviewListTableView.insertRows(at: indexPaths, with: .none)
+                            }
+                        }
+                    } else {
+                        self.hasMoreLecture = false
+                    }
+                }
+            } catch {
+                print(error)
+            }
+        }.resume()
     }
     
     
     func filterContentForSearchText(_ searchText: String) {
-        
-        filteredLectureList = lectureList.filter { (list: LectureInfo) -> Bool in
-            return list.professor.lowercased().contains(searchText.lowercased()) || list.lectureTitle.lowercased().contains(searchText.lowercased())
-        }
+        filteredLectureList = lectureList.filter { $0.professor.lowercased().contains(searchText.lowercased())
+                                                    || $0.title.lowercased().contains(searchText.lowercased()) }
         
         lectureReviewListTableView.reloadData()
     }
@@ -128,7 +147,8 @@ class LectureReviewBoardViewController: UIViewController {
         if let cell = sender as? UITableViewCell, let indexPath = lectureReviewListTableView.indexPath(for: cell) {
             
             if let vc = segue.destination as? DetailLectureReviewViewController {
-                vc.selectedLecture = lectureList[indexPath.row]
+                vc.professor = lectureList[indexPath.row].professor
+                vc.lectureInfoId = lectureList[indexPath.row].lectureInfoId
             }
         }
     }
@@ -137,13 +157,47 @@ class LectureReviewBoardViewController: UIViewController {
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        parseList()
+        
+        lectureReviewListTableView.isHidden = true
+        
+        lectureReviewListTableView.prefetchDataSource = self
+        
+        fetchRecentReview()
         
         setupSearchBar()
+        
+        // 강의평 입력하면 최신 강의평 업데이트
+        let token = NotificationCenter.default.addObserver(forName: .newLectureReviewDidInput, object: nil, queue: .main) { [weak self] noti in
+            guard let self = self else { return }
+            if let recentReview = noti.userInfo?["review"] as? LectureReviewListResponse.LectureReview,
+               let index = self.lectureList.firstIndex(where: { $0.lectureInfoId == recentReview.lectureInfoId }) {
+                self.lectureList.insert(self.lectureList[index], at: 0)
+                self.lectureList.remove(at: index + 1)
+                self.lectureList[0].content = recentReview.content
+                self.lectureList[0].rating = recentReview.rating
+                self.lectureList[0].semester = recentReview.semester
+                
+                self.lectureReviewListTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                self.lectureReviewListTableView.moveRow(at: IndexPath(row: index, section: 0), to: IndexPath(row: 0, section: 0))
+                self.lectureReviewListTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+            }
+        }
+        tokens.append(token)
     }
 }
 
+
+
+/// 강의목록을 나눠서 가져옴
+/// - Author: 남정은(dlsl7080@gmail.com)
+extension LectureReviewBoardViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        let readyFetch = indexPaths.contains { $0.row > self.lectureList.count - 8 }
+        if readyFetch && !lectureIsFetching {
+            fetchRecentReview()
+        }
+    }
+}
 
 
 
@@ -180,7 +234,7 @@ extension LectureReviewBoardViewController: UITableViewDataSource {
     /// section 안에 들어갈 row의 수를 리턴합니다.
     /// - Parameters:
     ///   - tableView: 강의평 목록 테이블 뷰
-    ///   - section: 강의평 목록을 나누는 section
+    ///   - section: 강의평 목록을 나누는 section index
     /// - Returns: section 안에 들어갈 row의 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
@@ -198,7 +252,7 @@ extension LectureReviewBoardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewTableViewCell", for: indexPath) as! LectureReviewTableViewCell
         
-        let list: LectureInfo
+        let list: LectureInfoListResponseData.LectureInfo
         
         if isFiltering {
             list = filteredLectureList[indexPath.row]
@@ -220,7 +274,7 @@ extension LectureReviewBoardViewController: UITableViewDelegate {
     /// section header의 높이를 리턴합니다.
     /// - Parameters:
     ///   - tableView: 강의평 목록 테이블 뷰
-    ///   - section: 강의평 목록을 나누는 section
+    ///   - section: 강의평 목록을 나누는 section index
     /// - Returns: header의 높이
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
@@ -230,7 +284,7 @@ extension LectureReviewBoardViewController: UITableViewDelegate {
     /// section header를 구성합니다.
     /// - Parameters:
     ///   - tableView: 강의평 목록 테이블 뷰
-    ///   - section: 강의평 목록을 나누는 section
+    ///   - section: 강의평 목록을 나누는 section index
     /// - Returns: header를 나타내는 뷰
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewHeaderTableViewCell") as! LectureReviewHeaderTableViewCell

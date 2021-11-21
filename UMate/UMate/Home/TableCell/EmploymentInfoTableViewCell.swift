@@ -4,8 +4,16 @@
 //
 //  Created by 황신택 on 2021/09/14.
 //
-import AZSClient
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
+import Action
+
+enum SomeError: Error {
+    case cannotFoundImage
+    case unknown
+}
 
 /// 채용정보 데이터를 구성하는 셀
 /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -45,10 +53,13 @@ class EmploymentInfoTableViewCell: CommonTableViewCell {
     /// - Parameter sender: CompanyWebSiteButton
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func goToWebSite(_ sender: Any) {
-        guard let urlStr = job?.website else { return }
-        if let url = URL(string: urlStr) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+        Observable.just(job?.website)
+            .filter { $0 != nil }
+            .compactMap { URL(string: $0!) }
+            .subscribe(onNext: {
+                UIApplication.shared.open($0, options: [:], completionHandler: nil)
+            })
+            .disposed(by: rx.disposeBag)
     }
     
     
@@ -56,21 +67,24 @@ class EmploymentInfoTableViewCell: CommonTableViewCell {
     /// - Parameter model: 채용정보 데이터
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     func configureCompany(with model: JobData.Job) {
-        job = model
         jobFieldLabel.text = model.field
         companyNameLabel.text = model.title
         detailLabel.text = model.detail
         careerLabel.text = model.career
         degreeLabel.text = model.degree
         regionLabel.text = model.region
-        fetchImage(with: model.url) { image in
-            if let image = image {
-                self.companyImageView.image = image
-            } else {
-                self.companyImageView.image = UIImage(named: "placeholder")
-            }
-        }
-        bookmarkImageView.image = UIImage(systemName: "bookmark")
+        
+        Observable.just(model.url)
+            .subscribe(on: backgroundScheduler)
+            .compactMap { URL(string: $0) }
+            .compactMap { try? Data(contentsOf: $0) }
+            .compactMap { UIImage(data: $0) }
+            .bind(to: companyImageView.rx.image)
+            .disposed(by: rx.disposeBag)
+        
+        Observable.just(UIImage(systemName: "bookmark"))
+            .bind(to: bookmarkImageView.rx.image)
+            .disposed(by: rx.disposeBag)
     }
     
     

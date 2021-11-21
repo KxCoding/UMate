@@ -7,6 +7,10 @@
 
 import BEMCheckBox
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
+
 
 /// 이용약관 화면
 /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -47,7 +51,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func checkToAllcheckboxes(_ sender: Any) {
         let checkBoxList = [checkBox2, checkBox3, checkBox4, checkBox5, checkBox6]
-        
+
         for elem in checkBoxList {
             guard elem?.on == true else {
                 alert(title: "알림", message: "필수 이용 약관에 모두 동의 해야합니다.", handler: nil)
@@ -55,7 +59,6 @@ class TermsOfConditionsTableViewController: UITableViewController {
             }
         }
     }
-    
     
     /// 초기화 작업을 진행합니다.
     /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -83,16 +86,21 @@ class TermsOfConditionsTableViewController: UITableViewController {
         if let serviceAssetData = NSDataAsset(name: "Service")?.data,
            let privacyAssetData = NSDataAsset(name: "Privacy")?.data,
            let locationAssetData = NSDataAsset(name: "Location")?.data,
+           let advertisementData = NSDataAsset(name: "advertisement")?.data,
            let serviceStr = String(data: serviceAssetData, encoding: .utf8),
            let privacyStr = String(data: privacyAssetData, encoding: .utf8),
-           let locationStr = String(data: locationAssetData, encoding: .utf8)   {
+           let locationStr = String(data: locationAssetData, encoding: .utf8),
+           let advertisementStr = String(data: advertisementData, encoding: .utf8) {
             
             serviceTextView.text = serviceStr
             privacyTextView.text = privacyStr
             communityTextView.text = locationStr
+            advertisementTextView.text = advertisementStr
         }
         
-        navigationController?.navigationBar.tintColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
+        Observable.just(UIColor.dynamicColor(light: .darkGray, dark: .lightGray))
+            .bind(to: (navigationController?.navigationBar.rx.tintColor)!)
+            .disposed(by: rx.disposeBag)
     }
 }
 

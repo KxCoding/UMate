@@ -27,20 +27,21 @@ class LectureReviewTableViewCell: UITableViewCell {
     
     /// 강의평 셀을 초기화합니다.
     /// - Parameter lecture: 선택된 강의
-    func configure(lecture: LectureInfo) {
-        // 최근 강의평이니까 무조건 첫번째
-        guard let recentReview = lecture.reviews.first else { return }
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    func configure(lecture: LectureInfoListResponseData.LectureInfo) {
+        lectureTitleLabel.text = lecture.title + " : " + lecture.professor
         
-        lectureTitleLabel.text = lecture.lectureTitle + " : " + lecture.professor
-        semesterLabel.text = "\(recentReview.semester) 수강자"
-        reviewContentLabel.text = recentReview.reviewContent
-        
-        // 종합 리뷰
-        let ratingSum = lecture.reviews.reduce(0) { partialResult, review in
-            return partialResult + review.rating.rawValue
+        if let rating = lecture.rating, let semester = lecture.semester {
+            semesterLabel.text = "\(semester) 수강자"
+            reviewContentLabel.text = lecture.content
+            ratingView.settings.emptyBorderColor = .yellow
+            ratingView.rating = Double(rating)
+        } else {
+            // 강의평이 등록되지 않은 강의
+            semesterLabel.text = "강의평을 달아주세요!"
+            reviewContentLabel.text = "등록된 강의평이 없습니다."
+            ratingView.settings.emptyBorderColor = UIColor.init(named: "lightGrayNonSelectedColor") ?? .lightGray
+            ratingView.rating = 0
         }
-       
-        let ratingAvg = Double(ratingSum) / Double(lecture.reviews.count)
-        ratingView.rating = ratingAvg.rounded()
     }
 }

@@ -15,6 +15,12 @@ class TimetableDetailViewController: CommonViewController {
     /// 강의 Id
     var id: String?
     
+    lazy var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
+        return session
+    }()
+    
     /// Dim View
     @IBOutlet weak var dimView: UIView!
     
@@ -36,25 +42,8 @@ class TimetableDetailViewController: CommonViewController {
     /// 강의실 Label
     @IBOutlet weak var courseRoomLabel: UILabel!
     
-    /// 강의 정보 수정 버튼
-    @IBOutlet weak var modifyButton: UIButton!
-    
-    /// 강의평 확인 버튼
-    @IBOutlet weak var reviewButton: UIButton!
-    
     /// 강의 삭제 버튼
     @IBOutlet weak var deleteButton: UIButton!
-    
-    
-    /// 강의 정보를 수정합니다.
-    /// - Parameter sender: 수정하기 버튼
-    @IBAction func modify(_ sender: UIButton) {
-    }
-    
-    /// 강의평 화면으로 이동합니다.
-    /// - Parameter sender: 강의평 보러 가기 버튼
-    @IBAction func showReview(_ sender: UIButton) {
-    }
     
     
     /// 등록한 강의를 삭제합니다.
@@ -64,13 +53,21 @@ class TimetableDetailViewController: CommonViewController {
         alertVersion2(title: "경고", message: "정말 삭제하시겠습니까?") { [weak self] _ in
             for i in 0..<LectureManager.shared.lectureEventList.count {
                 guard let courseId = self?.courseIdLabel.text else { return }
+                
                 if LectureManager.shared.lectureEventList[i].courseId == courseId {
                     LectureManager.shared.lectureEventList.remove(at: i)
+                    
+                    let timetableId = LectureManager.shared.timetableId[i]
+                    
+                    self?.deleteTimetable(timetableId: timetableId)
+                    
+                    LectureManager.shared.timetableId.remove(at: i)
                     
                     NotificationCenter.default.post(name: .DeleteCourseNotification,
                                                                 object: nil,
                                                                 userInfo: ["CourseId":courseId])
-                    self?.dismiss(animated: true, completion: nil)
+                    self?.view.removeFromSuperview()
+                    self?.removeFromParent()
                     return
                 }
             }
@@ -84,8 +81,54 @@ class TimetableDetailViewController: CommonViewController {
     /// 강의 상세 정보 화면을 닫습니다.
     /// - Parameter sender: Dim View
     @objc func handleTapGesture(sender: UITapGestureRecognizer) {
-        dismiss(animated: true, completion: nil)
+        self.view.removeFromSuperview()
+        self.removeFromParent()
     }
+    
+    
+    /// 시간표 정보를 삭제합니다.
+    /// - Parameter timetableId: Timetable 고유 Id
+    private func deleteTimetable(timetableId: Int) {
+        guard let url = URL(string: "https://localhost:25139/timetable/\(timetableId)") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.addValue("application/json", forHTTPHeaderField: "content-type")
+        request.addValue("Bearer \(userTempToken)", forHTTPHeaderField: "Authorization")
+        
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                print((response as? HTTPURLResponse)?.statusCode)
+                return
+            }
+
+            guard let data = data else {
+                return
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(TimetableDeleteResponse.self, from: data)
+                
+                switch result.code {
+                case ResultCode.ok.rawValue:
+                    print(result.message)
+                default:
+                    print(result.message)
+                }
+               
+            } catch {
+                print(error)
+            }
+        }.resume()
+    }
+    
+    
     
     
     /// ViewController가 메모리에 로드되면 호출됩니다.
@@ -96,9 +139,8 @@ class TimetableDetailViewController: CommonViewController {
 
         mainView.layer.cornerRadius = mainView.frame.height / 6
         
-        [modifyButton, reviewButton, deleteButton].forEach {
-            $0?.setToEnabledButtonTheme()
-        }
+        
+        deleteButton.setToEnabledButtonTheme()
         
         let tapGesture = UITapGestureRecognizer(target: self,
                                                 action: #selector(handleTapGesture(sender:)))
@@ -109,40 +151,43 @@ class TimetableDetailViewController: CommonViewController {
         var token = NotificationCenter.default.addObserver(forName: .SendCourseNotification,
                                                            object: nil,
                                                            queue: .main) { [weak self] noti in
-            guard let id = noti.userInfo?["CourseId"] as? String else {
-                print(noti.userInfo?["CourseId"])
+            
+            guard let timetable = noti.userInfo?["Timetable"] as? TimeTableInfo else {
                 return
             }
             
-            guard let name = noti.userInfo?["CourseName"] as? String else {
-                return
-            }
+            self?.courseIdLabel.text = timetable.courseId
+            self?.courseNameLabel.text = timetable.courseName
+            self?.courseRoomLabel.text = timetable.roomName
+            self?.professorNameLabel.text = timetable.professor
             
-            guard let day = noti.userInfo?["CourseDay"] else {
-                return
-            }
             
-            guard let startTime = noti.userInfo?["StartTime"] as? String else {
-                return
+            var dayStr = ""
+                        
+            switch timetable.courseDay {
+            case 1:
+                dayStr = "월"
+            case 2:
+                dayStr = "화"
+            case 3:
+                dayStr = "수"
+            case 4:
+                dayStr = "목"
+            default:
+                dayStr = "금"
             }
-            
-            guard let endTime = noti.userInfo?["EndTime"] as? String else {
-                return
-            }
-            
-            guard let professor = noti.userInfo?["Professor"] as? String else {
-                return
-            }
-            
-            guard let roomName = noti.userInfo?["RoomName"] as? String else {
-                return
-            }
-            
-            self?.courseIdLabel.text = id
-            self?.courseNameLabel.text = name
-            self?.courseRoomLabel.text = roomName
-            self?.professorNameLabel.text = professor
+            self?.courseTimeLabel.text = "\(dayStr) \(timetable.startTime) ~ \(timetable.endTime)"
         }
         tokens.append(token)
     }
 }
+
+
+extension TimetableDetailViewController: URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let trust = challenge.protectionSpace.serverTrust!
+        
+        completionHandler(.useCredential, URLCredential(trust: trust))
+    }
+}
+

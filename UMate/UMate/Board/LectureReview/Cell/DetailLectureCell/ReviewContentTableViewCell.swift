@@ -64,15 +64,13 @@ class ReviewContentTableViewCell: UITableViewCell {
     }
     
     
-    /// 셀을 초기화
-    /// - Parameters:
-    ///   - lecture: 강의 정보
-    ///   - indexPath: 개별 리뷰 셀의 인덱스패스
+    /// 개별 강의평을 나타냅니다.
+    /// - Parameter review: 개별 강의평
     /// - Author: 김정민
-    func configure(lecture: LectureInfo, indexPath: IndexPath) {
-        reviewContentLabel.text = lecture.reviews[indexPath.row].reviewContent
-        ratingView.rating = Double(lecture.reviews[indexPath.row].rating.rawValue)
-        ratingLabel.text = "\(lecture.reviews[indexPath.row].rating.rawValue)"
-        semesterLabel.text = "\(lecture.reviews[indexPath.row].semester) 수강자"
+    func configure(review: LectureReviewListResponse.LectureReview) {
+        reviewContentLabel.text = review.content
+        ratingView.rating = Double(review.rating)
+        ratingLabel.text = "\(review.rating)"
+        semesterLabel.text = "\(review.semester) 수강자"
     }
 }

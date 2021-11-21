@@ -17,10 +17,14 @@ class LectureSummaryTableViewCell: UITableViewCell {
     /// 개설학기 레이블
     @IBOutlet weak var openingSemesterLabel: UILabel!
     
+    
     /// 강의 정보를 간단히 나타내는 셀을 초기화합니다.
-    /// - Parameter lecture: 선택된 강의
-    func configure(lecture: LectureInfo){
-        professorNameLabel.text = lecture.professor.replacingOccurrences(of: "/", with: ",")
-        openingSemesterLabel.text = lecture.openingSemester.replacingOccurrences(of: "/", with: ",")
+    /// - Parameters:
+    ///   - lecture: 선택된 강의
+    ///   - professor: 교수명
+    ///   - Author: 남정은(dlsl7080@gmail.com)
+    func configure(lecture: LectureInfoDetailResponse.LectrueInfo, professor: String){
+        professorNameLabel.text = professor
+        openingSemesterLabel.text = lecture.semesters.replacingOccurrences(of: "/", with: ",")
     }
 }

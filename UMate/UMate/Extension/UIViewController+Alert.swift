@@ -73,6 +73,26 @@ extension UIViewController {
     }
     
     
+    /// 취소를 강조하는 알림메소드 입니다.
+    /// '확인'버튼을 주의해서 눌러야할 경우 사용합니다.
+    /// - Parameters:
+    ///   - title: 제목
+    ///   - message: 메시지
+    ///   - handler: 버튼 처리 동작
+    ///   - Author: 남정은(dlsl7080@gmail.com)
+    func alertVersion3(title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: handler)
+        alert.addAction(okAction)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
     /// 게시판 댓글 신고 알림입니다.
     /// - Parameters:
     ///   - title: 알림 타이틀. 기본값은 nil입니다.
@@ -195,5 +215,4 @@ extension UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
-    
 }

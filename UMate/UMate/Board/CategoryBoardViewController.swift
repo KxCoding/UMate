@@ -25,6 +25,26 @@ class CategoryBoardViewController: FreeBoardViewController {
     var isFiltering = false
     
     
+    /// 게시글을 필터링 중일 경우 필터링된 결과를 전달합니다.
+    /// - Parameters:
+    ///   - segue: 호출된 segue
+    ///   - sender: segue가 시작된 객체
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if isFiltering {
+            if let cell = sender as? UITableViewCell,
+               let indexPath = postListTableView.indexPath(for: cell) {
+                // 상세 게시글 화면에 선택된 게시글에 대한 정보 전달
+                if let vc = segue.destination as? DetailPostViewController {
+                    vc.selectedPostId = filteredPostList[indexPath.row].postId
+                }
+            }
+        }
+    }
+    
+    
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,19 +65,82 @@ class CategoryBoardViewController: FreeBoardViewController {
         tokens.append(token)
         
         // 게시글 삭제
-        token = NotificationCenter.default.addObserver(forName: .deletePost, object: nil, queue: .main, using: { [weak self] noti in
+        token = NotificationCenter.default.addObserver(forName: .postDidDelete, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if let postId = noti.userInfo?["postId"] as? Int,
-               let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+               let filterdIndex = self.filteredPostList.firstIndex(where: { $0.postId == postId }),
+               let originalIndex = self.postList.firstIndex(where: { $0.postId == postId}) {
                 if self.isFiltering {
-                    self.filteredPostList.remove(at: index)
-                    self.postList.remove(at: index)
-                    self.postListTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                    self.filteredPostList.remove(at: filterdIndex)
+                    self.postList.remove(at: originalIndex)
+                    self.postListTableView.deleteRows(at: [IndexPath(row: filterdIndex, section: 0)], with: .automatic)
                 } else {
-                    self.postList.remove(at: index)
-                    self.postListTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                    self.postList.remove(at: originalIndex)
+                    self.postListTableView.deleteRows(at: [IndexPath(row: originalIndex, section: 0)], with: .automatic)
                 }
             }
+        })
+        tokens.append(token)
+        
+        // 카운트 레이블 업데이트
+        token = NotificationCenter.default.addObserver(forName: .postDidLike, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if self.isFiltering {
+                if let postId = noti.userInfo?["postId"] as? Int,
+                   let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                    self.filteredPostList[index].likeCnt += 1
+                    self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+        })
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if self.isFiltering {
+                if let postId = noti.userInfo?["postId"] as? Int,
+                   let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                    self.filteredPostList[index].scrapCnt += 1
+                    self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+        })
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .postCancelScrap, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if self.isFiltering {
+                if let postId = noti.userInfo?["postId"] as? Int,
+                   let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                    self.filteredPostList[index].scrapCnt -= 1
+                    self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+        })
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .commentDidInsert, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if self.isFiltering {
+                if let postId = noti.userInfo?["postId"] as? Int,
+                   let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                    self.filteredPostList[index].commentCnt += 1
+                    self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+        })
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .commentDidDelete, object: nil, queue: .main, using: { [weak self] noti in
+            guard let self = self else { return }
+            if self.isFiltering {
+                if let postId = noti.userInfo?["postId"] as? Int,
+                   let index = self.filteredPostList.firstIndex(where: { $0.postId == postId }) {
+                    self.filteredPostList[index].commentCnt -= 1
+                    self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+           
         })
         tokens.append(token)
     }
@@ -230,10 +313,8 @@ extension CategoryBoardViewController {
     /// - Returns: 게시글 개수
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
-            print("isFiltering")
             return filteredPostList.count
         }
-        print("whole")
         return postList.count
     }
     

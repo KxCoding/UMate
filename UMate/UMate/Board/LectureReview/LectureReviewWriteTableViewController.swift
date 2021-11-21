@@ -13,6 +13,8 @@ import Loaf
 /// 강의평가 작성하기 위한 뷰컨트롤러
 /// - Author: 김정민(kimjm010@icloud.com)
 class LectureReviewWriteTableViewController: UITableViewController {
+    /// 관련 강의 정보 전달
+    var lectureInfo: LectureInfoDetailResponse.LectrueInfo?
     
     /// 리뷰 저장을 위한 속성
     /// - Author: 김정민(kimjm010@icloud.com)
@@ -278,19 +280,14 @@ class LectureReviewWriteTableViewController: UITableViewController {
     /// 수강학기 선택을 위한 메뉴 속성
     /// 수강학기는 현재 연도로부터 5년이전까지 선택할 수 있습니다.
     /// - Author: 김정민(kimjm010@icloud.com)
-    let menu: DropDown? = {
+    lazy var menu: DropDown? = {
         let menu = DropDown()
-        let now = Date()
-        let currnetYear = Calendar.current.dateComponents([.year], from: now)
-        guard let currentYear = currnetYear.year else { return menu }
-        
-        let startYear = (currentYear) - 5
-        
-        for year in startYear ... currentYear {
-            for sem in 1...2 {
-                menu.dataSource.append("\(year)-\(sem)")
-            }
+        if let semesters = lectureInfo?.semesters.components(separatedBy: "/") {
+            menu.dataSource = semesters
         }
+        menu.width = 150
+        menu.backgroundColor = UIColor.init(named: "systemGray6BackgroundColor")
+        menu.textColor = .label
         
         return menu
     }()
@@ -320,6 +317,8 @@ class LectureReviewWriteTableViewController: UITableViewController {
     @IBOutlet weak var reviewPlaceholder: UILabel!
     @IBOutlet weak var semesterLabel: UILabel!
     @IBOutlet weak var reviewSaveButton: UIButton!
+    
+    var token: NSObjectProtocol?
     
     
     /// 강의리뷰 저장 메소드입니다.
@@ -367,11 +366,19 @@ class LectureReviewWriteTableViewController: UITableViewController {
             return
         }
         
-        let newReview = LectureReview(assignment: reviewAssignment, groupMeeting: reviewGroupMeeting, evaluation: reviewEvaluation, attendance: reviewAttendance, testNumber: reviewTestNumber, rating: reviewRating, semester: semester, reviewContent: reviewContent)
-        
-        NotificationCenter.default.post(name: .newLectureReviewDidInput, object: nil, userInfo: ["review": newReview])
-        
-        dismiss(animated: true, completion: nil)
+        #warning("사용자 수정")
+        // 작성 경고문
+        alertVersion3(title: "강의평을 작성하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { _ in
+            let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
+            let newReview = LectureReviewPostData(lectureReviewId: 0, userId: "66", lectureInfoId: self.lectureInfo?.lectureInfoId ?? 0, assignment: reviewAssignment.rawValue, groupMeeting: reviewGroupMeeting.rawValue, evaluation: reviewEvaluation.rawValue, attendance: reviewAttendance.rawValue, testNumber: reviewTestNumber.rawValue, rating: reviewRating.rawValue, semester: semester, content: reviewContent, createdAt: dateStr)
+    
+                guard let url = URL(string: "https://board1104.azurewebsites.net/api/lectureReview") else { return }
+       
+                let body = try? BoardDataManager.shared.encoder.encode(newReview)
+                
+                self.sendSavingLectureReviewRequest(url: url, httpMethod: "POST", httpBody: body)
+                self.dismiss(animated: true, completion: nil)
+        }
     }
     
     
@@ -382,6 +389,60 @@ class LectureReviewWriteTableViewController: UITableViewController {
     }
     
     
+    /// 작성한 강의평을 서버에 저장합니다.
+    /// - Parameters:
+    ///   - url: 요청할 url
+    ///   - httpMethod: api 메소드
+    ///   - httpBody: 강의평 데이터
+    ///   - Author: 남정은(dlsl7080@gmail.com)
+    private func sendSavingLectureReviewRequest(url: URL, httpMethod: String, httpBody: Data?) {
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod
+        request.httpBody = httpBody
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let data = try decoder.decode(SaveLectureReviewResponseData.self, from: data)
+                switch data.resultCode {
+                case ResultCode.ok.rawValue:
+                    #if DEBUG
+                    print("추가 성공")
+                    #endif
+                    
+                    let newReview = LectureReviewListResponse.LectureReview(lectureReviewId: data.lectureReview.lectureReviewId, userId: data.lectureReview.userId, lectureInfoId: data.lectureReview.lectureInfoId, assignment: data.lectureReview.assignment, groupMeeting: data.lectureReview.groupMeeting, evaluation: data.lectureReview.evaluation, attendance: data.lectureReview.attendance, testNumber: data.lectureReview.testNumber, rating: data.lectureReview.rating, semester: data.lectureReview.semester, content: data.lectureReview.content, createdAt: data.lectureReview.createdAt)
+                    
+                    NotificationCenter.default.post(name: .newLectureReviewDidInput, object: nil, userInfo: ["review": newReview])
+                    
+                case ResultCode.lectureReviewExists.rawValue:
+                    #if DEBUG
+                    print("이미 존재함")
+                    #endif
+                default:
+                    break
+                }
+            } catch {
+                print(error)
+            }
+        }).resume()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -389,6 +450,13 @@ class LectureReviewWriteTableViewController: UITableViewController {
         selectSemesterView.layer.cornerRadius = 10
         reviewcontentTextView.layer.cornerRadius = 10
         reviewcontentTextView.delegate = self
+    }
+    
+    
+    deinit {
+        if let token = token {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
 }
 
@@ -418,3 +486,7 @@ extension LectureReviewWriteTableViewController: UITextViewDelegate {
         reviewPlaceholder.isHidden = false
     }
 }
+
+
+
+

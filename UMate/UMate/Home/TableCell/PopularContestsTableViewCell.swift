@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 /// 인기 대외활동 / 공모전 데이터를 구성하는 셀
 /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -36,12 +39,14 @@ class PopularContestsTableViewCell: UITableViewCell {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func goToWebsite(_ sender: UIButton) {
         let position = sender.convert(CGPoint.zero, to: listCollectionView)
-        if let indexPath = listCollectionView.indexPathForItem(at: position) {
-            let urlStr = list[indexPath.item].website
-            if let url = URL(string: urlStr) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        }
+        Observable.just(position)
+            .compactMap { self.listCollectionView.indexPathForItem(at: $0) }
+            .compactMap { self.list[$0.item].website }
+            .compactMap { URL(string: $0) }
+            .subscribe(onNext: {
+                UIApplication.shared.open($0, options: [:], completionHandler: nil)
+            })
+            .disposed(by: rx.disposeBag)
     }
     
     
