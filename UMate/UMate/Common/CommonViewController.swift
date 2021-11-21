@@ -94,6 +94,10 @@ class CommonViewController: UIViewController {
     /// - Author: 황신택
     var tapGesture = UITapGestureRecognizer()
     
+    /// 로그인 키체인 인스턴스
+    /// - Author: 장현우(heoun3089@gmail.com)
+    let loginKeychain = KeychainSwift()
+    
     
     /// 제이슨 데이터를 파싱 하고 파싱 된 데이터를 아이디로 정렬해서 오름차순으로 저장합니다.
     /// - Author: 황신택 (sinadsl1457@gmail.com)
