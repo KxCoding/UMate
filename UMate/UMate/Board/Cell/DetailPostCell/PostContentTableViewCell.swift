@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import Moya
 
 
 /// 스크랩과 '좋아요'에대한 노티피케이션
@@ -38,6 +40,9 @@ class PostContentTableViewCell: UITableViewCell {
     /// 게시글 내용 레이블
     @IBOutlet weak var postContentLabel: UILabel!
     
+    /// 네트워크 통신 관리 객체
+    let provider = PostService.shared.provider
+    
     /// 선택된 게시글
     var selectedPost: PostDtoResponseData.Post?
     
@@ -66,15 +71,13 @@ class PostContentTableViewCell: UITableViewCell {
         likeImageView.image = UIImage(named: "heart2.fill")
         likeImageView.tintColor = UIColor.init(named: "blackSelectedColor")
         
-        guard let url = URL(string: "https://board1104.azurewebsites.net/api/likePost") else { return }
         
         let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
         #warning("사용자 수정")
         let likePostdata = LikePostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: post.postId, createdAt: dateStr)
         
-        let body = try? BoardDataManager.shared.encoder.encode(likePostdata)
-        
-        sendScrapOrLikePostRequest(url: url, httpMethod: "POST", httpBody: body)
+        sendLikeInfoToServer(likePostData: likePostdata)
+
         isLiked = true
         NotificationCenter.default.post(name: .postDidLike, object: nil, userInfo: ["postId": post.postId])
     }
@@ -108,15 +111,12 @@ class PostContentTableViewCell: UITableViewCell {
             scrapImageView.tintColor = UIColor.init(named: "blackSelectedColor")
             scrapImageView.alpha = 1
             
-            guard let url = URL(string: "https://board1104.azurewebsites.net/api/scrapPost") else { return }
             
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
             #warning("사용자 수정")
             let scrapPostData = ScrapPostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: post.postId, createdAt: dateStr)
-            let body = try? BoardDataManager.shared.encoder.encode(scrapPostData)
             
-            sendScrapOrLikePostRequest(url: url, httpMethod: "POST", httpBody: body)
-            NotificationCenter.default.post(name: .postDidScrap, object: nil, userInfo: ["postId": post.postId])
+            sendScrapInfoToServer(scrapPostData: scrapPostData)
         }
     }
     
@@ -129,56 +129,75 @@ class PostContentTableViewCell: UITableViewCell {
     }
     
     
-    /// 게시물을 스크랩 또는 '좋아'합니다.
-    /// - Parameters:
-    ///   - url: 요청할 url
-    ///   - httpMethod: api 메소드
-    ///   - httpBody: 게시글 스크랩, 좋아요 데이터
-    ///   - Author: 남정은(dlsl7080@gmail.com)
-    private func sendScrapOrLikePostRequest(url: URL, httpMethod: String, httpBody: Data?) {
-        var request = URLRequest(url: url)
-        request.httpMethod = httpMethod
-        request.httpBody = httpBody
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let res = try decoder.decode(SaveScrapPostPostResponse.self, from: data)
-            
-                switch res.resultCode {
-                case ResultCode.ok.rawValue:
-                    DispatchQueue.main.async {
-                        self.scrapButton.tag = res.scrapPost?.scrapPostId ?? 0
+    /// 게시물 '스크랩' 정보를 서버에 저장합니다.
+    /// - Parameter likePostData: 게시물 스크랩 정보 객체
+    ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
+    private func sendScrapInfoToServer(scrapPostData: ScrapPostData) {
+        provider.rx.request(.saveScrapInfo(scrapPostData))
+            .filterSuccessfulStatusCodes()
+            .map(SaveScrapPostPostResponse.self)
+            .subscribe { (result) in
+                switch result {
+                case .success(let response):
+                    switch response.resultCode {
+                    case ResultCode.ok.rawValue:
+                        DispatchQueue.main.async {
+                            self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
+                        }
+                        
+                        #if DEBUG
+                        print("추가 성공")
+                        #endif
+                    case ResultCode.fail.rawValue:
+                        #if DEBUG
+                        print("이미 존재함")
+                        #endif
+                    default:
+                        break
                     }
-                    
+                case .failure(let error):
                     #if DEBUG
-                    print("추가 성공")
+                    print(error)
                     #endif
-                case ResultCode.fail.rawValue:
-                    #if DEBUG
-                    print("이미 존재함")
-                    #endif
-                default:
-                    break
                 }
-            } catch {
-                print(error)
             }
-        }).resume()
+            .disposed(by: rx.disposeBag)
+    }
+    
+    
+    /// 게시물 '공감' 정보를 서버에 저장합니다.
+    /// - Parameter likePostData: 게시물 공감 정보 객체
+    ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
+    private func sendLikeInfoToServer(likePostData: LikePostData) {
+        provider.rx.request(.saveLikeInfo(likePostData))
+            .filterSuccessfulStatusCodes()
+            .map(SaveScrapPostPostResponse.self)
+            .subscribe { (result) in
+                switch result {
+                case .success(let response):
+                    switch response.resultCode {
+                    case ResultCode.ok.rawValue:
+                        DispatchQueue.main.async {
+                            self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
+                        }
+                        
+                        #if DEBUG
+                        print("추가 성공")
+                        #endif
+                    case ResultCode.fail.rawValue:
+                        #if DEBUG
+                        print("이미 존재함")
+                        #endif
+                    default:
+                        break
+                    }
+                case .failure(let error):
+                    #if DEBUG
+                    print(error)
+                    #endif
+                }
+            }
+            .disposed(by: rx.disposeBag)
     }
     
     
