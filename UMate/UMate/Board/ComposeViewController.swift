@@ -99,6 +99,9 @@ class ComposeViewController: CommonViewController {
     /// 이미지 첨부 버튼
     @IBOutlet weak var selectImageAttachmentTypeBtn: UIBarButtonItem!
     
+    /// 게시글 작성 bottom 제약
+    @IBOutlet weak var composeContentTextViewBottomConstraint: NSLayoutConstraint!
+        
     /// 화면 닫기 버튼
     @IBOutlet weak var closeVc: UIBarButtonItem!
     
@@ -248,14 +251,6 @@ class ComposeViewController: CommonViewController {
         postTitleTextField.inputAccessoryView = accessoryBar
         postContentTextView.inputAccessoryView = postTitleTextField.inputAccessoryView
         
-        
-        // Asset에 추가한 커뮤니티 정보 txt 파일을 문자열 데이터로 가져옵니다.
-        // - Author: 김정민(kimjm010@icloud.com)
-        if let communityInfoAssetData = NSDataAsset(name: "communityInfo")?.data,
-           let communityInfoStr = String(data: communityInfoAssetData, encoding: .utf8) {
-            communityInfoLabel.text = communityInfoStr
-        }
-        
         // 게시글 화면에 앨범 이미지 표시
         // - Author: 김정민(kimjm010@icloud.com)
         sendSelectedImage
@@ -324,7 +319,7 @@ class ComposeViewController: CommonViewController {
         // 키보드 노티피케이션을 처리하는 옵저버블입니다.
         // - Author: 김정민(kimjm010@icloud.com)
         Observable.merge(willShow, willHide)
-            .bind(to: postContentTextView.rx.keyboardHeight)
+            .bind(to: composeContentTextViewBottomConstraint.rx.constant)
             .disposed(by: rx.disposeBag)
         
         // 게시글 제목의 placeholder상태를 관리합니다.

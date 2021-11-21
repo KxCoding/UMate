@@ -144,8 +144,6 @@ class SelectImageViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(allPhotos.count)
-        
         requestAuthorization()
         imageCollectionView.allowsSelection = true
         imageCollectionView.allowsMultipleSelection = true
@@ -164,7 +162,7 @@ class SelectImageViewController: CommonViewController {
 /// 첨부할 이미지 데이터 설정
 /// - Author: 김정민(kimjm010@icloud.com)
 extension SelectImageViewController: UICollectionViewDataSource {
-    
+
     /// 접근 가능한 이미지 수를 리턴합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView
@@ -174,8 +172,8 @@ extension SelectImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return allPhotos.count
     }
-    
-    
+
+
     /// 이미지 표시를 위한 셀을 구성합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView
@@ -183,16 +181,16 @@ extension SelectImageViewController: UICollectionViewDataSource {
     /// - Returns: imageCollectionView의 cell
     /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell",
                                                       for: indexPath) as! ImageCollectionViewCell
-        
+
         let target = allPhotos.object(at: indexPath.item)
         let size = CGSize(width: collectionView.frame.width / 4, height: collectionView.frame.width / 4)
         imageManager.requestImage(for: target, targetSize: size, contentMode: .aspectFill, options: nil) { image, _ in
             cell.imageView.image = image
         }
-        
+
         return cell
     }
 }
