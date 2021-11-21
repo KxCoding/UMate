@@ -36,7 +36,7 @@ struct Keys {
 
 
 /// 회원가입 화면
-/// - Author: 황신택 (sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com), 장현우(heoun3089@gmail.com)
 class DetailRegisterViewController: CommonViewController {
     /// 이메일 필드
     @IBOutlet weak var emailTextField: UITextField!
@@ -65,10 +65,16 @@ class DetailRegisterViewController: CommonViewController {
     /// 검증된 이메일 주소
     var verifiedEmail: String?
     
+    /// 입학 연도
+    ///
+    /// 이전 화면에서 전달됩니다.
+    /// - Author: 장현우(heoun3089@gmail.com)
+    var entranceYear: String?
+        
     
     /// 회원가입에 필요한 조건들을 검사하고 다음 화면으로 이동합니다.
     /// - Parameter sender: nextButton
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com), 장현우(heoun3089@gmail.com)
     @IBAction func checkToRegisterConditions(_ sender: Any) {
         guard let password = passwordTextField.text,
               isPasswordValid(password),
@@ -76,18 +82,6 @@ class DetailRegisterViewController: CommonViewController {
                   alert(title: "알림", message: "비밀번호는 반드시 영문 숫자 특수문자를 포함해야합니다냐.")
                   return
               }
-        
-        // 암호를 키체인 저장하고 액세스 레벨을 accessibleAfterFirstUnlock로 설정합니다.
-        // 앱을 재시작하기 전까지 언락 합니다.
-        if keychainPrefix.set(password, forKey: Keys.passwordKey, withAccess: .accessibleAfterFirstUnlock) {
-#if DEBUG
-            print("set Password")
-#endif
-        } else {
-#if DEBUG
-            print("Faild Set")
-#endif
-        }
         
         guard let repeatPassword = repeatPasswordTextField.text,
               repeatPassword == password else {
@@ -103,10 +97,19 @@ class DetailRegisterViewController: CommonViewController {
                   return
               }
         
-        UserDefaults.standard.set(name, forKey: "nameKey")
-        UserDefaults.standard.set(nickName, forKey: "nickNameKey")
+        guard let email = emailTextField.text,
+              let entranceYear = entranceYear else {
+                  return
+              }
+
         
-        CommonViewController.transitionToHome()
+        let emailJoinPostData = EmailJoinPostData(email: email,
+                                                  password: password,
+                                                  userName: name,
+                                                  nickName: nickName,
+                                                  yearOfAdmission: entranceYear)
+        
+        LoginDataManager.shared.singup(emailJoinPostData: emailJoinPostData, vc: self)
     }
     
     
