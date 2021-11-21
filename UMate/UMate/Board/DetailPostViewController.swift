@@ -29,46 +29,6 @@ enum SelectActionType {
 
 
 
-/// 댓글 저장 서비스
-enum CommentSaveService {
-    case saveComment(CommentPostData)
-}
-
-
-
-extension CommentSaveService: TargetType {
-    
-    /// 기본 URL
-    var baseURL: URL {
-        return URL(string: "https://board1104.azurewebsites.net")!
-    }
-    
-    /// 기본 URL 제외한 경로
-    var path: String {
-        return "/api/comment"
-    }
-    
-    /// HTTP 요청 메소드
-    var method: Moya.Method {
-        return .post
-    }
-    
-    /// HTTP 작업
-    var task: Task {
-        switch self {
-        case .saveComment(let commentPostData):
-            return .requestJSONEncodable(commentPostData)
-        }
-    }
-    
-    /// HTTP 헤더
-    var headers: [String : String]? {
-        return ["Content-Type": "application/json"]
-    }
-}
-
-
-
 /// 게시글 상세화면 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
 class DetailPostViewController: CommonViewController {

@@ -134,8 +134,9 @@ class TimetableViewController: CommonViewController {
                 
                 switch result.code {
                 case ResultCode.ok.rawValue:
-                    #ifDEBUG
+                    #if DEBUG
                     print(result.message)
+                    #endif
                 default:
                     print(result.message)
                 }
