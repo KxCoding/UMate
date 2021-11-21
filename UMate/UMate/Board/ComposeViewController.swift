@@ -24,47 +24,6 @@ enum SelectImageAttachActionType {
 
 
 
-/// 게시물 저장 서비스
-enum PostSaveService {
-    case uploadPost(PostPostData)
-}
-
-
-
-extension PostSaveService: TargetType {
-    
-    /// 기본 URL
-    var baseURL: URL {
-        URL(string: "https://board1104.azurewebsites.net")!
-    }
-    
-    /// 기본 URL 제외한 경로
-    var path: String {
-        return "/api/boardPost"
-    }
-    
-    /// HTTP 요청 메소드
-    var method: Moya.Method {
-        return .post
-    }
-    
-    /// HTTP 작업
-    var task: Task {
-        switch self {
-        case .uploadPost(let postPostData):
-            return .requestJSONEncodable(postPostData)
-        }
-    }
-    
-    /// HTTP 헤더
-    var headers: [String : String]? {
-        return ["Content-Type": "application/json"]
-    }
-}
-
-
-
-
 /// 게시글 작성 화면
 /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 class ComposeViewController: CommonViewController {
