@@ -144,8 +144,6 @@ class SelectImageViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(allPhotos.count)
-        
         requestAuthorization()
         imageCollectionView.allowsSelection = true
         imageCollectionView.allowsMultipleSelection = true

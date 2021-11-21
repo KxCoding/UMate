@@ -333,7 +333,7 @@ class ComposeViewController: CommonViewController {
         // 키보드 노티피케이션을 처리하는 옵저버블입니다.
         // - Author: 김정민(kimjm010@icloud.com)
         Observable.merge(willShow, willHide)
-            .bind(to: postContentTextView.rx.keyboardHeight)
+            .bind(to: composeContentTextViewBottomConstraint.rx.constant)
             .disposed(by: rx.disposeBag)
         
         // 게시글 제목의 placeholder상태를 관리합니다.
