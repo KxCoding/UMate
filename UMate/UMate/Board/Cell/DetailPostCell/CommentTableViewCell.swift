@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NSObject_Rx
 
 
 /// 댓글 및 대댓글을 표시하는 테이블뷰 셀
@@ -53,6 +54,9 @@ class CommentTableViewCell: UITableViewCell {
     /// 선택된 댓글
     var selectedComment: CommentListResponseData.Comment?
     
+    /// 네트워크 요청 관리 객체
+    let provider = CommentDataService.shared.provider
+    
     /// 댓글 좋아요 여부
     var isLiked = false
     
@@ -74,28 +78,11 @@ class CommentTableViewCell: UITableViewCell {
             heartImageView.isHidden = false
             heartCountLabel.isHidden = false
             
-            guard let url = URL(string: "https://board1104.azurewebsites.net/api/likeComment") else { return }
-            
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
             #warning("사용자 수정")
             let likeCommentData = LikeCommentPostData(likeCommentId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", commentId: comment.commentId, createdAt: dateStr)
             
-            let body = try? BoardDataManager.shared.encoder.encode(likeCommentData)
-            
-            BoardDataManager.shared.sendLikeCommentRequest(url: url, httpMethod: "POST", httpBody: body) { success, data in
-                if success {
-                    self.isLiked = true
-                    guard let likeComment = data.likeComment else { return }
-                    
-                    DispatchQueue.main.async {
-                        self.heartButton.tag = likeComment.likeCommentId
-                    }
-                } else {
-                    #if DEBUG
-                    print("댓글 좋아요 추가 실패")
-                    #endif
-                }
-            }
+            sendCommentLikeDataToServer(likeCommentPostData: likeCommentData)
         } else {
             heartImageView.image = UIImage(named: "heart2")
             heartButtonImageView.image = UIImage(named: "heart2")
@@ -119,7 +106,7 @@ class CommentTableViewCell: UITableViewCell {
             }
         }
     }
-  
+    
     
     /// 셀이 로드되면 UI를 초기화합니다.
     /// - Author: 김정민(kimjm010@icloud.com)
@@ -164,6 +151,47 @@ class CommentTableViewCell: UITableViewCell {
         
         selectedComment = comment
         self.isLiked = isLiked
+    }
+    
+    
+    /// 댓글 좋아요를 추가합니다.
+    /// - Parameter likeCommentPostData: 댓글 좋아요 정보 객체
+    /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
+    func sendCommentLikeDataToServer(likeCommentPostData: LikeCommentPostData) {
+        provider.rx.request(.saveCommentLikeData(likeCommentPostData))
+            .filterSuccessfulStatusCodes()
+            .map(SaveLikeCommentResponseData.self)
+            .subscribe { (result) in
+                switch result {
+                case .success(let response):
+                    switch response.resultCode {
+                    case ResultCode.ok.rawValue:
+                        #if DEBUG
+                        print("추가 성공")
+                        #endif
+                        self.isLiked = true
+                        guard let likeComment = response.likeComment else { return }
+                        
+                        DispatchQueue.main.async {
+                            self.heartButton.tag = likeComment.likeCommentId
+                        }
+                    case ResultCode.fail.rawValue:
+                        #if DEBUG
+                        print("이미 존재함")
+                        #endif
+                        
+                        #if DEBUG
+                        print("댓글 좋아요 추가 실패")
+                        #endif
+                    default:
+                        break
+                    }
+                case .failure(let error):
+                    #if DEBUG
+                    print(error.localizedDescription)
+                    #endif
+                }
+            }
     }
 }
 

@@ -123,56 +123,6 @@ class BoardDataManager {
     }
     
     
-    /// 댓글 좋아요를 추가합니다.
-    /// - Parameters:
-    ///   - url: 요청할 url
-    ///   - httpMethod: api 메소드
-    ///   - httpBody: 댓글 좋아요 데이터
-    /// - Author: 남정은(dlsl7080@gmail.com)
-    func sendLikeCommentRequest(url: URL, httpMethod: String, httpBody: Data?, completion: @escaping (Bool, SaveLikeCommentResponseData) -> ()) {
-        var request = URLRequest(url: url)
-        request.httpMethod = httpMethod
-        request.httpBody = httpBody
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        self.session.dataTask(with: request, completionHandler: { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let data = try decoder.decode(SaveLikeCommentResponseData.self, from: data)
-                
-                switch data.resultCode {
-                case ResultCode.ok.rawValue:
-                    #if DEBUG
-                    print("추가 성공")
-                    #endif
-                    completion(true, data)
-                case ResultCode.fail.rawValue:
-                    #if DEBUG
-                    print("이미 존재함")
-                    #endif
-                default:
-                    break
-                }
-            } catch {
-                print(error)
-            }
-        }).resume()
-    }
-    
-    
     /// 댓글 좋아요를 삭제합니다.
     /// - Parameter likeCommentId: 댓글 좋아요 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
