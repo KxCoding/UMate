@@ -41,7 +41,7 @@ class PostContentTableViewCell: UITableViewCell {
     @IBOutlet weak var postContentLabel: UILabel!
     
     /// 네트워크 통신 관리 객체
-    let provider = PostService.shared.provider
+    let provider = PostDataService.shared.provider
     
     /// 선택된 게시글
     var selectedPost: PostDtoResponseData.Post?

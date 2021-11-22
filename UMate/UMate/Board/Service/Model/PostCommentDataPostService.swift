@@ -9,8 +9,8 @@ import Foundation
 import Moya
 
 
-class PostService {
-    static let shared = PostService()
+class PostDataService {
+    static let shared = PostDataService()
     private init() { }
     
     /// 네트워크 통신 관리 공유 객체
@@ -153,5 +153,53 @@ extension CommentSaveService: TargetType {
             return ["Content-Type": "application/json", "Authorization":"Bearer \(token)"]
         }
         return nil
+    }
+}
+
+
+
+class CommentDataService {
+    static let shared = CommentDataService()
+    private init() { }
+    
+    let provider = MoyaProvider<CommentLikeService>()
+}
+
+
+/// 댓글 '좋아요' 저장 서비스
+enum CommentLikeService {
+    case saveCommentLikeData(LikeCommentPostData)
+}
+
+
+
+extension CommentLikeService: TargetType {
+    
+    /// 기본 URL
+    var baseURL: URL {
+        return URL(string: "https://board1104.azurewebsites.net")!
+    }
+    
+    /// 기본 URL 제외한 경로
+    var path: String {
+        return "/api/likeComment"
+    }
+    
+    /// HTTP 요청 메소드
+    var method: Moya.Method {
+        return .post
+    }
+    
+    /// HTTP 작업
+    var task: Task {
+        switch self {
+        case .saveCommentLikeData(let likeCommentPostData):
+            return .requestJSONEncodable(likeCommentPostData)
+        }
+    }
+    
+    /// HTTP 헤더
+    var headers: [String : String]? {
+        return ["Content-Type": "application/json"]
     }
 }

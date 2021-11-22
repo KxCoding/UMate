@@ -31,6 +31,9 @@ class TestInfoWriteViewController: CommonViewController {
     /// 선택된 강의
     var lectureInfo: LectureInfoDetailResponse.LectrueInfo?
     
+    /// 네트워크 통신 관리 객체
+    let provider = MoyaProvider<TestInfoSaveService>()
+    
     
     /// 강의정보 화면으로 돌아갑니다.
     /// - Parameter sender: 엑스 버튼
@@ -186,18 +189,14 @@ class TestInfoWriteViewController: CommonViewController {
                     let newTestInfo = TestInfoListResponse.TestInfo(testInfoId: data.testInfo.testInfoId, userId: data.testInfo.userId, lectureInfoId: data.testInfo.lectureInfoId, semester: data.testInfo.semester, testType: data.testInfo.testType, testStrategy: data.testInfo.testStrategy, questionTypes: data.testInfo.questionTypes, examples: exampleList, createdAt: data.testInfo.createdAt)
                     
                     NotificationCenter.default.post(name: .testInfoDidShare, object: nil, userInfo: ["testInfo": newTestInfo])
-                    
+                   
                 case ResultCode.testInfoExists.rawValue:
                     #if DEBUG
-                    print("이미 존재함")
+                    print(error.localizedDescription)
                     #endif
-                default:
-                    break
                 }
-            } catch {
-                print(error)
             }
-        }).resume()
+            .disposed(by: rx.disposeBag)
     }
 }
 
