@@ -73,7 +73,6 @@ class EmploymentInfoViewController: CommonViewController {
             }
             .do(onNext: { _ in
                 self.isSearching = true
-                self.listTableView.reloadData()
             })
             .bind(to: listTableView.rx.items(cellIdentifier: "CompanyTableViewCell", cellType: EmploymentInfoTableViewCell.self)) { row, element, cell in
                 cell.configureCompany(with: element)

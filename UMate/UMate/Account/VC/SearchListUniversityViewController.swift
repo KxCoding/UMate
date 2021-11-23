@@ -94,7 +94,6 @@ class SearchListUniversityViewController: CommonViewController {
             }
             .do(onNext: { _ in
                 self.isSearching = true
-                self.listTableView.reloadData()
             })
             .bind(to: listTableView.rx.items(cellIdentifier: "cell")) { row, name, cell in
                 cell.textLabel?.text = name.name
