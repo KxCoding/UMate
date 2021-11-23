@@ -5,13 +5,14 @@
 //  Created by 황신택 on 2021/07/23.
 //
 
+import KeychainSwift
 import UIKit
 
 
 /// 사용자 계정 설정 화면 TableViewController 클래스
 ///
 /// 사용자 계정 설정과 관련된 메뉴를 선택하여 수행합니다.
-/// - Author: 황신택, 안상희
+/// - Author: 황신택, 안상희, 장현우(heoun3089@gmail.com)
 class SettingTableViewController: UITableViewController {
     /// 선택한 메뉴 타이틀
     /// - Author: 안상희
@@ -23,14 +24,9 @@ class SettingTableViewController: UITableViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var enterYearAndUniNameLabel: UILabel!
     
-    
-    /// back to LoginView
-    @IBAction func logOutTapped(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Account", bundle: nil)
-        let loginNavController = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController")
-        
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginNavController)
-    }
+    /// 로그인 키체인 인스턴스
+    /// - Author: 장현우(heoun3089@gmail.com)
+    let loginKeychain = KeychainSwift()
     
     
     /// 커뮤니티 이용 규칙 메뉴가 클릭될 때 실행됩니다.
@@ -125,6 +121,24 @@ class SettingTableViewController: UITableViewController {
     }
     
     
+    /// 로그아웃합니다.
+    ///
+    /// 로그인 키체인 인스턴스에 저장된 모든 데이터를 지우고 인트로 화면으로 돌아갑니다.
+    /// - Parameter sender: 로그아웃 버튼
+    /// - Author: 장현우(heoun3089@gmail.com)
+    @IBAction func logout(_ sender: Any) {
+        alertLogoutMessage(alertTitle: "로그아웃", alertMessage: "로그아웃하시겠습니까?", okActionTitle: "로그아웃") { _ in
+            self.loginKeychain.clear()
+
+            let storyboard = UIStoryboard(name: "Account", bundle: nil)
+            
+            if let vc = storyboard.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    
     /// 선택한 메뉴 타이틀을 다음 뷰컨트롤러로 보내주는 역할을 합니다.
     /// - Author: 안상희
     func sendMenuTitle() {
@@ -134,6 +148,28 @@ class SettingTableViewController: UITableViewController {
         
         vc.menu = selectedMenu
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    /// 알림창을 띄웁니다.
+    ///
+    /// 핸들러가 포함된 AlertAction의 타이틀을 설정할 수 있습니다.
+    /// - Parameters:
+    ///   - alertTitle: 알림 타이틀
+    ///   - alertMessage: 알림 메시지
+    ///   - okActionTitle: 액션 타이틀
+    ///   - handler: 완료 블록
+    /// - Author: 장현우(heoun3089@gmail.com)
+    func alertLogoutMessage(alertTitle: String, alertMessage: String, okActionTitle: String? = "확인", handler: ((UIAlertAction) -> Void)?) {
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(cancelAction)
+        
+        let okAction = UIAlertAction(title: okActionTitle, style: .default, handler: handler)
+        alert.addAction(okAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     
@@ -147,11 +183,6 @@ class SettingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// get  register user information data
-        let name = UserDefaults.standard.string(forKey: "nameKey")
-        let nickName = UserDefaults.standard.string(forKey: "nickNameKey")
-        let enterYearOfUniversity = UserDefaults.standard.string(forKey: "enterenceYearKey")
-        let universityName = UserDefaults.standard.string(forKey: "universityNameKey")
         
         /// get register Profileimage data
         if let imageData =  UserDefaults.standard.object(forKey: "profile") as? Data {
@@ -161,12 +192,12 @@ class SettingTableViewController: UITableViewController {
         }
         
         /// To initialize user information in setting
-        if let name = name,
-           let nickName = nickName,
-           let enterYearOfUniversity = enterYearOfUniversity,
-           let universityName = universityName {
-            nameLabel.text = "\(name)/ \(nickName)"
-            enterYearAndUniNameLabel.text = "\(enterYearOfUniversity)/ \(universityName)"
+        if let email = loginKeychain.get(AccountKeys.email.rawValue),
+           let nickName = loginKeychain.get(AccountKeys.nickName.rawValue),
+           let enterYearOfUniversity = (loginKeychain.get(AccountKeys.yearOfAdmission.rawValue)) {
+            emailLabel.text = email
+            nameLabel.text = "홍길동 / \(nickName)"
+            enterYearAndUniNameLabel.text = "\(enterYearOfUniversity) / 서울대"
         }
         
         /// initialize

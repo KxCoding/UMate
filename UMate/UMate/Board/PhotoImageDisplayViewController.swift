@@ -6,7 +6,9 @@
 //
 
 import UIKit
-
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 /// 캡쳐한 사진 표시 화면
 /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gamil.com)
@@ -26,7 +28,6 @@ class PhotoImageDisplayViewController: UIViewController {
     
     /// 캡쳐한 이미지 및 사용자 앨범의 이미지 관리 객체
     var customPicker: UIImagePickerController?
-    
     
     /// Camera FlashMode를 변경합니다.
     /// - Parameter sender: FlashMode 버튼

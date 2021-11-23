@@ -11,6 +11,12 @@ import KeychainSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    /// window 객체
+    /// - Author: 장현우(heoun3089@gmail.com)
+    var window: UIWindow?
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         DropDown.startListeningToKeyboard()
         

@@ -12,7 +12,7 @@ import RxCocoa
 import NSObject_Rx
 
 /// 이메일 인증 화면
-/// Author: 황신택 (sinadsl1457@gmail.com)
+/// Author: 황신택 (sinadsl1457@gmail.com), 장현우(heoun3089@gmail.com)
 class EmailVerificationViewController: CommonViewController {
     /// 보안코드 발송 버튼
     @IBOutlet weak var sendCodeButton: UIButton!
@@ -28,6 +28,13 @@ class EmailVerificationViewController: CommonViewController {
     
     /// 이메일 화면 탭 제스쳐
     //    @IBOutlet var tapGesture: UITapGestureRecognizer!
+    
+    /// 입학 연도
+    ///
+    /// 이전 화면에서 전달됩니다.
+    /// - Author: 장현우(heoun3089@gmail.com)
+    var entranceYear: String?
+    
     
     /// 이메일 검증을 위한 보안코드를 요청합니다.
     /// - Parameter sender: sendCodeButton
@@ -65,10 +72,11 @@ class EmailVerificationViewController: CommonViewController {
     /// - Parameters:
     ///   - segue: 실행된 segue
     ///   - sender: segue를 실행한 객체
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com), 장현우(heoun3089@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? DetailRegisterViewController {
             vc.verifiedEmail = emailTextField.text
+            vc.entranceYear = entranceYear
         }
     }
     
@@ -77,6 +85,11 @@ class EmailVerificationViewController: CommonViewController {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        #if DEBUG
+        codeTextField.text = "12345678"
+        #endif
+        
         [sendCodeButton, emailVerificationButton].forEach({
             $0?.setToEnabledButtonTheme()
         })

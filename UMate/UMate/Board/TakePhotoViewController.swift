@@ -7,6 +7,9 @@
 
 import UIKit
 import AVFoundation
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 
 /// 캡쳐 카메라 프리뷰 화면
@@ -30,7 +33,7 @@ class previewView: UIView {
 /// 카메라 캡쳐 화면
 /// - Author: 김정민(kimjm010@icloud.com)
 class TakePhotoViewController: UIViewController {
-
+    
     /// 카메라 프리뷰 화면
     @IBOutlet weak var previewView: previewView!
     
@@ -230,7 +233,7 @@ class TakePhotoViewController: UIViewController {
         captureSession.commitConfiguration()
         captureSession.startRunning()
     }
-        
+    
     
     /// captureSession의 작업을 중지합니다.
     /// - Author: 김정민(kimjm010@icloud.com)
@@ -260,7 +263,7 @@ class TakePhotoViewController: UIViewController {
         }
     }
     
-
+    
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     /// - Author: 김정민(kimjm010@icloud.com)
     override func viewDidLoad() {

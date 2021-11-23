@@ -13,7 +13,7 @@ import NSObject_Rx
 
 
 /// 로그인 화면
-/// - Author: 황신택 (sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com), 장현우(heoun3089@gmail.com)
 class AccountViewController: CommonViewController {
     /// 아이디 필드
     @IBOutlet weak var idTextField: UITextField!
@@ -31,27 +31,15 @@ class AccountViewController: CommonViewController {
     /// 키체인 계정을 체크합니다.
     /// 성공시 홈화면으로 이동합니다.
     /// - Parameter sender: loginButton
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    /// - Author: 황신택 (sinadsl1457@gmail.com), 장현우(heoun3089@gmail.com)
     @IBAction func login(_ sender: Any) {
-#warning("협업을 하기위해서 잠시 주석처리 했습니다.")
-        /*
-         // 키체인에 저장된 계정인지 확인 합니다.
-         guard let safeEmail = keychain.get(Keys.userEmailKey),
-         let safePassword = keychain.get(Keys.passwordKey),
-         let email = idTextField.text,
-         let password = passwordTextField.text else { return }
-         
-         
-         if keychain.lastResultCode != noErr { print(keychain.lastResultCode) }
-         
-         guard email == safeEmail && password == safePassword else {
-         alert(title: "알림", message: "형식에 맞지않거나 존재하지않는 계정입니다", handler: nil)
-         return
-         }
-         */
+        guard let email = idTextField.text,
+              let password = passwordTextField.text else {
+                  return
+              }
         
-        // 홈화면으로 이동합니다.
-        CommonViewController.transitionToHome()
+        let emailLoginPostData = EmailLoginPostData(email: email, password: password)
+        LoginDataManager.shared.login(emailLoginPostData: emailLoginPostData, transitionToHome: CommonViewController.transitionToHome, vc: self)
     }
     
     
@@ -59,6 +47,12 @@ class AccountViewController: CommonViewController {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        #if DEBUG
+        idTextField.text = "test12@test.com"
+        passwordTextField.text = "Test123456$"
+        #endif
+        
         loginButton.setToEnabledButtonTheme()
         
         didTapMakeLowerKeyboard()
@@ -68,7 +62,3 @@ class AccountViewController: CommonViewController {
         makeChangeButtonColor(loginButton)
     }
 }
-
-
-
-

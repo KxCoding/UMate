@@ -9,6 +9,9 @@ import UIKit
 import Photos
 import PhotosUI
 import MobileCoreServices
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 
 /// 서버에 이미지 저장
@@ -16,6 +19,7 @@ import MobileCoreServices
 extension Notification.Name {
     static let requestPostImage = Notification.Name(rawValue: "requestPostImage")
 }
+
 
 
 
@@ -29,6 +33,9 @@ class SelectImageViewController: CommonViewController {
     /// 편집버튼
     /// 제한된 사진을 변경할 수 있습니다.
     @IBOutlet weak var editBtn: UIBarButtonItem!
+    
+    /// 이미지 선택 버튼
+    @IBOutlet weak var imageSelectButton: UIBarButtonItem!
     
     /// 이미지 관리 객체
     let imageManager = PHImageManager()
@@ -144,7 +151,6 @@ class SelectImageViewController: CommonViewController {
         PHPhotoLibrary.shared().register(self)
     }
     
-    
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
@@ -156,7 +162,7 @@ class SelectImageViewController: CommonViewController {
 /// 첨부할 이미지 데이터 설정
 /// - Author: 김정민(kimjm010@icloud.com)
 extension SelectImageViewController: UICollectionViewDataSource {
-    
+
     /// 접근 가능한 이미지 수를 리턴합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView
@@ -166,8 +172,8 @@ extension SelectImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return allPhotos.count
     }
-    
-    
+
+
     /// 이미지 표시를 위한 셀을 구성합니다.
     /// - Parameters:
     ///   - collectionView: imageCollectionView
@@ -175,16 +181,16 @@ extension SelectImageViewController: UICollectionViewDataSource {
     /// - Returns: imageCollectionView의 cell
     /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell",
                                                       for: indexPath) as! ImageCollectionViewCell
-        
+
         let target = allPhotos.object(at: indexPath.item)
         let size = CGSize(width: collectionView.frame.width / 4, height: collectionView.frame.width / 4)
         imageManager.requestImage(for: target, targetSize: size, contentMode: .aspectFill, options: nil) { image, _ in
             cell.imageView.image = image
         }
-        
+
         return cell
     }
 }
@@ -231,3 +237,4 @@ extension SelectImageViewController: PHPhotoLibraryChangeObserver {
         }
     }
 }
+
