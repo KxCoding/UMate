@@ -13,7 +13,7 @@ import NSObject_Rx
 
 
 /// 이용약관 화면
-/// - Author: 황신택 (sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com), Author: 장현우(heoun3089@gmail.com)
 class TermsOfConditionsTableViewController: UITableViewController {
     /// CheckBox 1 ... 6
     @IBOutlet weak var checkbox1: BEMCheckBox!
@@ -44,6 +44,12 @@ class TermsOfConditionsTableViewController: UITableViewController {
     /// 체크박스 아웃렛 배열
     var list = [BEMCheckBox]()
     
+    /// 입학 연도
+    ///
+    /// 이전 화면에서 전달됩니다.
+    /// - Author: 장현우(heoun3089@gmail.com)
+    var entranceYear: String?
+    
     
     /// 체크박스가 모두 체크되어있는지 확인합니다.
     /// 조건을 충족하면 다음 화면으로 이동합니다.
@@ -59,6 +65,19 @@ class TermsOfConditionsTableViewController: UITableViewController {
             }
         }
     }
+    
+    
+    /// 다음 화면으로 넘어가기 전에 호출됩니다.
+    /// - Parameters:
+    ///   - segue: 다음 화면 뷰컨트롤러에 대한 정보를 가지고 있는 segue 객체
+    ///   - sender: segue를 연결한 객체
+    /// - Author: 장현우(heoun3089@gmail.com)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? EmailVerificationViewController {
+            vc.entranceYear = entranceYear
+        }
+    }
+    
     
     /// 초기화 작업을 진행합니다.
     /// - Author: 황신택 (sinadsl1457@gmail.com)

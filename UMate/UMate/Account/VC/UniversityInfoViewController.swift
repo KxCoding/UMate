@@ -14,7 +14,7 @@ import RxDataSources
 
 
 /// 학번과 학교 이름 선택 화면
-/// - Author: 황신택 (sinadsl1457@gmail.com)
+/// - Author: 황신택 (sinadsl1457@gmail.com), 장현우(heoun3089@gmail.com)
 class UniversityInfoViewController: CommonViewController {
     /// 입학년도 뷰
     @IBOutlet weak var enterenceYearContainerView: UIView!
@@ -76,6 +76,22 @@ class UniversityInfoViewController: CommonViewController {
                   alert(title: "알림", message: "입학년도 혹은 학교이름을 선택하세요.")
                   return
               }
+    }
+    
+    
+    /// 다음 화면으로 넘어가기 전에 호출됩니다.
+    /// - Parameters:
+    ///   - segue: 다음 화면 뷰컨트롤러에 대한 정보를 가지고 있는 segue 객체
+    ///   - sender: segue를 연결한 객체
+    /// - Author: 장현우(heoun3089@gmail.com)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? TermsOfConditionsTableViewController {
+            if let enterenceYear = enterenceYearLabel.text {
+                let startIndex = enterenceYear.index(enterenceYear.startIndex, offsetBy: 2)
+                
+                vc.entranceYear = String(enterenceYear[startIndex...])
+            }
+        }
     }
     
     
