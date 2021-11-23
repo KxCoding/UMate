@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 import NSObject_Rx
 
 
@@ -168,6 +169,7 @@ class CommentTableViewCell: UITableViewCell {
         provider.rx.request(.saveCommentLikeData(likeCommentPostData))
             .filterSuccessfulStatusCodes()
             .map(SaveLikeCommentResponseData.self)
+            .observe(on: MainScheduler.instance)
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
@@ -179,9 +181,8 @@ class CommentTableViewCell: UITableViewCell {
                         self.isLiked = true
                         guard let likeComment = response.likeComment else { return }
                         
-                        DispatchQueue.main.async {
-                            self.heartButton.tag = likeComment.likeCommentId
-                        }
+                        self.heartButton.tag = likeComment.likeCommentId
+                        
                     case ResultCode.fail.rawValue:
                         #if DEBUG
                         print("이미 존재함")
