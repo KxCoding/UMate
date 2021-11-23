@@ -54,7 +54,7 @@ class PopularContestsTableViewCell: UITableViewCell {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+      
     }
 }
 
@@ -69,8 +69,8 @@ extension PopularContestsTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
-    
-    
+
+
     /// 셀에 데이터를 지정합니다.
     /// 테이블 뷰 셀 안의 콜렉션 뷰 셀로 데이터를 전달합니다.
     /// - Parameters:
@@ -81,9 +81,9 @@ extension PopularContestsTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PopularContestsCollectionViewCell", for: indexPath) as! PopularContestsCollectionViewCell
         let model = list[indexPath.row]
-        
+
         cell.configure(with: model)
-        
+
         return cell
     }
 }

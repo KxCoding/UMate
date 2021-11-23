@@ -562,9 +562,6 @@
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="W7D-ha-KId">
                                 <rect key="frame" x="0.0" y="88" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Djf-jZ-fpe" id="5Cr-fn-Cyj"/>
-                                </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XVe-BG-te9">
                                 <rect key="frame" x="0.0" y="139" width="414" height="723"/>
@@ -579,10 +576,6 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="Djf-jZ-fpe" id="lhE-a4-t8A"/>
-                                    <outlet property="delegate" destination="Djf-jZ-fpe" id="uWf-ux-Lsl"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Tim-Cb-LPp"/>
