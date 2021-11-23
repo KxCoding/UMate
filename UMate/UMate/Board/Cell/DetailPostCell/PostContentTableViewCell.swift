@@ -136,14 +136,13 @@ class PostContentTableViewCell: UITableViewCell {
         provider.rx.request(.saveScrapInfo(scrapPostData))
             .filterSuccessfulStatusCodes()
             .map(SaveScrapPostPostResponse.self)
+            .observe(on: MainScheduler.instance)
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
                     switch response.resultCode {
                     case ResultCode.ok.rawValue:
-                        DispatchQueue.main.async {
-                            self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
-                        }
+                        self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
                         
                         #if DEBUG
                         print("추가 성공")
@@ -172,14 +171,13 @@ class PostContentTableViewCell: UITableViewCell {
         provider.rx.request(.saveLikeInfo(likePostData))
             .filterSuccessfulStatusCodes()
             .map(SaveScrapPostPostResponse.self)
+            .observe(on: MainScheduler.instance)
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
                     switch response.resultCode {
                     case ResultCode.ok.rawValue:
-                        DispatchQueue.main.async {
-                            self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
-                        }
+                        self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
                         
                         #if DEBUG
                         print("추가 성공")

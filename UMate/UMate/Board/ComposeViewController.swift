@@ -167,6 +167,7 @@ class ComposeViewController: CommonViewController {
         provider.rx.request(.uploadPost(postData))
             .filterSuccessfulStatusCodes()
             .map(SavePostResponseData.self)
+            .observe(on: MainScheduler.instance)
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
@@ -180,9 +181,7 @@ class ComposeViewController: CommonViewController {
                         print("추가 성공!")
                         #endif
                         
-                        DispatchQueue.main.async {
-                            self.dismiss(animated: true, completion: nil)
-                        }
+                        self.dismiss(animated: true, completion: nil)
                     case ResultCode.fail.rawValue:
                         #if DEBUG
                         print("이미 존재함")
