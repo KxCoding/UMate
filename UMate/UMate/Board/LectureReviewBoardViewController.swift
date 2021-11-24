@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import Moya
 
 
 /// 최근 강의평 목록 뷰 컨트롤러
@@ -56,66 +58,66 @@ class LectureReviewBoardViewController: CommonViewController {
     /// 추가로 불러온 정보
     var hasMoreLecture = true
     
+    var totalCount = 0
+    
     
     /// 최근 강의평 목록을 불러옵니다.
     ///  - Author: 남정은(dlsl7080@gmail.com)
-    private func fetchRecentReview() {
-        guard !lectureIsFetching && hasMoreLecture else { return }
-        
+    private func fetchRecentReview() -> Observable<[LectureInfoListResponseData.LectureInfo]> {
         lectureIsFetching = true
         
-        guard let url = URL(string: "https://board1104.azurewebsites.net/api/lectureInfo?page=\(lecturePage)&pageSize=\(lecturePageSize)") else { return }
-        
-        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
-            defer {
-                self.lectureIsFetching = false
-            }
-            
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let data = try decoder.decode(LectureInfoListResponseData.self, from: data)
+        return BoardDataManager.shared.provider.rx.request(.recentLectureReviewList(lecturePage, lecturePageSize))
+            .filterSuccessfulStatusCodes()
+            .map(LectureInfoListResponseData.self)
+            .map { [weak self] data in
+                self?.lecturePage += 1
                 
-                if data.resultCode == ResultCode.ok.rawValue {
-                    if !data.list.isEmpty {
-                        let reloadRequired = self.lecturePage == 1
-                        
-                        self.lecturePage += 1
-                        self.hasMoreLecture = data.totalCount > self.lectureList.count + data.list.count
-                        
-                        let indexPaths = (self.lectureList.count ..< (self.lectureList.count + data.list.count))
-                            .map { IndexPath(row: $0, section: 0) }
-                        
-                        self.lectureList.append(contentsOf: data.list)
-                        
-                        DispatchQueue.main.async {
-                            if reloadRequired {
-                                self.lectureReviewListTableView.reloadData()
-                                self.lectureReviewListTableView.isHidden = false
-                            } else {
-                                self.lectureReviewListTableView.insertRows(at: indexPaths, with: .none)
-                            }
-                        }
-                    } else {
-                        self.hasMoreLecture = false
-                    }
-                }
-            } catch {
-                print(error)
+                self?.hasMoreLecture = data.totalCount > self?.lectureList.count ?? 0 + data.list.count// 추가되기 전에 계산
+                self?.totalCount = data.totalCount
+                
+                self?.lectureIsFetching = false
+                return data.list
             }
-        }.resume()
+            .asObservable()
+            .catchAndReturn([])
+    }
+    
+    
+    /// 최근 강의평을 테이블 뷰에 나타냅니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    private func fetchRecentReviewLecture() {
+        
+        guard !lectureIsFetching && hasMoreLecture else { return }
+        
+        let lectureReviews = Observable.zip(Observable.just(0), fetchRecentReview()).share().observe(on: MainScheduler.instance)
+        
+        lectureReviews.filter { $0.1.count == 0 }
+        .withUnretained(self)
+        .subscribe(onNext: {
+            $0.0.hasMoreLecture = false
+        })
+        .disposed(by: rx.disposeBag)
+        
+        let reloadRequired = self.lecturePage == 1
+        if reloadRequired {
+            lectureReviews.withUnretained(self)
+                .filter { !$0.1.1.isEmpty }
+                .subscribe(onNext: {
+                    $0.0.lectureList.append(contentsOf: $0.1.1)
+                    $0.0.lectureReviewListTableView.reloadData()
+                    $0.0.lectureReviewListTableView.isHidden = false
+                })
+                .disposed(by: rx.disposeBag)
+        } else {
+            lectureReviews.withUnretained(self)
+                .filter { !$0.1.1.isEmpty }
+                .subscribe(onNext: {
+                    let indexPaths = (self.lectureList.count ..< (self.lectureList.count + $0.1.1.count)).map { IndexPath(row: $0, section: 0) }
+                    $0.0.lectureList.append(contentsOf: $0.1.1)
+                    $0.0.lectureReviewListTableView.insertRows(at: indexPaths, with: .none)
+                })
+                .disposed(by: rx.disposeBag)
+        }
     }
     
     
@@ -160,9 +162,16 @@ class LectureReviewBoardViewController: CommonViewController {
         
         lectureReviewListTableView.isHidden = true
         
-        lectureReviewListTableView.prefetchDataSource = self
+        fetchRecentReviewLecture()
         
-        fetchRecentReview()
+        lectureReviewListTableView.rx.prefetchRows
+            .withUnretained(self)
+            .subscribe(onNext: { vc, indexPaths in
+                if indexPaths.contains(where: { $0.row > vc.lectureList.count - 8 }) && !vc.lectureIsFetching {
+                    vc.fetchRecentReviewLecture()
+                }
+            })
+            .disposed(by: rx.disposeBag)
         
         setupSearchBar()
         
@@ -183,19 +192,6 @@ class LectureReviewBoardViewController: CommonViewController {
             }
         }
         tokens.append(token)
-    }
-}
-
-
-
-/// 강의목록을 나눠서 가져옴
-/// - Author: 남정은(dlsl7080@gmail.com)
-extension LectureReviewBoardViewController: UITableViewDataSourcePrefetching {
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        let readyFetch = indexPaths.contains { $0.row > self.lectureList.count - 8 }
-        if readyFetch && !lectureIsFetching {
-            fetchRecentReview()
-        }
     }
 }
 

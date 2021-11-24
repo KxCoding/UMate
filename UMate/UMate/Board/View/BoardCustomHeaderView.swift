@@ -39,8 +39,10 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
     /// - Parameter sender: UIButton. section에서 펼침/접힘 동작을 담당하는 버튼입니다.
     @IBAction func expandOrFoldSection(_ sender: UIButton) {
         let section = sender.tag
+        guard var expandableArray = UserDefaults.standard.array(forKey: "expand") as? [Bool] else { return }
+        expandableArray[section - 2] = !expandableArray[section - 2]
         
-        expandableArray[section] = !expandableArray[section]
+        UserDefaults.standard.set(expandableArray, forKey: "expand")
         
         NotificationCenter.default.post(name: .expandOrFoldSection, object: nil, userInfo: ["section": section])
     }
@@ -60,7 +62,9 @@ class BoardCustomHeaderView: UITableViewHeaderFooterView {
             break
         }
         
-        if expandableArray[section] {
+        guard let expandableArray = UserDefaults.standard.array(forKey: "expand") as? [Bool] else { return }
+        
+        if expandableArray[section - 2] {
             summaryLabel.isHidden = true
             arrowImageView.image = UIImage(named: "up-arrow")
         } else {

@@ -119,7 +119,7 @@ class CategoryBoardViewController: FreeBoardViewController {
         })
         tokens.append(token)
         
-        token = NotificationCenter.default.addObserver(forName: .commentDidInsert, object: nil, queue: .main, using: { [weak self] noti in
+        token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if self.isFiltering {
                 if let postId = noti.userInfo?["postId"] as? Int,

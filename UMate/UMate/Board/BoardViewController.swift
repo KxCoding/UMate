@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import Moya
 
 
 /// 게시판 목록 뷰 컨트롤러
@@ -13,9 +15,6 @@ import UIKit
 class BoardViewController: CommonViewController {
     /// 게시판 목록 테이블 뷰
     @IBOutlet weak var boardListTableView: UITableView!
-    
-    /// 북마크 속성에 관한 딕셔너리
-    var bookmarks: [Int:Bool] = [:]
     
     /// 선택된 게시판의 indexPath
     var index: IndexPath?
@@ -27,55 +26,21 @@ class BoardViewController: CommonViewController {
     var scrapPostList = [PostListDtoResponseData.PostDto]()
     
     
-    /// 게시판 즐겨찾기 버튼의 색상 & 즐겨찾기 속성을 변경합니다.
-    /// - Parameter sender: UIButton. 즐겨찾기 핀버튼
-    /// - Author: 남정은(dlsl7080@gmail.com)
-    @IBAction func updateBookmark(_ sender: UIButton) {
-        sender.tintColor = sender.tintColor == UIColor.init(named: "lightGrayNonSelectedColor") ? UIColor.init(named: "blackSelectedColor") : UIColor.init(named: "lightGrayNonSelectedColor")
-        
-        if bookmarks.keys.contains(sender.tag) {
-            if let isBookmarked = bookmarks[sender.tag] {
-                bookmarks[sender.tag] = !isBookmarked
-            }
-        }
-    }
-    
-    
     /// 게시판 정보를 불러옵니다.
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchBoardList() {
-        guard let url = URL(string: "https://board1104.azurewebsites.net/api/board") else { return }
-        
-        BoardDataManager.shared.session.dataTask(with: url) { data, resposne, error in
-            
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = resposne as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let res = try decoder.decode(BoardDtoResponseData.self, from: data)
-                
-                if res.resultCode == ResultCode.ok.rawValue {
-                    self.boardList = res.list
-                    
-                    DispatchQueue.main.async {
-                        self.boardListTableView.reloadData()
-                    }
-                }
-            } catch {
-                print(error)
-            }
-        }.resume()
+        BoardDataManager.shared.provider.rx.request(.boardList)
+            .filterSuccessfulStatusCodes()
+            .map(BoardDtoResponseData.self)
+            .map { $0.list }
+            .catchAndReturn([])
+            .observe(on: MainScheduler.instance)
+            .subscribe(onSuccess: { [weak self] in
+                self?.boardList = $0
+                self?.boardListTableView.reloadData()
+                self?.boardListTableView.isHidden = false
+            })
+            .disposed(by: rx.disposeBag)
     }
     
     
@@ -83,33 +48,15 @@ class BoardViewController: CommonViewController {
     /// - Parameter userId: 사용자 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchScrapPostList(userId: String) {
-        guard let url = URL(string:"https://board1104.azurewebsites.net/api/scrapPost/?userId=\(userId)") else { return }
-        
-        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let data = try decoder.decode(PostListDtoResponseData.self, from: data)
-           
-                if data.resultCode == ResultCode.ok.rawValue {
-                    self.scrapPostList = data.list
-                }
-            } catch {
-                print(error)
-            }
-        }.resume()
+        BoardDataManager.shared.provider.rx.request(.scrapList(userId))
+            .filterSuccessfulStatusCodes()
+            .map(PostListDtoResponseData.self)
+            .map { $0.list }
+            .catchAndReturn([])
+            .subscribe(onSuccess: { [weak self] in
+                self?.scrapPostList = $0
+            })
+            .disposed(by: rx.disposeBag)
     }
     
     
@@ -170,6 +117,7 @@ class BoardViewController: CommonViewController {
         super.viewDidLoad()
         
         fetchBoardList()
+        boardListTableView.isHidden = true
         
         // 커스텀 테이블 뷰 헤더 등록
         let headerNib = UINib(nibName: "BoardCustomHeader", bundle: nil)
@@ -190,8 +138,10 @@ class BoardViewController: CommonViewController {
                     indexPathArr.append(indexPath)
                 }
                 
+                guard let expandableArray = UserDefaults.standard.array(forKey: "expand") as? [Bool] else { return }
+                
                 // isExpanded가 true라면 펼친 상태
-                if expandableArray[section] {
+                if expandableArray[section - 2] {
                     self.boardListTableView.insertRows(at: indexPathArr, with: .fade)
                     if section == 3 {
                         DispatchQueue.main.async {
@@ -209,10 +159,6 @@ class BoardViewController: CommonViewController {
             }
         }
         tokens.append(token)
-        
-        for board in boardList {
-            bookmarks[board.section * 100 + board.boardId] = false
-        }
     }
 }
 
@@ -236,9 +182,9 @@ extension BoardViewController: UITableViewDataSource {
     /// - Returns: section안에 나타낼 row수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionBoardList = boardList.filter({ $0.section == section})
-        
+        guard let expandableArray = UserDefaults.standard.array(forKey: "expand") as? [Bool] else { return 0 }
         if section >= 2 {
-            return expandableArray[section] ? sectionBoardList.count : 0
+            return expandableArray[section - 2] ? sectionBoardList.count : 0
         }
         return sectionBoardList.count
     }
@@ -255,13 +201,13 @@ extension BoardViewController: UITableViewDataSource {
         if indexPath.section < 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NonExpandableBoardTableViewCell", for: indexPath) as! NonExpandableBoardTableViewCell
             
-            cell.configure(boardList: filteredBoardList, indexPath: indexPath, bookmarks: bookmarks)
+            cell.configure(boardList: filteredBoardList, indexPath: indexPath)
             return cell
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpandableBoardTableViewCell", for: indexPath) as! ExpandableBoardTableViewCell
         
-        cell.configure(boardList: filteredBoardList, indexPath: indexPath, bookmarks: bookmarks)
+        cell.configure(boardList: filteredBoardList, indexPath: indexPath)
         return cell
     }
 }

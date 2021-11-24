@@ -198,8 +198,8 @@ class TestInfoWriteTableViewCell: UITableViewCell {
             
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
             let questionTypesStr = questionTypes.map{ $0.trimmingCharacters(in: .whitespaces)}.joined(separator: ",")
-            #warning("사용자 수정6c1c72d6-fa9b-4af6-8730-bb98fded0ad8")
-            let newTestInfo = TestInfoPostData(testInfoId: 0, userId: "22", lectureInfoId: lectureInfoId, semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypesStr, examples: examplesOfQuestions, createdAt: dateStr)
+            
+            let newTestInfo = TestInfoPostData(testInfoId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", lectureInfoId: lectureInfoId, semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypesStr, examples: examplesOfQuestions, createdAt: dateStr)
             
             NotificationCenter.default.post(name: .warningAlertDidSend, object: nil, userInfo: ["testInfo": newTestInfo])
         }

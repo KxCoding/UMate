@@ -30,7 +30,7 @@ enum ResultCode: Int {
 ///  공통 응답 데이터
 /// - Author: 남정은(dlsl7080@gmail.com)
 struct CommonResponse: Codable {
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -54,7 +54,7 @@ struct BoardDtoResponseData: Codable {
     }
    
     let list: [BoardDto]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -67,18 +67,21 @@ struct PostListDtoResponseData: Codable {
     
     struct PostDto: Codable {
         let postId: Int
+        let userId: String
+        let userName: String?
+        
         let title: String
         let content: String
-        var createdAt: String
-        let userName: String
+        
         var likeCnt: Int
         var commentCnt: Int
         var scrapCnt: Int
         let categoryNumber: Int
+        var createdAt: String
     }
     
     let list: [PostDto]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -89,8 +92,13 @@ struct PostListDtoResponseData: Codable {
 struct PostDtoResponseData: Codable {
     struct Post: Codable {
         let postId: Int
+        
         let userId: String
+        let userName: String?
+        let profileUrl: String?
+        
         let boardId: Int
+        
         let title: String
         let content: String
         let likeCnt: Int
@@ -104,7 +112,7 @@ struct PostDtoResponseData: Codable {
     let isLiked: Bool
     let isScrapped: Bool
     let scrapPostId: Int
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -117,7 +125,11 @@ struct CommentListResponseData: Codable {
     
     struct Comment: Codable {
         let commentId: Int
+        
         let userId: String
+        let userName: String?
+        let profileUrl: String?
+        
         let postId: Int
         var content: String
         var likeCnt: Int
@@ -128,7 +140,7 @@ struct CommentListResponseData: Codable {
     }
     
     let list: [Comment]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -144,7 +156,7 @@ struct LikeCommentListResponse: Codable {
         let createdAt: String
     }
     let list: [LikeComment]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -160,7 +172,7 @@ struct ImageListResponseData: Codable {
     }
     
     let list: [PostImage]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -172,8 +184,13 @@ struct ImageListResponseData: Codable {
 struct SavePostResponseData: Codable {
     struct Post: Codable {
         let postId: Int
+        
         let userId: String
+        let userName: String?
+        let profileUrl: String?
+        
         let boardId: Int
+        
         let title: String
         let content: String
         let likeCnt: Int
@@ -184,7 +201,7 @@ struct SavePostResponseData: Codable {
     }
 
     let post: Post
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -195,8 +212,13 @@ struct SavePostResponseData: Codable {
 struct SaveCommentResponseData: Codable {
     struct Comment: Codable {
         let commentId: Int
+        
         let userId: String
+        let userName: String?
+        let profileUrl: String?
+        
         let postId: Int
+        
         var content: String
         var likeCnt: Int
         let originalCommentId: Int
@@ -206,7 +228,7 @@ struct SaveCommentResponseData: Codable {
     }
     
     let comment: Comment
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -224,7 +246,7 @@ struct SaveLikeCommentResponseData: Codable {
     }
     
     let likeComment: LikeComment?
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -242,7 +264,7 @@ struct SaveScrapPostPostResponse: Codable {
     }
     
     let scrapPost: ScrapPost?
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 

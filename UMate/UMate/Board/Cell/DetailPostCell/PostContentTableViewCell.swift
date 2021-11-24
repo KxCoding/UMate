@@ -43,8 +43,8 @@ class PostContentTableViewCell: UITableViewCell {
     /// 네트워크 통신 관리 객체
     let provider = PostService.shared.provider
     
-    /// 선택된 게시글
-    var selectedPost: PostDtoResponseData.Post?
+    /// 선택된 게시글 Id
+    var postId = -1
     
     /// 게시글 좋아요 여부
     var isLiked = false
@@ -62,7 +62,6 @@ class PostContentTableViewCell: UITableViewCell {
     /// - Parameter sender: 하트 버튼
     /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func toggleLikeButton(_ sender: UIButton) {
-        guard let post = selectedPost else { return }
         
         if isLiked {
             NotificationCenter.default.post(name: .postAlreadyLiked, object: nil)
@@ -73,13 +72,12 @@ class PostContentTableViewCell: UITableViewCell {
         
         
         let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-        #warning("사용자 수정")
-        let likePostdata = LikePostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: post.postId, createdAt: dateStr)
+        let likePostdata = LikePostData(userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", postId: postId, createdAt: dateStr)
         
         sendLikeInfoToServer(likePostData: likePostdata)
 
         isLiked = true
-        NotificationCenter.default.post(name: .postDidLike, object: nil, userInfo: ["postId": post.postId])
+        NotificationCenter.default.post(name: .postDidLike, object: nil, userInfo: ["postId": postId])
     }
     
     
@@ -93,7 +91,6 @@ class PostContentTableViewCell: UITableViewCell {
     /// - Parameter sender: 스크랩 버튼
     /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func toggleScrapButton(_ sender: UIButton) {
-        guard let post = selectedPost else { return }
         let scrapPostId = sender.tag
     
         if isScrapped {
@@ -103,7 +100,7 @@ class PostContentTableViewCell: UITableViewCell {
             scrapImageView.alpha = 0.9
             
             deleteScrapPost(scrapPostId: scrapPostId)
-            NotificationCenter.default.post(name: .postCancelScrap, object: nil, userInfo: ["postId":post.postId])
+            NotificationCenter.default.post(name: .postCancelScrap, object: nil, userInfo: ["postId": postId])
             
         } else {
             isScrapped = true
@@ -113,8 +110,8 @@ class PostContentTableViewCell: UITableViewCell {
             
             
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-            #warning("사용자 수정")
-            let scrapPostData = ScrapPostData(userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", postId: post.postId, createdAt: dateStr)
+            
+            let scrapPostData = ScrapPostData(userId:LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", postId: postId, createdAt: dateStr)
             
             sendScrapInfoToServer(scrapPostData: scrapPostData)
         }
@@ -139,7 +136,7 @@ class PostContentTableViewCell: UITableViewCell {
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
-                    switch response.resultCode {
+                    switch response.code {
                     case ResultCode.ok.rawValue:
                         DispatchQueue.main.async {
                             self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
@@ -175,7 +172,7 @@ class PostContentTableViewCell: UITableViewCell {
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
-                    switch response.resultCode {
+                    switch response.code {
                     case ResultCode.ok.rawValue:
                         DispatchQueue.main.async {
                             self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
@@ -205,45 +202,21 @@ class PostContentTableViewCell: UITableViewCell {
     /// - Parameter scrapPostId: 스크랩 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func deleteScrapPost(scrapPostId: Int) {
-        guard let url = URL(string: "https://board1104.azurewebsites.net/api/scrapPost/\(scrapPostId)") else { return }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        
-        BoardDataManager.shared.session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-
-            do {
-                let decoder = JSONDecoder()
-                let res = try decoder.decode(CommonResponse.self, from: data)
-                
-                switch res.resultCode {
-                case ResultCode.ok.rawValue:
+        BoardDataManager.shared.provider.rx.request(.deleteScrapPost(scrapPostId))
+            .filterSuccessfulStatusCodes()
+            .map(CommonResponse.self)
+            .subscribe(onSuccess: {
+                if $0.code == ResultCode.ok.rawValue {
                     #if DEBUG
                     print("삭제 성공")
                     #endif
-                case ResultCode.fail.rawValue:
+                } else {
                     #if DEBUG
                     print("삭제 실패")
                     #endif
-                default:
-                    break
                 }
-            } catch {
-                print(error)
-            }
-        }.resume()
+            })
+            .disposed(by: rx.disposeBag)
     }
     
 
@@ -283,13 +256,24 @@ class PostContentTableViewCell: UITableViewCell {
             likeImageView.tintColor = UIColor.init(named: "darkGraySubtitleColor")
         }
         
-        userNameLabel.text = post.userId
+        if let urlStr = post.profileUrl {
+            BoardDataManager.shared.downloadImage(from: urlStr) { [weak self] image in
+                guard let self = self else { return }
+                if let image = image {
+                    self.userImageView.image = BoardDataManager.shared.resizeImage(image: image, targetSize: CGSize(width: 40, height: 40))
+                }
+            }
+        } else {
+            self.userImageView.image = UIImage(named: "user")
+        }
+    
+        userNameLabel.text = post.userName
         dateLabel.text = post.createdAt
         postTitleLabel.text = post.title
         postContentLabel.text = post.content
     
         // 게시글을 셀 클래스에서 사용하기위해 저장
-        selectedPost = post
+        postId = post.postId
         self.isLiked = isLiked
         self.isScrapped = isScrapped
         scrapButton.tag = scrapPostId

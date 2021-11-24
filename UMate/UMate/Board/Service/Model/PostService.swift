@@ -33,7 +33,7 @@ extension ScrapInfoService: TargetType {
     
     /// 기본 URL
     var baseURL: URL {
-        return URL(string: "https://board1104.azurewebsites.net")!
+        return URL(string: "https://umateserverboard.azurewebsites.net")!
     }
     
     /// 기본 URL제외한 경로
@@ -42,7 +42,7 @@ extension ScrapInfoService: TargetType {
         case .saveScrapInfo:
             return "/api/scrapPost"
         case .saveLikeInfo:
-            return "/likePost"
+            return "/api/likePost"
         }
     }
     
@@ -63,7 +63,10 @@ extension ScrapInfoService: TargetType {
     
     /// HTTP 헤더
     var headers: [String : String]? {
-        return ["Content-Type": "application/json"]
+        if let token = LoginDataManager.shared.loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            return ["Content-Type": "application/json", "Authorization":"Bearer \(token)"]
+        }
+        return nil
     }
 }
 
@@ -80,7 +83,7 @@ extension PostSaveService: TargetType {
     
     /// 기본 URL
     var baseURL: URL {
-        URL(string: "https://board1104.azurewebsites.net")!
+        URL(string: "https://umateserverboard.azurewebsites.net")!
     }
     
     /// 기본 URL 제외한 경로
@@ -103,7 +106,10 @@ extension PostSaveService: TargetType {
     
     /// HTTP 헤더
     var headers: [String : String]? {
-        return ["Content-Type": "application/json"]
+        if let token = LoginDataManager.shared.loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            return ["Content-Type": "application/json", "Authorization":"Bearer \(token)"]
+        }
+        return nil
     }
 }
 
@@ -120,7 +126,7 @@ extension CommentSaveService: TargetType {
     
     /// 기본 URL
     var baseURL: URL {
-        return URL(string: "https://board1104.azurewebsites.net")!
+        return URL(string: "https://umateserverboard.azurewebsites.net")!
     }
     
     /// 기본 URL 제외한 경로
@@ -143,6 +149,9 @@ extension CommentSaveService: TargetType {
     
     /// HTTP 헤더
     var headers: [String : String]? {
-        return ["Content-Type": "application/json"]
+        if let token = LoginDataManager.shared.loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            return ["Content-Type": "application/json", "Authorization":"Bearer \(token)"]
+        }
+        return nil
     }
 }

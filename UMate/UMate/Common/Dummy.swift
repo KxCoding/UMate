@@ -12,9 +12,6 @@ import UIKit
 
 // MARK: Board Dummy
 
-/// 게시판 접힙, 펼침 속성
-var expandableArray = [false, false, false, true]
-
 
 
 // MARK: - Place Dummy
