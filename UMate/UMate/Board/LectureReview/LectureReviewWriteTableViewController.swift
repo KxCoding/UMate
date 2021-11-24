@@ -318,8 +318,6 @@ class LectureReviewWriteTableViewController: UITableViewController {
     @IBOutlet weak var semesterLabel: UILabel!
     @IBOutlet weak var reviewSaveButton: UIButton!
     
-    var token: NSObjectProtocol?
-    
     
     /// 강의리뷰 저장 메소드입니다.
     /// - Parameter sender: 강의평가 저장 버튼
@@ -366,13 +364,12 @@ class LectureReviewWriteTableViewController: UITableViewController {
             return
         }
         
-        #warning("사용자 수정")
         // 작성 경고문
         alertVersion3(title: "강의평을 작성하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { _ in
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-            let newReview = LectureReviewPostData(lectureReviewId: 0, userId: "66", lectureInfoId: self.lectureInfo?.lectureInfoId ?? 0, assignment: reviewAssignment.rawValue, groupMeeting: reviewGroupMeeting.rawValue, evaluation: reviewEvaluation.rawValue, attendance: reviewAttendance.rawValue, testNumber: reviewTestNumber.rawValue, rating: reviewRating.rawValue, semester: semester, content: reviewContent, createdAt: dateStr)
+            let newReview = LectureReviewPostData(lectureReviewId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", lectureInfoId: self.lectureInfo?.lectureInfoId ?? 0, assignment: reviewAssignment.rawValue, groupMeeting: reviewGroupMeeting.rawValue, evaluation: reviewEvaluation.rawValue, attendance: reviewAttendance.rawValue, testNumber: reviewTestNumber.rawValue, rating: reviewRating.rawValue, semester: semester, content: reviewContent, createdAt: dateStr)
     
-                guard let url = URL(string: "https://board1104.azurewebsites.net/api/lectureReview") else { return }
+                guard let url = URL(string: "https://umateserverboard.azurewebsites.net/api/lectureReview") else { return }
        
                 let body = try? BoardDataManager.shared.encoder.encode(newReview)
                 
@@ -402,6 +399,10 @@ class LectureReviewWriteTableViewController: UITableViewController {
         request.httpBody = httpBody
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        if let token = LoginDataManager.shared.loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
                 print(error)
@@ -419,7 +420,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
             do {
                 let decoder = JSONDecoder()
                 let data = try decoder.decode(SaveLectureReviewResponseData.self, from: data)
-                switch data.resultCode {
+                switch data.code {
                 case ResultCode.ok.rawValue:
                     #if DEBUG
                     print("추가 성공")
@@ -450,13 +451,6 @@ class LectureReviewWriteTableViewController: UITableViewController {
         selectSemesterView.layer.cornerRadius = 10
         reviewcontentTextView.layer.cornerRadius = 10
         reviewcontentTextView.delegate = self
-    }
-    
-    
-    deinit {
-        if let token = token {
-            NotificationCenter.default.removeObserver(token)
-        }
     }
 }
 

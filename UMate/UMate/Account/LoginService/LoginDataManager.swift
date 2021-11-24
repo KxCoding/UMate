@@ -227,6 +227,7 @@ class LoginDataManager {
             loginKeychain.set(responseData.userName ?? "", forKey: AccountKeys.userName.rawValue)
             loginKeychain.set(responseData.nickName ?? "", forKey: AccountKeys.nickName.rawValue)
             loginKeychain.set(responseData.yearOfAdmission ?? "", forKey: AccountKeys.yearOfAdmission.rawValue)
+            UserDefaults.standard.set([true, true], forKey: "expand")
         }
     }
 }

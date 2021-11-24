@@ -68,27 +68,28 @@ class CommentTableViewCell: UITableViewCell {
         if !isLiked {
             heartImageView.image = UIImage(named: "heart2.fill")
             heartButtonImageView.image = UIImage(named: "heart2.fill")
-            heartCountLabel.text = "\(comment.likeCnt + 1)"
-            selectedComment?.likeCnt += 1
             
-            heartImageView.isHidden = false
-            heartCountLabel.isHidden = false
             
-            guard let url = URL(string: "https://board1104.azurewebsites.net/api/likeComment") else { return }
+            guard let url = URL(string: "https://umateserverboard.azurewebsites.net/api/likeComment") else { return }
             
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-            #warning("사용자 수정")
-            let likeCommentData = LikeCommentPostData(likeCommentId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", commentId: comment.commentId, createdAt: dateStr)
+            let likeCommentData = LikeCommentPostData(likeCommentId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", commentId: comment.commentId, createdAt: dateStr)
             
             let body = try? BoardDataManager.shared.encoder.encode(likeCommentData)
             
-            BoardDataManager.shared.sendLikeCommentRequest(url: url, httpMethod: "POST", httpBody: body) { success, data in
+            BoardDataManager.shared.sendLikeCommentRequest(url: url, httpMethod: "POST", httpBody: body) {[weak self] success, data in
+                guard let self = self else { return }
                 if success {
                     self.isLiked = true
                     guard let likeComment = data.likeComment else { return }
                     
                     DispatchQueue.main.async {
                         self.heartButton.tag = likeComment.likeCommentId
+                        self.heartCountLabel.text = "\(comment.likeCnt + 1)"
+                        self.selectedComment?.likeCnt += 1
+                        
+                        self.heartImageView.isHidden = false
+                        self.heartCountLabel.isHidden = false
                     }
                 } else {
                     #if DEBUG
@@ -105,12 +106,15 @@ class CommentTableViewCell: UITableViewCell {
                 heartImageView.isHidden = true
             }
             
-            heartCountLabel.text = "\(comment.likeCnt - 1)"
-            selectedComment?.likeCnt -= 1
-            
-            BoardDataManager.shared.deleteLikeComment(likeCommentId: heartButton.tag) { success in
+            BoardDataManager.shared.deleteLikeComment(likeCommentId: heartButton.tag) { [weak self] success in
+                guard let self = self else { return }
                 if success {
                     self.isLiked = false
+                    
+                    DispatchQueue.main.async {
+                        self.heartCountLabel.text = "\(comment.likeCnt - 1)"
+                        self.selectedComment?.likeCnt -= 1
+                    }
                 } else {
                     #if DEBUG
                     print("댓글 좋아요 삭제 실패")
@@ -155,9 +159,18 @@ class CommentTableViewCell: UITableViewCell {
         commentContainerView.backgroundColor = !(comment.isReComment) ? UIColor.systemBackground : UIColor.systemGray6
         commentContainerView.layer.cornerRadius = !(comment.isReComment) ? 0 : 10
         
-        #warning("로그인 기능 추가후 프로필이미지 설정")
-        //profileImageView.image = comment.image
-        userIdLabel.text = comment.userId
+        if let urlStr = comment.profileUrl {
+            BoardDataManager.shared.downloadImage(from: urlStr) { [weak self] image in
+                guard let self = self else { return }
+                if let image = image {
+                    self.profileImageView.image = BoardDataManager.shared.resizeImage(image: image, targetSize: CGSize(width: 30, height: 30))
+                }
+            }
+        } else {
+            self.profileImageView.image = UIImage(named: "user")
+        }
+      
+        userIdLabel.text = comment.userName
         commentLabel.text = comment.content
         dateTimeLabel.text = comment.createdAt
         heartCountLabel.text = comment.likeCnt.description

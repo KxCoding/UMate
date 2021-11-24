@@ -142,15 +142,13 @@ class ComposeViewController: CommonViewController {
         // 일반 게시판에 추가될 게시글
         group.notify(queue: .main) {
             if self.categoryList.isEmpty {
-                #warning("사용자 수정")
-                newPost = PostPostData(postId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: 0, urlStrings: urlStringList, createdAt:dateStr)
+                newPost = PostPostData(postId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: 0, urlStrings: urlStringList, createdAt:dateStr)
             } else {
                 guard let selectedCategory = self.selectedCategory else {
                     Loaf("카테고리 항목을 선택해 주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
                     return
                 }
-                #warning("사용자 수정")
-                newPost = PostPostData(postId: 0, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:dateStr)
+                newPost = PostPostData(postId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:dateStr)
             }
             
             self.sendDataToServer(postData: newPost)
@@ -170,9 +168,9 @@ class ComposeViewController: CommonViewController {
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
-                    switch response.resultCode {
+                    switch response.code {
                     case ResultCode.ok.rawValue:
-                        let newPost = PostListDtoResponseData.PostDto(postId: response.post.postId, title: response.post.title, content: response.post.content, createdAt: response.post.createdAt, userName: response.post.userId, likeCnt: 0, commentCnt: 0, scrapCnt: 0, categoryNumber: response.post.categoryNumber)
+                        let newPost = PostListDtoResponseData.PostDto(postId: response.post.postId, userId: response.post.userId, userName: response.post.userName, title: response.post.title, content: response.post.content, likeCnt: response.post.likeCnt, commentCnt: response.post.commentCnt, scrapCnt: response.post.scrapCnt, categoryNumber: response.post.categoryNumber, createdAt: response.post.createdAt)
                         
                         NotificationCenter.default.post(name: .newPostInsert, object: nil, userInfo: ["newPost": newPost])
                         

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import Moya
 
 
 /// 강의 정보 뷰 컨트롤러
@@ -36,113 +38,41 @@ class DetailLectureReviewViewController: CommonViewController {
     var testInfoList = [TestInfoListResponse.TestInfo]()
     
     
-    /// 강의 정보를 불러옵니다.
-    /// - Parameter id: 강의 정보 Id
+    /// 일부 강의 정보를 불러옵니다.
+    /// - Parameter lectureInfoId: 강의 정보 Id
     ///  - Author: 남정은(dlsl7080@gmail.com)
-    private func fetchLectureInfo(id: Int) {
-        guard let url = URL(string: "https://board1104.azurewebsites.net/api/lectureInfo/\(id)") else { return }
-        
-        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let data = try decoder.decode(LectureInfoDetailResponse.self, from: data)
-                
-                if data.resultCode == ResultCode.ok.rawValue {
-                    self.lectureInfo = data.lectureInfo
-                }
-                self.fetchLectureReviews(lectureInfoid: self.lectureInfoId)
-            } catch {
-                print(error)
-            }
-        }.resume()
+    private func fetchLectureInfo(lectureInfoId: Int) -> Observable<LectureInfoDetailResponse.LectrueInfo> {
+        return BoardDataManager.shared.provider.rx.request(.detailLectureInfo(lectureInfoId))
+            .filterSuccessfulStatusCodes()
+            .map(LectureInfoDetailResponse.self)
+            .map { $0.lectureInfo }
+            .asObservable()
+            .catchAndReturn(LectureInfoDetailResponse.LectrueInfo(lectureInfoId: 0, professorId: 0, title: "", bookName: "", bookLink: "", semesters: ""))
     }
     
     
     /// 강의평을 불러옵니다.
-    /// - Parameter id: 강의 정보 Id
+    /// - Parameter lectureInfoId: 강의 정보 Id
     ///  - Author: 남정은(dlsl7080@gmail.com)
-    private func fetchLectureReviews(lectureInfoid: Int) {
-        guard let url = URL(string: "https://board1104.azurewebsites.net/api/lectureReview?lectureInfoId=\(lectureInfoid)") else { return }
-        
-        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let data = try decoder.decode(LectureReviewListResponse.self, from: data)
-                
-                if data.resultCode == ResultCode.ok.rawValue {
-                    self.lectureReviewList = data.lectureReviews
-                    self.evaluatelecture(reviews: data.lectureReviews)
-                }
-                self.fetchTestInfos(lectureInfoid: self.lectureInfoId)
-            } catch {
-                print(error)
-            }
-        }.resume()
+    private func fetchLectureReviews(lectureInfoId: Int) -> Observable<[LectureReviewListResponse.LectureReview]> {
+        return BoardDataManager.shared.provider.rx.request(.lectureReviewList(lectureInfoId))
+            .filterSuccessfulStatusCodes()
+            .map(LectureReviewListResponse.self)
+            .map { $0.lectureReviews }
+            .asObservable()
+            .catchAndReturn([])
     }
     
     
     /// 시험 정보를 불러옵니다.
-    /// - Parameter id: 강의 정보 Id
+    /// - Parameter lectureInfoId: 강의 정보 Id
     ///  - Author: 남정은(dlsl7080@gmail.com)
-    private func fetchTestInfos(lectureInfoid: Int) {
-        guard let url = URL(string: "https://board1104.azurewebsites.net/api/testInfo?lectureInfoId=\(lectureInfoid)") else { return }
-        
-        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let data = try decoder.decode(TestInfoListResponse.self, from: data)
-                
-                if data.resultCode == ResultCode.ok.rawValue {
-                    self.testInfoList = data.testInfos
-                    
-                    self.group.notify(queue: .main) {
-                        self.lectureInfoTableView.reloadData()
-                        self.lectureInfoTableView.isHidden = false
-                    }
-                }
-            } catch {
-                print(error)
-            }
-        }.resume()
+    private func fetchTestInfos(lectureInfoId: Int) -> Observable<[TestInfoListResponse.TestInfo]> {
+        return BoardDataManager.shared.provider.rx.request(.testInfoList(lectureInfoId))
+            .map(TestInfoListResponse.self)
+            .map {$0.testInfos }
+            .asObservable()
+            .catchAndReturn([])
     }
     
     
@@ -169,8 +99,11 @@ class DetailLectureReviewViewController: CommonViewController {
     
     
     /// 각 항목의 빈도수를 rawValue로 체크합니다.
+    /// - Parameter reviews: 강의평 목록
+    /// - Returns: 평가 결과
     /// - Author: 남정은(dlsl7080@gmail.com)
-    private func evaluatelecture(reviews: [LectureReviewListResponse.LectureReview]) {
+    @discardableResult
+    private func evaluatelecture(reviews: [LectureReviewListResponse.LectureReview]) -> [Int] {
         group.enter()
         sortedResultReviewList.removeAll()
         defer {
@@ -228,6 +161,33 @@ class DetailLectureReviewViewController: CommonViewController {
             resultCounter.sort{ $0.value > $1.value } // 빈도수 높은게 왼쪽에 가도록
             sortedResultReviewList.append(resultCounter.first?.key ?? 0)
         }
+        
+        return sortedResultReviewList
+    }
+    
+    
+    /// 강의 상세정보를 나타냅니다.
+    /// - Author: 남정은(dlsl7080@gamil.com)
+    func fetchLectureDetail() {
+        let lectureSummary = fetchLectureInfo(lectureInfoId: lectureInfoId)
+        let reviews = fetchLectureReviews(lectureInfoId: lectureInfoId)
+        let resultReview = reviews
+            .withUnretained(self)
+            .map { $0.0.evaluatelecture(reviews: $0.1) }
+        let testInfos = fetchTestInfos(lectureInfoId: lectureInfoId)
+           
+        
+        Observable.zip(lectureSummary, reviews, resultReview, testInfos)
+            .withUnretained(self)
+            .subscribe(onNext: {
+                $0.0.lectureInfo = $0.1.0
+                $0.0.lectureReviewList = $0.1.1
+                $0.0.testInfoList = $0.1.3
+                
+                $0.0.lectureInfoTableView.reloadData()
+                $0.0.lectureInfoTableView.isHidden = false
+            })
+            .disposed(by: rx.disposeBag)
     }
     
 
@@ -256,7 +216,7 @@ class DetailLectureReviewViewController: CommonViewController {
         let headerNib = UINib(nibName: "LectureInfoCustomHeader", bundle: nil)
         lectureInfoTableView.register(headerNib, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         
-        fetchLectureInfo(id: lectureInfoId)
+        fetchLectureDetail()
         
         // 강의평 추가
         var token = NotificationCenter.default.addObserver(forName: .newLectureReviewDidInput, object: nil, queue: .main) { [weak self] noti in

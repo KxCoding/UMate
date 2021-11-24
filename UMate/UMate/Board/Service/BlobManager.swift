@@ -10,8 +10,8 @@ import UIKit
 import AZSClient
 
 
-#warning("현재는 Blob삭제 상태입니다.")
-let constr = "DefaultEndpointsProtocol=https;AccountName=boardimage1018;AccountKey=wNQrSSwm3M29lj9+mLoWRuZRZCSOh9KmQZm1A79+2Z7iNwZ6bCSiGloRXKOIUoI7vsdFU3LACKtQOurFkShAaw==;EndpointSuffix=core.windows.net"
+#warning("Blob 수정")
+let constr = "DefaultEndpointsProtocol=https;AccountName=boardimage1018;AccountKey=sTXm0jhZ7Yt9YGgCdrGY65ftGpE8USALIDa+NnzbsD/6lA62sAIw/0OZ9TUK61RD2KRrCuUglSWLDSbbQWNysw==;EndpointSuffix=core.windows.net"
 
 
 

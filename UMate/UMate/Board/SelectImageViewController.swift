@@ -22,7 +22,6 @@ extension Notification.Name {
 
 
 
-
 /// 앨범 표시 화면
 /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 class SelectImageViewController: CommonViewController {
@@ -87,11 +86,11 @@ class SelectImageViewController: CommonViewController {
         for index in indexPath {
             let target = allPhotos.object(at: index.item)
             
-            imageManager.requestImage(for: target,targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: nil) { (image, _) in
+            imageManager.requestImage(for: target, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: nil) { (image, _) in
                 if let image = image {
                     NotificationCenter.default.post(name: .imageDidSelect, object: nil, userInfo: ["img": [image]])
                     
-                    NotificationCenter.default.post(name: .requestPostImage, object: nil, userInfo: ["image": image])
+                   // NotificationCenter.default.post(name: .requestPostImage, object: nil, userInfo: ["image": image])
                 }
                 
                 self.dismiss(animated: true, completion: nil)

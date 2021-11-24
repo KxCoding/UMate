@@ -17,31 +17,16 @@ class NonExpandableBoardTableViewCell: UITableViewCell {
     /// 게시판 아이콘 이미지 뷰
     @IBOutlet weak var boardImageView: UIImageView!
     
-    /// 게시판 북마크 버튼
-    @IBOutlet weak var bookmarkButton: UIButton!
-    
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        // 북마크 버튼 설정
-        bookmarkButton.tintColor = UIColor.init(named: "lightGrayNonSelectedColor")
-        bookmarkButton.alpha = 0.8
-    }
-    
   
     /// 게시판 셀을 초기화합니다.
     /// - Parameters:
     ///   - boardList: 게시판 정보
     ///   - indexPath: 각 게시판의 indexPath
-    ///   - bookmarks: 북마크 정보
     ///   - Author: 남정은(dlsl7080@gmail.com)
-    func configure(boardList: [BoardDtoResponseData.BoardDto], indexPath: IndexPath, bookmarks: [Int:Bool]) {
+    func configure(boardList: [BoardDtoResponseData.BoardDto], indexPath: IndexPath) {
         let target = boardList[indexPath.row]
         
         if indexPath.section == 0 {
-            bookmarkButton.isHidden = true
-            boardImageView.isHidden = false
             if indexPath.row == 0 {
                 boardImageView.image = UIImage(named: "paper")
             } else {
@@ -50,9 +35,6 @@ class NonExpandableBoardTableViewCell: UITableViewCell {
         }
        
         boardLabel.text = target.name
-        
-        // 북마크 버튼의 tag초기화
-        bookmarkButton.tag = indexPath.section * 100 + target.boardId
     }
 }
 
