@@ -59,9 +59,7 @@ class PlaceListTableViewCell: UITableViewCell {
         } else {
             keywordContainer2.isHidden = true
         }
-        
-        /// 응답에 따라 이미지 뷰 업데이트
-        manager.download(.thumbnail, andUpdate: placeImageView, with: target.thumbnailUrl)
+        manager.getImage(with: target.thumbnailUrl, andUpdate: placeImageView)
     }
     
     

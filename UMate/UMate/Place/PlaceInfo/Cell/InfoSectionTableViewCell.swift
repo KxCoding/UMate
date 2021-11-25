@@ -100,22 +100,7 @@ class InfoSectionTableViewCell: UITableViewCell {
     /// - Parameter sender: 버튼
     /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func updateBookmark(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        
-        let normal = UIImage(systemName: "bookmark")
-        let highlighted = UIImage(systemName: "bookmark.fill")
-        sender.imageView?.image = sender.isSelected ? highlighted : normal
-        
-        if let index = PlaceUser.tempUser.userData.bookmarkedPlaces.firstIndex(of: target.id) {
-            PlaceUser.tempUser.userData.bookmarkedPlaces.remove(at: index)
-            NotificationCenter.default.post(name: .updateBookmark, object: nil)
-        } else {
-            PlaceUser.tempUser.userData.bookmarkedPlaces.append(target.id)
-        }
-        
-        #if DEBUG
-        print(PlaceUser.tempUser.userData.bookmarkedPlaces)
-        #endif
+        NotificationCenter.default.post(name: .updateBookmark, object: nil)
     }
     
     
@@ -127,7 +112,7 @@ class InfoSectionTableViewCell: UITableViewCell {
     /// 상점의 인스타그램 아이디나 웹페이지 정보가 없으면 버튼을 표시하지 않고, 북마크 상태에 따라 버튼 상태를 변경합니다.
     /// - Parameter content: 표시할 내용을 담은 Place 객체
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    func configure(with content: Place) {
+    func configure(with content: Place, isBookmarked: Bool) {
         
         target = content
         
@@ -140,21 +125,10 @@ class InfoSectionTableViewCell: UITableViewCell {
         keywordLabel.text = target.keywords.first
         placeTypeLabel.text = target.placeType.description
         
-        if target.instagramId == nil {
-            openInstagramButton.isHidden = true
-        }
+        openInstagramButton.isHidden = (target.instagramId == nil)
+        openSafariButton.isHidden = (target.url == nil)
         
-        if target.url == nil {
-            openSafariButton.isHidden = true
-        }
-        
-        if PlaceUser.tempUser.userData.bookmarkedPlaces.contains(target.id) {
-            bookmarkButton.isSelected = true
-        } else {
-            bookmarkButton.isSelected = false
-        }
-        
-        
+        bookmarkButton.isSelected = isBookmarked
     }
     
 }

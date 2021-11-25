@@ -6,12 +6,19 @@
 //
 
 import UIKit
+import Loaf
 
 
 extension Notification.Name {
     /// 하위 탭을 선택할 때 전송할 notification
     /// - Author: 박혜정(mailmelater11@gmail.com)
     static let tapToggleDidRequest = Notification.Name(rawValue: "tapToggleDidRequest")
+    
+    /// 북마크 목록이 업데이트 되었을 때 전송할 notification
+    ///
+    /// 북마크가 추가된 이후에 table view를 업데이트 하기 위해 전송됩니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    static let bookmarkListUpdated = Notification.Name(rawValue: "bookmarkListUpdated")
 }
 
 
@@ -43,9 +50,23 @@ class PlaceInfoViewController: CommonViewController {
     
     // MARK: Properties
     
+    let dataManager = PlaceDataManager.shared
+    
     /// 상세 정보를 표시할 상점
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    var place: Place!
+    var place: Place! = Place.dummyPlace {
+        didSet {
+            placeInfoTableView.reloadData()
+        }
+    }
+    
+    /// 현재 표시되는 상점의 북마킹 여부
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    var isBookmarked = false {
+        didSet {
+            placeInfoTableView.reloadSections([1], animationStyle: .none)
+        }
+    }
     
     /// 리뷰 요약 데이터
     /// - Author: 장현우(heoun3089@gmail.com)
@@ -67,6 +88,27 @@ class PlaceInfoViewController: CommonViewController {
     /// 화면 진입 시 정보 탭이 선택되어 있습니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
     var selectedTap: SubTab = .detail
+    
+    
+    // MARK: Loafs
+    
+    /// 북마크 추가 알림 토스트
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    lazy var bookmarkedLoaf = Loaf("북마크가 저장되었습니다",
+                              state: .success,
+                              location: .top,
+                              presentingDirection: .vertical,
+                              dismissingDirection: .vertical,
+                              sender: self)
+    
+    /// 북마크 삭제 알림 토스트
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    lazy var bookmarkDeletedLoaf = Loaf("북마크가 해제되었습니다",
+                                  state: .success,
+                                  location: .top,
+                                  presentingDirection: .vertical,
+                                  dismissingDirection: .vertical,
+                                  sender: self)
     
     
     // MARK: Actions
@@ -128,18 +170,57 @@ class PlaceInfoViewController: CommonViewController {
             case .tel:
                 self.openURLExternal(url: url)
             }
-            
         }
         
         tokens.append(token)
         
         token = NotificationCenter.default.addObserver(forName: .reviewWillApplied,
                                                        object: nil,
-                                                       queue: .main) { _ in
+                                                       queue: .main) { [weak self] _ in
+            guard let self = self else { return }
             self.placeInfoTableView.reloadData()
         }
         
         tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .updateBookmark,
+                                                           object: nil,
+                                                           queue: .main) { [weak self] noti in
+            guard let self = self else { return }
+            
+            if !self.isBookmarked {
+                let urlString = "https://umateapi.azurewebsites.net/api/place/bookmark"
+                guard let bookmarkPostUrl = URL(string: urlString) else { return }
+
+                let postData = PlaceBookmarkPostData(placeId: self.place.id)
+                
+                self.dataManager.post(postData, with: bookmarkPostUrl, on: self) { (response: PlaceCommonResponse) in
+                    if response.code == PlaceResultCode.ok.rawValue {
+                        DispatchQueue.main.async {
+                            self.isBookmarked.toggle()
+                            self.bookmarkedLoaf.show(.custom(1.2))
+                            NotificationCenter.default.post(name: .bookmarkListUpdated, object: nil)
+                        }
+                    }
+                }
+            } else {
+                let urlString = "https://umateapi.azurewebsites.net/api/place/bookmark/place/\(self.place.id)"
+                guard let bookmarkDeleteUrl = URL(string: urlString) else { return }
+                
+                PlaceDataManager.shared.delete(with: bookmarkDeleteUrl, on: self) { response in
+                    if response.code == PlaceResultCode.ok.rawValue {                         DispatchQueue.main.async {
+                            self.isBookmarked.toggle()
+                            self.bookmarkDeletedLoaf.show(.custom(1.2))
+                            NotificationCenter.default.post(name: .bookmarkListUpdated, object: nil)
+                        }
+
+                    }
+                }
+            }
+        }
+        
+        tokens.append(token)
+
         
         setTapBarAppearanceAsDefault()
     }
@@ -167,14 +248,6 @@ class PlaceInfoViewController: CommonViewController {
         
         if let vc = segue.destination as? AllReviewViewController {
             vc.placeName = place.name
-        }
-    }
-    
-    
-    deinit {
-        // 화면에서 사용된 옵저버 제거
-        for token in tokens {
-            NotificationCenter.default.removeObserver(token)
         }
     }
     
@@ -242,7 +315,7 @@ extension PlaceInfoViewController: UITableViewDataSource {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InfoSectionTableViewCell", for: indexPath) as! InfoSectionTableViewCell
             
-            cell.configure(with: place)
+            cell.configure(with: place, isBookmarked: isBookmarked)
             
             return cell
             

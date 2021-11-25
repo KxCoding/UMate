@@ -38,7 +38,7 @@ class PlaceSettingTableViewController: UITableViewController {
         case 0:
             return 2
         case 1:
-            return 3
+            return 2
         default:
             return 0
         }
@@ -58,10 +58,15 @@ class PlaceSettingTableViewController: UITableViewController {
             placeListVC.navigationItem.title = "북마크 관리"
             placeListVC.viewType = .bookmark
             
-            let places = Place.dummyData
-            placeListVC.entireItems = places.filter { place in
-                return PlaceUser.tempUser.userData.bookmarkedPlaces.contains(place.id)
+            guard let getUrl = URL(string: "https://umateapi.azurewebsites.net/api/place/bookmark") else { return }
+            PlaceDataManager.shared.get(with: getUrl, on: placeListVC) { [weak placeListVC] (response: PlaceBookmarkListResponse) in
+                guard let vc = placeListVC else { return }
+                
+                vc.entireItems = response.places.map { Place(simpleDto: $0) }
+                // 데이터를 추가한 후 table view 업데이트
+                vc.placeListTableView.reloadData()
             }
+            
             
             if let nav = self.navigationController {
                 nav.show(placeListVC, sender: nil)

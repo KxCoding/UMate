@@ -27,7 +27,11 @@ class FirstSectionTableViewCell: UITableViewCell {
     let manager = PlaceDataManager.shared
     
     /// 표시하는 상점
-    var target: Place!
+    var target = Place.dummyPlace {
+        didSet {
+            imageCollectionView.reloadData()
+        }
+    }
     
     /// 더미 이미지 배열
     ///
@@ -104,7 +108,7 @@ extension FirstSectionTableViewCell: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceImageCollectionViewCell",
                                                       for: indexPath) as! PlaceImageCollectionViewCell
         
-        manager.download(.detailImage, andUpdate: cell.imageView, with: target.imageUrls[indexPath.row])
+        manager.getImage(with: target.imageUrls[indexPath.row], andUpdate: cell.imageView)
         
         return cell
     }
