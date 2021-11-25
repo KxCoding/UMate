@@ -9,6 +9,9 @@ import UIKit
 import DropDown
 import Loaf
 import Moya
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 
 /// 강의평가 작성 화면
@@ -349,7 +352,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
             return
         }
         
-        guard let reviewTestNumber = reviewTestNumber else {
+        guard let reviewTest = reviewTestNumber else {
             Loaf("시험 횟수를 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
             return
         }
@@ -435,6 +438,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
         selectSemesterView.layer.cornerRadius = 10
         reviewcontentTextView.layer.cornerRadius = 10
         reviewcontentTextView.delegate = self
+
     }
 }
 

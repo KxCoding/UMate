@@ -177,7 +177,7 @@ extension CommentLikeService: TargetType {
     
     /// 기본 URL
     var baseURL: URL {
-        return URL(string: "https://board1104.azurewebsites.net")!
+        return URL(string: "https://umateserverboard.azurewebsites.net")!
     }
     
     /// 기본 URL 제외한 경로

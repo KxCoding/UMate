@@ -200,6 +200,7 @@ class CommentTableViewCell: UITableViewCell {
                     #endif
                 }
             }
+            .disposed(by: rx.disposeBag)
     }
 }
 
