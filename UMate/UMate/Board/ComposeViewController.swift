@@ -259,6 +259,7 @@ class ComposeViewController: CommonViewController {
         // 일반 게시판과 카테고리 게시판에 게시글을 저장합니다.
         // - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
         savePostButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: {
                 self.savePost()
             })
@@ -268,6 +269,7 @@ class ComposeViewController: CommonViewController {
         // 글쓰기 화면을 닫습니다.
         // - Author: 김정민(kimjm010@icloud.com)
         closeVc.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: {
                 self.dismiss(animated: true, completion: nil)
             })
