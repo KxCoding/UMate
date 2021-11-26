@@ -8,6 +8,8 @@
 import UIKit
 import CoreMedia
 import CoreMIDI
+import RxSwift
+import RxCocoa
 
 
 /// 기본 게시판 뷰 컨트롤러
@@ -29,6 +31,8 @@ class FreeBoardViewController: CommonViewController {
     /// 게시글 목록
     var postList = [PostListDtoResponseData.PostDto]()
     
+    var disposeBag = DisposeBag()
+    
     /// 검색 버튼을 눌렀을 시에 SearchViewController로 이동합니다.
     /// - Parameter sender: 검색 버튼
     /// - Author: 남정은(dlsl7080@gmail.com)
@@ -43,37 +47,17 @@ class FreeBoardViewController: CommonViewController {
     ///   - userId: 사용자 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchPostList(boardId: Int, userId: String) {
-        guard let url = URL(string: "https://board1104.azurewebsites.net/api/boardPost?boardId=\(boardId)&userId=\(userId)") else { return }
-        
-        BoardDataManager.shared.session.dataTask(with: url) { data, response, error in
-            
-            if let error = error {
-                print(error)
-                return
-            }
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let res = try decoder.decode(PostListDtoResponseData.self, from: data)
-                
-                if res.resultCode == ResultCode.ok.rawValue {
-                    self.postList = res.list
-                    
-                    DispatchQueue.main.async {
-                        self.postListTableView.reloadData()
-                    }
-                }
-            } catch {
-                print(error)
-            }
-        }.resume()
+        BoardDataManager.shared.provider.rx.request(.postList(boardId, userId))
+            .filterSuccessfulStatusCodes()
+            .map(PostListDtoResponseData.self)
+            .map { $0.list }
+            .catchAndReturn([])
+            .observe(on: MainScheduler.instance)
+            .subscribe(onSuccess: { [weak self] in
+                self?.postList = $0
+                self?.postListTableView.reloadData()
+            })
+            .disposed(by: rx.disposeBag)
     }
     
    
@@ -110,8 +94,7 @@ class FreeBoardViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
    
-        #warning("사용자 수정")
-        fetchPostList(boardId: selectedBoard?.boardId ?? 1, userId: "6c1c72d6-fa9b-4af6-8730-bb98fded0ad8")
+        fetchPostList(boardId: selectedBoard?.boardId ?? 1, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "")
         
         if let boardId = selectedBoard?.boardId, boardId <= 4 {
             composeButton.isHidden = true
@@ -131,10 +114,11 @@ class FreeBoardViewController: CommonViewController {
             if let unscrappedPostId = noti.userInfo?["postId"] as? Int,
                let index = self.postList.firstIndex(where: { $0.postId == unscrappedPostId }) {
                 self.postList.remove(at: index)
-                self.postListTableView.reloadData()
+                self.postListTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .none)
             }
         }
         tokens.append(token)
+       
         
         // 일반 게시판에 게시글 추가
         token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) { [weak self] noti in
@@ -173,6 +157,8 @@ class FreeBoardViewController: CommonViewController {
         })
         tokens.append(token)
         
+      
+        
         token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if let postId = noti.userInfo?["postId"] as? Int,
@@ -182,6 +168,8 @@ class FreeBoardViewController: CommonViewController {
             }
         })
         tokens.append(token)
+        
+      
         
         token = NotificationCenter.default.addObserver(forName: .postCancelScrap, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
@@ -193,6 +181,8 @@ class FreeBoardViewController: CommonViewController {
         })
         tokens.append(token)
         
+    
+        
         token = NotificationCenter.default.addObserver(forName: .commentDidInsert, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if let postId = noti.userInfo?["postId"] as? Int,
@@ -202,6 +192,7 @@ class FreeBoardViewController: CommonViewController {
             }
         })
         tokens.append(token)
+    
         
         token = NotificationCenter.default.addObserver(forName: .commentDidDelete, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }

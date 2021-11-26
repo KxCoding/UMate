@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import Moya
+import RxSwift
 
 
 /// 게시판에 사용되는 데이터 관리
@@ -42,6 +44,12 @@ class BoardDataManager {
  
     /// 캐시 생성
     let cache = NSCache<NSURL,UIImage>()
+    
+    /// 네트워크 요청 객체
+    let provider = MoyaProvider<BoardService>()
+    
+    /// 옵저버블 리소스 정리
+    let disposeBag = DisposeBag()
     
     
     /// 캐시에서 이미지를 불러오거나 이미지를 새로 다운로드 합니다.
@@ -135,6 +143,10 @@ class BoardDataManager {
         request.httpBody = httpBody
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        if let token = LoginDataManager.shared.loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         self.session.dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
                 print(error)
@@ -153,7 +165,7 @@ class BoardDataManager {
                 let decoder = JSONDecoder()
                 let data = try decoder.decode(SaveLikeCommentResponseData.self, from: data)
                 
-                switch data.resultCode {
+                switch data.code {
                 case ResultCode.ok.rawValue:
                     #if DEBUG
                     print("추가 성공")
@@ -177,30 +189,11 @@ class BoardDataManager {
     /// - Parameter likeCommentId: 댓글 좋아요 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
     func deleteLikeComment(likeCommentId: Int, completion: @escaping (Bool) -> ()) {
-        guard let url = URL(string: "https://board1104.azurewebsites.net/api/likeComment/\(likeCommentId)") else { return }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        
-        self.session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-
-            do {
-                let decoder = JSONDecoder()
-                let res = try decoder.decode(CommonResponse.self, from: data)
-                
-                if res.resultCode == ResultCode.ok.rawValue {
+        provider.rx.request(.deleteLikeComment(likeCommentId))
+            .filterSuccessfulStatusCodes()
+            .map(CommonResponse.self)
+            .subscribe(onSuccess: {
+                if $0.code == ResultCode.ok.rawValue {
                     #if DEBUG
                     print("삭제 성공")
                     #endif
@@ -210,10 +203,8 @@ class BoardDataManager {
                     print("삭제 실패")
                     #endif
                 }
-            } catch {
-                print(error)
-            }
-        }.resume()
+            })
+            .disposed(by: disposeBag)
     }
 }
 

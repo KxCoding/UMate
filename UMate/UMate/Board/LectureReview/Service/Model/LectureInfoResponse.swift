@@ -36,7 +36,7 @@ struct LectureInfoListResponseData: Codable {
     
     let totalCount: Int
     let list: [LectureInfo]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -65,7 +65,7 @@ struct LectureInfoDetailResponse: Codable {
     }
     
     let lectureInfo: LectrueInfo
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -112,7 +112,7 @@ struct LectureReviewListResponse: Codable {
     }
 
     var lectureReviews: [LectureReview]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -159,7 +159,7 @@ struct TestInfoListResponse: Codable {
     }
 
     var testInfos: [TestInfo]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -206,7 +206,7 @@ struct SaveTestInfoResponseData: Codable {
     
     let testInfo: TestInfo
     let examples: [Example]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }
 
@@ -253,6 +253,6 @@ struct SaveLectureReviewResponseData: Codable {
     }
     
     let lectureReview: LectureReview
-    let resultCode: Int
+    let code: Int
     let message: String?
 }

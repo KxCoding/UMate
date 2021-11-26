@@ -9,6 +9,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 import NSObject_Rx
+import RxAlamofire
+
 
 /// 채용정보 화면
 /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -18,7 +20,8 @@ class EmploymentInfoViewController: CommonViewController {
     
     /// 서치바
     @IBOutlet weak var searchBar: UISearchBar!
-    
+
+    var list = BehaviorSubject<[JobData.Job]>(value: [])
     
     /// 이전 화면으로 이동합니다.
     /// - Parameter sender: cancelButton
@@ -55,29 +58,33 @@ class EmploymentInfoViewController: CommonViewController {
         searchBar.backgroundImage = UIImage()
         
         didTapMakeLowerKeyboard()
+        
+        // 검색 유무에 따라 테이블뷰 채용정보 목록 결과가 달라집니다.
+        searchBar.rx.text.orEmpty
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .map {[unowned self] query -> [JobData.Job] in
+                if self.isSearching {
+                    let res = self.jobList.filter { $0.title.hasPrefix(query) || $0.field.hasPrefix(query) }
+                    return res
+                } else {
+                    return self.jobList
+                }
+            }
+            .do(onNext: { _ in
+                self.isSearching = true
+            })
+            .bind(to: listTableView.rx.items(cellIdentifier: "CompanyTableViewCell", cellType: EmploymentInfoTableViewCell.self)) { row, element, cell in
+                cell.configureCompany(with: element)
+            }
+            .disposed(by: rx.disposeBag)
+
+                
+        listTableView.rx.setDelegate(self)
+            .disposed(by: rx.disposeBag)
+        
     }
     
-}
-
-
-
-extension EmploymentInfoViewController: UISearchBarDelegate {
-    /// 등록된 모든 회사 이름 또는 분야의 이름 접두어 개수와 서치바에 입력된 문자열 접두어를 비교합니다.
-    /// - Parameters:
-    ///   - searchBar: 편집중 인 서치바
-    ///   - searchText: 서치바에 포함된 텍스트
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        DispatchQueue.global().async {
-            self.isSearching = true
-            self.searchedList = self.jobList.filter({
-                $0.title.prefix(searchText.count) == searchText || $0.field.prefix(searchText.count) == searchText
-            })
-            DispatchQueue.main.async {
-                self.listTableView.reloadData()
-            }
-        }
-    }
 }
 
 
@@ -96,45 +103,6 @@ extension EmploymentInfoViewController: UITableViewDataSourcePrefetching {
         if !isFetching {
             getJobData()
         }
-    }
-}
-
-
-
-extension EmploymentInfoViewController: UITableViewDataSource {
-    ///  섹션에 표시할 셀 수를 리턴합니다.
-    /// - Parameters:
-    ///   - tableView: 해당 정보를 요청한 테이블뷰
-    ///   - section: 섹션 인덱스
-    /// - Returns: 섹션에 표시할 셀 수
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isSearching {
-            return searchedList.count
-        } else {
-            return jobList.count
-        }
-    }
-    
-    
-    /// 채용정보 셀을 구성합니다.
-    /// 검색 상태에 따라 표시하는 셀이 달라집니다.
-    /// - Parameters:
-    ///   - tableView: 정보를 요청한 테이블뷰
-    ///   - indexPath: 셀의  indexPath
-    /// - Returns: 채용정보 셀
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CompanyTableViewCell", for: indexPath) as! EmploymentInfoTableViewCell
-        
-        if isSearching {
-            let model = searchedList[indexPath.row]
-            cell.configureCompany(with: model)
-        } else {
-            let model = jobList[indexPath.row]
-            cell.configureCompany(with: model)
-        }
-        return cell
     }
 }
 

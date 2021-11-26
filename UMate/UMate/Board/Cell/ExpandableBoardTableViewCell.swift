@@ -15,17 +15,9 @@ class ExpandableBoardTableViewCell: NonExpandableBoardTableViewCell {
     /// - Parameters:
     ///   - boardList: 게시판 정보
     ///   - indexPath: 각 게시판의 indexPath
-    ///   - bookmarks: 북마크 정보
     ///   - Author: 남정은(dlsl7080@gmail.com)
-    override func configure(boardList: [BoardDtoResponseData.BoardDto], indexPath: IndexPath, bookmarks: [Int:Bool]) {
-        super.configure(boardList: boardList, indexPath: indexPath, bookmarks: bookmarks)
-
-        // 섹션을 접었다 펼쳤을 시 북마크 속성에 따른 버튼 색 유지
-        if bookmarks[bookmarkButton.tag] == true {
-            bookmarkButton.tintColor = UIColor.init(named: "blackSelectedColor")
-        } else {
-            bookmarkButton.tintColor = UIColor.init(named: "lightGrayNonSelectedColor")
-        }
+    override func configure(boardList: [BoardDtoResponseData.BoardDto], indexPath: IndexPath) {
+        super.configure(boardList: boardList, indexPath: indexPath)
     }
 }
 

@@ -324,6 +324,8 @@ class PlaceDataManager {
             return nil
         }
         
+        print(url)
+        
         guard let data = try? Data(contentsOf: url) else { return nil }
         
         guard let result = decodeJson(type: type.self, fromJson: data) else { return nil }
