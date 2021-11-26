@@ -11,7 +11,7 @@ import UIKit
 
 /// 리뷰 관리 화면
 /// - Author: 장현우(heoun3089@gmail.com)
-class ReviewManagingViewController: UIViewController {
+class ReviewManagingViewController: CommonViewController {
     
     /// 리뷰 목록 테이블뷰
     @IBOutlet weak var reviewManagingTableView: UITableView!
@@ -32,17 +32,53 @@ class ReviewManagingViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? UITableViewCell, let indexPath = reviewManagingTableView.indexPath(for: cell) {
             if let vc = segue.destination as? PlaceInfoViewController {
-                let place = Place.dummyData.first(where: { $0.name == PlaceReviewItem.dummyData[indexPath.row].placeName})
+                let place = Place.dummyData.first(where: { $0.name == PlaceReviewDataManager.shared.placeReviewList[indexPath.row].place.name})
                 
                 vc.place = place
             }
         }
     }
+    
+    
+    /// 초기화 작업을 실행합니다.
+    ///
+    /// 상점 리뷰 데이터를 다운로드합니다.
+    /// - Author: 장현우(heoun3089@gmail.com)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        PlaceReviewDataManager.shared.fetchReview(vc: self) {
+            self.reviewManagingTableView.reloadData()
+        }
+        
+        var token = NotificationCenter.default.addObserver(forName: .reviewDidEdited, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            
+            PlaceReviewDataManager.shared.fetchReview(vc: self) {
+                self.reviewManagingTableView.reloadData()
+            }
+        }
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .reviewEditFailed,
+                                                       object: nil,
+                                                       queue: .main) { _ in
+            self.alert(message: "리뷰 수정에 실패했습니다.")
+        }
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .errorOccured,
+                                                       object: nil,
+                                                       queue: .main) { _ in
+            self.alert(message: "에러가 발생했습니다.")
+        }
+        tokens.append(token)
+    }
 }
 
 
 
-/// 내가 쓴 리뷰 테이블뷰 데이터 관리
+/// 리뷰 목록 테이블뷰 데이터 관리
 extension ReviewManagingViewController: UITableViewDataSource {
     
     /// 섹션에 표시할 셀 수를 리턴합니다.
@@ -52,7 +88,7 @@ extension ReviewManagingViewController: UITableViewDataSource {
     /// - Returns: 섹션 행의 수
     /// - Author: 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PlaceReviewItem.dummyData.count
+        return PlaceReviewDataManager.shared.placeReviewList.count
     }
     
     
@@ -65,7 +101,7 @@ extension ReviewManagingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReviewListTableViewCell", for: indexPath) as! ReviewListTableViewCell
         
-        let target = PlaceReviewItem.dummyData[indexPath.row]
+        let target = PlaceReviewDataManager.shared.placeReviewList[indexPath.row]
         cell.configure(with: target)
         
         return cell
@@ -88,8 +124,9 @@ extension ReviewManagingViewController: UITableViewDelegate {
             let storyboard = UIStoryboard(name: "ReviewWrite", bundle: nil)
             
             if let vc = storyboard.instantiateViewController(withIdentifier: "ReviewWriteTableViewController") as? ReviewWriteTableViewController {
-                let reviewData = PlaceReviewItem.dummyData[indexPath.row]
+                let reviewData = PlaceReviewDataManager.shared.placeReviewList[indexPath.row]
                 vc.reviewData = reviewData
+                vc.placeName = reviewData.place.name
                 self.present(vc, animated: true, completion: nil)
             }
             
@@ -100,11 +137,21 @@ extension ReviewManagingViewController: UITableViewDelegate {
         edit.image = UIImage(systemName: "square.and.pencil")
         
         let delete = UIContextualAction(style: .destructive, title: "리뷰 삭제") { act, v, completion in
-            PlaceReviewItem.dummyData.remove(at: indexPath.row)
-            self.reviewManagingTableView.deleteRows(at: [indexPath], with: .automatic)
-            self.reviewDeletedLoaf.show(.custom(1.2))
-            
-            completion(true)
+            DispatchQueue.main.async {
+                self.alertVersion2(message: "선택한 리뷰를 삭제하시겠습니까?", handler: { _ in
+                    let targetReviewId = PlaceReviewDataManager.shared.placeReviewList[indexPath.row].placeReviewId
+                    
+                    PlaceReviewDataManager.shared.deleteReview(reviewId: targetReviewId, vc: self)
+                    
+                    if let index = PlaceReviewDataManager.shared.placeReviewList.firstIndex(where: { $0.placeReviewId == targetReviewId }) {
+                        PlaceReviewDataManager.shared.placeReviewList.remove(at: index)
+                    }
+                    
+                    self.reviewManagingTableView.deleteRows(at: [indexPath], with: .automatic)
+                    
+                    completion(true)
+                })
+            }
         }
         
         delete.backgroundColor = .red

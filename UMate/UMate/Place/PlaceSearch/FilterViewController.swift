@@ -149,9 +149,6 @@ extension FilterViewController: UITableViewDataSource {
             return cell
             
         case 1:
-            return tableView.dequeueReusableCell(withIdentifier: "CategoryTableViewCell", for: indexPath)
-            
-        case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "StoreTypeTableViewCell", for: indexPath) as! StoreTypeTableViewCell
             
             if let filteredList = filteredList {
@@ -190,6 +187,6 @@ extension FilterViewController: UITableViewDataSource {
     /// - Returns: 섹션의 개수
     /// - Author: 장현우(heoun3089@gmail.com)
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
 }

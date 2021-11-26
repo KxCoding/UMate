@@ -70,19 +70,6 @@ class PlaceInfoViewController: CommonViewController {
     
     /// 리뷰 요약 데이터
     /// - Author: 장현우(heoun3089@gmail.com)
-    var review = PlaceReviewItem(reviewText: "분위기 너무 좋아요",
-                                 date: Date(),
-                                 image: UIImage(named: "search_00"),
-                                 placeName: "오오비",
-                                 starPoint: 4.5,
-                                 taste: .clean,
-                                 service: .kind,
-                                 mood: .clear,
-                                 price: .cheap,
-                                 amount: .suitable,
-                                 totalPoint: .fivePoint,
-                                 recommendationCount: 5)
-    
     /// 선택된 하위 탭을 저장하는 속성
     ///
     /// 화면 진입 시 정보 탭이 선택되어 있습니다.
@@ -156,6 +143,10 @@ class PlaceInfoViewController: CommonViewController {
         placeInfoTableView.dataSource = self
         placeInfoTableView.delegate = self
         
+        PlaceReviewDataManager.shared.fetchAllReview(vc: self) {
+            self.placeInfoTableView.reloadData()
+        }
+        
         var token = NotificationCenter.default.addObserver(forName: .openUrl,
                                                            object: nil,
                                                            queue: .main) { [weak self] noti in
@@ -174,11 +165,30 @@ class PlaceInfoViewController: CommonViewController {
         
         tokens.append(token)
         
-        token = NotificationCenter.default.addObserver(forName: .reviewWillApplied,
+        token = NotificationCenter.default.addObserver(forName: .reviewDidApplied,
                                                        object: nil,
                                                        queue: .main) { [weak self] _ in
             guard let self = self else { return }
-            self.placeInfoTableView.reloadData()
+            
+            PlaceReviewDataManager.shared.fetchAllReview(vc: self) {
+                self.placeInfoTableView.reloadData()
+            }
+        }
+        
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .reviewPostFailed,
+                                                       object: nil,
+                                                       queue: .main) { _ in
+            self.alert(message: "리뷰 추가에 실패했습니다.")
+        }
+        
+        tokens.append(token)
+        
+        token = NotificationCenter.default.addObserver(forName: .errorOccured,
+                                                       object: nil,
+                                                       queue: .main) { _ in
+            self.alert(message: "에러가 발생했습니다.")
         }
         
         tokens.append(token)
@@ -281,8 +291,10 @@ extension PlaceInfoViewController: UITableViewDataSource {
         switch section {
         case 4:
             if selectedTap == .review {
-                if PlaceReviewItem.dummyData.count < 3 {
-                    return PlaceReviewItem.dummyData.count
+                let reviewList = PlaceReviewDataManager.shared.allPlaceReviewList.filter { $0.place.name == place.name }
+                
+                if reviewList.count < 3 {
+                    return reviewList.count
                 } else {
                     return 3
                 }
@@ -336,7 +348,8 @@ extension PlaceInfoViewController: UITableViewDataSource {
             case .review:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "GeneralReviewTableViewCell", for: indexPath) as! GeneralReviewTableViewCell
                 
-                cell.configure(with: review)
+                let target = PlaceReviewDataManager.shared.allPlaceReviewList.filter { $0.place.name == place.name }
+                cell.configure(with: target)
                 
                 return cell
             }
@@ -345,12 +358,10 @@ extension PlaceInfoViewController: UITableViewDataSource {
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "UserReviewTableViewCell", for: indexPath) as! UserReviewTableViewCell
             
-            let target = PlaceReviewItem.dummyData[indexPath.row]
-            cell.userPointView.rating = target.starPoint
-            cell.userPointLabel.text = "\(target.starPoint)"
-            cell.reviewTextLabel.text = target.reviewText
-            cell.dateLabel.text = target.date.reviewDate
-            cell.recommendationCountLabel.text = target.recommendationCount.description
+            let targetPlace = PlaceReviewDataManager.shared.allPlaceReviewList.filter { $0.place.name == place.name }
+            let target = targetPlace[indexPath.row]
+            
+            cell.configure(with: target)
             
             return cell
         
@@ -390,5 +401,4 @@ extension PlaceInfoViewController: UITableViewDelegate {
             return UITableView.automaticDimension
         }
     }
-    
 }

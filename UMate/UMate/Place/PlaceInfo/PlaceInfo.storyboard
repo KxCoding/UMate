@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nMt-21-jnZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nMt-21-jnZ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -629,7 +629,7 @@
                                                                             </constraints>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
-                                                                                    <real key="value" value="4.5"/>
+                                                                                    <real key="value" value="0.0"/>
                                                                                 </userDefinedRuntimeAttribute>
                                                                                 <userDefinedRuntimeAttribute type="color" keyPath="filledBorderColor">
                                                                                     <color key="value" systemColor="systemYellowColor"/>
@@ -803,8 +803,8 @@
                                             <outlet property="priceLabel" destination="kVW-hH-0sd" id="sbN-bU-DyE"/>
                                             <outlet property="reviewWriteContainerView" destination="V6h-hf-0LI" id="03T-2M-PM4"/>
                                             <outlet property="serviceLabel" destination="yGE-Fk-I5P" id="HQb-MV-Bz9"/>
-                                            <outlet property="starPointLabel" destination="x8X-eG-ocW" id="KOq-ub-3Zi"/>
-                                            <outlet property="starPointView" destination="D78-pW-N95" id="PHx-Hq-BGB"/>
+                                            <outlet property="starRatingLabel" destination="x8X-eG-ocW" id="WT1-Me-VGi"/>
+                                            <outlet property="starRatingView" destination="D78-pW-N95" id="g3i-aS-xLI"/>
                                             <outlet property="tasteLabel" destination="5ac-gi-LqD" id="NtS-bJ-kpZ"/>
                                         </connections>
                                     </tableViewCell>
@@ -1334,7 +1334,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="163.5" height="30"/>
                                                                     <subviews>
                                                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8yw-2C-urr" customClass="CosmosView" customModule="Cosmos">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="30"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="20"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -1549,6 +1549,9 @@
     </scenes>
     <designables>
         <designable name="3Rl-Q3-FEY">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
+        <designable name="8yw-2C-urr">
             <size key="intrinsicContentSize" width="120" height="20"/>
         </designable>
         <designable name="D78-pW-N95">

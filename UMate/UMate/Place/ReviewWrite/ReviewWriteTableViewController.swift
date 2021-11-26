@@ -9,14 +9,6 @@ import Loaf
 import UIKit
 
 
-extension Notification.Name {
-    /// 리뷰 작성 화면에서 확인 버튼을 누르면 보낼 노티피케이션
-    /// - Author: 장현우(heoun3089@gmail.com)
-    static let reviewWillApplied = Notification.Name(rawValue: "reviewWillApplied")
-}
-
-
-
 /// 리뷰 작성 화면
 /// - Author: 장현우(heoun3089@gmail.com)
 class ReviewWriteTableViewController: UITableViewController {
@@ -39,7 +31,7 @@ class ReviewWriteTableViewController: UITableViewController {
     /// 리뷰 데이터
     ///
     /// 리뷰 수정 화면에서 전달됩니다.
-    var reviewData: PlaceReviewItem?
+    var reviewData: PlaceReviewList.PlaceReview?
     
     /// 상점 이름
     ///
@@ -116,26 +108,87 @@ class ReviewWriteTableViewController: UITableViewController {
             taste = .salty
         }
         
+        var service = PlaceReviewItem.Service.touchy
+        
+        if kindButton.isSelected {
+            service = .kind
+        } else if unkindButton.isSelected {
+            service = .unkind
+        } else if touchyButton.isSelected {
+            service = .touchy
+        }
+        
+        
+        var mood = PlaceReviewItem.Mood.clear
+        
+        if quietButton.isSelected {
+            mood = .quiet
+        } else if emotionalButton.isSelected {
+            mood = .emotional
+        } else if simpleButton.isSelected {
+            mood = .simple
+        } else if cuteButton.isSelected {
+            mood = .cute
+        } else if clearButton.isSelected {
+            mood = .clear
+        }
+        
+        
+        var price = PlaceReviewItem.Price.expensive
+        
+        if cheapButton.isSelected {
+            price = .cheap
+        } else if affordableButton.isSelected {
+            price = .affordable
+        } else if expensiveButton.isSelected {
+            price = .expensive
+        }
+        
+        
+        var amount = PlaceReviewItem.Amount.plenty
+        
+        if smallButton.isSelected {
+            amount = .small
+        } else if suitableButton.isSelected {
+            amount = .suitable
+        } else if plentyButton.isSelected {
+            amount = .plenty
+        }
+        
+        
+        var starRating = PlaceReviewItem.StarRating.onePoint
+        
+        if onePointButton.isSelected {
+            starRating = .onePoint
+        } else if twoPointButton.isSelected {
+            starRating = .twoPoint
+        } else if threePointButton.isSelected {
+            starRating = .threePoint
+        } else if fourPointButton.isSelected {
+            starRating = .fourPoint
+        } else if fivePointButton.isSelected {
+            starRating = .fivePoint
+        }
+        
         guard let placeName = placeName else { return }
 
-        let review = PlaceReviewItem(reviewText: reviewTextView.text,
-                                     date: Date(),
-                                     image: UIImage(named: "search_02"),
-                                     placeName: placeName,
-                                     starPoint: 4.5,
-                                     taste: taste,
-                                     service: .touchy,
-                                     mood: .cute,
-                                     price: .affordable,
-                                     amount: .plenty,
-                                     totalPoint: .fivePoint,
-                                     recommendationCount: 20)
-        
-        PlaceReviewItem.dummyData.insert(review, at: 0)
-        
-        NotificationCenter.default.post(name: .reviewWillApplied, object: nil, userInfo: nil)
-        
-        dismiss(animated: true)
+        if let reviewData = reviewData {
+            let placeReviewPutdata = PlaceReviewPutData(placeReviewId: reviewData.placeReviewId, place: placeName, taste: taste.rawValue, service: service.rawValue, mood: mood.rawValue, price: price.rawValue, amount: amount.rawValue, starRating: starRating.rawValue, reviewText: reviewTextView.text)
+            
+            PlaceReviewDataManager.shared.editReview(placeReviewPutData: placeReviewPutdata)
+            
+            alert(message: "리뷰가 수정되었습니다.") { _ in
+                self.dismiss(animated: true)
+            }
+        } else {
+            let placeReviewPostData = PlaceReviewPostData(place: placeName, taste: taste.rawValue, service: service.rawValue, mood: mood.rawValue, price: price.rawValue, amount: amount.rawValue, starRating: starRating.rawValue, reviewText: reviewTextView.text)
+            
+            PlaceReviewDataManager.shared.saveReview(placeReviewPostData: placeReviewPostData)
+            
+            alert(message: "리뷰가 추가되었습니다.") { _ in
+                self.dismiss(animated: true)
+            }
+        }
     }
     
     
@@ -360,7 +413,9 @@ class ReviewWriteTableViewController: UITableViewController {
             mainTitleLabel.text = "리뷰 수정"
             
             // 맛
-            switch reviewData.taste {
+            guard let taste = PlaceReviewItem.Taste.init(rawValue: reviewData.taste) else { return }
+            
+            switch taste {
             case .delicious:
                 deliciousButton.isSelected = true
                 deliciousButton.backgroundColor = .systemRed
@@ -383,7 +438,9 @@ class ReviewWriteTableViewController: UITableViewController {
             }
             
             // 서비스
-            switch reviewData.service {
+            guard let service = PlaceReviewItem.Service.init(rawValue: reviewData.service) else { return }
+            
+            switch service {
             case .kind:
                 kindButton.isSelected = true
                 kindButton.backgroundColor = .systemRed
@@ -398,7 +455,9 @@ class ReviewWriteTableViewController: UITableViewController {
             }
             
             // 분위기
-            switch reviewData.mood {
+            guard let mood = PlaceReviewItem.Mood.init(rawValue: reviewData.mood) else { return }
+            
+            switch mood {
             case .quiet:
                 quietButton.isSelected = true
                 quietButton.backgroundColor = .systemRed
@@ -421,7 +480,9 @@ class ReviewWriteTableViewController: UITableViewController {
             }
             
             // 가격
-            switch reviewData.price {
+            guard let price = PlaceReviewItem.Price.init(rawValue: reviewData.price) else { return }
+            
+            switch price {
             case .cheap:
                 cheapButton.isSelected = true
                 cheapButton.backgroundColor = .systemRed
@@ -436,7 +497,9 @@ class ReviewWriteTableViewController: UITableViewController {
             }
             
             // 음식양
-            switch reviewData.amount {
+            guard let amount = PlaceReviewItem.Amount.init(rawValue: reviewData.amount) else { return }
+            
+            switch amount {
             case .small:
                 smallButton.isSelected = true
                 smallButton.backgroundColor = .systemRed
@@ -451,7 +514,9 @@ class ReviewWriteTableViewController: UITableViewController {
             }
             
             // 총평
-            switch reviewData.totalPoint {
+            guard let starRating = PlaceReviewItem.StarRating.init(rawValue: reviewData.starRating) else { return }
+            
+            switch starRating {
             case .onePoint:
                 onePointButton.isSelected = true
                 onePointButton.backgroundColor = .systemRed

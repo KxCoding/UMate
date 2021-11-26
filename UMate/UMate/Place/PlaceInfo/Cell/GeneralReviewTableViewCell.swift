@@ -16,12 +16,12 @@ class GeneralReviewTableViewCell: UITableViewCell {
     /// 별점 이미지뷰
     ///
     /// 사용자가 작성한 별점의 평균값을 이미지로 표시합니다.
-    @IBOutlet weak var starPointView: CosmosView!
+    @IBOutlet weak var starRatingView: CosmosView!
     
     /// 별점 레이블
     ///
     /// 사용자가 작성한 별점을 숫자로 표시합니다.
-    @IBOutlet weak var starPointLabel: UILabel!
+    @IBOutlet weak var starRatingLabel: UILabel!
     
     /// 맛 평가 레이블
     @IBOutlet weak var tasteLabel: UILabel!
@@ -45,15 +45,27 @@ class GeneralReviewTableViewCell: UITableViewCell {
     /// 테이블뷰셀에 표시할 내용을 설정합니다.
     ///
     /// 각 평가 항목에 대한 정보를 표시합니다.
-    /// - Parameter placeReview: 내가 쓴 리뷰 객체
+    /// - Parameter placeReviewList: 상점 리뷰 목록
     /// - Author: 장현우(heoun3089@gmail.com)
-    func configure(with placeReview: PlaceReviewItem) {
-        starPointLabel.text = "\(starPointView.rating)"
-        tasteLabel.text = placeReview.taste.rawValue
-        serviceLabel.text = placeReview.service.rawValue
-        moodLabel.text = placeReview.mood.rawValue
-        priceLabel.text = placeReview.price.rawValue
-        foodAmountLabel.text = placeReview.amount.rawValue
+    func configure(with placeReviewList: [PlaceReviewList.PlaceReview]) {
+        var starRatingSum = 0.0
+        var starRatingAvg = 0.0
+        
+        for placeReview in placeReviewList {
+            starRatingSum += Double(placeReview.starRating)
+        }
+        
+        if starRatingSum != 0.0 {
+            starRatingAvg = starRatingSum / Double(placeReviewList.count)
+            starRatingView.rating = starRatingAvg
+        }
+        
+        starRatingLabel.text = String(format: "%.1f", starRatingView.rating)
+        tasteLabel.text = "맛있다"
+        serviceLabel.text = "친절함"
+        moodLabel.text = "깔끔한"
+        priceLabel.text = "저렴하다"
+        foodAmountLabel.text = "적당하다"
     }
     
     

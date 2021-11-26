@@ -11,7 +11,7 @@ import Moya
 import RxSwift
 
 
-/// 로그인 서비스
+/// 로그인 네트워크 요청 서비스
 /// - Author: 장현우(heoun3089@gmail.com)
 enum LoginService {
     case signup(EmailJoinPostData)
@@ -86,7 +86,7 @@ class LoginDataManager {
     /// 싱글톤
     private init() { }
     
-    /// DisposeBag
+    /// 리소스 정리
     let bag = DisposeBag()
     
     /// 로그인 키체인 인스턴스
@@ -114,29 +114,24 @@ class LoginDataManager {
     func singup(emailJoinPostData: EmailJoinPostData, vc: CommonViewController) {
         provider.rx.request(.signup(emailJoinPostData))
             .map(JoinResponse.self)
+            .observe(on: MainScheduler.instance)
             .subscribe { result in
                 switch result {
                 case .success(let response):
                     switch response.code {
                     case ResultCode.ok.rawValue:
                         self.saveAccount(responseData: response)
-                        DispatchQueue.main.async {
-                            vc.alert(message: "회원가입에 성공하였습니다.") { _ in
-                                CommonViewController.transitionToHome()
-                            }
+                        vc.alert(message: "회원가입에 성공하였습니다.") { _ in
+                            CommonViewController.transitionToHome()
                         }
                     case ResultCode.fail.rawValue:
-                        DispatchQueue.main.async {
-                            vc.alert(message: response.message ?? "오류가 발생했습니다.")
-                        }
+                        vc.alert(message: response.message ?? "오류가 발생했습니다.")
                     default:
                         break
                     }
                     
                 case .failure(let error):
-                    DispatchQueue.main.async {
-                        vc.alert(message: error.localizedDescription)
-                    }
+                    vc.alert(message: error.localizedDescription)
                 }
             }
             .disposed(by: bag)
@@ -152,6 +147,7 @@ class LoginDataManager {
     func login(emailLoginPostData: EmailLoginPostData, transitionToHome: @escaping () -> (), vc: CommonViewController) {
         provider.rx.request(.login(emailLoginPostData))
             .map(LoginResponse.self)
+            .observe(on: MainScheduler.instance)
             .subscribe { result in
                 switch result {
                 case .success(let response):
@@ -160,17 +156,13 @@ class LoginDataManager {
                         self.saveAccount(responseData: response)
                         transitionToHome()
                     case ResultCode.fail.rawValue:
-                        DispatchQueue.main.async {
-                            vc.alert(message: response.message ?? "오류가 발생했습니다.")
-                        }
+                        vc.alert(message: response.message ?? "오류가 발생했습니다.")
                     default:
                         break
                     }
                     
                 case .failure(let error):
-                    DispatchQueue.main.async {
-                        vc.alert(message: error.localizedDescription)
-                    }
+                    vc.alert(message: error.localizedDescription)
                 }
             }
             .disposed(by: bag)
@@ -188,6 +180,7 @@ class LoginDataManager {
     /// - Author: 장현우(heoun3089@gmail.com)
     func validateToken(transitionToLoginScreen: @escaping () -> (), transitionToHome: @escaping () -> (), vc: CommonViewController) {
         validationProvider.rx.request(.validateToken)
+            .observe(on: MainScheduler.instance)
             .subscribe { result in
                 switch result {
                 case .success(let response):
@@ -195,13 +188,10 @@ class LoginDataManager {
                     case ResultCode.ok.rawValue:
                         transitionToHome()
                     default:
-                        print(response)
                         transitionToLoginScreen()
                     }
                 case .failure(let error):
-                    DispatchQueue.main.async {
-                        vc.alert(message: error.localizedDescription)
-                    }
+                    vc.alert(message: error.localizedDescription)
                 }
             }
             .disposed(by: bag)

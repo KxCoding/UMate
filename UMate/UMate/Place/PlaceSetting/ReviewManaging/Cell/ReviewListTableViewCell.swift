@@ -5,6 +5,7 @@
 //  Created by Hyunwoo Jang on 2021/09/02.
 //
 
+import Cosmos
 import UIKit
 
 
@@ -14,6 +15,9 @@ class ReviewListTableViewCell: UITableViewCell {
     
     /// 상점 이름 레이블
     @IBOutlet weak var placeTitleLabel: UILabel!
+    
+    /// 평점뷰
+    @IBOutlet weak var starRatingView: CosmosView!
     
     /// 날짜 레이블
     @IBOutlet weak var dateLabel: UILabel!
@@ -31,10 +35,10 @@ class ReviewListTableViewCell: UITableViewCell {
     /// 상점 이미지를 표시합니다.
     /// - Parameter reviewItem: 리뷰 객체
     /// - Author: 장현우(heoun3089@gmail.com)
-    func configure(with reviewItem: PlaceReviewItem) {
-        placeTitleLabel.text = reviewItem.placeName
-        dateLabel.text = reviewItem.date.reviewDate
-        contentLabel.text = reviewItem.reviewText
-        storeImageView.image = reviewItem.image
+    func configure(with placeReview: PlaceReviewList.PlaceReview) {
+        placeTitleLabel.text = placeReview.place.name
+        starRatingView.rating = placeReview.starRating
+        dateLabel.text = placeReview.insertDate.reviewDBDate?.reviewDate
+        contentLabel.text = placeReview.reviewText
     }
 }
