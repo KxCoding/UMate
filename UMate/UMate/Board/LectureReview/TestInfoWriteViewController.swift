@@ -9,7 +9,7 @@ import DropDown
 import Loaf
 import UIKit
 import Moya
-import RxSwift
+import NSObject_Rx
 
 
 /// 시험정보 작성 화면에서 '공유하기' 버튼을 눌렀을 때 처리되는 동작에 대한 노티피케이션
@@ -125,12 +125,7 @@ class TestInfoWriteViewController: CommonViewController {
             self.alertVersion3(title: "시험 정보를 공유하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { _ in
                 if let newTestInfo = noti.userInfo?["testInfo"] as? TestInfoPostData {
            
-                    guard let url = URL(string: "https://umateserverboard.azurewebsites.net/api/testInfo") else { return }
-
-                    let body = try? BoardDataManager.shared.encoder.encode(newTestInfo)
-
-                    self.sendSavingTestInfoRequest(url: url, httpMethod: "POST", httpBody: body)
-                    
+                    self.sendTestInfoDataToServer(testInfoData: newTestInfo)
                     self.dismiss(animated: true, completion: nil)
                 }
             }
@@ -140,57 +135,47 @@ class TestInfoWriteViewController: CommonViewController {
     
     
     /// 작성한 시험 정보를 서버에 저장합니다.
-    /// - Parameters:
-    ///   - url: 요청할 url
-    ///   - httpMethod: api 메소드
-    ///   - httpBody: 시험 정보 데이터
-    ///   - Auhtor: 남정은(dlsl7080@gmail.com)
-    func sendSavingTestInfoRequest(url: URL, httpMethod: String, httpBody: Data?) {
-        var request = URLRequest(url: url)
-        request.httpMethod = httpMethod
-        request.httpBody = httpBody
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        if let token = LoginDataManager.shared.loginKeychain.get(AccountKeys.apiToken.rawValue) {
-            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
-        
-        BoardDataManager.shared.session.dataTask(with: request, completionHandler: { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print(response)
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let data = try decoder.decode(SaveTestInfoResponseData.self, from: data)
-                
-                switch data.code {
-                case ResultCode.ok.rawValue:
-                    #if DEBUG
-                    print("추가 성공")
-                    #endif
-                    
-                    var exampleList = [TestInfoListResponse.TestInfo.Example]()
-                    data.examples.forEach {
-                        let newExample = TestInfoListResponse.TestInfo.Example(exampleId: $0.exampleId, testInfoId: $0.testInfoId, content: $0.content)
-                        exampleList.append(newExample)
+    /// - Parameter testInfoData: 시험 정보 객체
+    ///   - Auhtor: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
+    func sendTestInfoDataToServer(testInfoData: TestInfoPostData) {
+        provider.rx.request(.saveTestInfoData(testInfoData))
+            .filterSuccessfulStatusCodes()
+            .map(SaveTestInfoResponseData.self)
+            .subscribe { (result) in
+                switch result {
+                case .success(let response):
+                    switch response.resultCode {
+                    case ResultCode.ok.rawValue:
+                        #if DEBUG
+                        print("추가 성공")
+                        #endif
+                        
+                        var exampleList = [TestInfoListResponse.TestInfo.Example]()
+                        response.examples.forEach {
+                            let newExample = TestInfoListResponse.TestInfo.Example(exampleId: $0.exampleId, testInfoId: $0.testInfoId, content: $0.content)
+                            exampleList.append(newExample)
+                        }
+
+                        let newTestInfo = TestInfoListResponse.TestInfo(testInfoId: response.testInfo.testInfoId,
+                                                                        userId: response.testInfo.userId,
+                                                                        lectureInfoId: response.testInfo.lectureInfoId,
+                                                                        semester: response.testInfo.semester,
+                                                                        testType: response.testInfo.testType,
+                                                                        testStrategy: response.testInfo.testStrategy,
+                                                                        questionTypes: response.testInfo.questionTypes,
+                                                                        examples: exampleList,
+                                                                        createdAt: response.testInfo.createdAt)
+
+                        NotificationCenter.default.post(name: .testInfoDidShare, object: nil, userInfo: ["testInfo": newTestInfo])
+                        
+                    case ResultCode.fail.rawValue:
+                        #if DEBUG
+                        print("이미 존재함")
+                        #endif
+                    default:
+                        break
                     }
-                    
-                    let newTestInfo = TestInfoListResponse.TestInfo(testInfoId: data.testInfo.testInfoId, userId: data.testInfo.userId, lectureInfoId: data.testInfo.lectureInfoId, semester: data.testInfo.semester, testType: data.testInfo.testType, testStrategy: data.testInfo.testStrategy, questionTypes: data.testInfo.questionTypes, examples: exampleList, createdAt: data.testInfo.createdAt)
-                    
-                    NotificationCenter.default.post(name: .testInfoDidShare, object: nil, userInfo: ["testInfo": newTestInfo])
-                   
-                case ResultCode.testInfoExists.rawValue:
+                case .failure(let error):
                     #if DEBUG
                     print(error.localizedDescription)
                     #endif
