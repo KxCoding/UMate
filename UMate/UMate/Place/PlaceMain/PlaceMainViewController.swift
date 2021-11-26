@@ -38,6 +38,9 @@ class PlaceMainViewController: UIViewController {
     
     // MARK: Properties
     
+    /// Data Manager
+    lazy var dataManager = PlaceDataManager.shared
+    
     /// Location Manager
     lazy var locationManager: CLLocationManager = { [weak self] in
         
@@ -61,7 +64,18 @@ class PlaceMainViewController: UIViewController {
     /// 상점 배열
     ///
     /// 상점 데이터는 정렬되지 않은 상태로 저장됩니다.
-    var list = [Place]()
+    var list = [Place]() {
+        willSet {
+            mapView.removeAnnotations(allAnnotations)
+            allAnnotations.removeAll()
+        }
+        didSet {
+            let newAnnots = list.map { $0.annotation }
+            allAnnotations = newAnnots
+            mapView.addAnnotations(allAnnotations)
+            registerMapAnnotationViews()
+        }
+    }
     
     /// 학교 좌표
     /// 기본값은 임시 학교의 좌표입니다.
@@ -103,6 +117,29 @@ class PlaceMainViewController: UIViewController {
     
     
     // MARK: Methods
+    
+    /// 장소 정보를 다운로드합니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    private func getPlaces() {
+        let urlString = "https://umateapi.azurewebsites.net/api/place/university/108"
+        guard let getUrl = URL(string: urlString) else { return }
+        
+        dataManager.get(with: getUrl, on: self) { [weak self] (response: PlaceListResponse) in
+            guard let self = self else { return }
+
+            guard let responsePlaces = response.places else { return }
+            
+            let places = responsePlaces.map { Place(simpleDto: $0) }.sorted { $0.coordinate.longitude < $1.coordinate.longitude }
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                self.list = places
+                self.nearbyPlaceCollectionView.reloadData()
+            }
+        }
+    }
+    
     
     /// 지도에서 사용할 annotation view 타입을 등록합니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
@@ -214,17 +251,7 @@ class PlaceMainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let result = PlaceDataManager.shared.getObject(of: PlaceList.self,
-                                                             fromJson: "places") else { return }
-        
-        user.university?.places = result.places
-        user.university?.name = result.university
-        
-        // 북마크 관리 기능을 위해 현재 대학의 전체 상점으로 Place의 dummy data를 교체합니다.
-        Place.dummyData = result.places
-        
-        // 컬렉션 뷰 셀을 넘김에 따라 동쪽에 있는 상점으로 이동하게 하기 위해 배열을 경도 기준으로 정렬합니다.
-        list = result.places.sorted(by: { return $0.coordinate.longitude < $1.coordinate.longitude })
+        getPlaces()
         
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -257,8 +284,9 @@ class PlaceMainViewController: UIViewController {
     /// - Author: 박혜정(mailmelater11@gmail.com)
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         checkLocationAuth()
+        
+        getPlaces()
     }
     
     
@@ -273,7 +301,23 @@ class PlaceMainViewController: UIViewController {
         if let cell = sender as? NearbyPlaceCollectionViewCell,
            let indexPath = nearbyPlaceCollectionView.indexPath(for: cell) {
             if let vc = segue.destination as? PlaceInfoViewController {
-                vc.place = list[indexPath.item]
+                // 상점 정보 다운로드
+                var urlString = "https://umateapi.azurewebsites.net/api/place/\(list[indexPath.row].id)"
+                guard let getUrl = URL(string: urlString) else { return }
+                
+                dataManager.get(with: getUrl, on: vc) { [weak vc] (response: PlaceResponse) in
+                    guard let vc = vc else { return }
+                    if let places = response.place { vc.place = Place(dto: places) }
+                }
+                
+                // 북마크 정보 다운로드
+                urlString = "https://umateapi.azurewebsites.net/api/place/bookmark/place/\(list[indexPath.row].id)"
+                guard let bookmarkInfoUrl = URL(string: urlString) else { return }
+                
+                dataManager.get(with: bookmarkInfoUrl, on: vc) { [weak vc] (response: PlaceBookmarkCheckResponse) in
+                    guard let vc = vc else { return }
+                    vc.isBookmarked = response.isBookmarked
+                }
             }
         }
         
@@ -307,8 +351,7 @@ extension PlaceMainViewController: MKMapViewDelegate {
         var annotationView: MKAnnotationView?
         
         if let annotation = annotation as? MKClusterAnnotation {
-            let clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier,
-                                                                    for: annotation) as! MKMarkerAnnotationView
+            let clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation) as! MKMarkerAnnotationView
             clusterView.markerTintColor = UIColor.systemGray5
             return clusterView
         }
@@ -373,9 +416,13 @@ extension PlaceMainViewController: MKMapViewDelegate {
         if let annot = view.annotation as? PlaceAnnotation {
             guard let placeInfoVC = UIStoryboard(name: "PlaceInfo", bundle: nil).instantiateInitialViewController() as? PlaceInfoViewController else { return }
             
-            placeInfoVC.place = list.first(where: { place in
-                return place.id == annot.placeId
-            })
+            let urlString = "https://umateapi.azurewebsites.net/api/place/\(annot.placeId)"
+            
+            guard let getUrl = URL(string: urlString) else { return }
+            
+            let place = dataManager.get(with: getUrl, on: placeInfoVC) { (response: PlaceResponse) in
+                if let places = response.place { placeInfoVC.place = Place(dto: places) }
+            }
             
             self.navigationController?.pushViewController(placeInfoVC, animated: true)
         }

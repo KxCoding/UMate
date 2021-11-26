@@ -13,7 +13,7 @@ import UIKit
 ///
 /// 상점 목록 보기 화면과 북마크 관리 화면의 공통 view controller 입니다.
 /// - Author: 박혜정(mailmelater11@gmail.com)
-class PlaceListViewController: UIViewController {
+class PlaceListViewController: CommonViewController {
     
     /// 목록 유형
     ///
@@ -41,6 +41,9 @@ class PlaceListViewController: UIViewController {
     
     
     // MARK: Properties
+    
+    /// Data Manager
+    let dataManager = PlaceDataManager.shared
     
     /// 목록 유형
     ///
@@ -70,8 +73,8 @@ class PlaceListViewController: UIViewController {
     
     /// 북마크가 삭제되었을 때 표시할 토스트
     lazy var bookmarkDeletedLoaf: Loaf = Loaf("북마크가 삭제되었습니다",
-                                              state: .info,
-                                              location: .bottom,
+                                              state: .success,
+                                              location: .top,
                                               presentingDirection: .vertical,
                                               dismissingDirection: .vertical,
                                               sender: self)
@@ -129,12 +132,30 @@ class PlaceListViewController: UIViewController {
             }
         case .bookmark:
             // 북마크 삭제 이벤트를 감시합니다.
-            NotificationCenter.default.addObserver(forName: .updateBookmark,
-                                                   object: nil,
-                                                   queue: .main) { [weak self] noti in
+            let token = NotificationCenter.default.addObserver(forName: .bookmarkListUpdated,
+                                                               object: nil,
+                                                               queue: .main) { [weak self] noti in
                 guard let self = self else { return }
-                self.placeListTableView.reloadData()
+                
+                let urlString = "https://umateapi.azurewebsites.net/api/place/bookmark"
+                guard let getUrl = URL(string: urlString) else { return }
+                
+                PlaceDataManager.shared.get(with: getUrl, on: self) { [weak self] (response: PlaceListResponse) in
+                    guard let self = self else { return }
+                    
+                    guard let responsePlaces = response.places else { return }
+                    let places = responsePlaces.map { Place(simpleDto: $0) }
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        
+                        self.entireItems = places
+                        self.placeListTableView.reloadData()
+                    }
+                }
             }
+            
+            tokens.append(token)
         }
         
         setTapBarAppearanceAsDefault()
@@ -150,15 +171,25 @@ class PlaceListViewController: UIViewController {
     /// - Author: 박혜정(mailmelater11@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? PlaceListTableViewCell {
-            guard let place = Place.dummyData.first(where: { $0.id == cell.target.id }) else {
-                #if DEBUG
-                print("검색 실패, 선택한 북마크 상점 찾을 수 없음")
-                #endif
-                return
-            }
-            
             if let vc = segue.destination as? PlaceInfoViewController {
-                vc.place = place
+                // 상점 정보 다운로드
+                var urlString = "https://umateapi.azurewebsites.net/api/place/\(cell.target.id)"
+                guard let placeInfoUrl = URL(string: urlString) else { return }
+                
+                PlaceDataManager.shared.get(with: placeInfoUrl, on: vc) { [weak vc] (response: PlaceResponse) in
+                    guard let vc = vc else { return }
+                    if let places = response.place { vc.place = Place(dto: places) }
+                }
+                
+                // 북마크 정보 다운로드
+                urlString = "https://umateapi.azurewebsites.net/api/place/bookmark/place/\(cell.target.id)"
+                guard let bookmarkInfoUrl = URL(string: urlString) else { return }
+                
+                PlaceDataManager.shared.get(with: bookmarkInfoUrl, on: vc) { [weak vc] (response: PlaceBookmarkCheckResponse) in
+                    guard let vc = vc else { return }
+                    vc.isBookmarked = response.isBookmarked
+                }
+                
             }
         }
         
@@ -299,7 +330,7 @@ extension PlaceListViewController: UITableViewDelegate {
     ///   - indexPath: 항목의 index path
     /// - Returns: 셀의 우측에 표시되는 contextual menu
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt  indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard viewType == .bookmark else { return nil }
         
         let selectedPlace = listedItems[indexPath.row]
@@ -307,19 +338,32 @@ extension PlaceListViewController: UITableViewDelegate {
         var conf = UISwipeActionsConfiguration(actions: [])
         
         let deleteBookmarkMenu = UIContextualAction(style: .destructive, title: nil) { [weak self] action, view, completion in
-            
             guard let self = self else { return }
             
-            // 북마크된 상점을 Id로 검색해서 삭제
-            if let index = PlaceUser.tempUser.userData.bookmarkedPlaces.firstIndex(of: selectedPlace.id) {
-                PlaceUser.tempUser.userData.bookmarkedPlaces.remove(at: index)
+            let urlString = "https://umateapi.azurewebsites.net/api/place/bookmark/place/\(selectedPlace.id)"
+            guard let url = URL(string: urlString) else { return }
+            
+            self.dataManager.delete(with: url, on: self) { response in
+                if response.code == PlaceResultCode.ok.rawValue {
+                    #if DEBUG
+                    print(">>>> 북마크 삭제됨 - \(selectedPlace.name)")
+                    #endif
+                    
+                    DispatchQueue.main.async {
+                        if let targetIndex = self.entireItems.firstIndex { $0.id == selectedPlace.id } {
+                            self.entireItems.remove(at: targetIndex)
+                            
+                            self.placeListTableView.beginUpdates()
+                            self.placeListTableView.deleteRows(at: [indexPath], with: .automatic)
+                            self.placeListTableView.endUpdates()
+                        } else {
+                            NotificationCenter.default.post(name: .bookmarkListUpdated, object: nil)
+                        }
+                        
+                        self.bookmarkDeletedLoaf.show(.custom(1.2))
+                    }
+                }
             }
-            
-            self.placeListTableView.beginUpdates()
-            self.placeListTableView.deleteRows(at: [indexPath], with: .automatic)
-            self.placeListTableView.endUpdates()
-            
-            self.bookmarkDeletedLoaf.show(.custom(1.2))
             
             completion(true)
         }
