@@ -10,7 +10,7 @@ import UIKit
 
 /// 리뷰 목록 화면
 /// - Author: 장현우(heoun3089@gmail.com)
-class AllReviewViewController: UIViewController {
+class AllReviewViewController: CommonViewController {
     
     /// 리뷰 목록 테이블뷰
     @IBOutlet weak var allReviewTableView: UITableView!
@@ -41,6 +41,9 @@ class AllReviewViewController: UIViewController {
     /// 이전 화면에서 전달됩니다.
     var placeName: String?
     
+    /// 선택한 상점에 해당하는 리뷰 목록
+    var targetPlaceList: [PlaceReviewList.PlaceReview]?
+    
     
     /// 리뷰를 날짜순으로 정렬합니다.
     /// - Parameter sender: 날짜순 정렬 버튼
@@ -60,11 +63,11 @@ class AllReviewViewController: UIViewController {
             dateAlignmentArrowImageView.tintColor = .systemBlue
             dateAlignmentArrowImageView.image = UIImage(systemName: "arrow.down")
             
-            PlaceReviewItem.dummyData.sort { $0.date > $1.date }
+            self.targetPlaceList?.sort { $0.insertDate > $1.insertDate }
         } else {
             dateAlignmentArrowImageView.image = UIImage(systemName: "arrow.up")
             
-            PlaceReviewItem.dummyData.sort { $0.date < $1.date }
+            self.targetPlaceList?.sort { $0.insertDate < $1.insertDate }
         }
         
         allReviewTableView.reloadData()
@@ -90,12 +93,12 @@ class AllReviewViewController: UIViewController {
             pointAlignmentArrowImageView.tintColor = .systemBlue
             pointAlignmentArrowImageView.image = UIImage(systemName: "arrow.down")
             
-            PlaceReviewItem.dummyData.sort { $0.starPoint > $1.starPoint }
+            self.targetPlaceList?.sort { $0.starRating > $1.starRating }
         } else {
             pointAlignmentLabel.text = "별점낮은순"
             pointAlignmentArrowImageView.image = UIImage(systemName: "arrow.up")
             
-            PlaceReviewItem.dummyData.sort { $0.starPoint < $1.starPoint }
+            self.targetPlaceList?.sort { $0.starRating < $1.starRating }
         }
         
         allReviewTableView.reloadData()
@@ -109,11 +112,15 @@ class AllReviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        PlaceReviewItem.dummyData.sort { $0.date > $1.date }
-        dateAlignmentLabel.textColor = UIColor(named: "blackSelectedColor")
-        dateAlignmentArrowImageView.tintColor = .systemBlue
-        
-        pointAlignmentArrowImageView.isHidden = true
+        PlaceReviewDataManager.shared.fetchAllReview(vc: self) {
+            PlaceReviewDataManager.shared.allPlaceReviewList.sort { $0.insertDate > $1.insertDate }
+            self.dateAlignmentButton.isSelected = true
+            self.dateAlignmentLabel.textColor = UIColor(named: "blackSelectedColor")
+            self.dateAlignmentArrowImageView.tintColor = .systemBlue
+            self.pointAlignmentArrowImageView.isHidden = true
+            
+            self.allReviewTableView.reloadData()
+        }
     }
     
     
@@ -126,13 +133,15 @@ class AllReviewViewController: UIViewController {
         if let placeName = placeName {
             self.navigationController?.navigationBar.topItem?.title = ""
             self.navigationItem.title = "\(placeName)의 리뷰"
+            
+            targetPlaceList = PlaceReviewDataManager.shared.allPlaceReviewList.filter { $0.place.name == placeName }
         }
     }
 }
 
 
 
-/// 모든 리뷰 테이블뷰 데이터 관리
+/// 리뷰 목록 테이블뷰 데이터 관리
 extension AllReviewViewController: UITableViewDataSource {
     
     /// 섹션에 표시할 셀 수를 리턴합니다.
@@ -142,7 +151,9 @@ extension AllReviewViewController: UITableViewDataSource {
     /// - Returns: 섹션 행의 수
     /// - Author: 장현우(heoun3089@gmail.com)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PlaceReviewItem.dummyData.count
+        guard let targetPlaceList = targetPlaceList else { return 0 }
+        
+        return targetPlaceList.count
     }
     
     
@@ -155,11 +166,13 @@ extension AllReviewViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserReviewTableViewCell", for: indexPath) as! UserReviewTableViewCell
         
-        let target = PlaceReviewItem.dummyData[indexPath.row]
-        cell.userPointView.rating = target.starPoint
-        cell.userPointLabel.text = "\(target.starPoint)"
+        guard let targetPlaceList = targetPlaceList else { return UITableViewCell() }
+        
+        let target = targetPlaceList[indexPath.row]
+        cell.userPointView.rating = target.starRating
+        cell.userPointLabel.text = "\(target.starRating)"
         cell.reviewTextLabel.text = target.reviewText
-        cell.dateLabel.text = target.date.reviewDate
+        cell.dateLabel.text = target.insertDate.reviewDBDate?.reviewDate
         cell.recommendationCountLabel.text = "\(target.recommendationCount)"
         
         return cell

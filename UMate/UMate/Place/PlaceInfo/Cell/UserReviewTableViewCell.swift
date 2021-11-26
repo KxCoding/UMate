@@ -13,14 +13,14 @@ import UIKit
 /// - Author: 장현우(heoun3089@gmail.com)
 class UserReviewTableViewCell: UITableViewCell {
     
-    /// 별점 이미지뷰
+    /// 평점 이미지뷰
     ///
-    /// 사용자가 작성한 별점을 이미지로 표시합니다.
+    /// 사용자가 작성한 평점을 별 이미지로 표시합니다.
     @IBOutlet weak var userPointView: CosmosView!
     
     /// 별점 레이블
     ///
-    /// 사용자가 작성한 별점을 숫자로 표시합니다.
+    /// 사용자가 작성한 평점을 숫자로 표시합니다.
     @IBOutlet weak var userPointLabel: UILabel!
     
     /// 리뷰 텍스트 레이블
@@ -46,6 +46,20 @@ class UserReviewTableViewCell: UITableViewCell {
     
     /// 추천수 레이블
     @IBOutlet weak var recommendationCountLabel: UILabel!
+    
+    
+    /// 테이블뷰셀에 표시할 내용을 설정합니다.
+    ///
+    /// 각 평가 항목에 대한 정보를 표시합니다.
+    /// - Parameter placeReview: 상점 리뷰 객체
+    /// - Author: 장현우(heoun3089@gmail.com)
+    func configure(with placeReview: PlaceReviewList.PlaceReview) {
+        userPointView.rating = placeReview.starRating
+        userPointLabel.text = "\(placeReview.starRating)"
+        reviewTextLabel.text = placeReview.reviewText
+        dateLabel.text = placeReview.insertDate.reviewDBDate?.reviewDate
+        recommendationCountLabel.text = placeReview.recommendationCount.description
+    }
     
     
     /// 초기화 작업을 실행합니다.
