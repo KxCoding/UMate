@@ -7,6 +7,12 @@
 
 import UIKit
 
+enum HTTPMethod {
+    case get
+    case post
+    case put
+    case delete
+}
 
 /// Place 데이터 관리 객체
 ///
@@ -171,7 +177,7 @@ class PlaceDataManager {
     /// - Parameter urlString: 문자열 이미지 url
     /// - Returns: 캐시에 저장된 이미지가 있거나 url로 해당 이미지를 가져올 수 있으면 이미지를 리턴하고, 실패하면 nil을 리턴합니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    func getImage(from urlString: String) -> UIImage? {
+    func getImage(with urlString: String) -> UIImage? {
         
         guard let url = URL(string: urlString) else {
             return nil
@@ -186,7 +192,7 @@ class PlaceDataManager {
     ///   - url: url
     ///   - completion: 완료 블록. 다운로드된 이미지가 전달됩니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    func fetchImage(with url: URL, completion: ((UIImage) -> ())?) {
+    func getImage(with url: URL, completion: ((UIImage) -> ())?) {
         fetchData(with: url) { data in
             guard let image = UIImage(data: data) else {
                 print("cannot convert data to image")
@@ -196,6 +202,29 @@ class PlaceDataManager {
             if let completion = completion {
                 completion(image)
             }
+        }
+    }
+    
+    
+    /// 이미지를 다운로드 합니다.
+    /// - Parameters:
+    ///   - urlString: url 문자열
+    ///   - imageView: 사용할 이미지 뷰
+    func getImage(with urlString: String, andUpdate imageView: UIImageView) {
+        let nsUrl = NSString(string: urlString)
+        
+        if let image = stringImageCache.object(forKey: nsUrl) {
+            imageView.image = image
+        } else {
+            imageView.image = placeholderImage
+            
+            guard let url = URL(string: urlString) else { return }
+            
+            getImage(with: url) { downloadedImage in
+                self.stringImageCache.setObject(downloadedImage, forKey: nsUrl)
+                imageView.image = downloadedImage
+            }
+            
         }
     }
     
@@ -345,10 +374,201 @@ class PlaceDataManager {
                     return
                 }
                 
-                self.fetchImage(with: url) { image in
+                self.getImage(with: url) { image in
                     self.stringImageCache.setObject(image, forKey: nsQuery)
                     imageView.image = image
                 }
+            }
+        }
+    }
+    
+    // MARK: 서버 관련 코드
+    
+    /// 임시 토큰
+    let tempToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiNTQ0M2ZiYTYtNzJiYy00YTkzLTk3ZTktOWEyN2YzYTFlOTMyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI1NDQzZmJhNi03MmJjLTRhOTMtOTdlOS05YTI3ZjNhMWU5MzIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0MUB0ZXN0LmNvbSIsImV4cCI6MTYzODMwNjc3MiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTU0MTUiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1NTQxNSJ9.tPj34LMEChrZ9oCVIgKzn4GbALjdfxAq6u_LXS4kF5E"
+    
+    /// json 인코더
+    let jsonEncoder = JSONEncoder()
+    
+
+    /// 서버에 데이터 등록을 요청합니다.
+    ///
+    /// - Parameters:
+    ///   - bodyData: 요청 body 데이터
+    ///   - url: url
+    ///   - vc: 처리 실패시 alert를 표시할 view controller
+    ///   - completion: 응답과 함께 처리할 작업
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func post<RequestDataType: Codable, ResponseDataType: PlaceResponseType>(_ bodyData: RequestDataType, with url: URL, on vc: UIViewController, completion: ((ResponseDataType) -> Void)?) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("Bearer \(tempToken)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        do {
+            request.httpBody = try jsonEncoder.encode(bodyData)
+        } catch {
+            #if DEBUG
+            print(error)
+            #endif
+        }
+
+        session.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
+
+            if let error = error {
+                #if DEBUG
+                print("datatask error", error)
+                #endif
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                #if DEBUG
+                print((response as? HTTPURLResponse)?
+                        .statusCode ?? "can't get status code")
+                #endif
+                return
+            }
+
+            guard let data = data else {
+                #if DEBUG
+                print("data == nil ")
+                #endif
+                return
+            }
+
+            guard let responseData = self.decodeJson(type: ResponseDataType.self, fromJson: data) else {
+                #if DEBUG
+                print("cannot decode data to the type")
+                #endif
+                return
+            }
+
+            self.handle(responseData, alertOn: vc, orCompleteWith: completion)
+
+        }.resume()
+
+    }
+    
+    
+    /// 서버에 데이터를 요청합니다.
+    ///
+    /// - Parameters:
+    ///   - url: url
+    ///   - vc: 처리 실패시 alert를 표시할 view controller
+    ///   - completion: 응답과 함께 처리할 작업
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func get<T: Codable & PlaceResponseType>(with url: URL, on vc: UIViewController, completion: ((T) -> Void)?) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("Bearer \(tempToken)", forHTTPHeaderField: "Authorization")
+
+        session.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                #if DEBUG
+                print("datatask error", error)
+                #endif
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                #if DEBUG
+                print((response as? HTTPURLResponse)?
+                        .statusCode ?? "can't get status code")
+                #endif
+                return
+            }
+
+            guard let data = data else {
+                #if DEBUG
+                print("data == nil ")
+                #endif
+                return
+            }
+
+            guard let responseData = self.decodeJson(type: T.self, fromJson: data) else {
+                #if DEBUG
+                print("cannot decode data to the type")
+                #endif
+                return
+            }
+            
+            self.handle(responseData, alertOn: vc, orCompleteWith: completion)
+
+        }.resume()
+    }
+    
+    
+    /// 서버에 데이터 삭제를 요청합니다.
+    /// - Parameters:
+    ///   - url: url
+    ///   - vc: 처리 실패시 alert를 표시할 view controller
+    ///   - completion: 응답과 함께 처리할 작업
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func delete(with url: URL, on vc: UIViewController, completion: ((PlaceCommonResponse) -> Void)?) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.addValue("Bearer \(tempToken)", forHTTPHeaderField: "Authorization")
+        
+        session.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                #if DEBUG
+                print("datatask error", error)
+                #endif
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                #if DEBUG
+                print((response as? HTTPURLResponse)?
+                        .statusCode ?? "can't get status code")
+                #endif
+                return
+            }
+            
+            guard let data = data else {
+                #if DEBUG
+                print("data == nil")
+                #endif
+                return
+            }
+            
+            guard let responseData = self.decodeJson(type: PlaceCommonResponse.self, fromJson: data) else {
+                #if DEBUG
+                print("cannot decode data to common response type")
+                #endif
+                return
+            }
+                        
+            self.handle(responseData, alertOn: vc, orCompleteWith: completion)
+                        
+        }.resume()
+    }
+    
+    
+    /// 응답 데이터를 처리합니다.
+    /// - Parameters:
+    ///   - response: 응답 데이터
+    ///   - vc: 정상 처리 실패시 alert를 표시할 view controller
+    ///   - completion: 처리 성공시 응답과 함께 처리할 작업
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    private func handle<T: PlaceResponseType>(_ response: T, alertOn vc: UIViewController, orCompleteWith completion: ((T) -> Void)?) {
+        if response.code != PlaceResultCode.ok.rawValue {
+            DispatchQueue.main.async { [weak vc] in
+                guard let vc = vc else { return }
+                vc.alert(title: "네트워크 오류", message: response.clientAlertMessage ?? "")
+            }
+        } else {
+            if let completion = completion {
+                DispatchQueue.main.async { completion(response) }
             }
         }
     }
