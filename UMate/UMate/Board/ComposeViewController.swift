@@ -335,8 +335,6 @@ class ComposeViewController: CommonViewController {
             .map {  $0 ? UIColor.systemRed : UIColor.lightGray}
             .drive(contentCountLabel.rx.textColor)
             .disposed(by: rx.disposeBag)
-        
-        return true
     }
 }
 

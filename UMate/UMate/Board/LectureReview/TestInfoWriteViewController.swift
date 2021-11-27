@@ -144,7 +144,7 @@ class TestInfoWriteViewController: CommonViewController {
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
-                    switch response.resultCode {
+                    switch response.code {
                     case ResultCode.ok.rawValue:
                         #if DEBUG
                         print("추가 성공")

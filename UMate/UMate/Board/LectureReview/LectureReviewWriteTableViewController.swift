@@ -373,15 +373,12 @@ class LectureReviewWriteTableViewController: UITableViewController {
         }
         
         // 작성 경고문
-        alertVersion3(title: "강의평을 작성하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { _ in
+        alertVersion3(title: "강의평을 작성하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { [unowned self] _ in
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-            let newReview = LectureReviewPostData(lectureReviewId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", lectureInfoId: self.lectureInfo?.lectureInfoId ?? 0, assignment: reviewAssignment.rawValue, groupMeeting: reviewGroupMeeting.rawValue, evaluation: reviewEvaluation.rawValue, attendance: reviewAttendance.rawValue, testNumber: reviewTestNumber.rawValue, rating: reviewRating.rawValue, semester: semester, content: reviewContent, createdAt: dateStr)
+            let newReview = LectureReviewPostData(lectureReviewId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", lectureInfoId: self.lectureInfo?.lectureInfoId ?? 0, assignment: reviewAssignment.rawValue, groupMeeting: reviewGroupMeeting.rawValue, evaluation: reviewEvaluation.rawValue, attendance: reviewAttendance.rawValue, testNumber: reviewTest.rawValue, rating: reviewRating.rawValue, semester: semester, content: reviewContent, createdAt: dateStr)
     
-                guard let url = URL(string: "https://umateserverboard.azurewebsites.net/api/lectureReview") else { return }
-       
-                let body = try? BoardDataManager.shared.encoder.encode(newReview)
-                
-                self.sendSavingLectureReviewRequest(url: url, httpMethod: "POST", httpBody: body)
+            self.sendLectureReviewDataToServer(lectureReviewPostData: newReview)
+            
                 self.dismiss(animated: true, completion: nil)
         }
     }
@@ -404,7 +401,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
-                    switch response.resultCode {
+                    switch response.code {
                     case ResultCode.ok.rawValue:
                         #if DEBUG
                         print("추가 성공")
