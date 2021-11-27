@@ -356,6 +356,25 @@ class DetailPostViewController: CommonViewController {
         }
         tokens.append(token)
         
+        
+        // 댓글의 placeholder상태를 관리합니다.
+        //
+        // 게시글 내용이 입력된 경우 placeholder 레이블을 숨깁니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        commentTextView.rx.text.orEmpty
+            .map { $0.count > 0 }
+            .bind(to: commentPlaceholderLabel.rx.isHidden)
+            .disposed(by: rx.disposeBag)
+        
+    }
+    
+    
+    /// 뷰 계층에 모든 뷰들이 추가된 이후 호출됩니다.
+    /// - Parameter animated: 윈도우에 뷰가 추가될 때 애니메이션 여부. 기본값은 true입니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         // 게시글 삭제
         token = NotificationCenter.default.addObserver(forName: .alertDidSend, object: nil, queue: .main, using: { _ in
             let alertMenu = UIAlertController(title: "", message: "메뉴를 선택하세요.", preferredStyle: .actionSheet)

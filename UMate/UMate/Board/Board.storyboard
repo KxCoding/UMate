@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ONU-BN-eP4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ONU-BN-eP4">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -847,9 +847,6 @@
                     <navigationItem key="navigationItem" title="선택된 사진" id="sbr-zY-CoC">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="zCt-E1-aZ4">
                             <color key="tintColor" systemColor="labelColor"/>
-                            <connections>
-                                <action selector="closeVC:" destination="5sr-Hl-lgU" id="tlp-yG-lRS"/>
-                            </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="edit" id="1zv-s4-DuW">
@@ -860,13 +857,11 @@
                             </barButtonItem>
                             <barButtonItem title="Select" id="WF3-f5-xOh">
                                 <color key="tintColor" systemColor="labelColor"/>
-                                <connections>
-                                    <action selector="selectImage:" destination="5sr-Hl-lgU" id="lap-HH-urJ"/>
-                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="closeVCButton" destination="zCt-E1-aZ4" id="0Fm-ht-yCO"/>
                         <outlet property="editBtn" destination="1zv-s4-DuW" id="qV7-e0-TxZ"/>
                         <outlet property="imageCollectionView" destination="D0r-D2-Ure" id="Fhg-0L-uig"/>
                         <outlet property="imageSelectButton" destination="WF3-f5-xOh" id="YhD-kc-ysR"/>

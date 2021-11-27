@@ -165,6 +165,7 @@ class ComposeViewController: CommonViewController {
         provider.rx.request(.uploadPost(postData))
             .filterSuccessfulStatusCodes()
             .map(SavePostResponseData.self)
+            .observe(on: MainScheduler.instance)
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
@@ -178,9 +179,7 @@ class ComposeViewController: CommonViewController {
                         print("추가 성공!")
                         #endif
                         
-                        DispatchQueue.main.async {
-                            self.dismiss(animated: true, completion: nil)
-                        }
+                        self.dismiss(animated: true, completion: nil)
                     case ResultCode.fail.rawValue:
                         #if DEBUG
                         print("이미 존재함")
@@ -255,9 +254,26 @@ class ComposeViewController: CommonViewController {
             })
             .disposed(by: rx.disposeBag)
         
+        // 이미지 첨부 방식을 선택합니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        selectImageAttachmentTypeBtn.rx.tap
+            .flatMap { _ in self.alertToSelectImageAttachWay(title: "알림", message: "이미지 첨부 방식을 선택하세요 :)") }
+            .subscribe(onNext: { [unowned self] (actionType) in
+                switch actionType {
+                case .find:
+                    self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
+                case .take:
+                    self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
+                default:
+                    break
+                }
+            })
+            .disposed(by: rx.disposeBag)
+        
         // 일반 게시판과 카테고리 게시판에 게시글을 저장합니다.
         // - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
         savePostButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: {
                 self.savePost()
             })
@@ -267,6 +283,7 @@ class ComposeViewController: CommonViewController {
         // 글쓰기 화면을 닫습니다.
         // - Author: 김정민(kimjm010@icloud.com)
         closeVc.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: {
                 self.dismiss(animated: true, completion: nil)
             })
@@ -319,8 +336,7 @@ class ComposeViewController: CommonViewController {
             .drive(contentCountLabel.rx.textColor)
             .disposed(by: rx.disposeBag)
         
-        imageCollectionView.rx.setDelegate(self)
-            .disposed(by: rx.disposeBag)
+        return true
     }
 }
 

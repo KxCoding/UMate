@@ -41,7 +41,10 @@ class PostContentTableViewCell: UITableViewCell {
     @IBOutlet weak var postContentLabel: UILabel!
     
     /// 네트워크 통신 관리 객체
-    let provider = PostService.shared.provider
+    let provider = PostDataService.shared.provider
+    
+    /// 선택된 게시글
+    var selectedPost: PostDtoResponseData.Post?
     
     /// 선택된 게시글 Id
     var postId = -1
@@ -133,14 +136,13 @@ class PostContentTableViewCell: UITableViewCell {
         provider.rx.request(.saveScrapInfo(scrapPostData))
             .filterSuccessfulStatusCodes()
             .map(SaveScrapPostPostResponse.self)
+            .observe(on: MainScheduler.instance)
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
                     switch response.code {
                     case ResultCode.ok.rawValue:
-                        DispatchQueue.main.async {
-                            self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
-                        }
+                        self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
                         
                         #if DEBUG
                         print("추가 성공")
@@ -169,14 +171,13 @@ class PostContentTableViewCell: UITableViewCell {
         provider.rx.request(.saveLikeInfo(likePostData))
             .filterSuccessfulStatusCodes()
             .map(SaveScrapPostPostResponse.self)
+            .observe(on: MainScheduler.instance)
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
                     switch response.code {
                     case ResultCode.ok.rawValue:
-                        DispatchQueue.main.async {
-                            self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
-                        }
+                        self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
                         
                         #if DEBUG
                         print("추가 성공")

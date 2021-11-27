@@ -22,6 +22,7 @@ extension Notification.Name {
 
 
 
+
 /// 앨범 표시 화면
 /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 class SelectImageViewController: CommonViewController {
@@ -29,12 +30,15 @@ class SelectImageViewController: CommonViewController {
     /// 앨범의 이미지 컬렉션뷰
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
+    /// 이미지 선택 버튼
+    @IBOutlet weak var imageSelectButton: UIBarButtonItem!
+    
+    /// 앨범 표시 화면 닫기 버튼
+    @IBOutlet weak var closeVCButton: UIBarButtonItem!
+    
     /// 편집버튼
     /// 제한된 사진을 변경할 수 있습니다.
     @IBOutlet weak var editBtn: UIBarButtonItem!
-    
-    /// 이미지 선택 버튼
-    @IBOutlet weak var imageSelectButton: UIBarButtonItem!
     
     /// 이미지 관리 객체
     let imageManager = PHImageManager()
@@ -47,9 +51,6 @@ class SelectImageViewController: CommonViewController {
         return option
     }()
     
-    /// 제한된 접근권한 확인
-    var hasLimitedPermission = false
-    
     /// Fetch한 사진 저장
     var allPhotos: PHFetchResult<PHAsset> = {
         let option = PHFetchOptions()
@@ -60,13 +61,8 @@ class SelectImageViewController: CommonViewController {
         return PHAsset.fetchAssets(with: option)
     }()
     
-    
-    /// 앨범 화면을 닫습니다.
-    /// - Parameter sender: Cancel 버튼
-    /// - Author: 김정민(kimjm010@icloud.com)
-    @IBAction func closeVC(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
+    /// 제한된 접근권한 확인
+    var hasLimitedPermission = false
     
     
     /// 접근 가능한 사진을 변경합니다.
@@ -74,28 +70,6 @@ class SelectImageViewController: CommonViewController {
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBAction func editSelectedImage(_ sender: Any) {
         PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
-    }
-    
-    
-    /// 게시글에 첨부할 이미지를 선택합니다.
-    /// - Parameter sender: select 버튼
-    /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gamil.com)
-    @IBAction func selectImage(_ sender: Any) {
-        guard let indexPath = imageCollectionView.indexPathsForSelectedItems else { return }
-        
-        for index in indexPath {
-            let target = allPhotos.object(at: index.item)
-            
-            imageManager.requestImage(for: target, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: nil) { (image, _) in
-                if let image = image {
-                    NotificationCenter.default.post(name: .imageDidSelect, object: nil, userInfo: ["img": [image]])
-                    
-                   // NotificationCenter.default.post(name: .requestPostImage, object: nil, userInfo: ["image": image])
-                }
-                
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
     }
     
     
@@ -146,6 +120,40 @@ class SelectImageViewController: CommonViewController {
         requestAuthorization()
         imageCollectionView.allowsSelection = true
         imageCollectionView.allowsMultipleSelection = true
+        
+        // 앨범 화면을 닫습니다.
+        // - Author: 김정민(kimjm010@icloud.com)
+        closeVCButton.rx.tap
+            .subscribe(onNext: { [unowned self] in
+                self.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: rx.disposeBag)
+        
+        
+        // 게시글에 첨부할 이미지를 선택합니다.
+        // - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gamil.com)
+        imageSelectButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [unowned self] in
+                guard let indexPath = imageCollectionView.indexPathsForSelectedItems else { return }
+                
+                for index in indexPath {
+                    let target = allPhotos.object(at: index.item)
+                    
+                    imageManager.requestImage(for: target,targetSize: PHImageManagerMaximumSize,
+                                                 contentMode: .aspectFill,
+                                                 options: nil) { (image, _) in
+                        if let image = image {
+                            NotificationCenter.default.post(name: .imageDidSelect, object: nil, userInfo: ["img": [image]])
+                            
+                            NotificationCenter.default.post(name: .requestPostImage, object: nil, userInfo: ["image": image])
+                        }
+                        
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            })
+            .disposed(by: rx.disposeBag)
         
         PHPhotoLibrary.shared().register(self)
     }
