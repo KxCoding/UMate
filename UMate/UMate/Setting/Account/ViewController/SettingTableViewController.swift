@@ -193,11 +193,13 @@ class SettingTableViewController: UITableViewController {
         
         /// To initialize user information in setting
         if let email = loginKeychain.get(AccountKeys.email.rawValue),
+           let userName = loginKeychain.get(AccountKeys.realName.rawValue),
            let nickName = loginKeychain.get(AccountKeys.nickName.rawValue),
+           let universityName = loginKeychain.get(AccountKeys.universityName.rawValue),
            let enterYearOfUniversity = (loginKeychain.get(AccountKeys.yearOfAdmission.rawValue)) {
             emailLabel.text = email
-            nameLabel.text = "홍길동 / \(nickName)"
-            enterYearAndUniNameLabel.text = "\(enterYearOfUniversity) / 서울대"
+            nameLabel.text = "\(userName) / \(nickName)"
+            enterYearAndUniNameLabel.text = "\(enterYearOfUniversity) / \(universityName)"
         }
         
         /// initialize

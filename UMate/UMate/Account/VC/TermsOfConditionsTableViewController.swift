@@ -44,6 +44,12 @@ class TermsOfConditionsTableViewController: UITableViewController {
     /// 체크박스 아웃렛 배열
     var list = [BEMCheckBox]()
     
+    /// 대학교 이름
+    ///
+    /// 이전 화면에서 전달됩니다.
+    /// - Author: 장현우(heoun3089@gmail.com)
+    var universityName: String?
+    
     /// 입학 연도
     ///
     /// 이전 화면에서 전달됩니다.
@@ -74,6 +80,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
     /// - Author: 장현우(heoun3089@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? EmailVerificationViewController {
+            vc.universityName = universityName
             vc.entranceYear = entranceYear
         }
     }

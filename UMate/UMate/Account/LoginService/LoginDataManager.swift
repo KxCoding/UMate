@@ -44,7 +44,7 @@ class LoginDataManager {
     /// 입력한 정보로 회원가입합니다.
     /// - Parameters:
     ///   - emailJoinPostData: 회원가입 정보를 담은 객체
-    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     /// - Author: 장현우(heoun3089@gmail.com)
     func singup(emailJoinPostData: EmailJoinPostData, vc: CommonViewController) {
         provider.rx.request(.signup(emailJoinPostData))
@@ -77,7 +77,7 @@ class LoginDataManager {
     /// - Parameters:
     ///   - emailLoginPostData: 로그인 정보를 담은 객체
     ///   - transitionToHome: 홈 화면으로 이동하는 메소드
-    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     /// - Author: 장현우(heoun3089@gmail.com)
     func login(emailLoginPostData: EmailLoginPostData, transitionToHome: @escaping () -> (), vc: CommonViewController) {
         provider.rx.request(.login(emailLoginPostData))
@@ -111,7 +111,7 @@ class LoginDataManager {
     /// - Parameters:
     ///   - transitionToLoginScreen: 로그인 화면으로 이동하는 메소드
     ///   - transitionToHome: 홈 화면으로 이동하는 메소드
-    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     /// - Author: 장현우(heoun3089@gmail.com)
     func validateToken(transitionToLoginScreen: @escaping () -> (), transitionToHome: @escaping () -> (), vc: CommonViewController) {
         validationProvider.rx.request(.validateToken)
@@ -151,6 +151,7 @@ class LoginDataManager {
             loginKeychain.set(token, forKey: AccountKeys.apiToken.rawValue)
             loginKeychain.set(responseData.realName ?? "", forKey: AccountKeys.realName.rawValue)
             loginKeychain.set(responseData.nickName ?? "", forKey: AccountKeys.nickName.rawValue)
+            loginKeychain.set(responseData.universityName ?? "", forKey: AccountKeys.universityName.rawValue)
             loginKeychain.set(responseData.yearOfAdmission ?? "", forKey: AccountKeys.yearOfAdmission.rawValue)
             UserDefaults.standard.set([true, true], forKey: "expand")
         }

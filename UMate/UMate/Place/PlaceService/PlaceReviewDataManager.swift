@@ -58,7 +58,7 @@ class PlaceReviewDataManager {
     
     /// 전체 상점 리뷰 목록을 다운로드합니다.
     /// - Parameters:
-    ///   - vc: 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     ///   - completion: 완료 블록
     /// - Author: 장현우(heoun3089@gmail.com)
     func fetchAllReview(vc: CommonViewController, completion: @escaping () -> ()) {
@@ -80,7 +80,7 @@ class PlaceReviewDataManager {
     
     /// 유저 아이디와 일치하는 상점 리뷰 목록을 다운로드합니다.
     /// - Parameters:
-    ///   - vc: 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     ///   - completion: 완료 블록
     /// - Author: 장현우(heoun3089@gmail.com)
     func fetchReview(vc: CommonViewController, completion: @escaping () -> ()) {
@@ -110,7 +110,7 @@ class PlaceReviewDataManager {
     /// 상점 리뷰를 삭제합니다.
     /// - Parameters:
     ///   - reviewId: 리뷰 아이디
-    ///   - vc: 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     /// - Author: 장현우(heoun3089@gmail.com)
     func deleteReview(reviewId: Int, vc: ReviewManagingViewController) {
         provider.rx.request(.removePlaceReview(reviewId))

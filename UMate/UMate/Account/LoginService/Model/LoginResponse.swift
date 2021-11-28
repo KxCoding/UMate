@@ -35,10 +35,13 @@ protocol CommonAccountResponseType {
     var token: String? { get }
     
     /// 유저 이름
-    var userName: String? { get }
+    var realName: String? { get }
     
     /// 닉네임
     var nickName: String? { get }
+    
+    /// 대학교 이름
+    var universityName: String? { get }
     
     /// 입학 연도
     var yearOfAdmission: String? { get }
@@ -66,10 +69,13 @@ struct LoginResponse: Codable, CommonResponseType, CommonAccountResponseType {
     var token: String?
     
     /// 유저 이름
-    let userName: String?
+    let realName: String?
     
     /// 닉네임
     let nickName: String?
+    
+    /// 대학교 이름
+    var universityName: String?
     
     /// 입학 연도
     let yearOfAdmission: String?

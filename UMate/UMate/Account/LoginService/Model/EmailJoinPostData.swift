@@ -19,10 +19,13 @@ struct EmailJoinPostData: Codable {
     let password: String
     
     /// 유저 이름
-    let userName: String
+    let realName: String
     
     /// 닉네임
     let nickName: String
+    
+    /// 대학교 아이디
+    let universityId: Int
     
     /// 입학 연도
     let yearOfAdmission: String

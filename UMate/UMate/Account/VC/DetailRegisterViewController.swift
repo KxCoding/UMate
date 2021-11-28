@@ -65,6 +65,12 @@ class DetailRegisterViewController: CommonViewController {
     /// 검증된 이메일 주소
     var verifiedEmail: String?
     
+    /// 대학교 이름
+    ///
+    /// 이전 화면에서 전달됩니다.
+    /// - Author: 장현우(heoun3089@gmail.com)
+    var universityName: String?
+    
     /// 입학 연도
     ///
     /// 이전 화면에서 전달됩니다.
@@ -102,14 +108,23 @@ class DetailRegisterViewController: CommonViewController {
                   return
               }
 
-        
-        let emailJoinPostData = EmailJoinPostData(email: email,
-                                                  password: password,
-                                                  userName: name,
-                                                  nickName: nickName,
-                                                  yearOfAdmission: entranceYear)
-        
-        LoginDataManager.shared.singup(emailJoinPostData: emailJoinPostData, vc: self)
+        UniversityDataManager.shared.fetchUniversity(vc: self) {
+            if let universityName = self.universityName {
+                let targetUniversity = UniversityDataManager.shared.universityList.filter { $0.name == universityName }
+                if let university = targetUniversity.first {
+                    print(university.universityId)
+                    
+                    let emailJoinPostData = EmailJoinPostData(email: email,
+                                                              password: password,
+                                                              realName: name,
+                                                              nickName: nickName,
+                                                              universityId: university.universityId,
+                                                              yearOfAdmission: entranceYear)
+                    
+                    LoginDataManager.shared.singup(emailJoinPostData: emailJoinPostData, vc: self)
+                }
+            }
+        }
     }
     
     

@@ -8,7 +8,7 @@
 import Foundation
 
 
-/// 상점 리뷰 모델
+/// 상점 리뷰 목록 응답 모델
 /// - Author: 장현우(heoun3089@gmail.com)
 struct PlaceReviewList: Codable {
     
@@ -75,7 +75,7 @@ struct PlaceReviewList: Codable {
     /// 서버 응답 데이터를 파싱합니다.
     /// - Parameters:
     ///   - data: 서버 응답 데이터
-    ///   - vc: 호출하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     /// - Returns: 상점 리뷰 목록
     static func parse(data: Data, vc: CommonViewController) -> [PlaceReview] {
         var list = [PlaceReview]()
