@@ -74,11 +74,25 @@ class CommentTableViewCell: UITableViewCell {
             heartImageView.image = UIImage(named: "heart2.fill")
             heartButtonImageView.image = UIImage(named: "heart2.fill")
             
+            heartCountLabel.text = "\(comment.likeCnt + 1)"
+            selectedComment?.likeCnt += 1
+            
+            heartImageView.isHidden = false
+            heartCountLabel.isHidden = false
             
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-            let likeCommentData = LikeCommentPostData(likeCommentId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", commentId: comment.commentId, createdAt: dateStr)
+            let likeCommentData = LikeCommentPostData(likeCommentId: 0, commentId: comment.commentId, createdAt: dateStr)
             
-            sendCommentLikeDataToServer(likeCommentPostData: likeCommentData)
+            CommentDataService.shared.sendCommentLikeDataToServer(likeCommentPostData: likeCommentData) { success, data in
+                if success {
+                    self.isLiked = true
+                    guard let likeComment = data.likeComment else { return }
+                    
+                    DispatchQueue.main.async {
+                        self.heartButton.tag = likeComment.likeCommentId
+                    }
+                }
+            }
         } else {
             heartImageView.image = UIImage(named: "heart2")
             heartButtonImageView.image = UIImage(named: "heart2")
@@ -159,48 +173,6 @@ class CommentTableViewCell: UITableViewCell {
         
         selectedComment = comment
         self.isLiked = isLiked
-    }
-    
-    
-    /// 댓글 좋아요를 추가합니다.
-    /// - Parameter likeCommentPostData: 댓글 좋아요 정보 객체
-    /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-    func sendCommentLikeDataToServer(likeCommentPostData: LikeCommentPostData) {
-        provider.rx.request(.saveCommentLikeData(likeCommentPostData))
-            .filterSuccessfulStatusCodes()
-            .map(SaveLikeCommentResponseData.self)
-            .observe(on: MainScheduler.instance)
-            .subscribe { (result) in
-                switch result {
-                case .success(let response):
-                    switch response.code {
-                    case ResultCode.ok.rawValue:
-                        #if DEBUG
-                        print("추가 성공")
-                        #endif
-                        self.isLiked = true
-                        guard let likeComment = response.likeComment else { return }
-                        
-                        self.heartButton.tag = likeComment.likeCommentId
-                        
-                    case ResultCode.fail.rawValue:
-                        #if DEBUG
-                        print("이미 존재함")
-                        #endif
-                        
-                        #if DEBUG
-                        print("댓글 좋아요 추가 실패")
-                        #endif
-                    default:
-                        break
-                    }
-                case .failure(let error):
-                    #if DEBUG
-                    print(error.localizedDescription)
-                    #endif
-                }
-            }
-            .disposed(by: rx.disposeBag)
     }
 }
 

@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import Moya
+import Loaf
 
 
 /// 강의 정보 뷰 컨트롤러
@@ -38,44 +39,6 @@ class DetailLectureReviewViewController: CommonViewController {
     var testInfoList = [TestInfoListResponse.TestInfo]()
     
     
-    /// 일부 강의 정보를 불러옵니다.
-    /// - Parameter lectureInfoId: 강의 정보 Id
-    ///  - Author: 남정은(dlsl7080@gmail.com)
-    private func fetchLectureInfo(lectureInfoId: Int) -> Observable<LectureInfoDetailResponse.LectrueInfo> {
-        return BoardDataManager.shared.provider.rx.request(.detailLectureInfo(lectureInfoId))
-            .filterSuccessfulStatusCodes()
-            .map(LectureInfoDetailResponse.self)
-            .map { $0.lectureInfo }
-            .asObservable()
-            .catchAndReturn(LectureInfoDetailResponse.LectrueInfo(lectureInfoId: 0, professorId: 0, title: "", bookName: "", bookLink: "", semesters: ""))
-    }
-    
-    
-    /// 강의평을 불러옵니다.
-    /// - Parameter lectureInfoId: 강의 정보 Id
-    ///  - Author: 남정은(dlsl7080@gmail.com)
-    private func fetchLectureReviews(lectureInfoId: Int) -> Observable<[LectureReviewListResponse.LectureReview]> {
-        return BoardDataManager.shared.provider.rx.request(.lectureReviewList(lectureInfoId))
-            .filterSuccessfulStatusCodes()
-            .map(LectureReviewListResponse.self)
-            .map { $0.lectureReviews }
-            .asObservable()
-            .catchAndReturn([])
-    }
-    
-    
-    /// 시험 정보를 불러옵니다.
-    /// - Parameter lectureInfoId: 강의 정보 Id
-    ///  - Author: 남정은(dlsl7080@gmail.com)
-    private func fetchTestInfos(lectureInfoId: Int) -> Observable<[TestInfoListResponse.TestInfo]> {
-        return BoardDataManager.shared.provider.rx.request(.testInfoList(lectureInfoId))
-            .map(TestInfoListResponse.self)
-            .map {$0.testInfos }
-            .asObservable()
-            .catchAndReturn([])
-    }
-    
-    
     /// 리뷰 총합
     typealias Count = (key: Int, value: Int)
     
@@ -104,11 +67,7 @@ class DetailLectureReviewViewController: CommonViewController {
     /// - Author: 남정은(dlsl7080@gmail.com)
     @discardableResult
     private func evaluatelecture(reviews: [LectureReviewListResponse.LectureReview]) -> [Int] {
-        group.enter()
         sortedResultReviewList.removeAll()
-        defer {
-            group.leave()
-        }
         
         for review in reviews {
             
@@ -169,12 +128,12 @@ class DetailLectureReviewViewController: CommonViewController {
     /// 강의 상세정보를 나타냅니다.
     /// - Author: 남정은(dlsl7080@gamil.com)
     func fetchLectureDetail() {
-        let lectureSummary = fetchLectureInfo(lectureInfoId: lectureInfoId)
-        let reviews = fetchLectureReviews(lectureInfoId: lectureInfoId)
+        let lectureSummary = BoardDataManager.shared.fetchLectureInfo(lectureInfoId: lectureInfoId)
+        let reviews =  BoardDataManager.shared.fetchLectureReviews(lectureInfoId: lectureInfoId)
         let resultReview = reviews
             .withUnretained(self)
             .map { $0.0.evaluatelecture(reviews: $0.1) }
-        let testInfos = fetchTestInfos(lectureInfoId: lectureInfoId)
+        let testInfos =  BoardDataManager.shared.fetchTestInfos(lectureInfoId: lectureInfoId)
            
         
         Observable.zip(lectureSummary, reviews, resultReview, testInfos)
@@ -199,9 +158,7 @@ class DetailLectureReviewViewController: CommonViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? TestInfoWriteViewController {
             vc.lectureInfo = lectureInfo
-        }
-        
-        if let vc = segue.destination as? LectureReviewWriteTableViewController {
+        } else if let vc = segue.destination as? LectureReviewWriteTableViewController {
             vc.lectureInfo = lectureInfo
         }
     }
@@ -219,7 +176,7 @@ class DetailLectureReviewViewController: CommonViewController {
         fetchLectureDetail()
         
         // 강의평 추가
-        var token = NotificationCenter.default.addObserver(forName: .newLectureReviewDidInput, object: nil, queue: .main) { [weak self] noti in
+        let token = NotificationCenter.default.addObserver(forName: .newLectureReviewDidInput, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             if let newReview = noti.userInfo?["review"] as? LectureReviewListResponse.LectureReview {
                 self.lectureReviewList.append(newReview)
@@ -227,7 +184,7 @@ class DetailLectureReviewViewController: CommonViewController {
                 if self.lectureReviewList.count > 0 {
                     self.evaluatelecture(reviews: self.lectureReviewList)
                     
-                    self.group.notify(queue: .main) {
+                    DispatchQueue.main.async {
                         if self.lectureReviewList.count == 1 {
                             self.lectureInfoTableView.insertRows(at: [IndexPath(row: 0, section: 2), IndexPath(row: self.lectureReviewList.count - 1, section: 3)], with: .automatic)
                         } else {
@@ -241,36 +198,50 @@ class DetailLectureReviewViewController: CommonViewController {
         tokens.append(token)
         
         // 시험 정보 추가
-        token = NotificationCenter.default.addObserver(forName: .testInfoDidShare, object: nil, queue: .main) { noti in
-            if let testInfo = noti.userInfo?["testInfo"] as? TestInfoListResponse.TestInfo {
-                self.testInfoList.append(testInfo)
-                
-                let count = self.testInfoList.count
-                self.lectureInfoTableView.insertRows(at: [IndexPath(row: count - 1, section: 4)], with: .automatic)
-            }
-        }
-        tokens.append(token)
-    }
-    
-    
-    /// 뷰 계층에 모든 뷰들이 추가된 이후 호출됩니다.
-    /// - Parameter animated: 윈도우에 뷰가 추가될 때 애니메이션 여부. 기본값은 true입니다.
-    /// - Author: 남정은(dlsl7080@gmail.com)
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
- 
+        NotificationCenter.default.rx.notification(.testInfoDidShare, object: nil)
+            .compactMap { $0.userInfo?["testInfo"] as? TestInfoListResponse.TestInfo }
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                $0.0.testInfoList.append($0.1)
+                let count = $0.0.testInfoList.count
+                $0.0.lectureInfoTableView.insertRows(at: [IndexPath(row: count - 1, section: 4)], with: .automatic)
+            })
+            .disposed(by: rx.disposeBag)
+        
         // 헤더뷰 버튼 동작
-        let token = NotificationCenter.default.addObserver(forName: .performSegueToWrite, object: nil, queue: .main, using: { [weak self] noti in
-            guard let self = self else { return }
-            if let tag = noti.userInfo?["tag"] as? Int {
-                if tag == 2 {
-                    self.performSegue(withIdentifier: "writeReviewSegue", sender: self)
+        NotificationCenter.default.rx.notification(.performSegueToWrite, object: nil)
+            .compactMap { $0.userInfo?["tag"] as? Int }
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                if $0.1 == 2 {
+                    $0.0.performSegue(withIdentifier: "writeReviewSegue", sender: self)
                 } else {
-                    self.performSegue(withIdentifier: "testInfoSegue", sender: self)
+                    $0.0.performSegue(withIdentifier: "testInfoSegue", sender: self)
                 }
-            }
-        })
-        tokens.append(token)
+            })
+            .disposed(by: rx.disposeBag)
+        
+        NotificationCenter.default.rx.notification(.testInfoDidReported, object: nil)
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { vc, _ in
+                vc.alertVersion3(title: "※ 신고하시겠습니까?", message: "\n해당 시험 정보가 부적절한 내용을 포함하여 신고합니다.") { _ in
+                    Loaf("신고가 접수되었습니다.", state: .custom(.init(backgroundColor: .black)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: vc).show(.short)
+                }
+            })
+            .disposed(by: rx.disposeBag)
+        
+        NotificationCenter.default.rx.notification(.lectureReviewDidReported, object: nil)
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { vc, _ in
+                vc.alertVersion3(title: "※ 신고하시겠습니까?", message: "\n해당 강의평이 부적절한 내용을 포함하여 신고합니다.") { _ in
+                    Loaf("신고가 접수되었습니다.", state: .custom(.init(backgroundColor: .black)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: vc).show(.short)
+                }
+            })
+            .disposed(by: rx.disposeBag)
     }
 }
 
@@ -538,7 +509,7 @@ extension DetailLectureReviewViewController: UICollectionViewDelegate {
             lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .top, animated: true)
           
         // 시험 정보 선택 시
-        case 3:
+        case 4:
             lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 4), at: .top, animated: true)
           
         default:

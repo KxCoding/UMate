@@ -36,10 +36,6 @@ struct BlobManager {
         account = try? AZSCloudStorageAccount(fromConnectionString: constr)
         client = account?.getBlobClient()
         container = client?.containerReference(fromName: "images")
-        
-        upload(image: UIImage()) { finished, id in
-            
-        }
     }
     
     

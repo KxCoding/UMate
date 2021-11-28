@@ -352,7 +352,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
             return
         }
         
-        guard let reviewTest = reviewTestNumber else {
+        guard let reviewTestNumber = reviewTestNumber else {
             Loaf("시험 횟수를 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
             return
         }
@@ -375,11 +375,11 @@ class LectureReviewWriteTableViewController: UITableViewController {
         // 작성 경고문
         alertVersion3(title: "강의평을 작성하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { [unowned self] _ in
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-            let newReview = LectureReviewPostData(lectureReviewId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", lectureInfoId: self.lectureInfo?.lectureInfoId ?? 0, assignment: reviewAssignment.rawValue, groupMeeting: reviewGroupMeeting.rawValue, evaluation: reviewEvaluation.rawValue, attendance: reviewAttendance.rawValue, testNumber: reviewTest.rawValue, rating: reviewRating.rawValue, semester: semester, content: reviewContent, createdAt: dateStr)
-    
+            let newReview = LectureReviewPostData(lectureReviewId: 0, lectureInfoId: self.lectureInfo?.lectureInfoId ?? 0, assignment: reviewAssignment.rawValue, groupMeeting: reviewGroupMeeting.rawValue, evaluation: reviewEvaluation.rawValue, attendance: reviewAttendance.rawValue, testNumber: reviewTestNumber.rawValue, rating: reviewRating.rawValue, semester: semester, content: reviewContent, createdAt: dateStr)
+            
             self.sendLectureReviewDataToServer(lectureReviewPostData: newReview)
             
-                self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

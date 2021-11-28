@@ -6,6 +6,15 @@
 //
 
 import UIKit
+import RxSwift
+
+
+/// 시험 정보 신고
+/// - Author: 남정은(dlsl7080@gmail.com)
+extension Notification.Name {
+    static let testInfoDidReported = Notification.Name("testInfoDidReported")
+}
+
 
 
 /// 시험정보 공유 테이블 뷰 셀
@@ -27,6 +36,22 @@ class TestInfoTableViewCell: UITableViewCell {
     /// 문제 예시들을 담는 스택뷰
     @IBOutlet weak var exaplesStackView: UIStackView!
     
+    /// 신고 버튼
+    @IBOutlet weak var reportButton: UIButton!
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        reportButton.layer.cornerRadius = 5
+        
+        reportButton.rx.tap
+            .throttle(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                NotificationCenter.default.post(name: .testInfoDidReported, object: nil)
+            })
+            .disposed(by: rx.disposeBag)
+    }
+    
     
     /// 시험정보 셀을 초기화 합니다.
     /// - Parameters:
@@ -39,7 +64,7 @@ class TestInfoTableViewCell: UITableViewCell {
         questionType.text = testInfo.questionTypes
         
         // 문제예시
-        exaplesStackView.removeFullyAllArrangedSubviews()
+        exaplesStackView.removeAllArrangedSubviews()
         for ex in testInfo.examples {
             // 문제 예시를 나타내는 레이블
             let exampleLabel = UILabel()
@@ -70,7 +95,7 @@ extension UIStackView {
     
     
     /// 스택뷰의 하위뷰를 모두 삭제함
-    func removeFullyAllArrangedSubviews() {
+    func removeAllArrangedSubviews() {
         arrangedSubviews.forEach { (view) in
             removeFully(view: view)
         }

@@ -34,6 +34,9 @@ class LectureBookTableViewCell: UITableViewCell {
         }
         // 등록된 교재가 있을 경우
         else {
+            bookNameLabel.isHidden = false
+            bookLinkTextView.isSelectable = true
+            explainLabel.isHidden = false
             let attributedString = NSMutableAttributedString(string: lecture.bookName,
                                                             attributes: [.font: UIFont.preferredFont(forTextStyle: .body)])
             if let encoded = lecture.bookLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),

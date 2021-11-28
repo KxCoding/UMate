@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import RxSwift
 
 
 class PostDataService {
@@ -29,7 +30,10 @@ enum ScrapInfoService {
 
 
 
-extension ScrapInfoService: TargetType {
+extension ScrapInfoService: TargetType, AccessTokenAuthorizable {
+    var authorizationType: AuthorizationType? {
+        return .bearer
+    }
     
     /// 기본 URL
     var baseURL: URL {
@@ -79,7 +83,10 @@ enum PostSaveService {
 
 
 
-extension PostSaveService: TargetType {
+extension PostSaveService: TargetType, AccessTokenAuthorizable {
+    var authorizationType: AuthorizationType? {
+        return .bearer
+    }
     
     /// 기본 URL
     var baseURL: URL {
@@ -122,7 +129,10 @@ enum CommentSaveService {
 
 
 
-extension CommentSaveService: TargetType {
+extension CommentSaveService: TargetType, AccessTokenAuthorizable {
+    var authorizationType: AuthorizationType? {
+        return .bearer
+    }
     
     /// 기본 URL
     var baseURL: URL {
@@ -162,7 +172,43 @@ class CommentDataService {
     static let shared = CommentDataService()
     private init() { }
     
+    let disposeBag = DisposeBag()
+    
     let provider = MoyaProvider<CommentLikeService>()
+    
+    /// 댓글 좋아요를 추가합니다.
+    /// - Parameter likeCommentPostData: 댓글 좋아요 정보 객체
+    /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
+    func sendCommentLikeDataToServer(likeCommentPostData: LikeCommentPostData, completion: @escaping (Bool, SaveLikeCommentResponseData) -> ()) {
+        provider.rx.request(.saveCommentLikeData(likeCommentPostData))
+            .filterSuccessfulStatusCodes()
+            .map(SaveLikeCommentResponseData.self)
+            .observe(on: MainScheduler.instance)
+            .subscribe { (result) in
+                switch result {
+                case .success(let response):
+                    switch response.code {
+                    case ResultCode.ok.rawValue:
+                        #if DEBUG
+                        print("추가 성공")
+                        #endif
+                        completion(true, response)
+                        
+                    case ResultCode.fail.rawValue:
+                        #if DEBUG
+                        print("댓글 좋아요 추가 실패")
+                        #endif
+                    default:
+                        break
+                    }
+                case .failure(let error):
+                    #if DEBUG
+                    print(error.localizedDescription)
+                    #endif
+                }
+            }
+            .disposed(by: disposeBag)
+    }
 }
 
 
@@ -173,7 +219,10 @@ enum CommentLikeService {
 
 
 
-extension CommentLikeService: TargetType {
+extension CommentLikeService: TargetType, AccessTokenAuthorizable {
+    var authorizationType: AuthorizationType? {
+        return .bearer
+    }
     
     /// 기본 URL
     var baseURL: URL {
@@ -200,6 +249,9 @@ extension CommentLikeService: TargetType {
     
     /// HTTP 헤더
     var headers: [String : String]? {
-        return ["Content-Type": "application/json"]
+        if let token = LoginDataManager.shared.loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            return ["Content-Type": "application/json", "Authorization":"Bearer \(token)"]
+        }
+        return nil
     }
 }

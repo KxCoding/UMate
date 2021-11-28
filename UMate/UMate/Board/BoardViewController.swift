@@ -22,9 +22,6 @@ class BoardViewController: CommonViewController {
     /// 게시판 목록
     var boardList = [BoardDtoResponseData.BoardDto]()
     
-    /// 스크랩 게시물 목록
-    var scrapPostList = [PostListDtoResponseData.PostDto]()
-    
     
     /// 게시판 정보를 불러옵니다.
     /// - Author: 남정은(dlsl7080@gmail.com)
@@ -39,22 +36,6 @@ class BoardViewController: CommonViewController {
                 self?.boardList = $0
                 self?.boardListTableView.reloadData()
                 self?.boardListTableView.isHidden = false
-            })
-            .disposed(by: rx.disposeBag)
-    }
-    
-    
-    /// 사용자가 스크랩한 게시글 목록을 불러옵니다.
-    /// - Parameter userId: 사용자 Id
-    /// - Author: 남정은(dlsl7080@gmail.com)
-    private func fetchScrapPostList(userId: String) {
-        BoardDataManager.shared.provider.rx.request(.scrapList(userId))
-            .filterSuccessfulStatusCodes()
-            .map(PostListDtoResponseData.self)
-            .map { $0.list }
-            .catchAndReturn([])
-            .subscribe(onSuccess: { [weak self] in
-                self?.scrapPostList = $0
             })
             .disposed(by: rx.disposeBag)
     }
@@ -76,8 +57,11 @@ class BoardViewController: CommonViewController {
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if let cell = sender as? UITableViewCell, let indexPath = boardListTableView.indexPath(for: cell) {
             // 강의 평가 게시판과 정보 게시판은 performSegue를 이용
-            if indexPath == IndexPath(row: 5, section: 1) || indexPath == IndexPath(row: 0, section: 3) {
-                return false
+            if let firstBoardInSection = boardList.first(where: { $0.section == indexPath.section }) {
+                let selectedBoard = boardList.first(where: { $0.boardId == indexPath.row + firstBoardInSection.boardId })
+                if selectedBoard?.boardId == 8 || selectedBoard?.boardId == 11 {
+                    return false
+                }
             }
         }
         return true
@@ -98,9 +82,9 @@ class BoardViewController: CommonViewController {
         
         if let cell = sender as? UITableViewCell,
            let indexPath = boardListTableView.indexPath(for: cell),
-           let firstBoardinSection = boardList.first(where: { $0.section == indexPath.section }) {
+           let firstBoardInSection = boardList.first(where: { $0.section == indexPath.section }) {
             
-            let selectedBoard = boardList.first(where: { $0.boardId == indexPath.row + firstBoardinSection.boardId })
+            let selectedBoard = boardList.first(where: { $0.boardId == indexPath.row + firstBoardInSection.boardId })
             
             if let vc = segue.destination as? FreeBoardViewController {
                 vc.selectedBoard = selectedBoard
@@ -125,6 +109,7 @@ class BoardViewController: CommonViewController {
         
         // 게시판 목록 section별로 펼치고 접는 동작
         let token = NotificationCenter.default.addObserver(forName: .expandOrFoldSection, object: nil, queue: .main) { [weak self] noti in
+            
             if let section = noti.userInfo?["section"] as? Int {
                 guard let self = self else { return }
                 
@@ -223,13 +208,17 @@ extension BoardViewController: UITableViewDelegate {
     ///   - indexPath: 게시판 셀의 indexPath
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // 강의평가 게시판으로 이동
-        if indexPath.section == 1 && indexPath.row == 5 {
-            performSegue(withIdentifier: "lectureSegue", sender: self)
-        }
-        // 정보 게시판으로 이동
-        else if indexPath.section == 3 && indexPath.row == 0 {
-            performSegue(withIdentifier: "infoSegue", sender: self)
+        if let firstBoardInSection = boardList.first(where: { $0.section == indexPath.section }) {
+            let selectedBoard = boardList.first(where: { $0.boardId == indexPath.row + firstBoardInSection.boardId })
+            
+            // 강의평가 게시판으로 이동
+            if selectedBoard?.boardId == 8 {
+                performSegue(withIdentifier: "lectureSegue", sender: self)
+            }
+            // 정보 게시판으로 이동
+            else if selectedBoard?.boardId == 11 {
+                performSegue(withIdentifier: "infoSegue", sender: self)
+            }
         }
     }
     

@@ -93,6 +93,24 @@ extension UIViewController {
     }
     
     
+    /// 기본 액션 시트
+    /// 메뉴를 추가할 수 있습니다.
+    /// - Parameters:
+    ///   - title: 제목
+    ///   - message: 메시지
+    ///   - handler: 버튼 처리 동작
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    func alertVersion4(title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+        var alertStyle = UIAlertController.Style.actionSheet
+        if (UIDevice.current.userInterfaceIdiom == .pad) {
+            alertStyle = UIAlertController.Style.alert
+        }
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: alertStyle)
+        return alert
+    }
+    
+    
     /// 게시판 댓글 신고 알림입니다.
     /// - Parameters:
     ///   - title: 알림 타이틀. 기본값은 nil입니다.
@@ -164,7 +182,12 @@ extension UIViewController {
     /// - Returns: SelectImageAttachActionType을 방출하는 옵저버블
     func alertToSelectImageAttachWay(title: String, message: String) -> Observable<SelectImageAttachActionType> {
         return Observable.create { [unowned self] observer in
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+            var alertStyle = UIAlertController.Style.actionSheet
+            if (UIDevice.current.userInterfaceIdiom == .pad) {
+                alertStyle = UIAlertController.Style.alert
+            }
+            
+            let alert = UIAlertController(title: title, message: message, preferredStyle: alertStyle)
             
             let findAction = UIAlertAction(title: "앨범에서 찾기", style: .default) { _ in
                 observer.onNext(.find)

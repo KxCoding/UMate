@@ -148,4 +148,22 @@ extension UIView {
         self.layer.cornerRadius = 14
         self.layer.borderColor = UIColor.systemGray.cgColor
     }
+    
+    
+    /// 텍스트필드가 firstResponder일 때를 알기 위해 사용
+    ///
+    /// 현재 firstResponder를 리턴해 주는 속성입니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    var firstResponder: UIView? {
+        // 현재 UIView가 firstResponder라면 자신을 리턴
+        guard !isFirstResponder else { return self }
+        
+        // 아니라면 하위뷰들 중에 firstResponder를 찾아서 리턴
+        for subview in subviews {
+            if let firstResponder = subview.firstResponder {
+                return firstResponder
+            }
+        }
+        return nil
+    }
 }

@@ -43,14 +43,6 @@ class SelectImageViewController: CommonViewController {
     /// 이미지 관리 객체
     let imageManager = PHImageManager()
     
-    /// 이미지 옵션
-    /// - Author: 남정은(dlsl7080@gmail.com)
-    lazy var imageOption: PHImageRequestOptions = {
-        let option = PHImageRequestOptions()
-        option.deliveryMode = PHImageRequestOptionsDeliveryMode.fastFormat
-        return option
-    }()
-    
     /// Fetch한 사진 저장
     var allPhotos: PHFetchResult<PHAsset> = {
         let option = PHFetchOptions()
@@ -140,7 +132,7 @@ class SelectImageViewController: CommonViewController {
                 for index in indexPath {
                     let target = allPhotos.object(at: index.item)
                     
-                    imageManager.requestImage(for: target,targetSize: PHImageManagerMaximumSize,
+                    imageManager.requestImage(for: target,targetSize: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height),
                                                  contentMode: .aspectFill,
                                                  options: nil) { (image, _) in
                         if let image = image {
@@ -162,7 +154,6 @@ class SelectImageViewController: CommonViewController {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
 }
-
 
 
 
@@ -188,7 +179,6 @@ extension SelectImageViewController: UICollectionViewDataSource {
     /// - Returns: imageCollectionView의 cell
     /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell",
                                                       for: indexPath) as! ImageCollectionViewCell
 

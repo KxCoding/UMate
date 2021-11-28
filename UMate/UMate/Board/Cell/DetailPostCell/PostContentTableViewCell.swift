@@ -18,6 +18,8 @@ extension  Notification.Name {
 
     static let postCancelScrap = Notification.Name("postCancelScrap")
     static let postAlreadyLiked = Notification.Name("postAlreadyLiked")
+    
+    static let menuSheetDidAlert = Notification.Name("menuSheetDidAlert")
 }
 
 
@@ -60,27 +62,29 @@ class PostContentTableViewCell: UITableViewCell {
     /// 하트 이미지 뷰
     @IBOutlet weak var likeImageView: UIImageView!
     
+    /// 하트 버튼
+    @IBOutlet weak var likeButton: UIButton!
+    
     
     /// 하트 버튼을 눌렀을 때 하트 이미지의 색상이 변경됩니다.
     /// - Parameter sender: 하트 버튼
     /// - Author: 남정은(dlsl7080@gmail.com)
-    @IBAction func toggleLikeButton(_ sender: UIButton) {
+    private func toggleLikeButton(_ sender: UIButton) {
         
         if isLiked {
             NotificationCenter.default.post(name: .postAlreadyLiked, object: nil)
+        } else {
+            likeImageView.image = UIImage(named: "heart2.fill")
+            likeImageView.tintColor = UIColor.init(named: "blackSelectedColor")
+            
+            let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
+            let likePostdata = LikePostData(postId: postId, createdAt: dateStr)
+            
+            sendLikeInfoToServer(likePostData: likePostdata)
+           
+            NotificationCenter.default.post(name: .postDidLike, object: nil, userInfo: ["postId": postId])
         }
-        
-        likeImageView.image = UIImage(named: "heart2.fill")
-        likeImageView.tintColor = UIColor.init(named: "blackSelectedColor")
-        
-        
-        let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-        let likePostdata = LikePostData(userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", postId: postId, createdAt: dateStr)
-        
-        sendLikeInfoToServer(likePostData: likePostdata)
-
         isLiked = true
-        NotificationCenter.default.post(name: .postDidLike, object: nil, userInfo: ["postId": postId])
     }
     
     
@@ -114,9 +118,10 @@ class PostContentTableViewCell: UITableViewCell {
             
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
             
-            let scrapPostData = ScrapPostData(userId:LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", postId: postId, createdAt: dateStr)
+            let scrapPostData = ScrapPostData(postId: postId, createdAt: dateStr)
             
             sendScrapInfoToServer(scrapPostData: scrapPostData)
+            NotificationCenter.default.post(name: .postDidScrap, object: nil, userInfo: ["postId": postId])
         }
     }
     
@@ -125,7 +130,7 @@ class PostContentTableViewCell: UITableViewCell {
     /// - Parameter sender: 햄버거 버튼
     /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func showMenu(_ sender: Any) {
-        NotificationCenter.default.post(name: .alertDidSend, object: nil)
+        NotificationCenter.default.post(name: .menuSheetDidAlert, object: nil)
     }
     
     
@@ -224,6 +229,14 @@ class PostContentTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        likeButton.rx.tap
+            .throttle(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .withUnretained(self)
+            .subscribe(onNext: {
+                $0.0.toggleLikeButton($0.0.likeButton)
+            })
+            .disposed(by: rx.disposeBag)
+        
         // 사용자 이미지 모서리 깎기
         userImageView.layer.cornerRadius = userImageView.frame.height / 2
     }
@@ -269,7 +282,7 @@ class PostContentTableViewCell: UITableViewCell {
         }
     
         userNameLabel.text = post.userName
-        dateLabel.text = post.createdAt
+        dateLabel.text = post.dateStr
         postTitleLabel.text = post.title
         postContentLabel.text = post.content
     

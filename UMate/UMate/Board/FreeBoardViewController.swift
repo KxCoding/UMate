@@ -44,10 +44,9 @@ class FreeBoardViewController: CommonViewController {
     /// 게시판에 해당하는 게시글 목록을 불러옵니다.
     /// - Parameters:
     ///   - boardId: 게시판 Id
-    ///   - userId: 사용자 Id
     /// - Author: 남정은(dlsl7080@gmail.com)
-    private func fetchPostList(boardId: Int, userId: String) {
-        BoardDataManager.shared.provider.rx.request(.postList(boardId, userId))
+    private func fetchPostList(boardId: Int) {
+        BoardDataManager.shared.provider.rx.request(.postList(boardId))
             .filterSuccessfulStatusCodes()
             .map(PostListDtoResponseData.self)
             .map { $0.list }
@@ -78,7 +77,6 @@ class FreeBoardViewController: CommonViewController {
         // 검색 버튼 클릭 시 선택된 게시판에 대한 정보 전달
         else if segue.identifier == "searchSegue", let vc = segue.destination as? SearchViewController {
             vc.postList = postList
-            
         }
         // 글 쓰기 버튼 클릭시 선택된 board 및 카테고리 정보 전달
         else if segue.identifier == "composeSegue", let vc = segue.destination.children.first as? ComposeViewController {
@@ -93,8 +91,8 @@ class FreeBoardViewController: CommonViewController {
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-   
-        fetchPostList(boardId: selectedBoard?.boardId ?? 1, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "")
+        
+        fetchPostList(boardId: selectedBoard?.boardId ?? 1)
         
         if let boardId = selectedBoard?.boardId, boardId <= 4 {
             composeButton.isHidden = true
@@ -118,7 +116,6 @@ class FreeBoardViewController: CommonViewController {
             }
         }
         tokens.append(token)
-       
         
         // 일반 게시판에 게시글 추가
         token = NotificationCenter.default.addObserver(forName: .newPostInsert, object: nil, queue: .main) { [weak self] noti in
@@ -157,8 +154,6 @@ class FreeBoardViewController: CommonViewController {
         })
         tokens.append(token)
         
-      
-        
         token = NotificationCenter.default.addObserver(forName: .postDidScrap, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if let postId = noti.userInfo?["postId"] as? Int,
@@ -168,8 +163,6 @@ class FreeBoardViewController: CommonViewController {
             }
         })
         tokens.append(token)
-        
-      
         
         token = NotificationCenter.default.addObserver(forName: .postCancelScrap, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
@@ -181,9 +174,7 @@ class FreeBoardViewController: CommonViewController {
         })
         tokens.append(token)
         
-    
-        
-        token = NotificationCenter.default.addObserver(forName: .commentDidInsert, object: nil, queue: .main, using: { [weak self] noti in
+        token = NotificationCenter.default.addObserver(forName: .commentCountDidIncreased, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if let postId = noti.userInfo?["postId"] as? Int,
                let index = self.postList.firstIndex(where: { $0.postId == postId }) {
@@ -192,9 +183,8 @@ class FreeBoardViewController: CommonViewController {
             }
         })
         tokens.append(token)
-    
         
-        token = NotificationCenter.default.addObserver(forName: .commentDidDelete, object: nil, queue: .main, using: { [weak self] noti in
+        token = NotificationCenter.default.addObserver(forName: .commentCountDidDecreased, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if let postId = noti.userInfo?["postId"] as? Int,
                let index = self.postList.firstIndex(where: { $0.postId == postId }) {
@@ -229,15 +219,9 @@ extension FreeBoardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FreeBoardTableViewCell", for: indexPath) as! FreeBoardTableViewCell
         
-        var post = postList[indexPath.row]
+        let post = postList[indexPath.row]
         
-        // 게시글 목록 셀 초기화
-        if let date = BoardDataManager.shared.decodingFormatter.date(from: post.createdAt) {
-            let dateStr = date.relativeDate
-            post.createdAt = dateStr
-            cell.configure(post: post)
-        }
-        
+        cell.configure(post: post)
         return cell
     }
 }

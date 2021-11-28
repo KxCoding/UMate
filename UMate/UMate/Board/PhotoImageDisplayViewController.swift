@@ -93,7 +93,7 @@ class PhotoImageDisplayViewController: UIViewController {
                                         object: nil,
                                         userInfo: ["img": capturedImage])
         
-        NotificationCenter.default.post(name: .requestPostImage, object: nil, userInfo: ["img": capturedImage])
+        NotificationCenter.default.post(name: .requestPostImage, object: nil, userInfo: ["image": capturedImage])
         
         dismiss(animated: true, completion: nil)
     }

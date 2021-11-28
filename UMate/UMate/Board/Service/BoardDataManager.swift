@@ -39,6 +39,13 @@ class BoardDataManager {
         return f
     }()
     
+    /// 리뷰 평균 소수점 설정
+    let numberFormatter: NumberFormatter = {
+       let f = NumberFormatter()
+        f.maximumFractionDigits = 1
+        return f
+    }()
+    
     /// 서버 요청 API
     let session = URLSession.shared
  
@@ -151,6 +158,130 @@ class BoardDataManager {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    
+    /// 게시글의 일부 정보를 불러옵니다.
+    /// - Parameters:
+    ///   - id: 게시글 Id
+    ///   - Author: 남정은(dlsl7080@gmail.com)
+    func fetchPostSummary(id: Int) -> Observable<PostDtoResponseData> {
+        return BoardDataManager.shared.provider.rx.request(.detailPost(id))
+            .filterSuccessfulStatusCodes()
+            .map(PostDtoResponseData.self)
+            .asObservable()
+    }
+    
+    
+    /// 게시글 이미지를 불러옵니다.
+    /// - Parameter postId: 게시글 Id
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    func fetchImages(postId: Int) -> Observable<[ImageListResponseData.PostImage]> {
+        return BoardDataManager.shared.provider.rx.request(.postImageList(postId))
+            .filterSuccessfulStatusCodes()
+            .map(ImageListResponseData.self)
+            .map { $0.list }
+            .catchAndReturn([])
+            .asObservable()
+    }
+    
+    
+    /// 게시글의 댓글목록을 불러옵니다.
+    /// - Parameter postId: 게시글 Id
+    /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
+    func fetchComments(postId: Int) -> Observable<CommentListResponseData> {
+        return BoardDataManager.shared.provider.rx.request(.commentList(postId))
+            .filterSuccessfulStatusCodes()
+            .map(CommentListResponseData.self)
+            .catchAndReturn(CommentListResponseData(lastId: 0, list: [], code: 0, message: nil))
+            .asObservable()
+    }
+    
+    
+    /// 댓글의 좋아요 정보를 불러옵니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    func fetchLikeComment() -> Observable<[LikeCommentListResponse.LikeComment]> {
+        return BoardDataManager.shared.provider.rx.request(.likeCommentList)
+            .filterSuccessfulStatusCodes()
+            .map(LikeCommentListResponse.self)
+            .map { $0.list }
+            .catchAndReturn([])
+            .asObservable()
+    }
+    
+    
+    /// 강의목록 페이지
+    var lecturePage = 1
+    
+    /// 강의목록 불러오는 양
+    let lecturePageSize = 12
+    
+    /// 강의정보 불러오는 중
+    var lectureIsFetching = false
+    
+    /// 추가로 불러온 정보
+    var hasMoreLecture = true
+    
+    /// 전체 강의 목록 개수
+    var totalCount = 0
+    
+    /// 최신 강의평 목록을 불러옵니다.
+    ///  - Author: 남정은(dlsl7080@gmail.com)
+    func fetchRecentReview(lectureCount: Int) -> Observable<[LectureInfoListResponseData.LectureInfo]> {
+        lectureIsFetching = true
+        
+        return BoardDataManager.shared.provider.rx.request(.recentLectureReviewList(lecturePage, lecturePageSize))
+            .filterSuccessfulStatusCodes()
+            .map(LectureInfoListResponseData.self)
+            .map { [weak self] data in
+                self?.lecturePage += 1
+                
+                self?.hasMoreLecture = data.totalCount > lectureCount + data.list.count
+                self?.totalCount = data.totalCount
+                
+                self?.lectureIsFetching = false
+                return data.list
+            }
+            .asObservable()
+            .catchAndReturn([])
+    }
+    
+    
+    /// 일부 강의 정보를 불러옵니다.
+    /// - Parameter lectureInfoId: 강의 정보 Id
+    ///  - Author: 남정은(dlsl7080@gmail.com)
+    func fetchLectureInfo(lectureInfoId: Int) -> Observable<LectureInfoDetailResponse.LectrueInfo> {
+        return BoardDataManager.shared.provider.rx.request(.detailLectureInfo(lectureInfoId))
+            .filterSuccessfulStatusCodes()
+            .map(LectureInfoDetailResponse.self)
+            .map { $0.lectureInfo }
+            .asObservable()
+            .catchAndReturn(LectureInfoDetailResponse.LectrueInfo(lectureInfoId: 0, professorId: 0, title: "", bookName: "", bookLink: "", semesters: ""))
+    }
+    
+    
+    /// 강의평을 불러옵니다.
+    /// - Parameter lectureInfoId: 강의 정보 Id
+    ///  - Author: 남정은(dlsl7080@gmail.com)
+    func fetchLectureReviews(lectureInfoId: Int) -> Observable<[LectureReviewListResponse.LectureReview]> {
+        return BoardDataManager.shared.provider.rx.request(.lectureReviewList(lectureInfoId))
+            .filterSuccessfulStatusCodes()
+            .map(LectureReviewListResponse.self)
+            .map { $0.lectureReviews }
+            .asObservable()
+            .catchAndReturn([])
+    }
+    
+    
+    /// 시험 정보를 불러옵니다.
+    /// - Parameter lectureInfoId: 강의 정보 Id
+    ///  - Author: 남정은(dlsl7080@gmail.com)
+    func fetchTestInfos(lectureInfoId: Int) -> Observable<[TestInfoListResponse.TestInfo]> {
+        return BoardDataManager.shared.provider.rx.request(.testInfoList(lectureInfoId))
+            .map(TestInfoListResponse.self)
+            .map {$0.testInfos }
+            .asObservable()
+            .catchAndReturn([])
     }
 }
 
