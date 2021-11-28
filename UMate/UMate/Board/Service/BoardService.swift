@@ -16,12 +16,11 @@ import Moya
 enum BoardService {
     /// GET
     case boardList
-    case scrapList(String)
-    case postList(Int, String)
-    case detailPost(Int, String)
+    case postList(Int)
+    case detailPost(Int)
     case postImageList(Int)
     case commentList(Int)
-    case likeCommentList(String)
+    case likeCommentList
     
     case recentLectureReviewList(Int, Int)
     case detailLectureInfo(Int)
@@ -40,12 +39,7 @@ enum BoardService {
 
 extension BoardService: TargetType, AccessTokenAuthorizable {
     var authorizationType: AuthorizationType? {
-        switch self {
-        case .testInfoList:
-            return .bearer
-        default:
-            return .basic
-        }
+        return .bearer
     }
     
     var baseURL: URL {
@@ -56,11 +50,9 @@ extension BoardService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .boardList:
             return "/api/board"
-        case .scrapList:
-            return "/api/scrapPost"
         case .postList:
             return "/api/boardPost"
-        case .detailPost(let postId, _):
+        case .detailPost(let postId):
             return "/api/boardPost/\(postId)"
         case .postImageList:
             return "/api/image"
@@ -93,7 +85,7 @@ extension BoardService: TargetType, AccessTokenAuthorizable {
     var method: Moya.Method {
         switch self {
         /// 게시판
-        case .boardList, .scrapList, .postList, .detailPost, .postImageList, .commentList, .likeCommentList:
+        case .boardList, .postList, .detailPost, .postImageList, .commentList, .likeCommentList:
             return .get
         case .deletePost, .deleteComment, .deleteScrapPost, .deleteLikeComment:
             return .delete
@@ -108,16 +100,10 @@ extension BoardService: TargetType, AccessTokenAuthorizable {
     var task: Task {
         switch self {
         /// 게시판
-        case .boardList:
+        case .boardList, .likeCommentList, .detailPost:
             return .requestPlain
-        case .scrapList:
-            return .requestPlain
-        case .likeCommentList(let userId):
-            return .requestParameters(parameters: ["userId": userId], encoding: URLEncoding.queryString)
-        case .postList(let boardId, let userId):
-            return .requestParameters(parameters: ["boardId": boardId, "userId": userId], encoding: URLEncoding.queryString)
-        case .detailPost(_, let userId):
-            return .requestParameters(parameters: ["userId": userId], encoding: URLEncoding.queryString)
+        case .postList(let boardId):
+            return .requestParameters(parameters: ["boardId": boardId], encoding: URLEncoding.queryString)
         case .postImageList(let postId), .commentList(let postId):
             return .requestParameters(parameters: ["postId": postId], encoding: URLEncoding.queryString)
             
@@ -125,7 +111,6 @@ extension BoardService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: ["postId": postId], encoding: URLEncoding.queryString)
         case .deleteComment(let commentId), .deleteLikeComment(let commentId):
             return .requestParameters(parameters: ["commentId": commentId], encoding: URLEncoding.queryString)
-        
         
             
         /// 강의평가

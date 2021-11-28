@@ -39,7 +39,7 @@ class FreeBoardTableViewCell: UITableViewCell {
         
         postTitleLabel.text = post.title
         postContentLabel.text = post.content
-        postTimeLabel.text = post.createdAt
+        postTimeLabel.text = post.dateStr
         postWriterLabel.text = post.userName
         likeCountLabel.text = "\(post.likeCnt)"
         commentCountLabel.text = "\(post.commentCnt)"

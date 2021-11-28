@@ -199,7 +199,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
             let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
             let questionTypesStr = questionTypes.map{ $0.trimmingCharacters(in: .whitespaces)}.joined(separator: ",")
             
-            let newTestInfo = TestInfoPostData(testInfoId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", lectureInfoId: lectureInfoId, semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypesStr, examples: examplesOfQuestions, createdAt: dateStr)
+            let newTestInfo = TestInfoPostData(testInfoId: 0, lectureInfoId: lectureInfoId, semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypesStr, examples: examplesOfQuestions, createdAt: dateStr)
             
             NotificationCenter.default.post(name: .warningAlertDidSend, object: nil, userInfo: ["testInfo": newTestInfo])
         }
@@ -226,9 +226,11 @@ class TestInfoWriteTableViewCell: UITableViewCell {
     /// 강의에 대한 정보를 받아오고 드롭다운 뷰에 데이터를 저장합니다.
     /// - Parameter openingSemester: 강의가 개설된 학기를 담은 배열
     /// - Author: 남정은(dlsl7080@gmail.com)
-    func receiveSemestersAndAddDropDownData(semesters: [String], lectureInfoId: Int) {
+    func receiveSemestersAndAddDropDownData(lecture: LectureInfoDetailResponse.LectrueInfo) {
+        // 개설학기를 담는 배열
+        let semesters = lecture.semesters.components(separatedBy: "/")
         self.semesters = semesters
-        self.lectureInfoId = lectureInfoId
+        self.lectureInfoId = lecture.lectureInfoId
         
         if !isAppended {
             isAppended = true

@@ -119,7 +119,7 @@ class CategoryBoardViewController: FreeBoardViewController {
         })
         tokens.append(token)
         
-        token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert, object: nil, queue: .main, using: { [weak self] noti in
+        token = NotificationCenter.default.addObserver(forName: .commentCountDidIncreased, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if self.isFiltering {
                 if let postId = noti.userInfo?["postId"] as? Int,
@@ -131,7 +131,7 @@ class CategoryBoardViewController: FreeBoardViewController {
         })
         tokens.append(token)
         
-        token = NotificationCenter.default.addObserver(forName: .commentDidDelete, object: nil, queue: .main, using: { [weak self] noti in
+        token = NotificationCenter.default.addObserver(forName: .commentCountDidDecreased, object: nil, queue: .main, using: { [weak self] noti in
             guard let self = self else { return }
             if self.isFiltering {
                 if let postId = noti.userInfo?["postId"] as? Int,
@@ -140,7 +140,6 @@ class CategoryBoardViewController: FreeBoardViewController {
                     self.postListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
                 }
             }
-           
         })
         tokens.append(token)
     }
@@ -330,22 +329,12 @@ extension CategoryBoardViewController {
                                                  for: indexPath) as! FreeBoardTableViewCell
         
         if isFiltering {
-            var post = filteredPostList[indexPath.row]
-            if let date = BoardDataManager.shared.decodingFormatter.date(from: post.createdAt) {
-                let dateStr = date.relativeDate
-                post.createdAt = dateStr
-                cell.configure(post: post)
-            }
-            
+            let post = filteredPostList[indexPath.row]
+            cell.configure(post: post)
         } else {
-            var post = postList[indexPath.row]
-            if let date = BoardDataManager.shared.decodingFormatter.date(from: post.createdAt) {
-                let dateStr = date.relativeDate
-                post.createdAt = dateStr
-                cell.configure(post: post)
-            }
+            let post = postList[indexPath.row]
+            cell.configure(post: post)
         }
-        
         return cell
     }
 }

@@ -14,9 +14,6 @@ struct LectureReviewPostData: Codable {
     /// 강의평 Id
     let lectureReviewId: Int
     
-    /// 사용자 Id
-    let userId: String
-    
     /// 강의정보 Id
     let lectureInfoId: Int
     
@@ -54,9 +51,6 @@ struct LectureReviewPostData: Codable {
 struct TestInfoPostData: Codable {
     /// 시험정보 Id
     let testInfoId: Int
-    
-    /// 사용자 Id
-    let userId: String
     
     /// 강의정보 Id
     let lectureInfoId: Int

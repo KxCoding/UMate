@@ -67,6 +67,9 @@ class ComposeViewController: CommonViewController {
     // 게시글을 저장합니다.
     @IBOutlet weak var savePostButton: UIBarButtonItem!
     
+    /// 이미지 업로드 딜레이를 나타냄
+    @IBOutlet weak var imageUploadActivityIndicatorView: UIActivityIndicatorView!
+    
     /// 선택된 게시판
     var selectedBoard: BoardDtoResponseData.BoardDto?
     
@@ -128,6 +131,7 @@ class ComposeViewController: CommonViewController {
         if self.boardImages.count > 0 {
             self.boardImages.forEach { image in
                 group.enter()
+                imageUploadActivityIndicatorView.startAnimating()
                 BlobManager.shared.upload(image: image) { success, id in
                     if success {
                         #warning("블롭주소 수정")
@@ -142,13 +146,13 @@ class ComposeViewController: CommonViewController {
         // 일반 게시판에 추가될 게시글
         group.notify(queue: .main) {
             if self.categoryList.isEmpty {
-                newPost = PostPostData(postId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: 0, urlStrings: urlStringList, createdAt:dateStr)
+                newPost = PostPostData(postId: 0, boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: 0, urlStrings: urlStringList, createdAt:dateStr)
             } else {
                 guard let selectedCategory = self.selectedCategory else {
                     Loaf("카테고리 항목을 선택해 주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
                     return
                 }
-                newPost = PostPostData(postId: 0, userId: LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? "", boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:dateStr)
+                newPost = PostPostData(postId: 0, boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:dateStr)
             }
             
             self.sendDataToServer(postData: newPost)
@@ -179,7 +183,10 @@ class ComposeViewController: CommonViewController {
                         print("추가 성공!")
                         #endif
                         
-                        self.dismiss(animated: true, completion: nil)
+                        DispatchQueue.main.async {
+                            self.imageUploadActivityIndicatorView.stopAnimating()
+                            self.dismiss(animated: true, completion: nil)
+                        }
                     case ResultCode.fail.rawValue:
                         #if DEBUG
                         print("이미 존재함")
@@ -199,7 +206,7 @@ class ComposeViewController: CommonViewController {
     /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(#function)
         categoryListCollectionView.isHidden = categoryList.isEmpty
         
         postTitleTextField.becomeFirstResponder()
@@ -227,30 +234,11 @@ class ComposeViewController: CommonViewController {
         
         // 서버에 올릴 이미지 저장
         // - Author: 남정은(dlsl7080@gmail.com)
-        let token = NotificationCenter.default.addObserver(forName: .requestPostImage, object: nil, queue: .main, using: { noti in
-            if let image = noti.userInfo?["image"] as? UIImage {
-                self.boardImages.append(image)
-            }
-            
-            if let image = noti.userInfo?["img"] as? UIImage {
-                self.boardImages.append(image)
-            }
-        })
-        tokens.append(token)
-        
-        // 이미지 첨부 방식을 선택합니다.
-        // - Author: 김정민(kimjm010@icloud.com)
-        selectImageAttachmentTypeBtn.rx.tap
-            .flatMap { _ in self.alertToSelectImageAttachWay(title: "알림", message: "이미지 첨부 방식을 선택하세요 :)") }
-            .subscribe(onNext: { [unowned self] (actionType) in
-                switch actionType {
-                case .find:
-                    self.performSegue(withIdentifier: "addPhotoSegue", sender: self)
-                case .take:
-                    self.performSegue(withIdentifier: "takePhotoSegue", sender: self)
-                default:
-                    break
-                }
+        NotificationCenter.default.rx.notification(.requestPostImage, object: nil)
+            .compactMap { $0.userInfo?["image"] as? UIImage }
+            .withUnretained(self)
+            .subscribe(onNext: {
+                $0.0.boardImages.append($0.1)
             })
             .disposed(by: rx.disposeBag)
         
@@ -344,7 +332,6 @@ class ComposeViewController: CommonViewController {
 /// 게시글 제목의 동작방식 처리
 /// - Author: 김정민(kimjm010@icloud.com)
 extension ComposeViewController: UITextFieldDelegate {
-    
     /// 제목 편집 중 Return버튼의 기능을 설정합니다.
     ///
     /// 제목의 Return버튼을 누르면 본문으로 넘어갑니다.
@@ -398,7 +385,6 @@ extension ComposeViewController: UICollectionViewDataSource {
     /// - Returns: 표시할 컬렉션뷰 item의 수
     /// - Author: 김정민(kimjm010@icloud.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         guard collectionView.tag == 101 else {
             return sampleImages.count
         }

@@ -50,14 +50,21 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         // 이미지 그림자 설정
-        layer.cornerRadius = postImageView.frame.height * 0.03
+        if (UIDevice.current.userInterfaceIdiom == .pad) {
+            layer.cornerRadius = postImageView.frame.height * 0.05
+            imageContentView.layer.cornerRadius = postImageView.frame.height * 0.05
+            layer.shadowOffset = CGSize(width: 2, height: 2)
+        } else {
+            layer.cornerRadius = postImageView.frame.height * 0.03
+            imageContentView.layer.cornerRadius = postImageView.frame.height * 0.03
+            layer.shadowOffset = CGSize(width: 1, height: 1)
+        }
+        
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 1, height: 1)
         layer.shadowRadius = 2
         layer.shadowOpacity = 0.3
-        layer.masksToBounds = false
         
-        imageContentView.layer.cornerRadius = postImageView.frame.height * 0.03
         imageContentView.layer.masksToBounds = true
+        layer.masksToBounds = false
     }
 }

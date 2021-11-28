@@ -14,12 +14,24 @@ class PostImageTableViewCell: UITableViewCell {
     /// 이미지 컬렉션 뷰
     @IBOutlet weak var postImageCollectionView: UICollectionView!
 
+    /// 이미지 컬렉션 뷰 높이
+    @IBOutlet weak var postImageCollectionViewHeightAnchor: NSLayoutConstraint!
+    
+    /// 이미지 다운로드 딜레이를 나타냄
+    @IBOutlet weak var imageDownloadActivityIndeicatorView: UIActivityIndicatorView!
+    
     /// 이미지 리스트
     var postImageList = [ImageListResponseData.PostImage]()
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        if (UIDevice.current.userInterfaceIdiom == .pad) {
+            postImageCollectionViewHeightAnchor.constant = CGFloat(UIScreen.main.bounds.size.width / 5)
+        } else {
+            postImageCollectionViewHeightAnchor.constant = CGFloat(UIScreen.main.bounds.size.width / 3)
+        }
      
         postImageCollectionView.dataSource = self
         postImageCollectionView.delegate = self
@@ -59,11 +71,12 @@ extension PostImageTableViewCell: UICollectionViewDataSource {
     /// - Returns: 이미지 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostImageCollectionViewCell", for: indexPath) as! PostImageCollectionViewCell
-        
+        imageDownloadActivityIndeicatorView.startAnimating()
         BoardDataManager.shared.downloadImage(from: self.postImageList[indexPath.row].urlString, completion: { img in
             if let img = img {
-                let image = BoardDataManager.shared.resizeImage(image: img, targetSize: CGSize(width: 180, height: 180))
+                let image = BoardDataManager.shared.resizeImage(image: img, targetSize: CGSize(width: collectionView.contentSize.width , height: collectionView.contentSize.height))
                 DispatchQueue.main.async {
+                    self.imageDownloadActivityIndeicatorView.stopAnimating()
                     cell.postImageView.image = image
                 }
             }
@@ -88,10 +101,13 @@ extension PostImageTableViewCell: UICollectionViewDelegateFlowLayout {
     ///   - indexPath: 이미지 셀의 indexPath
     /// - Returns: 이미지 셀의 사이즈
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
-
-        let width = (UIScreen.main.bounds.size.width - (flowLayout.minimumInteritemSpacing * 2 + 10)) * 0.4
+        let width: CGFloat
+        
+        if (UIDevice.current.userInterfaceIdiom == .pad) {
+            width = UIScreen.main.bounds.size.width / 5
+        } else {
+            width = UIScreen.main.bounds.size.width / 3
+        }
 
         return CGSize(width: width, height: width)
     }

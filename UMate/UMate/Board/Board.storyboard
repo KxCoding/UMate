@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ONU-BN-eP4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ONU-BN-eP4">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -81,8 +81,12 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="WjU-iN-lml" secondAttribute="trailing" id="05e-hg-Akm"/>
-                                                <constraint firstItem="WjU-iN-lml" firstAttribute="leading" secondItem="kfA-XO-1iq" secondAttribute="leading" id="Szd-mZ-DHE"/>
+                                                <constraint firstAttribute="trailing" secondItem="WjU-iN-lml" secondAttribute="trailing" id="05e-hg-Akm">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                                </constraint>
+                                                <constraint firstItem="WjU-iN-lml" firstAttribute="leading" secondItem="kfA-XO-1iq" secondAttribute="leading" id="Szd-mZ-DHE">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                                </constraint>
                                                 <constraint firstItem="WjU-iN-lml" firstAttribute="top" secondItem="kfA-XO-1iq" secondAttribute="top" id="WIt-70-3q6"/>
                                                 <constraint firstAttribute="bottom" secondItem="WjU-iN-lml" secondAttribute="bottom" id="aJx-JV-oqw"/>
                                             </constraints>
@@ -157,9 +161,13 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="WVb-JX-7tc" firstAttribute="leading" secondItem="IF1-sV-jgw" secondAttribute="leading" id="1Iz-sL-k5I"/>
+                                                <constraint firstItem="WVb-JX-7tc" firstAttribute="leading" secondItem="IF1-sV-jgw" secondAttribute="leading" id="1Iz-sL-k5I">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottom" secondItem="WVb-JX-7tc" secondAttribute="bottom" id="BeX-rj-1hm"/>
-                                                <constraint firstAttribute="trailing" secondItem="WVb-JX-7tc" secondAttribute="trailing" id="Flt-8J-1HU"/>
+                                                <constraint firstAttribute="trailing" secondItem="WVb-JX-7tc" secondAttribute="trailing" id="Flt-8J-1HU">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                                </constraint>
                                                 <constraint firstItem="WVb-JX-7tc" firstAttribute="top" secondItem="IF1-sV-jgw" secondAttribute="top" id="uhf-MI-6ps"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -524,6 +532,7 @@
                                         </cells>
                                         <connections>
                                             <outlet property="dataSource" destination="jcD-Qk-L5Q" id="9L5-8H-0Km"/>
+                                            <outlet property="delegate" destination="jcD-Qk-L5Q" id="Po3-1Q-Z96"/>
                                         </connections>
                                     </collectionView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Xr-iL-GRb">
@@ -581,7 +590,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                     </textView>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="102" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zmz-Iv-0Xw">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="102" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zmz-Iv-0Xw">
                                         <rect key="frame" x="0.0" y="408" width="382" height="100"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -620,6 +629,7 @@
                                         </cells>
                                         <connections>
                                             <outlet property="dataSource" destination="jcD-Qk-L5Q" id="DfM-LW-dDk"/>
+                                            <outlet property="delegate" destination="jcD-Qk-L5Q" id="BlL-N5-tpV"/>
                                         </connections>
                                     </collectionView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AjR-rl-xJ8">
@@ -645,6 +655,9 @@
                                 <color key="textColor" systemColor="systemGray3Color"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="BkA-WU-vhp">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Fnf-VL-yBm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -653,9 +666,11 @@
                             <constraint firstAttribute="bottom" secondItem="1Ms-iJ-U5C" secondAttribute="bottom" constant="8" id="20T-qM-09b"/>
                             <constraint firstItem="ZPW-pR-x51" firstAttribute="centerY" secondItem="9Xr-iL-GRb" secondAttribute="centerY" id="2DG-mf-Izt"/>
                             <constraint firstItem="1Ms-iJ-U5C" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="16" id="7ji-eN-uES"/>
+                            <constraint firstItem="BkA-WU-vhp" firstAttribute="centerY" secondItem="lKk-gX-GNp" secondAttribute="centerY" id="B8L-Ig-cx9"/>
                             <constraint firstItem="7T4-7L-4gj" firstAttribute="top" secondItem="Tx6-lQ-lIb" secondAttribute="top" constant="8" id="E7G-dj-1cq"/>
                             <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="udG-3F-xAh" secondAttribute="trailing" constant="16" id="UOG-zm-zaG"/>
                             <constraint firstItem="ZPW-pR-x51" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="20" id="XI4-ds-YhO"/>
+                            <constraint firstItem="BkA-WU-vhp" firstAttribute="centerX" secondItem="lKk-gX-GNp" secondAttribute="centerX" id="XWr-yw-Dgf"/>
                             <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="ZPW-pR-x51" secondAttribute="trailing" constant="16" id="XtK-vK-jo8"/>
                             <constraint firstItem="Fnf-VL-yBm" firstAttribute="trailing" secondItem="7T4-7L-4gj" secondAttribute="trailing" constant="16" id="YsL-W3-G5V"/>
                             <constraint firstItem="udG-3F-xAh" firstAttribute="leading" secondItem="Fnf-VL-yBm" secondAttribute="leading" constant="16" id="oHu-dw-Ovl"/>
@@ -680,6 +695,7 @@
                         <outlet property="contentCountLabel" destination="wQ6-1E-3AQ" id="Ein-ir-mme"/>
                         <outlet property="contentPlacehoderLabel" destination="7T4-7L-4gj" id="qHl-oQ-vwc"/>
                         <outlet property="imageCollectionView" destination="zmz-Iv-0Xw" id="yEa-qW-Ekh"/>
+                        <outlet property="imageUploadActivityIndicatorView" destination="BkA-WU-vhp" id="gbm-hz-sEA"/>
                         <outlet property="postContentTextView" destination="Tx6-lQ-lIb" id="bXk-gZ-1Wp"/>
                         <outlet property="postTitlePlaceholderLabel" destination="ZPW-pR-x51" id="PMn-m8-urD"/>
                         <outlet property="postTitleTextField" destination="9Xr-iL-GRb" id="hi1-LW-Rys"/>
@@ -1326,9 +1342,6 @@
                                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GxY-ko-01z">
                                                                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                                    <connections>
-                                                                                                        <action selector="toggleLikeButton:" destination="YUc-kN-hZb" eventType="touchUpInside" id="bSb-dX-obG"/>
-                                                                                                    </connections>
                                                                                                 </button>
                                                                                             </subviews>
                                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1461,6 +1474,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dateLabel" destination="Zk0-qO-uto" id="ZF2-tK-qeX"/>
+                                            <outlet property="likeButton" destination="GxY-ko-01z" id="qEL-Jr-lPO"/>
                                             <outlet property="likeImageView" destination="dhp-JK-dpg" id="aj0-IX-sI3"/>
                                             <outlet property="postContentLabel" destination="avK-KU-a6e" id="0Z3-YO-KNg"/>
                                             <outlet property="postTitleLabel" destination="lTQ-bW-B4b" id="mqN-Kf-k0s"/>
@@ -1478,10 +1492,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3np-Rn-hb2">
-                                                    <rect key="frame" x="0.0" y="10" width="414" height="238"/>
+                                                    <rect key="frame" x="0.0" y="10" width="414" height="228"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="180" id="zjp-KR-acE"/>
+                                                        <constraint firstAttribute="height" id="UXo-jK-766"/>
                                                     </constraints>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="9" minimumInteritemSpacing="15" id="QDb-Ec-Uhp">
                                                         <size key="itemSize" width="226" height="227"/>
@@ -1491,7 +1505,7 @@
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="TopLeft" reuseIdentifier="PostImageCollectionViewCell" id="ZOD-QU-M8X" customClass="PostImageCollectionViewCell" customModule="UMate" customModuleProvider="target">
-                                                            <rect key="frame" x="15" y="5.5" width="226" height="227"/>
+                                                            <rect key="frame" x="15" y="0.5" width="226" height="227"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="QhU-iD-blo">
                                                                 <rect key="frame" x="0.0" y="0.0" width="226" height="227"/>
@@ -1527,16 +1541,22 @@
                                                         </collectionViewCell>
                                                     </cells>
                                                 </collectionView>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" id="zgZ-rS-5sh">
+                                                    <rect key="frame" x="0.0" y="9.5" width="414" height="228"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="3np-Rn-hb2" firstAttribute="leading" secondItem="Htt-uB-Xpv" secondAttribute="leading" id="Jsq-Qw-DH2"/>
-                                                <constraint firstAttribute="bottom" secondItem="3np-Rn-hb2" secondAttribute="bottom" id="XpJ-F2-88h"/>
+                                                <constraint firstAttribute="bottom" secondItem="3np-Rn-hb2" secondAttribute="bottom" constant="10" id="XpJ-F2-88h"/>
                                                 <constraint firstAttribute="trailing" secondItem="3np-Rn-hb2" secondAttribute="trailing" id="YiF-WV-mHo"/>
                                                 <constraint firstItem="3np-Rn-hb2" firstAttribute="top" secondItem="Htt-uB-Xpv" secondAttribute="top" constant="10" id="kmJ-mk-lKX"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="imageDownloadActivityIndeicatorView" destination="zgZ-rS-5sh" id="jZb-eT-BXa"/>
                                             <outlet property="postImageCollectionView" destination="3np-Rn-hb2" id="qtl-Rs-k0X"/>
+                                            <outlet property="postImageCollectionViewHeightAnchor" destination="UXo-jK-766" id="2KX-eq-w8U"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommentTableViewCell" rowHeight="120" id="YpV-yj-SIs" customClass="CommentTableViewCell" customModule="UMate" customModuleProvider="target">
@@ -1862,18 +1882,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGH-UQ-Tfp">
-                                <rect key="frame" x="365" y="818" width="44" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="u6z-Bq-eMU"/>
-                                    <constraint firstAttribute="width" constant="44" id="wZY-HA-gyP"/>
-                                </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal">
-                                    <imageReference key="image" image="square.and.arrow.down" catalog="system"/>
-                                </state>
-                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nqX-Br-IMK">
                                 <rect key="frame" x="0.0" y="108" width="414" height="700"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1948,16 +1956,14 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="AbU-8s-KA3" firstAttribute="bottom" secondItem="hSK-oX-iGk" secondAttribute="bottom" constant="76" id="1te-jb-vIt"/>
-                            <constraint firstItem="nGH-UQ-Tfp" firstAttribute="top" secondItem="nqX-Br-IMK" secondAttribute="bottom" constant="10" id="3b8-jx-9b6"/>
                             <constraint firstItem="Rej-4d-lDb" firstAttribute="top" secondItem="AbU-8s-KA3" secondAttribute="top" constant="10" id="R09-pw-KjY"/>
                             <constraint firstItem="nqX-Br-IMK" firstAttribute="top" secondItem="Rej-4d-lDb" secondAttribute="bottom" constant="10" id="U70-F6-6h4"/>
                             <constraint firstItem="hSK-oX-iGk" firstAttribute="centerX" secondItem="1CC-iL-RDe" secondAttribute="centerX" id="Vhs-o0-wbT"/>
-                            <constraint firstItem="nGH-UQ-Tfp" firstAttribute="bottom" secondItem="AbU-8s-KA3" secondAttribute="bottom" id="Wuy-tl-Ub7"/>
                             <constraint firstItem="AbU-8s-KA3" firstAttribute="trailing" secondItem="Rej-4d-lDb" secondAttribute="trailing" constant="5" id="Y7s-Bn-dFP"/>
+                            <constraint firstItem="AbU-8s-KA3" firstAttribute="bottom" secondItem="nqX-Br-IMK" secondAttribute="bottom" constant="54" id="a16-tn-Tlo"/>
                             <constraint firstItem="nf4-kM-PPz" firstAttribute="centerY" secondItem="Rej-4d-lDb" secondAttribute="centerY" id="li9-Xd-fKX"/>
                             <constraint firstItem="nqX-Br-IMK" firstAttribute="trailing" secondItem="AbU-8s-KA3" secondAttribute="trailing" id="lxP-iJ-8mZ"/>
                             <constraint firstItem="nqX-Br-IMK" firstAttribute="leading" secondItem="AbU-8s-KA3" secondAttribute="leading" id="oU3-cb-D6E"/>
-                            <constraint firstItem="AbU-8s-KA3" firstAttribute="trailing" secondItem="nGH-UQ-Tfp" secondAttribute="trailing" constant="5" id="qCA-Ea-6NR"/>
                             <constraint firstItem="nf4-kM-PPz" firstAttribute="leading" secondItem="AbU-8s-KA3" secondAttribute="leading" constant="20" id="qL5-4F-yAk"/>
                         </constraints>
                     </view>
@@ -2584,7 +2590,6 @@
         <image name="newspaper" catalog="system" width="128" height="111"/>
         <image name="paperplane" catalog="system" width="128" height="118"/>
         <image name="search" width="16" height="16"/>
-        <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <image name="thumbtack40" width="20" height="20"/>
         <image name="turn-right" width="64" height="64"/>

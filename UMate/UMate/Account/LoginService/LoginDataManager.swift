@@ -27,6 +27,12 @@ class LoginDataManager {
     /// 로그인 키체인 인스턴스
     let loginKeychain = KeychainSwift()
     
+    /// userId를 리턴
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    var userId: String {
+        return LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue) ?? ""
+    }
+    
     /// 네트워크 서비스 객체
     var provider = MoyaProvider<LoginService>()
     

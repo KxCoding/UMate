@@ -78,6 +78,9 @@ struct PostListDtoResponseData: Codable {
         var scrapCnt: Int
         let categoryNumber: Int
         var createdAt: String
+        var dateStr: String? {
+            return BoardDataManager.shared.decodingFormatter.date(from: createdAt)?.relativeDate
+        }
     }
     
     let list: [PostDto]
@@ -106,6 +109,9 @@ struct PostDtoResponseData: Codable {
         let scrapCnt: Int
         let categoryNumber: Int
         var createdAt: String
+        var dateStr: String? {
+            return BoardDataManager.shared.decodingFormatter.date(from: createdAt)?.detailPostDate
+        }
     }
     
     var post: Post

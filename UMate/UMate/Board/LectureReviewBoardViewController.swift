@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import Moya
+import NSObject_Rx
 
 
 /// 최근 강의평 목록 뷰 컨트롤러
@@ -46,74 +47,37 @@ class LectureReviewBoardViewController: CommonViewController {
         return searchController.isActive && !isSearchBarEmpty
     }
     
-    /// 강의목록 페이지
-    var lecturePage = 1
     
-    /// 강의목록 불러오는 양
-    let lecturePageSize = 12
-    
-    /// 강의정보 불러오는 중
-    var lectureIsFetching = false
-    
-    /// 추가로 불러온 정보
-    var hasMoreLecture = true
-    
-    var totalCount = 0
-    
-    
-    /// 최근 강의평 목록을 불러옵니다.
-    ///  - Author: 남정은(dlsl7080@gmail.com)
-    private func fetchRecentReview() -> Observable<[LectureInfoListResponseData.LectureInfo]> {
-        lectureIsFetching = true
-        
-        return BoardDataManager.shared.provider.rx.request(.recentLectureReviewList(lecturePage, lecturePageSize))
-            .filterSuccessfulStatusCodes()
-            .map(LectureInfoListResponseData.self)
-            .map { [weak self] data in
-                self?.lecturePage += 1
-                
-                self?.hasMoreLecture = data.totalCount > self?.lectureList.count ?? 0 + data.list.count// 추가되기 전에 계산
-                self?.totalCount = data.totalCount
-                
-                self?.lectureIsFetching = false
-                return data.list
-            }
-            .asObservable()
-            .catchAndReturn([])
-    }
-    
-    
-    /// 최근 강의평을 테이블 뷰에 나타냅니다.
+    /// 최신 강의평을 테이블 뷰에 나타냅니다.
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchRecentReviewLecture() {
         
-        guard !lectureIsFetching && hasMoreLecture else { return }
+        guard !BoardDataManager.shared.lectureIsFetching && BoardDataManager.shared.hasMoreLecture else { return }
         
-        let lectureReviews = Observable.zip(Observable.just(0), fetchRecentReview()).share().observe(on: MainScheduler.instance)
+        let lectureReviews = BoardDataManager.shared.fetchRecentReview(lectureCount: self.lectureList.count).share().observe(on: MainScheduler.instance)
         
-        lectureReviews.filter { $0.1.count == 0 }
-        .withUnretained(self)
-        .subscribe(onNext: {
-            $0.0.hasMoreLecture = false
+        lectureReviews.filter { $0.count == 0 }
+        .subscribe(onNext: { _ in
+            BoardDataManager.shared.hasMoreLecture = false
         })
         .disposed(by: rx.disposeBag)
         
-        let reloadRequired = self.lecturePage == 1
+        let reloadRequired = BoardDataManager.shared.lecturePage == 1
         if reloadRequired {
             lectureReviews.withUnretained(self)
-                .filter { !$0.1.1.isEmpty }
+                .filter { !$0.1.isEmpty }
                 .subscribe(onNext: {
-                    $0.0.lectureList.append(contentsOf: $0.1.1)
+                    $0.0.lectureList.append(contentsOf: $0.1)
                     $0.0.lectureReviewListTableView.reloadData()
                     $0.0.lectureReviewListTableView.isHidden = false
                 })
                 .disposed(by: rx.disposeBag)
         } else {
             lectureReviews.withUnretained(self)
-                .filter { !$0.1.1.isEmpty }
+                .filter { !$0.1.isEmpty }
                 .subscribe(onNext: {
-                    let indexPaths = (self.lectureList.count ..< (self.lectureList.count + $0.1.1.count)).map { IndexPath(row: $0, section: 0) }
-                    $0.0.lectureList.append(contentsOf: $0.1.1)
+                    let indexPaths = (self.lectureList.count ..< (self.lectureList.count + $0.1.count)).map { IndexPath(row: $0, section: 0) }
+                    $0.0.lectureList.append(contentsOf: $0.1)
                     $0.0.lectureReviewListTableView.insertRows(at: indexPaths, with: .none)
                 })
                 .disposed(by: rx.disposeBag)
@@ -160,6 +124,9 @@ class LectureReviewBoardViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let headerNib = UINib(nibName: "LectureInfoCustomHeader", bundle: nil)
+        lectureReviewListTableView.register(headerNib, forHeaderFooterViewReuseIdentifier: "sectionHeader")
+        
         lectureReviewListTableView.isHidden = true
         
         fetchRecentReviewLecture()
@@ -167,7 +134,7 @@ class LectureReviewBoardViewController: CommonViewController {
         lectureReviewListTableView.rx.prefetchRows
             .withUnretained(self)
             .subscribe(onNext: { vc, indexPaths in
-                if indexPaths.contains(where: { $0.row > vc.lectureList.count - 8 }) && !vc.lectureIsFetching {
+                if indexPaths.contains(where: { $0.row > vc.lectureList.count - 8 }) && !BoardDataManager.shared.lectureIsFetching {
                     vc.fetchRecentReviewLecture()
                 }
             })
@@ -273,7 +240,7 @@ extension LectureReviewBoardViewController: UITableViewDelegate {
     ///   - section: 강의평 목록을 나누는 section index
     /// - Returns: header의 높이
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 70
+        return 60
     }
 
     
@@ -283,9 +250,12 @@ extension LectureReviewBoardViewController: UITableViewDelegate {
     ///   - section: 강의평 목록을 나누는 section index
     /// - Returns: header를 나타내는 뷰
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LectureReviewHeaderTableViewCell") as! LectureReviewHeaderTableViewCell
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! LectureInfoCustomHeaderView
+        headerView.backView.backgroundColor = .systemBackground
+        headerView.sectionNameLabel.text = "최신 강의평"
+        headerView.writeButton.isHidden = true
         
-        return cell.contentView
+        return headerView
     }
 }
 

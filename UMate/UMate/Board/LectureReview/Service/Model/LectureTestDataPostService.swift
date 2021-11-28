@@ -16,7 +16,10 @@ enum LectureReviewSaveService {
 
 
 
-extension LectureReviewSaveService: TargetType {
+extension LectureReviewSaveService: TargetType, AccessTokenAuthorizable {
+    var authorizationType: AuthorizationType? {
+        return .bearer
+    }
     
     /// 기본 URL
     var baseURL: URL {
@@ -43,7 +46,10 @@ extension LectureReviewSaveService: TargetType {
     
     /// HTTP 헤더
     var headers: [String : String]? {
-        return ["Content-Type": "application/json"]
+        if let token = LoginDataManager.shared.loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            return ["Content-Type": "application/json", "Authorization":"Bearer \(token)"]
+        }
+        return nil
     }
 }
 
@@ -56,7 +62,10 @@ enum TestInfoSaveService {
 
 
 
-extension TestInfoSaveService: TargetType{
+extension TestInfoSaveService: TargetType, AccessTokenAuthorizable {
+    var authorizationType: AuthorizationType? {
+        return .bearer
+    }
     
     /// 기본 URL
     var baseURL: URL {
@@ -83,6 +92,9 @@ extension TestInfoSaveService: TargetType{
     
     /// HTTP 헤더
     var headers: [String : String]? {
-        return ["Content-Type": "application/json"]
+        if let token = LoginDataManager.shared.loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            return ["Content-Type": "application/json", "Authorization":"Bearer \(token)"]
+        }
+        return nil
     }
 }

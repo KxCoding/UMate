@@ -54,6 +54,6 @@ class LectureRatingTableViewCell: UITableViewCell {
         ratingView.rating = ratingAvg
         
         // 별점의 평균값
-        ratingLabel.text = String(format: "%.1f", ratingAvg)
+        ratingLabel.text = BoardDataManager.shared.numberFormatter.string(for: ratingAvg)
     }
 }

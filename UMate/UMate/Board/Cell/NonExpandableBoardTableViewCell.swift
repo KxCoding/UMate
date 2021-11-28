@@ -17,7 +17,7 @@ class NonExpandableBoardTableViewCell: UITableViewCell {
     /// 게시판 아이콘 이미지 뷰
     @IBOutlet weak var boardImageView: UIImageView!
     
-  
+    
     /// 게시판 셀을 초기화합니다.
     /// - Parameters:
     ///   - boardList: 게시판 정보
@@ -32,6 +32,8 @@ class NonExpandableBoardTableViewCell: UITableViewCell {
             } else {
                 boardImageView.image = UIImage(named: "chat")
             }
+        } else {
+            boardImageView.alpha = 0.8
         }
        
         boardLabel.text = target.name

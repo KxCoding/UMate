@@ -8,6 +8,7 @@
 import DropDown
 import Loaf
 import UIKit
+import RxSwift
 import Moya
 import NSObject_Rx
 
@@ -46,33 +47,8 @@ class TestInfoWriteViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 키보드 노티피케이션
-        var token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil, using: {noti in
-            if let value = noti.userInfo?[
-                UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
-                
-                let height = value.cgRectValue.height
-                self.tableViewbottomConstraint.constant = height
-                
-                // firstResponder가 UITextField라면 하단스크롤
-                if let _ = self.view.window?.firstResponder as? UITextField {
-                    DispatchQueue.main.async {
-                        self.testInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
-                    }
-                }
-                
-            }
-        })
-        tokens.append(token)
-        
-        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil, using: { noti in
-            self.tableViewbottomConstraint.constant = 0
-        })
-        tokens.append(token)
-       
-        
         // 알림창 노티피케이션
-        token = NotificationCenter.default.addObserver(forName: .alertDidSend, object: nil, queue: .main) { [weak self] noti in
+        var token = NotificationCenter.default.addObserver(forName: .alertDidSend, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
             if let alertKey = noti.userInfo?["alertKey"] as? Int {
@@ -93,23 +69,59 @@ class TestInfoWriteViewController: CommonViewController {
             }
         }
         tokens.append(token)
-
+        
+        // 키보드 노티피케이션
+      
+            token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil, using: {noti in
+                if let value = noti.userInfo?[
+                    UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+                    
+                    let height = value.cgRectValue.height
+                    if (UIDevice.current.userInterfaceIdiom == .phone) {
+                        self.tableViewbottomConstraint.constant = height
+                    } else if (UIDevice.current.userInterfaceIdiom == .pad) {
+                        if (UIScreen.main.bounds.size.height - self.view.frame.size.height) / 2 < height {
+                            self.tableViewbottomConstraint.constant = height - (UIScreen.main.bounds.size.height - self.view.frame.size.height) / 2
+                        }
+                    }
+                    
+                    // firstResponder가 UITextField라면 하단스크롤
+                    if let _ = self.view.window?.firstResponder as? UITextField {
+                        DispatchQueue.main.async {
+                            self.testInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
+                        }
+                    }
+                    
+                }
+            })
+            tokens.append(token)
+        
+        
+        NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil)
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                $0.0.tableViewbottomConstraint.constant = 0
+            })
+            .disposed(by: rx.disposeBag)
         
         // 입력란 추가시 테이블 뷰 리로드
-        token = NotificationCenter.default.addObserver(forName: .testInfoInputFieldDidInsert, object: nil, queue: .main) { [weak self] noti in
-            guard let self = self else { return }
-            
-            self.testInfoTableView.reloadData()
-        }
-        tokens.append(token)
-        
+        NotificationCenter.default.rx.notification(.testInfoInputFieldDidInsert, object: nil)
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                $0.0.testInfoTableView.reloadData()
+            })
+            .disposed(by: rx.disposeBag)
         
         // 시험정보 공유 버튼 클릭시 화면 dismiss
-        token = NotificationCenter.default.addObserver(forName: .testInfoDidShare, object: nil, queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            self.dismiss(animated: true, completion: nil)
-        }
-        tokens.append(token)
+        NotificationCenter.default.rx.notification(.testInfoDidShare, object: nil)
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                $0.0.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: rx.disposeBag)
     }
     
     
@@ -155,7 +167,7 @@ class TestInfoWriteViewController: CommonViewController {
                             let newExample = TestInfoListResponse.TestInfo.Example(exampleId: $0.exampleId, testInfoId: $0.testInfoId, content: $0.content)
                             exampleList.append(newExample)
                         }
-
+                        
                         let newTestInfo = TestInfoListResponse.TestInfo(testInfoId: response.testInfo.testInfoId,
                                                                         userId: response.testInfo.userId,
                                                                         lectureInfoId: response.testInfo.lectureInfoId,
@@ -165,7 +177,7 @@ class TestInfoWriteViewController: CommonViewController {
                                                                         questionTypes: response.testInfo.questionTypes,
                                                                         examples: exampleList,
                                                                         createdAt: response.testInfo.createdAt)
-
+                        
                         NotificationCenter.default.post(name: .testInfoDidShare, object: nil, userInfo: ["testInfo": newTestInfo])
                         
                     case ResultCode.fail.rawValue:
@@ -211,29 +223,11 @@ extension TestInfoWriteViewController: UITableViewDataSource {
             return cell
         }
         
-        // 개설학기를 담는 배열
-        let semesters = lecture.semesters.components(separatedBy: "/")
-        cell.receiveSemestersAndAddDropDownData(semesters: semesters, lectureInfoId: lecture.lectureInfoId)
+        cell.receiveSemestersAndAddDropDownData(lecture: lecture)
         return cell
     }
 }
 
 
 
-/// 텍스트필드가 firstResponder일 때를 알기 위해 사용
-/// - Author: 남정은(dlsl7080@gmail.com)
-extension UIView {
-    /// 현재 firstResponder를 리턴해 주는 속성
-    var firstResponder: UIView? {
-        // 현재 UIView가 firstResponder라면 자신을 리턴
-        guard !isFirstResponder else { return self }
 
-        // 아니라면 하위뷰들 중에 firstResponder를 찾아서 리턴
-        for subview in subviews {
-            if let firstResponder = subview.firstResponder {
-                return firstResponder
-            }
-        }
-        return nil
-    }
-}
