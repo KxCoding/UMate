@@ -77,10 +77,10 @@ class BrowserSettingTableViewController: UITableViewController {
     /// 선택 사항을 저장하고 UI를 업데이트 합니다.
     /// - Parameter option: 선택한 브라우저 옵션
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    private func selectPreferredBrowser(prefer option: Preference.PreferredBrowser) {
-        Preference.preferredBrowser = option
+    private func set(preferredBrowser: Preference.PreferredBrowser) {
+        Preference.preferredBrowser = preferredBrowser
         
-        switch option {
+        switch preferredBrowser {
         case .none:
             internalImageview.isHighlighted = false
             externalImageView.isHighlighted = false
@@ -114,7 +114,7 @@ class BrowserSettingTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        selectPreferredBrowser(prefer: Preference.preferredBrowser)
+        set(preferredBrowser: Preference.preferredBrowser)
     }
     
     
@@ -130,17 +130,17 @@ class BrowserSettingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            selectPreferredBrowser(prefer: .none)
+            set(preferredBrowser: .none)
             tableView.deselectRow(at: indexPath, animated: true)
             resetLoaf.show(.custom(1.2))
             
         case 1:
             switch indexPath.row {
             case 0:
-                selectPreferredBrowser(prefer: .internal)
+                set(preferredBrowser: .internal)
                 selectedBrowserLoaf.show(.custom(1.2))
             case 1:
-                selectPreferredBrowser(prefer: .external)
+                set(preferredBrowser: .external)
                 selectedBrowserLoaf.show(.custom(1.2))
             default:
                 break

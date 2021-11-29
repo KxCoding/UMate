@@ -460,7 +460,7 @@ class PlaceDataManager {
     ///   - vc: 처리 실패시 alert를 표시할 view controller
     ///   - completion: 응답과 함께 처리할 작업
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    func get<T: Codable & PlaceResponseType>(with url: URL, on vc: UIViewController, completion: ((T) -> Void)?) {
+    func get<T: PlaceResponseType>(with url: URL, on vc: UIViewController, completion: ((T) -> Void)?) {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("Bearer \(tempToken)", forHTTPHeaderField: "Authorization")
@@ -561,7 +561,7 @@ class PlaceDataManager {
     ///   - completion: 처리 성공시 응답과 함께 처리할 작업
     /// - Author: 박혜정(mailmelater11@gmail.com)
     private func handle<T: PlaceResponseType>(_ response: T, alertOn vc: UIViewController, orCompleteWith completion: ((T) -> Void)?) {
-        if response.code != PlaceResultCode.ok.rawValue {
+        if response.code != ResultCode.ok.rawValue {
             DispatchQueue.main.async { [weak vc] in
                 guard let vc = vc else { return }
                 vc.alert(title: "네트워크 오류", message: response.clientAlertMessage ?? "")

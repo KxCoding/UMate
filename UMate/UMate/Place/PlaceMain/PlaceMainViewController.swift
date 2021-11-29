@@ -224,9 +224,10 @@ class PlaceMainViewController: UIViewController {
                 locationManager.requestWhenInUseAuthorization()
                 
             case .restricted, .denied:
-                if locationAlertHasShownAlready { break }
-                alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
-                locationAlertHasShownAlready = true
+                if !locationAlertHasShownAlready {
+                    alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
+                    locationAlertHasShownAlready = true
+                }
                 
             case .authorizedWhenInUse, .authorizedAlways:
                 updateLocation()
@@ -509,8 +510,10 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .restricted, .denied:
-            alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
-            break
+            if !locationAlertHasShownAlready {
+                alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
+                locationAlertHasShownAlready = true
+            }
             
         case .authorizedAlways, .authorizedWhenInUse:
             updateLocation()
@@ -531,9 +534,10 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
                          didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .restricted, .denied:
-            alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
-            break
-            
+            if !locationAlertHasShownAlready {
+                alert(message: "위치 서비스 권한이 제한되어\n현재 위치를 표시할 수 없습니다")
+                locationAlertHasShownAlready = true
+            }
         case .authorizedAlways, .authorizedWhenInUse:
             updateLocation()
             break
@@ -557,9 +561,12 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
         manager.stopUpdatingLocation()
         manager.stopUpdatingHeading()
         
-        alert(message: "현재 위치를 불러올 수 없습니다")
+        if !locationAlertHasShownAlready {
+            alert(message: "현재 위치를 불러올 수 없습니다")
+            locationAlertHasShownAlready = true
+        }
         
-        currentLocationLabel.text = user.university?.name ?? "위치 서비스 사용불가"
+        currentLocationLabel.text = University.tempUniversity.name ?? "위치 서비스 사용불가"
     }
     
     
@@ -575,7 +582,10 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
         if let currentLocation = locations.last {
             updateAddress(with: currentLocation)
         } else {
-            alert(message: "현재 위치를 불러올 수 없습니다")
+            if !locationAlertHasShownAlready {
+                alert(message: "현재 위치를 불러올 수 없습니다")
+                locationAlertHasShownAlready = true
+            }
         }
         
         // 위치는 한 번만 검색 (검색 즉시 종료)
@@ -651,5 +661,3 @@ extension CLAuthorizationStatus: CustomStringConvertible {
     }
     
 }
-
-

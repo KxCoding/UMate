@@ -4,7 +4,6 @@
 //
 //  Created by Effie on 2021/08/23.
 //
-
 import Loaf
 import UIKit
 
@@ -114,8 +113,6 @@ class PlaceListViewController: CommonViewController {
         placeListTableView.dataSource = self
         placeListTableView.delegate = self
         
-        placeListTableView.rowHeight = UITableView.automaticDimension
-        
         selectedPlaceType = .all
         let first = IndexPath(row: 0, section: 0)
         typeSelectionCollectionView.selectItem(at: first, animated: false, scrollPosition: .left)
@@ -132,7 +129,7 @@ class PlaceListViewController: CommonViewController {
             }
         case .bookmark:
             // 북마크 삭제 이벤트를 감시합니다.
-            let token = NotificationCenter.default.addObserver(forName: .bookmarkListUpdated,
+            let token = NotificationCenter.default.addObserver(forName: .bookmarkListHasBeenUpdated,
                                                                object: nil,
                                                                queue: .main) { [weak self] noti in
                 guard let self = self else { return }
@@ -199,7 +196,6 @@ class PlaceListViewController: CommonViewController {
 
 
 // MARK: CollectionView Delegation
-
 extension PlaceListViewController: UICollectionViewDataSource {
     
     /// 지정된 섹션에서 표시할 아이템의 개수를 리턴합니다.
@@ -268,7 +264,6 @@ extension PlaceListViewController: UICollectionViewDelegateFlowLayout {
 
 
 // MARK: TableView Delegation
-
 extension PlaceListViewController: UITableViewDataSource {
     
     /// 테이블 뷰에서 표시할 섹션의 개수를 리턴합니다.
@@ -331,51 +326,51 @@ extension PlaceListViewController: UITableViewDelegate {
     /// - Returns: 셀의 우측에 표시되는 contextual menu
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard viewType == .bookmark else { return nil }
-        
-        let selectedPlace = listedItems[indexPath.row]
-        
-        var conf = UISwipeActionsConfiguration(actions: [])
-        
-        let deleteBookmarkMenu = UIContextualAction(style: .destructive, title: nil) { [weak self] action, view, completion in
-            guard let self = self else { return }
+        if viewType == .bookmark {
             
-            let urlString = "https://umateapi.azurewebsites.net/api/place/bookmark/place/\(selectedPlace.id)"
-            guard let url = URL(string: urlString) else { return }
+            let selectedPlace = listedItems[indexPath.row]
             
-            self.dataManager.delete(with: url, on: self) { response in
-                if response.code == PlaceResultCode.ok.rawValue {
-                    #if DEBUG
-                    print(">>>> 북마크 삭제됨 - \(selectedPlace.name)")
-                    #endif
-                    
-                    DispatchQueue.main.async {
-                        if let targetIndex = self.entireItems.firstIndex { $0.id == selectedPlace.id } {
-                            self.entireItems.remove(at: targetIndex)
-                            
-                            self.placeListTableView.beginUpdates()
-                            self.placeListTableView.deleteRows(at: [indexPath], with: .automatic)
-                            self.placeListTableView.endUpdates()
-                        } else {
-                            NotificationCenter.default.post(name: .bookmarkListUpdated, object: nil)
-                        }
+            let deleteBookmarkMenu = UIContextualAction(style: .destructive, title: nil) { [weak self] action, view, completion in
+                guard let self = self else { return }
+                
+                let urlString = "https://umateapi.azurewebsites.net/api/place/bookmark/place/\(selectedPlace.id)"
+                guard let url = URL(string: urlString) else { return }
+                
+                self.dataManager.delete(with: url, on: self) { response in
+                    if response.code == ResultCode.ok.rawValue {
+                        #if DEBUG
+                        print(">>>> 북마크 삭제됨 - \(selectedPlace.name)")
+                        #endif
                         
-                        self.bookmarkDeletedLoaf.show(.custom(1.2))
+                        DispatchQueue.main.async {
+                            if let targetIndex = self.entireItems.firstIndex(where: { $0.id == selectedPlace.id }) {
+                                self.entireItems.remove(at: targetIndex)
+                                
+                                self.placeListTableView.beginUpdates()
+                                self.placeListTableView.deleteRows(at: [indexPath], with: .automatic)
+                                self.placeListTableView.endUpdates()
+                            } else {
+                                NotificationCenter.default.post(name: .bookmarkListHasBeenUpdated, object: nil)
+                            }
+                            
+                            self.bookmarkDeletedLoaf.show(.custom(1.2))
+                        }
                     }
                 }
+                
+                completion(true)
             }
             
-            completion(true)
+            deleteBookmarkMenu.backgroundColor = .systemRed
+            deleteBookmarkMenu.image = UIImage(systemName: "bookmark.slash.fill")
+            
+            let conf = UISwipeActionsConfiguration(actions: [deleteBookmarkMenu])
+            conf.performsFirstActionWithFullSwipe = false
+            
+            return conf
         }
         
-        deleteBookmarkMenu.backgroundColor = .systemRed
-        deleteBookmarkMenu.image = UIImage(systemName: "bookmark.slash.fill")
-        
-        conf.performsFirstActionWithFullSwipe = false
-        
-        conf = UISwipeActionsConfiguration(actions: [deleteBookmarkMenu])
-        
-        return conf
+        return nil
     }
     
     
@@ -389,4 +384,3 @@ extension PlaceListViewController: UITableViewDelegate {
     }
     
 }
-

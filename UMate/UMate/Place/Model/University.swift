@@ -32,8 +32,6 @@ struct University {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
-    /// 학교 주변 상점
-    var places: [Place]
     
     /// 임시 데이터
     ///
@@ -41,7 +39,6 @@ struct University {
     static var tempUniversity = University(id: 0,
                                            name: "숙명여자대학교",
                                            latitude: 37.545621,
-                                           longitude: 126.96502,
-                                           places: Place.dummyData)
+                                           longitude: 126.96502)
     
 }

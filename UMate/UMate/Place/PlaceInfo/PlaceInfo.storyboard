@@ -233,7 +233,7 @@
                                             <outlet property="openInstagramButton" destination="py4-Ry-hRN" id="d1S-Kh-nrU"/>
                                             <outlet property="openSafariButton" destination="2NL-98-eiM" id="MnY-vT-WDf"/>
                                             <outlet property="placeNameLabel" destination="d5N-zv-Tqt" id="bwb-Tc-IY6"/>
-                                            <outlet property="placeTypeImage" destination="Rdc-Pf-88H" id="yi8-ET-GnQ"/>
+                                            <outlet property="placeTypeImageView" destination="Rdc-Pf-88H" id="yi8-ET-GnQ"/>
                                             <outlet property="placeTypeLabel" destination="jSF-Ga-Mmu" id="uh3-9y-Gau"/>
                                             <outlet property="universityLabel" destination="e8s-fh-Jlt" id="8Da-4p-32c"/>
                                         </connections>
@@ -392,7 +392,7 @@
                                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                     </collectionViewFlowLayout>
                                                                     <cells>
-                                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DistrictCollectionViewCell" id="iVR-oW-Ydl" customClass="DistrictCollectionViewCell" customModule="UMate" customModuleProvider="target">
+                                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DistrictCollectionViewCell" id="iVR-oW-Ydl" customClass="WordCollectionViewCell" customModule="UMate" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="11" width="67.5" height="28"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nLb-fM-ybd">
@@ -426,8 +426,8 @@
                                                                                 </constraints>
                                                                             </collectionViewCellContentView>
                                                                             <connections>
-                                                                                <outlet property="districtItemView" destination="7oP-tc-8Ej" id="LMt-7Q-C12"/>
-                                                                                <outlet property="districtKeywordLabel" destination="KDg-jO-m74" id="bX7-1A-PVt"/>
+                                                                                <outlet property="wordLabel" destination="KDg-jO-m74" id="k1d-ZP-1rb"/>
+                                                                                <outlet property="wordLabelContainer" destination="7oP-tc-8Ej" id="xEJ-a6-rka"/>
                                                                             </connections>
                                                                         </collectionViewCell>
                                                                     </cells>
@@ -465,7 +465,7 @@
                                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                     </collectionViewFlowLayout>
                                                                     <cells>
-                                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="KeywordsCollectionViewCell" id="jXY-9P-wG0" customClass="KeywordsCollectionViewCell" customModule="UMate" customModuleProvider="target">
+                                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="KeywordsCollectionViewCell" id="jXY-9P-wG0" customClass="WordCollectionViewCell" customModule="UMate" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="11" width="67.5" height="28"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OW3-ZU-iww">
@@ -499,8 +499,8 @@
                                                                                 </constraints>
                                                                             </collectionViewCellContentView>
                                                                             <connections>
-                                                                                <outlet property="keywordItemView" destination="ZW4-gB-RFH" id="jyI-Py-Hg8"/>
-                                                                                <outlet property="keywordLabel" destination="vE5-Vr-bCR" id="PF0-Iw-gY5"/>
+                                                                                <outlet property="wordLabel" destination="vE5-Vr-bCR" id="Fer-i2-KeC"/>
+                                                                                <outlet property="wordLabelContainer" destination="ZW4-gB-RFH" id="cW9-iX-yLj"/>
                                                                             </connections>
                                                                         </collectionViewCell>
                                                                     </cells>
