@@ -23,78 +23,6 @@ extension Notification.Name {
 
 
 
-/// 상점 리뷰 네트워크 요청 서비스
-/// - Author: 장현우(heoun3089@gmail.com)
-enum PlaceReviewService {
-    case allPlaceReivewList
-    case placeReviewList
-    case savePlaceReview(PlaceReviewPostData)
-    case editPlaceReview(PlaceReviewPutData)
-    case removePlaceReview(Int)
-}
-
-
-
-extension PlaceReviewService: TargetType, AccessTokenAuthorizable {
-    
-    /// 기본 URL
-    var baseURL: URL {
-        return URL(string: "https://umateplacereviewserver.azurewebsites.net")!
-    }
-    
-    /// 기본 URL을 제외한 나머지 경로
-    var path: String {
-        switch self {
-        case .allPlaceReivewList:
-            return "/allplacereview"
-        case .placeReviewList, .savePlaceReview:
-            return "/placereview"
-        case .editPlaceReview(let placeReviewPutData):
-            return "/placereview/\(placeReviewPutData.placeReviewId)"
-        case .removePlaceReview(let id):
-            return "/placereview/\(id)"
-        }
-    }
-    
-    /// HTTP 요청 메소드
-    var method: Moya.Method {
-        switch self {
-        case .allPlaceReivewList, .placeReviewList:
-            return .get
-        case .savePlaceReview:
-            return .post
-        case .editPlaceReview:
-            return .put
-        case .removePlaceReview:
-            return .delete
-        }
-    }
-    
-    /// HTTP 작업 유형
-    var task: Task {
-        switch self {
-        case .allPlaceReivewList, .placeReviewList, .removePlaceReview:
-            return .requestPlain
-        case .savePlaceReview(let placeReviewPostData):
-            return .requestJSONEncodable(placeReviewPostData)
-        case .editPlaceReview(let placeReviewPutData):
-            return .requestJSONEncodable(placeReviewPutData)
-        }
-    }
-    
-    /// HTTP 헤더
-    var headers: [String : String]? {
-        return ["Content-Type": "application/json"]
-    }
-    
-    /// 인증 타입
-    var authorizationType: AuthorizationType? {
-        return .bearer
-    }
-}
-
-
-
 /// 상점 리뷰 데이터 관리
 /// - Author: 장현우(heoun3089@gmail.com)
 class PlaceReviewDataManager {
@@ -130,7 +58,7 @@ class PlaceReviewDataManager {
     
     /// 전체 상점 리뷰 목록을 다운로드합니다.
     /// - Parameters:
-    ///   - vc: 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     ///   - completion: 완료 블록
     /// - Author: 장현우(heoun3089@gmail.com)
     func fetchAllReview(vc: CommonViewController, completion: @escaping () -> ()) {
@@ -152,7 +80,7 @@ class PlaceReviewDataManager {
     
     /// 유저 아이디와 일치하는 상점 리뷰 목록을 다운로드합니다.
     /// - Parameters:
-    ///   - vc: 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     ///   - completion: 완료 블록
     /// - Author: 장현우(heoun3089@gmail.com)
     func fetchReview(vc: CommonViewController, completion: @escaping () -> ()) {
@@ -182,7 +110,7 @@ class PlaceReviewDataManager {
     /// 상점 리뷰를 삭제합니다.
     /// - Parameters:
     ///   - reviewId: 리뷰 아이디
-    ///   - vc: 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     /// - Author: 장현우(heoun3089@gmail.com)
     func deleteReview(reviewId: Int, vc: ReviewManagingViewController) {
         provider.rx.request(.removePlaceReview(reviewId))

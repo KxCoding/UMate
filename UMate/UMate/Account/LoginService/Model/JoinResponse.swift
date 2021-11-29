@@ -28,10 +28,13 @@ struct JoinResponse: Codable, CommonResponseType, CommonAccountResponseType {
     var token: String?
     
     /// 유저 이름
-    let userName: String?
+    let realName: String?
     
     /// 닉네임
     let nickName: String?
+    
+    /// 대학교 이름
+    var universityName: String?
     
     /// 입학 연도
     let yearOfAdmission: String?

@@ -49,7 +49,7 @@ class AccountViewController: CommonViewController {
         super.viewDidLoad()
         
         #if DEBUG
-        idTextField.text = "test12@test.com"
+        idTextField.text = "test20@test.com"
         passwordTextField.text = "Test123456$"
         #endif
         

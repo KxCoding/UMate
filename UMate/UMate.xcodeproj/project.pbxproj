@@ -26,6 +26,11 @@
 		2CA56EE8274CED320072C26D /* PlaceReviewPutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA56EE7274CED320072C26D /* PlaceReviewPutData.swift */; };
 		2CA56EEA274CED740072C26D /* PlaceReviewDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA56EE9274CED740072C26D /* PlaceReviewDataManager.swift */; };
 		2CA56EEF274CF8D50072C26D /* PlaceReviewPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA56EEE274CF8D50072C26D /* PlaceReviewPostData.swift */; };
+		2CBD9BC027538E9600166B95 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBD9BBF27538E9600166B95 /* LoginService.swift */; };
+		2CBD9BC227538F6600166B95 /* PlaceReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBD9BC127538F6600166B95 /* PlaceReviewService.swift */; };
+		2CBD9BC62753BF9D00166B95 /* UniversityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBD9BC52753BF9D00166B95 /* UniversityList.swift */; };
+		2CBD9BC82753C17F00166B95 /* UniversityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBD9BC72753C17F00166B95 /* UniversityService.swift */; };
+		2CBD9BCA2753C28000166B95 /* UniversityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBD9BC92753C28000166B95 /* UniversityDataManager.swift */; };
 		2CD0EB7A274E7CF50060929B /* String+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD0EB79274E7CF50060929B /* String+Formatter.swift */; };
 		2CDB2106274505F600D3F519 /* ReplaceRootSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDB2105274505F600D3F519 /* ReplaceRootSegue.swift */; };
 		2CDB2108274506F500D3F519 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDB2107274506F500D3F519 /* IntroViewController.swift */; };
@@ -244,6 +249,11 @@
 		2CA56EE7274CED320072C26D /* PlaceReviewPutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewPutData.swift; sourceTree = "<group>"; };
 		2CA56EE9274CED740072C26D /* PlaceReviewDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewDataManager.swift; sourceTree = "<group>"; };
 		2CA56EEE274CF8D50072C26D /* PlaceReviewPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewPostData.swift; sourceTree = "<group>"; };
+		2CBD9BBF27538E9600166B95 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		2CBD9BC127538F6600166B95 /* PlaceReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewService.swift; sourceTree = "<group>"; };
+		2CBD9BC52753BF9D00166B95 /* UniversityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversityList.swift; sourceTree = "<group>"; };
+		2CBD9BC72753C17F00166B95 /* UniversityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversityService.swift; sourceTree = "<group>"; };
+		2CBD9BC92753C28000166B95 /* UniversityDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversityDataManager.swift; sourceTree = "<group>"; };
 		2CD0EB79274E7CF50060929B /* String+Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Formatter.swift"; sourceTree = "<group>"; };
 		2CDB2105274505F600D3F519 /* ReplaceRootSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplaceRootSegue.swift; sourceTree = "<group>"; };
 		2CDB2107274506F500D3F519 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
@@ -480,6 +490,24 @@
 			path = PlaceReview;
 			sourceTree = "<group>";
 		};
+		2CBD9BC32753BF4800166B95 /* UniversityService */ = {
+			isa = PBXGroup;
+			children = (
+				2CBD9BC42753BF7700166B95 /* Model */,
+				2CBD9BC72753C17F00166B95 /* UniversityService.swift */,
+				2CBD9BC92753C28000166B95 /* UniversityDataManager.swift */,
+			);
+			path = UniversityService;
+			sourceTree = "<group>";
+		};
+		2CBD9BC42753BF7700166B95 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2CBD9BC52753BF9D00166B95 /* UniversityList.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		2CDB2104274505D400D3F519 /* Segue */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,6 +520,7 @@
 			isa = PBXGroup;
 			children = (
 				2CDB210C27450B4900D3F519 /* Model */,
+				2CBD9BBF27538E9600166B95 /* LoginService.swift */,
 				2CDB210A2745079400D3F519 /* LoginDataManager.swift */,
 			);
 			path = LoginService;
@@ -698,6 +727,7 @@
 			isa = PBXGroup;
 			children = (
 				6DB56F8A2740E7B4004E4B20 /* UniversityNameModel */,
+				2CBD9BC32753BF4800166B95 /* UniversityService */,
 				2CDB21092745074900D3F519 /* LoginService */,
 				6D80AE0B26F41B65003D41C8 /* Extension */,
 				6D9E0CEC26ABC7C600ABB37F /* VC */,
@@ -990,6 +1020,7 @@
 				F47EEDDA26EA30950036E8F7 /* BlurHash */,
 				F4066E7C26F3C8F500023408 /* Model */,
 				F401BE1C26DAC356000C7898 /* PlaceDataManager.swift */,
+				2CBD9BC127538F6600166B95 /* PlaceReviewService.swift */,
 				2CA56EE9274CED740072C26D /* PlaceReviewDataManager.swift */,
 			);
 			path = PlaceService;
@@ -1325,6 +1356,7 @@
 				F5C319CF270589C600BBA1CA /* TakePhotoViewController.swift in Sources */,
 				6D3EC62926B10B6C00907A68 /* TermsOfConditionsTableViewController.swift in Sources */,
 				2CDB21102745498400D3F519 /* EmailJoinPostData.swift in Sources */,
+				2CBD9BC82753C17F00166B95 /* UniversityService.swift in Sources */,
 				DF42108826E7B00800C6E9F5 /* TestInfoWriteViewController.swift in Sources */,
 				6DA8043C2727B88300D4EECE /* CommonTableViewCell.swift in Sources */,
 				5C5A69A026E1046C00470E45 /* AppInformationTextViewController.swift in Sources */,
@@ -1337,6 +1369,7 @@
 				2C53EF3326F3ABD500FD002A /* ReportViewController.swift in Sources */,
 				F47EEDDE26EA30A30036E8F7 /* BlurHashDecode.swift in Sources */,
 				F560368726B9EE5C0093DDC7 /* CommentTableViewCell.swift in Sources */,
+				2CBD9BC027538E9600166B95 /* LoginService.swift in Sources */,
 				2C715DAC26C072C100B0B22B /* StoreTypeTableViewCell.swift in Sources */,
 				F5E00E6A26E6461100E4068C /* LectureReviewWriteTableViewController.swift in Sources */,
 				5C0C79582745B849002E331A /* TimetableListResponse.swift in Sources */,
@@ -1433,6 +1466,7 @@
 				F4ABE8D426D38C1400F54B3B /* PlaceListViewController.swift in Sources */,
 				F596F9AF2704989500864076 /* SelectCategoryBoardCollectionViewCell.swift in Sources */,
 				5CA0D8DC26BB11070098FBE4 /* PasswordCheckViewController.swift in Sources */,
+				2CBD9BCA2753C28000166B95 /* UniversityDataManager.swift in Sources */,
 				F4BBA7C1274B4A07001D1A42 /* PlaceDto.swift in Sources */,
 				6D83C9FB26F06FC500E27932 /* EmploymentInfoTableViewCell.swift in Sources */,
 				F4CBE55726E21EFE00A2BE77 /* TemplateManagingTableViewController.swift in Sources */,
@@ -1459,6 +1493,7 @@
 				6DA41EE026C0C98200BC249B /* FindPasswordAndEmailTableViewController.swift in Sources */,
 				DF2F6B0226C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift in Sources */,
 				DF943CC82731C05300F2F1FE /* LectureInfoResponse.swift in Sources */,
+				2CBD9BC62753BF9D00166B95 /* UniversityList.swift in Sources */,
 				DFE3DD7326CFC700002F98D9 /* LectureRatingTableViewCell.swift in Sources */,
 				F48843B126ABE512005DB8A3 /* RoundedButton.swift in Sources */,
 				5C0A7D4B271EEF3D00009BEB /* TimetableDetailViewController.swift in Sources */,
@@ -1467,6 +1502,7 @@
 				F47EEDDD26EA30A30036E8F7 /* BlurHashEncode.swift in Sources */,
 				5CCD820E270E337300A21CB9 /* SchoolDetailViewController.swift in Sources */,
 				DF943C732730228400F2F1FE /* BoardRequest.swift in Sources */,
+				2CBD9BC227538F6600166B95 /* PlaceReviewService.swift in Sources */,
 				2C3D34C026B6A3650036DF0A /* PlaceSearchViewController.swift in Sources */,
 				F44389EA26D2F52400B9A193 /* BrowserSettingTableViewController.swift in Sources */,
 				DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */,

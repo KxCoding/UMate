@@ -11,71 +11,6 @@ import Moya
 import RxSwift
 
 
-/// 로그인 네트워크 요청 서비스
-/// - Author: 장현우(heoun3089@gmail.com)
-enum LoginService {
-    case signup(EmailJoinPostData)
-    case login(EmailLoginPostData)
-    case validateToken
-}
-
-
-
-extension LoginService: TargetType, AccessTokenAuthorizable {
-    
-    /// 기본 URL
-    var baseURL: URL {
-        return URL(string: "https://umateloginserver.azurewebsites.net")!
-    }
-    
-    /// 기본 URL을 제외한 나머지 경로
-    var path: String {
-        switch self {
-        case .signup:
-            return "/join/email"
-        case .login:
-            return "/login/email"
-        case .validateToken:
-            return "/validation"
-        }
-    }
-    
-    /// HTTP 요청 메소드
-    var method: Moya.Method {
-        switch self {
-        case .signup, .login:
-            return .post
-        case .validateToken:
-            return .get
-        }
-    }
-    
-    /// HTTP 작업 유형
-    var task: Task {
-        switch self {
-        case .signup(let emailJoinPostData):
-            return .requestJSONEncodable(emailJoinPostData)
-        case .login(let emailLoginPostData):
-            return .requestJSONEncodable(emailLoginPostData)
-        case .validateToken:
-            return .requestPlain
-        }
-    }
-    
-    /// HTTP 헤더
-    var headers: [String : String]? {
-        
-        return ["Content-Type": "application/json"]
-    }
-    
-    /// 인증 타입
-    var authorizationType: AuthorizationType? {
-        return .bearer
-    }
-}
-
-
-
 /// 로그인 데이터 관리
 /// - Author: 장현우(heoun3089@gmail.com)
 class LoginDataManager {
@@ -109,7 +44,7 @@ class LoginDataManager {
     /// 입력한 정보로 회원가입합니다.
     /// - Parameters:
     ///   - emailJoinPostData: 회원가입 정보를 담은 객체
-    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     /// - Author: 장현우(heoun3089@gmail.com)
     func singup(emailJoinPostData: EmailJoinPostData, vc: CommonViewController) {
         provider.rx.request(.signup(emailJoinPostData))
@@ -142,7 +77,7 @@ class LoginDataManager {
     /// - Parameters:
     ///   - emailLoginPostData: 로그인 정보를 담은 객체
     ///   - transitionToHome: 홈 화면으로 이동하는 메소드
-    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     /// - Author: 장현우(heoun3089@gmail.com)
     func login(emailLoginPostData: EmailLoginPostData, transitionToHome: @escaping () -> (), vc: CommonViewController) {
         provider.rx.request(.login(emailLoginPostData))
@@ -176,7 +111,7 @@ class LoginDataManager {
     /// - Parameters:
     ///   - transitionToLoginScreen: 로그인 화면으로 이동하는 메소드
     ///   - transitionToHome: 홈 화면으로 이동하는 메소드
-    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    ///   - vc: 이 메소드를 호출하는 뷰컨트롤러
     /// - Author: 장현우(heoun3089@gmail.com)
     func validateToken(transitionToLoginScreen: @escaping () -> (), transitionToHome: @escaping () -> (), vc: CommonViewController) {
         validationProvider.rx.request(.validateToken)
@@ -204,7 +139,7 @@ class LoginDataManager {
     private func saveAccount(responseData: CommonAccountResponseType) {
         loginKeychain.delete(responseData.userId ?? "")
         loginKeychain.delete(responseData.token ?? "")
-        loginKeychain.delete(responseData.userName ?? "")
+        loginKeychain.delete(responseData.realName ?? "")
         loginKeychain.delete(responseData.nickName ?? "")
         loginKeychain.delete(responseData.yearOfAdmission ?? "")
         
@@ -214,8 +149,9 @@ class LoginDataManager {
             loginKeychain.set(userId, forKey: AccountKeys.userId.rawValue)
             loginKeychain.set(email, forKey: AccountKeys.email.rawValue)
             loginKeychain.set(token, forKey: AccountKeys.apiToken.rawValue)
-            loginKeychain.set(responseData.userName ?? "", forKey: AccountKeys.userName.rawValue)
+            loginKeychain.set(responseData.realName ?? "", forKey: AccountKeys.realName.rawValue)
             loginKeychain.set(responseData.nickName ?? "", forKey: AccountKeys.nickName.rawValue)
+            loginKeychain.set(responseData.universityName ?? "", forKey: AccountKeys.universityName.rawValue)
             loginKeychain.set(responseData.yearOfAdmission ?? "", forKey: AccountKeys.yearOfAdmission.rawValue)
             UserDefaults.standard.set([true, true], forKey: "expand")
         }

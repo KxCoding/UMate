@@ -86,6 +86,8 @@ class UniversityInfoViewController: CommonViewController {
     /// - Author: 장현우(heoun3089@gmail.com)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? TermsOfConditionsTableViewController {
+            vc.universityName = universityNameField.text
+            
             if let enterenceYear = enterenceYearLabel.text {
                 let startIndex = enterenceYear.index(enterenceYear.startIndex, offsetBy: 2)
                 
