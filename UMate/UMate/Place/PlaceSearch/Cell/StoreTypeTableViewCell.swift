@@ -13,7 +13,7 @@ import UIKit
 class StoreTypeTableViewCell: UITableViewCell {
     
     /// 필터링할 항목
-    var storeTypeFilterArray = [Place.PlaceType]()
+    var storeTypeFilterArray = [Place.PlaceType.RawValue]()
     
     
     // MARK: 카페 관련 그룹
@@ -35,7 +35,7 @@ class StoreTypeTableViewCell: UITableViewCell {
         cafeLabel.textColor = cafeLabel.textColor == .darkGray ? .red : .darkGray
         cafeImageView.tintColor = cafeImageView.tintColor == .darkGray ? .red : .darkGray
         
-        let target = Place.PlaceType.cafe
+        let target = Place.PlaceType.cafe.rawValue
         if cafeImageContainerView.layer.borderColor == UIColor.red.cgColor {
             storeTypeFilterArray.append(target)
         } else {
@@ -70,7 +70,7 @@ class StoreTypeTableViewCell: UITableViewCell {
         restaurantLabel.textColor = restaurantLabel.textColor == .darkGray ? .red : .darkGray
         restaurantImageView.tintColor = restaurantImageView.tintColor == .darkGray ? .red : .darkGray
         
-        let target = Place.PlaceType.restaurant
+        let target = Place.PlaceType.restaurant.rawValue
         if restaurantImageContainerView.layer.borderColor == UIColor.red.cgColor {
             storeTypeFilterArray.append(target)
         } else {
@@ -102,7 +102,7 @@ class StoreTypeTableViewCell: UITableViewCell {
         bakeryLabel.textColor = bakeryLabel.textColor == .darkGray ? .red : .darkGray
         bakeryImageView.tintColor = bakeryImageView.tintColor == .darkGray ? .red : .darkGray
         
-        let target = Place.PlaceType.bakery
+        let target = Place.PlaceType.bakery.rawValue
         if bakeryImageContainerView.layer.borderColor == UIColor.red.cgColor {
             storeTypeFilterArray.append(target)
         } else {
@@ -134,7 +134,7 @@ class StoreTypeTableViewCell: UITableViewCell {
         studyCafeLabel.textColor = studyCafeLabel.textColor == .darkGray ? .red : .darkGray
         studyCafeImageView.tintColor = studyCafeImageView.tintColor == .darkGray ? .red : .darkGray
         
-        let target = Place.PlaceType.studyCafe
+        let target = Place.PlaceType.studyCafe.rawValue
         if studyCafeImageContainerView.layer.borderColor == UIColor.red.cgColor {
             storeTypeFilterArray.append(target)
         } else {
@@ -166,7 +166,7 @@ class StoreTypeTableViewCell: UITableViewCell {
         pubLabel.textColor = pubLabel.textColor == .darkGray ? .red : .darkGray
         pubImageView.tintColor = pubImageView.tintColor == .darkGray ? .red : .darkGray
         
-        let target = Place.PlaceType.pub
+        let target = Place.PlaceType.pub.rawValue
         if pubImageContainerView.layer.borderColor == UIColor.red.cgColor {
             storeTypeFilterArray.append(target)
         } else {
@@ -198,7 +198,7 @@ class StoreTypeTableViewCell: UITableViewCell {
         desertLabel.textColor = desertLabel.textColor == .darkGray ? .red : .darkGray
         desertImageView.tintColor = desertImageView.tintColor == .darkGray ? .red : .darkGray
         
-        let target = Place.PlaceType.dessert
+        let target = Place.PlaceType.dessert.rawValue
         if desertImageContainerView.layer.borderColor == UIColor.red.cgColor {
             storeTypeFilterArray.append(target)
         } else {

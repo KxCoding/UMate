@@ -34,11 +34,13 @@ class PlaceSearchCollectionViewCell: UICollectionViewCell {
     /// 상점 이미지를 표시합니다.
     /// - Parameter searchItem: 검색 결과 객체
     /// - Author: 장현우(heoun3089@gmail.com)
-    func configure(with searchItem: Place, image: UIImage?) {
-        imageView.image = image
+    func configure(with searchItem: Place) {
+        imageView.image = PlaceDataManager.shared.getImage(with: searchItem.thumbnailUrl)
+        
         placeTitleLabel.text = searchItem.name
         regionNameLabel.text = searchItem.district
-        classificationNameLabel.text = searchItem.placeType.rawValue
+        
+        classificationNameLabel.text = searchItem.type
     }
     
     

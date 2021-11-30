@@ -6,6 +6,8 @@
 //
 
 import CoreLocation
+import NSObject_Rx
+import RxSwift
 import UIKit
 
 
@@ -16,16 +18,16 @@ class PlaceSearchViewController: CommonViewController {
     /// 검색 결과 컬렉션뷰
     @IBOutlet weak var searchCollectionView: UICollectionView!
     
-    /// 필터링된 상점 정보
+    /// 전체 상점 목록
     var list = [Place]()
     
-    /// 상점 이미지 목록
-    var images = [UIImage?]()
+    /// 필터링된 상점 정보
+    var filteredPlacelist = [Place]()
     
     /// 필터링 된 항목
     ///
     /// 필터 화면에서 이전에 선택한 필터링 항목은 이미 선택되어 있게 합니다.
-    var filteredList = [Place.PlaceType]()
+    var filteredList = [Place.PlaceType.RawValue]()
     
     /// 사용자 위치
     ///
@@ -61,18 +63,6 @@ class PlaceSearchViewController: CommonViewController {
     }
     
     
-    /// window에 추가된 DimView를 제거합니다.
-    /// - Author: 장현우(heoun3089@gmail.com)
-    func removeDimViewFromWindow() {
-        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
-        
-        for view in window.subviews as [UIView] where view == dimView {
-            view.removeFromSuperview()
-            break
-        }
-    }
-    
-    
     /// 초기화 작업을 실행합니다.
     ///
     /// window에 추가된 DimView를 제거합니다.
@@ -81,83 +71,90 @@ class PlaceSearchViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for image in 0...5 {
-            images.append(UIImage(named: "search_0\(image)"))
-        }
-        
-        // 네비게이션바에 백버튼 타이틀 지우고 SearchBar를 추가
-        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
         addSearchBar()
         
-        var token = NotificationCenter.default.addObserver(forName: .filterWillCancelled, object: nil, queue: .main) { [weak self] _ in
+        guard let getUrl = URL(string: "https://umate-api.azurewebsites.net/api/place") else { return }
+        
+        PlaceDataManager.shared.get(with: getUrl, on: self) { [weak self] (response: PlaceListResponse) in
             guard let self = self else { return }
             
-            UIView.animate(withDuration: 0.3) {
-                self.removeDimViewFromWindow()
+            guard let responsePlaces = response.places else { return }
+            let places = responsePlaces.map { Place(simpleDto: $0) }
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                self.list = places
             }
         }
         
-        tokens.append(token)
-        
-        token = NotificationCenter.default.addObserver(forName: .filterWillApplied, object: nil, queue: .main) { [weak self] noti in
-            guard let self = self else { return }
-            
-            UIView.animate(withDuration: 0.3) {
-                self.removeDimViewFromWindow()
-            }
-            
-            // 필터 화면에서 보낸 필터링할 열거형 타입 배열을 가져옵니다.
-            if let filteredList = noti.userInfo?["filteredItem"] as? [Place.PlaceType] {
-                self.filteredList = filteredList
+        NotificationCenter.default.rx.notification(.filterWillCancelled, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 
-                if !self.filteredList.isEmpty {
-                    var data = [Place]()
-                    
-                    // 더미데이터에 속한 각 데이터의 placeType과 filterList의 placeType이 같다면 data배열에 추가합니다.
-                    for filteredItem in self.filteredList {
-                        for item in Place.dummyData {
-                            if item.placeType == filteredItem {
-                                data.append(item)
-                            }
-                        }
-                    }
-                    
-                    var containedData = [Place]()
-                    // 현재 화면에 표시하고 있는 list에서 필터링합니다.
-                    for currentItem in self.list {
-                        for filteredItem in data {
-                            if currentItem.name == filteredItem.name {
-                                containedData.append(filteredItem)
-                            }
-                        }
-                    }
-                    
-                    self.list = containedData
-                    self.searchCollectionView.reloadData()
-                }
-            }
-        }
+                self.dimView.removeFromSuperview()
+            })
+            .disposed(by: rx.disposeBag)
         
-        tokens.append(token)
-        
-        token = NotificationCenter.default.addObserver(forName: .sortByDistanceButtonSeleted, object: nil, queue: .main) { [weak self] noti in
-            guard let self = self else { return }
-            
-            if let list = noti.userInfo?["list"] as? [Place] {
-                self.distanceFilterOn = true
-                self.list = list
+        NotificationCenter.default.rx.notification(.filterWillApplied, object: nil)
+            .subscribe(onNext: { [weak self] noti in
+                guard let self = self else { return }
                 
-                let indexPaths = (0 ..< self.list.count).map {
-                    IndexPath(item: $0, section: 0)
+                UIView.animate(withDuration: 0.3) {
+                    self.dimView.removeFromSuperview()
                 }
                 
-                DispatchQueue.main.async {
+                // 필터 화면에서 보낸 필터링할 열거형 타입 배열을 가져옵니다.
+                if let filteredList = noti.userInfo?[filterWillAppliedNotificationFilteredPlaceList] as? [Place.PlaceType.RawValue] {
+                    self.filteredList = filteredList
+                    
+                    if !self.filteredList.isEmpty {
+                        var data = [Place]()
+                        
+                        // 더미데이터에 속한 각 데이터의 placeType과 filterList의 placeType이 같다면 data배열에 추가합니다.
+                        for filteredItem in self.filteredList {
+                            for item in self.list {
+                                if item.type == filteredItem {
+                                    data.append(item)
+                                }
+                            }
+                        }
+                        
+                        var containedData = [Place]()
+                        // 현재 화면에 표시하고 있는 list에서 필터링합니다.
+                        for currentItem in self.filteredPlacelist {
+                            for filteredItem in data {
+                                if currentItem.name == filteredItem.name {
+                                    containedData.append(filteredItem)
+                                }
+                            }
+                        }
+                        
+                        self.filteredPlacelist = containedData
+                        self.searchCollectionView.reloadData()
+                    }
+                }
+            })
+            .disposed(by: rx.disposeBag)
+        
+        NotificationCenter.default.rx.notification(.sortByDistanceButtonSeleted, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] noti in
+                guard let self = self else { return }
+                
+                if let sortedPlaceList = noti.userInfo?[sortByDistanceButtonSeletedNotificationSortedPlaceList] as? [Place] {
+                    self.distanceFilterOn = true
+                    self.filteredPlacelist = sortedPlaceList
+                    
+                    let indexPaths = (0 ..< self.filteredPlacelist.count).map {
+                        IndexPath(item: $0, section: 0)
+                    }
+                    
                     self.searchCollectionView.reloadItems(at: indexPaths)
                 }
-            }
-        }
-        
-        tokens.append(token)
+            })
+            .disposed(by: rx.disposeBag)
     }
     
     
@@ -178,7 +175,7 @@ class PlaceSearchViewController: CommonViewController {
         if let vc = segue.destination as? FilterViewController {
             window.addSubview(self.dimView)
             vc.filteredList = filteredList
-            vc.placeList = list
+            vc.placeList = filteredPlacelist
             vc.userLocation = userLocation
             vc.distanceFilterOn = distanceFilterOn
         }
@@ -186,7 +183,7 @@ class PlaceSearchViewController: CommonViewController {
         if let cell = sender as? UICollectionViewCell,
            let indexPath = searchCollectionView.indexPath(for: cell) {
             if let vc = segue.destination as? PlaceInfoViewController {
-                vc.place = list[indexPath.item]
+                vc.place = filteredPlacelist[indexPath.item]
             }
         }
     }
@@ -204,7 +201,7 @@ extension PlaceSearchViewController: UICollectionViewDataSource {
     /// - Returns: 섹션 아이템 수
     /// - Author: 장현우(heoun3089@gmail.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list.count
+        return filteredPlacelist.count
     }
     
     
@@ -217,9 +214,8 @@ extension PlaceSearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceSearchCollectionViewCell", for: indexPath) as! PlaceSearchCollectionViewCell
         
-        let target = list[indexPath.row]
-        let image = images[indexPath.row]
-        cell.configure(with: target, image: image)
+        let target = filteredPlacelist[indexPath.row]
+        cell.configure(with: target)
         
         return cell
     }
@@ -273,7 +269,7 @@ extension PlaceSearchViewController: UICollectionViewDelegateFlowLayout {
     /// - Returns: 헤더 사이즈
     /// - Author: 장현우(heoun3089@gmail.com)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if list.isEmpty {
+        if filteredPlacelist.isEmpty {
             return .zero
         }
         
@@ -293,7 +289,7 @@ extension PlaceSearchViewController: UISearchBarDelegate {
     /// - Author: 장현우(heoun3089@gmail.com)
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // 버튼을 누르면 list 배열을 초기화
-        list = []
+        filteredPlacelist = []
         
         // 버튼을 누르면 필터 리스트 초기화
         filteredList = []
@@ -303,11 +299,11 @@ extension PlaceSearchViewController: UISearchBarDelegate {
         guard let text = searchBar.text else { return }
         
         // 검색한 텍스트로 필터링
-        let containData = Place.dummyData.filter { $0.name.contains(text) }
+        let containData = list.filter { $0.name.contains(text) }
         
         // 필터링된 데이터를 장소 이름을 기준으로 오름차순 정렬
         let sortContainData = containData.sorted { $0.name < $1.name }
-        list.append(contentsOf: sortContainData)
+        filteredPlacelist.append(contentsOf: sortContainData)
         
         searchBar.resignFirstResponder()
         

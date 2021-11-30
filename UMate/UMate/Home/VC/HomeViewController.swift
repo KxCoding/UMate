@@ -17,6 +17,10 @@ class HomeViewController: CommonViewController {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBOutlet weak var listCollectionView: UICollectionView!
     
+    /// 대학교 이름 레이블
+    /// - Author: 장현우(heoun3089@gmail.com)
+    @IBOutlet weak var universityLabel: UILabel!
+    
     /// 홈 화면 데이터 리스트
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     var list = HomeViewCellData.getHomeDataList()
@@ -136,6 +140,8 @@ class HomeViewController: CommonViewController {
         }
         
         didTapMakeLowerKeyboard()
+        
+        universityLabel.text = loginKeychain.get(AccountKeys.universityName.rawValue)
     }
     
     

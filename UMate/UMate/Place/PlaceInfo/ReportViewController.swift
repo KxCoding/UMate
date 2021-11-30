@@ -38,7 +38,6 @@ class ReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationItem.title = "리뷰 신고"
         
         reportTextView.layer.cornerRadius = 10
