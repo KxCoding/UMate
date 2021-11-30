@@ -409,9 +409,9 @@ class TemplateManagingTableViewController: UITableViewController {
     // MARK: Table View Delegate Methods
     
     /// 테이블 뷰에서 표시할 섹션의 개수를 리턴합니다.
-    /// - Author: 박혜정(mailmelater11@gmail.com)
     /// - Parameter tableView: 테이블 뷰
     /// - Returns: 섹션의 개수
+    /// - Author: 박혜정(mailmelater11@gmail.com)
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }

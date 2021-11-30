@@ -8,19 +8,6 @@
 import Foundation
 
 
-/// Place 전용 응답 코드
-/// - Author: 박혜정(mailmelater11@gmail.com)
-enum PlaceResultCode: Int {
-    case ok = 200
-    case fail = -999
-    case notFound = 404
-    
-    case existAlready = 5000
-    case cannotFindData = 6000
-}
-
-
-
 /// Place 전용 응답 데이터 타입
 /// - Author: 박혜정(mailmelater11@gmail.com)
 protocol PlaceResponseType: Codable {

@@ -12,13 +12,13 @@ import Loaf
 extension Notification.Name {
     /// 하위 탭을 선택할 때 전송할 notification
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    static let tapToggleDidRequest = Notification.Name(rawValue: "tapToggleDidRequest")
+    static let tabToggleDidRequest = Notification.Name(rawValue: "tabToggleDidRequest")
     
     /// 북마크 목록이 업데이트 되었을 때 전송할 notification
     ///
     /// 북마크가 추가된 이후에 table view를 업데이트 하기 위해 전송됩니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    static let bookmarkListUpdated = Notification.Name(rawValue: "bookmarkListUpdated")
+    static let bookmarkListHasBeenUpdated = Notification.Name(rawValue: "bookmarkListHasBeenUpdated")
 }
 
 
@@ -64,7 +64,7 @@ class PlaceInfoViewController: CommonViewController {
     /// - Author: 박혜정(mailmelater11@gmail.com)
     var isBookmarked = false {
         didSet {
-            placeInfoTableView.reloadSections([1], animationStyle: .none)
+            placeInfoTableView.reloadSections([1], with: .automatic)
         }
     }
     
@@ -74,7 +74,7 @@ class PlaceInfoViewController: CommonViewController {
     ///
     /// 화면 진입 시 정보 탭이 선택되어 있습니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    var selectedTap: SubTab = .detail
+    var selectedTab: SubTab = .detail
     
     
     // MARK: Loafs
@@ -108,26 +108,21 @@ class PlaceInfoViewController: CommonViewController {
     @IBAction func selectTap(_ sender: UIButton) {
         switch sender.tag {
         case 100:
-            selectedTap = .detail
+            selectedTab = .detail
             
-            NotificationCenter.default.post(name: .tapToggleDidRequest,
+            NotificationCenter.default.post(name: .tabToggleDidRequest,
                                             object: nil,
-                                            userInfo: ["selectedTap": selectedTap])
-            
-            placeInfoTableView.reloadData()
-            
+                                            userInfo: [placeInfoTabSelectedNotificationSelectedTab: selectedTab])
         case 101:
-            selectedTap = .review
+            selectedTab = .review
             
-            NotificationCenter.default.post(name: .tapToggleDidRequest,
+            NotificationCenter.default.post(name: .tabToggleDidRequest,
                                             object: nil,
-                                            userInfo: ["selectedTap": selectedTap])
-            
-            placeInfoTableView.reloadData()
-            
+                                            userInfo: [placeInfoTabSelectedNotificationSelectedTab: selectedTab])
         default:
             break
         }
+        placeInfoTableView.reloadData()
     }
     
     
@@ -147,13 +142,13 @@ class PlaceInfoViewController: CommonViewController {
             self.placeInfoTableView.reloadData()
         }
         
-        var token = NotificationCenter.default.addObserver(forName: .openUrl,
+        var token = NotificationCenter.default.addObserver(forName: .urlOpenHasBeenRequested,
                                                            object: nil,
                                                            queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
-            guard let urlType = noti.userInfo?["type"] as? URLType,
-                  let url = noti.userInfo?["url"] as? URL else { return }
+            guard let urlType = noti.userInfo?[urlOpenRequestNotificationUrlType] as? URLType,
+                  let url = noti.userInfo?[urlOpenRequestNotificationUrl] as? URL else { return }
             
             switch urlType {
             case .web:
@@ -193,7 +188,7 @@ class PlaceInfoViewController: CommonViewController {
         
         tokens.append(token)
         
-        token = NotificationCenter.default.addObserver(forName: .updateBookmark,
+        token = NotificationCenter.default.addObserver(forName: .bookmarkHasBeenUpdated,
                                                            object: nil,
                                                            queue: .main) { [weak self] noti in
             guard let self = self else { return }
@@ -205,11 +200,11 @@ class PlaceInfoViewController: CommonViewController {
                 let postData = PlaceBookmarkPostData(placeId: self.place.id)
                 
                 self.dataManager.post(postData, with: bookmarkPostUrl, on: self) { (response: PlaceCommonResponse) in
-                    if response.code == PlaceResultCode.ok.rawValue {
+                    if response.code == ResultCode.ok.rawValue {
                         DispatchQueue.main.async {
                             self.isBookmarked.toggle()
                             self.bookmarkedLoaf.show(.custom(1.2))
-                            NotificationCenter.default.post(name: .bookmarkListUpdated, object: nil)
+                            NotificationCenter.default.post(name: .bookmarkListHasBeenUpdated, object: nil)
                         }
                     }
                 }
@@ -218,10 +213,10 @@ class PlaceInfoViewController: CommonViewController {
                 guard let bookmarkDeleteUrl = URL(string: urlString) else { return }
                 
                 PlaceDataManager.shared.delete(with: bookmarkDeleteUrl, on: self) { response in
-                    if response.code == PlaceResultCode.ok.rawValue {                         DispatchQueue.main.async {
+                    if response.code == ResultCode.ok.rawValue {                         DispatchQueue.main.async {
                             self.isBookmarked.toggle()
                             self.bookmarkDeletedLoaf.show(.custom(1.2))
-                            NotificationCenter.default.post(name: .bookmarkListUpdated, object: nil)
+                            NotificationCenter.default.post(name: .bookmarkListHasBeenUpdated, object: nil)
                         }
 
                     }
@@ -274,7 +269,7 @@ extension PlaceInfoViewController: UITableViewDataSource {
     /// - Returns: 섹션의 개수
     /// - Author: 박혜정(mailmelater11@gmail.com), 장현우(heoun3089@gmail.com)
     func numberOfSections(in tableView: UITableView) -> Int {
-        if selectedTap == .review {
+        if selectedTab == .review {
             return 6
         }
         return 5
@@ -290,7 +285,7 @@ extension PlaceInfoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 4:
-            if selectedTap == .review {
+            if selectedTab == .review {
                 let reviewList = PlaceReviewDataManager.shared.allPlaceReviewList.filter { $0.place.name == place.name }
                 
                 if reviewList.count < 3 {
@@ -337,11 +332,11 @@ extension PlaceInfoViewController: UITableViewDataSource {
             
         // 선택된 하위 탭에 따라 - 상세 정보 / 리뷰 요약
         case 3:
-            switch selectedTap {
+            switch selectedTab {
             case .detail:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "DetailTableViewCell", for: indexPath) as! DetailTableViewCell
                 
-                cell.configure(with: place, indexPath: indexPath)
+                cell.configure(with: place)
                 
                 return cell
                 

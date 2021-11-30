@@ -24,6 +24,9 @@ class TabSectionTableViewCell: UITableViewCell {
     /// 언더라인의 리뷰 탭 쪽 가운데 정렬 제약
     @IBOutlet weak var centerXToReviewConstraint: NSLayoutConstraint!
     
+    /// 옵저버 제거를 위한 토큰 배열
+    var tokens = [NSObjectProtocol]()
+    
     
     // MARK: Cell Lifecycle Method
     
@@ -37,17 +40,25 @@ class TabSectionTableViewCell: UITableViewCell {
         detailButton.tag = 100
         reviewButton.tag = 101
         
-        NotificationCenter.default.addObserver(forName: .tapToggleDidRequest, object: nil, queue: .main) { [weak self] noti in
+        var token = NotificationCenter.default.addObserver(forName: .tabToggleDidRequest, object: nil, queue: .main) { [weak self] noti in
             
-            guard let selectedTap = noti.userInfo?["selectedTap"] as? PlaceInfoViewController.SubTab else { return }
+            guard let selectedTab = noti.userInfo?[placeInfoTabSelectedNotificationSelectedTab] as? PlaceInfoViewController.SubTab else { return }
             
-            switch selectedTap {
+            switch selectedTab {
             case .detail:
                 self?.centerXToDetailConstraint.priority = UILayoutPriority(1000)
             case .review:
                 self?.centerXToDetailConstraint.priority = UILayoutPriority(998)
             }
         }
+        
+        tokens.append(token)
+    }
+    
+    
+    deinit {
+        // 옵저버를 제거합니다.
+        for token in tokens { NotificationCenter.default.removeObserver(token) }
     }
     
 }

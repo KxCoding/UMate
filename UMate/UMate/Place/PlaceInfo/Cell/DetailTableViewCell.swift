@@ -36,7 +36,7 @@ class DetailTableViewCell: UITableViewCell {
     // MARK: Properties
     
     /// 정보를 표시할 상점
-    var target: Place!
+    var target: Place?
     
     
     // MARK: Actions
@@ -45,12 +45,14 @@ class DetailTableViewCell: UITableViewCell {
     /// - Parameter sender: 전화번호 레이블 위에 위치한 버튼
     /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func call(_ sender: Any) {
+        guard let target = target else { return }
+        
         guard let tel = target.tel,
               let url = URL(string: "tel:\(tel)") else { return }
         
-        NotificationCenter.default.post(name: .openUrl,
+        NotificationCenter.default.post(name: .urlOpenHasBeenRequested,
                                         object: nil,
-                                        userInfo: ["type": URLType.tel, "url": url])
+                                        userInfo: [urlOpenRequestNotificationUrlType: URLType.tel, urlOpenRequestNotificationUrl: url])
         
     }
     
@@ -59,8 +61,9 @@ class DetailTableViewCell: UITableViewCell {
     /// 각 뷰에서 표시하는 데이터를 초기화합니다.
     /// - Parameter content: 표시할 내용을 담은 Place 객체
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    func configure(with content: Place, indexPath: IndexPath) {
+    func configure(with content: Place) {
         target = content
+        guard let target = target else { return }
         
         addressLabel.text = target.district
         telLabel.text = target.tel
@@ -68,7 +71,7 @@ class DetailTableViewCell: UITableViewCell {
         districtCollectionView.reloadData()
         keywordsCollectionView.reloadData()
     }
-   
+    
     
     // MARK: Cell Lifecycle Method
     
@@ -99,6 +102,8 @@ extension DetailTableViewCell: UICollectionViewDataSource {
     /// - Returns: 섹션에 포함되는 아이템의 개수
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let target = target else { return 0 }
+        
         switch collectionView {
         case districtCollectionView:
             return 1
@@ -122,24 +127,21 @@ extension DetailTableViewCell: UICollectionViewDataSource {
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        guard let target = target else { fatalError() }
+        
         switch collectionView {
-            
         case districtCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DistrictCollectionViewCell",
-                                                          for: indexPath) as! DistrictCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DistrictCollectionViewCell", for: indexPath) as! WordCollectionViewCell
             
-            cell.configure(with: target, indexPath: indexPath)
+            cell.configure(with: target.district)
             
             return cell
-            
         case keywordsCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "KeywordsCollectionViewCell",
-                                                          for: indexPath) as! KeywordsCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "KeywordsCollectionViewCell", for: indexPath) as! WordCollectionViewCell
             
-            cell.configure(with: target, indexPath: indexPath)
+            cell.configure(with: target.keywords[indexPath.row])
             
             return cell
-            
         default:
             fatalError()
             

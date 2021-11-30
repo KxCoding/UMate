@@ -38,9 +38,6 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
     /// 데이터 관리 객체
     let manager = PlaceDataManager.shared
     
-    /// 셀에서 표시하는 place 객체
-    var target: Place!
-    
     
     // MARK: Methods
     
@@ -48,21 +45,19 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
     /// - Parameter content: 표시할 정보를 담은 Place 객체
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func configure(with content: Place) {
-        target = content
-        
-        placeNameLabel.text = target.name
-        districtLabel.text = target.district
-        keywordLabel1.text = target.keywords.first
+        placeNameLabel.text = content.name
+        districtLabel.text = content.district
+        keywordLabel1.text = content.keywords.first
         
         // 키워드가 한 개 이상이면 두번째 까지 표시하고 그렇지 않으면 hidden 처리합니다.
-        if target.keywords.count > 1 {
-            keywordLabel2.text = target.keywords[1]
+        if content.keywords.count > 1 {
+            keywordLabel2.text = content.keywords[1]
         } else {
             keywordContainer2.isHidden = true
         }
         
         // 응답에 따라 이미지 뷰를 업데이트합니다.
-        manager.getImage(with: target.thumbnailUrl, andUpdate: placeImageView)
+        manager.getImage(with: content.thumbnailUrl, andUpdate: placeImageView)
         
     }
     
@@ -76,4 +71,3 @@ class NearbyPlaceCollectionViewCell: UICollectionViewCell {
     }
     
 }
-

@@ -13,11 +13,11 @@ extension Notification.Name {
     
     /// 북마크 토글 시 전송되는 notification
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    static let updateBookmark = Notification.Name(rawValue: "bookmarkUpdate")
+    static let bookmarkHasBeenUpdated = Notification.Name(rawValue: "bookmarkHasBeenUpdated")
     
     /// url 관련 버튼을 눌렀을 때 전송되는 notification
     /// - Author: 박혜정(mailmelater11@gmail.com)
-    static let openUrl = Notification.Name(rawValue: "openUrl")
+    static let urlOpenHasBeenRequested = Notification.Name(rawValue: "urlOpenHasBeenRequested")
     
 }
 
@@ -30,7 +30,7 @@ class InfoSectionTableViewCell: UITableViewCell {
     // MARK: Outlets
     
     /// 상점 타입을 나타내는 심벌을 표시하는 이미지 뷰
-    @IBOutlet weak var placeTypeImage: UIImageView!
+    @IBOutlet weak var placeTypeImageView: UIImageView!
     
     /// 상점 이름 레이블
     @IBOutlet weak var placeNameLabel: UILabel!
@@ -60,7 +60,7 @@ class InfoSectionTableViewCell: UITableViewCell {
     // MARK: Properties
     
     /// 정보를 표시할 상점
-    var target: Place!
+    var target: Place?
     
     
     // MARK: Actions
@@ -71,10 +71,12 @@ class InfoSectionTableViewCell: UITableViewCell {
     /// - Parameter sender: 버튼
     /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func openInInstagram(_ sender: UIButton) {
+        guard let target = target else { return }
+        
         guard let id = target.instagramId,
               let url = URL(string: "https://instagram.com/\(id)") else { return }
         
-        NotificationCenter.default.post(name: .openUrl,
+        NotificationCenter.default.post(name: .urlOpenHasBeenRequested,
                                         object: nil,
                                         userInfo: ["type": URLType.web, "url": url])
     }
@@ -86,9 +88,11 @@ class InfoSectionTableViewCell: UITableViewCell {
     /// - Parameter sender: 버튼
     /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func openInSafari(_ sender: Any) {
-        guard let urlString = target.url, let url = URL(string: urlString) else { return }
+        guard let target = target else { return }
+        guard let urlString = target.url,
+                let url = URL(string: urlString) else { return }
         
-        NotificationCenter.default.post(name: .openUrl,
+        NotificationCenter.default.post(name: .urlOpenHasBeenRequested,
                                         object: nil,
                                         userInfo: ["type": URLType.web, "url": url])
     }
@@ -100,7 +104,8 @@ class InfoSectionTableViewCell: UITableViewCell {
     /// - Parameter sender: 버튼
     /// - Author: 박혜정(mailmelater11@gmail.com)
     @IBAction func updateBookmark(_ sender: UIButton) {
-        NotificationCenter.default.post(name: .updateBookmark, object: nil)
+        NotificationCenter.default.post(name: .bookmarkHasBeenUpdated,
+                                        object: nil)
     }
     
     
@@ -115,11 +120,12 @@ class InfoSectionTableViewCell: UITableViewCell {
     func configure(with content: Place, isBookmarked: Bool) {
         
         target = content
+        guard let target = target else { return }
         
-        placeTypeImage.image = target.placeType.iconImage
+        placeTypeImageView.image = target.placeType.iconImage
         placeNameLabel.text = target.name
         
-        universityLabel.text = PlaceUser.tempUser.university?.name
+        universityLabel.text = University.tempUniversity.name
         districtLabel.text = target.district
         
         keywordLabel.text = target.keywords.first

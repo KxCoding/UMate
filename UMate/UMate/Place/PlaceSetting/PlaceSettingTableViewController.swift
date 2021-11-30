@@ -15,6 +15,8 @@ class PlaceSettingTableViewController: UITableViewController {
     /// 뷰가 메모리에 로드되었을 때 데이터나 UI를 초기화합니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         setTapBarAppearanceAsDefault()
     }
     
