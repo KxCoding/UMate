@@ -55,7 +55,7 @@ class FirstSectionTableViewCell: UITableViewCell {
     func configure(with content: Place) {
         target = content
         
-        pager.isHidden = (target.imageUrls.count < 2)
+        pager.isHidden = target.imageUrls.count < 2
         
         pager.numberOfPages = target.imageUrls.count
     }

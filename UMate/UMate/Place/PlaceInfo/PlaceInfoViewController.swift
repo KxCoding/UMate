@@ -64,7 +64,7 @@ class PlaceInfoViewController: CommonViewController {
     /// - Author: 박혜정(mailmelater11@gmail.com)
     var isBookmarked = false {
         didSet {
-            placeInfoTableView.reloadSections([1], animationStyle: .none)
+            placeInfoTableView.reloadSections([1], with: .automatic)
         }
     }
     
