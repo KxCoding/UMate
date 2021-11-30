@@ -1,17 +1,21 @@
 //
-//  PlaceReviewService.swift
+//  Service.swift
 //  UMate
 //
-//  Created by Hyunwoo Jang on 2021/11/28.
+//  Created by Hyunwoo Jang on 2021/11/30.
 //
 
 import Foundation
 import Moya
 
 
-/// 상점 리뷰 네트워크 요청 서비스
+/// 네트워크 요청 서비스
 /// - Author: 장현우(heoun3089@gmail.com)
-enum PlaceReviewService {
+enum Service {
+    case signup(EmailJoinPostData)
+    case login(EmailLoginPostData)
+    case validateToken
+    case universityList
     case allPlaceReivewList
     case placeReviewList
     case savePlaceReview(PlaceReviewPostData)
@@ -20,17 +24,24 @@ enum PlaceReviewService {
 }
 
 
-
-extension PlaceReviewService: TargetType, AccessTokenAuthorizable {
+extension Service: TargetType, AccessTokenAuthorizable {
     
     /// 기본 URL
     var baseURL: URL {
-        return URL(string: "https://umateplacereviewserver.azurewebsites.net")!
+        return URL(string: "https://umate-api.azurewebsites.net")!
     }
     
     /// 기본 URL을 제외한 나머지 경로
     var path: String {
         switch self {
+        case .signup:
+            return "/join/email"
+        case .login:
+            return "/login/email"
+        case .validateToken:
+            return "/validation"
+        case .universityList:
+            return "/api/university"
         case .allPlaceReivewList:
             return "/allplacereview"
         case .placeReviewList, .savePlaceReview:
@@ -45,9 +56,9 @@ extension PlaceReviewService: TargetType, AccessTokenAuthorizable {
     /// HTTP 요청 메소드
     var method: Moya.Method {
         switch self {
-        case .allPlaceReivewList, .placeReviewList:
+        case .validateToken, .universityList, .allPlaceReivewList, .placeReviewList:
             return .get
-        case .savePlaceReview:
+        case .signup, .login, .savePlaceReview:
             return .post
         case .editPlaceReview:
             return .put
@@ -59,17 +70,22 @@ extension PlaceReviewService: TargetType, AccessTokenAuthorizable {
     /// HTTP 작업 유형
     var task: Task {
         switch self {
-        case .allPlaceReivewList, .placeReviewList, .removePlaceReview:
+        case .validateToken, .universityList, .allPlaceReivewList, .placeReviewList, .removePlaceReview:
             return .requestPlain
-        case .savePlaceReview(let placeReviewPostData):
-            return .requestJSONEncodable(placeReviewPostData)
-        case .editPlaceReview(let placeReviewPutData):
-            return .requestJSONEncodable(placeReviewPutData)
+        case .signup(let emailJoinPostData):
+            return .requestJSONEncodable(emailJoinPostData)
+        case .login(let emailLoginPostData):
+            return .requestJSONEncodable(emailLoginPostData)
+            case .savePlaceReview(let placeReviewPostData):
+                return .requestJSONEncodable(placeReviewPostData)
+            case .editPlaceReview(let placeReviewPutData):
+                return .requestJSONEncodable(placeReviewPutData)
         }
     }
     
     /// HTTP 헤더
     var headers: [String : String]? {
+        
         return ["Content-Type": "application/json"]
     }
     

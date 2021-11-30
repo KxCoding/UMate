@@ -27,10 +27,8 @@ extension Notification.Name {
 /// - Author: 장현우(heoun3089@gmail.com)
 class PlaceReviewDataManager {
     
-    /// 싱글톤
+    /// 싱글톤 인스턴스
     static let shared = PlaceReviewDataManager()
-    
-    /// 싱글톤
     private init() { }
     
     /// 리소스 정리
@@ -42,11 +40,11 @@ class PlaceReviewDataManager {
     /// 네트워크 서비스 객체
     ///
     /// Bearer 토큰 인증 방식을 사용합니다.
-    lazy var provider: MoyaProvider<PlaceReviewService> = {
+    lazy var provider: MoyaProvider<Service> = {
         let token = loginKeychain.get(AccountKeys.apiToken.rawValue) ?? ""
         let authPlugin = AccessTokenPlugin { _ in token }
         
-        return MoyaProvider<PlaceReviewService>(plugins: [authPlugin])
+        return MoyaProvider<Service>(plugins: [authPlugin])
     }()
     
     /// 전체 상점 리뷰 목록
@@ -88,7 +86,7 @@ class PlaceReviewDataManager {
             let token = loginKeychain.get(AccountKeys.apiToken.rawValue) ?? ""
             let authPlugin = AccessTokenPlugin { _ in token }
             
-            return MoyaProvider<PlaceReviewService>(plugins: [authPlugin])
+            return MoyaProvider<Service>(plugins: [authPlugin])
         }()
         
         provider.rx.request(.placeReviewList)

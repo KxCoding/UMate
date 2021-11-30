@@ -67,7 +67,7 @@ class EmailVerificationViewController: CommonViewController {
     /// - Parameter sender: emailVerificationButton
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func checkToVerifiedCode(_ sender: Any) {
-        guard let codeField = codeTextField.text, codeField == "12345678" else {
+        guard let codeField = codeTextField.text, codeField == "123456" else {
             alert(title: "알림", message: "잘못된 코드입니다.")
             return
         }
@@ -94,7 +94,7 @@ class EmailVerificationViewController: CommonViewController {
         super.viewDidLoad()
         
         #if DEBUG
-        codeTextField.text = "12345678"
+        codeTextField.text = "123456"
         #endif
         
         [sendCodeButton, emailVerificationButton].forEach({

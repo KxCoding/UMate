@@ -5,8 +5,10 @@
 //  Created by 안상희 on 2021/07/12.
 //
 
-import UIKit
 import Loaf
+import NSObject_Rx
+import RxSwift
+import UIKit
 
 
 extension Notification.Name {
@@ -138,6 +140,8 @@ class PlaceInfoViewController: CommonViewController {
         placeInfoTableView.dataSource = self
         placeInfoTableView.delegate = self
         
+        self.navigationItem.title = "상점 정보"
+        
         PlaceReviewDataManager.shared.fetchAllReview(vc: self) {
             self.placeInfoTableView.reloadData()
         }
@@ -160,33 +164,26 @@ class PlaceInfoViewController: CommonViewController {
         
         tokens.append(token)
         
-        token = NotificationCenter.default.addObserver(forName: .reviewDidApplied,
-                                                       object: nil,
-                                                       queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            
-            PlaceReviewDataManager.shared.fetchAllReview(vc: self) {
-                self.placeInfoTableView.reloadData()
-            }
-        }
+        NotificationCenter.default.rx.notification(.reviewDidApplied, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                
+                PlaceReviewDataManager.shared.fetchAllReview(vc: self) {
+                    self.placeInfoTableView.reloadData()
+                }
+            })
+            .disposed(by: rx.disposeBag)
         
-        tokens.append(token)
+        NotificationCenter.default.rx.notification(.reviewPostFailed, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { _ in self.alert(message: "리뷰 추가에 실패했습니다.") })
+            .disposed(by: rx.disposeBag)
         
-        token = NotificationCenter.default.addObserver(forName: .reviewPostFailed,
-                                                       object: nil,
-                                                       queue: .main) { _ in
-            self.alert(message: "리뷰 추가에 실패했습니다.")
-        }
-        
-        tokens.append(token)
-        
-        token = NotificationCenter.default.addObserver(forName: .errorOccured,
-                                                       object: nil,
-                                                       queue: .main) { _ in
-            self.alert(message: "에러가 발생했습니다.")
-        }
-        
-        tokens.append(token)
+        NotificationCenter.default.rx.notification(.errorOccured, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { _ in self.alert(message: "에러가 발생했습니다.") })
+            .disposed(by: rx.disposeBag)
         
         token = NotificationCenter.default.addObserver(forName: .bookmarkHasBeenUpdated,
                                                            object: nil,
@@ -231,16 +228,6 @@ class PlaceInfoViewController: CommonViewController {
     }
     
     
-    /// 뷰가 나타나기 전에 호출됩니다.
-    /// - Parameter animated: 애니메이션 사용 여부
-    /// - Author: 장현우(heoun3089@gmail.com)
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationItem.title = "상점 정보"
-    }
-    
-    
     /// 다음 화면으로 넘어가기 전에 호출됩니다.
     /// - Parameters:
     ///   - segue: 다음 화면 뷰컨트롤러에 대한 정보를 가지고 있는 segue 객체
@@ -249,13 +236,10 @@ class PlaceInfoViewController: CommonViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? ReviewWriteTableViewController {
             vc.placeName = place.name
-        }
-        
-        if let vc = segue.destination as? AllReviewViewController {
+        } else if let vc = segue.destination as? AllReviewViewController {
             vc.placeName = place.name
         }
     }
-    
 }
 
 

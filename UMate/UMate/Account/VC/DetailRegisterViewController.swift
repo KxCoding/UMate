@@ -111,9 +111,12 @@ class DetailRegisterViewController: CommonViewController {
         UniversityDataManager.shared.fetchUniversity(vc: self) {
             if let universityName = self.universityName {
                 let targetUniversity = UniversityDataManager.shared.universityList.filter { $0.name == universityName }
+                
+                if targetUniversity.isEmpty {
+                    self.alert(message: "일치하는 대학교 이름을 찾을 수 없습니다.")
+                }
+                
                 if let university = targetUniversity.first {
-                    print(university.universityId)
-                    
                     let emailJoinPostData = EmailJoinPostData(email: email,
                                                               password: password,
                                                               realName: name,

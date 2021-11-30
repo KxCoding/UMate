@@ -35,12 +35,12 @@ class FilterViewController: UIViewController {
     /// 상점 종류 배열
     ///
     /// 셀에 저장되어 있는 상점 종류 타입을 저장합니다.
-    var list = [Place.PlaceType]()
+    var placeTypelist = [Place.PlaceType.RawValue]()
     
     /// 필터링 된 항목
     ///
     /// 이전 화면에서 전달됩니다.
-    var filteredList: [Place.PlaceType]?
+    var filteredList: [Place.PlaceType.RawValue]?
     
     /// 상점 목록
     ///
@@ -84,7 +84,7 @@ class FilterViewController: UIViewController {
             return userLocation.distance(from: firstPlaceCLLocation) < userLocation.distance(from: secondPlaceCLLocation)
         }
         
-        NotificationCenter.default.post(name: .sortByDistanceButtonSeleted, object: nil, userInfo: ["list": placeList])
+        NotificationCenter.default.post(name: .sortByDistanceButtonSeleted, object: nil, userInfo: [sortByDistanceButtonSeletedNotificationSortedPlaceList: placeList])
     }
     
     
@@ -92,10 +92,10 @@ class FilterViewController: UIViewController {
     /// - Parameter sender: 필터 적용 버튼
     /// - Author: 장현우(heoun3089@gmail.com)
     @IBAction func applyFilterButtonTapped(_ sender: Any) {
-        if let cell = filterTableView.cellForRow(at: IndexPath(row: 0, section: 2)) as? StoreTypeTableViewCell {
-            list = cell.storeTypeFilterArray
+        if let cell = filterTableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? StoreTypeTableViewCell {
+            placeTypelist = cell.storeTypeFilterArray
             
-            NotificationCenter.default.post(name: .filterWillApplied, object: nil, userInfo: ["filteredItem": list])
+            NotificationCenter.default.post(name: .filterWillApplied, object: nil, userInfo: [filterWillAppliedNotificationFilteredPlaceList: placeTypelist])
         }
         
         dismiss(animated: true, completion: nil)
@@ -106,6 +106,15 @@ class FilterViewController: UIViewController {
 
 /// 필터 화면 테이블뷰 데이터 관리
 extension FilterViewController: UITableViewDataSource {
+    
+    /// 섹션의 개수를 리턴합니다.
+    /// - Parameter tableView: 필터 화면 테이블뷰
+    /// - Returns: 섹션의 개수
+    /// - Author: 장현우(heoun3089@gmail.com)
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     
     /// 섹션에 표시할 셀 수를 리턴합니다.
     /// - Parameters:
@@ -154,23 +163,26 @@ extension FilterViewController: UITableViewDataSource {
             if let filteredList = filteredList {
                 for filterType in filteredList {
                     switch filterType {
-                    case .cafe:
+                    case Place.PlaceType.cafe.rawValue:
                         cell.caffeButtonTapped(self)
                         
-                    case .restaurant:
+                    case Place.PlaceType.restaurant.rawValue:
                         cell.restauranteButtonTapped(self)
                         
-                    case .bakery:
+                    case Place.PlaceType.bakery.rawValue:
                         cell.bakeryButtonTapped(self)
                         
-                    case .studyCafe:
+                    case Place.PlaceType.studyCafe.rawValue:
                         cell.studyCafeButtonTapped(self)
                         
-                    case .pub:
+                    case Place.PlaceType.pub.rawValue:
                         cell.pubButtonTapped(self)
                         
-                    case .dessert:
+                    case Place.PlaceType.dessert.rawValue:
                         cell.desertButtonTapped(self)
+                        
+                    default:
+                        break
                     }
                 }
             }
@@ -179,14 +191,5 @@ extension FilterViewController: UITableViewDataSource {
         default:
             return UITableViewCell()
         }
-    }
-    
-    
-    /// 섹션의 개수를 리턴합니다.
-    /// - Parameter tableView: 필터 화면 테이블뷰
-    /// - Returns: 섹션의 개수
-    /// - Author: 장현우(heoun3089@gmail.com)
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
     }
 }
