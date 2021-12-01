@@ -9,7 +9,7 @@ import UIKit
 
 /// 홈 화면 대외활동 / 공모전 탭을 표시할 콜렉션 뷰 셀
 /// - Author: 황신택 (sinadsl1457@gmail.com)
-class ContestCollectionViewCell: UICollectionViewCell {
+class ContestCollectionViewCell: CommonCollectionViewCell {
     /// 공모전 대외활동 타이틀 레이블
     @IBOutlet weak var titleLabel: UILabel!
     
@@ -24,10 +24,6 @@ class ContestCollectionViewCell: UICollectionViewCell {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
-        clipsToBounds = false
-        layer.cornerRadius = 20
-        layer.shadowColor = UIColor.gray.cgColor
-        layer.shadowOffset = CGSize(width: 3, height: 3)
-        layer.shadowOpacity = 0.5
+        makeCollectionCellRounded()
     }
 }

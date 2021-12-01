@@ -9,7 +9,7 @@ import UIKit
 
 /// 홈 화면 구인정보 탭을 나타내는 콜렉션 뷰 셀
 /// - Author: 황신택 (sinadsl1457@gmail.com)
-class JobInfoCollectionViewCell: UICollectionViewCell {
+class JobInfoCollectionViewCell: CommonCollectionViewCell {
     /// 구인 카테고리 이미지 뷰
     @IBOutlet weak var jobCategoryImageView: UIImageView!
     
@@ -24,10 +24,6 @@ class JobInfoCollectionViewCell: UICollectionViewCell {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
-        clipsToBounds = false
-        layer.cornerRadius = 20
-        layer.shadowColor = UIColor.gray.cgColor
-        layer.shadowOffset = CGSize(width: 3, height: 3)
-        layer.shadowOpacity = 0.5
+        makeCollectionCellRounded()
     }
 }

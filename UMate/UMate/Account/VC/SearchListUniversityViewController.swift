@@ -10,6 +10,13 @@ import RxSwift
 import RxCocoa
 import NSObject_Rx
 
+
+/// Rx 테이블뷰 ModelSelected에 사용되는 모델 타입
+/// - Author: 황신택 (sinadsl1457@gmail.com)
+struct UniversityName {
+    let name: String
+}
+
 /// 학교 이름을 포스팅 할 새로운 이름 생성
 /// - Author: 황신택 (sinadsl1457@gmail.com)
 extension Notification.Name {

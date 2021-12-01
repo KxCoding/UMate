@@ -76,14 +76,18 @@ class EmploymentInfoTableViewCell: CommonTableViewCell {
         
         Observable.just(model.url)
             .subscribe(on: backgroundScheduler)
-            .compactMap { URL(string: $0) }
-            .compactMap { try? Data(contentsOf: $0) }
-            .compactMap { UIImage(data: $0) }
-            .bind(to: companyImageView.rx.image)
-            .disposed(by: rx.disposeBag)
-        
-        Observable.just(UIImage(systemName: "bookmark"))
-            .bind(to: bookmarkImageView.rx.image)
+            .compactMap { NSURL(string: $0) }
+            .subscribe(onNext: { [unowned self] in
+                if let image = cache.object(forKey: $0) {
+                    self.companyImageView.image = image
+                } else {
+                    if let data = try? Data(contentsOf: $0 as URL), let image = UIImage(data: data) {
+                        cache.setObject(image, forKey: $0)
+                        self.companyImageView.image = image
+                    }
+                }
+                
+            })
             .disposed(by: rx.disposeBag)
     }
     

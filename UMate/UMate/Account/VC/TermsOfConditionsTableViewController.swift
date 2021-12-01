@@ -124,9 +124,7 @@ class TermsOfConditionsTableViewController: UITableViewController {
             advertisementTextView.text = advertisementStr
         }
         
-        Observable.just(UIColor.dynamicColor(light: .darkGray, dark: .lightGray))
-            .bind(to: (navigationController?.navigationBar.rx.tintColor)!)
-            .disposed(by: rx.disposeBag)
+        navigationController?.navigationBar.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
     }
 }
 
