@@ -209,20 +209,6 @@ class DetailLectureReviewViewController: CommonViewController {
             })
             .disposed(by: rx.disposeBag)
         
-        // 헤더뷰 버튼 동작
-        NotificationCenter.default.rx.notification(.performSegueToWrite, object: nil)
-            .compactMap { $0.userInfo?["tag"] as? Int }
-            .withUnretained(self)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
-                if $0.1 == 2 {
-                    $0.0.performSegue(withIdentifier: "writeReviewSegue", sender: self)
-                } else {
-                    $0.0.performSegue(withIdentifier: "testInfoSegue", sender: self)
-                }
-            })
-            .disposed(by: rx.disposeBag)
-        
         NotificationCenter.default.rx.notification(.testInfoDidReported, object: nil)
             .withUnretained(self)
             .observe(on: MainScheduler.instance)
@@ -239,6 +225,28 @@ class DetailLectureReviewViewController: CommonViewController {
             .subscribe(onNext: { vc, _ in
                 vc.alertVersion3(title: "※ 신고하시겠습니까?", message: "\n해당 강의평이 부적절한 내용을 포함하여 신고합니다.") { _ in
                     Loaf("신고가 접수되었습니다.", state: .custom(.init(backgroundColor: .black)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: vc).show(.short)
+                }
+            })
+            .disposed(by: rx.disposeBag)
+    }
+    
+    
+    /// 뷰 계층에 모든 뷰들이 추가된 이후 호출됩니다.
+    /// - Parameter animated: 윈도우에 뷰가 추가될 때 애니메이션 여부. 기본값은 true입니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // 헤더뷰 버튼 동작
+        NotificationCenter.default.rx.notification(.performSegueToWrite, object: nil)
+            .compactMap { $0.userInfo?["tag"] as? Int }
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                if $0.1 == 2 {
+                    $0.0.performSegue(withIdentifier: "writeReviewSegue", sender: self)
+                } else {
+                    $0.0.performSegue(withIdentifier: "testInfoSegue", sender: self)
                 }
             })
             .disposed(by: rx.disposeBag)

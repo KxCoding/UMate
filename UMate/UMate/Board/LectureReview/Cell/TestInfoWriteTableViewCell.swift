@@ -13,8 +13,8 @@ import UIKit
 /// - Author: 남정은(dlsl7080@gmail.com)
 extension Notification.Name {
     static let testInfoInputFieldDidInsert = Notification.Name("insertTestInfoInputField")
-    static let alertDidSend = Notification.Name("alertDidSend")
-    static let warningAlertDidSend = Notification.Name("warningAlert")
+    static let testInfoAlertDidSend = Notification.Name("testInfoAlertDidSend")
+    static let wirteTestInfoCheckingAlertDidSend = Notification.Name("wirteTestInfoCheckingAlertDidSend")
 }
 
 
@@ -160,23 +160,23 @@ class TestInfoWriteTableViewCell: UITableViewCell {
         
         // 수강학기 미선택시
         if semestersView.selectedItem == nil {
-            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":0])
+            NotificationCenter.default.post(name: .testInfoAlertDidSend, object: nil, userInfo: ["alertKey":0])
         }
         // 시험죵류 미선택시
         else if testTypesView.selectedItem == nil {
-            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":1])
+            NotificationCenter.default.post(name: .testInfoAlertDidSend, object: nil, userInfo: ["alertKey":1])
         }
         // 시험전략 미작성시
         else if testStrategyTextView.text.count < 20 {
-            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":2])
+            NotificationCenter.default.post(name: .testInfoAlertDidSend, object: nil, userInfo: ["alertKey":2])
         }
         // 문제유형 미선택시
         else if selectedButton.count == 0 {
-            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":3])
+            NotificationCenter.default.post(name: .testInfoAlertDidSend, object: nil, userInfo: ["alertKey":3])
         }
         // 문제예시 미작성시
         else if firstTextField.text?.count ?? 0 < 5 {
-            NotificationCenter.default.post(name: .alertDidSend, object: nil, userInfo: ["alertKey":4])
+            NotificationCenter.default.post(name: .testInfoAlertDidSend, object: nil, userInfo: ["alertKey":4])
         }
         // 다 입력했을 경우
         else {
@@ -200,7 +200,7 @@ class TestInfoWriteTableViewCell: UITableViewCell {
             
             let newTestInfo = TestInfoPostData(testInfoId: 0, lectureInfoId: lectureInfoId, semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypesStr, examples: examplesOfQuestions, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
-            NotificationCenter.default.post(name: .warningAlertDidSend, object: nil, userInfo: ["testInfo": newTestInfo])
+            NotificationCenter.default.post(name: .wirteTestInfoCheckingAlertDidSend, object: nil, userInfo: ["testInfo": newTestInfo])
         }
     }
     
