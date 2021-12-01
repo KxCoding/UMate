@@ -10,12 +10,7 @@ import UIKit
 import AZSClient
 
 
-#warning("Blob 수정")
-let constr = "DefaultEndpointsProtocol=https;AccountName=boardimage1018;AccountKey=sTXm0jhZ7Yt9YGgCdrGY65ftGpE8USALIDa+NnzbsD/6lA62sAIw/0OZ9TUK61RD2KRrCuUglSWLDSbbQWNysw==;EndpointSuffix=core.windows.net"
-
-
-
-/// 블랍 메니저
+/// 블랍 매니저
 ///
 /// 이미지 데이터를 관리합니다.
 ///  - Author: 남정은(dlsl7080@gmail.com)
@@ -33,9 +28,9 @@ struct BlobManager {
     /// 이미지 업로드를 위한 설정을 초기화 합니다.
     ///  - Author: 남정은(dlsl7080@gmail.com)
     private init() {
-        account = try? AZSCloudStorageAccount(fromConnectionString: constr)
+        account = try? AZSCloudStorageAccount(fromConnectionString: blobConnectStr)
         client = account?.getBlobClient()
-        container = client?.containerReference(fromName: "images")
+        container = client?.containerReference(fromName: "default")
     }
     
     

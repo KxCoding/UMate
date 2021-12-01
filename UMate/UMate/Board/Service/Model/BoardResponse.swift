@@ -143,6 +143,9 @@ struct CommentListResponseData: Codable {
         let isReComment: Bool
         var createdAt: String
         let updatedAt: String
+        var dateStr: String? {
+            return BoardDataManager.shared.decodingFormatter.date(from: createdAt)?.commentDate
+        }
     }
     
     let list: [Comment]

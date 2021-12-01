@@ -196,10 +196,9 @@ class TestInfoWriteTableViewCell: UITableViewCell {
                 }
             }
             
-            let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
             let questionTypesStr = questionTypes.map{ $0.trimmingCharacters(in: .whitespaces)}.joined(separator: ",")
             
-            let newTestInfo = TestInfoPostData(testInfoId: 0, lectureInfoId: lectureInfoId, semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypesStr, examples: examplesOfQuestions, createdAt: dateStr)
+            let newTestInfo = TestInfoPostData(testInfoId: 0, lectureInfoId: lectureInfoId, semester: semestersView.selectedItem ?? "", testType: testTypesView.selectedItem ?? "", testStrategy: testStrategyTextView.text ?? "", questionTypes: questionTypesStr, examples: examplesOfQuestions, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
             NotificationCenter.default.post(name: .warningAlertDidSend, object: nil, userInfo: ["testInfo": newTestInfo])
         }

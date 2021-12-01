@@ -40,7 +40,7 @@ class LectureReviewTableViewCell: UITableViewCell {
             // 강의평이 등록되지 않은 강의
             semesterLabel.text = "강의평을 달아주세요!"
             reviewContentLabel.text = "등록된 강의평이 없습니다."
-            ratingView.settings.emptyBorderColor = UIColor.init(named: "lightGrayNonSelectedColor") ?? .lightGray
+            ratingView.settings.emptyBorderColor = UIColor.init(named: "ratingStarColor") ?? .lightGray
             ratingView.rating = 0
         }
     }

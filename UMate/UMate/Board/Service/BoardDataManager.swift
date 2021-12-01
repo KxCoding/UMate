@@ -210,8 +210,7 @@ class BoardDataManager {
     }
     
     
-    /// 강의목록 페이지
-    var lecturePage = 1
+   
     
     /// 강의목록 불러오는 양
     let lecturePageSize = 12
@@ -219,24 +218,25 @@ class BoardDataManager {
     /// 강의정보 불러오는 중
     var lectureIsFetching = false
     
-    /// 추가로 불러온 정보
-    var hasMoreLecture = true
+    
     
     /// 전체 강의 목록 개수
     var totalCount = 0
     
+    
+    
+    
+    
     /// 최신 강의평 목록을 불러옵니다.
     ///  - Author: 남정은(dlsl7080@gmail.com)
-    func fetchRecentReview(lectureCount: Int) -> Observable<[LectureInfoListResponseData.LectureInfo]> {
+    func fetchRecentReview(lecturePage: Int) -> Observable<[LectureInfoListResponseData.LectureInfo]> {
         lectureIsFetching = true
+        
         
         return BoardDataManager.shared.provider.rx.request(.recentLectureReviewList(lecturePage, lecturePageSize))
             .filterSuccessfulStatusCodes()
             .map(LectureInfoListResponseData.self)
             .map { [weak self] data in
-                self?.lecturePage += 1
-                
-                self?.hasMoreLecture = data.totalCount > lectureCount + data.list.count
                 self?.totalCount = data.totalCount
                 
                 self?.lectureIsFetching = false
