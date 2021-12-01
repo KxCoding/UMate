@@ -47,32 +47,10 @@ class TestInfoWriteViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 알림창 노티피케이션
-        var token = NotificationCenter.default.addObserver(forName: .alertDidSend, object: nil, queue: .main) { [weak self] noti in
-            guard let self = self else { return }
-            
-            if let alertKey = noti.userInfo?["alertKey"] as? Int {
-                switch alertKey {
-                case 0:
-                    Loaf("이 과목을 수강하신 학기를 선택해주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show()
-                case 1:
-                    Loaf("시험 종류를 선택해주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show()
-                case 2:
-                    Loaf("시험 전략에 대해 좀 더 성의있는 작성을 부탁드립니다 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
-                case 3:
-                    Loaf("문제 유형을 선택해주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show()
-                case 4:
-                    Loaf("문제 예시를 더 세부적으로 적어주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show()
-                default:
-                    break
-                }
-            }
-        }
-        tokens.append(token)
+      
         
         // 키보드 노티피케이션
-      
-            token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil, using: {noti in
+        let token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil, using: {noti in
                 if let value = noti.userInfo?[
                     UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
                     
@@ -132,7 +110,7 @@ class TestInfoWriteViewController: CommonViewController {
         super.viewDidAppear(animated)
  
         // 작성 경고문
-        let token = NotificationCenter.default.addObserver(forName: .warningAlertDidSend, object: nil, queue: .main) { [weak self] noti in
+        var token = NotificationCenter.default.addObserver(forName: .wirteTestInfoCheckingAlertDidSend, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
             self.alertVersion3(title: "시험 정보를 공유하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { _ in
                 if let newTestInfo = noti.userInfo?["testInfo"] as? TestInfoPostData {
@@ -143,6 +121,41 @@ class TestInfoWriteViewController: CommonViewController {
             }
         }
         tokens.append(token)
+        
+        // 알림창 노티피케이션
+        token = NotificationCenter.default.addObserver(forName: .testInfoAlertDidSend, object: nil, queue: .main) { [weak self] noti in
+            guard let self = self else { return }
+            
+            if let alertKey = noti.userInfo?["alertKey"] as? Int {
+                switch alertKey {
+                case 0:
+                    Loaf("이 과목을 수강하신 학기를 선택해주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show(.short)
+                case 1:
+                    Loaf("시험 종류를 선택해주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show(.short)
+                case 2:
+                    Loaf("시험 전략에 대해 좀 더 성의있는 작성을 부탁드립니다 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show(.short)
+                case 3:
+                    Loaf("문제 유형을 선택해주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show(.short)
+                case 4:
+                    Loaf("문제 예시를 더 세부적으로 적어주세요.", state: .custom(.init(backgroundColor: .black)), sender: self).show(.short)
+                default:
+                    break
+                }
+            }
+        }
+        tokens.append(token)
+    }
+    
+    
+    /// 뷰가 계층에서 사라지기 전에 호출됩니다.
+    /// - Parameter animated: 애니메이션 여부. 기본값은 true입니다.
+    /// - Author: 남정은(dlsl7080@gmail.com)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        for token in tokens {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
     
     

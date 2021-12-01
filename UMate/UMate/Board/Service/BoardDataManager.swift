@@ -208,8 +208,6 @@ class BoardDataManager {
             .catchAndReturn([])
             .asObservable()
     }
-    
-    
    
     
     /// 강의목록 불러오는 양
@@ -218,13 +216,8 @@ class BoardDataManager {
     /// 강의정보 불러오는 중
     var lectureIsFetching = false
     
-    
-    
     /// 전체 강의 목록 개수
     var totalCount = 0
-    
-    
-    
     
     
     /// 최신 강의평 목록을 불러옵니다.
