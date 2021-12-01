@@ -47,23 +47,48 @@ class LectureReviewBoardViewController: CommonViewController {
         return searchController.isActive && !isSearchBarEmpty
     }
     
+    /// 강의목록 페이지
+    var lecturePage = 1
+    
+    /// 추가로 불러온 정보
+    var hasMoreLecture = true
+    
+    /// 첫음에는 리로드 테이블 뷰
+    var reloadRequired = false
+    
+    /// 데이터를 불러올 때 필요한 데이터 설정
+    let setting = { (lecturePage: inout Int, hasMoreLecture: inout Bool, dataListCount: Int, lectureListCount: Int) -> () in
+        lecturePage += 1
+        
+        hasMoreLecture = BoardDataManager.shared.totalCount > lectureListCount + dataListCount
+    }
+    
     
     /// 최신 강의평을 테이블 뷰에 나타냅니다.
     /// - Author: 남정은(dlsl7080@gmail.com)
     private func fetchRecentReviewLecture() {
         
-        guard !BoardDataManager.shared.lectureIsFetching && BoardDataManager.shared.hasMoreLecture else { return }
+        guard !BoardDataManager.shared.lectureIsFetching && self.hasMoreLecture else { return }
         
-        let lectureReviews = BoardDataManager.shared.fetchRecentReview(lectureCount: self.lectureList.count).share().observe(on: MainScheduler.instance)
+        reloadRequired = lecturePage == 1
+        
+        let lectureReviews = BoardDataManager.shared.fetchRecentReview(lecturePage: lecturePage).share().observe(on: MainScheduler.instance)
+        
+        lectureReviews
+            .withUnretained(self)
+            .subscribe(onNext: {
+                $0.0.setting(&$0.0.lecturePage, &$0.0.hasMoreLecture, $0.1.count, $0.0.lectureList.count)
+            })
+            .disposed(by: rx.disposeBag)
         
         lectureReviews.filter { $0.count == 0 }
-        .subscribe(onNext: { _ in
-            BoardDataManager.shared.hasMoreLecture = false
+        .withUnretained(self)
+        .subscribe(onNext: {
+            $0.0.hasMoreLecture = false
         })
         .disposed(by: rx.disposeBag)
-        
-        let reloadRequired = BoardDataManager.shared.lecturePage == 1
-        if reloadRequired {
+       
+        if self.reloadRequired {
             lectureReviews.withUnretained(self)
                 .filter { !$0.1.isEmpty }
                 .subscribe(onNext: {

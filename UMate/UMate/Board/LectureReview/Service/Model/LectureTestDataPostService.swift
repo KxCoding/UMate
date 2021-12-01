@@ -23,7 +23,7 @@ extension LectureReviewSaveService: TargetType, AccessTokenAuthorizable {
     
     /// 기본 URL
     var baseURL: URL {
-        return URL(string: "https://umateserverboard.azurewebsites.net")!
+        return URL(string: "https://umate-api.azurewebsites.net")!
     }
     
     /// 기본 URL 제외한 경로
@@ -69,7 +69,7 @@ extension TestInfoSaveService: TargetType, AccessTokenAuthorizable {
     
     /// 기본 URL
     var baseURL: URL {
-        return URL(string: "https://umateserverboard.azurewebsites.net")!
+        return URL(string: "https://umate-api.azurewebsites.net")!
     }
     
     /// 기본 URL 제외한 경로

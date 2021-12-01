@@ -122,8 +122,6 @@ class ComposeViewController: CommonViewController {
                   return
               }
         
-        let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-        
         var newPost: PostPostData?
         var urlStringList = [String]()
         let group = DispatchGroup()
@@ -134,8 +132,7 @@ class ComposeViewController: CommonViewController {
                 imageUploadActivityIndicatorView.startAnimating()
                 BlobManager.shared.upload(image: image) { success, id in
                     if success {
-                        #warning("블롭주소 수정")
-                        let imageUrlStr = "https://boardimage1018.blob.core.windows.net/images/\(id.lowercased())"
+                        let imageUrlStr = "https://umate.blob.core.windows.net/default/\(id.lowercased())"
                         urlStringList.append(imageUrlStr)
                         group.leave()
                     }
@@ -146,13 +143,13 @@ class ComposeViewController: CommonViewController {
         // 일반 게시판에 추가될 게시글
         group.notify(queue: .main) {
             if self.categoryList.isEmpty {
-                newPost = PostPostData(postId: 0, boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: 0, urlStrings: urlStringList, createdAt:dateStr)
+                newPost = PostPostData(postId: 0, boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: 0, urlStrings: urlStringList, createdAt:BoardDataManager.shared.postDateFormatter.string(from: Date()))
             } else {
                 guard let selectedCategory = self.selectedCategory else {
                     Loaf("카테고리 항목을 선택해 주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
                     return
                 }
-                newPost = PostPostData(postId: 0, boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:dateStr)
+                newPost = PostPostData(postId: 0, boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:BoardDataManager.shared.postDateFormatter.string(from: Date()))
             }
             
             self.sendDataToServer(postData: newPost)
@@ -183,10 +180,9 @@ class ComposeViewController: CommonViewController {
                         print("추가 성공!")
                         #endif
                         
-                        DispatchQueue.main.async {
-                            self.imageUploadActivityIndicatorView.stopAnimating()
-                            self.dismiss(animated: true, completion: nil)
-                        }
+                        self.imageUploadActivityIndicatorView.stopAnimating()
+                        self.dismiss(animated: true, completion: nil)
+                        
                     case ResultCode.fail.rawValue:
                         #if DEBUG
                         print("이미 존재함")
@@ -206,7 +202,7 @@ class ComposeViewController: CommonViewController {
     /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(#function)
+        
         categoryListCollectionView.isHidden = categoryList.isEmpty
         
         postTitleTextField.becomeFirstResponder()
@@ -457,7 +453,6 @@ extension ComposeViewController: UICollectionViewDelegateFlowLayout {
         return .zero
     }
 }
-
 
 
 

@@ -37,7 +37,7 @@ extension ScrapInfoService: TargetType, AccessTokenAuthorizable {
     
     /// 기본 URL
     var baseURL: URL {
-        return URL(string: "https://umateserverboard.azurewebsites.net")!
+        return URL(string: "https://umate-api.azurewebsites.net")!
     }
     
     /// 기본 URL제외한 경로
@@ -90,7 +90,7 @@ extension PostSaveService: TargetType, AccessTokenAuthorizable {
     
     /// 기본 URL
     var baseURL: URL {
-        URL(string: "https://umateserverboard.azurewebsites.net")!
+        URL(string: "https://umate-api.azurewebsites.net")!
     }
     
     /// 기본 URL 제외한 경로
@@ -136,7 +136,7 @@ extension CommentSaveService: TargetType, AccessTokenAuthorizable {
     
     /// 기본 URL
     var baseURL: URL {
-        return URL(string: "https://umateserverboard.azurewebsites.net")!
+        return URL(string: "https://umate-api.azurewebsites.net")!
     }
     
     /// 기본 URL 제외한 경로
@@ -226,7 +226,7 @@ extension CommentLikeService: TargetType, AccessTokenAuthorizable {
     
     /// 기본 URL
     var baseURL: URL {
-        return URL(string: "https://umateserverboard.azurewebsites.net")!
+        return URL(string: "https://umate-api.azurewebsites.net")!
     }
     
     /// 기본 URL 제외한 경로

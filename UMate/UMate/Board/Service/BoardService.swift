@@ -43,7 +43,7 @@ extension BoardService: TargetType, AccessTokenAuthorizable {
     }
     
     var baseURL: URL {
-        return URL(string: "https://umateserverboard.azurewebsites.net")!
+        return URL(string: "https://umate-api.azurewebsites.net")!
     }
     
     var path: String {

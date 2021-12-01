@@ -80,8 +80,7 @@ class CommentTableViewCell: UITableViewCell {
             heartImageView.isHidden = false
             heartCountLabel.isHidden = false
             
-            let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-            let likeCommentData = LikeCommentPostData(likeCommentId: 0, commentId: comment.commentId, createdAt: dateStr)
+            let likeCommentData = LikeCommentPostData(likeCommentId: 0, commentId: comment.commentId, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
             CommentDataService.shared.sendCommentLikeDataToServer(likeCommentPostData: likeCommentData) { success, data in
                 if success {
@@ -168,7 +167,7 @@ class CommentTableViewCell: UITableViewCell {
       
         userIdLabel.text = comment.userName
         commentLabel.text = comment.content
-        dateTimeLabel.text = comment.createdAt
+        dateTimeLabel.text = comment.dateStr
         heartCountLabel.text = comment.likeCnt.description
         
         selectedComment = comment

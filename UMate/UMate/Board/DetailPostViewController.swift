@@ -128,8 +128,7 @@ class DetailPostViewController: CommonViewController {
             originalCommentId = commentId
         }
         
-        let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-        let newComment = CommentPostData(postId: selectedPostId, content: content, originalCommentId: originalCommentId ?? 0, isReComment: isReComment, createdAt: dateStr)
+        let newComment = CommentPostData(postId: selectedPostId, content: content, originalCommentId: originalCommentId ?? 0, isReComment: isReComment, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
         
         sendCommentDataToServer(commentPostData: newComment)
         NotificationCenter.default.post(name: .commentCountDidIncreased, object: nil, userInfo: ["postId": post?.postId ?? 0])
@@ -483,10 +482,6 @@ extension DetailPostViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
             
             var comment = sortedCommentList[indexPath.row]
-            if let date = BoardDataManager.shared.decodingFormatter.date(from: comment.createdAt) {
-                let dateStr = date.commentDate
-                comment.createdAt = dateStr
-            }
             let isLiked = likeCommentList.contains { $0.commentId == comment.commentId }
             let likedComment = likeCommentList.first { $0.commentId == comment.commentId }
             cell.configure(comment: comment, isLiked: isLiked, likedComment: likedComment)

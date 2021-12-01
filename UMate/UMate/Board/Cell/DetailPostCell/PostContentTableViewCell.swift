@@ -77,8 +77,7 @@ class PostContentTableViewCell: UITableViewCell {
             likeImageView.image = UIImage(named: "heart2.fill")
             likeImageView.tintColor = UIColor.init(named: "blackSelectedColor")
             
-            let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-            let likePostdata = LikePostData(postId: postId, createdAt: dateStr)
+            let likePostdata = LikePostData(postId: postId, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
             sendLikeInfoToServer(likePostData: likePostdata)
            
@@ -115,10 +114,7 @@ class PostContentTableViewCell: UITableViewCell {
             scrapImageView.tintColor = UIColor.init(named: "blackSelectedColor")
             scrapImageView.alpha = 1
             
-            
-            let dateStr = BoardDataManager.shared.postDateFormatter.string(from: Date())
-            
-            let scrapPostData = ScrapPostData(postId: postId, createdAt: dateStr)
+            let scrapPostData = ScrapPostData(postId: postId, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
             sendScrapInfoToServer(scrapPostData: scrapPostData)
             NotificationCenter.default.post(name: .postDidScrap, object: nil, userInfo: ["postId": postId])
