@@ -165,18 +165,14 @@ class CommonViewController: UIViewController {
     /// 라이트 모드 다크모드에 따라서  버튼 색상을 지정합니다.
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     func makeChangeButtonColor(_ button: UIButton) {
-        Observable.just(UIColor.dynamicColor(light: .white, dark: .white))
-            .subscribe(onNext: { button.setTitleColor($0, for: .normal) })
-            .disposed(by: rx.disposeBag)
+        button.setTitleColor(UIColor.dynamicColor(light: .white, dark: .white), for: .normal)
     }
     
     
     /// 라이트 모드 다크모드에 따라서  네비게이션바 색상을 지정합니다.
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     func makeChangeNavigationItemColor() {
-        Observable.just(UIColor.dynamicColor(light: .darkGray, dark: .lightGray))
-            .bind(to: (navigationController?.navigationBar.rx.tintColor)!)
-            .disposed(by: rx.disposeBag)
+        navigationController?.navigationBar.tintColor = UIColor.dynamicColor(light: .darkGray, dark: .lightGray)
     }
     
     

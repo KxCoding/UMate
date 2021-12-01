@@ -34,10 +34,7 @@ class PopularContestsCollectionViewCell: UICollectionViewCell {
             .bind(to: contestImageView.rx.image)
             .disposed(by: rx.disposeBag)
         
-        Observable.just(model)
-            .map { $0.description }
-            .bind(to: descLabel.rx.text)
-            .disposed(by: rx.disposeBag)
+        descLabel.text = model.description
     }
     
     

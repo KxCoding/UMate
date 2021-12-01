@@ -273,7 +273,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         let type = list[indexPath.item]
         
         switch type {
-        case .main(_):
+        case .main:
             if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular {
                 let width = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing * 3 + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 4
                 
@@ -291,14 +291,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             
             return CGSize(width: Int(width), height: Int(height))
             
-        case .promotion(_):
+        case .promotion:
             let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) * 1.06
             
             let height = width * 0.3
             
             return CGSize(width: Int(width), height: Int(height))
             
-        case .contest(_):
+        case .contest:
             let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) * 1.06
             
             let height = width * 0.3
