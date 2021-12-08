@@ -16,5 +16,4 @@ class CommonTableViewCell: UITableViewCell {
     let cache = NSCache<NSURL, UIImage>()
     
     let backgroundScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global())
-
 }

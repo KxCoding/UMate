@@ -77,6 +77,7 @@ class EmploymentInfoTableViewCell: CommonTableViewCell {
         Observable.just(model.url)
             .subscribe(on: backgroundScheduler)
             .compactMap { NSURL(string: $0) }
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [unowned self] in
                 if let image = cache.object(forKey: $0) {
                     self.companyImageView.image = image
@@ -86,7 +87,6 @@ class EmploymentInfoTableViewCell: CommonTableViewCell {
                         self.companyImageView.image = image
                     }
                 }
-                
             })
             .disposed(by: rx.disposeBag)
     }
