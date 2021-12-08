@@ -28,7 +28,7 @@ struct BlobManager {
     /// 이미지 업로드를 위한 설정을 초기화 합니다.
     ///  - Author: 남정은(dlsl7080@gmail.com)
     private init() {
-        account = try? AZSCloudStorageAccount(fromConnectionString: blobConnectStr)
+        account = try? AZSCloudStorageAccount(fromConnectionString: constr)
         client = account?.getBlobClient()
         container = client?.containerReference(fromName: "default")
     }
