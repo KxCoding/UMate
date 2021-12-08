@@ -85,7 +85,6 @@ extension ContestsViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PopularContestsTableViewCell", for: indexPath) as! PopularContestsTableViewCell
             cell.configure(with: contestDataList)
-
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ContestsTableViewCell", for: indexPath) as! ContestsTableViewCell

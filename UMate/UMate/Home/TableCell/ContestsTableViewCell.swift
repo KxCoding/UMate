@@ -51,6 +51,7 @@ class ContestsTableViewCell: CommonTableViewCell {
         Observable.just(model.url)
             .subscribe(on: backgroundScheduler)
             .compactMap { NSURL(string: $0) }
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [unowned self] in
                 if let image = cache.object(forKey: $0) {
                     self.contestImageView.image = image
@@ -60,7 +61,6 @@ class ContestsTableViewCell: CommonTableViewCell {
                         self.contestImageView.image = image
                     }
                 }
-                
             })
             .disposed(by: rx.disposeBag)
     }
