@@ -27,7 +27,7 @@ class ContestsTableViewCell: CommonTableViewCell {
     
     /// 대외활동 데이터
     var contests: ContestSingleData.Contests?
-
+    
     
     /// 포스터를 탭하면 대외활동 웹사이트로 이동합니다.
     /// - Parameter sender: 포스터 이미지 버튼
@@ -50,10 +50,18 @@ class ContestsTableViewCell: CommonTableViewCell {
         
         Observable.just(model.url)
             .subscribe(on: backgroundScheduler)
-            .compactMap { URL(string: $0) }
-            .compactMap { try? Data(contentsOf: $0) }
-            .compactMap { UIImage(data: $0) }
-            .bind(to: contestImageView.rx.image)
+            .compactMap { NSURL(string: $0) }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [unowned self] in
+                if let image = cache.object(forKey: $0) {
+                    self.contestImageView.image = image
+                } else {
+                    if let data = try? Data(contentsOf: $0 as URL), let image = UIImage(data: data) {
+                        cache.setObject(image, forKey: $0)
+                        self.contestImageView.image = image
+                    }
+                }
+            })
             .disposed(by: rx.disposeBag)
     }
     

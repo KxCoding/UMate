@@ -52,14 +52,43 @@ class FindPasswordAndEmailTableViewController: UITableViewController {
     /// - Parameter sender: 아이디 버튼
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     @IBAction func didTapId(_ sender: Any) {
-        // priority의 값을 high, low로 토글하면서 좌우 애니메이션 효과를 줍니다.
-        idLabelCenterX.priority = .defaultHigh
-        passwordLabelCenterX.priority = .defaultLow
+        makeMoveContraints(idPriority: .defaultHigh,
+                                  pwPriority: .defaultLow,
+                                  textField: "가입한 이메일을 입력하세요",
+                                  labelText: "아이디 찾기",
+                                  isHidden: false)
+    }
     
-        emailTextField.placeholder = "가입한 이메일을 입력하세요."
-        buttonLabel.text = "아이디 찾기"
+    
+    /// 비밀번호 레이블을 탭 하면 막대의 위치를 비밀번호 레이블로 이동시킵니다.
+    /// - Parameter sender: 패스워드 버튼
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    @IBAction func didTapPassword(_ sender: Any) {
+        makeMoveContraints(idPriority: .defaultLow,
+                                 pwPriority: .defaultHigh,
+                                 textField: "가입한 아이디를 입력해주세요.",
+                                 labelText: "비밀번호 찾기",
+                                 isHidden: true)
+    }
+    
+    
+    /// 누르는 탭 항목에 따라서 아웃렛 속성을 바꾸게 합니다.
+    /// - Parameters:
+    ///   - idPriority: id 아웃렛 NSLayoutConstraint Priority
+    ///   - pwPriority: password 아웃렛 NSLayoutConstraint Priority
+    ///   - textField: textField의 placeholder
+    ///   - labelText: 탭 label의 text
+    ///   - isHidden: InfoTextView의 isHidden
+    /// - Author: 황신택 (sinadsl1457@gmail.com)
+    func makeMoveContraints(idPriority: UILayoutPriority, pwPriority: UILayoutPriority, textField: String, labelText: String, isHidden: Bool) {
+        // priority의 값을 high, low로 토글하면서 좌우 애니메이션 효과를 줍니다.
+        idLabelCenterX.priority = idPriority
+        passwordLabelCenterX.priority = pwPriority
+    
+        emailTextField.placeholder = textField
+        buttonLabel.text = labelText
         
-        infoTextView.isHidden = false
+        infoTextView.isHidden = isHidden
         
         // activatedBar의 다크 모드 라이트 모드를 지원합니다.
         activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
@@ -75,33 +104,6 @@ class FindPasswordAndEmailTableViewController: UITableViewController {
         }
         UIView.transition(with: passwordLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
             self.passwordLabel.textColor = UIColor.dynamicColor(light: .systemGray6, dark: .darkGray)
-        }
-    }
-    
-    
-    /// 비밀번호 레이블을 탭 하면 막대의 위치를 비밀번호 레이블로 이동시킵니다.
-    /// - Parameter sender: 패스워드 버튼
-    /// - Author: 황신택 (sinadsl1457@gmail.com)
-    @IBAction func didTapPassword(_ sender: Any) {
-        passwordLabelCenterX.priority = .defaultHigh
-        idLabelCenterX.priority = .defaultLow
-       
-        emailTextField.placeholder = "가입된 아이디를 입력해 주세요."
-        buttonLabel.text = "비밀번호 찾기"
-        
-        infoTextView.isHidden = true
-        
-        activatedBar.backgroundColor = UIColor.dynamicColor(light: .black, dark: .lightGray)
-        
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-        UIView.transition(with: idLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
-            self.idLabel.textColor = UIColor.dynamicColor(light: .systemGray6, dark: .darkGray)
-            
-        }
-        UIView.transition(with: passwordLabel, duration: 0.3, options: [.transitionCrossDissolve]) {
-            self.passwordLabel.textColor = UIColor.dynamicColor(light: .black, dark: .white)
         }
     }
     

@@ -8,7 +8,7 @@
 import UIKit
 /// 홈 화면의 4가지탭을 구성하는 콜렉션뷰 셀
 /// - Author: 황신택 (sinadsl1457@gmail.com)
-class MainCollectionViewCell: UICollectionViewCell {
+class MainCollectionViewCell: CommonCollectionViewCell {
     /// 카테고리 레이블
     @IBOutlet weak var categoryLabel: UILabel!
     
@@ -20,10 +20,6 @@ class MainCollectionViewCell: UICollectionViewCell {
     /// - Author: 황신택 (sinadsl1457@gmail.com)
     override func awakeFromNib() {
         super.awakeFromNib()
-        clipsToBounds = false
-        layer.cornerRadius = 20
-        layer.shadowColor = UIColor.gray.cgColor
-        layer.shadowOffset = CGSize(width: 3, height: 3)
-        layer.shadowOpacity = 0.5
+        makeCollectionCellRounded()
     }
 }

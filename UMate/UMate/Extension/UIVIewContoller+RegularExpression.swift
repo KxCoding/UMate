@@ -1,12 +1,13 @@
 //
-//  Extension.swift
+//  UIVIewContoller+RegularExpression.swift
 //  UMate
 //
-//  Created by 황신택 on 2021/09/17.
+//  Created by 황신택 on 2021/12/01.
 //
 
 import Foundation
 import UIKit
+
 
 /// 이메일 / 비밀번호 정규식 검증 익스텐션
 /// - Author: 황신택 (sinadsl1457@gmail.com)
@@ -34,5 +35,3 @@ extension UIViewController {
         return false
     }
 }
-
-
