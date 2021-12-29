@@ -5,8 +5,9 @@
 //  Created by Hyunwoo Jang on 2021/11/17.
 //
 
-import UIKit
 import KeychainSwift
+import RxSwift
+import UIKit
 
 
 /// 인트로 화면
@@ -31,7 +32,24 @@ class IntroViewController: CommonViewController {
         
         if let _ = loginKeychain.get(AccountKeys.userId.rawValue),
            let _ = loginKeychain.get(AccountKeys.apiToken.rawValue) {
-            LoginDataManager.shared.validateToken(transitionToLoginScreen: transitionToLoginScreen, transitionToHome: CommonViewController.transitionToHome, vc: self)
+            LoginDataManager.shared.validateToken()
+                .observe(on: MainScheduler.instance)
+                .subscribe { result in
+                    switch result {
+                    case .success(let response):
+                        switch response.statusCode {
+                        case ResultCode.ok.rawValue:
+                            CommonViewController.transitionToHome()
+                            
+                        default:
+                            self.transitionToLoginScreen()
+                        }
+                        
+                    case .failure(let error):
+                        self.alert(message: error.localizedDescription)
+                    }
+                }
+                .disposed(by: rx.disposeBag)
         } else {
             transitionToLoginScreen()
         }
