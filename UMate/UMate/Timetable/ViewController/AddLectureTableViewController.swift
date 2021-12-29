@@ -6,10 +6,8 @@
 //
 
 import Elliotable
-//import Moya
-//import NSObject_Rx
-//import RxSwift
-//import UIKit
+import Moya
+import RxSwift
 
 
 /// TimeTable 탭의 메인 화면 ViewController 클래스
@@ -17,12 +15,6 @@ import Elliotable
 /// 사용자가 직접 강의 정보를 입력하여 강의를 추가할 수 있는 화면입니다.
 /// - Author: 안상희
 class AddLectureTableViewController: UITableViewController {
-    lazy var session: URLSession = {
-        let configuration = URLSessionConfiguration.default
-        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
-        return session
-    }()
-
     // MARK: - Property
     /// 시간표 Delegate
     var timeTableDelegate: SendTimeTableDataDelegate?
@@ -386,15 +378,6 @@ class AddLectureTableViewController: UITableViewController {
             }
             
             
-            guard let url = URL(string: "https://localhost:25139/timetable") else { return }
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "content-type")
-            
-            request.addValue("Bearer \(userTempToken)", forHTTPHeaderField: "Authorization")
-            
-            
             let timetablePostData = TimetablePostData(courseId: courseId,
                                                       courseName: courseName,
                                                       roomName: roomName,
@@ -405,45 +388,22 @@ class AddLectureTableViewController: UITableViewController {
                                                       backgroundColor: colorString,
                                                       textColor: textColorString)
             
-            do {
-                let encoder = JSONEncoder()
-                request.httpBody = try encoder.encode(timetablePostData)
-            } catch {
-                print(error)
-            }
-            
-            self.session.dataTask(with: request) { data, response, error in
-                if let error = error {
-                    #if DEBUG
-                    print(error)
-                    #endif
-                    return
-                }
-                
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    print((response as? HTTPURLResponse)?.statusCode)
-                    return
-                }
-                
-                guard let data = data else { return }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    let result = try decoder.decode(TimetablePostResponse.self, from: data)
-                    
-                    switch result.code {
-                    case ResultCode.ok.rawValue:
-                        #if DEBUG
-                        print(result.message)
-                        #endif
-                        self.timeTableDelegate?.sendData(data: lectureList, timetableId: result.timetableId)
-                    default:
-                        print(result.message)
+            TimetableDataManager.shared.provider.rx.request(.postTimetable(timetablePostData))
+                .filterSuccessfulStatusCodes()
+                .map(TimetablePostResponse.self)
+                .subscribe(onSuccess: {
+                    if $0.code == ResultCode.ok.rawValue {
+#if DEBUG
+                        print($0.message)
+#endif
+                        self.timeTableDelegate?.sendData(data: lectureList, timetableId: $0.timetableId)
+                    } else {
+#if DEBUG
+                        print($0.message)
+#endif
                     }
-                } catch {
-                    print(error)
-                }
-            }.resume()
+                })
+                .disposed(by: rx.disposeBag)
             
             
             // 강의 정보가 저장되면 알림을 띄웁니다.
@@ -635,17 +595,6 @@ extension AddLectureTableViewController: UITextFieldDelegate {
         return true
     }
 }
-
-
-
-extension AddLectureTableViewController: URLSessionDelegate {
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        let trust = challenge.protectionSpace.serverTrust!
-        
-        completionHandler(.useCredential, URLCredential(trust: trust))
-    }
-}
-
 
 
 
