@@ -19,6 +19,7 @@ class CommunityRuleViewController: UIViewController {
     /// 커뮤니티 이용규칙
     @IBOutlet weak var communityRuleTextView: UITextView!
     
+    /// 화면 닫기 버튼
     @IBOutlet weak var closeVCButton: UIBarButtonItem!
     
     

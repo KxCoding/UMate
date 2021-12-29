@@ -75,7 +75,7 @@ struct LectureInfoDetailResponse: Codable {
 struct LectureReviewListResponse: Codable {
     struct LectureReview: Codable {
         /// 강의평 Id
-        let lectureReviewId: Int
+        var lectureReviewId: Int
         
         /// 사용자 Id
         let userId: String
@@ -109,8 +109,12 @@ struct LectureReviewListResponse: Codable {
         
         /// 등록 일자
         let createdAt: String
+        
+        struct ReviewResponseData {
+            var responseData: LectureReviewListResponse.LectureReview
+        }
     }
-
+    
     var lectureReviews: [LectureReview]
     let code: Int
     let message: String?

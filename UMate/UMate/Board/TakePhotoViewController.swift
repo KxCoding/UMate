@@ -12,30 +12,12 @@ import RxCocoa
 import NSObject_Rx
 
 
-/// 캡쳐 카메라 프리뷰 화면
-/// - Author: 김정민(kimjm010@icloud.com)
-class previewView: UIView {
-    
-    /// 캡쳐한 이미지를 표시하는 클래스
-    override class var layerClass: AnyClass {
-        return AVCaptureVideoPreviewLayer.self
-    }
-    
-    /// 미리보기 레이어
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer {
-        return layer as! AVCaptureVideoPreviewLayer
-    }
-}
-
-
-
-
 /// 카메라 캡쳐 화면
 /// - Author: 김정민(kimjm010@icloud.com)
 class TakePhotoViewController: UIViewController {
     
     /// 카메라 프리뷰 화면
-    @IBOutlet weak var previewView: previewView!
+    @IBOutlet weak var previewView: PreviewView!
     
     /// Camera FlashMode
     @IBOutlet weak var flashModeBtn: UIButton!

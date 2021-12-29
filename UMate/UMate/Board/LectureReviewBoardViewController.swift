@@ -12,7 +12,7 @@ import NSObject_Rx
 
 
 /// 최근 강의평 목록 뷰 컨트롤러
-/// - Author: 김정민, 남정은(dlsl7080@gmail.com)
+/// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 class LectureReviewBoardViewController: CommonViewController {
     /// 강의평 테이블 뷰
     @IBOutlet weak var lectureReviewListTableView: UITableView!
@@ -110,6 +110,8 @@ class LectureReviewBoardViewController: CommonViewController {
     }
     
     
+    /// 검색 결과에 따라서 필터링 된 게시물을 배열에 저장
+    /// - Parameter searchText: 검색어
     func filterContentForSearchText(_ searchText: String) {
         filteredLectureList = lectureList.filter { $0.professor.lowercased().contains(searchText.lowercased())
                                                     || $0.title.lowercased().contains(searchText.lowercased()) }
@@ -118,6 +120,7 @@ class LectureReviewBoardViewController: CommonViewController {
     }
 
     
+    /// serach controller 초기화
     func setupSearchBar() {
         self.definesPresentationContext = true
         self.navigationItem.searchController = searchController
@@ -188,7 +191,8 @@ class LectureReviewBoardViewController: CommonViewController {
 }
 
 
-
+/// 서치 바에 대한 동작 처리
+/// - Author: 김정민(kimjm010@icloud.com)
 extension LectureReviewBoardViewController: UISearchBarDelegate {
     /// 서치바의 검색어가 변경될 때마다 호출되는 메소드
     /// - Parameters:
@@ -200,7 +204,8 @@ extension LectureReviewBoardViewController: UISearchBarDelegate {
     }
     
     
-    /// 검색이 마칠 때 호출되는 메소드
+    /// 검색 내용 편집이 끝났을 시에 호출됩니다.
+    /// - Parameter searchBar: 편집중인 서치 바
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         if let text = cachedText, !(text.isEmpty || filteredLectureList.isEmpty) {
             searchController.searchBar.text = text
@@ -208,7 +213,9 @@ extension LectureReviewBoardViewController: UISearchBarDelegate {
     }
     
     
-    ///키보드의 Return버튼을 입력했을 때, 검색이 실행되는 메소드
+    
+    /// 검색버튼 혹은 return 버튼을 눌렀을 시에 호출됩니다.
+    /// - Parameter searchBar: 편집중인 서치 바
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchController.isActive = false
     }
@@ -217,7 +224,7 @@ extension LectureReviewBoardViewController: UISearchBarDelegate {
 
 
 /// 강의평을 나타냄
-/// - Author: 김정민, 남정은(dlsl7080@gmail.com)
+/// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 extension LectureReviewBoardViewController: UITableViewDataSource {
     /// section 안에 들어갈 row의 수를 리턴합니다.
     /// - Parameters:
