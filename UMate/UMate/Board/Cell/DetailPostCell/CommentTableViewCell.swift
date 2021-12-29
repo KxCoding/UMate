@@ -55,11 +55,11 @@ class CommentTableViewCell: UITableViewCell {
     /// 선택된 댓글
     var selectedComment: CommentListResponseData.Comment?
     
-    /// 네트워크 요청 관리 객체
-    let provider = CommentDataService.shared.provider
-    
     /// 댓글 좋아요 여부
     var isLiked = false
+    
+    /// ViewController Extension을 활용하기 위한 속성
+    let vc = UIViewController()
     
     
     /// 좋아요 버튼 처리 동작
@@ -82,7 +82,9 @@ class CommentTableViewCell: UITableViewCell {
             
             let likeCommentData = LikeCommentPostData(likeCommentId: 0, commentId: comment.commentId, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
-            CommentDataService.shared.sendCommentLikeDataToServer(likeCommentPostData: likeCommentData) { success, data in
+            
+            
+            BoardDataManager.shared.sendCommentLikeData(likeCommentPostData: likeCommentData) { (success, data) in
                 if success {
                     self.isLiked = true
                     guard let likeComment = data.likeComment else { return }
@@ -90,6 +92,8 @@ class CommentTableViewCell: UITableViewCell {
                     DispatchQueue.main.async {
                         self.heartButton.tag = likeComment.likeCommentId
                     }
+                } else {
+                    self.vc.alertVersion3(title: "알림", message: "댓글 좋아요가 정상적으로 반영되지 않았습니다. 잠시 후에 다시 시도해 주세요:)", handler: nil)
                 }
             }
         } else {
@@ -111,9 +115,7 @@ class CommentTableViewCell: UITableViewCell {
                         self.selectedComment?.likeCnt -= 1
                     }
                 } else {
-                    #if DEBUG
-                    print("댓글 좋아요 삭제 실패")
-                    #endif
+                    self.vc.alertVersion3(title: "알림", message: "댓글 좋아요 삭제에 실패하였습니다. 잠시 후에 다시 시도해 주세요:)", handler: nil)
                 }
             }
         }
@@ -164,7 +166,7 @@ class CommentTableViewCell: UITableViewCell {
         } else {
             self.profileImageView.image = UIImage(named: "user")
         }
-      
+        
         userIdLabel.text = comment.userName
         commentLabel.text = comment.content
         dateTimeLabel.text = comment.dateStr

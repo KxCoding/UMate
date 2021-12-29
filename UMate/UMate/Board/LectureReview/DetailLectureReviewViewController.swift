@@ -12,14 +12,14 @@ import Loaf
 
 
 /// 강의 정보 뷰 컨트롤러
-/// - Author: 김정민, 남정은(dlsl7080@gmail.com)
+/// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 class DetailLectureReviewViewController: CommonViewController {
     /// 강의 정보 테이블 뷰
     @IBOutlet weak var lectureInfoTableView: UITableView!
     
     /// 교수명
     var professor: String?
-
+    
     /// 선택색상을 표현하기 위한 속성
     var isSelected = true
     
@@ -116,7 +116,7 @@ class DetailLectureReviewViewController: CommonViewController {
             for i in counter {
                 resultCounter.append((i.key, i.value)) // rawValue값,  빈도수
             }
-
+            
             resultCounter.sort{ $0.value > $1.value } // 빈도수 높은게 왼쪽에 가도록
             sortedResultReviewList.append(resultCounter.first?.key ?? 0)
         }
@@ -134,7 +134,7 @@ class DetailLectureReviewViewController: CommonViewController {
             .withUnretained(self)
             .map { $0.0.evaluatelecture(reviews: $0.1) }
         let testInfos =  BoardDataManager.shared.fetchTestInfos(lectureInfoId: lectureInfoId)
-           
+        
         
         Observable.zip(lectureSummary, reviews, resultReview, testInfos)
             .withUnretained(self)
@@ -149,7 +149,7 @@ class DetailLectureReviewViewController: CommonViewController {
             .disposed(by: rx.disposeBag)
     }
     
-
+    
     /// 시험정보공유 작성화면에 강의에 대한 정보를 전달합니다.
     /// - Parameters:
     ///   - segue: 호출된 segue
@@ -178,19 +178,33 @@ class DetailLectureReviewViewController: CommonViewController {
         // 강의평 추가
         let token = NotificationCenter.default.addObserver(forName: .newLectureReviewDidInput, object: nil, queue: .main) { [weak self] noti in
             guard let self = self else { return }
-            if let newReview = noti.userInfo?["review"] as? LectureReviewListResponse.LectureReview {
-                self.lectureReviewList.append(newReview)
+            
+            guard let responseData = noti.userInfo?["response"] as? LectureReviewListResponse.LectureReview else { return }
+            
+            let newReview = LectureReviewListResponse.LectureReview(lectureReviewId: responseData.lectureReviewId,
+                                                                    userId: responseData.userId,
+                                                                    lectureInfoId: responseData.lectureInfoId,
+                                                                    assignment: responseData.assignment,
+                                                                    groupMeeting: responseData.groupMeeting,
+                                                                    evaluation: responseData.evaluation,
+                                                                    attendance: responseData.attendance,
+                                                                    testNumber: responseData.testNumber,
+                                                                    rating: responseData.rating,
+                                                                    semester: responseData.semester,
+                                                                    content: responseData.content,
+                                                                    createdAt: responseData.createdAt)
+            
+            self.lectureReviewList.append(newReview)
+            
+            if self.lectureReviewList.count > 0 {
+                self.evaluatelecture(reviews: self.lectureReviewList)
                 
-                if self.lectureReviewList.count > 0 {
-                    self.evaluatelecture(reviews: self.lectureReviewList)
-                    
-                    DispatchQueue.main.async {
-                        if self.lectureReviewList.count == 1 {
-                            self.lectureInfoTableView.insertRows(at: [IndexPath(row: 0, section: 2), IndexPath(row: self.lectureReviewList.count - 1, section: 3)], with: .automatic)
-                        } else {
-                            self.lectureInfoTableView.insertRows(at: [IndexPath(row: self.lectureReviewList.count - 1, section: 3)], with: .automatic)
-                            self.lectureInfoTableView.reloadSections(IndexSet(2...2), with: .automatic)
-                        }
+                DispatchQueue.main.async {
+                    if self.lectureReviewList.count == 1 {
+                        self.lectureInfoTableView.insertRows(at: [IndexPath(row: 0, section: 2), IndexPath(row: self.lectureReviewList.count - 1, section: 3)], with: .automatic)
+                    } else {
+                        self.lectureInfoTableView.insertRows(at: [IndexPath(row: self.lectureReviewList.count - 1, section: 3)], with: .automatic)
+                        self.lectureInfoTableView.reloadSections(IndexSet(2...2), with: .automatic)
                     }
                 }
             }
@@ -273,26 +287,26 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
     /// - Returns: section안에 포함되는 셀의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        // 강의 개요
+            // 강의 개요
         case 0:
             return 1
             
-        // 교재 정보
+            // 교재 정보
         case 1:
             return 1
             
-        // 종합 리뷰
+            // 종합 리뷰
         case 2:
             if lectureReviewList.count > 0 {
                 return 1
             }
             return 0
             
-        // 개별 리뷰
+            // 개별 리뷰
         case 3:
             return lectureReviewList.count
             
-        // 시험 정보
+            // 시험 정보
         case 4:
             return testInfoList.count
             
@@ -311,14 +325,14 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
         guard let lectureInfo = lectureInfo else { return UITableViewCell() }
         
         switch indexPath.section {
-        // 강의 개요
+            // 강의 개요
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LectureSummaryTableViewCell", for: indexPath) as! LectureSummaryTableViewCell
             
             cell.configure(lecture: lectureInfo, professor: professor ?? "")
             return cell
             
-        // 교재 정보
+            // 교재 정보
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LectureBookTableViewCell", for: indexPath) as! LectureBookTableViewCell
             
@@ -326,19 +340,19 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
             cell.configure(lecture: lectureInfo)
             return cell
             
-        // 종합 리뷰
+            // 종합 리뷰
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LectureRatingTableViewCell", for: indexPath) as! LectureRatingTableViewCell
             
             let ratingSum = lectureReviewList.reduce(0) { partialResult, review in
                 return partialResult + review.rating
             }
-           
+            
             let ratingAvg = Double(ratingSum) / Double(lectureReviewList.count).rounded()
             cell.configure(resultReview: sortedResultReviewList, ratingAvg: ratingAvg)
             return cell
             
-        // 개별 리뷰
+            // 개별 리뷰
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReviewContentTableViewCell", for: indexPath) as! ReviewContentTableViewCell
             
@@ -346,7 +360,7 @@ extension DetailLectureReviewViewController: UITableViewDataSource {
             cell.configure(review: review)
             return cell
             
-        // 시험 정보
+            // 시험 정보
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TestInfoTableViewCell", for: indexPath) as! TestInfoTableViewCell
             
@@ -375,9 +389,9 @@ extension DetailLectureReviewViewController: UITableViewDelegate {
         if section != 3 {
             return 60
         }
-       return 0
+        return 0
     }
-
+    
     
     /// section header를 구성합니다.
     /// - Parameters:
@@ -389,28 +403,28 @@ extension DetailLectureReviewViewController: UITableViewDelegate {
         headerView.backView.backgroundColor = .systemBackground
         
         switch section {
-        // 강의 개요
+            // 강의 개요
         case 0:
             headerView.sectionNameLabel.text = lectureInfo?.title ?? ""
             headerView.writeButton.isHidden = true
             
             return headerView
             
-        // 교재 정보
+            // 교재 정보
         case 1:
             headerView.sectionNameLabel.text = "교재 정보"
             headerView.writeButton.isHidden = true
             
             return headerView
             
-        // 종합 리뷰
+            // 종합 리뷰
         case 2:
             headerView.sectionNameLabel.text = "강의평"
             headerView.writeButton.setTitle("새 강의평 쓰기", for: .normal)
             headerView.writeButton.tag = 2
             return headerView
             
-        // 시험 정보
+            // 시험 정보
         case 4:
             headerView.sectionNameLabel.text = "시험 정보"
             headerView.writeButton.setTitle("시험 정보 공유", for: .normal)
@@ -504,22 +518,22 @@ extension DetailLectureReviewViewController: UICollectionViewDelegate {
     ///   - indexPath: 소제목 셀의 indexPath
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.row {
-        // 개요 선택시 개요 부분으로 스크롤 이동
+            // 개요 선택시 개요 부분으로 스크롤 이동
         case 0:
             lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        
-        // 교재 정보 선택 시
+            
+            // 교재 정보 선택 시
         case 1:
             lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
-       
-        // 강의평 선택 시
+            
+            // 강의평 선택 시
         case 2:
             lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .top, animated: true)
-          
-        // 시험 정보 선택 시
+            
+            // 시험 정보 선택 시
         case 4:
             lectureInfoTableView.scrollToRow(at: IndexPath(row: 0, section: 4), at: .top, animated: true)
-          
+            
         default:
             break
         }

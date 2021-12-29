@@ -14,14 +14,6 @@ import NSObject_Rx
 import Moya
 
 
-/// 이미지 첨부 방식
-/// - Author: 김정민(kimjm010@icloud.com)
-enum SelectImageAttachActionType {
-    case find
-    case take
-    case close
-}
-
 
 
 /// 게시글 작성 화면
@@ -75,9 +67,6 @@ class ComposeViewController: CommonViewController {
     
     /// 게시판 카테고리 이름 리스트
     var categoryList = [BoardDtoResponseData.BoardDto.Category]()
-    
-    /// 네트워크 통신 관리 객체
-    let provider = MoyaProvider<PostSaveService>()
     
     /// 컬렉션 뷰에 표시될 이미지
     var sampleImages = [UIImage]()
@@ -152,7 +141,7 @@ class ComposeViewController: CommonViewController {
                 newPost = PostPostData(postId: 0, boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:BoardDataManager.shared.postDateFormatter.string(from: Date()))
             }
             
-            self.sendDataToServer(postData: newPost)
+            self.sendPostData(postData: newPost)
         }
     }
     
@@ -160,10 +149,10 @@ class ComposeViewController: CommonViewController {
     /// 게시글을 서버에 저장합니다.
     /// - Parameter postData: 게시글 정보 객체
     ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-    func sendDataToServer(postData: PostPostData?) {
+    func sendPostData(postData: PostPostData?) {
         guard let postData = postData else { return }
         
-        provider.rx.request(.uploadPost(postData))
+        BoardDataManager.shared.provider.rx.request(.uploadPost(postData))
             .filterSuccessfulStatusCodes()
             .map(SavePostResponseData.self)
             .observe(on: MainScheduler.instance)
@@ -172,26 +161,20 @@ class ComposeViewController: CommonViewController {
                 case .success(let response):
                     switch response.code {
                     case ResultCode.ok.rawValue:
-                        let newPost = PostListDtoResponseData.PostDto(postId: response.post.postId, userId: response.post.userId, userName: response.post.userName, title: response.post.title, content: response.post.content, likeCnt: response.post.likeCnt, commentCnt: response.post.commentCnt, scrapCnt: response.post.scrapCnt, categoryNumber: response.post.categoryNumber, createdAt: response.post.createdAt)
-                        
-                        NotificationCenter.default.post(name: .newPostInsert, object: nil, userInfo: ["newPost": newPost])
-                        
-                        #if DEBUG
-                        print("추가 성공!")
-                        #endif
+                        let responseData = PostListDtoResponseData.PostDto.self
+                        let userInfo = ["newResponse": responseData]
+                        NotificationCenter.default.post(name: .newPostInsert, object: nil, userInfo: userInfo)
                         
                         self.imageUploadActivityIndicatorView.stopAnimating()
                         self.dismiss(animated: true, completion: nil)
                         
                     case ResultCode.fail.rawValue:
-                        #if DEBUG
-                        print("이미 존재함")
-                        #endif
+                        self.alertVersion3(title: "알림", message: "이미 존재합니다.", handler: nil)
                     default:
                         break
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self.alertVersion3(title: "알림", message: error.localizedDescription, handler: nil)
                 }
             }
             .disposed(by: rx.disposeBag)
@@ -476,11 +459,7 @@ extension ComposeViewController: UICollectionViewDelegate {
         
         if collectionView.tag == 101 {
             switch selectedBoard?.boardId {
-            case 9:
-                selectedCategory = categoryList[indexPath.item].categoryId
-            case 10:
-                selectedCategory = categoryList[indexPath.item].categoryId
-            case 12:
+            case 9, 10, 12:
                 selectedCategory = categoryList[indexPath.item].categoryId
             default:
                 break

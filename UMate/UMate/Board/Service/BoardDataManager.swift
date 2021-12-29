@@ -58,6 +58,9 @@ class BoardDataManager {
     /// 옵저버블 리소스 정리
     let disposeBag = DisposeBag()
     
+    /// ViewController의 Extension을 사용하기 위한 속성
+    let vc = UIViewController()
+    
     
     /// 캐시에서 이미지를 불러오거나 이미지를 새로 다운로드 합니다.
     /// - Parameters:
@@ -135,6 +138,35 @@ class BoardDataManager {
         UIGraphicsEndImageContext()
         
         return newImage
+    }
+    
+    
+    /// 댓글 좋아요를 추가합니다.
+    /// - Parameter likeCommentPostData: 댓글 좋아요 정보 객체
+    /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
+    func sendCommentLikeData(likeCommentPostData: LikeCommentPostData,
+                             completion: @escaping (Bool, SaveLikeCommentResponseData) -> ()) {
+        provider.rx.request(.saveCommentLikeData(likeCommentPostData))
+            .filterSuccessfulStatusCodes()
+            .map(SaveLikeCommentResponseData.self)
+            .observe(on: MainScheduler.instance)
+            .subscribe { (result) in
+                switch result {
+                case .success(let response):
+                    switch response.code {
+                    case ResultCode.ok.rawValue:
+                        completion(true, response)
+                        
+                    case ResultCode.fail.rawValue:
+                        self.vc.alertVersion3(title: "알림", message: "이미 댓글 좋아요를 추가하셨습니다.", handler: nil)
+                    default:
+                        break
+                    }
+                case .failure(let error):
+                    self.vc.alertVersion3(title: "알림", message: error.localizedDescription, handler: nil)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     
@@ -278,4 +310,14 @@ class BoardDataManager {
     }
 }
 
+
+
+
+/// 이미지 첨부 방식
+/// - Author: 김정민(kimjm010@icloud.com)
+enum SelectImageAttachActionType {
+    case find
+    case take
+    case close
+}
 
