@@ -40,11 +40,14 @@ class PlaceReviewDataManager {
     /// 네트워크 서비스 객체
     ///
     /// Bearer 토큰 인증 방식을 사용합니다.
-    lazy var provider: MoyaProvider<Service> = {
-        let token = loginKeychain.get(AccountKeys.apiToken.rawValue) ?? ""
-        let authPlugin = AccessTokenPlugin { _ in token }
-        
-        return MoyaProvider<Service>(plugins: [authPlugin])
+    lazy var provider: MoyaProvider<LoginAndPlaceReviewService> = {
+        if let token = loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            let authPlugin = AccessTokenPlugin { _ in token }
+            
+            return MoyaProvider<LoginAndPlaceReviewService>(plugins: [authPlugin])
+        } else {
+            return MoyaProvider<LoginAndPlaceReviewService>()
+        }
     }()
     
     /// 전체 상점 리뷰 목록
@@ -83,10 +86,13 @@ class PlaceReviewDataManager {
     /// - Author: 장현우(heoun3089@gmail.com)
     func fetchReview(vc: CommonViewController, completion: @escaping () -> ()) {
         provider = {
-            let token = loginKeychain.get(AccountKeys.apiToken.rawValue) ?? ""
-            let authPlugin = AccessTokenPlugin { _ in token }
-            
-            return MoyaProvider<Service>(plugins: [authPlugin])
+            if let token = loginKeychain.get(AccountKeys.apiToken.rawValue) {
+                let authPlugin = AccessTokenPlugin { _ in token }
+                
+                return MoyaProvider<LoginAndPlaceReviewService>(plugins: [authPlugin])
+            } else {
+                return MoyaProvider<LoginAndPlaceReviewService>()
+            }
         }()
         
         provider.rx.request(.placeReviewList)

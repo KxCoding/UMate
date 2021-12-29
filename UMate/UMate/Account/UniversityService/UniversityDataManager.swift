@@ -26,9 +26,7 @@ class UniversityDataManager {
     private let loginKeychain = KeychainSwift()
     
     /// 네트워크 서비스 객체
-    ///
-    /// Bearer 토큰 인증 방식을 사용합니다.
-    private let provider = MoyaProvider<Service>()
+    private let provider = MoyaProvider<LoginAndPlaceReviewService>()
     
     /// 대학교 목록
     var universityList = [UniversityList.University]()

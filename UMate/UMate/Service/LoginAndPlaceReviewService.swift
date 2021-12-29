@@ -11,7 +11,7 @@ import Moya
 
 /// 네트워크 요청 서비스
 /// - Author: 장현우(heoun3089@gmail.com)
-enum Service {
+enum LoginAndPlaceReviewService {
     case signup(EmailJoinPostData)
     case login(EmailLoginPostData)
     case validateToken
@@ -24,7 +24,7 @@ enum Service {
 }
 
 
-extension Service: TargetType, AccessTokenAuthorizable {
+extension LoginAndPlaceReviewService: TargetType, AccessTokenAuthorizable {
     
     /// 기본 URL
     var baseURL: URL {

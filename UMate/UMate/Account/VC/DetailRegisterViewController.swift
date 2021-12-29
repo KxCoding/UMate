@@ -5,11 +5,12 @@
 //  Created by 황신택 on 2021/08/03.
 //
 
-import UIKit
 import KeychainSwift
+import NSObject_Rx
 import RxSwift
 import RxCocoa
-import NSObject_Rx
+import UIKit
+
 
 /// 키체인 키
 /// - Author: 황신택 (sinadsl1457@gmail.com), 안상희
@@ -124,7 +125,30 @@ class DetailRegisterViewController: CommonViewController {
                                                               universityId: university.universityId,
                                                               yearOfAdmission: entranceYear)
                     
-                    LoginDataManager.shared.singup(emailJoinPostData: emailJoinPostData, vc: self)
+                    LoginDataManager.shared.signup(emailJoinPostData: emailJoinPostData)
+                        .observe(on: MainScheduler.instance)
+                        .subscribe { result in
+                            switch result {
+                            case .next(let joinResponse):
+                                switch joinResponse.code {
+                                case ResultCode.ok.rawValue:
+                                    LoginDataManager.shared.saveAccount(responseData: joinResponse)
+                                    self.alert(message: "회원가입에 성공하였습니다.") { _ in
+                                        CommonViewController.transitionToHome()
+                                    }
+                                    
+                                default:
+                                    self.alert(message: "회원가입에 실패했습니다.")
+                                }
+                                
+                            case .error(let error):
+                                self.alert(message: error.localizedDescription)
+                                
+                            default:
+                                break
+                            }
+                        }
+                        .disposed(by: self.rx.disposeBag)
                 }
             }
         }
