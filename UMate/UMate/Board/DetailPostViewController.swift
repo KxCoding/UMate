@@ -23,11 +23,6 @@ extension Notification.Name {
 
 
 
-enum SelectActionType {
-    case delete
-}
-
-
 
 /// 게시글 상세화면 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
@@ -53,9 +48,6 @@ class DetailPostViewController: CommonViewController {
     /// 좋아요, 스크랩, 메뉴 버튼 옵저버 저장
     var alertTokens = [NSObjectProtocol]()
     
-    /// 네트워크 요청 관리 객체
-    let provider = MoyaProvider<CommentSaveService>()
-    
     /// 댓글 리스트
     var commentList = [CommentListResponseData.Comment]()
     
@@ -67,7 +59,7 @@ class DetailPostViewController: CommonViewController {
     
     /// 댓글 좋아요 리스트
     var likeCommentList = [LikeCommentListResponse.LikeComment]()
-
+    
     /// 게시글 정보
     var post: PostDtoResponseData.Post?
     
@@ -97,19 +89,6 @@ class DetailPostViewController: CommonViewController {
     /// 사용자 스크랩Id
     var scrapPostId = 0
     
-    var selectedCommentIndex: IndexPath?
-    
-    /// keyboard의 높이를 방출하는 옵저버블
-    let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification,
-                                                              object: nil)
-        .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue }
-        .map { $0.cgRectValue.height }
-    
-    /// keybaordr의 높이를 0으로 방출하는 옵저버블
-    let willHide = NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification,
-                                                              object: nil)
-            .map { _ in CGFloat(0)}
-    
     
     /// 댓글 및 대댓글을 저장합니다.
     /// - Parameter sender: 댓글 저장 버튼
@@ -130,8 +109,9 @@ class DetailPostViewController: CommonViewController {
         
         let newComment = CommentPostData(postId: selectedPostId, content: content, originalCommentId: originalCommentId ?? 0, isReComment: isReComment, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
         
-        sendCommentDataToServer(commentPostData: newComment)
-        NotificationCenter.default.post(name: .commentCountDidIncreased, object: nil, userInfo: ["postId": post?.postId ?? 0])
+        send(commentPostData: newComment)
+        let userInfo = ["postId": post?.postId ?? 0]
+        NotificationCenter.default.post(name: .commentCountDidIncreased, object: nil, userInfo: userInfo)
         
         isReComment = false
         
@@ -139,21 +119,24 @@ class DetailPostViewController: CommonViewController {
     }
     
     
+    
+    
     /// 댓글을 서버에 저장합니다.
     /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
-    func sendCommentDataToServer(commentPostData: CommentPostData) {
-        provider.rx.request(.saveComment(commentPostData))
+    func send(commentPostData: CommentPostData) {
+        BoardDataManager.shared.provider.rx.request(.saveComment(commentPostData))
             .filterSuccessfulStatusCodes()
             .map(SaveCommentResponseData.self)
             .subscribe { (result) in
                 switch result {
                 case .success(let response):
-                    if response.code == ResultCode.ok.rawValue {
-                        
-                        let newComment = CommentListResponseData.Comment(commentId: response.comment.commentId, userId: response.comment.userId, userName: response.comment.userName, profileUrl: response.comment.profileUrl, postId: response.comment.postId, content: response.comment.content, likeCnt: response.comment.likeCnt, originalCommentId: response.comment.originalCommentId, isReComment: response.comment.isReComment, createdAt: response.comment.createdAt, updatedAt: response.comment.updatedAt)
-                        
-                        
-                        NotificationCenter.default.post(name: .newCommentDidInsert, object: nil, userInfo: ["comment": newComment])
+                    switch response.code {
+                    case ResultCode.ok.rawValue:
+                        let newResponse = CommentListResponseData.Comment.self
+                        let userInfo = ["comment": newResponse]
+                        NotificationCenter.default.post(name: .newCommentDidInsert, object: nil, userInfo: userInfo)
+                    default:
+                        break
                     }
                 default:
                     break
@@ -172,14 +155,8 @@ class DetailPostViewController: CommonViewController {
             .map(CommonResponse.self)
             .subscribe(onSuccess: {
                 if $0.code == ResultCode.ok.rawValue {
-                    #if DEBUG
-                    print("삭제 성공")
-                    #endif
                     completion(true)
                 } else {
-                    #if DEBUG
-                    print("삭제 실패")
-                    #endif
                     completion(false)
                 }
             })
@@ -197,15 +174,14 @@ class DetailPostViewController: CommonViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onSuccess: {
                 if $0.code == ResultCode.ok.rawValue {
-                    #if DEBUG
-                    print("삭제 성공")
-                    #endif
                     NotificationCenter.default.post(name: .postDidDelete, object: nil, userInfo: ["postId": postId])
                 } else {
-                    #if DEBUG
-                    print("삭제 실패")
-                    #endif
-                    Loaf("게시글 삭제 실패. 다시 시도해 주세요.", state: .custom(.init(backgroundColor: .black)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
+                    Loaf("게시글 삭제 실패. 다시 시도해 주세요.",
+                         state: .custom(.init(backgroundColor: .black)),
+                         location: .bottom,
+                         presentingDirection: .vertical,
+                         dismissingDirection: .vertical,
+                         sender: self).show(.short)
                 }
             })
             .disposed(by: rx.disposeBag)
@@ -232,13 +208,13 @@ class DetailPostViewController: CommonViewController {
                 self.postImageList = result.1
                 self.commentList = result.2.list
                 self.sortedCommentList = result.2.list.sorted {
-                   if $0.originalCommentId == $1.originalCommentId {
-                       return $0.commentId < $1.commentId
-                   }
-
-                   return $0.originalCommentId < $1.originalCommentId
-               }
-
+                    if $0.originalCommentId == $1.originalCommentId {
+                        return $0.commentId < $1.commentId
+                    }
+                    
+                    return $0.originalCommentId < $1.originalCommentId
+                }
+                
                 self.lastCommentId = result.2.lastId
                 self.likeCommentList = result.3
                 self.detailPostTableView.reloadData()
@@ -256,7 +232,7 @@ class DetailPostViewController: CommonViewController {
             vc.postImageList = postImageList
         }
     }
-   
+    
     
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
@@ -269,6 +245,20 @@ class DetailPostViewController: CommonViewController {
         
         writeCommentContainerView.layer.cornerRadius = 14
         
+        // tabBar의 높이
+        guard let tabBarHeight = self.tabBarController?.tabBar.frame.height else { return }
+        
+        // keyboard의 높이를 방출하는 옵저버블
+        let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification,
+                                                                  object: nil)
+            .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue }
+            .map { $0.cgRectValue.height - tabBarHeight }
+        
+        // keybaordr의 높이를 0으로 방출하는 옵저버블
+        let willHide = NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification,
+                                                                  object: nil)
+            .map { _ in CGFloat(0)}
+        
         // 키보드 노티피케이션을 처리하는 옵저버블입니다.
         // - Author: 김정민(kimjm010@icloud.com)
         Observable.merge(willShow, willHide)
@@ -277,9 +267,41 @@ class DetailPostViewController: CommonViewController {
         
         // 댓글 및 대댓글을 추가합니다.
         // - Author: 김정민(kimjm010@icloud.com)
-        let token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
-                                                       object: nil,
-                                                       queue: .main) { [weak self] (noti) in
+        var token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
+                                                           object: nil,
+                                                           queue: .main) { [weak self] (noti) in
+            
+            if let responseData = noti.userInfo?["comment"] as? CommentListResponseData.Comment {
+                guard let self = self else { return }
+                let newComment = CommentListResponseData.Comment(commentId: responseData.commentId,
+                                                                 userId: responseData.userId,
+                                                                 userName: responseData.userName,
+                                                                 profileUrl: responseData.profileUrl,
+                                                                 postId: responseData.postId,
+                                                                 content: responseData.content,
+                                                                 likeCnt: responseData.likeCnt,
+                                                                 originalCommentId: responseData.originalCommentId,
+                                                                 isReComment: responseData.isReComment,
+                                                                 createdAt: responseData.createdAt,
+                                                                 updatedAt: responseData.updatedAt)
+                self.commentList.append(newComment)
+                self.sortedCommentList.append(newComment)
+                
+                self.sortedCommentList.sort {
+                    if $0.originalCommentId == $1.originalCommentId {
+                        return $0.commentId < $1.commentId
+                    }
+                    
+                    return $0.originalCommentId < $1.originalCommentId
+                }
+                
+                guard let index = self.sortedCommentList.firstIndex(where: { $0.commentId == newComment.commentId }) else { return }
+                
+                self.commentTextView.text = nil
+                self.detailPostTableView.insertRows(at: [IndexPath(row: index, section: 2)], with: .left)
+                self.detailPostTableView.scrollToRow(at: IndexPath(row: index, section: 2), at: .middle, animated: true)
+            }
+            
             if let newComment = noti.userInfo?["comment"] as? CommentListResponseData.Comment {
                 guard let self = self else { return }
                 self.commentList.append(newComment)
@@ -299,6 +321,24 @@ class DetailPostViewController: CommonViewController {
                 self.detailPostTableView.scrollToRow(at: IndexPath(row: index, section: 2), at: .middle, animated: true)
             }
         }
+        tokens.append(token)
+        
+        
+        token = NotificationCenter.default.addObserver(forName: .postAlreadyLiked, object: nil, queue: .main, using: { [weak self] _ in
+            self?.alertVersion3(title: "알림", message: "이미 좋아요를 눌렀습니다 :)", handler: nil)
+        })
+        tokens.append(token)
+        
+        
+        token = NotificationCenter.default.addObserver(forName: .postAlreadyScrapped, object: nil, queue: .main, using: { [weak self] _ in
+            self?.alertVersion3(title: "알림", message: "이미 존재합니다.", handler: nil)
+        })
+        tokens.append(token)
+        
+        
+        token = NotificationCenter.default.addObserver(forName: .tryAgainLater, object: nil, queue: .main, using: { [weak self] _ in
+            self?.alertVersion3(title: "알림", message: "작업에 실패하였습니다. 잠시 후 다시 시도해 주시기 바랍니다 :)", handler: nil)
+        })
         tokens.append(token)
     }
     
@@ -381,20 +421,6 @@ class DetailPostViewController: CommonViewController {
     }
     
     
-    /// 댓글을 오른쪽으로 Swipe해서 신고합니다.
-    /// - Parameter indexPath: 댓글의 IndexPath
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func reportCommentDelete(_ indexPath: IndexPath) {
-        // TODO: 서버 구현 후 작업 예정입니다.
-        #if DEBUG
-        print(#function)
-        print("댓글을 신고하시겠습니까?")
-        #endif
-        
-        self.alertComment()
-    }
-    
-    
     /// 댓글을 왼쪽으로 Swipe해서 삭제합니다
     /// - Parameter indexPath: 댓글의 IndexPath
     /// - Author: 김정민(kimjm010@icloud.com)
@@ -435,18 +461,18 @@ extension DetailPostViewController: UITableViewDataSource {
     /// - Returns: section안에 들어갈 row의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        // 작성자, 제목, 내용
+            // 작성자, 제목, 내용
         case 0:
             return 1
             
-        // 게시글에 첨부된 이미지
+            // 게시글에 첨부된 이미지
         case 1:
             if postImageList.count == 0 {
                 return 0
             }
             return 1
             
-        // 게시글에 포함된 댓글
+            // 게시글에 포함된 댓글
         case 2:
             return sortedCommentList.count
             
@@ -462,7 +488,7 @@ extension DetailPostViewController: UITableViewDataSource {
     /// - Returns: 게시글 상세화면 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        // 게시글 내용 표시하는 셀
+            // 게시글 내용 표시하는 셀
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostContentTableViewCell", for: indexPath) as! PostContentTableViewCell
             
@@ -470,18 +496,18 @@ extension DetailPostViewController: UITableViewDataSource {
             cell.configure(post: post, isLiked: isLiked, isScrapped: isScrapped, scrapPostId: scrapPostId)
             return cell
             
-        // 이미지 표시하는 셀
+            // 이미지 표시하는 셀
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostImageTableViewCell", for: indexPath) as! PostImageTableViewCell
-           
+            
             cell.configure(postImageList: postImageList)
             return cell
             
-        // 댓글 및 대댓글 표시하는 셀
+            // 댓글 및 대댓글 표시하는 셀
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
             
-            var comment = sortedCommentList[indexPath.row]
+            let comment = sortedCommentList[indexPath.row]
             let isLiked = likeCommentList.contains { $0.commentId == comment.commentId }
             let likedComment = likeCommentList.first { $0.commentId == comment.commentId }
             cell.configure(comment: comment, isLiked: isLiked, likedComment: likedComment)
@@ -500,30 +526,6 @@ extension DetailPostViewController: UITableViewDataSource {
 /// 상세 게시글 테이블 뷰의 동작 처리
 /// - Author: 김정민(kimjm010@icloud.com)
 extension DetailPostViewController: UITableViewDelegate {
-    
-    /// 댓글을 오른쪽으로 Swipe하여 신고합니다.
-    /// - Parameters:
-    ///   - tableView: 댓글을 포함하고 있는 TableView
-    ///   - indexPath: 댓글의 indexPath
-    /// - Returns: Leading끝에 표시될 SwipeAction
-    /// - Author: 김정민(kimjm010@icloud.com)
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
-        if indexPath.section == 2 && sortedCommentList[indexPath.row].userId != LoginDataManager.shared.userId {
-            let noti = UIContextualAction(style: .normal, title: "댓글 신고") { action, v, completion in
-                self.alertComment()
-                completion(true)
-            }
-            noti.backgroundColor = UIColor.darkGray
-            
-            let conf = UISwipeActionsConfiguration(actions: [noti])
-            conf.performsFirstActionWithFullSwipe = true
-            return conf
-        }
-        
-        return nil
-    }
-    
     
     /// 댓글을 왼쪽으로 Swipe하여 삭제합니다.
     /// - Parameters:
@@ -578,31 +580,20 @@ extension DetailPostViewController: UITableViewDelegate {
         
         if indexPath.section == 2 {
             return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
-                if self.sortedCommentList[indexPath.row].userId != LoginDataManager.shared.userId {
-                    let notiAction =
-                    UIAction(title: NSLocalizedString("댓글 신고", comment: "")) { action in
-                        self.reportCommentDelete(indexPath)
-                    }
-                    return UIMenu(title: "", children: [notiAction])
-                    
-                } else {
-                    let deleteAction =
-                    UIAction(title: NSLocalizedString("댓글 삭제", comment: ""),
-                             attributes: .destructive) { action in
-                        let id = self.sortedCommentList[indexPath.row].commentId
-                        self.deleteComment(commentId: id) { success in
-                            if success {
-                                NotificationCenter.default.post(name: .commentCountDidDecreased, object: nil, userInfo: ["postId": self.post?.postId ?? 0])
-                                
-                                self.sortedCommentList.remove(at: indexPath.row)
-                                tableView.deleteRows(at: [indexPath], with: .automatic)
-                            } else {
-                                Loaf("댓글 삭제 실패. 다시 시도해 주세요.", state: .custom(.init(backgroundColor: .black)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
-                            }
+                let deleteAction = UIAction(title: NSLocalizedString("댓글 삭제", comment: ""), attributes: .destructive) { action in
+                    let id = self.sortedCommentList[indexPath.row].commentId
+                    self.deleteComment(commentId: id) { success in
+                        if success {
+                            NotificationCenter.default.post(name: .commentCountDidDecreased, object: nil, userInfo: ["postId": self.post?.postId ?? 0])
+                            
+                            self.sortedCommentList.remove(at: indexPath.row)
+                            tableView.deleteRows(at: [indexPath], with: .automatic)
+                        } else {
+                            Loaf("댓글 삭제 실패. 다시 시도해 주세요.", state: .custom(.init(backgroundColor: .black)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
                         }
                     }
-                    return UIMenu(title: "", children: [deleteAction])
                 }
+                return UIMenu(title: "", children: [deleteAction])
             })
         }
         return nil
@@ -618,7 +609,7 @@ extension DetailPostViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if sortedCommentList.count > 0 {
             let target = sortedCommentList[indexPath.row]
-
+            
             if target.commentId != target.originalCommentId {
                 return nil
             } else {

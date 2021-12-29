@@ -9,17 +9,11 @@ import UIKit
 import DropDown
 import Loaf
 import Moya
-import RxSwift
-import RxCocoa
-import NSObject_Rx
 
 
 /// 강의평가 작성 화면
 /// - Author: 김정민(kimjm010@icloud.com)
 class LectureReviewWriteTableViewController: UITableViewController {
-    
-    /// 네트워크 통신 관리 객체
-    let provider = MoyaProvider<LectureReviewSaveService>()
     
     /// 관련 강의 정보 전달
     var lectureInfo: LectureInfoDetailResponse.LectrueInfo?
@@ -276,7 +270,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
             break
         }
     }
-
+    
     /// 수강학기 선택 버튼
     /// - Author: 김정민(kimjm010@icloud.com)
     @IBOutlet weak var selectSemesterButton: UIButton!
@@ -341,7 +335,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
             Loaf("조모임 비율을 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
             return
         }
-
+        
         guard let reviewEvaluation = reviewEvaluation else {
             Loaf("학점 비율을 체크해주세요 :)", state: .custom(.init(backgroundColor: .black)), sender: self).show()
             return
@@ -374,11 +368,20 @@ class LectureReviewWriteTableViewController: UITableViewController {
         
         // 작성 경고문
         alertVersion3(title: "강의평을 작성하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { [unowned self] _ in
-        
-            let newReview = LectureReviewPostData(lectureReviewId: 0, lectureInfoId: self.lectureInfo?.lectureInfoId ?? 0, assignment: reviewAssignment.rawValue, groupMeeting: reviewGroupMeeting.rawValue, evaluation: reviewEvaluation.rawValue, attendance: reviewAttendance.rawValue, testNumber: reviewTestNumber.rawValue, rating: reviewRating.rawValue, semester: semester, content: reviewContent, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
-            self.sendLectureReviewDataToServer(lectureReviewPostData: newReview)
+            let newReview = LectureReviewPostData(lectureReviewId: 0,
+                                                  lectureInfoId: self.lectureInfo?.lectureInfoId ?? 0,
+                                                  assignment: reviewAssignment.rawValue,
+                                                  groupMeeting: reviewGroupMeeting.rawValue,
+                                                  evaluation: reviewEvaluation.rawValue,
+                                                  attendance: reviewAttendance.rawValue,
+                                                  testNumber: reviewTestNumber.rawValue,
+                                                  rating: reviewRating.rawValue,
+                                                  semester: semester,
+                                                  content: reviewContent,
+                                                  createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
+            self.send(lectureReviewPostData: newReview)
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -394,8 +397,8 @@ class LectureReviewWriteTableViewController: UITableViewController {
     /// 작성한 강의평을 서버에 저장합니다.
     /// - Parameter lectureReviewPostData: 강의평 정보 객체
     ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-    func sendLectureReviewDataToServer(lectureReviewPostData: LectureReviewPostData) {
-        provider.rx.request(.saveLectureReviewData(lectureReviewPostData))
+    func send(lectureReviewPostData: LectureReviewPostData) {
+        BoardDataManager.shared.provider.rx.request(.saveLectureReviewData(lectureReviewPostData))
             .filterSuccessfulStatusCodes()
             .map(SaveLectureReviewResponseData.self)
             .subscribe { (result) in
@@ -403,25 +406,17 @@ class LectureReviewWriteTableViewController: UITableViewController {
                 case .success(let response):
                     switch response.code {
                     case ResultCode.ok.rawValue:
-                        #if DEBUG
-                        print("추가 성공")
-                        #endif
-
-                        let newReview = LectureReviewListResponse.LectureReview(lectureReviewId: response.lectureReview.lectureReviewId, userId: response.lectureReview.userId, lectureInfoId: response.lectureReview.lectureInfoId, assignment: response.lectureReview.assignment, groupMeeting: response.lectureReview.groupMeeting, evaluation: response.lectureReview.evaluation, attendance: response.lectureReview.attendance, testNumber: response.lectureReview.testNumber, rating: response.lectureReview.rating, semester: response.lectureReview.semester, content: response.lectureReview.content, createdAt: response.lectureReview.createdAt)
-
-                        NotificationCenter.default.post(name: .newLectureReviewDidInput, object: nil, userInfo: ["review": newReview])
+                        let responseData = LectureReviewListResponse.LectureReview.self
                         
+                        let userInfo = ["response": responseData]
+                        NotificationCenter.default.post(name: .newLectureReviewDidInput, object: nil, userInfo: userInfo)
                     case ResultCode.fail.rawValue:
-                        #if DEBUG
-                        print("이미 존재함")
-                        #endif
+                        self.alertVersion3(title: "알림", message: "이미 존재하는 강의 리뷰입니다.", handler: nil)
                     default:
                         break
                     }
                 case .failure(let error):
-                    #if DEBUG
-                    print(error.localizedDescription)
-                    #endif
+                    self.alertVersion3(title: "알림", message: error.localizedDescription, handler: nil)
                 }
             }
             .disposed(by: rx.disposeBag)
@@ -435,7 +430,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
         selectSemesterView.layer.cornerRadius = 10
         reviewcontentTextView.layer.cornerRadius = 10
         reviewcontentTextView.delegate = self
-
+        
     }
 }
 

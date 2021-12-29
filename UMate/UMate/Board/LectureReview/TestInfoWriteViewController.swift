@@ -32,9 +32,6 @@ class TestInfoWriteViewController: CommonViewController {
     /// 선택된 강의
     var lectureInfo: LectureInfoDetailResponse.LectrueInfo?
     
-    /// 네트워크 통신 관리 객체
-    let provider = MoyaProvider<TestInfoSaveService>()
-    
     
     /// 강의정보 화면으로 돌아갑니다.
     /// - Parameter sender: 엑스 버튼
@@ -46,8 +43,6 @@ class TestInfoWriteViewController: CommonViewController {
     /// 뷰 컨트롤러의 뷰 계층이 메모리에 올라간 뒤 호출됩니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-      
         
         // 키보드 노티피케이션
         let token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil, using: {noti in
@@ -115,7 +110,7 @@ class TestInfoWriteViewController: CommonViewController {
             self.alertVersion3(title: "시험 정보를 공유하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { _ in
                 if let newTestInfo = noti.userInfo?["testInfo"] as? TestInfoPostData {
            
-                    self.sendTestInfoDataToServer(testInfoData: newTestInfo)
+                    self.send(testInfoData: newTestInfo)
                     self.dismiss(animated: true, completion: nil)
                 }
             }
@@ -162,8 +157,8 @@ class TestInfoWriteViewController: CommonViewController {
     /// 작성한 시험 정보를 서버에 저장합니다.
     /// - Parameter testInfoData: 시험 정보 객체
     ///   - Auhtor: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-    func sendTestInfoDataToServer(testInfoData: TestInfoPostData) {
-        provider.rx.request(.saveTestInfoData(testInfoData))
+    func send(testInfoData: TestInfoPostData) {
+        BoardDataManager.shared.provider.rx.request(.saveTestInfoData(testInfoData))
             .filterSuccessfulStatusCodes()
             .map(SaveTestInfoResponseData.self)
             .subscribe { (result) in
@@ -171,10 +166,6 @@ class TestInfoWriteViewController: CommonViewController {
                 case .success(let response):
                     switch response.code {
                     case ResultCode.ok.rawValue:
-                        #if DEBUG
-                        print("추가 성공")
-                        #endif
-                        
                         var exampleList = [TestInfoListResponse.TestInfo.Example]()
                         response.examples.forEach {
                             let newExample = TestInfoListResponse.TestInfo.Example(exampleId: $0.exampleId, testInfoId: $0.testInfoId, content: $0.content)
@@ -191,19 +182,16 @@ class TestInfoWriteViewController: CommonViewController {
                                                                         examples: exampleList,
                                                                         createdAt: response.testInfo.createdAt)
                         
-                        NotificationCenter.default.post(name: .testInfoDidShare, object: nil, userInfo: ["testInfo": newTestInfo])
+                        let userInfo = ["testInfo": newTestInfo]
+                        NotificationCenter.default.post(name: .testInfoDidShare, object: nil, userInfo: userInfo)
                         
                     case ResultCode.fail.rawValue:
-                        #if DEBUG
-                        print("이미 존재함")
-                        #endif
+                        self.alertVersion3(title: "알림", message: "이미 존재하는 시험정보 입니다.", handler: nil)
                     default:
                         break
                     }
                 case .failure(let error):
-                    #if DEBUG
-                    print(error.localizedDescription)
-                    #endif
+                    self.alertVersion3(title: "알림", message: error.localizedDescription, handler: nil)
                 }
             }
             .disposed(by: rx.disposeBag)

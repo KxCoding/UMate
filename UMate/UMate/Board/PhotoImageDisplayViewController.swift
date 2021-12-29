@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import NSObject_Rx
 
+
 /// 캡쳐한 사진 표시 화면
 /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gamil.com)
 class PhotoImageDisplayViewController: UIViewController {
@@ -89,11 +90,13 @@ class PhotoImageDisplayViewController: UIViewController {
 
         guard let capturedImage = photoImageView.image else { return }
         
+        var userInfo = ["img": capturedImage]
         NotificationCenter.default.post(name: .newImageCaptured,
                                         object: nil,
-                                        userInfo: ["img": capturedImage])
+                                        userInfo: userInfo)
         
-        NotificationCenter.default.post(name: .requestPostImage, object: nil, userInfo: ["image": capturedImage])
+        userInfo = ["image": capturedImage]
+        NotificationCenter.default.post(name: .requestPostImage, object: nil, userInfo: userInfo)
         
         dismiss(animated: true, completion: nil)
     }
@@ -150,7 +153,8 @@ class PhotoImageDisplayViewController: UIViewController {
                                                queue: .main) { [weak self] noti in
             guard let self = self else { return }
             
-            if let image = noti.userInfo?["image"] as? UIImage {
+            let userInfoKey = noti.userInfo?["image"]
+            if let image = userInfoKey as? UIImage {
                 self.photoImageView.image = image
             }
         }
