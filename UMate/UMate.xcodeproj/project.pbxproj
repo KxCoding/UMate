@@ -49,15 +49,15 @@
 		5C2141B326BF0F5B00F93A84 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2141B226BF0F5B00F93A84 /* UIView+Extension.swift */; };
 		5C2141B626BF162B00F93A84 /* ThemeSettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2141B526BF162B00F93A84 /* ThemeSettingTableViewController.swift */; };
 		5C2141BC26BF1A1500F93A84 /* SetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2141BB26BF1A1500F93A84 /* SetPasswordViewController.swift */; };
+		5C24F158277C4D76006065A2 /* TimetableDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24F157277C4D76006065A2 /* TimetableDataManager.swift */; };
+		5C24F15A277C4D93006065A2 /* TimetableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24F159277C4D93006065A2 /* TimetableService.swift */; };
+		5C24F15C277C503C006065A2 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24F15B277C503C006065A2 /* Credentials.swift */; };
 		5C2C36D826E9BBB600D61B01 /* CommonPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C36D726E9BBB600D61B01 /* CommonPasswordViewController.swift */; };
 		5C2C36DA26EAFC7800D61B01 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C36D926EAFC7800D61B01 /* EmptyViewController.swift */; };
 		5C44242E26B7586200A6C23B /* SchoolAuthTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44242D26B7586200A6C23B /* SchoolAuthTableViewController.swift */; };
 		5C5A69A026E1046C00470E45 /* AppInformationTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A699F26E1046C00470E45 /* AppInformationTextViewController.swift */; };
 		5C5A69A226E141A000470E45 /* NSNotification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A69A126E141A000470E45 /* NSNotification+Extension.swift */; };
 		5C733FDF26B0659A00C1AF21 /* UserTimeTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C733FDE26B0659A00C1AF21 /* UserTimeTable.swift */; };
-		5C733FE126B07CB500C1AF21 /* FriendsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C733FE026B07CB500C1AF21 /* FriendsListTableViewController.swift */; };
-		5C733FE326B07D7C00C1AF21 /* FriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C733FE226B07D7C00C1AF21 /* FriendsListViewController.swift */; };
-		5C733FE526B0839D00C1AF21 /* FriendLectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C733FE426B0839D00C1AF21 /* FriendLectureViewController.swift */; };
 		5C7E4C4D26BD6FC9009DF776 /* CommonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7E4C4C26BD6FC9009DF776 /* CommonViewController.swift */; };
 		5C7E4C4F26BD6FD4009DF776 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7E4C4E26BD6FD4009DF776 /* Dummy.swift */; };
 		5C7E4C5126BD71ED009DF776 /* CommonConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7E4C5026BD71ED009DF776 /* CommonConstant.swift */; };
@@ -79,7 +79,6 @@
 		5C92DD3C269BF84F0094A93C /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92DD3B269BF84E0094A93C /* AccountViewController.swift */; };
 		5CA0D8DC26BB11070098FBE4 /* PasswordCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA0D8DB26BB11070098FBE4 /* PasswordCheckViewController.swift */; };
 		5CAFD3AD26A74B9D0002D0EC /* AddLectureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAFD3AC26A74B9D0002D0EC /* AddLectureTableViewController.swift */; };
-		5CB9104926B2C875001E24DC /* FriendSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB9104826B2C875001E24DC /* FriendSearchViewController.swift */; };
 		5CCD820E270E337300A21CB9 /* SchoolDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCD820D270E337300A21CB9 /* SchoolDetailViewController.swift */; };
 		5CD1F63A26B9A7FB00441831 /* PasswordChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD1F63926B9A7FB00441831 /* PasswordChangeViewController.swift */; };
 		5CD1F63C26B9B1F700441831 /* EmailChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD1F63B26B9B1F700441831 /* EmailChangeViewController.swift */; };
@@ -123,7 +122,6 @@
 		DF2F6B0226C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2F6B0126C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift */; };
 		DF3381E826F257E200001478 /* LectureReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3381E726F257E200001478 /* LectureReview.swift */; };
 		DF36281526A93207007AC5D2 /* ExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF46AEAB26A1C72C00435D94 /* ExpandableBoardTableViewCell.swift */; };
-		DF397DE92757B8B0009F641F /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF397DE82757B8B0009F641F /* Credentials.swift */; };
 		DF3EA85D26A4003100424E7E /* NonExpandableBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */; };
 		DF40510726C05335009FCA17 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF40510626C05335009FCA17 /* SearchViewController.swift */; };
 		DF415C6A2732E74C00016126 /* LectureInfoCustomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF415C692732E74C00016126 /* LectureInfoCustomHeader.xib */; };
@@ -269,15 +267,15 @@
 		5C2141B226BF0F5B00F93A84 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		5C2141B526BF162B00F93A84 /* ThemeSettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingTableViewController.swift; sourceTree = "<group>"; };
 		5C2141BB26BF1A1500F93A84 /* SetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasswordViewController.swift; sourceTree = "<group>"; };
+		5C24F157277C4D76006065A2 /* TimetableDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDataManager.swift; sourceTree = "<group>"; };
+		5C24F159277C4D93006065A2 /* TimetableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableService.swift; sourceTree = "<group>"; };
+		5C24F15B277C503C006065A2 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		5C2C36D726E9BBB600D61B01 /* CommonPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonPasswordViewController.swift; sourceTree = "<group>"; };
 		5C2C36D926EAFC7800D61B01 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		5C44242D26B7586200A6C23B /* SchoolAuthTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolAuthTableViewController.swift; sourceTree = "<group>"; };
 		5C5A699F26E1046C00470E45 /* AppInformationTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInformationTextViewController.swift; sourceTree = "<group>"; };
 		5C5A69A126E141A000470E45 /* NSNotification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Extension.swift"; sourceTree = "<group>"; };
 		5C733FDE26B0659A00C1AF21 /* UserTimeTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTimeTable.swift; sourceTree = "<group>"; };
-		5C733FE026B07CB500C1AF21 /* FriendsListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListTableViewController.swift; sourceTree = "<group>"; };
-		5C733FE226B07D7C00C1AF21 /* FriendsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListViewController.swift; sourceTree = "<group>"; };
-		5C733FE426B0839D00C1AF21 /* FriendLectureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendLectureViewController.swift; sourceTree = "<group>"; };
 		5C7E4C4C26BD6FC9009DF776 /* CommonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonViewController.swift; sourceTree = "<group>"; };
 		5C7E4C4E26BD6FD4009DF776 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
 		5C7E4C5026BD71ED009DF776 /* CommonConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonConstant.swift; sourceTree = "<group>"; };
@@ -301,7 +299,6 @@
 		5C92DD3B269BF84E0094A93C /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		5CA0D8DB26BB11070098FBE4 /* PasswordCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCheckViewController.swift; sourceTree = "<group>"; };
 		5CAFD3AC26A74B9D0002D0EC /* AddLectureTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLectureTableViewController.swift; sourceTree = "<group>"; };
-		5CB9104826B2C875001E24DC /* FriendSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendSearchViewController.swift; sourceTree = "<group>"; };
 		5CCD820D270E337300A21CB9 /* SchoolDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDetailViewController.swift; sourceTree = "<group>"; };
 		5CD1F63926B9A7FB00441831 /* PasswordChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordChangeViewController.swift; sourceTree = "<group>"; };
 		5CD1F63B26B9B1F700441831 /* EmailChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailChangeViewController.swift; sourceTree = "<group>"; };
@@ -346,7 +343,6 @@
 		DF2C1F03274AAF8A00212092 /* BoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardService.swift; sourceTree = "<group>"; };
 		DF2F6B0126C3BA74003827E8 /* ExpandPostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandPostImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF3381E726F257E200001478 /* LectureReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReview.swift; sourceTree = "<group>"; };
-		DF397DE82757B8B0009F641F /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		DF3EA85C26A4003100424E7E /* NonExpandableBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonExpandableBoardTableViewCell.swift; sourceTree = "<group>"; };
 		DF40510626C05335009FCA17 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		DF415C692732E74C00016126 /* LectureInfoCustomHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LectureInfoCustomHeader.xib; sourceTree = "<group>"; };
@@ -581,6 +577,15 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		5C24F156277C4D28006065A2 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				5C24F157277C4D76006065A2 /* TimetableDataManager.swift */,
+				5C24F159277C4D93006065A2 /* TimetableService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		5C7E4BE426BC1957009DF776 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -611,8 +616,8 @@
 				6DA8043B2727B88300D4EECE /* CommonTableViewCell.swift */,
 				F47D68552755448B00ED8009 /* NotificationUserInfoKey.swift */,
 				2C59BD212756075200BC8090 /* CommonResponseType.swift */,
-				DF397DE82757B8B0009F641F /* Credentials.swift */,
 				6D008E5F2757C3B800182194 /* CommonCollectionViewCell.swift */,
+				5C24F15B277C503C006065A2 /* Credentials.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -633,10 +638,6 @@
 			isa = PBXGroup;
 			children = (
 				5CAFD3AC26A74B9D0002D0EC /* AddLectureTableViewController.swift */,
-				5C733FE026B07CB500C1AF21 /* FriendsListTableViewController.swift */,
-				5C733FE426B0839D00C1AF21 /* FriendLectureViewController.swift */,
-				5C733FE226B07D7C00C1AF21 /* FriendsListViewController.swift */,
-				5CB9104826B2C875001E24DC /* FriendSearchViewController.swift */,
 				5C92DD33269B4EDF0094A93C /* TimetableViewController.swift */,
 				5C0A7D4A271EEF3D00009BEB /* TimetableDetailViewController.swift */,
 			);
@@ -686,6 +687,7 @@
 		5C92DD1F269B4E5D0094A93C /* Timetable */ = {
 			isa = PBXGroup;
 			children = (
+				5C24F156277C4D28006065A2 /* Service */,
 				5C7E4C5826BD917C009DF776 /* ViewController */,
 				5C7E4C5526BD9031009DF776 /* Model */,
 				5C92DD29269B4E8E0094A93C /* Timetable.storyboard */,
@@ -1361,6 +1363,7 @@
 				F4D5F8D426F0B5E60019C0B0 /* PlaceImageDataType.swift in Sources */,
 				DFE3DD7526CFC715002F98D9 /* ReviewContentTableViewCell.swift in Sources */,
 				DF2C1F04274AAF8A00212092 /* BoardService.swift in Sources */,
+				5C24F15C277C503C006065A2 /* Credentials.swift in Sources */,
 				2CA56EEF274CF8D50072C26D /* PlaceReviewPostData.swift in Sources */,
 				6D42861126EFA09E006BE7CA /* ContestCollectionViewCell.swift in Sources */,
 				6D008E602757C3B800182194 /* CommonCollectionViewCell.swift in Sources */,
@@ -1380,6 +1383,7 @@
 				F4FC9DE7271F47DC00193A77 /* SimplePlaceTypeCollectionViewCell.swift in Sources */,
 				5C0C795A2745D450002E331A /* TimetableSingleResponse.swift in Sources */,
 				2C08ED2B27455C5D008DF5DA /* LoginResponse.swift in Sources */,
+				5C24F158277C4D76006065A2 /* TimetableDataManager.swift in Sources */,
 				F541B912277AE80D0009EC82 /* CpauterImagePreview.swift in Sources */,
 				F48843AD26ABE512005DB8A3 /* UserReviewTableViewCell.swift in Sources */,
 				5C7E4C4F26BD6FD4009DF776 /* Dummy.swift in Sources */,
@@ -1395,7 +1399,6 @@
 				5CD1F63A26B9A7FB00441831 /* PasswordChangeViewController.swift in Sources */,
 				6D9E3AAF26B26B300038614D /* EmailVerificationViewController.swift in Sources */,
 				5C92DD0A269B4DEF0094A93C /* AppDelegate.swift in Sources */,
-				5CB9104926B2C875001E24DC /* FriendSearchViewController.swift in Sources */,
 				2C715DA626C0514400B0B22B /* SearchHeaderCollectionViewCell.swift in Sources */,
 				DF943CCA2731C05C00F2F1FE /* LectureInfoRequest.swift in Sources */,
 				2C59BD1E2755FCAE00BC8090 /* Service.swift in Sources */,
@@ -1403,12 +1406,10 @@
 				6D4E7FA92711877A00F3BB5C /* ContestHeaderView.swift in Sources */,
 				2CDB2106274505F600D3F519 /* ReplaceRootSegue.swift in Sources */,
 				F48843AF26ABE512005DB8A3 /* FirstSectionTableViewCell.swift in Sources */,
-				5C733FE126B07CB500C1AF21 /* FriendsListTableViewController.swift in Sources */,
 				5C89D9D926C07FB6000DB3D2 /* UIColor+Extension.swift in Sources */,
 				5C92DD0C269B4DEF0094A93C /* SceneDelegate.swift in Sources */,
 				F4ABE8CF26D30D3200F54B3B /* PlaceUser.swift in Sources */,
 				F4666A3126BAEF7800A7AFA5 /* PlaceMainViewController.swift in Sources */,
-				DF397DE92757B8B0009F641F /* Credentials.swift in Sources */,
 				DF3381E826F257E200001478 /* LectureReview.swift in Sources */,
 				5C7E4C4D26BD6FC9009DF776 /* CommonViewController.swift in Sources */,
 				5C89D9D226C017F8000DB3D2 /* MakingPasswordViewController.swift in Sources */,
@@ -1435,7 +1436,6 @@
 				DF415C6C2732E87D00016126 /* LectureInfoCustomHeaderView.swift in Sources */,
 				6DA8990426B91CE900F81AD9 /* DetailRegisterViewController.swift in Sources */,
 				6DFEBAF726EC8587002CE476 /* MainCollectionViewCell.swift in Sources */,
-				5C733FE526B0839D00C1AF21 /* FriendLectureViewController.swift in Sources */,
 				DF27D74D26B937240046D7BF /* CategoryBoardCollectionViewCell.swift in Sources */,
 				F401BE1F26DC8806000C7898 /* University.swift in Sources */,
 				DF943C712730227D00F2F1FE /* BoardResponse.swift in Sources */,
@@ -1446,6 +1446,7 @@
 				2CBD9BCA2753C28000166B95 /* UniversityDataManager.swift in Sources */,
 				F4BBA7C1274B4A07001D1A42 /* PlaceDto.swift in Sources */,
 				6D83C9FB26F06FC500E27932 /* EmploymentInfoTableViewCell.swift in Sources */,
+				5C24F15A277C4D93006065A2 /* TimetableService.swift in Sources */,
 				F4CBE55726E21EFE00A2BE77 /* TemplateManagingTableViewController.swift in Sources */,
 				DFE3DD7126CFC6EE002F98D9 /* LectureBookTableViewCell.swift in Sources */,
 				DFE3DD6B26CFC6A6002F98D9 /* SectionTitleCollectionViewCell.swift in Sources */,
@@ -1453,7 +1454,6 @@
 				F48843AE26ABE512005DB8A3 /* TabSectionTableViewCell.swift in Sources */,
 				F4D5F8DA26F0B6D30019C0B0 /* ReviewTemplate.swift in Sources */,
 				5C1A18A926DFF35A00BB2891 /* PasswordRootViewController.swift in Sources */,
-				5C733FE326B07D7C00C1AF21 /* FriendsListViewController.swift in Sources */,
 				5C0C795C2745D460002E331A /* TimetablePostData.swift in Sources */,
 				F50F9B5426B0F932007ABEF6 /* CommunityRuleViewController.swift in Sources */,
 				DF454E2526C2DAED0031F92C /* UIViewController+View.swift in Sources */,
@@ -1635,14 +1635,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83P9XUMFCW;
+				DEVELOPMENT_TEAM = K6MHP3M8UT;
 				INFOPLIST_FILE = UMate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hyunwooJang.UMate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kxcoding.UMate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1657,7 +1657,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83P9XUMFCW;
+				DEVELOPMENT_TEAM = K6MHP3M8UT;
 				INFOPLIST_FILE = UMate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (

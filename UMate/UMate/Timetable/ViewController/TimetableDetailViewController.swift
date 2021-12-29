@@ -6,6 +6,8 @@
 //
 
 import Elliotable
+import Moya
+import RxSwift
 import UIKit
 
 
@@ -14,12 +16,7 @@ import UIKit
 class TimetableDetailViewController: CommonViewController {
     /// 강의 Id
     var id: String?
-    
-    lazy var session: URLSession = {
-        let configuration = URLSessionConfiguration.default
-        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
-        return session
-    }()
+
     
     /// Dim View
     @IBOutlet weak var dimView: UIView!
@@ -89,43 +86,20 @@ class TimetableDetailViewController: CommonViewController {
     /// 시간표 정보를 삭제합니다.
     /// - Parameter timetableId: Timetable 고유 Id
     private func deleteTimetable(timetableId: Int) {
-        guard let url = URL(string: "https://localhost:25139/timetable/\(timetableId)") else { return }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        request.addValue("application/json", forHTTPHeaderField: "content-type")
-        request.addValue("Bearer \(userTempToken)", forHTTPHeaderField: "Authorization")
-        
-        session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print((response as? HTTPURLResponse)?.statusCode)
-                return
-            }
-
-            guard let data = data else {
-                return
-            }
-
-            do {
-                let decoder = JSONDecoder()
-                let result = try decoder.decode(TimetableDeleteResponse.self, from: data)
-                
-                switch result.code {
-                case ResultCode.ok.rawValue:
-                    print(result.message)
-                default:
-                    print(result.message)
+        TimetableDataManager.shared.provider.rx.request(.deleteTimetable(timetableId))
+            .filterSuccessfulStatusCodes()
+            .map(TimetableDeleteResponse.self)
+            .subscribe(onSuccess: {
+                if $0.code == ResultCode.ok.rawValue {
+#if DEBUG
+                        print($0.message)
+#endif
+                } else {
+#if DEBUG
+                        print($0.message)
+#endif
                 }
-               
-            } catch {
-                print(error)
-            }
-        }.resume()
+            })
     }
     
     
@@ -148,7 +122,7 @@ class TimetableDetailViewController: CommonViewController {
         dimView.addGestureRecognizer(tapGesture)
         
         
-        var token = NotificationCenter.default.addObserver(forName: .SendCourseNotification,
+        let token = NotificationCenter.default.addObserver(forName: .SendCourseNotification,
                                                            object: nil,
                                                            queue: .main) { [weak self] noti in
             
@@ -181,13 +155,3 @@ class TimetableDetailViewController: CommonViewController {
         tokens.append(token)
     }
 }
-
-
-extension TimetableDetailViewController: URLSessionDelegate {
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        let trust = challenge.protectionSpace.serverTrust!
-        
-        completionHandler(.useCredential, URLCredential(trust: trust))
-    }
-}
-
