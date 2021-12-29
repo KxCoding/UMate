@@ -12,14 +12,12 @@ import RxCocoa
 import NSObject_Rx
 
 
-
-
 /// 카메라 캡쳐 화면
 /// - Author: 김정민(kimjm010@icloud.com)
 class TakePhotoViewController: UIViewController {
     
     /// 카메라 프리뷰 화면
-    @IBOutlet weak var previewView: previewView!
+    @IBOutlet weak var previewView: PreviewView!
     
     /// Camera FlashMode
     @IBOutlet weak var flashModeBtn: UIButton!

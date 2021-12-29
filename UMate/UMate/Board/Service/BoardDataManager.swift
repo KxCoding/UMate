@@ -144,7 +144,7 @@ class BoardDataManager {
     /// 댓글 좋아요를 추가합니다.
     /// - Parameter likeCommentPostData: 댓글 좋아요 정보 객체
     /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-    func sendCommentLikeData(likeCommentPostData: LikeCommentPostData,
+    func send(likeCommentPostData: LikeCommentPostData,
                              completion: @escaping (Bool, SaveLikeCommentResponseData) -> ()) {
         provider.rx.request(.saveCommentLikeData(likeCommentPostData))
             .filterSuccessfulStatusCodes()
@@ -315,9 +315,8 @@ class BoardDataManager {
 
 /// 이미지 첨부 방식
 /// - Author: 김정민(kimjm010@icloud.com)
-enum SelectImageAttachActionType {
+enum SelectActionType {
     case find
     case take
     case close
 }
-

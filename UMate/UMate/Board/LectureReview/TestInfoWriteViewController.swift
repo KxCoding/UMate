@@ -110,7 +110,7 @@ class TestInfoWriteViewController: CommonViewController {
             self.alertVersion3(title: "시험 정보를 공유하시겠습니까?", message: "\n※ 등록 후에는 수정하거나 삭제할 수 없습니다.\n\n※ 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 제한될 수 있습니다.") { _ in
                 if let newTestInfo = noti.userInfo?["testInfo"] as? TestInfoPostData {
            
-                    self.sendTestInfoData(testInfoData: newTestInfo)
+                    self.send(testInfoData: newTestInfo)
                     self.dismiss(animated: true, completion: nil)
                 }
             }
@@ -157,7 +157,7 @@ class TestInfoWriteViewController: CommonViewController {
     /// 작성한 시험 정보를 서버에 저장합니다.
     /// - Parameter testInfoData: 시험 정보 객체
     ///   - Auhtor: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-    func sendTestInfoData(testInfoData: TestInfoPostData) {
+    func send(testInfoData: TestInfoPostData) {
         BoardDataManager.shared.provider.rx.request(.saveTestInfoData(testInfoData))
             .filterSuccessfulStatusCodes()
             .map(SaveTestInfoResponseData.self)

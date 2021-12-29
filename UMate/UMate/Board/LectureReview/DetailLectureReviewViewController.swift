@@ -14,6 +14,7 @@ import Loaf
 /// 강의 정보 뷰 컨트롤러
 /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
 class DetailLectureReviewViewController: CommonViewController {
+    
     /// 강의 정보 테이블 뷰
     @IBOutlet weak var lectureInfoTableView: UITableView!
     
@@ -38,6 +39,7 @@ class DetailLectureReviewViewController: CommonViewController {
     /// 시험정보
     var testInfoList = [TestInfoListResponse.TestInfo]()
     
+    var lectureReview: LectureReviewListResponse.LectureReview?
     
     /// 리뷰 총합
     typealias Count = (key: Int, value: Int)
@@ -181,20 +183,9 @@ class DetailLectureReviewViewController: CommonViewController {
             
             guard let responseData = noti.userInfo?["response"] as? LectureReviewListResponse.LectureReview else { return }
             
-            let newReview = LectureReviewListResponse.LectureReview(lectureReviewId: responseData.lectureReviewId,
-                                                                    userId: responseData.userId,
-                                                                    lectureInfoId: responseData.lectureInfoId,
-                                                                    assignment: responseData.assignment,
-                                                                    groupMeeting: responseData.groupMeeting,
-                                                                    evaluation: responseData.evaluation,
-                                                                    attendance: responseData.attendance,
-                                                                    testNumber: responseData.testNumber,
-                                                                    rating: responseData.rating,
-                                                                    semester: responseData.semester,
-                                                                    content: responseData.content,
-                                                                    createdAt: responseData.createdAt)
+            let new = LectureReviewListResponse.LectureReview.ReviewResponseData(responseData: responseData)
             
-            self.lectureReviewList.append(newReview)
+            self.lectureReviewList.append(new.responseData)
             
             if self.lectureReviewList.count > 0 {
                 self.evaluatelecture(reviews: self.lectureReviewList)
@@ -539,6 +530,3 @@ extension DetailLectureReviewViewController: UICollectionViewDelegate {
         }
     }
 }
-
-
-

@@ -11,7 +11,7 @@ import Photos
 
 /// 캡쳐 카메라 프리뷰 화면
 /// - Author: 김정민(kimjm010@icloud.com)
-class previewView: UIView {
+class PreviewView: UIView {
     
     /// 캡쳐한 이미지를 표시하는 클래스
     override class var layerClass: AnyClass {

@@ -23,11 +23,6 @@ extension Notification.Name {
 
 
 
-enum SelectActionType {
-    case delete
-}
-
-
 
 /// 게시글 상세화면 뷰 컨트롤러
 /// - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
@@ -94,8 +89,6 @@ class DetailPostViewController: CommonViewController {
     /// 사용자 스크랩Id
     var scrapPostId = 0
     
-    var selectedCommentIndex: IndexPath?
-    
     
     /// 댓글 및 대댓글을 저장합니다.
     /// - Parameter sender: 댓글 저장 버튼
@@ -116,7 +109,7 @@ class DetailPostViewController: CommonViewController {
         
         let newComment = CommentPostData(postId: selectedPostId, content: content, originalCommentId: originalCommentId ?? 0, isReComment: isReComment, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
         
-        sendCommentData(commentPostData: newComment)
+        send(commentPostData: newComment)
         let userInfo = ["postId": post?.postId ?? 0]
         NotificationCenter.default.post(name: .commentCountDidIncreased, object: nil, userInfo: userInfo)
         
@@ -126,9 +119,11 @@ class DetailPostViewController: CommonViewController {
     }
     
     
+    
+    
     /// 댓글을 서버에 저장합니다.
     /// - Author: 김정민(kimjm010@icloud.com), 남정은(dlsl7080@gmail.com)
-    func sendCommentData(commentPostData: CommentPostData) {
+    func send(commentPostData: CommentPostData) {
         BoardDataManager.shared.provider.rx.request(.saveComment(commentPostData))
             .filterSuccessfulStatusCodes()
             .map(SaveCommentResponseData.self)
@@ -272,7 +267,7 @@ class DetailPostViewController: CommonViewController {
         
         // 댓글 및 대댓글을 추가합니다.
         // - Author: 김정민(kimjm010@icloud.com)
-        let token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
+        var token = NotificationCenter.default.addObserver(forName: .newCommentDidInsert,
                                                            object: nil,
                                                            queue: .main) { [weak self] (noti) in
             
@@ -326,6 +321,24 @@ class DetailPostViewController: CommonViewController {
                 self.detailPostTableView.scrollToRow(at: IndexPath(row: index, section: 2), at: .middle, animated: true)
             }
         }
+        tokens.append(token)
+        
+        
+        token = NotificationCenter.default.addObserver(forName: .postAlreadyLiked, object: nil, queue: .main, using: { [weak self] _ in
+            self?.alertVersion3(title: "알림", message: "이미 좋아요를 눌렀습니다 :)", handler: nil)
+        })
+        tokens.append(token)
+        
+        
+        token = NotificationCenter.default.addObserver(forName: .postAlreadyScrapped, object: nil, queue: .main, using: { [weak self] _ in
+            self?.alertVersion3(title: "알림", message: "이미 존재합니다.", handler: nil)
+        })
+        tokens.append(token)
+        
+        
+        token = NotificationCenter.default.addObserver(forName: .tryAgainLater, object: nil, queue: .main, using: { [weak self] _ in
+            self?.alertVersion3(title: "알림", message: "작업에 실패하였습니다. 잠시 후 다시 시도해 주시기 바랍니다 :)", handler: nil)
+        })
         tokens.append(token)
     }
     

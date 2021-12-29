@@ -15,11 +15,16 @@ import Moya
 extension  Notification.Name {
     static let postDidScrap = Notification.Name("postDidScrap")
     static let postDidLike = Notification.Name("postDidLike")
-
+    
     static let postCancelScrap = Notification.Name("postCancelScrap")
     static let postAlreadyLiked = Notification.Name("postAlreadyLiked")
     
     static let menuSheetDidAlert = Notification.Name("menuSheetDidAlert")
+    
+    static let postAlreadyScrapped = Notification.Name("postAlreadyScrapped")
+    static let postAlreadyCancelScrapped = Notification.Name("postAlreadyCancelScrapped")
+    static let postAlreadyLike = Notification.Name("postAlreadyLike")
+    static let tryAgainLater = Notification.Name("tryAgainLater")
 }
 
 
@@ -45,9 +50,6 @@ class PostContentTableViewCell: UITableViewCell {
     /// 선택된 게시글
     var selectedPost: PostDtoResponseData.Post?
     
-    /// ViewController의 Extension을 사용하기 위한 속성
-    let vc = UIViewController()
-    
     /// 선택된 게시글 Id
     var postId = -1
     
@@ -56,7 +58,7 @@ class PostContentTableViewCell: UITableViewCell {
     
     /// 게시글 스크랩 여부
     var isScrapped = false
-
+    
     
     // MARK: 공감 버튼
     /// 하트 이미지 뷰
@@ -79,7 +81,7 @@ class PostContentTableViewCell: UITableViewCell {
             
             let likePostdata = LikePostData(postId: postId, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
-            sendLikeInfoData(likePostData: likePostdata)
+            send(likePostData: likePostdata)
             NotificationCenter.default.post(name: .postDidLike, object: nil, userInfo: ["postId": postId])
         }
         isLiked = true
@@ -89,6 +91,8 @@ class PostContentTableViewCell: UITableViewCell {
     // MARK: 스크랩 버튼
     /// 스크랩 이미지 뷰
     @IBOutlet weak var scrapImageView: UIImageView!
+    
+    /// 스크랩 버튼
     @IBOutlet weak var scrapButton: UIButton!
     
     
@@ -97,7 +101,7 @@ class PostContentTableViewCell: UITableViewCell {
     /// - Author: 남정은(dlsl7080@gmail.com)
     @IBAction func toggleScrapButton(_ sender: UIButton) {
         let scrapPostId = sender.tag
-    
+        
         if isScrapped {
             isScrapped = false
             scrapImageView.image = UIImage(named: "bookmark64")
@@ -115,7 +119,7 @@ class PostContentTableViewCell: UITableViewCell {
             
             let scrapPostData = ScrapPostData(postId: postId, createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
-            sendScrapInfoData(scrapPostData: scrapPostData)
+            send(scrapPostData: scrapPostData)
             NotificationCenter.default.post(name: .postDidScrap, object: nil, userInfo: ["postId": postId])
         }
     }
@@ -132,7 +136,7 @@ class PostContentTableViewCell: UITableViewCell {
     /// 게시물 '스크랩' 정보를 서버에 저장합니다.
     /// - Parameter likePostData: 게시물 스크랩 정보 객체
     ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-    private func sendScrapInfoData(scrapPostData: ScrapPostData) {
+    private func send(scrapPostData: ScrapPostData) {
         BoardDataManager.shared.provider.rx.request(.saveScrapInfo(scrapPostData))
             .filterSuccessfulStatusCodes()
             .map(SaveScrapPostPostResponse.self)
@@ -144,12 +148,12 @@ class PostContentTableViewCell: UITableViewCell {
                     case ResultCode.ok.rawValue:
                         self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
                     case ResultCode.fail.rawValue:
-                        self.vc.alertVersion3(title: "알림", message: "이미 존재합니다.", handler: nil)
+                        NotificationCenter.default.post(name: .postAlreadyScrapped, object: nil)
                     default:
                         break
                     }
-                case .failure(let error):
-                    self.vc.alertVersion3(title: "알림", message: error.localizedDescription, handler: nil)
+                case .failure:
+                    NotificationCenter.default.post(name: .tryAgainLater, object: nil)
                 }
             }
             .disposed(by: rx.disposeBag)
@@ -159,7 +163,7 @@ class PostContentTableViewCell: UITableViewCell {
     /// 게시물 '공감' 정보를 서버에 저장합니다.
     /// - Parameter likePostData: 게시물 공감 정보 객체
     ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-    private func sendLikeInfoData(likePostData: LikePostData) {
+    private func send(likePostData: LikePostData) {
         BoardDataManager.shared.provider.rx.request(.saveLikeInfo(likePostData))
             .filterSuccessfulStatusCodes()
             .map(SaveScrapPostPostResponse.self)
@@ -171,12 +175,12 @@ class PostContentTableViewCell: UITableViewCell {
                     case ResultCode.ok.rawValue:
                         self.scrapButton.tag = response.scrapPost?.scrapPostId ?? 0
                     case ResultCode.fail.rawValue:
-                        self.vc.alertVersion3(title: "알림", message: "이미 존재합니다.", handler: nil)
+                        NotificationCenter.default.post(name: .postAlreadyLiked, object: nil)
                     default:
                         break
                     }
-                case .failure(let error):
-                    self.vc.alertVersion3(title: "알림", message: error.localizedDescription, handler: nil)
+                case .failure:
+                    NotificationCenter.default.post(name: .tryAgainLater, object: nil)
                 }
             }
             .disposed(by: rx.disposeBag)
@@ -191,16 +195,14 @@ class PostContentTableViewCell: UITableViewCell {
             .filterSuccessfulStatusCodes()
             .map(CommonResponse.self)
             .subscribe(onSuccess: {
-                if $0.code == ResultCode.ok.rawValue {
-                    self.vc.alertVersion3(title: "알림", message: "게시물 스크랩을 취소했습니다.", handler: nil)
-                } else {
-                    self.vc.alertVersion3(title: "알림", message: "이미 스크랩을 취소한 게시물 입니다..", handler: nil)
+                if $0.code == ResultCode.fail.rawValue {
+                    NotificationCenter.default.post(name: .tryAgainLater, object: nil)
                 }
             })
             .disposed(by: rx.disposeBag)
     }
     
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -216,7 +218,7 @@ class PostContentTableViewCell: UITableViewCell {
         userImageView.layer.cornerRadius = userImageView.frame.height / 2
     }
     
-  
+    
     /// 작성자, 제목, 내용을 나타내는 셀을 초기화합니다.
     /// - Parameters:
     ///   - post: 선택된 post
@@ -225,7 +227,7 @@ class PostContentTableViewCell: UITableViewCell {
     ///   - scrapPostId: 스크랩 Id, 사용자가 스크랩하지 않은 경우는 0이 전달됩니다.
     /// - Author: 남정은(dlsl7080@gmail.com)
     func configure(post: PostDtoResponseData.Post, isLiked: Bool, isScrapped: Bool, scrapPostId: Int) {
-    
+        
         if isScrapped {
             scrapImageView.image = UIImage(named: "bookmark64.fill")
             scrapImageView.tintColor = UIColor.init(named: "blackSelectedColor")
@@ -255,12 +257,12 @@ class PostContentTableViewCell: UITableViewCell {
         } else {
             self.userImageView.image = UIImage(named: "user")
         }
-    
+        
         userNameLabel.text = post.userName
         dateLabel.text = post.dateStr
         postTitleLabel.text = post.title
         postContentLabel.text = post.content
-    
+        
         // 게시글을 셀 클래스에서 사용하기위해 저장
         postId = post.postId
         self.isLiked = isLiked

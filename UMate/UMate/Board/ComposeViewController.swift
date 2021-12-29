@@ -141,7 +141,7 @@ class ComposeViewController: CommonViewController {
                 newPost = PostPostData(postId: 0, boardId: self.selectedBoard?.boardId ?? 0, title: title, content: content, categoryNumber: selectedCategory, urlStrings: urlStringList, createdAt:BoardDataManager.shared.postDateFormatter.string(from: Date()))
             }
             
-            self.sendPostData(postData: newPost)
+            self.send(postData: newPost)
         }
     }
     
@@ -149,7 +149,7 @@ class ComposeViewController: CommonViewController {
     /// 게시글을 서버에 저장합니다.
     /// - Parameter postData: 게시글 정보 객체
     ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-    func sendPostData(postData: PostPostData?) {
+    func send(postData: PostPostData?) {
         guard let postData = postData else { return }
         
         BoardDataManager.shared.provider.rx.request(.uploadPost(postData))

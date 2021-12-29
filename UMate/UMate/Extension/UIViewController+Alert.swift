@@ -181,7 +181,7 @@ extension UIViewController {
     ///   - message: 알림의 Message
     /// - Returns: SelectImageAttachActionType을 방출하는 옵저버블
     /// - Author: 김정민(kimjm010@icloud.com)
-    func alertToSelectImageAttachWay(title: String, message: String) -> Observable<SelectImageAttachActionType> {
+    func alertToSelectImageAttachWay(title: String, message: String) -> Observable<SelectActionType> {
         return Observable.create { [unowned self] observer in
             var alertStyle = UIAlertController.Style.actionSheet
             if (UIDevice.current.userInterfaceIdiom == .pad) {

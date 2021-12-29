@@ -381,7 +381,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
                                                   content: reviewContent,
                                                   createdAt: BoardDataManager.shared.postDateFormatter.string(from: Date()))
             
-            self.sendLectureReviewData(lectureReviewPostData: newReview)
+            self.send(lectureReviewPostData: newReview)
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -397,7 +397,7 @@ class LectureReviewWriteTableViewController: UITableViewController {
     /// 작성한 강의평을 서버에 저장합니다.
     /// - Parameter lectureReviewPostData: 강의평 정보 객체
     ///   - Author: 남정은(dlsl7080@gmail.com), 김정민(kimjm010@icloud.com)
-    func sendLectureReviewData(lectureReviewPostData: LectureReviewPostData) {
+    func send(lectureReviewPostData: LectureReviewPostData) {
         BoardDataManager.shared.provider.rx.request(.saveLectureReviewData(lectureReviewPostData))
             .filterSuccessfulStatusCodes()
             .map(SaveLectureReviewResponseData.self)
