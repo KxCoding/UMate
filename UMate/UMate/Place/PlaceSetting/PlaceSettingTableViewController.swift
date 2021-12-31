@@ -60,15 +60,10 @@ class PlaceSettingTableViewController: UITableViewController {
             placeListVC.navigationItem.title = "북마크 관리"
             placeListVC.viewType = .bookmark
             
-            guard let getUrl = URL(string: "https://umateapi.azurewebsites.net/api/place/bookmark") else { return }
-            PlaceDataManager.shared.get(with: getUrl, on: placeListVC) { [weak placeListVC] (response: PlaceBookmarkListResponse) in
-                guard let vc = placeListVC else { return }
-                
-                vc.entireItems = response.places.map { Place(simpleDto: $0) }
-                // 데이터를 추가한 후 table view 업데이트
-                vc.placeListTableView.reloadData()
+            PlaceDataManager.shared.fetchBoomarkList(vc: placeListVC) { places in
+                placeListVC.entireItems = places
+                placeListVC.placeListTableView.reloadData()
             }
-            
             
             if let nav = self.navigationController {
                 nav.show(placeListVC, sender: nil)

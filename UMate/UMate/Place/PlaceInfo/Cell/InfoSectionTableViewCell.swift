@@ -78,7 +78,7 @@ class InfoSectionTableViewCell: UITableViewCell {
         
         NotificationCenter.default.post(name: .urlOpenHasBeenRequested,
                                         object: nil,
-                                        userInfo: ["type": URLType.web, "url": url])
+                                        userInfo: [urlOpenRequestNotificationUrlType: URLType.web, urlOpenRequestNotificationUrl: url])
     }
     
     
@@ -94,7 +94,7 @@ class InfoSectionTableViewCell: UITableViewCell {
         
         NotificationCenter.default.post(name: .urlOpenHasBeenRequested,
                                         object: nil,
-                                        userInfo: ["type": URLType.web, "url": url])
+                                        userInfo: [urlOpenRequestNotificationUrlType: URLType.web, urlOpenRequestNotificationUrl: url])
     }
     
     

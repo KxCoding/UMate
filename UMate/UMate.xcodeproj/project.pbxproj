@@ -182,6 +182,7 @@
 		F48843B026ABE512005DB8A3 /* ReviewWriteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48843A026ABE512005DB8A3 /* ReviewWriteTableViewController.swift */; };
 		F48843B126ABE512005DB8A3 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48843A126ABE512005DB8A3 /* RoundedButton.swift */; };
 		F48E1D5426BD9E2D00552C35 /* ReviewWrite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F48E1D5326BD9E2D00552C35 /* ReviewWrite.storyboard */; };
+		F49C6779277E17B500855F82 /* PlaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49C6778277E17B500855F82 /* PlaceService.swift */; };
 		F4ABE8CF26D30D3200F54B3B /* PlaceUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ABE8CE26D30D3200F54B3B /* PlaceUser.swift */; };
 		F4ABE8D226D38BDE00F54B3B /* PlaceList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4ABE8D126D38BDE00F54B3B /* PlaceList.storyboard */; };
 		F4ABE8D426D38C1400F54B3B /* PlaceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ABE8D326D38C1400F54B3B /* PlaceListViewController.swift */; };
@@ -404,6 +405,7 @@
 		F48843A026ABE512005DB8A3 /* ReviewWriteTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewWriteTableViewController.swift; sourceTree = "<group>"; };
 		F48843A126ABE512005DB8A3 /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		F48E1D5326BD9E2D00552C35 /* ReviewWrite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReviewWrite.storyboard; sourceTree = "<group>"; };
+		F49C6778277E17B500855F82 /* PlaceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceService.swift; sourceTree = "<group>"; };
 		F4ABE8CE26D30D3200F54B3B /* PlaceUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceUser.swift; sourceTree = "<group>"; };
 		F4ABE8D126D38BDE00F54B3B /* PlaceList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlaceList.storyboard; sourceTree = "<group>"; };
 		F4ABE8D326D38C1400F54B3B /* PlaceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListViewController.swift; sourceTree = "<group>"; };
@@ -995,15 +997,16 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		F401BE1B26DAC095000C7898 /* PlaceService */ = {
+		F401BE1B26DAC095000C7898 /* Service */ = {
 			isa = PBXGroup;
 			children = (
 				F47EEDDA26EA30950036E8F7 /* BlurHash */,
 				F4066E7C26F3C8F500023408 /* Model */,
+				F49C6778277E17B500855F82 /* PlaceService.swift */,
 				F401BE1C26DAC356000C7898 /* PlaceDataManager.swift */,
 				2CA56EE9274CED740072C26D /* PlaceReviewDataManager.swift */,
 			);
-			path = PlaceService;
+			path = Service;
 			sourceTree = "<group>";
 		};
 		F4066E7C26F3C8F500023408 /* Model */ = {
@@ -1063,9 +1066,9 @@
 		F488438D26ABE512005DB8A3 /* Place */ = {
 			isa = PBXGroup;
 			children = (
-				F4FC9E1C2721525C00193A77 /* PlaceCommon */,
-				F401BE1B26DAC095000C7898 /* PlaceService */,
+				F401BE1B26DAC095000C7898 /* Service */,
 				F488438F26ABE512005DB8A3 /* Model */,
+				F4FC9E1D2721527500193A77 /* PlaceList */,
 				F4666A2F26BAEF6200A7AFA5 /* PlaceMain */,
 				F44389DC26D2E2ED00B9A193 /* PlaceSetting */,
 				F488439226ABE512005DB8A3 /* PlaceSearch */,
@@ -1153,14 +1156,6 @@
 				F4CBE55626E21EFE00A2BE77 /* TemplateManagingTableViewController.swift */,
 			);
 			path = TemplateManaging;
-			sourceTree = "<group>";
-		};
-		F4FC9E1C2721525C00193A77 /* PlaceCommon */ = {
-			isa = PBXGroup;
-			children = (
-				F4FC9E1D2721527500193A77 /* PlaceList */,
-			);
-			path = PlaceCommon;
 			sourceTree = "<group>";
 		};
 		F4FC9E1D2721527500193A77 /* PlaceList */ = {
@@ -1415,6 +1410,7 @@
 				5C89D9D226C017F8000DB3D2 /* MakingPasswordViewController.swift in Sources */,
 				5C92DD32269B4ED20094A93C /* BoardViewController.swift in Sources */,
 				F47D68562755448B00ED8009 /* NotificationUserInfoKey.swift in Sources */,
+				F49C6779277E17B500855F82 /* PlaceService.swift in Sources */,
 				6DA42D4326F1F48F00C99BAA /* HomeModel.swift in Sources */,
 				2C59BD222756075200BC8090 /* CommonResponseType.swift in Sources */,
 				DF25EF4426AFD59300949AAB /* PostImageTableViewCell.swift in Sources */,

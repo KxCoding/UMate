@@ -134,18 +134,8 @@ class PlaceListViewController: CommonViewController {
                                                                queue: .main) { [weak self] noti in
                 guard let self = self else { return }
                 
-                let urlString = "https://umateapi.azurewebsites.net/api/place/bookmark"
-                guard let getUrl = URL(string: urlString) else { return }
-                
-                PlaceDataManager.shared.get(with: getUrl, on: self) { [weak self] (response: PlaceListResponse) in
-                    guard let self = self else { return }
-                    
-                    guard let responsePlaces = response.places else { return }
-                    let places = responsePlaces.map { Place(simpleDto: $0) }
-                    
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        
+                self.dataManager.fetchBoomarkList(vc: self) { places in
+                    DispatchQueue.main.async {
                         self.entireItems = places
                         self.placeListTableView.reloadData()
                     }
@@ -170,23 +160,14 @@ class PlaceListViewController: CommonViewController {
         if let cell = sender as? PlaceListTableViewCell {
             if let vc = segue.destination as? PlaceInfoViewController {
                 // 상점 정보 다운로드
-                var urlString = "https://umateapi.azurewebsites.net/api/place/\(cell.target.id)"
-                guard let placeInfoUrl = URL(string: urlString) else { return }
-                
-                PlaceDataManager.shared.get(with: placeInfoUrl, on: vc) { [weak vc] (response: PlaceResponse) in
-                    guard let vc = vc else { return }
-                    if let places = response.place { vc.place = Place(dto: places) }
+                dataManager.fetchPlaceInfo(placeId: cell.target.id, vc: vc) { place in
+                    vc.place = place
                 }
-                
+                                
                 // 북마크 정보 다운로드
-                urlString = "https://umateapi.azurewebsites.net/api/place/bookmark/place/\(cell.target.id)"
-                guard let bookmarkInfoUrl = URL(string: urlString) else { return }
-                
-                PlaceDataManager.shared.get(with: bookmarkInfoUrl, on: vc) { [weak vc] (response: PlaceBookmarkCheckResponse) in
-                    guard let vc = vc else { return }
-                    vc.isBookmarked = response.isBookmarked
+                dataManager.fetchIfBookmarked(placeId: cell.target.id, vc: vc) { isBookmarked in
+                    vc.isBookmarked = isBookmarked
                 }
-                
             }
         }
         
@@ -333,28 +314,19 @@ extension PlaceListViewController: UITableViewDelegate {
             let deleteBookmarkMenu = UIContextualAction(style: .destructive, title: nil) { [weak self] action, view, completion in
                 guard let self = self else { return }
                 
-                let urlString = "https://umateapi.azurewebsites.net/api/place/bookmark/place/\(selectedPlace.id)"
-                guard let url = URL(string: urlString) else { return }
-                
-                self.dataManager.delete(with: url, on: self) { response in
-                    if response.code == ResultCode.ok.rawValue {
-                        #if DEBUG
-                        print(">>>> 북마크 삭제됨 - \(selectedPlace.name)")
-                        #endif
-                        
-                        DispatchQueue.main.async {
-                            if let targetIndex = self.entireItems.firstIndex(where: { $0.id == selectedPlace.id }) {
-                                self.entireItems.remove(at: targetIndex)
-                                
-                                self.placeListTableView.beginUpdates()
-                                self.placeListTableView.deleteRows(at: [indexPath], with: .automatic)
-                                self.placeListTableView.endUpdates()
-                            } else {
-                                NotificationCenter.default.post(name: .bookmarkListHasBeenUpdated, object: nil)
-                            }
-                            
-                            self.bookmarkDeletedLoaf.show(.custom(1.2))
+                self.dataManager.deleteBookmark(placeId: selectedPlace.id, vc: self) {
+                    DispatchQueue.main.async {
+                        if let targetIndex = self.entireItems.firstIndex(where: { $0.id == selectedPlace.id }) {
+                            self.entireItems.remove(at: targetIndex)
+
+                            self.placeListTableView.beginUpdates()
+                            self.placeListTableView.deleteRows(at: [indexPath], with: .automatic)
+                            self.placeListTableView.endUpdates()
+                        } else {
+                            NotificationCenter.default.post(name: .bookmarkListHasBeenUpdated, object: nil)
                         }
+
+                        self.bookmarkDeletedLoaf.show(.custom(1.2))
                     }
                 }
                 

@@ -164,6 +164,32 @@ class PlaceInfoViewController: CommonViewController {
         
         tokens.append(token)
         
+        token = NotificationCenter.default.addObserver(forName: .bookmarkHasBeenUpdated,
+                                                           object: nil,
+                                                           queue: .main) { [weak self] noti in
+            guard let self = self else { return }
+            
+            if !self.isBookmarked {
+                self.dataManager.createBookmark(placeId: self.place.id, vc: self) { _ in
+                    DispatchQueue.main.async {
+                        self.isBookmarked.toggle()
+                        self.bookmarkedLoaf.show(.custom(1.2))
+                        NotificationCenter.default.post(name: .bookmarkListHasBeenUpdated, object: nil)
+                    }
+                }
+            } else {
+                self.dataManager.deleteBookmark(placeId: self.place.id, vc: self) {
+                    DispatchQueue.main.async {
+                        self.isBookmarked.toggle()
+                        self.bookmarkDeletedLoaf.show(.custom(1.2))
+                        NotificationCenter.default.post(name: .bookmarkListHasBeenUpdated, object: nil)
+                    }
+                }
+            }
+        }
+        
+        tokens.append(token)
+        
         NotificationCenter.default.rx.notification(.reviewDidApplied, object: nil)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -184,45 +210,6 @@ class PlaceInfoViewController: CommonViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { _ in self.alert(message: "에러가 발생했습니다.") })
             .disposed(by: rx.disposeBag)
-        
-        token = NotificationCenter.default.addObserver(forName: .bookmarkHasBeenUpdated,
-                                                           object: nil,
-                                                           queue: .main) { [weak self] noti in
-            guard let self = self else { return }
-            
-            if !self.isBookmarked {
-                let urlString = "https://umateapi.azurewebsites.net/api/place/bookmark"
-                guard let bookmarkPostUrl = URL(string: urlString) else { return }
-
-                let postData = PlaceBookmarkPostData(placeId: self.place.id)
-                
-                self.dataManager.post(postData, with: bookmarkPostUrl, on: self) { (response: PlaceCommonResponse) in
-                    if response.code == ResultCode.ok.rawValue {
-                        DispatchQueue.main.async {
-                            self.isBookmarked.toggle()
-                            self.bookmarkedLoaf.show(.custom(1.2))
-                            NotificationCenter.default.post(name: .bookmarkListHasBeenUpdated, object: nil)
-                        }
-                    }
-                }
-            } else {
-                let urlString = "https://umateapi.azurewebsites.net/api/place/bookmark/place/\(self.place.id)"
-                guard let bookmarkDeleteUrl = URL(string: urlString) else { return }
-                
-                PlaceDataManager.shared.delete(with: bookmarkDeleteUrl, on: self) { response in
-                    if response.code == ResultCode.ok.rawValue {                         DispatchQueue.main.async {
-                            self.isBookmarked.toggle()
-                            self.bookmarkDeletedLoaf.show(.custom(1.2))
-                            NotificationCenter.default.post(name: .bookmarkListHasBeenUpdated, object: nil)
-                        }
-
-                    }
-                }
-            }
-        }
-        
-        tokens.append(token)
-
         
         setTapBarAppearanceAsDefault()
     }

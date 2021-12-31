@@ -174,7 +174,7 @@ extension UIViewController {
         present(alertCommnet, animated: true, completion: nil)
     }
     
-
+    
     /// 이미지 첨부 방법을 선택하는 알림입니다.
     /// - Parameters:
     ///   - title: 알림의 Title
@@ -238,5 +238,26 @@ extension UIViewController {
         alert.addAction(goToSettingAction)
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    
+    /// 네트워크 오류 정보와 함께 알림을 표시합니다.
+    /// - Parameters:
+    ///   - message: 결과 코드에 따른 알림 메시지 또는 기본 메시지
+    ///   - handler: 완료 블록. 버튼을 탭하면 호출됩니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func alertNetworkError(message: String?, handler: ((UIAlertAction) -> Void)? = nil) {
+        let defaultMessage = "네트워크 오류로 데이터를 가져올 수 없습니다"
+        alert(title: "네트워크 오류", message: message ?? defaultMessage, handler: handler)
+    }
+    
+    
+    /// 오류 정보와 함께 알림을 표시합니다.
+    /// - Parameters:
+    ///   - error: 발생한 오류
+    ///   - handler: 완료 블록. 버튼을 탭하면 호출됩니다.
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func alertErrorWithDescription(error: Error, handler: ((UIAlertAction) -> Void)? = nil) {
+        alert(title: "네트워크 오류", message: "description: " + error.localizedDescription, handler: handler)
     }
 }
