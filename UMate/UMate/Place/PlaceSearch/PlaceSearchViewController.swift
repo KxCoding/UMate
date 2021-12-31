@@ -73,20 +73,20 @@ class PlaceSearchViewController: CommonViewController {
         
         addSearchBar()
         
-        guard let getUrl = URL(string: "https://umate-api.azurewebsites.net/api/place") else { return }
-        
-        PlaceDataManager.shared.get(with: getUrl, on: self) { [weak self] (response: PlaceListResponse) in
-            guard let self = self else { return }
-            
-            guard let responsePlaces = response.places else { return }
-            let places = responsePlaces.map { Place(simpleDto: $0) }
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                self.list = places
-            }
-        }
+//        guard let getUrl = URL(string: "https://umate-api.azurewebsites.net/api/place") else { return }
+//
+//        PlaceDataManager.shared.get(with: getUrl, on: self) { [weak self] (response: PlaceListResponse) in
+//            guard let self = self else { return }
+//
+//            guard let responsePlaces = response.places else { return }
+//            let places = responsePlaces.map { Place(simpleDto: $0) }
+//
+//            DispatchQueue.main.async { [weak self] in
+//                guard let self = self else { return }
+//
+//                self.list = places
+//            }
+//        }
         
         NotificationCenter.default.rx.notification(.filterWillCancelled, object: nil)
             .observe(on: MainScheduler.instance)
@@ -183,7 +183,18 @@ class PlaceSearchViewController: CommonViewController {
         if let cell = sender as? UICollectionViewCell,
            let indexPath = searchCollectionView.indexPath(for: cell) {
             if let vc = segue.destination as? PlaceInfoViewController {
-                vc.place = filteredPlacelist[indexPath.item]
+                let targetId = filteredPlacelist[indexPath.item].id
+                
+                // 상점 정보 다운로드
+                PlaceDataManager.shared.fetchPlaceInfo(placeId: targetId, vc: vc) { place in
+                    vc.place = place
+                }
+                
+                // 북마크 정보 다운로드
+                PlaceDataManager.shared.fetchIfBookmarked(placeId: targetId, vc: vc) { isBookmarked in
+                    vc.isBookmarked = isBookmarked
+                }
+                
             }
         }
     }
