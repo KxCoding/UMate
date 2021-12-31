@@ -121,22 +121,9 @@ class PlaceMainViewController: UIViewController {
     /// 장소 정보를 다운로드합니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
     private func getPlaces() {
-        let urlString = "https://umateapi.azurewebsites.net/api/place/university/108"
-        guard let getUrl = URL(string: urlString) else { return }
-        
-        dataManager.get(with: getUrl, on: self) { [weak self] (response: PlaceListResponse) in
-            guard let self = self else { return }
-
-            guard let responsePlaces = response.places else { return }
-            
-            let places = responsePlaces.map { Place(simpleDto: $0) }.sorted { $0.coordinate.longitude < $1.coordinate.longitude }
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                self.list = places
-                self.nearbyPlaceCollectionView.reloadData()
-            }
+        dataManager.fetchUniversityPlaces(universityId: 104, vc: self) { places in
+            self.list = places.sorted(by: { $0.longitude < $1.longitude })
+            self.nearbyPlaceCollectionView.reloadData()
         }
     }
     
@@ -279,8 +266,6 @@ class PlaceMainViewController: UIViewController {
         nearbyPlaceCollectionView.collectionViewLayout = configureLayout()
         
         setTapBarAppearanceAsDefault()
-        
-        self.navigationItem.backButtonTitle = ""
     }
     
     /// 뷰가 화면에 표시되기 직전에 위치 권한을 요청합니다.
@@ -305,22 +290,15 @@ class PlaceMainViewController: UIViewController {
            let indexPath = nearbyPlaceCollectionView.indexPath(for: cell) {
             if let vc = segue.destination as? PlaceInfoViewController {
                 // 상점 정보 다운로드
-                var urlString = "https://umateapi.azurewebsites.net/api/place/\(list[indexPath.row].id)"
-                guard let getUrl = URL(string: urlString) else { return }
-                
-                dataManager.get(with: getUrl, on: vc) { [weak vc] (response: PlaceResponse) in
-                    guard let vc = vc else { return }
-                    if let places = response.place { vc.place = Place(dto: places) }
+                dataManager.fetchPlaceInfo(placeId: list[indexPath.row].id, vc: vc) { place in
+                    vc.place = place
                 }
                 
                 // 북마크 정보 다운로드
-                urlString = "https://umateapi.azurewebsites.net/api/place/bookmark/place/\(list[indexPath.row].id)"
-                guard let bookmarkInfoUrl = URL(string: urlString) else { return }
-                
-                dataManager.get(with: bookmarkInfoUrl, on: vc) { [weak vc] (response: PlaceBookmarkCheckResponse) in
-                    guard let vc = vc else { return }
-                    vc.isBookmarked = response.isBookmarked
+                dataManager.fetchIfBookmarked(placeId: list[indexPath.row].id, vc: vc) { isBookmarked in
+                    vc.isBookmarked = isBookmarked
                 }
+                
             }
         }
         
@@ -414,17 +392,11 @@ extension PlaceMainViewController: MKMapViewDelegate {
     ///   - control: tap 이벤트가 발생한 컨트롤
     /// - Author: 박혜정(mailmelater11@gmail.com)
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
-        // 작업 수행의 조건을 PlaceAnnotation으로 제한합니다.
         if let annot = view.annotation as? PlaceAnnotation {
             guard let placeInfoVC = UIStoryboard(name: "PlaceInfo", bundle: nil).instantiateInitialViewController() as? PlaceInfoViewController else { return }
             
-            let urlString = "https://umateapi.azurewebsites.net/api/place/\(annot.placeId)"
-            
-            guard let getUrl = URL(string: urlString) else { return }
-            
-            let place = dataManager.get(with: getUrl, on: placeInfoVC) { (response: PlaceResponse) in
-                if let places = response.place { placeInfoVC.place = Place(dto: places) }
+            dataManager.fetchPlaceInfo(placeId: annot.placeId, vc: placeInfoVC) { place in
+                placeInfoVC.place = place
             }
             
             self.navigationController?.pushViewController(placeInfoVC, animated: true)
@@ -568,7 +540,7 @@ extension PlaceMainViewController: CLLocationManagerDelegate {
             locationAlertHasShownAlready = true
         }
         
-        currentLocationLabel.text = University.tempUniversity.name ?? "위치 서비스 사용불가"
+        currentLocationLabel.text = University.tempUniversity.name
     }
     
     

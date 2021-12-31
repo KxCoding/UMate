@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import KeychainSwift
+import Moya
+import RxSwift
 
 enum HTTPMethod {
     case get
@@ -24,6 +27,171 @@ class PlaceDataManager {
     /// singleton instance
     static let shared = PlaceDataManager()
     private init() { }
+    
+    
+    
+    // MARK: - Moya
+        
+    /// 리소스 정리
+    let bag = DisposeBag()
+    
+    /// 로그인 키체인 인스턴스
+    let loginKeychain = KeychainSwift()
+    
+    
+    /// 네트워크 서비스 객체
+    ///
+    /// Bearer 토큰 인증 방식을 사용합니다.
+    lazy var provider: MoyaProvider<PlaceService> = {
+        if let token = loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            let authPlugin = AccessTokenPlugin { _ in token }
+            return MoyaProvider<PlaceService>(plugins: [authPlugin])
+        } else {
+            return MoyaProvider<PlaceService>()
+        }
+    }()
+    
+    
+    /// 학교 주변 상점을 다운로드합니다.
+    /// - Parameters:
+    ///   - universityId: 대학교 id
+    ///   - vc: 경고창을 표시할 view controller
+    ///   - completion: 완료 블록
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func fetchUniversityPlaces(universityId: Int, vc: UIViewController, completion: @escaping ([Place]) -> ()) {
+        provider.rx.request(.universityPlaceList(universityId))
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                switch result {
+                case .success(let response):
+                    if let listResponse = PlaceListResponse.parse(data: response.data, vc: vc),
+                       let placeDto = listResponse.places {
+                        let places = placeDto.map { Place(simpleDto: $0) }
+                        completion(places)
+                    }
+                case .failure(let error):
+                    vc.alertErrorWithDescription(error: error, handler: nil)
+                }
+            }
+            .disposed(by: bag)
+    }
+    
+    
+    /// 상점 상세 정보를 다운로드 합니다.
+    /// - Parameters:
+    ///   - placeId: 상점 id
+    ///   - vc: 경고창을 표시할 view controller
+    ///   - completion: 완료 블록
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func fetchPlaceInfo(placeId: Int, vc: UIViewController, completion: @escaping (Place) -> ()) {
+        provider.rx.request(.placeInfo(placeId))
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                switch result {
+                case .success(let response):
+                    if let placeResponse = PlaceResponse.parse(data: response.data, vc: vc),
+                       let placeDto = placeResponse.place {
+                        let place = Place(dto: placeDto)
+                        completion(place)
+                    }
+                case .failure(let error):
+                    vc.alertErrorWithDescription(error: error, handler: nil)
+                }
+            }
+            .disposed(by: bag)
+    }
+    
+    
+    /// 사용자의 북마크 리스트를 다운로드 합니다.
+    /// - Parameters:
+    ///   - vc: 경고창을 표시할 view controller
+    ///   - completion: 완료 블록
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func fetchBoomarkList(vc: UIViewController, completion: @escaping ([Place]) -> ()) {
+        provider.rx.request(.bookmarkList)
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                switch result {
+                case .success(let response):
+                    if let listResponse = PlaceListResponse.parse(data: response.data, vc: vc) {
+                        if let placeDtos = listResponse.places {
+                            let bookmarkedPlace = placeDtos.map { Place(simpleDto: $0) }
+                            completion(bookmarkedPlace)
+                        }
+                    }
+                case .failure(let error):
+                    vc.alertErrorWithDescription(error: error, handler: nil)
+                }
+            }
+            .disposed(by: bag)
+    }
+    
+    
+    /// 상점의 북마크 여부를 읽어옵니다.
+    /// - Parameters:
+    ///   - placeId: 상점 id
+    ///   - vc: 경고창 표시할 view controller
+    ///   - completion: 완료 블록
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func fetchIfBookmarked(placeId: Int, vc: UIViewController, completion: @escaping (Bool) -> ()) {
+        provider.rx.request(.ifBookmarked(placeId))
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                switch result {
+                case .success(let response):
+                    if let checkResponse = PlaceBookmarkCheckResponse.parse(data: response.data, vc: vc) { completion(checkResponse.isBookmarked) }
+                case .failure(let error):
+                    vc.alertErrorWithDescription(error: error, handler: nil)
+                }
+            }
+            .disposed(by: bag)
+    }
+    
+    
+    /// 북마크를 생성합니다.
+    /// - Parameters:
+    ///   - placeId: 북마크를 추가할 대상 상점의 id
+    ///   - vc: 경고창 표시할 view controller
+    ///   - completion: 완료 블록
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func createBookmark(placeId: Int, vc: UIViewController, completion: @escaping (Int) -> ()) {
+        let postData = PlaceBookmarkPostData(placeId: placeId)
+        
+        provider.rx.request(.postBookmark(postData))
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                switch result {
+                case .success(let response):
+                    if let commonResponse = PlaceCommonResponse.parse(data: response.data, vc: vc) { completion(postData.placeId) }
+                case .failure(let error):
+                    vc.alertErrorWithDescription(error: error, handler: nil)
+                }
+            }
+            .disposed(by: bag)
+        
+    }
+    
+    
+    /// 북마크를 삭제합니다.
+    /// - Parameters:
+    ///   - placeId: 북마크를 삭제할 대상 상점의 id
+    ///   - vc: 경고창 표시할 view controller
+    ///   - completion: 완료 블록
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func deleteBookmark(placeId: Int, vc: UIViewController, completion: @escaping () -> ()) {
+        provider.rx.request(.deleteBookmark(placeId))
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                switch result {
+                case .success(let response):
+                    if let checkResponse = PlaceCommonResponse.parse(data: response.data, vc: vc) { completion() }
+                case .failure(let error):
+                    vc.alertErrorWithDescription(error: error, handler: nil)
+                }
+            }
+            .disposed(by: bag)
+    }
+    
     
     
     // MARK: - Data
@@ -195,7 +363,9 @@ class PlaceDataManager {
     func getImage(with url: URL, completion: ((UIImage) -> ())?) {
         fetchData(with: url) { data in
             guard let image = UIImage(data: data) else {
+                #if DEBUG
                 print("cannot convert data to image")
+                #endif
                 return
             }
             
@@ -206,25 +376,31 @@ class PlaceDataManager {
     }
     
     
-    /// 이미지를 다운로드 합니다.
+    /// 다운로드한 이미지로 이미지 뷰를 업데이트 합니다.
     /// - Parameters:
     ///   - urlString: url 문자열
     ///   - imageView: 사용할 이미지 뷰
-    func getImage(with urlString: String, andUpdate imageView: UIImageView) {
-        let nsUrl = NSString(string: urlString)
+    /// - Author: 박혜정(mailmelater11@gmail.com)
+    func getImage(with urlString: String?, andUpdate imageView: UIImageView) {
+        imageView.image = placeholderImage
         
+        guard let urlString = urlString else { return }
+        
+        let nsUrl = NSString(string: urlString)
         if let image = stringImageCache.object(forKey: nsUrl) {
             imageView.image = image
         } else {
-            imageView.image = placeholderImage
+            guard urlString.contains("https://"),
+                  let url = URL(string: urlString) else { return }
             
-            guard let url = URL(string: urlString) else { return }
+            #if DEBUG
+            print("Download image... (URL: \(urlString))")
+            #endif
             
-            getImage(with: url) { downloadedImage in
-                self.stringImageCache.setObject(downloadedImage, forKey: nsUrl)
-                imageView.image = downloadedImage
+            getImage(with: url) { resultImage in
+                self.stringImageCache.setObject(resultImage, forKey: nsUrl)
+                DispatchQueue.main.async { imageView.image = resultImage }
             }
-            
         }
     }
     
@@ -382,16 +558,18 @@ class PlaceDataManager {
         }
     }
     
-    // MARK: 서버 관련 코드
+    // MARK: - 일반 네트워크 요청
     
-    /// 임시 토큰
-    let tempToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiNTQ0M2ZiYTYtNzJiYy00YTkzLTk3ZTktOWEyN2YzYTFlOTMyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI1NDQzZmJhNi03MmJjLTRhOTMtOTdlOS05YTI3ZjNhMWU5MzIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0MUB0ZXN0LmNvbSIsImV4cCI6MTYzODMwNjc3MiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTU0MTUiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1NTQxNSJ9.tPj34LMEChrZ9oCVIgKzn4GbALjdfxAq6u_LXS4kF5E"
+    /// 사용자 계정 토큰
+    var token: String {
+        return loginKeychain.get(AccountKeys.apiToken.rawValue) ?? ""
+    }
     
     /// json 인코더
     let jsonEncoder = JSONEncoder()
     
-
-    /// 서버에 데이터 등록을 요청합니다.
+    
+    /// 서버에 데이터 등록을 요청합니다. (POST)
     ///
     /// - Parameters:
     ///   - bodyData: 요청 body 데이터
@@ -402,7 +580,7 @@ class PlaceDataManager {
     func post<RequestDataType: Codable, ResponseDataType: PlaceResponseType>(_ bodyData: RequestDataType, with url: URL, on vc: UIViewController, completion: ((ResponseDataType) -> Void)?) {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.addValue("Bearer \(tempToken)", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         do {
@@ -453,7 +631,7 @@ class PlaceDataManager {
     }
     
     
-    /// 서버에 데이터를 요청합니다.
+    /// 서버에 데이터를 요청합니다. (GET)
     ///
     /// - Parameters:
     ///   - url: url
@@ -463,7 +641,7 @@ class PlaceDataManager {
     func get<T: PlaceResponseType>(with url: URL, on vc: UIViewController, completion: ((T) -> Void)?) {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("Bearer \(tempToken)", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         session.dataTask(with: request) { [weak self] data, response, error in
             guard let self = self else { return }
@@ -504,7 +682,7 @@ class PlaceDataManager {
     }
     
     
-    /// 서버에 데이터 삭제를 요청합니다.
+    /// 서버에 데이터 삭제를 요청합니다. (DELETE)
     /// - Parameters:
     ///   - url: url
     ///   - vc: 처리 실패시 alert를 표시할 view controller
@@ -513,7 +691,7 @@ class PlaceDataManager {
     func delete(with url: URL, on vc: UIViewController, completion: ((PlaceCommonResponse) -> Void)?) {
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
-        request.addValue("Bearer \(tempToken)", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         session.dataTask(with: request) { [weak self] data, response, error in
             guard let self = self else { return }
