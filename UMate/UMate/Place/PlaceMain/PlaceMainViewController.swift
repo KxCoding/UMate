@@ -35,6 +35,8 @@ class PlaceMainViewController: UIViewController {
     /// 주변 상점 컬렉션 뷰
     @IBOutlet weak var nearbyPlaceCollectionView: UICollectionView!
     
+    /// 다운로드 작업 activity indicator view
+    @IBOutlet weak var downloadingIndicatorView: UIActivityIndicatorView!
     
     // MARK: Properties
     
@@ -121,9 +123,11 @@ class PlaceMainViewController: UIViewController {
     /// 장소 정보를 다운로드합니다.
     /// - Author: 박혜정(mailmelater11@gmail.com)
     private func getPlaces() {
+        downloadingIndicatorView.startAnimating()
         dataManager.fetchUniversityPlaces(universityId: 104, vc: self) { places in
             self.list = places.sorted(by: { $0.longitude < $1.longitude })
             self.nearbyPlaceCollectionView.reloadData()
+            self.downloadingIndicatorView.stopAnimating()
         }
     }
     
@@ -265,6 +269,8 @@ class PlaceMainViewController: UIViewController {
         nearbyPlaceCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         nearbyPlaceCollectionView.collectionViewLayout = configureLayout()
         
+        downloadingIndicatorView.hidesWhenStopped = true
+        
         setTapBarAppearanceAsDefault()
     }
     
@@ -298,12 +304,12 @@ class PlaceMainViewController: UIViewController {
                 dataManager.fetchIfBookmarked(placeId: list[indexPath.row].id, vc: vc) { isBookmarked in
                     vc.isBookmarked = isBookmarked
                 }
-                
             }
         }
         
-        if let cell = segue.destination as? PlaceSearchViewController {
-            cell.userLocation = locationManager.location
+        if let vc = segue.destination as? PlaceSearchViewController {
+            vc.userLocation = locationManager.location
+            vc.list = list
         }
     }
 }

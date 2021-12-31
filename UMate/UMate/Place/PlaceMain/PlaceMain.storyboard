@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Iul-PA-3zo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Iul-PA-3zo">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -26,13 +26,18 @@
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="IXa-YA-P58">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                     </mapView>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="olZ-Bf-7wX">
+                                        <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="IXa-YA-P58" firstAttribute="top" secondItem="RUb-OM-ljv" secondAttribute="top" id="ChX-L7-hec"/>
                                     <constraint firstItem="IXa-YA-P58" firstAttribute="leading" secondItem="RUb-OM-ljv" secondAttribute="leading" id="Epl-oq-q6q"/>
                                     <constraint firstAttribute="trailing" secondItem="IXa-YA-P58" secondAttribute="trailing" id="Nvj-Rf-oBC"/>
+                                    <constraint firstItem="olZ-Bf-7wX" firstAttribute="centerX" secondItem="RUb-OM-ljv" secondAttribute="centerX" id="STs-m1-bBC"/>
                                     <constraint firstAttribute="bottom" secondItem="IXa-YA-P58" secondAttribute="bottom" id="m1Z-GI-hDS"/>
+                                    <constraint firstItem="olZ-Bf-7wX" firstAttribute="centerY" secondItem="RUb-OM-ljv" secondAttribute="centerY" id="xWH-dV-rfc"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tru-B1-Enb">
@@ -239,7 +244,7 @@
                                                             <constraint firstAttribute="width" constant="20" id="fhX-ds-ACh"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울시 용산구 한강대로 84길" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x3e-U5-sEP">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울시 용산구 한강대로 84길" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3e-U5-sEP">
                                                         <rect key="frame" x="30" y="0.0" width="162.5" height="20"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
@@ -320,6 +325,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="currentLocationLabel" destination="x3e-U5-sEP" id="dOf-y3-E26"/>
+                        <outlet property="downloadingIndicatorView" destination="olZ-Bf-7wX" id="T1A-5m-ngg"/>
                         <outlet property="listViewBtnContainer" destination="Gos-MC-Gxq" id="o2o-IM-QnO"/>
                         <outlet property="locationContainer" destination="oy5-8U-eaF" id="rTL-Bv-NDz"/>
                         <outlet property="mapView" destination="IXa-YA-P58" id="Npc-h3-YRZ"/>

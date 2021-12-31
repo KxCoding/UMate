@@ -88,7 +88,7 @@ class PlaceListViewController: CommonViewController {
     @objc func showSearchVC(_ sender: Any) {
         guard let searchVC = UIStoryboard(name: "PlaceSearch", bundle: nil).instantiateInitialViewController() as? PlaceSearchViewController else { return }
         
-        // TODO: 검색 화면 데이터 초기화 (검색 화면 구현 수정 요망)
+        searchVC.list = entireItems
         
         if let navigationController = self.navigationController {
             navigationController.show(searchVC, sender: sender)
@@ -170,7 +170,6 @@ class PlaceListViewController: CommonViewController {
                 }
             }
         }
-        
     }
 }
 
